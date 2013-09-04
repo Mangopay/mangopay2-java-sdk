@@ -21,12 +21,13 @@ public class Configuration {
     public String BaseUrl = "https://mangopay-api-inte.leetchi.com";
     
     /**
-     * [readonly] Authentication type - always of value "Strong"
-     */
-    public String AuthenticationType = "Strong";
-    
-    /**
      * [INTERNAL USAGE ONLY] Switch debug mode: log all request and response data
      */
     public boolean DebugMode = false;
+    
+//    /**
+//     * [readonly] Authentication type - always of value "Strong"
+//     */
+//    public String AuthenticationType = "Strong";
+
 }

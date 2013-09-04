@@ -39,9 +39,6 @@ import java.util.regex.Matcher;
  */
 public class RestTool {
     
-    /**REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
-    private static OAuthToken _oauth;
-
     /**
      * Root/parent instance that holds the OAuthToken and Configuration instance
      */
@@ -50,7 +47,7 @@ public class RestTool {
     /**
      * Variable to switch on/off log debugging
      */
-    private Boolean _debugMode = false;
+    private Boolean _debugMode;
     
     /**
      * Variable to flag that in request authentication data are required

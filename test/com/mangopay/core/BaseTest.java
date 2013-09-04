@@ -4,8 +4,6 @@ import com.mangopay.*;
 import com.mangopay.entities.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,27 +13,19 @@ import static org.junit.Assert.*;
 
 @Ignore("Just a base class for tests: nothing to test here")
 public abstract class BaseTest {
-    
+
     protected MangoPayApi _api;
 
-    public static UserNatural John;
+    private static UserNatural _john;
+    private static UserLegal _matrix;
+    private static BankAccount _johnsAccount;
+    private static Wallet _johnsWallet;
+    private static PayIn _johnsPayInCardWeb;
+    private static PayInPaymentDetailsCard _payInPaymentDetailsCard;
+    private static PayInExecutionDetailsWeb _payInExecutionDetailsWeb;
+    private static PayOut _johnsPayOutBankWire;
+    private static Transfer _johnsTransfer;
 
-    public static UserLegal Matrix;
-
-    public static BankAccount JohnsAccount;
-
-    public static Wallet JohnsWallet;
-    
-    public static PayIn JohnsPayInCardWeb;
-    
-    public static PayInPaymentDetailsCard PayInPaymentDetailsCard;
-    
-    public static PayInExecutionDetailsWeb PayInExecutionDetailsWeb;
-
-    public static PayOut JohnsPayOutBankWire;
-    
-    public static Transfer JohnsTransfer;
-    
     public BaseTest() {
         this._api = buildNewMangoPayApi();
     }
@@ -65,7 +55,7 @@ public abstract class BaseTest {
     }
     
     protected UserNatural getJohn() throws Exception {
-        if (BaseTest.John == null) {
+        if (BaseTest._john == null) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
             
@@ -80,16 +70,16 @@ public abstract class BaseTest {
             user.Occupation = "programmer";
             user.IncomeRange = 3;
             //try {
-                BaseTest.John = (UserNatural)this._api.Users.create(user);
+                BaseTest._john = (UserNatural)this._api.Users.create(user);
             //} catch (Exception ex) {
             //    Logger.getLogger(BaseTest.class.getName()).log(Level.SEVERE, null, ex);
             //}
         }
-        return BaseTest.John;
+        return BaseTest._john;
     }
 
     protected UserLegal getMatrix() throws Exception {
-        if (BaseTest.Matrix == null) {
+        if (BaseTest._matrix == null) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
             user.Name = "MartixSampleOrg";
@@ -103,16 +93,16 @@ public abstract class BaseTest {
             user.LegalRepresentativeNationality = john.Nationality;
             user.LegalRepresentativeCountryOfResidence = john.CountryOfResidence;
             //try {
-                BaseTest.Matrix = (UserLegal)this._api.Users.create(user);
+                BaseTest._matrix = (UserLegal)this._api.Users.create(user);
             //} catch (Exception ex) {
             //    Logger.getLogger(BaseTest.class.getName()).log(Level.SEVERE, null, ex);
             //}
         }
-        return BaseTest.Matrix;
+        return BaseTest._matrix;
     }
 
     protected BankAccount getJohnsAccount() throws Exception {
-        if (BaseTest.JohnsAccount == null) {
+        if (BaseTest._johnsAccount == null) {
             UserNatural john = this.getJohn();
             BankAccount account = new BankAccount();
             account.Type = "IBAN";
@@ -120,13 +110,13 @@ public abstract class BaseTest {
             account.OwnerAddress = john.Address;
             account.IBAN = "AD12 0001 2030 2003 5910 0100";
             account.BIC = "BINAADADXXX";
-            BaseTest.JohnsAccount = this._api.Users.createBankAccount(john.Id, account);
+            BaseTest._johnsAccount = this._api.Users.createBankAccount(john.Id, account);
         }
-        return BaseTest.JohnsAccount;
+        return BaseTest._johnsAccount;
     }
     
     protected Wallet getJohnsWallet() throws Exception {
-        if (BaseTest.JohnsWallet == null) {
+        if (BaseTest._johnsWallet == null) {
             UserNatural john = this.getJohn();
             
             Wallet wallet = new Wallet();
@@ -136,35 +126,35 @@ public abstract class BaseTest {
             wallet.Currency = "EUR";
             wallet.Description = "WALLET IN EUR";
             
-            BaseTest.JohnsWallet = this._api.Wallets.create(wallet);
+            BaseTest._johnsWallet = this._api.Wallets.create(wallet);
         }
         
-        return BaseTest.JohnsWallet;
+        return BaseTest._johnsWallet;
     }
     
     private PayInPaymentDetailsCard getPayInPaymentDetailsCard() {
-        if (BaseTest.PayInPaymentDetailsCard == null) {
-            BaseTest.PayInPaymentDetailsCard = new PayInPaymentDetailsCard();
-            BaseTest.PayInPaymentDetailsCard.CardType = "AMEX";
-            BaseTest.PayInPaymentDetailsCard.ReturnURL = "https://test.com";
+        if (BaseTest._payInPaymentDetailsCard == null) {
+            BaseTest._payInPaymentDetailsCard = new PayInPaymentDetailsCard();
+            BaseTest._payInPaymentDetailsCard.CardType = "AMEX";
+            BaseTest._payInPaymentDetailsCard.ReturnURL = "https://test.com";
         }
         
-        return BaseTest.PayInPaymentDetailsCard;
+        return BaseTest._payInPaymentDetailsCard;
     }
     
     private PayInExecutionDetailsWeb getPayInExecutionDetailsWeb() {
-        if (BaseTest.PayInExecutionDetailsWeb == null) {
-            BaseTest.PayInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
-            BaseTest.PayInExecutionDetailsWeb.TemplateURL = "https://TemplateURL.com";
-            BaseTest.PayInExecutionDetailsWeb.SecureMode = "DEFAULT";
-            BaseTest.PayInExecutionDetailsWeb.Culture = "fr";
+        if (BaseTest._payInExecutionDetailsWeb == null) {
+            BaseTest._payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+            BaseTest._payInExecutionDetailsWeb.TemplateURL = "https://TemplateURL.com";
+            BaseTest._payInExecutionDetailsWeb.SecureMode = "DEFAULT";
+            BaseTest._payInExecutionDetailsWeb.Culture = "fr";
         }
         
-        return BaseTest.PayInExecutionDetailsWeb;
+        return BaseTest._payInExecutionDetailsWeb;
     }
     
     protected PayIn getJohnsPayInCardWeb() throws Exception {
-        if (BaseTest.JohnsPayInCardWeb == null) {
+        if (BaseTest._johnsPayInCardWeb == null) {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
             
@@ -181,14 +171,14 @@ public abstract class BaseTest {
             payIn.PaymentDetails = this.getPayInPaymentDetailsCard();
             payIn.ExecutionDetails = this.getPayInExecutionDetailsWeb();
             
-            BaseTest.JohnsPayInCardWeb = this._api.PayIns.create(payIn);
+            BaseTest._johnsPayInCardWeb = this._api.PayIns.create(payIn);
         }
         
-        return BaseTest.JohnsPayInCardWeb;
+        return BaseTest._johnsPayInCardWeb;
     }
     
     protected PayOut getJohnsPayOutBankWire() throws Exception {
-        if (BaseTest.JohnsPayOutBankWire == null) {
+        if (BaseTest._johnsPayOutBankWire == null) {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
             BankAccount account = this.getJohnsAccount();
@@ -210,17 +200,17 @@ public abstract class BaseTest {
             ((PayOutPaymentDetailsBankWire)payOut.MeanOfPaymentDetails).Communication = "Communication text";
             
             //try {
-                BaseTest.JohnsPayOutBankWire = this._api.PayOuts.create(payOut);
+                BaseTest._johnsPayOutBankWire = this._api.PayOuts.create(payOut);
             //} catch (Exception ex) {
             //    Logger.getLogger(BaseTest.class.getName()).log(Level.SEVERE, null, ex);
             //}
         }
         
-        return BaseTest.JohnsPayOutBankWire;
+        return BaseTest._johnsPayOutBankWire;
     }
     
     protected Transfer getJohnsTransfer() throws Exception {
-        if (BaseTest.JohnsTransfer == null) {
+        if (BaseTest._johnsTransfer == null) {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
             
@@ -238,10 +228,10 @@ public abstract class BaseTest {
             transfer.DebitedWalletId = wallet.Id;
             transfer.CreditedWalletId = wallet.Id;
 
-            BaseTest.JohnsTransfer = this._api.Transfers.create(transfer);
+            BaseTest._johnsTransfer = this._api.Transfers.create(transfer);
         }
         
-        return BaseTest.JohnsTransfer;
+        return BaseTest._johnsTransfer;
     }
     
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {

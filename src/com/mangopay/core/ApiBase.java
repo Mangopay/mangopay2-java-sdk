@@ -10,14 +10,6 @@ import java.util.Map;
  */
 public abstract class ApiBase {
 
-    /** REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-    public static OAuthToken OAuthToken;
-    /** REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-    public static Configuration Config;
-    /** REMOVE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-    public ApiBase(OAuthToken oAuth) { ApiBase.OAuthToken = oAuth; }
-
-    
     /**
      * Root/parent instance that holds the OAuthToken and Configuration instance
      */
