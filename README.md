@@ -1,6 +1,6 @@
 MangoPay SDK
 =================================================
-MangoPaySDK is a client library to work with
+MangoPaySDK is a Java client library to work with
 [MangoPay REST API](http://docs.mangopay.com/api-references/).
 
 
