@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Response exception class.
  */
-class ResponseException extends Exception {
+public class ResponseException extends Exception {
     
     /**
      * 
