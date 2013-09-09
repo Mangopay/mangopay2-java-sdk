@@ -48,8 +48,9 @@ public class ApiPayInsTest extends BaseTest {
         
         assertTrue(getPayIn.Status.equals("CREATED"));
         assertTrue(getPayIn.ExecutionDate == null);
-        assertNotNull(((PayInPaymentDetailsCard)getPayIn.PaymentDetails).RedirectURL);
-        assertNotNull(((PayInPaymentDetailsCard)getPayIn.PaymentDetails).ReturnURL);
+
+        assertNotNull(((PayInExecutionDetailsWeb)getPayIn.ExecutionDetails).RedirectURL);
+        assertNotNull(((PayInExecutionDetailsWeb)getPayIn.ExecutionDetails).ReturnURL);
     }
     
 }

@@ -136,7 +136,6 @@ public abstract class BaseTest {
         if (BaseTest._payInPaymentDetailsCard == null) {
             BaseTest._payInPaymentDetailsCard = new PayInPaymentDetailsCard();
             BaseTest._payInPaymentDetailsCard.CardType = "AMEX";
-            BaseTest._payInPaymentDetailsCard.ReturnURL = "https://test.com";
         }
         
         return BaseTest._payInPaymentDetailsCard;
@@ -148,6 +147,7 @@ public abstract class BaseTest {
             BaseTest._payInExecutionDetailsWeb.TemplateURL = "https://TemplateURL.com";
             BaseTest._payInExecutionDetailsWeb.SecureMode = "DEFAULT";
             BaseTest._payInExecutionDetailsWeb.Culture = "fr";
+            BaseTest._payInExecutionDetailsWeb.ReturnURL = "https://test.com";
         }
         
         return BaseTest._payInExecutionDetailsWeb;
@@ -282,13 +282,13 @@ public abstract class BaseTest {
             
         } else if (entity1 instanceof PayInPaymentDetailsCard) {
             assertEquals(((PayInPaymentDetailsCard)entity1).CardType, ((PayInPaymentDetailsCard)entity2).CardType);
-            assertEquals(((PayInPaymentDetailsCard)entity1).RedirectURL, ((PayInPaymentDetailsCard)entity2).RedirectURL);
-            assertEquals(((PayInPaymentDetailsCard)entity1).ReturnURL, ((PayInPaymentDetailsCard)entity2).ReturnURL);
             
         } else if (entity1 instanceof PayInExecutionDetailsWeb) {
             assertEquals(((PayInExecutionDetailsWeb)entity1).TemplateURL, ((PayInExecutionDetailsWeb)entity2).TemplateURL);
             assertEquals(((PayInExecutionDetailsWeb)entity1).Culture, ((PayInExecutionDetailsWeb)entity2).Culture);
             assertEquals(((PayInExecutionDetailsWeb)entity1).SecureMode, ((PayInExecutionDetailsWeb)entity2).SecureMode);
+            assertEquals(((PayInExecutionDetailsWeb)entity1).RedirectURL, ((PayInExecutionDetailsWeb)entity2).RedirectURL);
+            assertEquals(((PayInExecutionDetailsWeb)entity1).ReturnURL, ((PayInExecutionDetailsWeb)entity2).ReturnURL);
             
         } else if (entity1 instanceof PayOut) {
             assertEquals(((PayOut)entity1).Tag, ((PayOut)entity2).Tag);
