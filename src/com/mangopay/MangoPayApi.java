@@ -23,6 +23,7 @@ public class MangoPayApi {
         PayIns = new ApiPayIns(this);
         PayOuts = new ApiPayOuts(this);
         Transfers = new ApiTransfers(this);
+        CardRegistrations = new ApiCardRegistrations(this);
     }
     
     ////////////////////////////////////////
@@ -78,5 +79,10 @@ public class MangoPayApi {
      * Transfer methods.
      */
     public ApiTransfers Transfers;
+    
+    /**
+     * CardRegistrations methods.
+     */
+    public ApiCardRegistrations CardRegistrations;
     
 }

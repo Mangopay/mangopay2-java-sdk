@@ -25,6 +25,7 @@ public abstract class BaseTest {
     private static PayInExecutionDetailsWeb _payInExecutionDetailsWeb;
     private static PayOut _johnsPayOutBankWire;
     private static Transfer _johnsTransfer;
+    private static CardRegistration _johnsCardRegistration;
 
     public BaseTest() {
         this._api = buildNewMangoPayApi();
@@ -232,6 +233,24 @@ public abstract class BaseTest {
         }
         
         return BaseTest._johnsTransfer;
+    }
+    
+    /**
+     * Creates card registration object.
+     * @return CardRegistration instance returned from API.
+     */
+    protected CardRegistration getJohnsCardRegistration() throws Exception {
+        if (BaseTest._johnsCardRegistration == null) {
+            UserNatural user = this.getJohn();
+            
+            CardRegistration cardRegistration = new CardRegistration();
+            cardRegistration.UserId = user.Id;
+            cardRegistration.Currency = "EUR";
+
+            BaseTest._johnsCardRegistration = this._api.CardRegistrations.create(cardRegistration);
+        }
+        
+        return BaseTest._johnsCardRegistration;
     }
     
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {
