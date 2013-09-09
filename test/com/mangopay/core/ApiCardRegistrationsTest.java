@@ -12,7 +12,6 @@ public class ApiCardRegistrationsTest extends BaseTest {
     
     @Test
     public void test_CardRegistrations_Create() throws Exception {
-        
         CardRegistration cardRegistration = this.getJohnsCardRegistration();
         UserNatural user = this.getJohn();
 
@@ -25,7 +24,6 @@ public class ApiCardRegistrationsTest extends BaseTest {
         assertEquals(user.Id, cardRegistration.UserId);
         assertEquals("EUR", cardRegistration.Currency);
         assertEquals("CREATED", cardRegistration.Status);
-
     }
     
     @Test

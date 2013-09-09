@@ -38,8 +38,11 @@ public abstract class ApiBase {
         put("info_getfeewallets", new String[] { "/info/fee-wallets", RequestType.GET });
         put("info_getmeansofpayment", new String[] { "/info/means-of-payment", RequestType.GET });
      
-        put("paymentcardregistration_create", new String[] { "/payment-card-registration", RequestType.POST });
-        put("paymentcardregistration_get", new String[] { "/payment-card-registration/%s", RequestType.GET });
+        put("cardregistration_create", new String[] { "/cardregistrations", RequestType.POST });
+        put("cardregistration_get", new String[] { "/cardregistrations/%s", RequestType.GET });
+        put("cardregistration_save", new String[] { "/cardregistrations/%s", RequestType.PUT });
+        
+        put("card_get", new String[] { "/cards/%s", RequestType.GET });
         
         // pay ins URLs
         put("payins_card-web_create", new String[] { "/payins/card/web/", RequestType.POST });
