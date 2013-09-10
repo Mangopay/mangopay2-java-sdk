@@ -57,6 +57,10 @@ public class PayIn extends Transaction {
                             put("ExecutionDetails", PayInExecutionDetailsWeb.class);
                         }}
                     );
+                    put("DIRECT", new HashMap<String, Class<?>>() {{
+                            put("ExecutionDetails", PayInExecutionDetailsDirect.class);
+                        }}
+                    );
                     // ...and more in future...
                 }}
             );
