@@ -164,7 +164,7 @@ public abstract class ApiBase {
         else
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId);
         
-        RestTool rest = this.getRestToolObject();
+        RestTool rest = new RestTool(this._root, true);
         T result = rest.request(classOfT, urlMethod, this.getRequestType(methodKey), null, null, entity);
         
         return result;
@@ -196,7 +196,7 @@ public abstract class ApiBase {
         
         String urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
         
-        RestTool rest = this.getRestToolObject();
+        RestTool rest = new RestTool(this._root, true);
         T response = rest.request(classOfT, urlMethod, this.getRequestType(methodKey));
         
         return response;
@@ -241,7 +241,7 @@ public abstract class ApiBase {
             pagination = new Pagination();
         }
         
-        RestTool rest = this.getRestToolObject();
+        RestTool rest = new RestTool(this._root, true);
         
         return rest.requestList(classOfT, classOfTItem, urlMethod, this.getRequestType(methodKey), null, pagination, additionalUrlParams);
                 
@@ -285,31 +285,10 @@ public abstract class ApiBase {
         if (entity instanceof EntityBase) {
             String urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
 
-            RestTool rest = this.getRestToolObject();
+            RestTool rest = new RestTool(this._root, true);
             return rest.request(classOfT, urlMethod, this.getRequestType(methodKey), null, null, entity);
         } else {
             return null;
         }
     }
-    
-    /**
-     * Gets RestTool instance. 
-     * @param authRequired      Flag denoting whether the authentication data 
-                                are required.
-     * @return                  Ready to use RestTool object.
-     */
-    protected RestTool getRestToolObject(Boolean authRequired) throws Exception {
-        // check/create auth token first...
-        if (authRequired && (this._root.OAuthToken == null || this._root.OAuthToken.IsExpired())) {
-            this._root.OAuthToken = this._root.AuthenticationManager.createToken();
-        }
-        return new RestTool(this._root, authRequired);
-    }
-    
-    /**
-     * Gets RestTool instance.
-     * @return Ready to use RestTool object.
-     */
-    protected RestTool getRestToolObject() throws Exception { return getRestToolObject(true); }
-
 }

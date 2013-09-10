@@ -34,7 +34,7 @@ public class ApiClients extends ApiBase {
             put("Email", clientEmail);
         }};
         
-        RestTool rest = this.getRestToolObject(false);
+        RestTool rest = new RestTool(this._root, false);
         rest.addRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
         return rest.request(Client.class, urlMethod, requestType, requestData);
     }    

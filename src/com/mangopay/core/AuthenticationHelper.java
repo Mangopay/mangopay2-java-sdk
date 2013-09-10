@@ -64,12 +64,16 @@ class AuthenticationHelper {
     /**
      * Get HTTP header value with authorization string for strong authentication
      */
-    private Map<String, String> getHttpHeaderStrong() throws Exception{
-        if (_root.OAuthToken == null || _root.OAuthToken.access_token.length() == 0 || _root.OAuthToken.token_type.length() == 0)
+    private Map<String, String> getHttpHeaderStrong() throws Exception {
+        
+        final OAuthToken token = _root.OAuthTokenManager.getToken();
+        
+        if (token == null || token.access_token.length() == 0 || token.token_type.length() == 0)
             throw new Exception ("OAuth token is not created (or is invalid) for strong authentication");
                 
         return new HashMap<String, String>(){{
-            put("Authorization", _root.OAuthToken.token_type + " " + _root.OAuthToken.access_token);
+            put("Authorization", token.token_type + " " + token.access_token);
         }};
+        
     }
 }

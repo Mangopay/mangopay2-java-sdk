@@ -30,7 +30,8 @@ public class ApiOAuth extends ApiBase {
             put("grant_type", "client_credentials");
         }};
         
-        RestTool rest = getRestToolObject(false);
+        //RestTool rest = getRestToolObject(false);
+        RestTool rest = new RestTool(this._root, false);
         AuthenticationHelper authHlp = new AuthenticationHelper(_root);
         
         try {

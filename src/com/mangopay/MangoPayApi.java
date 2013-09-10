@@ -14,6 +14,7 @@ public class MangoPayApi {
 
         // default config setup
         Config = new Configuration();
+        OAuthTokenManager = new AuthorizationTokenManager(this);
 
         // API managers
         AuthenticationManager = new ApiOAuth(this);
@@ -31,10 +32,9 @@ public class MangoPayApi {
     ////////////////////////////////////////
 
     /**
-     * OAuthToken; null by default: will auto-generate it on first API call.
-     * Or you can set your own if you want to reuse it until it expires.
+     * Authorization token methods.
      */
-    public OAuthToken OAuthToken;
+    public AuthorizationTokenManager OAuthTokenManager;
 
     /**
      * Configuration instance with default settings (to be reset if required).
