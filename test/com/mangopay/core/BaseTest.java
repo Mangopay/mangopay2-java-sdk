@@ -47,11 +47,16 @@ public abstract class BaseTest {
     public void tearDown() {
     }
     
-    protected MangoPayApi buildNewMangoPayApi() {
+    protected final MangoPayApi buildNewMangoPayApi() {
         MangoPayApi api = new MangoPayApi();
+        
         // use test client credentails
         api.Config.ClientId = "example";
         api.Config.ClientPassword = "uyWsmnwMQyTnqKgi8Y35A3eVB7bGhqrebYqA1tL6x2vYNpGPiY";
+        
+        // register storage strategy for tests
+        api.OAuthTokenManager.registerCustomStorageStrategy(new DefaultStorageStrategyForTests());
+        
         return api;
     }
     

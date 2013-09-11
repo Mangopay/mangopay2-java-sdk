@@ -5,14 +5,14 @@ import com.mangopay.MangoPayApi;
 /**
  * Authorization token manager.
  */
-public class AuthorizationTokenManager extends ApiBase {
+public final class AuthorizationTokenManager extends ApiBase {
     
     private IStorageStrategy _storageStrategy;
     
     public AuthorizationTokenManager(MangoPayApi root) {
         super(root);
         
-        _storageStrategy = new DefaultStorageStrategy();
+        this.registerCustomStorageStrategy(new DefaultStorageStrategy());
     }
     
     /**

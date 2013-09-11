@@ -1,9 +1,9 @@
 package com.mangopay.core;
 
 /**
- * Default token storage strategy implementation.
+ * Default token storage strategy implementation for tests.
  */
-public class DefaultStorageStrategy implements IStorageStrategy {
+public class DefaultStorageStrategyForTests implements IStorageStrategy {
 
     private static OAuthToken _oAuthToken = null;
     
