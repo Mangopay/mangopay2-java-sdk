@@ -1,6 +1,5 @@
 package com.mangopay.core;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Tests for holding authentication token in instance

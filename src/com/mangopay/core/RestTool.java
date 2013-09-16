@@ -1,6 +1,7 @@
 package com.mangopay.core;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -373,7 +374,8 @@ public class RestTool {
                 if (entity != null) {
                     HashMap<String, Object> requestData = buildRequestData(classOfT, entity);
                     
-                    requestBody = new Gson().toJson(requestData);
+                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                    requestBody = gson.toJson(requestData);
                 }
                 if (this._requestData != null) {
                     String params = "";
@@ -410,7 +412,6 @@ public class RestTool {
                 resp = new StringBuffer();
                 while((line = rd.readLine()) != null) {
                     resp.append(line);
-                    resp.append('\r');
                 }
             }
             String responseString = resp.toString();
@@ -432,7 +433,7 @@ public class RestTool {
                 if (this._debugMode) Logs.debug("Response object", response.toString());
             }
             
-            this.checkResponseCode();
+            this.checkResponseCode(responseString);
             
         }
         catch (Exception ex) {
@@ -884,7 +885,7 @@ public class RestTool {
                 }
             }
 
-            this.checkResponseCode();
+            this.checkResponseCode(responseString);
             
         }
         catch (Exception ex) {
@@ -924,12 +925,37 @@ public class RestTool {
     
     /**
      * Checks response HTTP code.
-     * @throws Exception If response code is not 200 (OK)
+     * @throws ResponseException If response code is not 200 (OK)
      */
-    private void checkResponseCode() throws ResponseException {
+    private void checkResponseCode(String message) throws ResponseException {
 
         if (this._responseCode != 200) {
-            throw new ResponseException(this._responseCode);
+            
+            HashMap<Integer, String> responseCodes = new HashMap<Integer, String>() {{
+                put(206, "PartialContent");
+                put(400, "Bad request");
+                put(401, "Unauthorized");
+                put(403, "Prohibition to use the method");
+                put(404, "Not found");
+                put(405, "Method not allowed");
+                put(413, "Request entity too large");
+                put(422, "Unprocessable entity");
+                put(500, "Internal server error");
+                put(501, "Not implemented");
+            }};
+            
+            String errorMsg = "";
+            if (responseCodes.containsKey(this._responseCode)) {
+                errorMsg = responseCodes.get(this._responseCode);
+            } else {
+                errorMsg = "Unknown response error";
+            }
+
+            if (message != null) {
+                errorMsg += ". " + message;
+            }
+            
+            throw new ResponseException(errorMsg);
         }
     }
 

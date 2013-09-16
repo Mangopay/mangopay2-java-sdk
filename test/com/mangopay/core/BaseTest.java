@@ -2,6 +2,14 @@ package com.mangopay.core;
 
 import com.mangopay.*;
 import com.mangopay.entities.*;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import org.junit.After;
@@ -21,11 +29,14 @@ public abstract class BaseTest {
     private static BankAccount _johnsAccount;
     private static Wallet _johnsWallet;
     private static PayIn _johnsPayInCardWeb;
+    private static PayIn _johnsPayInCardDirect;
     private static PayInPaymentDetailsCard _payInPaymentDetailsCard;
     private static PayInExecutionDetailsWeb _payInExecutionDetailsWeb;
     private static PayOut _johnsPayOutBankWire;
     private static Transfer _johnsTransfer;
     private static CardRegistration _johnsCardRegistration;
+    private static Refund _johnsRefundForTransfer;
+    private static Refund _johnsRefundForPayIn;
 
     public BaseTest() {
         this._api = buildNewMangoPayApi();
@@ -75,11 +86,8 @@ public abstract class BaseTest {
             user.CountryOfResidence = "FR";
             user.Occupation = "programmer";
             user.IncomeRange = 3;
-            //try {
-                BaseTest._john = (UserNatural)this._api.Users.create(user);
-            //} catch (Exception ex) {
-            //    Logger.getLogger(BaseTest.class.getName()).log(Level.SEVERE, null, ex);
-            //}
+            
+            BaseTest._john = (UserNatural)this._api.Users.create(user);
         }
         return BaseTest._john;
     }
@@ -98,11 +106,8 @@ public abstract class BaseTest {
             user.LegalRepresentativeBirthday = john.Birthday;
             user.LegalRepresentativeNationality = john.Nationality;
             user.LegalRepresentativeCountryOfResidence = john.CountryOfResidence;
-            //try {
-                BaseTest._matrix = (UserLegal)this._api.Users.create(user);
-            //} catch (Exception ex) {
-            //    Logger.getLogger(BaseTest.class.getName()).log(Level.SEVERE, null, ex);
-            //}
+            
+            BaseTest._matrix = (UserLegal)this._api.Users.create(user);
         }
         return BaseTest._matrix;
     }
@@ -133,9 +138,72 @@ public abstract class BaseTest {
             wallet.Description = "WALLET IN EUR";
             
             BaseTest._johnsWallet = this._api.Wallets.create(wallet);
+            
+            if (BaseTest._johnsWallet.Balance.Amount == null) {
+                BaseTest._johnsWallet.Balance.Amount = 0.0;
+            }
         }
         
         return BaseTest._johnsWallet;
+    }
+    
+    /**
+     * Creates wallet for John, loaded with 10k EUR (John's got lucky) if not 
+     * created yet, or returns an existing one.
+     * @return Wallet instance loaded with 10k EUR.
+     */
+    protected Wallet getJohnsWalletWithMoney() throws Exception {
+        return getJohnsWalletWithMoney(10000);
+    }
+    
+    /**
+     * Creates wallet for John, if not created yet, or returns an existing one.
+     * @param amount Initial wallet's money amount.
+     * @return Wallet entity instance.
+     */
+    protected Wallet getJohnsWalletWithMoney(double amount) throws Exception {
+        
+        Wallet wallet = this.getJohnsWallet();
+        
+        if (wallet.Balance.Amount <= 0) {
+            
+            CardRegistration cardRegistration = new CardRegistration();
+            cardRegistration.UserId = wallet.Owners.get(0);
+            cardRegistration.Currency = "EUR";
+            cardRegistration = this._api.CardRegistrations.create(cardRegistration);
+            
+            cardRegistration.RegistrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
+            cardRegistration = this._api.CardRegistrations.update(cardRegistration);
+            
+            Card card = this._api.Cards.get(cardRegistration.CardId);
+            
+            // create pay-in CARD DIRECT
+            PayIn payIn = new PayIn();
+            payIn.CreditedWalletId = wallet.Id;
+            payIn.AuthorId = cardRegistration.UserId;
+            payIn.DebitedFunds = new Money();
+            payIn.DebitedFunds.Amount = amount;
+            payIn.DebitedFunds.Currency = "EUR";
+            payIn.Fees = new Money();
+            payIn.Fees.Amount = 0.0;
+            payIn.Fees.Currency = "EUR";
+
+            // payment type as CARD
+            payIn.PaymentDetails = new PayInPaymentDetailsCard();
+            if (card.CardType.equals("CB") || card.CardType.equals("VISA") || card.CardType.equals("MASTERCARD"))
+                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "CB_VISA_MASTERCARD";
+            else if (card.CardType.equals("AMEX"))
+                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "AMEX";
+
+            // execution type as DIRECT
+            payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
+            ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).CardId = card.Id;
+            ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).SecureModeReturnURL = "http://test.com";
+            // create Pay-In
+            this._api.PayIns.create(payIn);
+        }
+        
+        return this._api.Wallets.get(wallet.Id);
     }
     
     private PayInPaymentDetailsCard getPayInPaymentDetailsCard() {
@@ -183,6 +251,53 @@ public abstract class BaseTest {
         return BaseTest._johnsPayInCardWeb;
     }
     
+    /**
+     * Creates Pay-In Card Direct object
+     * @return PayIn
+     */
+    protected PayIn getJohnsPayInCardDirect() throws Exception {
+        if (BaseTest._johnsPayInCardDirect == null) {
+            Wallet wallet = this.getJohnsWallet();
+            UserNatural user = this.getJohn();
+
+            CardRegistration cardRegistration = new CardRegistration();
+            cardRegistration.UserId = user.Id;
+            cardRegistration.Currency = "EUR";
+            cardRegistration = this._api.CardRegistrations.create(cardRegistration);
+            cardRegistration.RegistrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
+            cardRegistration = this._api.CardRegistrations.update(cardRegistration);
+            
+            Card card = this._api.Cards.get(cardRegistration.CardId);
+            
+            // create pay-in CARD DIRECT
+            PayIn payIn = new PayIn();
+            payIn.CreditedWalletId = wallet.Id;
+            payIn.AuthorId = user.Id;
+            payIn.DebitedFunds = new Money();
+            payIn.DebitedFunds.Amount = 10000.0;
+            payIn.DebitedFunds.Currency = "EUR";
+            payIn.Fees = new Money();
+            payIn.Fees.Amount = 0.0;
+            payIn.Fees.Currency = "EUR";
+            
+            // payment type as CARD
+            payIn.PaymentDetails = new PayInPaymentDetailsCard();
+            if (card.CardType.equals("CB") || card.CardType.equals("VISA") || card.CardType.equals("MASTERCARD"))
+                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "CB_VISA_MASTERCARD";
+            else if (card.CardType.equals("AMEX"))
+                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "AMEX";
+            
+            // execution type as DIRECT
+            payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
+            ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).CardId = card.Id;
+            ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).SecureModeReturnURL = "http://test.com";
+            
+            BaseTest._johnsPayInCardDirect = this._api.PayIns.create(payIn);
+        }
+        
+        return BaseTest._johnsPayInCardDirect;
+    }
+    
     protected PayOut getJohnsPayOutBankWire() throws Exception {
         if (BaseTest._johnsPayOutBankWire == null) {
             Wallet wallet = this.getJohnsWallet();
@@ -205,11 +320,7 @@ public abstract class BaseTest {
             ((PayOutPaymentDetailsBankWire)payOut.MeanOfPaymentDetails).BankAccountId = account.Id;
             ((PayOutPaymentDetailsBankWire)payOut.MeanOfPaymentDetails).Communication = "Communication text";
             
-            //try {
-                BaseTest._johnsPayOutBankWire = this._api.PayOuts.create(payOut);
-            //} catch (Exception ex) {
-            //    Logger.getLogger(BaseTest.class.getName()).log(Level.SEVERE, null, ex);
-            //}
+            BaseTest._johnsPayOutBankWire = this._api.PayOuts.create(payOut);
         }
         
         return BaseTest._johnsPayOutBankWire;
@@ -217,8 +328,14 @@ public abstract class BaseTest {
     
     protected Transfer getJohnsTransfer() throws Exception {
         if (BaseTest._johnsTransfer == null) {
-            Wallet wallet = this.getJohnsWallet();
+            Wallet walletWithMoney = this.getJohnsWalletWithMoney();
             UserNatural user = this.getJohn();
+            
+            Wallet wallet = new Wallet();
+            wallet.Owners.add(user.Id);
+            wallet.Currency = "EUR";
+            wallet.Description = "WALLET IN EUR";
+            wallet = this._api.Wallets.create(wallet);
             
             Transfer transfer = new Transfer();
             transfer.Tag = "DefaultTag";
@@ -229,15 +346,65 @@ public abstract class BaseTest {
             transfer.DebitedFunds.Amount = 100.0;
             transfer.Fees = new Money();
             transfer.Fees.Currency = "EUR";
-            transfer.Fees.Amount = 10.0;
+            transfer.Fees.Amount = 0.0;
 
-            transfer.DebitedWalletId = wallet.Id;
+            transfer.DebitedWalletId = walletWithMoney.Id;
             transfer.CreditedWalletId = wallet.Id;
 
             BaseTest._johnsTransfer = this._api.Transfers.create(transfer);
         }
         
         return BaseTest._johnsTransfer;
+    }
+    
+    /**
+     * Creates refund object for transfer.
+     */
+    protected Refund getJohnsRefundForTransfer() throws Exception {
+        if (BaseTest._johnsRefundForTransfer == null) {
+            UserNatural user = this.getJohn();
+            Transfer transfer = this.getJohnsTransfer();
+            
+            Refund refund = new Refund();
+            refund.DebitedWalletId = transfer.DebitedWalletId;
+            refund.CreditedWalletId = transfer.CreditedWalletId;
+            refund.AuthorId = user.Id;
+            refund.DebitedFunds = new Money();
+            refund.DebitedFunds.Amount = transfer.DebitedFunds.Amount;
+            refund.DebitedFunds.Currency = transfer.DebitedFunds.Currency;
+            refund.Fees = new Money();
+            refund.Fees.Amount = transfer.Fees.Amount;
+            refund.Fees.Currency = transfer.Fees.Currency;
+
+            BaseTest._johnsRefundForTransfer = this._api.Transfers.createRefund(transfer.Id, refund);
+        }
+        
+        return BaseTest._johnsRefundForTransfer;
+    }
+
+    /**
+     * Creates refund object for PayIn
+     * @return \MangoPay\Refund
+     */
+    protected Refund getJohnsRefundForPayIn() throws Exception {
+        if (BaseTest._johnsRefundForPayIn == null) {
+            UserNatural user = this.getJohn();
+            PayIn payIn = this.getJohnsPayInCardDirect();
+
+            Refund refund = new Refund();
+            refund.CreditedWalletId = payIn.CreditedWalletId;
+            refund.AuthorId = user.Id;
+            refund.DebitedFunds = new Money();
+            refund.DebitedFunds.Amount = payIn.DebitedFunds.Amount;
+            refund.DebitedFunds.Currency = payIn.DebitedFunds.Currency;
+            refund.Fees = new Money();
+            refund.Fees.Amount = payIn.Fees.Amount;
+            refund.Fees.Currency = payIn.Fees.Currency;
+
+            BaseTest._johnsRefundForPayIn = this._api.PayIns.createRefund(payIn.Id, refund);
+        }
+        
+        return BaseTest._johnsRefundForPayIn;
     }
     
     /**
@@ -256,6 +423,56 @@ public abstract class BaseTest {
         }
         
         return BaseTest._johnsCardRegistration;
+    }
+    
+    /**
+     * Gets registration data from Payline service.
+     * @param cardRegistration
+     * @return Registration data.
+     */
+    protected String getPaylineCorrectRegistartionData(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
+        
+        String data = "data=" + cardRegistration.PreregistrationData +
+                "&accessKeyRef=" + cardRegistration.AccessKey +
+                "&cardNumber=4970101122334406" +
+                "&cardExpirationDate=1214" +
+                "&cardCvx=123";
+
+        URL url = new URL(cardRegistration.CardRegistrationURL);
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        
+        connection.setRequestMethod("POST");
+        connection.setUseCaches (false);
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+        
+        try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+            wr.writeBytes(data);
+            wr.flush ();
+        }
+        
+        int responseCode = connection.getResponseCode();
+        InputStream is;
+        if (responseCode != 200) {
+            is = connection.getErrorStream();
+        } else {
+            is = connection.getInputStream();
+        }
+
+        StringBuffer resp;
+        try (BufferedReader rd = new BufferedReader(new InputStreamReader(is))) {
+            String line;
+            resp = new StringBuffer();
+            while((line = rd.readLine()) != null) {
+                resp.append(line);
+            }
+        }
+        String responseString = resp.toString();
+        
+        if (responseCode == 200)
+            return responseString;
+        else
+            throw new Exception(responseString);
     }
     
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {

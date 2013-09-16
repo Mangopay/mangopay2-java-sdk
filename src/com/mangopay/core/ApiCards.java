@@ -22,7 +22,7 @@ public class ApiCards extends ApiBase {
      * @param cardId Card identifier.
      * @return Card object returned from API.
      */
-    public Card Get(String cardId) throws Exception {
+    public Card get(String cardId) throws Exception {
         return this.getObject(Card.class, "card_get", cardId);
     }
     

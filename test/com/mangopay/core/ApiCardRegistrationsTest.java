@@ -39,11 +39,15 @@ public class ApiCardRegistrationsTest extends BaseTest {
     @Test
     public void test_CardRegistrations_Update() throws Exception {
         CardRegistration cardRegistration = this.getJohnsCardRegistration();
-        cardRegistration.RegistrationData = "test RegistrationData";
-
+        String registrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
+        cardRegistration.RegistrationData = registrationData;
+        
         CardRegistration getCardRegistration = this._api.CardRegistrations.update(cardRegistration);
         
-        assertEquals("test RegistrationData", getCardRegistration.RegistrationData);
+        assertEquals(registrationData, getCardRegistration.RegistrationData);
+        assertNotNull(getCardRegistration.CardId);
+        assertEquals("VALIDATED", getCardRegistration.Status);
+        assertEquals("00000", getCardRegistration.ResultCode);
     }
     
 }

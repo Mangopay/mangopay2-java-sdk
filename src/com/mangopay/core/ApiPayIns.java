@@ -2,6 +2,7 @@ package com.mangopay.core;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.PayIn;
+import com.mangopay.entities.Refund;
 
 /**
  * API for PayIns.
@@ -33,6 +34,25 @@ public class ApiPayIns extends ApiBase {
      */
     public PayIn get(String payInId) throws Exception {
         return this.getObject(PayIn.class, "payins_get", payInId);
+    }
+    
+    /**
+     * Creates refund for PayIn object.
+     * @param payInId PayIn identifier.
+     * @param refund Refund object to be created.
+     * @return Refund entity instance returned by REST API.
+     */
+    public Refund createRefund(String payInId, Refund refund) throws Exception {
+        return this.createObject(Refund.class, "payins_createrefunds", refund, payInId);
+    }
+
+    /**
+     * Gets refund for PayIn object.
+     * @param payInId PayIn identifier.
+     * @return Refund entity instance returned by REST API.
+     */
+    public Refund getRefund(String payInId) throws Exception {
+        return this.getObject(Refund.class, "payins_getrefunds", payInId);
     }
     
     private String getPaymentKey(PayIn payIn) throws Exception {

@@ -23,7 +23,7 @@ public class Configuration {
     /**
      * [INTERNAL USAGE ONLY] Switch debug mode: log all request and response data
      */
-    public boolean DebugMode = false;
+    public boolean DebugMode = true;
     
 //    /**
 //     * [readonly] Authentication type - always of value "Strong"

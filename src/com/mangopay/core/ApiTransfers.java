@@ -1,6 +1,7 @@
 package com.mangopay.core;
 
 import com.mangopay.MangoPayApi;
+import com.mangopay.entities.Refund;
 import com.mangopay.entities.Transfer;
 
 /**
@@ -31,6 +32,25 @@ public class ApiTransfers extends ApiBase {
      */
     public Transfer get(String transferId) throws Exception {
         return this.getObject(Transfer.class, "transfers_get", transferId);
+    }
+    
+    /**
+     * Creates refund for transfer object.
+     * @param transferId Transfer identifier.
+     * @param refund Refund object to create.
+     * @return Refund entity instance returned by REST API.
+     */
+    public Refund createRefund(String transferId, Refund refund) throws Exception {
+        return this.createObject(Refund.class, "transfers_createrefunds", refund, transferId);
+    }
+    
+    /**
+     * Gets refund for transfer object.
+     * @param transferId Transfer identifier.
+     * @return Refund entity instance returned by REST API.
+     */
+    public Refund getRefund(String transferId) throws Exception {
+        return this.getObject(Refund.class, "transfers_getrefunds", transferId);
     }
     
 }

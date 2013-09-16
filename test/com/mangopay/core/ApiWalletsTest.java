@@ -2,8 +2,6 @@ package com.mangopay.core;
 
 import com.mangopay.entities.*;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -17,8 +15,7 @@ public class ApiWalletsTest extends BaseTest {
         UserNatural john = this.getJohn();
         Wallet wallet = this.getJohnsWallet();
         
-        assertNotNull(wallet.Id);
-        assertFalse(wallet.Id.equals(""));
+        assertTrue(wallet.Id.length() > 0);
         assertTrue(wallet.Owners.contains(john.Id));
     }
     
@@ -34,7 +31,7 @@ public class ApiWalletsTest extends BaseTest {
     }
     
     @Test
-    public void test_Wallets_Update() throws Exception {
+    public void test_Wallets_Save() throws Exception {
         Wallet wallet = this.getJohnsWallet();
         wallet.Description = "New description to test";
         
@@ -48,12 +45,7 @@ public class ApiWalletsTest extends BaseTest {
     public void test_Wallets_Transactions() throws Exception {
         UserNatural john = this.getJohn();
         Wallet wallet = this.getJohnsWallet();
-        PayIn payIn = null;
-        try {
-            payIn = this.getJohnsPayInCardWeb();
-        } catch (Exception ex) {
-            Logger.getLogger(ApiWalletsTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        PayIn payIn = this.getJohnsPayInCardWeb();
 
         Pagination pagination = new Pagination(1, 1);
         FilterTransactions filter = new FilterTransactions();
@@ -62,7 +54,7 @@ public class ApiWalletsTest extends BaseTest {
 
         assertTrue(transactions.size() == 1);
         assertTrue(transactions.get(0) instanceof Transaction);
-        assertTrue(transactions.get(0).AuthorId.equals(john.Id));
-        assertEqualInputProps(transactions.get(0), (Transaction)payIn);
+        assertEquals(transactions.get(0).AuthorId, john.Id);
+        this.assertEqualInputProps(transactions.get(0), payIn);
     }
 }
