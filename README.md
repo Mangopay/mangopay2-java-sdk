@@ -33,6 +33,50 @@ Report bugs or suggest features using
 [issue tracker at GitHub](https://github.com/MangoPay/mangopay2-java-sdk).
 
 
+Client creation example (you need to call it only once)
+-------------------------------------------------
+
+    import com.mangopay.MangoPayApi;
+    import com.mangopay.entities.Client;
+
+    // ...
+
+    MangoPayApi api = new MangoPayApi();
+
+    Client client = api.Clients.create(
+        "your-client-id", 
+        "your-client-name", 
+        "your-client-email@sample.org"
+    );
+
+    // you receive your password here, note it down and keep in secret
+    System.out.println(client.Passphrase);
+
+
+Configuration
+-------------------------------------------------
+See the example above and call `api.Clients.create` once to get your passphrase.
+Then set `api.Config.ClientId` to your MangoPay Client ID and 
+`api.Config.ClientPassword` to your passphrase.
+
+`api.Config.BaseUrl` is set to sandbox environment by default. To enable production
+environment, set it to `https://mangopay-api.leetchi.com`.
+
+    import com.mangopay.MangoPayApi;
+
+    // ...
+
+    MangoPayApi api = new MangoPayApi();
+
+    // configuration
+    api.Config.ClientId = "your-client-id";
+    api.Config.ClientPassword = "your-client-password";
+    //api.Config.BaseUrl = "https://mangopay-api.leetchi.com";
+
+    // call some API methods...
+    List<User> users = api.Users.getAll();
+
+
 Sample usage
 -------------------------------------------------
 
@@ -60,49 +104,3 @@ Sample usage
     // get his bank accounts
     pagination = new Pagination(2, 10); // get 2nd page, 10 items per page
     List<BankAccount> accounts = api.Users.getBankAccounts(john.Id, pagination);
-
-
-Client creation example (you need to call it only once)
--------------------------------------------------
-
-    import com.mangopay.MangoPayApi;
-    import com.mangopay.entities.Client;
-
-    // ...
-
-    MangoPayApi api = new MangoPayApi();
-    Client client = api.Clients.create("your-client-id", "your-client-name", "your-client-email@sample.org");
-    System.out.println(client.Passphrase); // you receive your password here
-
-
-Configuration example
--------------------------------------------------
-
-    import com.mangopay.MangoPayApi;
-
-    // ...
-
-    MangoPayApi api = new MangoPayApi();
-
-    api.Config.ClientId = "your-client-id";
-    api.Config.ClientPassword = "your-client-password";
-    System.out.println(api.Config.BaseUrl); // you probably dont have to change it
-
-
-Example with auth token reusage
--------------------------------------------------
-
-    import com.mangopay.MangoPayApi;
-
-    // ...
-
-    MangoPayApi api = new MangoPayApi();
-
-    // optionally you can reuse token from previous requests (unless expired)
-    api.OAuthToken = myTokensPersistenceService.loadIfStored();
-
-    // call some API methods...
-    Object users = api.Users.getAll();
-
-    // optionally store the token for future requests (until expires)
-    myTokensPersistenceService.store(api.OAuthToken);
