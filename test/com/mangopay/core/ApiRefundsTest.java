@@ -11,8 +11,8 @@ public class ApiRefundsTest extends BaseTest {
     
     @Test
     public void test_Refund_GetForTransfer() throws Exception {
-        Refund refund = this.getJohnsRefundForTransfer();
-        Transfer transfer = this.getJohnsTransfer();
+        Transfer transfer = this.getNewTransfer();
+        Refund refund = this.getNewRefundForTransfer(transfer);
         UserNatural user = this.getJohn();
         
         Refund getRefund = this._api.Refunds.get(refund.Id);
@@ -25,9 +25,8 @@ public class ApiRefundsTest extends BaseTest {
     
     @Test
     public void test_Refund_GetForPayIn() throws Exception {
-        /*
-        Refund refund = this.getJohnsRefundForPayIn();
-        PayIn payIn = this.getJohnsPayInCardDirect();
+        PayIn payIn = this.getNewPayInCardDirect();
+        Refund refund = this.getNewRefundForPayIn(payIn);
         UserNatural user = this.getJohn();
 
         Refund getRefund = this._api.Refunds.get(refund.Id);
@@ -36,7 +35,7 @@ public class ApiRefundsTest extends BaseTest {
         assertEquals(getRefund.InitialTransactionId, payIn.Id);
         assertEquals(getRefund.AuthorId, user.Id);
         assertEquals(getRefund.Type, "PAYOUT");
-        */
+        
     }
     
 }

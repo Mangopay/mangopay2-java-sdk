@@ -23,6 +23,7 @@ public class MangoPayApi {
         Wallets = new ApiWallets(this);
         PayIns = new ApiPayIns(this);
         PayOuts = new ApiPayOuts(this);
+        Refunds = new ApiRefunds(this);
         Transfers = new ApiTransfers(this);
         CardRegistrations = new ApiCardRegistrations(this);
         Cards = new ApiCards(this);

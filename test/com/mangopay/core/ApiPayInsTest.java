@@ -58,10 +58,10 @@ public class ApiPayInsTest extends BaseTest {
     
     @Test
     public void test_PayIns_Create_CardDirect() throws Exception {
-        Wallet johnWallet = this.getJohnsWallet();
+        Wallet johnWallet = this.getJohnsWalletWithMoney();
         Wallet beforeWallet = this._api.Wallets.get(johnWallet.Id);
         
-        PayIn payIn = this.getJohnsPayInCardDirect();
+        PayIn payIn = this.getNewPayInCardDirect();
         Wallet wallet = this._api.Wallets.get(johnWallet.Id);
         UserNatural user = this.getJohn();
         
@@ -82,7 +82,7 @@ public class ApiPayInsTest extends BaseTest {
     
     @Test
     public void test_PayIns_Get_CardDirect() throws Exception {
-        PayIn payIn = this.getJohnsPayInCardDirect();
+        PayIn payIn = this.getNewPayInCardDirect();
         
         PayIn getPayIn = this._api.PayIns.get(payIn.Id);
         
@@ -97,16 +97,16 @@ public class ApiPayInsTest extends BaseTest {
     
     @Test
     public void test_PayIns_CreateRefund_CardDirect() throws Exception {
-        Wallet wallet = this.getJohnsWallet();
+        PayIn payIn = this.getNewPayInCardDirect();
+        Wallet wallet = this.getJohnsWalletWithMoney();
         Wallet walletBefore = this._api.Wallets.get(wallet.Id);
-        PayIn payIn = this.getJohnsPayInCardDirect();
                 
-        Refund refund = this.getJohnsRefundForPayIn();
+        Refund refund = this.getNewRefundForPayIn(payIn);
         Wallet walletAfter = this._api.Wallets.get(wallet.Id);
 
         assertTrue(refund.Id.length() > 0);
-        assertTrue(refund.DebitedFunds.Amount == payIn.DebitedFunds.Amount);
-        assertTrue(walletBefore.Balance.Amount == walletAfter.Balance.Amount + payIn.DebitedFunds.Amount);
+        assertTrue(refund.DebitedFunds.Amount.equals(payIn.DebitedFunds.Amount));
+        assertTrue(walletBefore.Balance.Amount.equals(walletAfter.Balance.Amount + payIn.DebitedFunds.Amount));
         assertEquals("PAYOUT", refund.Type);
         assertEquals("REFUND", refund.Nature);
     }

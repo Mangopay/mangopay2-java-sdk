@@ -716,6 +716,8 @@ public class RestTool {
                                         addMethod.invoke(o, e.getAsJsonPrimitive().getAsInt());
                                     } else if (genericTypeClass.getName().equals(long.class.getName())) {
                                         addMethod.invoke(o, e.getAsJsonPrimitive().getAsLong());
+                                    } else if (genericTypeClass.getName().equals(Double.class.getName())) {
+                                        addMethod.invoke(o, e.getAsJsonPrimitive().getAsDouble());
                                     }
                                 }
                                 f.set(result, o);
@@ -726,6 +728,8 @@ public class RestTool {
                                     f.setInt(result, entry.getValue().getAsInt());
                                 } else if (fieldTypeName.equals(long.class.getName())) {
                                     f.setLong(result, entry.getValue().getAsLong());
+                                } else if (fieldTypeName.equals(Double.class.getName())) {
+                                    f.set(result, entry.getValue().getAsDouble());
                                 } else if (fieldTypeName.equals(String.class.getName())) {
                                     f.set(result, entry.getValue().getAsString());
                                 }

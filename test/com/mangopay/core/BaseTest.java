@@ -28,15 +28,12 @@ public abstract class BaseTest {
     private static UserLegal _matrix;
     private static BankAccount _johnsAccount;
     private static Wallet _johnsWallet;
+    private static Wallet _johnsWalletWithMoney;
     private static PayIn _johnsPayInCardWeb;
-    private static PayIn _johnsPayInCardDirect;
     private static PayInPaymentDetailsCard _payInPaymentDetailsCard;
     private static PayInExecutionDetailsWeb _payInExecutionDetailsWeb;
     private static PayOut _johnsPayOutBankWire;
-    private static Transfer _johnsTransfer;
     private static CardRegistration _johnsCardRegistration;
-    private static Refund _johnsRefundForTransfer;
-    private static Refund _johnsRefundForPayIn;
 
     public BaseTest() {
         this._api = buildNewMangoPayApi();
@@ -163,12 +160,21 @@ public abstract class BaseTest {
      */
     protected Wallet getJohnsWalletWithMoney(double amount) throws Exception {
         
-        Wallet wallet = this.getJohnsWallet();
-        
-        if (wallet.Balance.Amount <= 0) {
+        if (BaseTest._johnsWalletWithMoney == null) {
+            
+            UserNatural john = this.getJohn();
+            
+            // create wallet with money
+            Wallet wallet = new Wallet();
+            wallet.Owners = new ArrayList<>();
+            wallet.Owners.add(john.Id);
+            wallet.Currency = "EUR";
+            wallet.Description = "WALLET IN EUR WITH MONEY";
+            
+            BaseTest._johnsWalletWithMoney = this._api.Wallets.create(wallet);
             
             CardRegistration cardRegistration = new CardRegistration();
-            cardRegistration.UserId = wallet.Owners.get(0);
+            cardRegistration.UserId = BaseTest._johnsWalletWithMoney.Owners.get(0);
             cardRegistration.Currency = "EUR";
             cardRegistration = this._api.CardRegistrations.create(cardRegistration);
             
@@ -179,7 +185,7 @@ public abstract class BaseTest {
             
             // create pay-in CARD DIRECT
             PayIn payIn = new PayIn();
-            payIn.CreditedWalletId = wallet.Id;
+            payIn.CreditedWalletId = BaseTest._johnsWalletWithMoney.Id;
             payIn.AuthorId = cardRegistration.UserId;
             payIn.DebitedFunds = new Money();
             payIn.DebitedFunds.Amount = amount;
@@ -203,7 +209,7 @@ public abstract class BaseTest {
             this._api.PayIns.create(payIn);
         }
         
-        return this._api.Wallets.get(wallet.Id);
+        return this._api.Wallets.get(BaseTest._johnsWalletWithMoney.Id);
     }
     
     private PayInPaymentDetailsCard getPayInPaymentDetailsCard() {
@@ -255,47 +261,44 @@ public abstract class BaseTest {
      * Creates Pay-In Card Direct object
      * @return PayIn
      */
-    protected PayIn getJohnsPayInCardDirect() throws Exception {
-        if (BaseTest._johnsPayInCardDirect == null) {
-            Wallet wallet = this.getJohnsWallet();
-            UserNatural user = this.getJohn();
-
-            CardRegistration cardRegistration = new CardRegistration();
-            cardRegistration.UserId = user.Id;
-            cardRegistration.Currency = "EUR";
-            cardRegistration = this._api.CardRegistrations.create(cardRegistration);
-            cardRegistration.RegistrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
-            cardRegistration = this._api.CardRegistrations.update(cardRegistration);
-            
-            Card card = this._api.Cards.get(cardRegistration.CardId);
-            
-            // create pay-in CARD DIRECT
-            PayIn payIn = new PayIn();
-            payIn.CreditedWalletId = wallet.Id;
-            payIn.AuthorId = user.Id;
-            payIn.DebitedFunds = new Money();
-            payIn.DebitedFunds.Amount = 10000.0;
-            payIn.DebitedFunds.Currency = "EUR";
-            payIn.Fees = new Money();
-            payIn.Fees.Amount = 0.0;
-            payIn.Fees.Currency = "EUR";
-            
-            // payment type as CARD
-            payIn.PaymentDetails = new PayInPaymentDetailsCard();
-            if (card.CardType.equals("CB") || card.CardType.equals("VISA") || card.CardType.equals("MASTERCARD"))
-                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "CB_VISA_MASTERCARD";
-            else if (card.CardType.equals("AMEX"))
-                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "AMEX";
-            
-            // execution type as DIRECT
-            payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
-            ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).CardId = card.Id;
-            ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).SecureModeReturnURL = "http://test.com";
-            
-            BaseTest._johnsPayInCardDirect = this._api.PayIns.create(payIn);
-        }
+    protected PayIn getNewPayInCardDirect() throws Exception {
         
-        return BaseTest._johnsPayInCardDirect;
+        Wallet wallet = this.getJohnsWalletWithMoney();
+        UserNatural user = this.getJohn();
+
+        CardRegistration cardRegistration = new CardRegistration();
+        cardRegistration.UserId = user.Id;
+        cardRegistration.Currency = "EUR";
+        cardRegistration = this._api.CardRegistrations.create(cardRegistration);
+        cardRegistration.RegistrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
+        cardRegistration = this._api.CardRegistrations.update(cardRegistration);
+
+        Card card = this._api.Cards.get(cardRegistration.CardId);
+
+        // create pay-in CARD DIRECT
+        PayIn payIn = new PayIn();
+        payIn.CreditedWalletId = wallet.Id;
+        payIn.AuthorId = user.Id;
+        payIn.DebitedFunds = new Money();
+        payIn.DebitedFunds.Amount = 10000.0;
+        payIn.DebitedFunds.Currency = "EUR";
+        payIn.Fees = new Money();
+        payIn.Fees.Amount = 0.0;
+        payIn.Fees.Currency = "EUR";
+
+        // payment type as CARD
+        payIn.PaymentDetails = new PayInPaymentDetailsCard();
+        if (card.CardType.equals("CB") || card.CardType.equals("VISA") || card.CardType.equals("MASTERCARD"))
+            ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "CB_VISA_MASTERCARD";
+        else if (card.CardType.equals("AMEX"))
+            ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "AMEX";
+
+        // execution type as DIRECT
+        payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
+        ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).CardId = card.Id;
+        ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).SecureModeReturnURL = "http://test.com";
+            
+        return this._api.PayIns.create(payIn);
     }
     
     protected PayOut getJohnsPayOutBankWire() throws Exception {
@@ -326,85 +329,72 @@ public abstract class BaseTest {
         return BaseTest._johnsPayOutBankWire;
     }
     
-    protected Transfer getJohnsTransfer() throws Exception {
-        if (BaseTest._johnsTransfer == null) {
-            Wallet walletWithMoney = this.getJohnsWalletWithMoney();
-            UserNatural user = this.getJohn();
-            
-            Wallet wallet = new Wallet();
-            wallet.Owners.add(user.Id);
-            wallet.Currency = "EUR";
-            wallet.Description = "WALLET IN EUR";
-            wallet = this._api.Wallets.create(wallet);
-            
-            Transfer transfer = new Transfer();
-            transfer.Tag = "DefaultTag";
-            transfer.AuthorId = user.Id;
-            transfer.CreditedUserId = user.Id;
-            transfer.DebitedFunds = new Money();
-            transfer.DebitedFunds.Currency = "EUR";
-            transfer.DebitedFunds.Amount = 100.0;
-            transfer.Fees = new Money();
-            transfer.Fees.Currency = "EUR";
-            transfer.Fees.Amount = 0.0;
+    protected Transfer getNewTransfer() throws Exception {
+        Wallet walletWithMoney = this.getJohnsWalletWithMoney();
+        UserNatural user = this.getJohn();
 
-            transfer.DebitedWalletId = walletWithMoney.Id;
-            transfer.CreditedWalletId = wallet.Id;
+        Wallet wallet = new Wallet();
+        wallet.Owners = new ArrayList<>();
+        wallet.Owners.add(user.Id);
+        wallet.Currency = "EUR";
+        wallet.Description = "WALLET IN EUR FOR TRANSFER";
+        wallet = this._api.Wallets.create(wallet);
 
-            BaseTest._johnsTransfer = this._api.Transfers.create(transfer);
-        }
+        Transfer transfer = new Transfer();
+        transfer.Tag = "DefaultTag";
+        transfer.AuthorId = user.Id;
+        transfer.CreditedUserId = user.Id;
+        transfer.DebitedFunds = new Money();
+        transfer.DebitedFunds.Currency = "EUR";
+        transfer.DebitedFunds.Amount = 100.0;
+        transfer.Fees = new Money();
+        transfer.Fees.Currency = "EUR";
+        transfer.Fees.Amount = 0.0;
+
+        transfer.DebitedWalletId = walletWithMoney.Id;
+        transfer.CreditedWalletId = wallet.Id;
         
-        return BaseTest._johnsTransfer;
+        return this._api.Transfers.create(transfer);
     }
     
     /**
      * Creates refund object for transfer.
      */
-    protected Refund getJohnsRefundForTransfer() throws Exception {
-        if (BaseTest._johnsRefundForTransfer == null) {
-            UserNatural user = this.getJohn();
-            Transfer transfer = this.getJohnsTransfer();
-            
-            Refund refund = new Refund();
-            refund.DebitedWalletId = transfer.DebitedWalletId;
-            refund.CreditedWalletId = transfer.CreditedWalletId;
-            refund.AuthorId = user.Id;
-            refund.DebitedFunds = new Money();
-            refund.DebitedFunds.Amount = transfer.DebitedFunds.Amount;
-            refund.DebitedFunds.Currency = transfer.DebitedFunds.Currency;
-            refund.Fees = new Money();
-            refund.Fees.Amount = transfer.Fees.Amount;
-            refund.Fees.Currency = transfer.Fees.Currency;
+    protected Refund getNewRefundForTransfer(Transfer transfer) throws Exception {
+        UserNatural user = this.getJohn();
 
-            BaseTest._johnsRefundForTransfer = this._api.Transfers.createRefund(transfer.Id, refund);
-        }
+        Refund refund = new Refund();
+        refund.DebitedWalletId = transfer.DebitedWalletId;
+        refund.CreditedWalletId = transfer.CreditedWalletId;
+        refund.AuthorId = user.Id;
+        refund.DebitedFunds = new Money();
+        refund.DebitedFunds.Amount = transfer.DebitedFunds.Amount;
+        refund.DebitedFunds.Currency = transfer.DebitedFunds.Currency;
+        refund.Fees = new Money();
+        refund.Fees.Amount = transfer.Fees.Amount;
+        refund.Fees.Currency = transfer.Fees.Currency;
         
-        return BaseTest._johnsRefundForTransfer;
+        return this._api.Transfers.createRefund(transfer.Id, refund);
     }
 
     /**
-     * Creates refund object for PayIn
-     * @return \MangoPay\Refund
+     * Creates refund object for PayIn.
+     * @return Created Refund entity.
      */
-    protected Refund getJohnsRefundForPayIn() throws Exception {
-        if (BaseTest._johnsRefundForPayIn == null) {
-            UserNatural user = this.getJohn();
-            PayIn payIn = this.getJohnsPayInCardDirect();
+    protected Refund getNewRefundForPayIn(PayIn payIn) throws Exception {
+        UserNatural user = this.getJohn();
 
-            Refund refund = new Refund();
-            refund.CreditedWalletId = payIn.CreditedWalletId;
-            refund.AuthorId = user.Id;
-            refund.DebitedFunds = new Money();
-            refund.DebitedFunds.Amount = payIn.DebitedFunds.Amount;
-            refund.DebitedFunds.Currency = payIn.DebitedFunds.Currency;
-            refund.Fees = new Money();
-            refund.Fees.Amount = payIn.Fees.Amount;
-            refund.Fees.Currency = payIn.Fees.Currency;
-
-            BaseTest._johnsRefundForPayIn = this._api.PayIns.createRefund(payIn.Id, refund);
-        }
+        Refund refund = new Refund();
+        refund.CreditedWalletId = payIn.CreditedWalletId;
+        refund.AuthorId = user.Id;
+        refund.DebitedFunds = new Money();
+        refund.DebitedFunds.Amount = payIn.DebitedFunds.Amount;
+        refund.DebitedFunds.Currency = payIn.DebitedFunds.Currency;
+        refund.Fees = new Money();
+        refund.Fees.Amount = payIn.Fees.Amount;
+        refund.Fees.Currency = payIn.Fees.Currency;
         
-        return BaseTest._johnsRefundForPayIn;
+        return this._api.PayIns.createRefund(payIn.Id, refund);
     }
     
     /**
