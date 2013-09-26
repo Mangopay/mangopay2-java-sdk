@@ -1,9 +1,6 @@
 package com.mangopay.core;
-import com.mangopay.entities.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import java.lang.Exception;
-import com.mangopay.core.OAuthToken;
 import com.mangopay.MangoPayApi;
 
 /**

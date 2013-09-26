@@ -1,11 +1,12 @@
 package com.mangopay.core;
 
 import com.mangopay.core.Dto;
+import java.io.Serializable;
 
 /**
  * OAuth entity.
  */
-public class OAuthToken extends Dto {
+public class OAuthToken extends Dto implements Serializable {
 
     /**
      * Created time.
