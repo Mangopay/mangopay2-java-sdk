@@ -46,10 +46,4 @@ public class Card extends EntityBase {
      * Validity.
      */
     public String Validity;
-    
-    /**
-     * Reusable.
-     */
-    public Boolean Reusable;
-    
 }

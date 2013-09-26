@@ -18,7 +18,7 @@ public class Configuration {
     /**
      * Base URL to MangoPay API
      */
-    public String BaseUrl = "https://mangopay-api-inte.leetchi.com";
+    public String BaseUrl = "https://api-preprod.mangopay.com";
     
     /**
      * [INTERNAL USAGE ONLY] Switch debug mode: log all request and response data
