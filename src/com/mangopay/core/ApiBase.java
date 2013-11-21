@@ -110,6 +110,11 @@ public abstract class ApiBase {
         put("users_savenaturals", new String[] { "/users/natural/%s", RequestType.PUT });
         put("users_savelegals", new String[] { "/users/legal/%s", RequestType.PUT });
         
+        put("users_createkycdocument", new String[] { "/users/%s/KYC/documents", RequestType.POST });
+        put("users_getkycdocument", new String[] { "/users/%s/KYC/documents/%s", RequestType.GET });
+        put("users_savekycdocument", new String[] { "/users/%s/KYC/documents/%s", RequestType.PUT });
+        put("users_createkycpage", new String[] { "/users/%s/KYC/documents/%s/pages", RequestType.POST });
+        
         put("wallets_create", new String[] { "/wallets", RequestType.POST });
         put("wallets_allrecurringpayinorders", new String[] { "/wallets/%s/recurring-pay-in-orders", RequestType.GET });
         put("wallets_alltransactions", new String[] { "/wallets/%s/transactions", RequestType.GET });
@@ -148,26 +153,43 @@ public abstract class ApiBase {
     /**
      * Creates the Dto instance.
      * @param <T>
-     * @param classOfT      The class on behalf of which the request is 
-                            being called.
-     * @param methodKey     Relevant method key.
-     * @param entity        Dto instance that is going to be sent.
-     * @param entityId      Entity identifier.
-     * @return              The Dto instance returned from API.
+     * @param classOfT          The class on behalf of which the request is 
+                                being called.
+     * @param methodKey         Relevant method key.
+     * @param entity            Dto instance that is going to be sent.
+     * @param entityId          Entity identifier.
+     * @param secondEntityId    Second entity identifier.
+     * @return                  The Dto instance returned from API.
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
+    protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
         
         String urlMethod;
         
         if (entityId.length() == 0)
             urlMethod = this.getRequestUrl(methodKey);
-        else
+        else if (secondEntityId.length() == 0)
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId);
+        else
+            urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
         
         RestTool rest = new RestTool(this._root, true);
         T result = rest.request(classOfT, urlMethod, this.getRequestType(methodKey), null, null, entity);
         
         return result;
+        
+    }
+    /**
+     * Creates the Dto instance.
+     * @param <T>
+     * @param classOfT          The class on behalf of which the request is 
+                                being called.
+     * @param methodKey         Relevant method key.
+     * @param entity            Dto instance that is going to be sent.
+     * @param entityId          Entity identifier.
+     * @return                  The Dto instance returned from API.
+     */
+    protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
+        return createObject(classOfT, methodKey, entity, entityId, "");
     }
     /**
      * Creates the Dto instance.
@@ -281,9 +303,22 @@ public abstract class ApiBase {
      * @return              The Dto instance returned from API.
      */
     protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity) throws Exception {
+        return updateObject(classOfT, methodKey, entity, "");
+    }
+    
+    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
         
         if (entity instanceof EntityBase) {
-            String urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
+            
+            String urlMethod;
+        
+            if (entityId.length() == 0)
+                urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
+            else {
+                String ggg = this.getRequestUrl(methodKey);
+                urlMethod = String.format(this.getRequestUrl(methodKey), entityId, ((EntityBase)entity).Id);
+            }
+                
 
             RestTool rest = new RestTool(this._root, true);
             return rest.request(classOfT, urlMethod, this.getRequestType(methodKey), null, null, entity);

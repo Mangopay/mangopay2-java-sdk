@@ -47,7 +47,7 @@ public class ApiCardRegistrationsTest extends BaseTest {
         assertEquals(registrationData, getCardRegistration.RegistrationData);
         assertNotNull(getCardRegistration.CardId);
         assertEquals("VALIDATED", getCardRegistration.Status);
-        assertEquals("00000", getCardRegistration.ResultCode);
+        assertEquals("000000", getCardRegistration.ResultCode);
     }
     
 }

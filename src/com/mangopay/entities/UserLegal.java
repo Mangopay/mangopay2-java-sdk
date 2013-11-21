@@ -48,7 +48,7 @@ public class UserLegal extends User {
     
     /**
      */
-    public Long LegalRepresentativeBirthday;
+    public long LegalRepresentativeBirthday;
     
     /**
      */

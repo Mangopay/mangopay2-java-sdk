@@ -400,7 +400,7 @@ public class RestTool {
             // get response
             this._responseCode = _connection.getResponseCode();
             InputStream is;
-            if (this._responseCode != 200) {
+            if (this._responseCode != 200 && this._responseCode != 204) {
                 is = _connection.getErrorStream();
             } else {
                 is = _connection.getInputStream();
@@ -417,7 +417,7 @@ public class RestTool {
             String responseString = resp.toString();
             
             if (this._debugMode) {
-                if (this._responseCode == 200) {
+                if (this._responseCode == 200 || this._responseCode == 204) {
                     Logs.debug("Response OK", responseString);
                 } else {
                     Logs.debug("Response ERROR", responseString);
@@ -933,7 +933,7 @@ public class RestTool {
      */
     private void checkResponseCode(String message) throws ResponseException {
 
-        if (this._responseCode != 200) {
+        if (this._responseCode != 200 && this._responseCode != 204) {
             
             HashMap<Integer, String> responseCodes = new HashMap<Integer, String>() {{
                 put(206, "PartialContent");

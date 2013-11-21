@@ -20,7 +20,7 @@ public abstract class EntityBase extends Dto {
     /**
      * Date of creation.
      */
-    public Long CreationDate;
+    public long CreationDate;
     
     /**
      * Gets the collection of read-only fields names

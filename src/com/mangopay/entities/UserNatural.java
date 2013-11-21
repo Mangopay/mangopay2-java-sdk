@@ -26,7 +26,7 @@ public final class UserNatural extends User {
      /**
      * Date of birth.
      */
-    public Long Birthday;
+    public long Birthday;
     
      /**
      * Place of birth.

@@ -1,7 +1,11 @@
 package com.mangopay.core;
 
 import com.mangopay.entities.*;
+import java.net.URL;
+import java.nio.file.Path;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -45,6 +49,14 @@ public class ApiUsersTest extends BaseTest {
         UserLegal user = new UserLegal();
         user.Name = "SomeOtherSampleOrg";
         user.LegalPersonType = "BUSINESS";
+        user.LegalRepresentativeFirstName = "RepFName";
+        user.LegalRepresentativeLastName = "RepLName";
+        Calendar c = Calendar.getInstance();
+        c.set(1975, 12, 21, 0, 0, 0);
+        user.LegalRepresentativeBirthday = c.getTimeInMillis() / 1000;
+        user.LegalRepresentativeNationality = "FR";
+        user.LegalRepresentativeCountryOfResidence = "FR";
+        user.Email = "email@email.org";
         
         User ret = null;
         
@@ -172,4 +184,59 @@ public class ApiUsersTest extends BaseTest {
         assertTrue(pagination.ItemsPerPage == 12);
     }
     
+    
+    @Test
+    public void test_Users_CreateKycDocument() throws Exception {
+        KycDocument kycDocument = this.getJohnsKycDocument();
+        
+        assertNotNull(kycDocument);
+        assertTrue(kycDocument.Status.equals("CREATED"));
+    }
+    
+    @Test
+    public void test_Users_SaveKycDocument() throws Exception {
+        UserNatural john = this.getJohn();
+        KycDocument kycDocument = this.getJohnsKycDocument();
+        
+        //Calendar c = Calendar.getInstance();
+        //Long currTime = c.getTimeInMillis() / 1000;
+        //kycDocument.Tag = currTime.toString();
+        kycDocument.Status = "VALIDATION_ASKED";
+        
+        KycDocument result = this._api.Users.updateKycDocument(john.Id, kycDocument);
+        
+        assertNotNull(result);
+        assertTrue(kycDocument.Type.equals(result.Type));
+        assertTrue(kycDocument.Status.equals("VALIDATION_ASKED"));
+        //assertNotNull(result.Tag);
+        //assertTrue(result.Tag.equals(currTime.toString()));
+    }
+    
+    @Test
+    public void test_Users_GetKycDocument() throws Exception {
+        UserNatural john = this.getJohn();
+        KycDocument kycDocument = this.getJohnsKycDocument();
+        
+        KycDocument result = this._api.Users.getKycDocument(john.Id, kycDocument.Id);
+        
+        assertNotNull(result);
+        assertTrue(kycDocument.Id.equals(result.Id));
+        assertTrue(kycDocument.Type.equals(result.Type));
+        assertTrue(kycDocument.Status.equals(result.Status));
+        assertTrue(kycDocument.CreationDate == result.CreationDate);
+    }
+    
+    @Test 
+    public void test_Users_CreateKycPage() throws Exception {
+        UserNatural john = this.getJohn();
+        KycDocument kycDocument = this.getJohnsKycDocument();
+        
+        this._api.Users.createKycPage(john.Id, kycDocument.Id, "Test KYC page".getBytes());
+        
+        URL url = getClass().getProtectionDomain().getCodeSource().getLocation();
+        String filePath = url.toString() + "/com/mangopay/core/TestKycPageFile.txt";
+        filePath = filePath.replace("file:/", "").replace("//", "/").replace("/", "\\");
+        
+        this._api.Users.createKycPage(john.Id, kycDocument.Id, filePath);
+    }
 }

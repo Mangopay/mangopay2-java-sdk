@@ -34,6 +34,7 @@ public abstract class BaseTest {
     private static PayInExecutionDetailsWeb _payInExecutionDetailsWeb;
     private static PayOut _johnsPayOutBankWire;
     private static CardRegistration _johnsCardRegistration;
+    private static KycDocument _johnsKycDocument;
 
     public BaseTest() {
         this._api = buildNewMangoPayApi();
@@ -59,8 +60,9 @@ public abstract class BaseTest {
         MangoPayApi api = new MangoPayApi();
         
         // use test client credentails
-        api.Config.ClientId = "example";
-        api.Config.ClientPassword = "uyWsmnwMQyTnqKgi8Y35A3eVB7bGhqrebYqA1tL6x2vYNpGPiY";
+        api.Config.ClientId = "sdk-unit-tests";
+        api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
+        api.Config.DebugMode = true;
         
         // register storage strategy for tests
         api.OAuthTokenManager.registerCustomStorageStrategy(new DefaultStorageStrategyForTests());
@@ -104,6 +106,11 @@ public abstract class BaseTest {
             user.LegalRepresentativeNationality = john.Nationality;
             user.LegalRepresentativeCountryOfResidence = john.CountryOfResidence;
             
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+            user.LegalRepresentativeBirthday = c.getTimeInMillis() / 1000;
+            user.Email = john.Email;
+            
             BaseTest._matrix = (UserLegal)this._api.Users.create(user);
         }
         return BaseTest._matrix;
@@ -116,7 +123,7 @@ public abstract class BaseTest {
             account.Type = "IBAN";
             account.OwnerName = john.FirstName + " " + john.LastName;
             account.OwnerAddress = john.Address;
-            account.IBAN = "AD12 0001 2030 2003 5910 0100";
+            account.IBAN = "FR76 1790 6000 3200 0833 5232 973";
             account.BIC = "BINAADADXXX";
             BaseTest._johnsAccount = this._api.Users.createBankAccount(john.Id, account);
         }
@@ -415,6 +422,16 @@ public abstract class BaseTest {
         return BaseTest._johnsCardRegistration;
     }
     
+    protected KycDocument getJohnsKycDocument() throws Exception {
+        if (BaseTest._johnsKycDocument == null) {
+            String johnsId = this.getJohn().Id;
+            
+            BaseTest._johnsKycDocument = this._api.Users.createKycDocument(johnsId, KycDocumentType.IDENTITY_PROOF);
+        }
+        
+        return BaseTest._johnsKycDocument;
+    }
+    
     /**
      * Gets registration data from Payline service.
      * @param cardRegistration
@@ -424,7 +441,7 @@ public abstract class BaseTest {
         
         String data = "data=" + cardRegistration.PreregistrationData +
                 "&accessKeyRef=" + cardRegistration.AccessKey +
-                "&cardNumber=4970101122334406" +
+                "&cardNumber=4970100000000154" +
                 "&cardExpirationDate=1214" +
                 "&cardCvx=123";
 
@@ -489,7 +506,8 @@ public abstract class BaseTest {
             assertEquals(((UserLegal)entity1).LegalRepresentativeLastName, ((UserLegal)entity2).LegalRepresentativeLastName);
             assertEquals("***** TEMPORARY API ISSUE: RETURNED OBJECT MISSES THIS PROP AFTER CREATION *****", ((UserLegal)entity1).LegalRepresentativeAddress, ((UserLegal)entity2).LegalRepresentativeAddress);
             assertEquals(((UserLegal)entity1).LegalRepresentativeEmail, ((UserLegal)entity2).LegalRepresentativeEmail);
-            assertEquals("***** TEMPORARY API ISSUE: RETURNED OBJECT HAS THIS PROP CHANGED FROM TIMESTAMP INTO ISO STRING AFTER CREATION *****", ((UserLegal)entity1).LegalRepresentativeBirthday, ((UserLegal)entity2).LegalRepresentativeBirthday);
+            //assertEquals("***** TEMPORARY API ISSUE: RETURNED OBJECT HAS THIS PROP CHANGED FROM TIMESTAMP INTO ISO STRING AFTER CREATION *****", ((UserLegal)entity1).LegalRepresentativeBirthday, ((UserLegal)entity2).LegalRepresentativeBirthday);
+            assertEquals(((UserLegal)entity1).LegalRepresentativeBirthday, ((UserLegal)entity2).LegalRepresentativeBirthday);
             assertEquals(((UserLegal)entity1).LegalRepresentativeNationality, ((UserLegal)entity2).LegalRepresentativeNationality);
             assertEquals(((UserLegal)entity1).LegalRepresentativeCountryOfResidence, ((UserLegal)entity2).LegalRepresentativeCountryOfResidence);
 

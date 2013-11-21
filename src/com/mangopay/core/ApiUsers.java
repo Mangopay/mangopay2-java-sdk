@@ -2,6 +2,21 @@ package com.mangopay.core;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.*;
+import org.apache.commons.codec.binary.Base64;;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import org.apache.commons.codec.binary.StringUtils;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import org.apache.commons.codec.binary.StringUtils;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -146,5 +161,45 @@ public class ApiUsers extends ApiBase {
      */
     public BankAccount getBankAccount(String userId, String bankAccountId) throws Exception {
         return this.getObject(BankAccount.class, "users_getbankaccount", userId, bankAccountId);
+    }
+    
+    public void createKycPage(String userId, String kycDocumentId, byte[] binaryData) throws Exception {
+        KycPage kycPage = new KycPage();
+        
+        String fileContent = new String(Base64.encodeBase64(binaryData));
+        
+        kycPage.File = fileContent;
+        
+        try
+        {
+            this.createObject(KycPage.class, "users_createkycpage", kycPage, userId, kycDocumentId);
+        }
+        catch (Exception ex)
+        {
+            Exception e = ex;
+        }
+    }
+    
+    public void createKycPage(String userId, String kycDocumentId, String filePath) throws Exception {
+        byte[] fileArray;
+        Path path = Paths.get(filePath);
+        fileArray = Files.readAllBytes(path);
+        
+        createKycPage(userId, kycDocumentId, fileArray);
+    }
+    
+    public KycDocument createKycDocument(String userId, KycDocumentType type) throws Exception {
+        KycDocument kycDocument = new KycDocument();
+        kycDocument.Type = type.name();
+        
+        return this.createObject(KycDocument.class, "users_createkycdocument", kycDocument, userId);
+    }
+    
+    public KycDocument getKycDocument(String userId, String kycDocumentId) throws Exception {
+        return this.getObject(KycDocument.class, "users_getkycdocument", userId, kycDocumentId);
+    }
+    
+    public KycDocument updateKycDocument(String userId, KycDocument kycDocument) throws Exception {
+        return this.updateObject(KycDocument.class, "users_savekycdocument", kycDocument, userId);
     }
 }
