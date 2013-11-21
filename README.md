@@ -60,7 +60,7 @@ Then set `api.Config.ClientId` to your MangoPay Client ID and
 `api.Config.ClientPassword` to your passphrase.
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production
-environment, set it to `https://mangopay-api.leetchi.com`.
+environment, set it to `https://api.mangopay.com`.
 
     import com.mangopay.MangoPayApi;
 

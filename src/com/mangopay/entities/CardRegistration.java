@@ -52,11 +52,6 @@ public class CardRegistration extends EntityBase {
      * Status.
      */
     public String Status;
-        
-    /**
-     * Reusable.
-     */
-    public Boolean Reusable;
     
     @Override
     public ArrayList<String> getReadOnlyProperties() {
