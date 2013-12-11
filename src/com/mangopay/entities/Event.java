@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
@@ -11,7 +7,7 @@ import com.mangopay.core.EntityBase;
  */
 public class Event extends EntityBase {
     
-    public String RessourceId;
+    public String ResourceId;
     
     public String EventType;
     
