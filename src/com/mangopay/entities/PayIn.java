@@ -48,6 +48,14 @@ public class PayIn extends Transaction {
                             put("PaymentDetails", PayInPaymentDetailsCard.class);
                         }}
                     );
+                    put("PREAUTHORIZED", new HashMap<String, Class<?>>() {{
+                            put("PaymentDetails", PayInPaymentDetailsPreAuthorized.class);
+                        }}
+                    );
+                    put("BANK_WIRE", new HashMap<String, Class<?>>() {{
+                            put("PaymentDetails", PayInPaymentDetailsBankWire.class);
+                        }}
+                    );
                     // ...and more in future...
                 }}
             );

@@ -23,9 +23,6 @@ public abstract class ApiBase {
         put("authentication_base", new String[] { "/api/clients/", RequestType.POST });
         put("authentication_oauth", new String[] { "/api/oauth/token", RequestType.POST });
         
-        put("crosscurrencytransfers_create", new String[] { "/transfers/%s", RequestType.POST });
-        put("crosscurrencytransfers_get", new String[] { "/transfers/%s", RequestType.GET });
-        
         put("events_all", new String[] { "/events", RequestType.GET });
         put("events_gethookcallbacks", new String[] { "/events/%s/hook-callbacks", RequestType.GET });
         
@@ -41,6 +38,10 @@ public abstract class ApiBase {
         put("cardregistration_create", new String[] { "/cardregistrations", RequestType.POST });
         put("cardregistration_get", new String[] { "/cardregistrations/%s", RequestType.GET });
         put("cardregistration_save", new String[] { "/cardregistrations/%s", RequestType.PUT });
+        
+        put("preauthorization_create", new String[] { "/preauthorizations/card/direct", RequestType.POST });
+        put("preauthorization_get", new String[] { "/preauthorizations/%s", RequestType.GET });
+        put("preauthorization_save", new String[] { "/preauthorizations/%s", RequestType.PUT });
         
         put("card_get", new String[] { "/cards/%s", RequestType.GET });
         
@@ -67,6 +68,9 @@ public abstract class ApiBase {
         put("payins_get", new String[] { "/payins/%s", RequestType.GET });
         put("payins_createrefunds", new String[] { "/payins/%s/refunds", RequestType.POST });
         
+        put("payins_preauthorized-direct_create", new String[] { "/payins/preauthorized/direct/", RequestType.POST });
+        put("payins_bankwire-direct_create", new String[] { "/payins/bankwire/direct/", RequestType.POST });
+        
         put("payouts_bankwire_create", new String[] { "/payouts/bankwire/", RequestType.POST });
         put("payouts_merchantexpense_create", new String[] { "/payouts/merchant-expense/", RequestType.POST });
         put("payouts_amazongiftcard_create", new String[] { "/payouts/amazon-giftcard/", RequestType.POST });
@@ -90,7 +94,13 @@ public abstract class ApiBase {
         put("users_createnaturals", new String[] { "/users/natural", RequestType.POST });
         put("users_createlegals", new String[] { "/users/legal", RequestType.POST });
         put("users_createkycrequests", new String[] { "/users/%s/KYC/requests", RequestType.POST });
-        put("users_createbankaccounts", new String[] { "/users/%s/bankaccounts", RequestType.POST });
+        
+        put("users_createbankaccounts_iban", new String[] { "/users/%s/bankaccounts/iban", RequestType.POST });
+        put("users_createbankaccounts_gb", new String[] { "/users/%s/bankaccounts/gb", RequestType.POST });
+        put("users_createbankaccounts_us", new String[] { "/users/%s/bankaccounts/us", RequestType.POST });
+        put("users_createbankaccounts_ca", new String[] { "/users/%s/bankaccounts/ca", RequestType.POST });
+        put("users_createbankaccounts_other", new String[] { "/users/%s/bankaccounts/other", RequestType.POST });
+        
         put("users_all", new String[] { "/users", RequestType.GET });
         put("users_allkyc", new String[] { "/users/%s/KYC", RequestType.GET });
         put("users_allkycrequests", new String[] { "/users/%s/KYC/requests", RequestType.GET });
@@ -109,6 +119,9 @@ public abstract class ApiBase {
         put("users_getpaymentcards", new String[] { "/users/%s/payment-cards/%s", RequestType.GET });
         put("users_savenaturals", new String[] { "/users/natural/%s", RequestType.PUT });
         put("users_savelegals", new String[] { "/users/legal/%s", RequestType.PUT });
+        
+        put("users_allcards", new String[] { "/users/%s/cards", RequestType.GET });
+        put("users_alltransactions", new String[] { "/users/%s/transactions", RequestType.GET });
         
         put("users_createkycdocument", new String[] { "/users/%s/KYC/documents", RequestType.POST });
         put("users_getkycdocument", new String[] { "/users/%s/KYC/documents/%s", RequestType.GET });
@@ -137,8 +150,14 @@ public abstract class ApiBase {
      * @param key   The method key to get URL of.
      * @return      The URL string of given method.
      */
-    protected String getRequestUrl(String key) {
-        return this.methods.get(key)[0];
+    protected String getRequestUrl(String key) throws Exception {
+        String result = "";
+        try {
+            result = this.methods.get(key)[0];
+        } catch (Exception ex) {
+            throw new Exception("Unknown method key: " + key);
+        }
+        return result;
     }
     
     /**

@@ -1,9 +1,14 @@
 package com.mangopay.core;
 
 /**
- * Class represents Web type for execution option in PayIn entity
+ * Class representing the Web type for execution option in PayIn entity.
  */
 public class PayInExecutionDetailsDirect extends Dto implements IPayInExecutionDetails {
+    
+    /**
+     * CardId.
+     */
+    public String CardId;
     
     /**
      * SecureMode { DEFAULT, FORCE }
@@ -11,12 +16,7 @@ public class PayInExecutionDetailsDirect extends Dto implements IPayInExecutionD
     public String SecureMode;
     
     /**
-     * CardId
-     */
-    public String CardId;
-    
-    /**
-     * SecureModeReturnURL
+     * SecureModeReturnURL.
      */
     public String SecureModeReturnURL;
     

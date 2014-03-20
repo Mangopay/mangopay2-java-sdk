@@ -2,10 +2,11 @@ package com.mangopay.core;
 
 import com.mangopay.entities.*;
 import java.net.URL;
-import java.nio.file.Path;
+import java.nio.file.AccessDeniedException;
+import java.nio.file.NoSuchFileException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -151,6 +152,119 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
+    public void test_Users_CreateBankAccount_IBAN() {
+        try {
+            UserNatural john = this.getJohn();
+            BankAccount account = this.getJohnsAccount();
+            
+            assertTrue(account.Id.length() > 0);
+            assertEquals(account.UserId, john.Id);
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void test_Users_CreateBankAccount_GB() {
+        try {
+            UserNatural john = this.getJohn();
+            BankAccount account = new BankAccount();
+            account.OwnerName = john.FirstName + " " + john.LastName;
+            account.OwnerAddress = john.Address;
+            account.Details = new BankAccountDetailsGB();
+            ((BankAccountDetailsGB)account.Details).AccountNumber = "234234234234";
+            ((BankAccountDetailsGB)account.Details).SortCode = "234334";
+            
+            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            
+            assertTrue(createAccount.Id.length() > 0);
+            assertTrue(createAccount.UserId.equals(john.Id));
+            assertTrue(createAccount.Type.equals("GB"));
+            assertTrue(((BankAccountDetailsGB)createAccount.Details).AccountNumber.equals("234234234234"));
+            assertTrue(((BankAccountDetailsGB)createAccount.Details).SortCode.equals("234334"));
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void test_Users_CreateBankAccount_US() {
+        try {
+            UserNatural john = this.getJohn();
+            BankAccount account = new BankAccount();
+            account.OwnerName = john.FirstName + " " + john.LastName;
+            account.OwnerAddress = john.Address;
+            account.Details = new BankAccountDetailsUS();
+            ((BankAccountDetailsUS)account.Details).AccountNumber = "234234234234";
+            ((BankAccountDetailsUS)account.Details).ABA = "234334789";
+            
+            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            
+            assertTrue(createAccount.Id.length() > 0);
+            assertTrue(createAccount.UserId.equals(john.Id));
+            assertTrue(createAccount.Type.equals("US"));
+            assertTrue(((BankAccountDetailsUS)createAccount.Details).AccountNumber.equals("234234234234"));
+            assertTrue(((BankAccountDetailsUS)createAccount.Details).ABA.equals("234334789"));
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void test_Users_CreateBankAccount_CA() {
+        try {
+            UserNatural john = this.getJohn();
+            BankAccount account = new BankAccount();
+            account.OwnerName = john.FirstName + " " + john.LastName;
+            account.OwnerAddress = john.Address;
+            account.Details = new BankAccountDetailsCA();
+            ((BankAccountDetailsCA)account.Details).BankName = "TestBankName";
+            ((BankAccountDetailsCA)account.Details).BranchCode = "12345";
+            ((BankAccountDetailsCA)account.Details).AccountNumber = "234234234234";
+            ((BankAccountDetailsCA)account.Details).InstitutionNumber = "123";
+            
+            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            
+            assertTrue(createAccount.Id.length() > 0);
+            assertTrue(createAccount.UserId.equals(john.Id));
+            assertTrue(createAccount.Type.equals("CA"));
+            assertTrue(((BankAccountDetailsCA)createAccount.Details).AccountNumber.equals("234234234234"));
+            assertTrue(((BankAccountDetailsCA)createAccount.Details).BankName.equals("TestBankName"));
+            assertTrue(((BankAccountDetailsCA)createAccount.Details).BranchCode.equals("12345"));
+            assertTrue(((BankAccountDetailsCA)createAccount.Details).InstitutionNumber.equals("123"));
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void test_Users_CreateBankAccount_OTHER() {
+        try {
+            UserNatural john = this.getJohn();
+            BankAccount account = new BankAccount();
+            account.OwnerName = john.FirstName + " " + john.LastName;
+            account.OwnerAddress = john.Address;
+            account.Details = new BankAccountDetailsOTHER();
+            ((BankAccountDetailsOTHER)account.Details).Type = "OTHER";
+            ((BankAccountDetailsOTHER)account.Details).Country = "FR";
+            ((BankAccountDetailsOTHER)account.Details).AccountNumber = "234234234234";
+            ((BankAccountDetailsOTHER)account.Details).BIC = "BINAADADXXX";
+            
+            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            
+            assertTrue(createAccount.Id.length() > 0);
+            assertTrue(createAccount.UserId.equals(john.Id));
+            assertTrue(createAccount.Type.equals("OTHER"));
+            assertTrue(((BankAccountDetailsOTHER)createAccount.Details).Type.equals("OTHER"));
+            assertTrue(((BankAccountDetailsOTHER)createAccount.Details).Country.equals("FR"));
+            assertTrue(((BankAccountDetailsOTHER)createAccount.Details).AccountNumber.equals("234234234234"));
+            assertTrue(((BankAccountDetailsOTHER)createAccount.Details).BIC.equals("BINAADADXXX"));
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
+    @Test
     public void test_Users_CreateBankAccount() throws Exception {
         UserNatural john = this.getJohn();
         BankAccount account = this.getJohnsAccount();
@@ -238,5 +352,32 @@ public class ApiUsersTest extends BaseTest {
         filePath = filePath.replace("file:/", "").replace("//", "/").replace("/", "\\");
         
         this._api.Users.createKycPage(john.Id, kycDocument.Id, filePath);
+    }
+    
+    @Test
+    public void test_Users_AllCards() throws Exception {
+        UserNatural john = this.getJohn();
+        PayIn payIn = this.getNewPayInCardDirect();
+        Pagination pagination = new Pagination(1, 1);
+        Card card = this._api.Cards.get(((PayInPaymentDetailsCard)payIn.PaymentDetails).CardId);
+        List<Card> cards = this._api.Users.getCards(john.Id, pagination);
+        
+        assertTrue(cards.size() == 1);
+        assertTrue(cards.get(0).CardType != null);
+        assertTrue(cards.get(0).Currency != null);
+        assertEqualInputProps(cards.get(0), card);
+    }
+    
+    @Test
+    public void test_Users_Transactions() throws Exception {
+        UserNatural john = this.getJohn();
+        Transfer transfer = this.getNewTransfer();
+        Pagination pagination = new Pagination(1, 1);
+        
+        List<Transaction> transactions = this._api.Users.getTransactions(john.Id, pagination, new FilterTransactions());
+        
+        assertTrue(transactions.size() > 0);
+        assertTrue(transactions.get(0).Type != null);
+        assertTrue(transactions.get(0).Status != null);
     }
 }

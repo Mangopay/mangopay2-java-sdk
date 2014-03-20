@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
+import com.mangopay.entities.BankAccount;
 import com.mangopay.entities.PayIn;
 import com.mangopay.entities.PayOut;
 import com.mangopay.entities.User;
@@ -572,6 +574,10 @@ public class RestTool {
             return true;
         }
         
+        if (classOfT.getName().equals(BankAccount.class.getName()) && fieldName.equals("Details")) {
+            return true;
+        }
+        
         return false;
         
     }
@@ -671,7 +677,7 @@ public class RestTool {
                     }
                     
                     //continue;
-                }
+                }   
                         
                 for (Entry<String, JsonElement> entry : response.entrySet()) {
                     
@@ -679,7 +685,12 @@ public class RestTool {
                         
                         // is sub object?
                         if (subObjects.containsKey(name)) {
-                            f.set(result, castResponseToEntity(f.getType(), entry.getValue().getAsJsonObject()));
+                            if (entry.getValue() instanceof JsonNull) {
+                                f.set(result, null);
+                            }
+                            else {
+                                f.set(result, castResponseToEntity(f.getType(), entry.getValue().getAsJsonObject()));
+                            }
                             break;
                         }
                         
@@ -750,7 +761,8 @@ public class RestTool {
 //            throw new Exception("Cannot cast response to entity object. Wrong entity class name");
         } catch (Exception e) {
             Logger.getLogger(RestTool.class.getName()).log(Level.SEVERE, null, e);
-            throw new Exception(e);
+            //throw new Exception(e);
+            throw e;
         }
         
     }
@@ -790,8 +802,6 @@ public class RestTool {
             
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
-            
-            
             if (this._debugMode)
                 Logs.debug("FullUrl", urlTool.getFullUrl(restUrl));
 

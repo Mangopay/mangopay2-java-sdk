@@ -28,6 +28,8 @@ public class MangoPayApi {
         CardRegistrations = new ApiCardRegistrations(this);
         Cards = new ApiCards(this);
         Events = new ApiEvents(this);
+        CardPreAuthorizations = new ApiCardPreAuthorizations(this);
+        Hooks = new ApiHooks(this);
     }
     
     ////////////////////////////////////////
@@ -88,6 +90,8 @@ public class MangoPayApi {
      */
     public ApiCardRegistrations CardRegistrations;
     
+    public ApiCardPreAuthorizations CardPreAuthorizations;
+    
     /**
      * Cards methods.
      */
@@ -102,5 +106,10 @@ public class MangoPayApi {
      * Events methods.
      */
     public ApiEvents Events;
+    
+    /**
+     * Hooks methods.
+     */
+    public ApiHooks Hooks;
     
 }

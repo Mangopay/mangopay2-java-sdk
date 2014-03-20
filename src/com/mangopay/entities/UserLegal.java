@@ -1,6 +1,5 @@
 package com.mangopay.entities;
 
-import com.mangopay.core.NoUpdate;
 import java.util.ArrayList;
 
 /**

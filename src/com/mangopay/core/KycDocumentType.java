@@ -5,5 +5,8 @@ package com.mangopay.core;
  */
 public enum KycDocumentType {
     IDENTITY_PROOF,
-    REGISTRATION_PROOF
+    REGISTRATION_PROOF,
+    ARTICLES_OF_ASSOCIATION,
+    SHAREHOLDER_DECLARATION,
+    ADDRESS_PROOF
 }

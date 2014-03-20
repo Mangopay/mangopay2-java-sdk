@@ -8,7 +8,8 @@ import com.mangopay.core.EntityBase;
 public class KycDocument extends EntityBase {
 
     /**
-     * Possible values: { IDENTITY_PROOF, REGISTRATION_PROOF }
+     * Possible values: { IDENTITY_PROOF, REGISTRATION_PROOF, 
+     * ARTICLES_OF_ASSOCIATION, SHAREHOLDER_DECLARATION, ADDRESS_PROOF }
      */
     public String Type;
     

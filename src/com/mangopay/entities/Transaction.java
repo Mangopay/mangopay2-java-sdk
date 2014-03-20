@@ -47,6 +47,11 @@ public class Transaction extends EntityBase {
     public String ResultCode;
     
     /**
+     * The PreAuthorization result Message explaining the result code.
+     */
+    public String ResultMessage;
+    
+    /**
      * ExecutionDate (UNIX timestamp).
      */
     public Long ExecutionDate;

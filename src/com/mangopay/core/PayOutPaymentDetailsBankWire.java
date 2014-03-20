@@ -1,7 +1,7 @@
 package com.mangopay.core;
 
 /**
- * Class representing BankWire type for mean of payment in PayOut entity
+ * Class representing the BankWire type for mean of payment in PayOut entity.
  */
 public class PayOutPaymentDetailsBankWire extends Dto implements IPayOutPaymentDetails {
     
@@ -11,8 +11,7 @@ public class PayOutPaymentDetailsBankWire extends Dto implements IPayOutPaymentD
     public String BankAccountId;
     
     /**
-     * Communication.
+     * Communication
      */
     public String Communication;
-    
 }

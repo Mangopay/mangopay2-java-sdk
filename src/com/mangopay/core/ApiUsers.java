@@ -2,22 +2,12 @@ package com.mangopay.core;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.*;
-import org.apache.commons.codec.binary.Base64;;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import org.apache.commons.codec.binary.StringUtils;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-import org.apache.commons.codec.binary.StringUtils;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
+import org.apache.commons.codec.binary.Base64;
+
 
 /**
  * API for Users.
@@ -128,7 +118,8 @@ public class ApiUsers extends ApiBase {
      * @throws Exception
      */
     public BankAccount createBankAccount(String userId, BankAccount bankAccount) throws Exception {
-        return this.createObject(BankAccount.class, "users_createbankaccounts", bankAccount, userId);
+        String type = this.getBankAccountType(bankAccount);
+        return this.createObject(BankAccount.class, "users_createbankaccounts_" + type, bankAccount, userId);
     }    
     
     /**
@@ -163,6 +154,36 @@ public class ApiUsers extends ApiBase {
         return this.getObject(BankAccount.class, "users_getbankaccount", userId, bankAccountId);
     }
     
+    /**
+     * Gets transactions for user.
+     * @param userId        User identifier.
+     * @param pagination    Pagination object.
+     * @param filter        Filter object.
+     * @return              Collection of transactions of user.
+     * @throws Exception
+     */
+    public List<Transaction> getTransactions(String userId, Pagination pagination, FilterTransactions filter) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class, "users_alltransactions", pagination, userId, filter.getValues());
+    }
+    
+    /**
+     * Gets all cards for user.
+     * @param userId        User identifier.
+     * @param pagination    Pagination object.
+     * @return              Collection of user's cards.
+     * @throws Exception
+     */
+    public List<Card> getCards(String userId, Pagination pagination) throws Exception {
+        return this.getList(Card[].class, Card.class, "users_allcards", pagination, userId);
+    }
+    
+    /**
+     * Creates KycPage from byte array.
+     * @param userId            User identifier.
+     * @param kycDocumentId     Kyc document identifier.
+     * @param binaryData        The byte array the KycPage will be created from.
+     * @throws Exception
+     */
     public void createKycPage(String userId, String kycDocumentId, byte[] binaryData) throws Exception {
         KycPage kycPage = new KycPage();
         
@@ -180,6 +201,13 @@ public class ApiUsers extends ApiBase {
         }
     }
     
+    /**
+     * Creates KycPage from file.
+     * @param userId            User identifier.
+     * @param kycDocumentId     Kyc document identifier.
+     * @param filePath          Path to the file the KycPage will be created from.
+     * @throws Exception
+     */
     public void createKycPage(String userId, String kycDocumentId, String filePath) throws Exception {
         byte[] fileArray;
         Path path = Paths.get(filePath);
@@ -201,5 +229,14 @@ public class ApiUsers extends ApiBase {
     
     public KycDocument updateKycDocument(String userId, KycDocument kycDocument) throws Exception {
         return this.updateObject(KycDocument.class, "users_savekycdocument", kycDocument, userId);
+    }
+    
+    private String getBankAccountType(BankAccount bankAccount) throws Exception {
+        
+        if (bankAccount.Details == null)
+            throw new Exception("Details is not defined.");
+        
+        String className = bankAccount.Details.getClass().getSimpleName().replace("BankAccountDetails", "");
+        return className.toLowerCase();
     }
 }
