@@ -18,6 +18,8 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -392,10 +394,15 @@ public class RestTool {
                     Logs.debug("RequestBody", requestBody);
                 }
                 
-                try (DataOutputStream wr = new DataOutputStream(_connection.getOutputStream())) {
-                    wr.writeBytes(requestBody);
-                    wr.flush ();
+                try (OutputStreamWriter osw = new OutputStreamWriter(_connection.getOutputStream(), "UTF-8")) {
+                    osw.write(requestBody);
+                    osw.flush ();
                 }
+                
+//                try (DataOutputStream wr = new DataOutputStream(_connection.getOutputStream())) {
+//                    wr.writeBytes(requestBody);
+//                    wr.flush ();
+//                }
             }
             
 
@@ -409,7 +416,7 @@ public class RestTool {
             }
             
             StringBuffer resp;
-            try (BufferedReader rd = new BufferedReader(new InputStreamReader(is))) {
+            try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
                 String line;
                 resp = new StringBuffer();
                 while((line = rd.readLine()) != null) {
