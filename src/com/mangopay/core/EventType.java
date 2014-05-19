@@ -4,6 +4,7 @@ package com.mangopay.core;
  * Event types enumeration.
  */
 public enum EventType {
+    ALL,
     PAYIN_NORMAL_CREATED,
     PAYIN_NORMAL_SUCCEEDED,
     PAYIN_NORMAL_FAILED,
@@ -21,5 +22,9 @@ public enum EventType {
     PAYOUT_REFUND_FAILED,
     TRANSFER_REFUND_CREATED,
     TRANSFER_REFUND_SUCCEEDED,
-    TRANSFER_REFUND_FAILED
+    TRANSFER_REFUND_FAILED,
+    KYC_CREATED,
+    KYC_VALIDATION_ASKED,
+    KYC_SUCCEEDED,
+    KYC_FAILED
 }

@@ -24,7 +24,7 @@ public class Hook extends EntityBase {
     public String Validity;
     
     /**
-     * Event type.
+     * Event type (the <code>EventType.ALL</code> value is forbidden here).
      */
     public EventType EventType;
     

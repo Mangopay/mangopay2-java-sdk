@@ -18,7 +18,11 @@ public class ApiEventsTest extends BaseTest {
         
         List<Event> getEvents = this._api.Events.get(eventsFilter, null);
         
+        eventsFilter.Type = EventType.ALL;
+        List<Event> getAllEvents = this._api.Events.get(eventsFilter, null);
+        
         assertNotNull(getEvents);
+        assertNotNull(getAllEvents);
     }
     
 }

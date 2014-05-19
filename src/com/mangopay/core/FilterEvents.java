@@ -31,7 +31,9 @@ public class FilterEvents extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
         
-        result.put("eventtype", Type.name());
+        if (Type != EventType.ALL) {
+            result.put("eventtype", Type.name());
+        }
         
         if (BeforeDate != null) result.put("beforeDate", Long.toString(BeforeDate));
         if (AfterDate != null) result.put("afterDate", Long.toString(AfterDate));

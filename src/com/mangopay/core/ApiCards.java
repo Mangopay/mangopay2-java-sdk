@@ -26,4 +26,24 @@ public class ApiCards extends ApiBase {
         return this.getObject(Card.class, "card_get", cardId);
     }
     
+    /**
+     * Saves card.
+     * @param card  Card entity instance to be updated.
+     * @return      Card object returned from API.
+     * @throws Exception
+     */
+    public Card update(Card card) throws Exception {
+        return this.updateObject(Card.class, "card_put", card);
+    }
+    
+    /**
+     * Disables card (sets INVALID as the value of Validity field).
+     * @param card  Card entity instance to be updated.
+     * @return      Card object returned from API.
+     * @throws Exception
+     */
+    public Card disable(Card card) throws Exception {
+        card.Validity = "INVALID";
+        return update(card);
+    }
 }

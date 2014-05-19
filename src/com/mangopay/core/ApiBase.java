@@ -44,6 +44,7 @@ public abstract class ApiBase {
         put("preauthorization_save", new String[] { "/preauthorizations/%s", RequestType.PUT });
         
         put("card_get", new String[] { "/cards/%s", RequestType.GET });
+        put("card_get", new String[] { "/cards/%s", RequestType.PUT });
         
         // pay ins URLs
         put("payins_card-web_create", new String[] { "/payins/card/web/", RequestType.POST });

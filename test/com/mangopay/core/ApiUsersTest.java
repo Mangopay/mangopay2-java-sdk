@@ -135,8 +135,20 @@ public class ApiUsersTest extends BaseTest {
         User userSaved = this._api.Users.update(john);
         User userFetched = this._api.Users.get(john.Id);
         
-        assertEqualInputProps(userSaved, john);
-        assertEqualInputProps(userFetched, john);
+        assertEqualInputProps(john, userSaved);
+        assertEqualInputProps(john, userFetched);
+    }
+
+    @Test
+    public void test_Users_Save_Natural_NonASCII() throws Exception {
+        UserNatural john = this.getJohn();
+        john.LastName += " - CHANGED (éèęóąśłżźćń)";
+        
+        User userSaved = this._api.Users.update(john);
+        User userFetched = this._api.Users.get(john.Id);
+        
+        assertEqualInputProps(john, userSaved);
+        assertEqualInputProps(john, userFetched);
     }
 
     @Test
