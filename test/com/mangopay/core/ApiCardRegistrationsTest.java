@@ -49,5 +49,4 @@ public class ApiCardRegistrationsTest extends BaseTest {
         assertEquals("VALIDATED", getCardRegistration.Status);
         assertEquals("000000", getCardRegistration.ResultCode);
     }
-    
 }

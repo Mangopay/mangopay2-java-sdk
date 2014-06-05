@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Abstract class for all DTOs (entities and their composites)
+ * Base abstract class for entities.
  */
 public abstract class Dto {
     
@@ -25,13 +25,15 @@ public abstract class Dto {
     public Map<String, Map<String, Map<String, Class<?>>>> getDependentObjects() { return new HashMap<>(); }
     
     /**
-     * Gets map of fields and values.
+     * Gets map of fields and values. 
+     * To be overridden in child class.
      * @return Collection of field name-field value pairs.
      */
     public Map<String, String> getValues() { return new HashMap<>(); }
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
+     * To be overridden in child class.
      * @return List of field names.
      */
     public ArrayList<String> getReadOnlyProperties() { return new ArrayList<>(); }

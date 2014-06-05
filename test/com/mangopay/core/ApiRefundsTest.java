@@ -35,7 +35,5 @@ public class ApiRefundsTest extends BaseTest {
         assertEquals(getRefund.InitialTransactionId, payIn.Id);
         assertEquals(getRefund.AuthorId, user.Id);
         assertEquals(getRefund.Type, "PAYOUT");
-        
     }
-    
 }

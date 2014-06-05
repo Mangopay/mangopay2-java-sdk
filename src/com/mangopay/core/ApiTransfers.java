@@ -5,12 +5,13 @@ import com.mangopay.entities.Refund;
 import com.mangopay.entities.Transfer;
 
 /**
- * API for Transfers.
+ * API for transfers.
  */
 public class ApiTransfers extends ApiBase {
 
     /**
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
+     * Instantiates new ApiTransfers object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiTransfers(MangoPayApi root) { super(root); }
     
@@ -38,7 +39,8 @@ public class ApiTransfers extends ApiBase {
      * Creates refund for transfer object.
      * @param transferId Transfer identifier.
      * @param refund Refund object to create.
-     * @return Refund entity instance returned by REST API.
+     * @return Refund entity instance returned from API.
+     * @throws Exception
      */
     public Refund createRefund(String transferId, Refund refund) throws Exception {
         return this.createObject(Refund.class, "transfers_createrefunds", refund, transferId);
@@ -47,7 +49,8 @@ public class ApiTransfers extends ApiBase {
     /**
      * Gets refund for transfer object.
      * @param transferId Transfer identifier.
-     * @return Refund entity instance returned by REST API.
+     * @return Refund entity instance returned from API.
+     * @throws Exception
      */
     public Refund getRefund(String transferId) throws Exception {
         return this.getObject(Refund.class, "transfers_getrefunds", transferId);

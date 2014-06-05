@@ -3,7 +3,7 @@ package com.mangopay.core;
 import java.util.ArrayList;
 
 /**
- * Abstract class with common properties.
+ * Base abstract class for entities. Provides common properties.
  */
 public abstract class EntityBase extends Dto {
 
@@ -18,12 +18,12 @@ public abstract class EntityBase extends Dto {
     public String Tag;
 
     /**
-     * Date of creation.
+     * Date of creation (UNIX timestamp).
      */
     public long CreationDate;
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

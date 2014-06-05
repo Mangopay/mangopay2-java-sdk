@@ -6,8 +6,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 /**
- * Transaction entity.
- * Base class for: PayIn, PayOut, Transfer.
+ * Transaction entity. Base class for: PayIn, PayOut, Transfer.
  */
 public class Transaction extends EntityBase {
     
@@ -37,7 +36,7 @@ public class Transaction extends EntityBase {
     public Money Fees;
     
     /**
-     * TransactionStatus {CREATED, SUCCEEDED, FAILED}
+     * TransactionStatus { CREATED, SUCCEEDED, FAILED }.
      */
     public String Status;
     
@@ -57,18 +56,17 @@ public class Transaction extends EntityBase {
     public Long ExecutionDate;
     
     /**
-     * TransactionType {PAYIN, PAYOUT, TRANSFER}
+     * TransactionType { PAYIN, PAYOUT, TRANSFER }.
      */
     public String Type;
     
     /**
-     * TransactionNature { REGULAR, REFUND, REPUDIATION }
+     * TransactionNature { REGULAR, REFUND, REPUDIATION }.
      */
     public String Nature;
     
     /**
      * Gets map which property is an object and what type of object.
-     * To be overridden in child class if has any sub objects.
      * @return Collection of field name-field type pairs.
      */
     @Override
@@ -84,7 +82,7 @@ public class Transaction extends EntityBase {
     }
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

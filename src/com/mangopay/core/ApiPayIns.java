@@ -10,7 +10,8 @@ import com.mangopay.entities.Refund;
 public class ApiPayIns extends ApiBase {
 
     /**
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
+     * Instantiates new ApiPayIns object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiPayIns(MangoPayApi root) { super(root); }
     
@@ -29,7 +30,7 @@ public class ApiPayIns extends ApiBase {
     /**
      * Gets PayIn entity by its identifier.
      * @param payInId   PayIn identifier.
-     * @return          PayIn object returned by API
+     * @return          PayIn object returned by API.
      * @throws Exception
      */
     public PayIn get(String payInId) throws Exception {
@@ -41,6 +42,7 @@ public class ApiPayIns extends ApiBase {
      * @param payInId PayIn identifier.
      * @param refund Refund object to be created.
      * @return Refund entity instance returned by REST API.
+     * @throws Exception
      */
     public Refund createRefund(String payInId, Refund refund) throws Exception {
         return this.createObject(Refund.class, "payins_createrefunds", refund, payInId);
@@ -50,6 +52,7 @@ public class ApiPayIns extends ApiBase {
      * Gets refund for PayIn object.
      * @param payInId PayIn identifier.
      * @return Refund entity instance returned by REST API.
+     * @throws Exception
      */
     public Refund getRefund(String payInId) throws Exception {
         return this.getObject(Refund.class, "payins_getrefunds", payInId);

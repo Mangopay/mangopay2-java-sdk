@@ -9,6 +9,7 @@ import com.mangopay.entities.CardPreAuthorization;
 public class ApiCardPreAuthorizations extends ApiBase {
     
     /**
+     * Instantiates new ApiCardPreAuthorizations object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiCardPreAuthorizations(MangoPayApi root) { super(root); }
@@ -16,7 +17,7 @@ public class ApiCardPreAuthorizations extends ApiBase {
     /**
      * Creates new pre-authorization object.
      * @param cardPreAuthorization PreAuthorization object to be created.
-     * @return PreAuthorization object returned from API.
+     * @return Card pre-authorization instance returned from API.
      * @throws Exception
      */
     public CardPreAuthorization create(CardPreAuthorization cardPreAuthorization) throws Exception {
@@ -26,7 +27,7 @@ public class ApiCardPreAuthorizations extends ApiBase {
     /**
      * Gets pre-authorization object.
      * @param cardPreAuthorizationId PreAuthorization identifier.
-     * @return Card registration instance returned from API.
+     * @return Card pre-authorization instance returned from API.
      * @throws Exception
      */
     public CardPreAuthorization get(String cardPreAuthorizationId) throws Exception {
@@ -35,7 +36,7 @@ public class ApiCardPreAuthorizations extends ApiBase {
     /**
      * Updates pre-authorization object.
      * @param cardPreAuthorization PreAuthorization object to be updated.
-     * @return PreAuthorization object returned from API.
+     * @return Card pre-authorization instance returned from API.
      * @throws Exception
      */
     public CardPreAuthorization update(CardPreAuthorization cardPreAuthorization) throws Exception {

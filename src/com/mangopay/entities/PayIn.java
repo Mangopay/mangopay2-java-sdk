@@ -14,7 +14,7 @@ public class PayIn extends Transaction {
     public String CreditedWalletId;
     
     /**
-     * PaymentType {CARD, BANK_WIRE, AUTOMATIC_DEBIT, DIRECT_DEBIT }
+     * PaymentType {CARD, BANK_WIRE, AUTOMATIC_DEBIT, DIRECT_DEBIT }.
      */
     public String PaymentType;
     
@@ -24,7 +24,7 @@ public class PayIn extends Transaction {
     public IPayInPaymentDetails PaymentDetails;
     
     /**
-     * ExecutionType { WEB, TOKEN, DIRECT, PREAUTHORIZED, RECURRING_ORDER_EXECUTION }
+     * ExecutionType { WEB, TOKEN, DIRECT, PREAUTHORIZED, RECURRING_ORDER_EXECUTION }.
      */
     public String ExecutionType;
     
@@ -35,7 +35,6 @@ public class PayIn extends Transaction {
     
     /**
      * Gets the structure that maps which property depends on other property.
-     * To be overridden in child class if has any dependent objects.
      * @return 
      */
     @Override
@@ -76,7 +75,7 @@ public class PayIn extends Transaction {
     }
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

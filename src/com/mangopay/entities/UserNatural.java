@@ -9,22 +9,22 @@ import java.util.ArrayList;
 public final class UserNatural extends User {
     
     /**
-     * First name for user.
+     * First name.
      */
     public String FirstName;
     
      /**
-     * Last name for user.
+     * Last name.
      */
     public String LastName;
     
      /**
-     * Address for user.
+     * Address.
      */
     public String Address;
     
      /**
-     * Date of birth.
+     * Date of birth (UNIX timestamp).
      */
     public long Birthday;
     
@@ -34,13 +34,13 @@ public final class UserNatural extends User {
     public String Birthplace;
     
      /**
-     * User's country
+     * User's country.
      * ISO 3166-1 alpha-2
      */
     public String Nationality;
     
      /**
-     * Country of residence
+     * Country of residence.
      * ISO 3166-1 alpha-2
      */
     public String CountryOfResidence;
@@ -69,26 +69,29 @@ public final class UserNatural extends User {
     }
 
     /**
-     * Income range. One of IncomeRanges constants.
+     * Income range. One of UserNatural.IncomeRanges constants.
      */
     public Integer IncomeRange;
     
     /**
-     * Url of the document.
+     * Proof of identity.
      */
     protected String ProofOfIdentity;
 
     /**
-     * Url of the document.
+     * Proof of address.
      */
     protected String ProofOfAddress;
 
+    /**
+     * Instantiates new UserNatural object.
+     */
     public UserNatural() {
         PersonType = Types.Natural;
     }
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

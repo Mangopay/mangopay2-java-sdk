@@ -64,5 +64,4 @@ public class ApiHooksTest extends BaseTest {
             Assert.fail(ex.getMessage());
         }
     }
-    
 }

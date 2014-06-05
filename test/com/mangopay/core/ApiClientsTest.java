@@ -5,8 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Test class for Client API
- * @author arek
+ * ApiClients test methods
  */
 public class ApiClientsTest extends BaseTest {
     

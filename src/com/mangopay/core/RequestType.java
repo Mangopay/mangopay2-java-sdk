@@ -1,7 +1,7 @@
 package com.mangopay.core;
 
 /**
- * Request type enumeration.
+ * Request type constants.
  */
 public class RequestType {
     public static String GET = "GET";

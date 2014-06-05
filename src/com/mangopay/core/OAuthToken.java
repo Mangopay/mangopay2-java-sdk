@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class OAuthToken extends Dto implements Serializable {
 
     /**
-     * Created time.
+     * Creation time.
      */
     private Long create_time;
     
@@ -24,12 +24,12 @@ public class OAuthToken extends Dto implements Serializable {
     public String token_type;
     
     /**
-     * How long the token is valid, in seconds.
+     * Denotes how long the token is valid, in seconds.
      */
     public int expires_in;
     
     /**
-     * Constructor.
+     * Instantiates new OAuthToken object.
      */
     public OAuthToken() {
         create_time = System.currentTimeMillis() - 5000;
@@ -37,6 +37,7 @@ public class OAuthToken extends Dto implements Serializable {
     
     /**
      * Checks if current token is expired.
+     * @return Returns true if token has expired, or false if token is still valid.
      */
     public Boolean IsExpired() {
         return (System.currentTimeMillis() >= (create_time + (expires_in * 1000)));

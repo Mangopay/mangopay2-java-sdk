@@ -32,7 +32,6 @@ public class PayInPaymentDetailsBankWire extends Dto implements IPayInPaymentDet
     
     /**
      * Gets map which property is an object and what type of object.
-     * To be overridden in child class if has any sub objects.
      * @return Collection of field name-field type pairs.
      */
     @Override

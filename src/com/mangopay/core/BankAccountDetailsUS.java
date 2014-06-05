@@ -11,7 +11,7 @@ public class BankAccountDetailsUS extends Dto implements IBankAccountDetails {
     public String AccountNumber;
     
     /**
-     * ABA
+     * ABA.
      */
     public String ABA;
     

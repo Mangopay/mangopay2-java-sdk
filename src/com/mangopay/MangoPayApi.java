@@ -10,6 +10,9 @@ import com.mangopay.core.*;
  */
 public class MangoPayApi {
 
+    /**
+     * Instantiates new MangoPayApi object.
+     */
     public MangoPayApi() {
 
         // default config setup
@@ -37,7 +40,7 @@ public class MangoPayApi {
     ////////////////////////////////////////
 
     /**
-     * Authorization token methods.
+     * Provides Authorization token methods.
      */
     public AuthorizationTokenManager OAuthTokenManager;
 
@@ -51,64 +54,67 @@ public class MangoPayApi {
     ////////////////////////////////////////
 
     /**
-     * OAuth methods.
+     * Provides OAuth methods.
      */
     public ApiOAuth AuthenticationManager;
 
     /**
-     * Clients methods.
+     * Provides Clients methods.
      */
     public ApiClients Clients;
 
     /**
-     * Users methods.
+     * Provides Users methods.
      */
     public ApiUsers Users;
     
     /**
-     * Wallets methods.
+     * Provides Wallets methods.
      */
     public ApiWallets Wallets;
     
     /**
-     * PayIns methods.
+     * Provides PayIns methods.
      */
     public ApiPayIns PayIns;
     
     /**
-     * PayOuts methods.
+     * Provides PayOuts methods.
      */
     public ApiPayOuts PayOuts;
     
     /**
-     * Transfer methods.
+     * Provides Transfer methods.
      */
     public ApiTransfers Transfers;
     
     /**
-     * CardRegistrations methods.
+     * Provides CardRegistrations methods.
      */
     public ApiCardRegistrations CardRegistrations;
     
+    /**
+     * Provides CardPreAuthorizations methods.
+     */
     public ApiCardPreAuthorizations CardPreAuthorizations;
     
     /**
-     * Cards methods.
+     * Provides Cards methods.
      */
     public ApiCards Cards;
     
     /**
-     * Refunds methods.
+     * Provides Refunds methods.
      */
     public ApiRefunds Refunds;
     
     /**
-     * Events methods.
+     * Provides Events methods.
      */
     public ApiEvents Events;
     
     /**
-     * Hooks methods.
+     * Provides Hooks methods.
      */
     public ApiHooks Hooks;
     

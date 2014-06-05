@@ -3,7 +3,7 @@ package com.mangopay.core;
 import java.util.ArrayList;
 
 /**
- * Class represents Web type for execution option in PayIn entity
+ * Class representing Web type for execution option in PayIn entity.
  */
 public class PayInExecutionDetailsWeb extends Dto implements IPayInExecutionDetails {
 
@@ -18,17 +18,17 @@ public class PayInExecutionDetailsWeb extends Dto implements IPayInExecutionDeta
     public String Culture;
     
     /**
-     * Mode3DSType { DEFAULT, FORCE }
+     * Mode3DSType { DEFAULT, FORCE }.
      */
     public String SecureMode;
     
     /**
-     * URL format expected.
+     * Redirect URL.
      */
     public String RedirectURL;
     
     /**
-     * URL format expected.
+     * Return URL.
      */
     public String ReturnURL;
     

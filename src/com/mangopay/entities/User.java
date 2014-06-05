@@ -18,7 +18,7 @@ public abstract class User extends EntityBase {
     }
 
     /**
-     * Type of user. One of Types constants.
+     * Type of user. One of User.Types constants.
      */
     public String PersonType;
 
@@ -37,7 +37,7 @@ public abstract class User extends EntityBase {
     protected User() {}
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

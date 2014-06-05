@@ -1,33 +1,28 @@
 package com.mangopay.core;
 
 /**
- * Configuration settings
+ * Configuration settings.
  */
 public class Configuration {
 
     /**
-     * Client Id
+     * Client identifier.
      */
     public String ClientId = "";
     
     /**
-     * Client password
+     * Client password.
      */
     public String ClientPassword = "";
     
     /**
-     * Base URL to MangoPay API
+     * Base URL to MangoPay API.
      */
     public String BaseUrl = "https://api.sandbox.mangopay.com";
     
     /**
-     * [INTERNAL USAGE ONLY] Switch debug mode: log all request and response data
+     * [INTERNAL USAGE ONLY] Switch debug mode: log all request and response data.
      */
     public boolean DebugMode = false;
-    
-//    /**
-//     * [readonly] Authentication type - always of value "Strong"
-//     */
-//    public String AuthenticationType = "Strong";
 
 }

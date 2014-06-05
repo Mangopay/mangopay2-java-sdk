@@ -40,59 +40,42 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
 /**
- * Class to prepare HTTP request, call the request and decode the response 
+ * Class used to build HTTP request, call the request and handle response.
  */
 public class RestTool {
     
-    /**
-     * Root/parent instance that holds the OAuthToken and Configuration instance
-     */
+    // root/parent instance that holds the OAuthToken and Configuration instance
     private MangoPayApi _root;
     
-    /**
-     * Variable to switch on/off log debugging
-     */
+    // enable/disable debugging
     private Boolean _debugMode;
     
-    /**
-     * Variable to flag that in request authentication data are required
-     */
+    // variable to flag that in request authentication data are required
     private Boolean _authRequired;
     
-    /**
-     * Array with HTTP header to send with request
-     */
+    // array with HTTP header to send with request
     private Map<String, String> _requestHttpHeaders;
     
-    /**
-     * 
-     */
+    // HTTP communication object
     private HttpURLConnection _connection;
     
-    /**
-     * Request type for current request
-     */
+    // request type for current request
     private String _requestType;
     
-    /**
-     * Key-value collection pass in the request
-     */
+    // key-value collection pass in the request
     private Map<String, String> _requestData;
     
-    /**
-     * Code get from response
-     */
+    // code get from response
     private int _responseCode;
     
-    /**
-     * Pagination object
-     */
+    // pagination object
     private Pagination _pagination;
         
     /**
-     * Creates new RestTool object.
+     * Instantiates new RestTool object.
      * @param root          Root/parent instance that holds the OAuthToken and Configuration instance.
      * @param authRequired  Defines whether request authentication is required.
+     * @throws Exception
      */
     public RestTool(MangoPayApi root, Boolean authRequired) throws Exception {
         this._root = root;
@@ -101,8 +84,8 @@ public class RestTool {
     }
     
     /**
-     *
-     * @param httpHeader
+     * Adds HTTP headers as name/value pairs into the request.
+     * @param httpHeader    Collection of headers name/value pairs.
      */
     public void addRequestHttpHeader(Map<String, String> httpHeader) {
         
@@ -113,9 +96,9 @@ public class RestTool {
     }    
     
     /**
-     *
-     * @param key
-     * @param value
+     * Adds HTTP header into the request.
+     * @param key       Header name.
+     * @param value     Header value.
      */
     public void addRequestHttpHeader(final String key, final String value) {
         addRequestHttpHeader(new HashMap<String, String>(){{
@@ -129,9 +112,8 @@ public class RestTool {
      * This generic method handles calls targeting single 
      * <code>Dto</code> instances. In order to process collections of objects, 
      * use <code>requestList</code> method instead.
-     * @param <T>
-     * @param classOfT      The class on behalf of which the request is being 
-                            called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term, one of the GET, PUT or POST.
      * @param requestData   Collection of key-value pairs of request 
@@ -140,6 +122,7 @@ public class RestTool {
      * @param entity        Instance of Dto class that is going to be
                             sent in case of PUTting or POSTing.
      * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, T entity) throws Exception {
         
@@ -161,12 +144,12 @@ public class RestTool {
      * This generic method handles calls targeting single 
      * <code>Dto</code> instances. In order to process collections of objects, 
      * use <code>requestList</code> method instead.
-     * @param <T>
-     * @param classOfT      The class on behalf of which the request is being 
-                            called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term, one of the GET, PUT or POST.     
      * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType) throws Exception {
         return request(classOfT, urlMethod, requestType, null, null, null);
@@ -178,14 +161,14 @@ public class RestTool {
      * This generic method handles calls targeting single 
      * <code>Dto</code> instances. In order to process collections of objects, 
      * use <code>requestList</code> method instead.
-     * @param <T>
-     * @param classOfT      The class on behalf of which the request is being 
-                            called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term, one of the GET, PUT or POST.
      * @param requestData   Collection of key-value pairs of request 
                             parameters.
      * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData) throws Exception {
         return request(classOfT, urlMethod, requestType, requestData, null, null);
@@ -197,15 +180,15 @@ public class RestTool {
      * This generic method handles calls targeting single 
      * <code>Dto</code> instances. In order to process collections of objects, 
      * use <code>requestList</code> method instead.
-     * @param <T>
-     * @param classOfT      The class on behalf of which the request is being 
-                            called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term, one of the GET, PUT or POST.
      * @param requestData   Collection of key-value pairs of request 
                             parameters.
      * @param pagination    Pagination object.
      * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination) throws Exception {
         return request(classOfT, urlMethod, requestType, requestData, pagination, null);
@@ -217,9 +200,8 @@ public class RestTool {
      * This generic method handles calls targeting collections of 
      * <code>Dto</code> instances. In order to process single objects, 
      * use <code>request</code> method instead.
-     * @param <T>
-     * @param classOfT      The array class on behalf of which the request is 
-                            being called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param classOfTItem  The class of single item in array.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term. For lists should be always GET.
@@ -250,9 +232,8 @@ public class RestTool {
      * This generic method handles calls targeting collections of 
      * <code>Dto</code> instances. In order to process single objects, 
      * use <code>request</code> method instead.
-     * @param <T>
-     * @param classOfT      The array class on behalf of which the request is 
-                            being called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param classOfTItem  The class of single item in array.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term. For lists should be always GET.
@@ -269,9 +250,8 @@ public class RestTool {
      * This generic method handles calls targeting collections of 
      * <code>Dto</code> instances. In order to process single objects, 
      * use <code>request</code> method instead.
-     * @param <T>
-     * @param classOfT      The array class on behalf of which the request is 
-                            being called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param classOfTItem  The class of single item in array.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term. For lists should be always GET.
@@ -290,9 +270,8 @@ public class RestTool {
      * This generic method handles calls targeting collections of 
      * <code>Dto</code> instances. In order to process single objects, 
      * use <code>request</code> method instead.
-     * @param <T>
-     * @param classOfT      The array class on behalf of which the request is 
-                            being called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param classOfTItem  The class of single item in array.
      * @param urlMethod     Relevant method key.
      * @param requestType   HTTP request term. For lists should be always GET.
@@ -306,29 +285,6 @@ public class RestTool {
         return requestList(classOfT, classOfTItem, urlMethod, requestType, requestData, pagination, null);
     }
     
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param urlMethod
-     * @param pagination
-     * @return
-     * @throws Exception 
-     */
-    private <T extends Dto> T doRequest(Class<T> classOfT, String urlMethod, Pagination pagination) throws Exception {
-        return doRequest(classOfT, urlMethod, pagination, null);
-    }
-    
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param urlMethod
-     * @param pagination
-     * @param entity
-     * @return
-     * @throws Exception 
-     */
     private <T extends Dto> T doRequest(Class<T> classOfT, String urlMethod, Pagination pagination, T entity) throws Exception {
         
         T response = null;
@@ -398,11 +354,6 @@ public class RestTool {
                     osw.write(requestBody);
                     osw.flush ();
                 }
-                
-//                try (DataOutputStream wr = new DataOutputStream(_connection.getOutputStream())) {
-//                    wr.writeBytes(requestBody);
-//                    wr.flush ();
-//                }
             }
             
 
@@ -454,10 +405,6 @@ public class RestTool {
         return response;
     }
     
-    /**
-     * 
-     * @param conn 
-     */
     private void readResponseHeaders(HttpURLConnection conn) {
         for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
             for (String v : k.getValue()){
@@ -497,13 +444,6 @@ public class RestTool {
         }
     }
     
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param entity
-     * @return 
-     */
     private <T extends Dto> HashMap<String, Object> buildRequestData(Class<T> classOfT, T entity) {
         HashMap<String, Object> result = new HashMap<>();
         
@@ -563,13 +503,6 @@ public class RestTool {
         return result;
     }
     
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param fieldName
-     * @return 
-     */
     private <T> Boolean canReadSubRequestData(Class<T> classOfT, String fieldName) {
         
         if (classOfT.getName().equals(PayIn.class.getName()) && 
@@ -589,27 +522,10 @@ public class RestTool {
         
     }
     
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param response
-     * @return
-     * @throws Exception 
-     */
     private <T> T castResponseToEntity(Class<T> classOfT, JsonObject response) throws Exception {
         return castResponseToEntity(classOfT, response, false);
     }
     
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param response
-     * @param asDependentObject
-     * @return
-     * @throws Exception 
-     */
     private <T> T castResponseToEntity(Class<T> classOfT, JsonObject response, boolean asDependentObject) throws Exception {
         
         try {
@@ -682,8 +598,6 @@ public class RestTool {
                             break;
                         }
                     }
-                    
-                    //continue;
                 }   
                         
                 for (Entry<String, JsonElement> entry : response.entrySet()) {
@@ -763,42 +677,18 @@ public class RestTool {
             
             return result;
             
-//        } catch (InstantiationException | IllegalAccessException ex) {
-//            Logger.getLogger(RestTool.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new Exception("Cannot cast response to entity object. Wrong entity class name");
         } catch (Exception e) {
             Logger.getLogger(RestTool.class.getName()).log(Level.SEVERE, null, e);
-            //throw new Exception(e);
+            
             throw e;
         }
         
     }
     
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param classOfTItem
-     * @param urlMethod
-     * @param pagination
-     * @return
-     * @throws Exception 
-     */
     private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination) throws Exception {
         return doRequestList(classOfT, classOfTItem, urlMethod, pagination, null);
     }
     
-    /**
-     * 
-     * @param <T>
-     * @param classOfT
-     * @param classOfTItem
-     * @param urlMethod
-     * @param pagination
-     * @param additionalUrlParams
-     * @return
-     * @throws Exception 
-     */
     private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination, Map<String, String> additionalUrlParams) throws Exception {
         
         List<T> response = new ArrayList<>();
@@ -945,8 +835,9 @@ public class RestTool {
     }
     
     /**
-     * Checks response HTTP code.
-     * @throws ResponseException If response code is not 200 (OK)
+     * Checks the HTTP response code and if it's neither 200 nor 204 throws a ResponseException.
+     * @param message   Text response.
+     * @throws ResponseException If response code is other than 200 or 204.
      */
     private void checkResponseCode(String message) throws ResponseException {
 
@@ -979,5 +870,4 @@ public class RestTool {
             throw new ResponseException(errorMsg);
         }
     }
-
 }

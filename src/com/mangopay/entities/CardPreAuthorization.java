@@ -47,7 +47,7 @@ public class CardPreAuthorization extends EntityBase {
         
     /**
      * How the PreAuthorization has been executed. 
-     * Only on value for now: CARD
+     * Only single value for now: CARD
      */
     public String ExecutionType;
     
@@ -59,7 +59,7 @@ public class CardPreAuthorization extends EntityBase {
     public String SecureMode;
     
     /**
-     * The ID of the registered card (Got through CardRegistration object).
+     * Identifier of the registered card (got through CardRegistration object).
      */
     public String CardId;
     
@@ -81,12 +81,12 @@ public class CardPreAuthorization extends EntityBase {
     public String SecureModeReturnURL;
     
     /**
-     * The date when the payment is processed (UNIX timestamp).
+     * The date when the payment has been processed (UNIX timestamp).
      */
     public Long ExpirationDate;
     
     /**
-     * The Id of the associated PayIn.
+     * Identifier of the associated PayIn.
      */
     public String PayInId;
     

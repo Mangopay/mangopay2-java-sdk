@@ -14,12 +14,12 @@ public class Hook extends EntityBase {
     public String Url;
     
     /**
-     * Status { ENABLED, DISABLED }
+     * Status { ENABLED, DISABLED }.
      */
     public String Status;
     
     /**
-     * Validity { VALID, INVALID }
+     * Validity { VALID, INVALID }.
      */
     public String Validity;
     

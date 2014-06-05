@@ -1,7 +1,7 @@
 package com.mangopay.core;
 
 /**
- * Class represents money value with currency 
+ * Class represents money value with currency.
  */
 public class Money extends Dto {
     

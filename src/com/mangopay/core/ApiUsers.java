@@ -10,20 +10,20 @@ import org.apache.commons.codec.binary.Base64;
 
 
 /**
- * API for Users.
+ * API for users.
  */
 public class ApiUsers extends ApiBase {
 
     /**
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
+     * Instantiates new ApiUsers object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiUsers(MangoPayApi root) { super(root); }
 
     /**
-     * Gets user by its identifier.
+     * Gets user.
      * @param userId    User identifier.
-     * @return          User instance returned from API, which is either of
-                        UserNatural or UserLegal type.
+     * @return          User instance returned from API, which is either of UserNatural or UserLegal type.
      * @throws Exception
      */
     public User get(String userId) throws Exception {
@@ -33,8 +33,7 @@ public class ApiUsers extends ApiBase {
     /**
      * Creates new user.
      * @param user  User object to be created.
-     * @return      User instance returned from API, which is either of
-                    UserNatural or UserLegal type.
+     * @return      User instance returned from API, which is either of UserNatural or UserLegal type.
      * @throws Exception
      */
     public User create(User user) throws Exception {
@@ -92,8 +91,7 @@ public class ApiUsers extends ApiBase {
     
     /**
      * Updates the user.
-     * @param user      Instance of UserNatural or UserLegal class to be 
-                        updated.
+     * @param user      Instance of UserNatural or UserLegal class to be updated.
      * @return          Updated User object returned from API.
      * @throws Exception
      */
@@ -114,7 +112,7 @@ public class ApiUsers extends ApiBase {
      * Creates bank account for user.
      * @param userId        User identifier to create bank account for.
      * @param bankAccount   Bank account object.
-     * @return              Created bank account object returned by API.
+     * @return              Created bank account object returned from API.
      * @throws Exception
      */
     public BankAccount createBankAccount(String userId, BankAccount bankAccount) throws Exception {
@@ -147,7 +145,7 @@ public class ApiUsers extends ApiBase {
      * Gets bank account of user.
      * @param userId        User identifier.
      * @param bankAccountId Bank account identifier.
-     * @return              Bank account object returned by API.
+     * @return              Bank account object returned from API.
      * @throws Exception
      */
     public BankAccount getBankAccount(String userId, String bankAccountId) throws Exception {
@@ -216,6 +214,13 @@ public class ApiUsers extends ApiBase {
         createKycPage(userId, kycDocumentId, fileArray);
     }
     
+    /**
+     * Creates KycDocument.
+     * @param userId        User identifier.
+     * @param type          Type of KycDocument.
+     * @return              KycDocument object returned from API.
+     * @throws Exception
+     */
     public KycDocument createKycDocument(String userId, KycDocumentType type) throws Exception {
         KycDocument kycDocument = new KycDocument();
         kycDocument.Type = type.name();
@@ -223,10 +228,24 @@ public class ApiUsers extends ApiBase {
         return this.createObject(KycDocument.class, "users_createkycdocument", kycDocument, userId);
     }
     
+    /**
+     * Gets KycDocument.
+     * @param userId        User identifier.
+     * @param kycDocumentId KycDocument identifier.
+     * @return              KycDocument object returned from API.
+     * @throws Exception
+     */
     public KycDocument getKycDocument(String userId, String kycDocumentId) throws Exception {
         return this.getObject(KycDocument.class, "users_getkycdocument", userId, kycDocumentId);
     }
     
+    /**
+     * Updates KycDocument.
+     * @param userId        User identifier.
+     * @param kycDocument   KycDocument entity instance to be updated.
+     * @return              KycDocument object returned from API.
+     * @throws Exception
+     */
     public KycDocument updateKycDocument(String userId, KycDocument kycDocument) throws Exception {
         return this.updateObject(KycDocument.class, "users_savekycdocument", kycDocument, userId);
     }

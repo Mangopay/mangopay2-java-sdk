@@ -13,6 +13,7 @@ import com.mangopay.entities.Card;
 public class ApiCards extends ApiBase {
     
     /**
+     * Instantiates new ApiCards object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
     public ApiCards(MangoPayApi root) { super(root); }
@@ -20,7 +21,8 @@ public class ApiCards extends ApiBase {
     /**
      * Gets card.
      * @param cardId Card identifier.
-     * @return Card object returned from API.
+     * @return Card instance returned from API.
+     * @throws Exception
      */
     public Card get(String cardId) throws Exception {
         return this.getObject(Card.class, "card_get", cardId);
@@ -37,7 +39,7 @@ public class ApiCards extends ApiBase {
     }
     
     /**
-     * Disables card (sets INVALID as the value of Validity field).
+     * Disables card (sets { INVALID } as the value of Validity field).
      * @param card  Card entity instance to be updated.
      * @return      Card object returned from API.
      * @throws Exception

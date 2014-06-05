@@ -24,5 +24,4 @@ public class ApiEventsTest extends BaseTest {
         assertNotNull(getEvents);
         assertNotNull(getAllEvents);
     }
-    
 }

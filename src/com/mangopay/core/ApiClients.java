@@ -6,21 +6,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * API for Clients.
+ * API for clients.
  */
 public class ApiClients extends ApiBase {
     
     /**
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
+     * Instantiates new ApiClients object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiClients(MangoPayApi root) { super(root); }
 
     /**
      * Gets client data for Basic Access Authentication.
-     * @param clientId      Client identifier
-     * @param clientName    Beautiful name for presentation
-     * @param clientEmail   Client's email
-     * @return              Returns Client entity instance.
+     * @param clientId      Client identifier.
+     * @param clientName    Beautiful name for presentation.
+     * @param clientEmail   Client's email.
+     * @return              Client instance returned from API.
      * @throws Exception
      */
     public Client create(final String clientId, final String clientName, final String clientEmail) throws Exception {

@@ -8,10 +8,19 @@ import java.util.ArrayList;
  */
 public class Event extends EntityBase {
     
+    /**
+     * Resource identifier.
+     */
     public String ResourceId;
     
+    /**
+     * Type of event.
+     */
     public String EventType;
     
+    /**
+     * Date as UNIX timestamp.
+     */
     public long Date;
     
     /**

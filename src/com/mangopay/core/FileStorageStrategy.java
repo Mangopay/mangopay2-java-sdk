@@ -15,6 +15,10 @@ public class FileStorageStrategy implements IStorageStrategy {
 
     private String _tempDir = null;
     
+    /**
+     * Instantiates FileStorageStrategy object.
+     * @param tempDir Temporary directory path.
+     */
     public FileStorageStrategy(String tempDir) {
         _tempDir = tempDir;
     }

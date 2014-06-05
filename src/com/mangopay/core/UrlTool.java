@@ -8,17 +8,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * Class to manage URLs.
+ * Helper class to manage URLs.
  */
 class UrlTool {
 
     /**
-     * Root/parent instance that holds the OAuthToken and Configuration instance
+     * Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     private MangoPayApi _root;
 
     /**
-     * Creates new UrlTool object.
+     * Instantiates new UrlTool object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public UrlTool(MangoPayApi root) {
@@ -36,9 +36,9 @@ class UrlTool {
     }
     
     /**
-     * 
-     * @param urlKey
-     * @return
+     * Gets REST url.
+     * @param urlKey                Url key.
+     * @return Final REST url.
      * @throws UnsupportedEncodingException 
      */
     public String getRestUrl(String urlKey) throws UnsupportedEncodingException {
@@ -46,10 +46,10 @@ class UrlTool {
     }
     
     /**
-     * 
-     * @param urlKey
-     * @param addClientId
-     * @return
+     * Gets REST url.
+     * @param urlKey                Url key.
+     * @param addClientId           Denotes whether client identifier should be composed into final url.
+     * @return Final REST url.
      * @throws UnsupportedEncodingException 
      */
     public String getRestUrl(String urlKey, Boolean addClientId) throws UnsupportedEncodingException {
@@ -57,11 +57,11 @@ class UrlTool {
     }
     
     /**
-     * 
-     * @param urlKey
-     * @param addClientId
-     * @param pagination
-     * @return
+     * Gets REST url.
+     * @param urlKey                Url key.
+     * @param addClientId           Denotes whether client identifier should be composed into final url.
+     * @param pagination            Pagination object.
+     * @return Final REST url.
      * @throws UnsupportedEncodingException 
      */
     public String getRestUrl(String urlKey, Boolean addClientId, Pagination pagination) throws UnsupportedEncodingException {
@@ -69,12 +69,12 @@ class UrlTool {
     }
     
     /**
-     * 
-     * @param urlKey
-     * @param addClientId
-     * @param pagination
-     * @param additionalUrlParams
-     * @return
+     * Gets REST url.
+     * @param urlKey                Url key.
+     * @param addClientId           Denotes whether client identifier should be composed into final url.
+     * @param pagination            Pagination object.
+     * @param additionalUrlParams   Additional parameters.
+     * @return Final REST url.
      * @throws UnsupportedEncodingException 
      */
     public String getRestUrl(String urlKey, Boolean addClientId, Pagination pagination, Map<String, String> additionalUrlParams) throws UnsupportedEncodingException {
@@ -105,9 +105,9 @@ class UrlTool {
     }
     
     /**
-     * 
-     * @param restUrl
-     * @return 
+     * Gets complete url.
+     * @param restUrl   Rest url.
+     * @return Complete url.
      */
     public String getFullUrl(String restUrl) {
         

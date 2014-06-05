@@ -53,6 +53,10 @@ public class CardRegistration extends EntityBase {
      */
     public String Status;
     
+    /**
+     * Gets the collection of read-only fields names.
+     * @return List of field names.
+     */
     @Override
     public ArrayList<String> getReadOnlyProperties() {
         

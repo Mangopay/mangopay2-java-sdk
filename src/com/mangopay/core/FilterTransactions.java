@@ -9,34 +9,32 @@ import java.util.Map;
 public class FilterTransactions extends Dto {
     
     /**
-     * TransactionStatus {CREATED, SUCCEEDED, FAILED}
+     * TransactionStatus { CREATED, SUCCEEDED, FAILED }.
      */
     public String Status;
     
     /**
-     * TransactionType {PAYIN, PAYOUT, TRANSFER}
+     * TransactionType { PAYIN, PAYOUT, TRANSFER }.
      */
     public String Type;
     
     /**
-     * TransactionNature { REGULAR, REFUND, REPUDIATION }
+     * TransactionNature { REGULAR, REFUND, REPUDIATION }.
      */
     public String Nature;
     
     /**
-     * TransactionDirection {DEBIT, CREDIT}
+     * TransactionDirection { DEBIT, CREDIT }.
      */
     public String Direction;
     
     /**
-     * Start date in Unix format:
-     * return only transactions that have CreationDate BEFORE this date
+     * Start date in Unix format: return only transactions that have CreationDate BEFORE this date.
      */
     public Long BeforeDate;
     
     /**
-     * End date in Unix format:
-     * return only transactions that have CreationDate AFTER this date
+     * End date in Unix format: return only transactions that have CreationDate AFTER this date.
      */
     public Long AfterDate;
     

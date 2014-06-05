@@ -258,6 +258,5 @@ public class ApiPayInsTest extends BaseTest {
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
-        
     }
 }

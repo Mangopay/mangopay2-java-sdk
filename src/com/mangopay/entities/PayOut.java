@@ -14,7 +14,7 @@ public class PayOut extends Transaction {
     public String DebitedWalletId;
     
     /**
-     * PaymentType (BANK_WIRE, MERCHANT_EXPENSE, AMAZON_GIFTCARD)
+     * PaymentType { BANK_WIRE, MERCHANT_EXPENSE, AMAZON_GIFTCARD }.
      */
     public String PaymentType;
     
@@ -25,7 +25,6 @@ public class PayOut extends Transaction {
     
     /**
      * Gets the structure that maps which property depends on other property.
-     * To be overridden in child class if has any dependent objects.
      * @return 
      */
     @Override
@@ -45,7 +44,7 @@ public class PayOut extends Transaction {
     }
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

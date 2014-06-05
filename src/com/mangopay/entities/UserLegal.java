@@ -21,63 +21,74 @@ public class UserLegal extends User {
     }
     
     /**
-     * Type for legal user. One of LegalPersonTypes constants.
+     * Type for legal user. One of UserLegal.LegalPersonTypes constants.
      */
     public String LegalPersonType;
     
     /**
+     * Headquarters address.
      */
     public String HeadquartersAddress;
     
     /**
+     * Legal representative first name.
      */
     public String LegalRepresentativeFirstName;
     
     /**
+     * Legal representative last name.
      */
     public String LegalRepresentativeLastName;
     
     /**
+     * Legal representative address.
      */
     public String LegalRepresentativeAddress;
     
     /**
+     * Legal representative email.
      */
     public String LegalRepresentativeEmail;
     
     /**
+     * Legal representative birthday.
      */
     public long LegalRepresentativeBirthday;
     
     /**
+     * Legal representative nationality.
      */
     public String LegalRepresentativeNationality;
     
     /**
+     * Legal representative country of residence.
      */
     public String LegalRepresentativeCountryOfResidence;
     
     /**
+     * Statute.
      */
     public String Statute;
     
     /**
+     * Proof of registration.
      */
     public String ProofOfRegistration;
     
     /**
+     * Shareholder declaration.
      */
     public String ShareholderDeclaration;
 
     /**
-     * Creates new instance of UserLegal class.
+     * Instantiates new UserLegal object.
      */
     public UserLegal() {
         PersonType = Types.Legal;
     }
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

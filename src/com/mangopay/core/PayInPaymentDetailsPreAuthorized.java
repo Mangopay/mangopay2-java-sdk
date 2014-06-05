@@ -1,12 +1,12 @@
 package com.mangopay.core;
 
 /**
- * Class representing the Web type for execution option in PayIn entity.
+ * Class representing the PreAuthorized type for execution option in PayIn entity.
  */
 public class PayInPaymentDetailsPreAuthorized extends Dto implements IPayInPaymentDetails {
     
     /**
-     * The identifier of the Preauthorization object.
+     * Pre-authorization identifier.
      */
     public String PreauthorizationId;
     

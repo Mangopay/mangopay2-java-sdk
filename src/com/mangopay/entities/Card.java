@@ -24,14 +24,14 @@ public class Card extends EntityBase {
     public String CardProvider;
     
     /**
-     * Card type. { CB_VISA_MASTERCARD } is the only value available yet.
+     * Card type.
      */
     public String CardType;
     
     /**
      * Product codes.
      */
-    public String Product ;
+    public String Product;
     
     /**
      * Bank code.

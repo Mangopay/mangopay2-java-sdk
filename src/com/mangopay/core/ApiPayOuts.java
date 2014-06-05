@@ -4,12 +4,13 @@ import com.mangopay.MangoPayApi;
 import com.mangopay.entities.PayOut;
 
 /**
- * API for PayOuts
+ * API for PayOuts.
  */
 public class ApiPayOuts extends ApiBase {
 
     /**
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
+     * Instantiates new ApiPayOuts object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiPayOuts(MangoPayApi root) { super(root); }
     

@@ -6,7 +6,7 @@ package com.mangopay.core;
 public class PayInPaymentDetailsCard extends Dto implements IPayInPaymentDetails {
 
     /**
-     * Card type { CB_VISA_MASTERCARD, AMEX }
+     * Card type { CB_VISA_MASTERCARD, AMEX }.
      */
     public String CardType;
     

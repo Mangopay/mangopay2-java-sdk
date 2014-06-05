@@ -5,10 +5,14 @@ import com.mangopay.entities.Event;
 import java.util.List;
 
 /**
- * API for Events.
+ * API for events.
  */
 public class ApiEvents extends ApiBase {
     
+    /**
+     * Instantiates new ApiEvents object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
+     */
     public ApiEvents(MangoPayApi root) { super(root); }
     
     /**

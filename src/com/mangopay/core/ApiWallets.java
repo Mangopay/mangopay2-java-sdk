@@ -6,11 +6,12 @@ import com.mangopay.entities.Wallet;
 import java.util.List;
 
 /**
- * API for Wallets.
+ * API for wallets.
  */
 public class ApiWallets extends ApiBase {
     
     /**
+     * Instantiates new ApiWallets object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
     public ApiWallets(MangoPayApi root) { super(root); }

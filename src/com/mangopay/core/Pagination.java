@@ -1,7 +1,7 @@
 package com.mangopay.core;
 
 /**
- * Class represents pagination information.
+ * Pagination class.
  */
 public class Pagination extends Dto {
     
@@ -26,27 +26,24 @@ public class Pagination extends Dto {
     public int TotalItems;
     
     /**
-     * Array with links to navigation. 
+     * Four-elements array with links to navigation. 
      * All values are optional. Format:
-     * array(
-     *      first => http url
-     *      prev => http url
-     *      next => http url
-     *      last => http url
-     * )
+     * Links[0] -> first,
+     * Links[1] -> previous, 
+     * Links[2] -> next, 
+     * Links[3] -> last.
      */
     public String[] Links;
     
-    
     /**
-     * Construct
+     * Instantiates new Pagination object.
      */
     public Pagination() {
         this(1, 10);
     }
     
     /**
-     * Construct
+     * Instantiates new Pagination object.
      * @param page  Page number.
      */
     public Pagination(int page) {
@@ -54,9 +51,9 @@ public class Pagination extends Dto {
     }
     
     /**
-     * Construct
+     * Instantiates new Pagination object.
      * @param page          Page number.
-     * @param itemsPerPage  Number of items per one page
+     * @param itemsPerPage  Number of items per page.
      */
     public Pagination(int page, int itemsPerPage) {
         this.Links = new String[4];

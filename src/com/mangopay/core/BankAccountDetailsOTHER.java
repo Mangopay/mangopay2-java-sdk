@@ -11,7 +11,7 @@ public class BankAccountDetailsOTHER extends Dto implements IBankAccountDetails 
     public String Type;
     
     /**
-     * The Country associate to the BankAccount, 
+     * The Country associate to the BankAccount. 
      * ISO 3166-1 alpha-2 format is expected.
      */
     public String Country;

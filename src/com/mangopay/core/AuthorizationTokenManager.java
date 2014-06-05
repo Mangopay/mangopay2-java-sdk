@@ -3,12 +3,16 @@ package com.mangopay.core;
 import com.mangopay.MangoPayApi;
 
 /**
- * Authorization token manager.
+ * Authorization token manager. This class cannot be inherited.
  */
 public final class AuthorizationTokenManager extends ApiBase {
     
     private IStorageStrategy _storageStrategy;
     
+    /**
+     * Instantiates new AuthorizationTokenManager object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instances.
+     */
     public AuthorizationTokenManager(MangoPayApi root) {
         super(root);
         
@@ -34,8 +38,7 @@ public final class AuthorizationTokenManager extends ApiBase {
     }
     
     /**
-     * Stores authorization token passed as an argument in the underlying
-     * storage strategy implementation.
+     * Stores authorization token passed as an argument in the underlying storage strategy implementation.
      * @param token Token instance to be stored.
      */
     public void storeToken(OAuthToken token) {

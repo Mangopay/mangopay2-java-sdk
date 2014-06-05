@@ -34,7 +34,6 @@ public class Wallet extends EntityBase {
     
     /**
      * Gets map which property is an object and what type of object.
-     * To be overridden in child class if has any sub objects.
      * @return Collection of field name-field type pairs.
      */
     @Override
@@ -46,7 +45,7 @@ public class Wallet extends EntityBase {
     }
     
     /**
-     * Gets the collection of read-only fields names
+     * Gets the collection of read-only fields names.
      * @return List of field names.
      */
     @Override

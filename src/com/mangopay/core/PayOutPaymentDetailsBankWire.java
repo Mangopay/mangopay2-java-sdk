@@ -6,12 +6,12 @@ package com.mangopay.core;
 public class PayOutPaymentDetailsBankWire extends Dto implements IPayOutPaymentDetails {
     
     /**
-     * Bank account Id
+     * Bank account identifier.
      */
     public String BankAccountId;
     
     /**
-     * Communication
+     * Communication.
      */
     public String Communication;
 }

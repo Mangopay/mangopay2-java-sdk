@@ -9,6 +9,7 @@ import com.mangopay.entities.CardRegistration;
 public class ApiCardRegistrations extends ApiBase {
     
     /**
+     * Instantiates new ApiCardRegistration object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
     public ApiCardRegistrations(MangoPayApi root) { super(root); }
@@ -16,7 +17,8 @@ public class ApiCardRegistrations extends ApiBase {
     /**
      * Creates new card registration.
      * @param cardRegistration Card registration object to create.
-     * @return Card registration object returned from API.
+     * @return Card registration instance returned from API.
+     * @throws Exception
      */
     public CardRegistration create(CardRegistration cardRegistration) throws Exception {
         return this.createObject(CardRegistration.class, "cardregistration_create", cardRegistration);
@@ -25,7 +27,8 @@ public class ApiCardRegistrations extends ApiBase {
     /**
      * Gets card registration.
      * @param cardRegistrationId Card Registration identifier.
-     * @return Card registration object returned from API.
+     * @return Card registration instance returned from API.
+     * @throws Exception
      */
     public CardRegistration get(String cardRegistrationId) throws Exception {
         return this.getObject(CardRegistration.class, "cardregistration_get", cardRegistrationId);
@@ -34,7 +37,8 @@ public class ApiCardRegistrations extends ApiBase {
     /**
      * Updates card registration.
      * @param cardRegistration Card registration object to be updated.
-     * @return Card registration object returned from API.
+     * @return Card registration instance returned from API.
+     * @throws Exception
      */
     public CardRegistration update(CardRegistration cardRegistration) throws Exception {
         return this.updateObject(CardRegistration.class, "cardregistration_save", cardRegistration);

@@ -38,9 +38,8 @@ public class ApiUsersTest extends BaseTest {
         try {
             ret = this._api.Users.create(user);
             
-            assertTrue("CreateLegal() should throw an exception when required props are not provided", false);
-        }
-        catch (ResponseException ex) {
+            Assert.fail("CreateLegal() should throw an exception when required props are not provided");
+        } catch (ResponseException ex) {
             assertNull(ret);
         }
     }
@@ -80,8 +79,6 @@ public class ApiUsersTest extends BaseTest {
         assertTrue(user2.PersonType.equals(User.Types.Natural));
         assertTrue(user2.Id.equals(john.Id));
         
-        //assertIdentical(user1, john);
-        //assertIdentical(user2, john);
         assertEqualInputProps(user1, john);
     }
 
@@ -93,9 +90,8 @@ public class ApiUsersTest extends BaseTest {
         try {
             user = this._api.Users.getNatural(matrix.Id);
             
-            assertTrue("GetUser() should throw an exception when called with legal user id", false);
-        }
-        catch (ResponseException ex) {
+            Assert.fail("GetUser() should throw an exception when called with legal user id");
+        } catch (ResponseException ex) {
             assertNull(user);
         }
     }
@@ -108,7 +104,7 @@ public class ApiUsersTest extends BaseTest {
         try {
             user = this._api.Users.getLegal(john.Id);
             
-            assertTrue("GetLegal() should throw an exception when called with natural user id", false);
+            Assert.fail("GetLegal() should throw an exception when called with natural user id");
         } catch (ResponseException ex) {
             assertNull(user);
         }
@@ -121,8 +117,6 @@ public class ApiUsersTest extends BaseTest {
         User user1 = this._api.Users.get(matrix.Id);
         User user2 = this._api.Users.getLegal(matrix.Id);
 
-//        assertEquals(user1, matrix);
-//        assertEquals(user2, matrix);
         assertEqualInputProps((UserLegal)user1, matrix);
         assertEqualInputProps((UserLegal)user2, matrix);
     }
@@ -184,16 +178,16 @@ public class ApiUsersTest extends BaseTest {
             account.OwnerName = john.FirstName + " " + john.LastName;
             account.OwnerAddress = john.Address;
             account.Details = new BankAccountDetailsGB();
-            ((BankAccountDetailsGB)account.Details).AccountNumber = "234234234234";
-            ((BankAccountDetailsGB)account.Details).SortCode = "234334";
+            ((BankAccountDetailsGB)account.Details).AccountNumber = "18329068";
+            ((BankAccountDetailsGB)account.Details).SortCode = "306541";
             
             BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
             assertTrue(createAccount.Type.equals("GB"));
-            assertTrue(((BankAccountDetailsGB)createAccount.Details).AccountNumber.equals("234234234234"));
-            assertTrue(((BankAccountDetailsGB)createAccount.Details).SortCode.equals("234334"));
+            assertTrue(((BankAccountDetailsGB)createAccount.Details).AccountNumber.equals("18329068"));
+            assertTrue(((BankAccountDetailsGB)createAccount.Details).SortCode.equals("306541"));
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
@@ -324,9 +318,6 @@ public class ApiUsersTest extends BaseTest {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getJohnsKycDocument();
         
-        //Calendar c = Calendar.getInstance();
-        //Long currTime = c.getTimeInMillis() / 1000;
-        //kycDocument.Tag = currTime.toString();
         kycDocument.Status = "VALIDATION_ASKED";
         
         KycDocument result = this._api.Users.updateKycDocument(john.Id, kycDocument);
@@ -334,8 +325,6 @@ public class ApiUsersTest extends BaseTest {
         assertNotNull(result);
         assertTrue(kycDocument.Type.equals(result.Type));
         assertTrue(kycDocument.Status.equals("VALIDATION_ASKED"));
-        //assertNotNull(result.Tag);
-        //assertTrue(result.Tag.equals(currTime.toString()));
     }
     
     @Test

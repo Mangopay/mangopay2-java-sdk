@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * MangoPay API base class.
+ * Base class for all Api classes.
  */
 public abstract class ApiBase {
 
     /**
-     * Root/parent instance that holds the OAuthToken and Configuration instance
+     * Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     protected MangoPayApi _root;
 
@@ -44,7 +44,7 @@ public abstract class ApiBase {
         put("preauthorization_save", new String[] { "/preauthorizations/%s", RequestType.PUT });
         
         put("card_get", new String[] { "/cards/%s", RequestType.GET });
-        put("card_get", new String[] { "/cards/%s", RequestType.PUT });
+        put("card_save", new String[] { "/cards/%s", RequestType.PUT });
         
         // pay ins URLs
         put("payins_card-web_create", new String[] { "/payins/card/web/", RequestType.POST });
@@ -140,7 +140,7 @@ public abstract class ApiBase {
     
     /**
      * Creates new API instance.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiBase(MangoPayApi root) {
         _root = root;
@@ -172,14 +172,14 @@ public abstract class ApiBase {
     
     /**
      * Creates the Dto instance.
-     * @param <T>
-     * @param classOfT          The class on behalf of which the request is 
-                                being called.
+     * @param <T>               Type on behalf of which the request is being called.
+     * @param classOfT          Type on behalf of which the request is being called.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
      * @param entityId          Entity identifier.
      * @param secondEntityId    Second entity identifier.
      * @return                  The Dto instance returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
         
@@ -198,27 +198,29 @@ public abstract class ApiBase {
         return result;
         
     }
+    
     /**
      * Creates the Dto instance.
-     * @param <T>
-     * @param classOfT          The class on behalf of which the request is 
-                                being called.
-     * @param methodKey         Relevant method key.
-     * @param entity            Dto instance that is going to be sent.
-     * @param entityId          Entity identifier.
-     * @return                  The Dto instance returned from API.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
+     * @param methodKey     Relevant method key.
+     * @param entity        Dto instance that is going to be sent.
+     * @param entityId      Entity identifier.
+     * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
         return createObject(classOfT, methodKey, entity, entityId, "");
     }
+    
     /**
      * Creates the Dto instance.
-     * @param <T>
-     * @param classOfT      The class on behalf of which the request is 
-                            being called.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param entity        Dto instance that is going to be sent.
      * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity) throws Exception {
         return createObject(classOfT, methodKey, entity, "");
@@ -226,13 +228,13 @@ public abstract class ApiBase {
     
     /**
      * Gets the Dto instance from API.
-     * @param <T>
-     * @param classOfT              The class on behalf of which the request is 
-                                    being called.
-     * @param methodKey             Relevant method key.
-     * @param entityId              Entity identifier.
-     * @param secondEntityId        Entity identifier for the second entity.
-     * @return                      The Dto instance returned from API.
+     * @param <T>               Type on behalf of which the request is being called.
+     * @param classOfT          Type on behalf of which the request is being called.
+     * @param methodKey         Relevant method key.
+     * @param entityId          Entity identifier.
+     * @param secondEntityId    Entity identifier for the second entity.
+     * @return                  The Dto instance returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, String entityId, String secondEntityId) throws Exception {
         
@@ -246,12 +248,12 @@ public abstract class ApiBase {
     
     /**
      * Gets the Dto instance from API.
-     * @param <T>
-     * @param classOfT              The class on behalf of which the request is 
-                                    being called.
-     * @param methodKey             Relevant method key.
-     * @param entityId              Entity identifier.
-     * @return                      The Dto instance returned from API.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
+     * @param methodKey     Relevant method key.
+     * @param entityId      Entity identifier.
+     * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, String entityId) throws Exception {
         return getObject(classOfT, methodKey, entityId, "");
@@ -259,16 +261,14 @@ public abstract class ApiBase {
     
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>
-     * @param classOfT              The class on behalf of which the request is 
-                                    being called.
+     * @param <T>                   Type on behalf of which the request is being called.
+     * @param classOfT              Type on behalf of which the request is being called.
      * @param methodKey             Relevant method key.
      * @param pagination            Pagination object.
      * @param entityId              Entity identifier.
-     * @param additionalUrlParams   Collection of key-value pairs of request 
-                                    parameters.
-     * @return                      The array of Dto instances returned 
-                                    from API.
+     * @param additionalUrlParams   Collection of key-value pairs of request parameters.
+     * @return                      The array of Dto instances returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, Map<String, String> additionalUrlParams) throws Exception {
         
@@ -288,29 +288,29 @@ public abstract class ApiBase {
         return rest.requestList(classOfT, classOfTItem, urlMethod, this.getRequestType(methodKey), null, pagination, additionalUrlParams);
                 
     }
+    
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>
-     * @param classOfT              The class on behalf of which the request is 
-                                    being called.
-     * @param methodKey             Relevant method key.
-     * @param pagination            Pagination object.
-     * @param entityId              Entity identifier.
-     * @return                      The array of Dto instances returned 
-                                    from API.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
+     * @param methodKey     Relevant method key.
+     * @param pagination    Pagination object.
+     * @param entityId      Entity identifier.
+     * @return              The array of Dto instances returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId) throws Exception {
         return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null);
     }
+    
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>
-     * @param classOfT              The class on behalf of which the request is 
-                                    being called.
-     * @param methodKey             Relevant method key.
-     * @param pagination            Pagination object.
-     * @return                      The array of Dto instances returned 
-                                    from API.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
+     * @param methodKey     Relevant method key.
+     * @param pagination    Pagination object.
+     * @return              The array of Dto instances returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination) throws Exception {
         return getList(classOfT, classOfTItem, methodKey, pagination, "");
@@ -318,14 +318,27 @@ public abstract class ApiBase {
     
     /**
      * Saves the Dto instance.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param entity        Dto instance that is going to be sent.
      * @return              The Dto instance returned from API.
+     * @throws Exception
      */
     protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity) throws Exception {
         return updateObject(classOfT, methodKey, entity, "");
     }
     
+    /**
+     * Saves the Dto instance.
+     * @param <T>           Type on behalf of which the request is being called.
+     * @param classOfT      Type on behalf of which the request is being called.
+     * @param methodKey     Relevant method key.
+     * @param entity        Dto instance that is going to be sent.
+     * @param entityId      Entity identifier.
+     * @return              The Dto instance returned from API.
+     * @throws Exception
+     */
     protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
         
         if (entity instanceof EntityBase) {
