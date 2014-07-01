@@ -823,7 +823,7 @@ public class RestTool {
         Map<String, String> httpHeaders = new HashMap<>();
         
         // content type
-        httpHeaders.put("Content-Type", "application/json");
+        httpHeaders.put("Content-Type", "application/x-www-form-urlencoded");
         
         // AuthenticationHelper http header
         if (this._authRequired) {

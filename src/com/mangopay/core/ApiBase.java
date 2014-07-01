@@ -21,7 +21,7 @@ public abstract class ApiBase {
     private Map<String, String[]> methods = new HashMap<String, String[]>(){{
 
         put("authentication_base", new String[] { "/api/clients/", RequestType.POST });
-        put("authentication_oauth", new String[] { "/api/oauth/token", RequestType.POST });
+        put("authentication_oauth", new String[] { "/oauth/token", RequestType.POST });
         
         put("events_all", new String[] { "/events", RequestType.GET });
         put("events_gethookcallbacks", new String[] { "/events/%s/hook-callbacks", RequestType.GET });
