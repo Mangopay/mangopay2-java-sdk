@@ -26,6 +26,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.SocketAddress;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -301,6 +304,12 @@ public class RestTool {
                 Logs.debug("FullUrl", urlTool.getFullUrl(restUrl));
             }
 
+            /*  FOR WEB DEBUG PURPOSES
+            SocketAddress addr = new InetSocketAddress("localhost", 8888);
+            Proxy proxy = new Proxy(Proxy.Type.HTTP, addr);
+            _connection = (HttpURLConnection)url.openConnection(proxy);
+            */
+            
             _connection = (HttpURLConnection)url.openConnection();
             
             // set request method
@@ -352,7 +361,7 @@ public class RestTool {
                 
                 try (OutputStreamWriter osw = new OutputStreamWriter(_connection.getOutputStream(), "UTF-8")) {
                     osw.write(requestBody);
-                    osw.flush ();
+                    osw.flush();
                 }
             }
             
@@ -823,7 +832,7 @@ public class RestTool {
         Map<String, String> httpHeaders = new HashMap<>();
         
         // content type
-        httpHeaders.put("Content-Type", "application/x-www-form-urlencoded");
+        httpHeaders.put("Content-Type", "application/json");
         
         // AuthenticationHelper http header
         if (this._authRequired) {
