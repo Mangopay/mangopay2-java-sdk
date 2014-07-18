@@ -72,7 +72,7 @@ public class CardPreAuthorization extends EntityBase {
      * This is the URL where to redirect users to proceed 
      * to 3D secure validation.
      */
-    public String SecureModeRedirectUrl;
+    public String SecureModeRedirectURL;
     
     /**
      * This is the URL where users are automatically redirected 
