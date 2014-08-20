@@ -1,5 +1,6 @@
 package com.mangopay.core;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -39,7 +40,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 
 /**
@@ -73,6 +73,9 @@ public class RestTool {
     
     // pagination object
     private Pagination _pagination;
+    
+    // slf4j logger facade
+    private Logger _logger;
         
     /**
      * Instantiates new RestTool object.
@@ -84,6 +87,8 @@ public class RestTool {
         this._root = root;
         this._authRequired = authRequired;
         this._debugMode = this._root.Config.DebugMode;
+        
+        _logger = LoggerFactory.getLogger(RestTool.class);
     }
     
     /**
@@ -301,7 +306,7 @@ public class RestTool {
             
             
             if (this._debugMode) {
-                Logs.debug("FullUrl", urlTool.getFullUrl(restUrl));
+                _logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
             }
 
             /*  FOR WEB DEBUG PURPOSES
@@ -322,7 +327,7 @@ public class RestTool {
                 _connection.addRequestProperty(entry.getKey(), entry.getValue());
                 
                 if (this._debugMode)
-                    Logs.debug("HTTP Header", entry.getKey() + ": " + entry.getValue());
+                    _logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
             }
             
             // prepare to go
@@ -335,7 +340,7 @@ public class RestTool {
             }
 
             if (this._debugMode)
-                Logs.debug("RequestType", this._requestType);
+                _logger.info("RequestType: {}", this._requestType);
 
             if (this._requestData != null || entity != null) {
 
@@ -355,8 +360,8 @@ public class RestTool {
                 }
                  
                 if (this._debugMode) {
-                    Logs.debug("RequestData", this._requestData);
-                    Logs.debug("RequestBody", requestBody);
+                    _logger.info("RequestData: {}", this._requestData);
+                    _logger.info("RequestBody: {}", requestBody);
                 }
                 
                 try (OutputStreamWriter osw = new OutputStreamWriter(_connection.getOutputStream(), "UTF-8")) {
@@ -387,9 +392,9 @@ public class RestTool {
             
             if (this._debugMode) {
                 if (this._responseCode == 200 || this._responseCode == 204) {
-                    Logs.debug("Response OK", responseString);
+                    _logger.info("Response OK: {}", responseString);
                 } else {
-                    Logs.debug("Response ERROR", responseString);
+                    _logger.info("Response ERROR: {}", responseString);
                 }
             }
         
@@ -399,7 +404,7 @@ public class RestTool {
                 
                 response = castResponseToEntity(classOfT, new JsonParser().parse(responseString).getAsJsonObject());
 
-                if (this._debugMode) Logs.debug("Response object", response.toString());
+                if (this._debugMode) _logger.info("Response object: {}", response.toString());
             }
             
             this.checkResponseCode(responseString);
@@ -407,7 +412,7 @@ public class RestTool {
         }
         catch (Exception ex) {
             //ex.printStackTrace();
-            if (this._debugMode) Logs.debug("EXCEPTION", Arrays.toString(ex.getStackTrace()));
+            if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
             throw ex;
         }
         
@@ -418,7 +423,7 @@ public class RestTool {
         for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
             for (String v : k.getValue()){
                 
-                if (this._debugMode) Logs.debug("Response header", k.getKey() + ":" + v);
+                if (this._debugMode) _logger.info("Response header: {}", k.getKey() + ":" + v);
 
                 if (k.getKey() == null) continue;
                 
@@ -488,7 +493,7 @@ public class RestTool {
                     Method m = RestTool.class.getDeclaredMethod("buildRequestData", Class.class, Dto.class);
                     subRequestData = (HashMap<String, Object>)m.invoke(this, f.getType(), f.get(entity));
                 } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                    Logger.getLogger(RestTool.class.getName()).log(Level.SEVERE, null, ex);
+                    if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
                 }
                     
                 for (Entry<String, Object> e : subRequestData.entrySet()) {
@@ -540,7 +545,7 @@ public class RestTool {
         try {
             
             if (_debugMode) {
-                Logs.debug("Entity type", classOfT.getName());
+                _logger.info("Entity type: {}", classOfT.getName());
             }
             
             T result = null;
@@ -634,7 +639,7 @@ public class RestTool {
                         }
                         
                         if (_debugMode) {
-                            Logs.debug("Recognized field", String.format("[%s] %s%s", name, fieldTypeName, fieldIsArray ? "[]" : ""));
+                            _logger.info("Recognized field: {}", String.format("[%s] %s%s", name, fieldTypeName, fieldIsArray ? "[]" : ""));
                         }
                         
                         if (fieldIsArray) {
@@ -687,7 +692,7 @@ public class RestTool {
             return result;
             
         } catch (Exception e) {
-            Logger.getLogger(RestTool.class.getName()).log(Level.SEVERE, null, e);
+            if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(e.getStackTrace()));
             
             throw e;
         }
@@ -709,7 +714,7 @@ public class RestTool {
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
             if (this._debugMode)
-                Logs.debug("FullUrl", urlTool.getFullUrl(restUrl));
+                _logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
 
             _connection = (HttpURLConnection)url.openConnection();
             
@@ -723,7 +728,7 @@ public class RestTool {
                 _connection.addRequestProperty(entry.getKey(), entry.getValue());
                 
                 if (this._debugMode)
-                    Logs.debug("HTTP Header", entry.getKey() + ": " + entry.getValue());
+                    _logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
             }
             
             // prepare to go
@@ -736,7 +741,7 @@ public class RestTool {
             }
 
             if (this._debugMode)
-                Logs.debug("RequestType", this._requestType);
+                _logger.info("RequestType: {}", this._requestType);
 
             if (this._requestData != null) {
 
@@ -753,8 +758,8 @@ public class RestTool {
                 }
 
                 if (this._debugMode) {
-                    Logs.debug("RequestData", this._requestData);
-                    Logs.debug("RequestBody", requestBody);
+                    _logger.info("RequestData: {}", this._requestData);
+                    _logger.info("RequestBody: {}", requestBody);
                 }
             }
             
@@ -781,9 +786,9 @@ public class RestTool {
             
             if (this._debugMode) {
                 if (this._responseCode == 200) {
-                    Logs.debug("Response OK", responseString);
+                    _logger.info("Response OK: {}", responseString);
                 } else {
-                    Logs.debug("Response ERROR", responseString);
+                    _logger.info("Response ERROR: {}", responseString);
                 }
             }
         
@@ -800,8 +805,8 @@ public class RestTool {
                 }            
 
                 if (this._debugMode) {
-                    Logs.debug("Response object", response.toString());
-                    Logs.debug("Elements count", response.size());
+                    _logger.info("Response object: {}", response.toString());
+                    _logger.info("Elements count: {}", response.size());
                 }
             }
 
@@ -809,8 +814,7 @@ public class RestTool {
             
         }
         catch (Exception ex) {
-            //ex.printStackTrace();
-            if (this._debugMode) Logs.debug("EXCEPTION", Arrays.toString(ex.getStackTrace()));
+            if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
             throw ex;
         }
         
