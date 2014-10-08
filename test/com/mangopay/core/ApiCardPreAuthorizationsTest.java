@@ -18,9 +18,9 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
         
         assertTrue(!"".equals(cardPreAuthorization.Id));
-        assertEquals(cardPreAuthorization.Status, "SUCCEEDED");
-        assertEquals(cardPreAuthorization.PaymentStatus, "WAITING");
-        assertEquals(cardPreAuthorization.ExecutionType, "DIRECT");
+        assertEquals("SUCCEEDED", cardPreAuthorization.Status);
+        assertEquals("WAITING", cardPreAuthorization.PaymentStatus);
+        assertEquals("DIRECT", cardPreAuthorization.ExecutionType);
         assertNull(cardPreAuthorization.PayInId);
     }
     
@@ -31,7 +31,8 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
         CardPreAuthorization getCardPreAuthorization = this._api.CardPreAuthorizations.get(cardPreAuthorization.Id);
         
         assertEquals(cardPreAuthorization.Id, getCardPreAuthorization.Id);
-        assertEquals(getCardPreAuthorization.ResultCode, "000000");
+        assertEquals("SUCCEEDED", getCardPreAuthorization.Status);
+        assertEquals("000000", getCardPreAuthorization.ResultCode);
     }
     
     @Test
@@ -41,8 +42,8 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
         
         CardPreAuthorization resultCardPreAuthorization = this._api.CardPreAuthorizations.update(cardPreAuthorization);
         
-        assertEquals(resultCardPreAuthorization.Status, "SUCCEEDED");
-        assertEquals(resultCardPreAuthorization.PaymentStatus, "CANCELED");
+        assertEquals("SUCCEEDED", resultCardPreAuthorization.Status);
+        assertEquals("CANCELED", resultCardPreAuthorization.PaymentStatus);
     }
     
 }

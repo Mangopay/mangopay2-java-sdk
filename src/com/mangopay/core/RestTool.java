@@ -574,7 +574,6 @@ public class RestTool {
             Map<String, Type> subObjects = ((Dto)result).getSubObjects();
             Map<String, Map<String, Map<String, Class<?>>>> dependentObjects = ((Dto)result).getDependentObjects();
             
-            //for (Field f : classOfT.getFields()) {
             for (Field f : result.getClass().getFields()) {
                 String name = f.getName();
                 

@@ -19,7 +19,7 @@ public class ApiTransfersTest extends BaseTest {
         assertTrue(transfer.Id.length() > 0);
         assertEquals(transfer.AuthorId, john.Id);
         assertEquals(transfer.CreditedUserId, john.Id);
-        assertTrue(creditedWallet.Balance.Amount == 100.0);
+        assertTrue(creditedWallet.Balance.Amount == 100);
     }
     
     @Test
@@ -46,8 +46,8 @@ public class ApiTransfersTest extends BaseTest {
         Wallet walletAfter = this._api.Wallets.get(wallet.Id);
 
         assertTrue(refund.Id.length() > 0);
-        assertTrue(refund.DebitedFunds.Amount.equals(transfer.DebitedFunds.Amount));
-        assertTrue(walletBefore.Balance.Amount.equals(walletAfter.Balance.Amount - transfer.DebitedFunds.Amount));
+        assertTrue(refund.DebitedFunds.Amount == transfer.DebitedFunds.Amount);
+        assertTrue(walletBefore.Balance.Amount == (walletAfter.Balance.Amount - transfer.DebitedFunds.Amount));
         assertEquals("TRANSFER", refund.Type);
         assertEquals("REFUND", refund.Nature);
     }

@@ -127,8 +127,8 @@ public class ApiUsers extends ApiBase {
      * @return              Collection of bank accounts of user.
      * @throws Exception
      */
-    public List<BankAccount> getBankAccounts(String userId, Pagination pagination) throws Exception {
-        return this.getList(BankAccount[].class, BankAccount.class, "users_allbankaccount", pagination, userId);
+    public List<BankAccount> getBankAccounts(String userId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(BankAccount[].class, BankAccount.class, "users_allbankaccount", pagination, userId, sorting);
     }
     
     /**
@@ -138,7 +138,7 @@ public class ApiUsers extends ApiBase {
      * @throws Exception
      */
     public List<BankAccount> getBankAccounts(String userId) throws Exception {
-        return getBankAccounts(userId, null);
+        return getBankAccounts(userId, null, null);
     }
     
     /**
@@ -153,26 +153,50 @@ public class ApiUsers extends ApiBase {
     }
     
     /**
+     * Gets all wallets of user.
+     * @param userId        User identifier to get bank accounts of.
+     * @param pagination    Pagination object.
+     * @param sorting       Sorting object.
+     * @return              Collection of wallets of user.
+     * @throws Exception
+     */
+    public List<Wallet> getWallets(String userId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Wallet[].class, Wallet.class, "users_allwallets", pagination, userId, sorting);
+    }
+    
+    /**
+     * Gets first page of all wallets of user.
+     * @param userId        User identifier to get bank accounts of.
+     * @return              Collection of wallets of user.
+     * @throws Exception
+     */
+    public List<Wallet> getWallets(String userId) throws Exception {
+        return getWallets(userId, null, null);
+    }
+    
+    /**
      * Gets transactions for user.
      * @param userId        User identifier.
      * @param pagination    Pagination object.
      * @param filter        Filter object.
+     * @param sorting       Sorting object.
      * @return              Collection of transactions of user.
      * @throws Exception
      */
-    public List<Transaction> getTransactions(String userId, Pagination pagination, FilterTransactions filter) throws Exception {
-        return this.getList(Transaction[].class, Transaction.class, "users_alltransactions", pagination, userId, filter.getValues());
+    public List<Transaction> getTransactions(String userId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class, "users_alltransactions", pagination, userId, filter.getValues(), sorting);
     }
     
     /**
      * Gets all cards for user.
      * @param userId        User identifier.
      * @param pagination    Pagination object.
+     * @param sorting       Sorting object.
      * @return              Collection of user's cards.
      * @throws Exception
      */
-    public List<Card> getCards(String userId, Pagination pagination) throws Exception {
-        return this.getList(Card[].class, Card.class, "users_allcards", pagination, userId);
+    public List<Card> getCards(String userId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Card[].class, Card.class, "users_allcards", pagination, userId, sorting);
     }
     
     /**
@@ -248,6 +272,18 @@ public class ApiUsers extends ApiBase {
      */
     public KycDocument updateKycDocument(String userId, KycDocument kycDocument) throws Exception {
         return this.updateObject(KycDocument.class, "users_savekycdocument", kycDocument, userId);
+    }
+    
+    /**
+     * Gets all KYC documents for single user.
+     * @param userId        User identifier.
+     * @param pagination    Pagination.
+     * @param sorting       Sorting object.
+     * @return              List of KycDocuments returned from API.
+     * @throws Exception
+     */
+    public List<KycDocument> getKycDocuments(String userId, Pagination pagination, Sorting sorting) throws Exception{
+        return this.getList(KycDocument[].class, KycDocument.class, "users_allkycdocuments", pagination, userId, sorting);
     }
     
     private String getBankAccountType(BankAccount bankAccount) throws Exception {

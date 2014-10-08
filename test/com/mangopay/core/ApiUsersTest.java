@@ -6,6 +6,7 @@ import java.nio.file.AccessDeniedException;
 import java.nio.file.NoSuchFileException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -295,13 +296,31 @@ public class ApiUsersTest extends BaseTest {
         BankAccount account = this.getJohnsAccount();
         Pagination pagination = new Pagination(1, 12);
         
-        List<BankAccount> list = this._api.Users.getBankAccounts(john.Id, pagination);
+        List<BankAccount> list = this._api.Users.getBankAccounts(john.Id, pagination, null);
         
         assertTrue(list.get(0) instanceof BankAccount);
         assertTrue(account.Id.equals(list.get(0).Id));
         assertEqualInputProps(account, list.get(0));
         assertTrue(pagination.Page == 1);
         assertTrue(pagination.ItemsPerPage == 12);
+    }
+    
+    @Test
+    public void test_Users_BankAccounts_SortByCreationDate() throws Exception {
+        UserNatural john = this.getJohn();
+        this.getJohnsAccount();
+        this.holdOn(2);
+        this.getNewBankAccount();
+        Pagination pagination = new Pagination(1, 12);
+        Sorting sorting = new Sorting();
+        sorting.addField("CreationDate", SortDirection.desc);
+        
+        List<BankAccount> list = this._api.Users.getBankAccounts(john.Id, pagination, sorting);
+        
+        assertNotNull(list);
+        assertTrue(list.get(0) instanceof BankAccount);
+        assertTrue(list.size() > 1);
+        assertTrue(list.get(0).CreationDate > list.get(1).CreationDate);
     }
     
     
@@ -358,27 +377,98 @@ public class ApiUsersTest extends BaseTest {
     @Test
     public void test_Users_AllCards() throws Exception {
         UserNatural john = this.getJohn();
+        Pagination pagination = new Pagination(1, 20);
+        List<Card> cardsBefore = this._api.Users.getCards(john.Id, pagination, null);
         PayIn payIn = this.getNewPayInCardDirect();
-        Pagination pagination = new Pagination(1, 1);
         Card card = this._api.Cards.get(((PayInPaymentDetailsCard)payIn.PaymentDetails).CardId);
-        List<Card> cards = this._api.Users.getCards(john.Id, pagination);
+        List<Card> cardsAfter = this._api.Users.getCards(john.Id, pagination, null);
         
-        assertTrue(cards.size() == 1);
-        assertTrue(cards.get(0).CardType != null);
-        assertTrue(cards.get(0).Currency != null);
-        assertEqualInputProps(cards.get(0), card);
+        assertNotNull(cardsBefore);
+        assertTrue(cardsAfter.size() > cardsBefore.size());
+    }
+    
+    @Test
+    public void test_Users_AllCards_SortByCreationDate() throws Exception {
+        UserNatural john = this.getJohn();
+        this.getNewPayInCardDirect();
+        this.holdOn(2);
+        this.getNewPayInCardDirect();
+        Pagination pagination = new Pagination(1, 20);
+        Sorting sorting = new Sorting();
+        sorting.addField("CreationDate", SortDirection.desc);
+        List<Card> cards = this._api.Users.getCards(john.Id, pagination, sorting);
+        
+        assertNotNull(cards);
+        assertTrue(cards.size() > 1);
+        assertTrue(cards.get(0).CreationDate > cards.get(1).CreationDate);
     }
     
     @Test
     public void test_Users_Transactions() throws Exception {
         UserNatural john = this.getJohn();
         Transfer transfer = this.getNewTransfer();
-        Pagination pagination = new Pagination(1, 1);
+        Pagination pagination = new Pagination(1, 20);
         
-        List<Transaction> transactions = this._api.Users.getTransactions(john.Id, pagination, new FilterTransactions());
+        List<Transaction> transactions = this._api.Users.getTransactions(john.Id, pagination, new FilterTransactions(), null);
         
         assertTrue(transactions.size() > 0);
         assertTrue(transactions.get(0).Type != null);
         assertTrue(transactions.get(0).Status != null);
+    }
+    
+    @Test
+    public void test_Users_Transactions_SortByCreationDate() throws Exception {
+        UserNatural john = this.getJohn();
+        this.getNewTransfer();
+        this.holdOn(2);
+        this.getNewTransfer();
+        Pagination pagination = new Pagination(1, 20);
+        Sorting sorting = new Sorting();
+        sorting.addField("CreationDate", SortDirection.desc);
+        
+        List<Transaction> transactions = this._api.Users.getTransactions(john.Id, pagination, new FilterTransactions(), sorting);
+        
+        assertNotNull(transactions);
+        assertTrue(transactions.size() > 1);
+        assertTrue(transactions.get(0).CreationDate > transactions.get(1).CreationDate);
+    }
+    
+    @Test
+     public void test_Users_GetKycDocuments() throws Exception{
+        KycDocument kycDocument = this.getJohnsKycDocument();
+        UserNatural user = this.getJohn();
+        Pagination pagination = new Pagination(1, 20);
+        
+        List<KycDocument> getKycDocuments = this._api.Users.getKycDocuments(user.Id, pagination, null);
+        
+        assertTrue(getKycDocuments.get(0) instanceof KycDocument);
+        KycDocument kycFromList = null;
+        for (KycDocument item : getKycDocuments) {
+            if (item.Id.equals(kycDocument.Id)) {
+                kycFromList = item;
+                break;
+            }
+        }
+        assertNotNull(kycFromList);
+        assertEquals(kycDocument.Id, kycFromList.Id);
+        assertEqualInputProps(kycDocument, kycFromList);
+    }
+    
+    @Test
+     public void test_Users_GetKycDocuments_SortByCreationDate() throws Exception{
+        this.getJohnsKycDocument();
+        this.holdOn(2);
+        this.getNewKycDocument();
+        UserNatural user = this.getJohn();
+        Pagination pagination = new Pagination(1, 20);
+        Sorting sorting = new Sorting();
+        sorting.addField("CreationDate", SortDirection.desc);
+        
+        List<KycDocument> getKycDocuments = this._api.Users.getKycDocuments(user.Id, pagination, sorting);
+        
+        assertNotNull(getKycDocuments);
+        assertTrue(getKycDocuments.get(0) instanceof KycDocument);
+        assertTrue(getKycDocuments.size() > 1);
+        assertTrue(getKycDocuments.get(0).CreationDate > getKycDocuments.get(1).CreationDate);
     }
 }

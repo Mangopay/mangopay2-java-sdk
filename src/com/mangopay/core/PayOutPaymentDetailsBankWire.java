@@ -14,4 +14,9 @@ public class PayOutPaymentDetailsBankWire extends Dto implements IPayOutPaymentD
      * Communication.
      */
     public String Communication;
+    
+    /**
+     * Bank wire reference.
+     */
+    public String BankWireRef;
 }

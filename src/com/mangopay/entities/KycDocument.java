@@ -28,4 +28,9 @@ public class KycDocument extends EntityBase {
      */
     public String RefusedReasonMessage;
     
+    /**
+     * User identifier.
+     */
+    public String UserId;
+    
 }

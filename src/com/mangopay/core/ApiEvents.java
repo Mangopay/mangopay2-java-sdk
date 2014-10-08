@@ -23,6 +23,6 @@ public class ApiEvents extends ApiBase {
      * @throws Exception
      */
     public List<Event> get(FilterEvents filter, Pagination pagination) throws Exception {
-        return this.getList(Event[].class, Event.class, "events_all", pagination, "", filter.getValues());
+        return this.getList(Event[].class, Event.class, "events_all", pagination, "", filter.getValues(), null);
     }
 }

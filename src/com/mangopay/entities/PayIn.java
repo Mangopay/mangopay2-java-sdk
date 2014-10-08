@@ -55,6 +55,10 @@ public class PayIn extends Transaction {
                             put("PaymentDetails", PayInPaymentDetailsBankWire.class);
                         }}
                     );
+                    put("DIRECT_DEBIT", new HashMap<String, Class<?>>() {{
+                            put("PaymentDetails", PayInPaymentDetailsDirectDebit.class);
+                        }}
+                    );
                     // ...and more in future...
                 }}
             );

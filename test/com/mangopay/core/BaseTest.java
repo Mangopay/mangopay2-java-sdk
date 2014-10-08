@@ -13,6 +13,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -71,6 +72,18 @@ public abstract class BaseTest {
         api.OAuthTokenManager.registerCustomStorageStrategy(new DefaultStorageStrategyForTests());
         
         return api;
+    }
+    
+    /**
+     * Makes the current thread to sleep for given period of time in seconds.
+     * @param sleepTimeInSeconds    How long to sleep.
+     */
+    protected void holdOn(int sleepTimeInSeconds) {
+        try {
+            TimeUnit.SECONDS.sleep(sleepTimeInSeconds);
+        } catch (InterruptedException ex) {
+            /* intentionally suppressed InterruptedException here */
+        }
     }
     
     protected UserNatural getJohn() throws Exception {
@@ -155,6 +168,11 @@ public abstract class BaseTest {
         return BaseTest._johnsAccount;
     }
     
+    protected BankAccount getNewBankAccount() throws Exception {
+        BaseTest._johnsAccount = null;
+        return getJohnsAccount();
+    }
+    
     protected Wallet getJohnsWallet() throws Exception {
         if (BaseTest._johnsWallet == null) {
             UserNatural john = this.getJohn();
@@ -167,10 +185,6 @@ public abstract class BaseTest {
             wallet.Description = "WALLET IN EUR";
             
             BaseTest._johnsWallet = this._api.Wallets.create(wallet);
-            
-            if (BaseTest._johnsWallet.Balance.Amount == null) {
-                BaseTest._johnsWallet.Balance.Amount = 0.0;
-            }
         }
         
         return BaseTest._johnsWallet;
@@ -190,7 +204,7 @@ public abstract class BaseTest {
      * @param amount Initial wallet's money amount.
      * @return Wallet entity instance.
      */
-    protected Wallet getJohnsWalletWithMoney(double amount) throws Exception {
+    protected Wallet getJohnsWalletWithMoney(int amount) throws Exception {
         
         if (BaseTest._johnsWalletWithMoney == null) {
             
@@ -223,7 +237,7 @@ public abstract class BaseTest {
             payIn.DebitedFunds.Amount = amount;
             payIn.DebitedFunds.Currency = "EUR";
             payIn.Fees = new Money();
-            payIn.Fees.Amount = 0.0;
+            payIn.Fees.Amount = 0;
             payIn.Fees.Currency = "EUR";
 
             // payment type as CARD
@@ -275,10 +289,10 @@ public abstract class BaseTest {
             payIn.CreditedUserId = user.Id;
             payIn.DebitedFunds = new Money();
             payIn.DebitedFunds.Currency = "EUR";
-            payIn.DebitedFunds.Amount = 1000.0;
+            payIn.DebitedFunds.Amount = 1000;
             payIn.Fees = new Money();
             payIn.Fees.Currency = "EUR";
-            payIn.Fees.Amount = 5.0;
+            payIn.Fees.Amount = 5;
             payIn.CreditedWalletId = wallet.Id;
             payIn.PaymentDetails = this.getPayInPaymentDetailsCard();
             payIn.ExecutionDetails = this.getPayInExecutionDetailsWeb();
@@ -287,6 +301,11 @@ public abstract class BaseTest {
         }
         
         return BaseTest._johnsPayInCardWeb;
+    }
+    
+    protected PayIn getNewPayInCardWeb() throws Exception {
+        BaseTest._johnsPayInCardWeb = null;
+        return getJohnsPayInCardWeb();
     }
     
 //    protected PayIn getJohnsPayInBankWireDirect() throws Exception {
@@ -330,10 +349,10 @@ public abstract class BaseTest {
         payIn.CreditedWalletId = wallet.Id;
         payIn.AuthorId = userId;
         payIn.DebitedFunds = new Money();
-        payIn.DebitedFunds.Amount = 10000.0;
+        payIn.DebitedFunds.Amount = 10000;
         payIn.DebitedFunds.Currency = "EUR";
         payIn.Fees = new Money();
-        payIn.Fees.Amount = 0.0;
+        payIn.Fees.Amount = 0;
         payIn.Fees.Currency = "EUR";
 
         // payment type as CARD
@@ -364,10 +383,10 @@ public abstract class BaseTest {
             payOut.CreditedUserId = user.Id;
             payOut.DebitedFunds = new Money();
             payOut.DebitedFunds.Currency = "EUR";
-            payOut.DebitedFunds.Amount = 10.0;
+            payOut.DebitedFunds.Amount = 10;
             payOut.Fees = new Money();
             payOut.Fees.Currency = "EUR";
-            payOut.Fees.Amount = 5.0;
+            payOut.Fees.Amount = 5;
             
             payOut.DebitedWalletId = wallet.Id;
             payOut.MeanOfPaymentDetails = new PayOutPaymentDetailsBankWire();
@@ -396,10 +415,10 @@ public abstract class BaseTest {
             payOut.CreditedUserId = payIn.AuthorId;
             payOut.DebitedFunds = new Money();
             payOut.DebitedFunds.Currency = "EUR";
-            payOut.DebitedFunds.Amount = 10.0;
+            payOut.DebitedFunds.Amount = 10;
             payOut.Fees = new Money();
             payOut.Fees.Currency = "EUR";
-            payOut.Fees.Amount = 5.0;
+            payOut.Fees.Amount = 5;
             
             payOut.DebitedWalletId = payIn.CreditedWalletId;
             payOut.MeanOfPaymentDetails = new PayOutPaymentDetailsBankWire();
@@ -429,10 +448,10 @@ public abstract class BaseTest {
         transfer.CreditedUserId = user.Id;
         transfer.DebitedFunds = new Money();
         transfer.DebitedFunds.Currency = "EUR";
-        transfer.DebitedFunds.Amount = 100.0;
+        transfer.DebitedFunds.Amount = 100;
         transfer.Fees = new Money();
         transfer.Fees.Currency = "EUR";
-        transfer.Fees.Amount = 0.0;
+        transfer.Fees.Amount = 0;
 
         transfer.DebitedWalletId = walletWithMoney.Id;
         transfer.CreditedWalletId = wallet.Id;
@@ -516,7 +535,7 @@ public abstract class BaseTest {
             cardPreAuthorization.AuthorId = user.Id;
             cardPreAuthorization.DebitedFunds = new Money();
             cardPreAuthorization.DebitedFunds.Currency = "EUR";
-            cardPreAuthorization.DebitedFunds.Amount = 10000.0;
+            cardPreAuthorization.DebitedFunds.Amount = 10000;
             cardPreAuthorization.CardId = getCardRegistration.CardId;
             cardPreAuthorization.SecureModeReturnURL = "http://test.com";
             
@@ -531,6 +550,11 @@ public abstract class BaseTest {
         }
         
         return BaseTest._johnsKycDocument;
+    }
+    
+    protected KycDocument getNewKycDocument() throws Exception {
+        BaseTest._johnsKycDocument = null;
+        return getJohnsKycDocument();
     }
     
     /**
@@ -718,6 +742,10 @@ public abstract class BaseTest {
         } else if (entity1 instanceof Money) {
             assertEquals(((Money)entity1).Currency, ((Money)entity2).Currency);
             assertEquals(((Money)entity1).Amount, ((Money)entity2).Amount);
+        } else if (entity1 instanceof KycDocument) {
+            assertEquals(((KycDocument)entity1).Type, ((KycDocument)entity2).Type);
+            assertEquals(((KycDocument)entity1).Status, ((KycDocument)entity2).Status);
+            assertEquals(((KycDocument)entity1).UserId, ((KycDocument)entity2).UserId);
         } else {
             throw new Exception("Unsupported type");
         }

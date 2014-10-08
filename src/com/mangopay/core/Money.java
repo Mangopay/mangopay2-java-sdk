@@ -11,8 +11,8 @@ public class Money extends Dto {
     public String Currency;
     
     /**
-     * The currency amount of money.
+     * The currency amount of money, in cents
      */
-    public Double Amount;
+    public int Amount;
     
 }

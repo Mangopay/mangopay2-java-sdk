@@ -117,8 +117,8 @@ public class ApiPayInsTest extends BaseTest {
             Wallet walletAfter = this._api.Wallets.get(wallet.Id);
 
             assertTrue(refund.Id.length() > 0);
-            assertTrue(refund.DebitedFunds.Amount.equals(payIn.DebitedFunds.Amount));
-            assertTrue(walletBefore.Balance.Amount.equals(walletAfter.Balance.Amount + payIn.DebitedFunds.Amount));
+            assertTrue(refund.DebitedFunds.Amount == payIn.DebitedFunds.Amount);
+            assertTrue(walletBefore.Balance.Amount == (walletAfter.Balance.Amount + payIn.DebitedFunds.Amount));
             assertEquals("PAYOUT", refund.Type);
             assertEquals("REFUND", refund.Nature);
         } catch (Exception ex) {
@@ -138,10 +138,10 @@ public class ApiPayInsTest extends BaseTest {
             payIn.CreditedWalletId = wallet.Id;
             payIn.AuthorId = user.Id;
             payIn.DebitedFunds = new Money();
-            payIn.DebitedFunds.Amount = 10000.0;
+            payIn.DebitedFunds.Amount = 10000;
             payIn.DebitedFunds.Currency = "EUR";
             payIn.Fees = new Money();
-            payIn.Fees.Amount = 0.0;
+            payIn.Fees.Amount = 0;
             payIn.Fees.Currency = "EUR";
             
             // payment type as CARD
@@ -185,10 +185,10 @@ public class ApiPayInsTest extends BaseTest {
             // payment type as CARD
             payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Amount = 10000.0;
+            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Amount = 10000;
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Currency = "EUR";
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Amount = 0.0;
+            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Amount = 0;
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Currency = "EUR";
             payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
             
@@ -230,10 +230,10 @@ public class ApiPayInsTest extends BaseTest {
             // payment type as CARD
             payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Amount = 10000.0;
+            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Amount = 10000;
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Currency = "EUR";
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Amount = 0.0;
+            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Amount = 0;
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Currency = "EUR";
             payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
             PayIn createdPayIn = this._api.PayIns.create(payIn);
@@ -256,6 +256,63 @@ public class ApiPayInsTest extends BaseTest {
             assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Details).IBAN);
             assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Details).BIC);
         } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
+    @Test
+    public void test_PayIns_DirectDebitWeb_Create() {
+        try {
+            Wallet wallet = this.getJohnsWallet();
+            UserNatural user = this.getJohn();
+
+            // create pay-in PRE-AUTHORIZED DIRECT
+            PayIn payIn = new PayIn();
+            payIn.CreditedWalletId = wallet.Id;
+            payIn.AuthorId = user.Id;
+            payIn.DebitedFunds = new Money();
+            payIn.DebitedFunds.Amount = 10000;
+            payIn.DebitedFunds.Currency = "EUR";
+            payIn.Fees = new Money();
+            payIn.Fees.Amount = 100;
+            payIn.Fees.Currency = "EUR";
+
+            // payment type as CARD
+            payIn.PaymentDetails = new PayInPaymentDetailsDirectDebit();
+            ((PayInPaymentDetailsDirectDebit)payIn.PaymentDetails).DirectDebitType = "GIROPAY";
+            payIn.ExecutionDetails = new PayInExecutionDetailsWeb();
+            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).ReturnURL = "http://www.mysite.com/returnURL/";
+            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).Culture = "FR";
+            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions = new PayInTemplateURLOptions();
+            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions.PAYLINE = "https://www.maysite.com/payline_template/";                
+
+            PayIn createPayIn = this._api.PayIns.create(payIn);
+
+            assertNotNull(createPayIn.Id);
+            assertEquals(wallet.Id, createPayIn.CreditedWalletId);
+            assertEquals("DIRECT_DEBIT", createPayIn.PaymentType);
+            assertTrue(createPayIn.PaymentDetails instanceof PayInPaymentDetailsDirectDebit);
+            assertEquals(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).DirectDebitType, "GIROPAY");
+            assertEquals("WEB", createPayIn.ExecutionType);
+            assertTrue(createPayIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
+            assertEquals("FR", ((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).Culture);
+            assertEquals(user.Id, createPayIn.AuthorId);
+            assertEquals("CREATED", createPayIn.Status);
+            assertEquals("PAYIN", createPayIn.Type);
+            assertTrue(createPayIn.DebitedFunds instanceof Money);
+            assertTrue(10000 == createPayIn.DebitedFunds.Amount);
+            assertEquals("EUR", createPayIn.DebitedFunds.Currency);
+            assertTrue(createPayIn.CreditedFunds instanceof Money);
+            assertTrue(9900 == createPayIn.CreditedFunds.Amount);
+            assertEquals("EUR", createPayIn.CreditedFunds.Currency);
+            assertTrue(createPayIn.Fees instanceof Money);
+            assertTrue(100 == createPayIn.Fees.Amount);
+            assertEquals("EUR", createPayIn.Fees.Currency);
+            assertNotNull(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).ReturnURL);
+            assertNotNull(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).RedirectURL);
+            assertNotNull(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).TemplateURL);
+    
+        } catch (Exception ex){
             Assert.fail(ex.getMessage());
         }
     }

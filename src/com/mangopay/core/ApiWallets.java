@@ -45,6 +45,18 @@ public class ApiWallets extends ApiBase {
     public Wallet update(Wallet wallet) throws Exception {
         return this.updateObject(Wallet.class, "wallets_save", wallet);
     }
+    
+    /**
+     * Gets transactions for the wallet.
+     * @param walletId      Wallet identifier.
+     * @param pagination    Pagination object.
+     * @param filter        Object to filter data.
+     * @return              Transactions for wallet returned from API.
+     * @throws Exception
+     */
+    public List<Transaction> getTransactions(String walletId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class, "wallets_alltransactions", pagination, walletId, filter.getValues(), sorting);
+    }
 
     /**
      * Gets transactions for the wallet.
@@ -55,7 +67,7 @@ public class ApiWallets extends ApiBase {
      * @throws Exception
      */
     public List<Transaction> getTransactions(String walletId, Pagination pagination, FilterTransactions filter) throws Exception {
-        return this.getList(Transaction[].class, Transaction.class, "wallets_alltransactions", pagination, walletId, filter.getValues());
+        return getTransactions(walletId, pagination, filter, null);
     }
     
     /**

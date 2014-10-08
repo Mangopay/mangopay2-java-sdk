@@ -57,4 +57,25 @@ public class ApiWalletsTest extends BaseTest {
         assertEquals(transactions.get(0).AuthorId, john.Id);
         this.assertEqualInputProps(transactions.get(0), payIn);
     }
+    
+    @Test
+    public void test_Wallets_Transactions_SortByCreationDate() throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+        
+        // create two payin objects
+        this.getJohnsPayInCardWeb();
+        this.holdOn(2);
+        this.getNewPayInCardWeb();
+        Sorting sorting = new Sorting();
+        sorting.addField("CreationDate", SortDirection.desc);
+        Pagination pagination = new Pagination(1, 20);
+        FilterTransactions filter = new FilterTransactions();
+        filter.Type = "PAYIN";
+        
+        List<Transaction> transactions = this._api.Wallets.getTransactions(wallet.Id, pagination, filter, sorting);
+        
+        assertNotNull(transactions);
+        assertTrue(transactions.size() > 1);
+        assertTrue(transactions.get(0).CreationDate > transactions.get(1).CreationDate);
+    }
 }
