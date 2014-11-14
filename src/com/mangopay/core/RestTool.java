@@ -316,6 +316,8 @@ public class RestTool {
             */
             
             _connection = (HttpURLConnection)url.openConnection();
+            _connection.setConnectTimeout(60000);
+            _connection.setReadTimeout(60000);
             
             // set request method
             _connection.setRequestMethod(this._requestType);
