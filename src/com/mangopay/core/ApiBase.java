@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Base class for all Api classes.
+ * Base class for all API classes.
  */
 public abstract class ApiBase {
 
@@ -94,6 +94,11 @@ public abstract class ApiBase {
         put("kyc_page_create", new String[] { "/users/%s/KYC/documents/%s/pages", RequestType.POST });
         put("kyc_documents_all", new String[] { "/KYC/documents", RequestType.GET });
         
+        // These are temporary functions and WILL be removed in the future. 
+        // Contact support before using these features or if have any queries.
+        put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST });
+        put("temp_paymentcards_get", new String[] { "/temp/paymentcards/%s", RequestType.GET });
+        put("temp_immediatepayins_create", new String[] { "/temp/immediate-payins", RequestType.POST });
     }};
     
     /**

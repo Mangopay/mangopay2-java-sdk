@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Refund;
+import com.mangopay.entities.TemporaryImmediatePayIn;
 
 /**
  * API for PayIns.
@@ -56,6 +57,20 @@ public class ApiPayIns extends ApiBase {
      */
     public Refund getRefund(String payInId) throws Exception {
         return this.getObject(Refund.class, "payins_getrefunds", payInId);
+    }
+    
+    /**
+     * WARNING! 
+     * This is temporary entity and will be removed in future.
+     * Contact support before using these features or if have any queries.
+     * 
+     * Creates new temporary immediate pay-in.
+     * @param immediatePayIn    Immediate pay-in object to create.
+     * @return                  Immediate pay-in object returned from API.
+     * @throws Exception
+     */
+    public TemporaryImmediatePayIn createTemporaryImmediatePayIn(TemporaryImmediatePayIn immediatePayIn) throws Exception {
+        return this.createObject(TemporaryImmediatePayIn.class, "temp_immediatepayins_create", immediatePayIn);
     }
     
     private String getPaymentKey(PayIn payIn) throws Exception {

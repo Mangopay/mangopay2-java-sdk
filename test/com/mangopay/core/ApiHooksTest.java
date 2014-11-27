@@ -54,7 +54,7 @@ public class ApiHooksTest extends BaseTest {
             Hook hook = this.getJohnsHook();
             Pagination pagination = new Pagination(1, 1);
             
-            List<Hook> list = this._api.Hooks.getAll(pagination);
+            List<Hook> list = this._api.Hooks.getAll(pagination, null);
             
             assertTrue(list.get(0) instanceof Hook);
             assertEquals(hook.Id, list.get(0).Id);

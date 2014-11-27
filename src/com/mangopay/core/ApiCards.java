@@ -6,6 +6,7 @@ package com.mangopay.core;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.Card;
+import com.mangopay.entities.TemporaryPaymentCard;
 
 /**
  * API for cards.
@@ -47,5 +48,33 @@ public class ApiCards extends ApiBase {
     public Card disable(Card card) throws Exception {
         card.Validity = "INVALID";
         return update(card);
+    }
+    
+    /**
+     * WARNING! 
+     * This is temporary entity and will be removed in future.
+     * Contact support before using these features or if have any queries.
+     * 
+     * Creates new temporary payment card.
+     * @param paymentCard   Payment card object to create.
+     * @return              Payment card object returned from API.
+     * @throws Exception
+     */
+    public TemporaryPaymentCard createTemporaryPaymentCard(TemporaryPaymentCard paymentCard) throws Exception {
+        return this.createObject(TemporaryPaymentCard.class, "temp_paymentcards_create", paymentCard);
+    }
+    
+    /**
+     * WARNING! 
+     * This is temporary entity and will be removed in future.
+     * Contact support before using these features or if have any queries.
+     * 
+     * Gets temporary payment card.
+     * @param paymentCardId Payment card identifier.
+     * @return              Payment card object returned from API.
+     * @throws Exception
+     */
+    public TemporaryPaymentCard getTemporaryPaymentCard(String paymentCardId) throws Exception {
+        return this.getObject(TemporaryPaymentCard.class, "temp_paymentcards_get", paymentCardId);
     }
 }

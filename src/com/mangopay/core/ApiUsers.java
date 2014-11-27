@@ -56,8 +56,8 @@ public class ApiUsers extends ApiBase {
      * @return              Collection of User instances.
      * @throws Exception
      */
-    public List<User> getAll(Pagination pagination) throws Exception {
-        return this.getList(User[].class, User.class, "users_all", pagination);
+    public List<User> getAll(Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(User[].class, User.class, "users_all", pagination, sorting);
     }
     
     /**
@@ -66,7 +66,7 @@ public class ApiUsers extends ApiBase {
      * @throws Exception
      */
     public List<User> getAll() throws Exception {
-        return getAll(null);
+        return getAll(null, null);
     }
     
     /**
@@ -213,14 +213,7 @@ public class ApiUsers extends ApiBase {
         
         kycPage.File = fileContent;
         
-        try
-        {
-            this.createObject(KycPage.class, "users_createkycpage", kycPage, userId, kycDocumentId);
-        }
-        catch (Exception ex)
-        {
-            Exception e = ex;
-        }
+        this.createObject(KycPage.class, "kyc_page_create", kycPage, userId, kycDocumentId);
     }
     
     /**

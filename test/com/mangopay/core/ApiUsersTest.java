@@ -3,7 +3,9 @@ package com.mangopay.core;
 import com.mangopay.entities.*;
 import java.net.URL;
 import java.nio.file.AccessDeniedException;
+import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -298,9 +300,18 @@ public class ApiUsersTest extends BaseTest {
         
         List<BankAccount> list = this._api.Users.getBankAccounts(john.Id, pagination, null);
         
+        int index = -1;
+        for (int i=0; i<list.size(); i++)
+        {
+            if (account.Id.equals(list.get(i).Id)){
+                index = i;
+                break;
+            }
+        }
+        
         assertTrue(list.get(0) instanceof BankAccount);
-        assertTrue(account.Id.equals(list.get(0).Id));
-        assertEqualInputProps(account, list.get(0));
+        assertTrue(index > -1);
+        assertEqualInputProps(account, list.get(index));
         assertTrue(pagination.Page == 1);
         assertTrue(pagination.ItemsPerPage == 12);
     }
@@ -363,15 +374,16 @@ public class ApiUsersTest extends BaseTest {
     @Test 
     public void test_Users_CreateKycPage() throws Exception {
         UserNatural john = this.getJohn();
-        KycDocument kycDocument = this.getJohnsKycDocument();
-        
-        this._api.Users.createKycPage(john.Id, kycDocument.Id, "Test KYC page".getBytes());
+        KycDocument kycDocument = this.getNewKycDocument();
         
         URL url = getClass().getProtectionDomain().getCodeSource().getLocation();
-        String filePath = url.toString() + "/com/mangopay/core/TestKycPageFile.txt";
+        String filePath = url.toString() + "/com/mangopay/core/TestKycPageFile.png";
         filePath = filePath.replace("file:/", "").replace("//", "/").replace("/", "\\");
         
         this._api.Users.createKycPage(john.Id, kycDocument.Id, filePath);
+        
+        kycDocument = this.getNewKycDocument();
+        this._api.Users.createKycPage(john.Id, kycDocument.Id, Files.readAllBytes(Paths.get(filePath)));
     }
     
     @Test

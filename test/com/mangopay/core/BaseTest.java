@@ -611,7 +611,7 @@ public abstract class BaseTest {
         if (BaseTest._johnsHook == null) {
             
             Pagination pagination = new Pagination(1, 1);
-            List<Hook> list = this._api.Hooks.getAll(pagination);
+            List<Hook> list = this._api.Hooks.getAll(pagination, null);
             
             if (list != null && list.size() > 0 && list.get(0) != null) {
                 BaseTest._johnsHook = list.get(0);

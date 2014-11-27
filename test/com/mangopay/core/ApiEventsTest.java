@@ -16,10 +16,10 @@ public class ApiEventsTest extends BaseTest {
         FilterEvents eventsFilter = new FilterEvents();
         eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
         
-        List<Event> getEvents = this._api.Events.get(eventsFilter, null);
+        List<Event> getEvents = this._api.Events.get(eventsFilter, null, null);
         
         eventsFilter.Type = EventType.ALL;
-        List<Event> getAllEvents = this._api.Events.get(eventsFilter, null);
+        List<Event> getAllEvents = this._api.Events.get(eventsFilter, null, null);
         
         assertNotNull(getEvents);
         assertNotNull(getAllEvents);

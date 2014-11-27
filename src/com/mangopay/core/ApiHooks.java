@@ -51,8 +51,8 @@ public class ApiHooks extends ApiBase {
      * @return              List of Hook instances returned from API.
      * @throws Exception
      */
-    public List<Hook> getAll(Pagination pagination) throws Exception {
-        return this.getList(Hook[].class, Hook.class, "hooks_all", pagination);
+    public List<Hook> getAll(Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Hook[].class, Hook.class, "hooks_all", pagination, sorting);
     }
     
     /**
@@ -61,7 +61,7 @@ public class ApiHooks extends ApiBase {
      * @throws Exception
      */
     public List<Hook> getAll() throws Exception {
-        return this.getAll(null);
+        return this.getAll(null, null);
     }
     
 }
