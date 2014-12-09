@@ -36,7 +36,7 @@ public class ApiCards extends ApiBase {
      * @throws Exception
      */
     public Card update(Card card) throws Exception {
-        return this.updateObject(Card.class, "card_put", card);
+        return this.updateObject(Card.class, "card_save", card);
     }
     
     /**
