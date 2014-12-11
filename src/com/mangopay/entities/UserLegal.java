@@ -17,7 +17,7 @@ public class UserLegal extends User {
      */
     public static class LegalPersonTypes {
         public static final String Business = "BUSINESS";
-        public static final String Organization = "ASSOCIATION";
+        public static final String Organization = "ORGANIZATION";
     }
     
     /**
