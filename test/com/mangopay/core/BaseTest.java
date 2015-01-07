@@ -567,7 +567,7 @@ public abstract class BaseTest {
         String data = "data=" + cardRegistration.PreregistrationData +
                 "&accessKeyRef=" + cardRegistration.AccessKey +
                 "&cardNumber=4970100000000154" +
-                "&cardExpirationDate=1214" +
+                "&cardExpirationDate=1218" +
                 "&cardCvx=123";
 
         URL url = new URL(cardRegistration.CardRegistrationURL);
