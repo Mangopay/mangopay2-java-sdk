@@ -6,11 +6,6 @@ package com.mangopay.core;
 public class PayInExecutionDetailsDirect extends Dto implements IPayInExecutionDetails {
     
     /**
-     * Card identifier.
-     */
-    public String CardId;
-    
-    /**
      * SecureMode { DEFAULT, FORCE }.
      */
     public String SecureMode;
@@ -19,5 +14,15 @@ public class PayInExecutionDetailsDirect extends Dto implements IPayInExecutionD
      * Secure mode return URL.
      */
     public String SecureModeReturnURL;
+    
+     /**
+     * Secure mode redirect URL.
+     */
+    public String SecureModeRedirectURL;
+    
+     /**
+     * Secure mode needed.
+     */
+    public String SecureModeNeeded;
     
 }
