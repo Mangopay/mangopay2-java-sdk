@@ -139,7 +139,7 @@ public class ApiUsersTest extends BaseTest {
     @Test
     public void test_Users_Save_Natural_NonASCII() throws Exception {
         UserNatural john = this.getJohn();
-        john.LastName += " - CHANGED (éèęóąśłżźćń)";
+        john.LastName += " - CHANGED";
         
         User userSaved = this._api.Users.update(john);
         User userFetched = this._api.Users.get(john.Id);
