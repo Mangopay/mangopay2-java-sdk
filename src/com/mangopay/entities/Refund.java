@@ -11,6 +11,11 @@ public class Refund extends Transaction {
     public String InitialTransactionId;
     
     /**
+     * Initial transaction type.
+     */
+    public String InitialTransactionType;
+    
+    /**
      * Debited wallet identifier.
      */
     public String DebitedWalletId;
