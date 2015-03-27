@@ -242,10 +242,7 @@ public abstract class BaseTest {
 
             // payment type as CARD
             payIn.PaymentDetails = new PayInPaymentDetailsCard();
-            if (card.CardType.equals("CB") || card.CardType.equals("VISA") || card.CardType.equals("MASTERCARD"))
-                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "CB_VISA_MASTERCARD";
-            else if (card.CardType.equals("AMEX"))
-                ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = "AMEX";
+            payIn.PaymentDetails.CardType = card.CardType;
 
             // execution type as DIRECT
             payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
