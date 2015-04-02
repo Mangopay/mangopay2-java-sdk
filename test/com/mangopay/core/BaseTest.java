@@ -242,7 +242,7 @@ public abstract class BaseTest {
 
             // payment type as CARD
             payIn.PaymentDetails = new PayInPaymentDetailsCard();
-            payIn.PaymentDetails.CardType = card.CardType;
+            ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = card.CardType;
 
             // execution type as DIRECT
             payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
@@ -354,7 +354,7 @@ public abstract class BaseTest {
 
         // payment type as CARD
         payIn.PaymentDetails = new PayInPaymentDetailsCard();
-        payIn.PaymentDetails = card.CardType;
+        ((PayInPaymentDetailsCard)payIn.PaymentDetails).CardType = card.CardType;
 
         // execution type as DIRECT
         payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
