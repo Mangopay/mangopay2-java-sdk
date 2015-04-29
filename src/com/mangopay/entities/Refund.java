@@ -2,6 +2,7 @@ package com.mangopay.entities;
 
 import com.mangopay.core.RefundReason;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +47,21 @@ public class Refund extends Transaction {
         Map<String, Type> result = super.getSubObjects();
         
         result.put("RefundReason", RefundReason.class);
+        
+        return result;
+    }
+    
+    /**
+     * Gets the collection of read-only fields names.
+     * @return List of field names.
+     */
+    @Override
+    public ArrayList<String> getReadOnlyProperties() {
+        
+        ArrayList<String> result = super.getReadOnlyProperties();
+        
+        result.add("InitialTransactionType");
+        result.add("RefundReason");
         
         return result;
     }
