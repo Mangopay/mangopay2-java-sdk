@@ -214,6 +214,17 @@ public class ApiUsersTest extends BaseTest {
             assertTrue(createAccount.Type.equals("US"));
             assertTrue(((BankAccountDetailsUS)createAccount.Details).AccountNumber.equals("234234234234"));
             assertTrue(((BankAccountDetailsUS)createAccount.Details).ABA.equals("234334789"));
+            assertTrue(((BankAccountDetailsUS)createAccount.Details).DepositAccountType.equals(DepositAccountType.CHECKING));
+
+            ((BankAccountDetailsUS)account.Details).DepositAccountType = DepositAccountType.SAVINGS;
+            BankAccount createAccountSavings = this._api.Users.createBankAccount(john.Id, account);
+
+            assertTrue(createAccountSavings.Id.length() > 0);
+            assertTrue(createAccountSavings.UserId.equals(john.Id));
+            assertTrue(createAccountSavings.Type.equals("US"));
+            assertTrue(((BankAccountDetailsUS)createAccountSavings.Details).AccountNumber.equals("234234234234"));
+            assertTrue(((BankAccountDetailsUS)createAccountSavings.Details).ABA.equals("234334789"));
+            assertTrue(((BankAccountDetailsUS)createAccountSavings.Details).DepositAccountType.equals(DepositAccountType.SAVINGS));
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }

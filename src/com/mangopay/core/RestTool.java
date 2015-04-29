@@ -665,6 +665,10 @@ public class RestTool {
                                         addMethod.invoke(o, e.getAsJsonPrimitive().getAsLong());
                                     } else if (genericTypeClass.getName().equals(Double.class.getName())) {
                                         addMethod.invoke(o, e.getAsJsonPrimitive().getAsDouble());
+                                    } else if (genericTypeClass.isEnum()) {// Enumeration, try getting enum by name
+                                        Class cls = genericTypeClass;
+                                        Object val = Enum.valueOf(cls, e.getAsJsonPrimitive().getAsString());
+                                        addMethod.invoke(o, val);
                                     }
                                 }
                                 f.set(result, o);
@@ -679,6 +683,10 @@ public class RestTool {
                                     f.set(result, entry.getValue().getAsDouble());
                                 } else if (fieldTypeName.equals(String.class.getName())) {
                                     f.set(result, entry.getValue().getAsString());
+                                } else if (f.getType().isEnum()) {// Enumeration, try getting enum by name
+                                    Class cls = f.getType();
+                                    Object val = Enum.valueOf(cls, entry.getValue().getAsString());
+                                    f.set(result, val);
                                 }
                             }
                             

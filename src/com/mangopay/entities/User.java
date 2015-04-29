@@ -1,6 +1,7 @@
 package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
+import com.mangopay.core.KycLevel;
 import java.util.ArrayList;
 
 /**
@@ -21,6 +22,8 @@ public abstract class User extends EntityBase {
      * Type of user. One of User.Types constants.
      */
     public String PersonType;
+    
+    public KycLevel KYCLevel;
 
     /**
      * Email address.
@@ -46,6 +49,7 @@ public abstract class User extends EntityBase {
         ArrayList<String> result = super.getReadOnlyProperties();
         
         result.add("PersonType");
+        result.add("KYCLevel");
         
         return result;
     }

@@ -15,4 +15,15 @@ public class BankAccountDetailsUS extends Dto implements IBankAccountDetails {
      */
     public String ABA;
     
+    /**
+     * Deposit account type.
+     */
+    public DepositAccountType DepositAccountType;
+
+    /**
+     * Instantiates new BankAccountDetailsUS object.
+     */
+    public BankAccountDetailsUS() {
+        this.DepositAccountType = DepositAccountType.CHECKING;
+    }
 }
