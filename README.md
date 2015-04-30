@@ -1,7 +1,7 @@
-MangoPay SDK
+Mangopay SDK
 =================================================
-MangoPaySDK is a Java client library to work with
-[MangoPay REST API](http://docs.mangopay.com/api-references/).
+MangopaySDK is a Java client library to work with
+[Mangopay REST API](http://docs.mangopay.com/api-references/).
 
 
 Installation
@@ -18,7 +18,7 @@ under any classpath/location that will be available for imports in your project:
 
 License
 -------------------------------------------------
-MangoPaySDK is distributed under MIT license, see LICENSE file.
+MangopaySDK is distributed under MIT license, see LICENSE file.
 
 
 Unit Tests
@@ -56,7 +56,7 @@ Client creation example (you need to call it only once)
 Configuration
 -------------------------------------------------
 See the example above and call `api.Clients.create` once to get your passphrase.
-Then set `api.Config.ClientId` to your MangoPay Client ID and 
+Then set `api.Config.ClientId` to your Mangopay Client ID and 
 `api.Config.ClientPassword` to your passphrase.
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production
@@ -71,7 +71,7 @@ environment, set it to `https://api.mangopay.com`.
     // configuration
     api.Config.ClientId = "your-client-id";
     api.Config.ClientPassword = "your-client-password";
-    //api.Config.BaseUrl = "https://mangopay-api.leetchi.com";
+    //api.Config.BaseUrl = "https://api.mangopay.com";
 
     // call some API methods...
     List<User> users = api.Users.getAll();
