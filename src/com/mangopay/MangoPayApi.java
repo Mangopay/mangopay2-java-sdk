@@ -1,6 +1,6 @@
 package com.mangopay;
 
-import com.mangopay.core.Configuration;
+import com.mangopay.core.APIs.*;
 import com.mangopay.core.*;
 
 /**

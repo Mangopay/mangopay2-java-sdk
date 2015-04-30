@@ -1,5 +1,7 @@
 package com.mangopay.core;
 
+import com.mangopay.core.interfaces.IStorageStrategy;
+import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.MangoPayApi;
 
 /**

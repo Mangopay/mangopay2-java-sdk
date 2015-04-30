@@ -1,6 +1,6 @@
 package com.mangopay.entities;
 
-import com.mangopay.core.NoUpdate;
+import com.mangopay.core.enumerations.*;
 import java.util.ArrayList;
 
 /**
@@ -35,15 +35,13 @@ public final class UserNatural extends User {
     
      /**
      * User's country.
-     * ISO 3166-1 alpha-2
      */
-    public String Nationality;
+    public CountryIso Nationality;
     
      /**
      * Country of residence.
-     * ISO 3166-1 alpha-2
      */
-    public String CountryOfResidence;
+    public CountryIso CountryOfResidence;
     
     /**
      * User's occupation.
@@ -87,7 +85,7 @@ public final class UserNatural extends User {
      * Instantiates new UserNatural object.
      */
     public UserNatural() {
-        PersonType = Types.Natural;
+        PersonType = PersonType.NATURAL;
     }
     
     /**

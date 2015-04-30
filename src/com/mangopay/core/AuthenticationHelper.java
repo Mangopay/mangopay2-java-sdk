@@ -1,13 +1,12 @@
 package com.mangopay.core;
 
 import com.mangopay.MangoPayApi;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Authentication helper class.
  */
-class AuthenticationHelper {
+public class AuthenticationHelper {
     
     /**
      * Root/parent instance that holds the OAuthToken and Configuration instance.

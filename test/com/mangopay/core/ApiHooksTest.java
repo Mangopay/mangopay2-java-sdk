@@ -27,6 +27,7 @@ public class ApiHooksTest extends BaseTest {
             Hook hook = this.getJohnsHook();
             Hook getHook = this._api.Hooks.get(hook.Id);
             
+            assertEquals(getHook.EventType, hook.EventType);
             assertEquals(getHook.Id, hook.Id);
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());

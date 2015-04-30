@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.EntityBase;
 import java.util.ArrayList;
 
@@ -46,7 +47,7 @@ public class CardRegistration extends EntityBase {
     /**
      * Currency.
      */
-    public String Currency;
+    public CurrencyIso Currency;
         
     /**
      * Status.

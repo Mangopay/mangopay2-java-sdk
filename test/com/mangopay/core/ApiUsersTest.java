@@ -1,5 +1,11 @@
 package com.mangopay.core;
 
+import com.mangopay.entities.subentities.BankAccountDetailsOTHER;
+import com.mangopay.entities.subentities.BankAccountDetailsGB;
+import com.mangopay.entities.subentities.BankAccountDetailsCA;
+import com.mangopay.entities.subentities.BankAccountDetailsUS;
+import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
+import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import java.net.URL;
 import java.nio.file.AccessDeniedException;
@@ -22,14 +28,14 @@ public class ApiUsersTest extends BaseTest {
     public void test_Users_CreateNatural() throws Exception {
         UserNatural john = this.getJohn();
         assertTrue(john.Id.length() > 0);
-        assertTrue(john.PersonType.equals(User.Types.Natural));
+        assertTrue(john.PersonType.equals(PersonType.NATURAL));
     }
 
     @Test
     public void test_Users_CreateLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
         assertTrue(matrix.Id.length() > 0);
-        assertTrue(matrix.PersonType.equals(User.Types.Legal));
+        assertTrue(matrix.PersonType.equals(PersonType.LEGAL));
     }
 
     @Test
@@ -51,14 +57,14 @@ public class ApiUsersTest extends BaseTest {
     public void test_Users_CreateLegal_PassesIfRequiredPropsProvided() throws Exception {
         UserLegal user = new UserLegal();
         user.Name = "SomeOtherSampleOrg";
-        user.LegalPersonType = "BUSINESS";
+        user.LegalPersonType = LegalPersonType.BUSINESS;
         user.LegalRepresentativeFirstName = "RepFName";
         user.LegalRepresentativeLastName = "RepLName";
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
         user.LegalRepresentativeBirthday = c.getTimeInMillis() / 1000;
-        user.LegalRepresentativeNationality = "FR";
-        user.LegalRepresentativeCountryOfResidence = "FR";
+        user.LegalRepresentativeNationality = CountryIso.FR;
+        user.LegalRepresentativeCountryOfResidence = CountryIso.FR;
         user.Email = "email@email.org";
         
         User ret = null;
@@ -77,9 +83,9 @@ public class ApiUsersTest extends BaseTest {
         User user1 = this._api.Users.get(john.Id);
         UserNatural user2 = this._api.Users.getNatural(john.Id);
 
-        assertTrue(user1.PersonType.equals(User.Types.Natural));
+        assertTrue(user1.PersonType.equals(PersonType.NATURAL));
         assertTrue(user1.Id.equals(john.Id));
-        assertTrue(user2.PersonType.equals(User.Types.Natural));
+        assertTrue(user2.PersonType.equals(PersonType.NATURAL));
         assertTrue(user2.Id.equals(john.Id));
         
         assertEqualInputProps(user1, john);
@@ -188,7 +194,7 @@ public class ApiUsersTest extends BaseTest {
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
-            assertTrue(createAccount.Type.equals("GB"));
+            assertTrue(createAccount.Type == BankAccountType.GB);
             assertTrue(((BankAccountDetailsGB)createAccount.Details).AccountNumber.equals("18329068"));
             assertTrue(((BankAccountDetailsGB)createAccount.Details).SortCode.equals("306541"));
         } catch (Exception ex) {
@@ -211,7 +217,7 @@ public class ApiUsersTest extends BaseTest {
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
-            assertTrue(createAccount.Type.equals("US"));
+            assertTrue(createAccount.Type == BankAccountType.US);
             assertTrue(((BankAccountDetailsUS)createAccount.Details).AccountNumber.equals("234234234234"));
             assertTrue(((BankAccountDetailsUS)createAccount.Details).ABA.equals("234334789"));
             assertTrue(((BankAccountDetailsUS)createAccount.Details).DepositAccountType.equals(DepositAccountType.CHECKING));
@@ -221,7 +227,7 @@ public class ApiUsersTest extends BaseTest {
 
             assertTrue(createAccountSavings.Id.length() > 0);
             assertTrue(createAccountSavings.UserId.equals(john.Id));
-            assertTrue(createAccountSavings.Type.equals("US"));
+            assertTrue(createAccountSavings.Type == BankAccountType.US);
             assertTrue(((BankAccountDetailsUS)createAccountSavings.Details).AccountNumber.equals("234234234234"));
             assertTrue(((BankAccountDetailsUS)createAccountSavings.Details).ABA.equals("234334789"));
             assertTrue(((BankAccountDetailsUS)createAccountSavings.Details).DepositAccountType.equals(DepositAccountType.SAVINGS));
@@ -247,7 +253,7 @@ public class ApiUsersTest extends BaseTest {
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
-            assertTrue(createAccount.Type.equals("CA"));
+            assertTrue(createAccount.Type == BankAccountType.CA);
             assertTrue(((BankAccountDetailsCA)createAccount.Details).AccountNumber.equals("234234234234"));
             assertTrue(((BankAccountDetailsCA)createAccount.Details).BankName.equals("TestBankName"));
             assertTrue(((BankAccountDetailsCA)createAccount.Details).BranchCode.equals("12345"));
@@ -265,8 +271,8 @@ public class ApiUsersTest extends BaseTest {
             account.OwnerName = john.FirstName + " " + john.LastName;
             account.OwnerAddress = john.Address;
             account.Details = new BankAccountDetailsOTHER();
-            ((BankAccountDetailsOTHER)account.Details).Type = "OTHER";
-            ((BankAccountDetailsOTHER)account.Details).Country = "FR";
+            account.Type = BankAccountType.OTHER;
+            ((BankAccountDetailsOTHER)account.Details).Country = CountryIso.FR;
             ((BankAccountDetailsOTHER)account.Details).AccountNumber = "234234234234";
             ((BankAccountDetailsOTHER)account.Details).BIC = "BINAADADXXX";
             
@@ -274,9 +280,8 @@ public class ApiUsersTest extends BaseTest {
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
-            assertTrue(createAccount.Type.equals("OTHER"));
-            assertTrue(((BankAccountDetailsOTHER)createAccount.Details).Type.equals("OTHER"));
-            assertTrue(((BankAccountDetailsOTHER)createAccount.Details).Country.equals("FR"));
+            assertTrue(createAccount.Type == BankAccountType.OTHER);
+            assertTrue(((BankAccountDetailsOTHER)createAccount.Details).Country.equals(CountryIso.FR));
             assertTrue(((BankAccountDetailsOTHER)createAccount.Details).AccountNumber.equals("234234234234"));
             assertTrue(((BankAccountDetailsOTHER)createAccount.Details).BIC.equals("BINAADADXXX"));
         } catch (Exception ex) {
@@ -351,7 +356,7 @@ public class ApiUsersTest extends BaseTest {
         KycDocument kycDocument = this.getJohnsKycDocument();
         
         assertNotNull(kycDocument);
-        assertTrue(kycDocument.Status.equals("CREATED"));
+        assertTrue(kycDocument.Status == KycStatus.CREATED);
     }
     
     @Test
@@ -359,13 +364,13 @@ public class ApiUsersTest extends BaseTest {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getJohnsKycDocument();
         
-        kycDocument.Status = "VALIDATION_ASKED";
+        kycDocument.Status = KycStatus.VALIDATION_ASKED;
         
         KycDocument result = this._api.Users.updateKycDocument(john.Id, kycDocument);
         
         assertNotNull(result);
         assertTrue(kycDocument.Type.equals(result.Type));
-        assertTrue(kycDocument.Status.equals("VALIDATION_ASKED"));
+        assertTrue(kycDocument.Status == KycStatus.VALIDATION_ASKED);
     }
     
     @Test

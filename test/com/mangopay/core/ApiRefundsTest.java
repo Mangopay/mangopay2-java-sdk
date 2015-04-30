@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import static org.junit.Assert.*;
 import org.junit.Test;
@@ -20,10 +21,10 @@ public class ApiRefundsTest extends BaseTest {
         assertEquals(getRefund.Id, refund.Id);
         assertEquals(getRefund.InitialTransactionId, transfer.Id);
         assertEquals(getRefund.AuthorId, user.Id);
-        assertEquals(getRefund.Type, "TRANSFER");
-        assertEquals(getRefund.InitialTransactionType, "TRANSFER");
+        assertTrue(getRefund.Type == TransactionType.TRANSFER);
+        assertTrue(getRefund.InitialTransactionType == InitialTransactionType.TRANSFER);
         assertNotNull(getRefund.RefundReason);
-        assertEquals(getRefund.RefundReason.RefundReasonType, "OTHER");
+        assertTrue(getRefund.RefundReason.RefundReasonType == RefundReasonType.OTHER);
     }
     
     @Test
@@ -37,9 +38,9 @@ public class ApiRefundsTest extends BaseTest {
         assertEquals(getRefund.Id, refund.Id);
         assertEquals(getRefund.InitialTransactionId, payIn.Id);
         assertEquals(getRefund.AuthorId, user.Id);
-        assertEquals(getRefund.Type, "PAYOUT");
-        assertEquals(getRefund.InitialTransactionType, "PAYIN");
+        assertTrue(getRefund.Type == TransactionType.PAYOUT);
+        assertTrue(getRefund.InitialTransactionType == InitialTransactionType.PAYIN);
         assertNotNull(getRefund.RefundReason);
-        assertEquals(getRefund.RefundReason.RefundReasonType, "INITIALIZED_BY_CLIENT");
+        assertTrue(getRefund.RefundReason.RefundReasonType == RefundReasonType.INITIALIZED_BY_CLIENT);
     }
 }

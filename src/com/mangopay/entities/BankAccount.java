@@ -1,15 +1,14 @@
 package com.mangopay.entities;
 
-import com.mangopay.core.BankAccountDetailsCA;
-import com.mangopay.core.BankAccountDetailsGB;
-import com.mangopay.core.BankAccountDetailsIBAN;
-import com.mangopay.core.BankAccountDetailsOTHER;
-import com.mangopay.core.BankAccountDetailsUS;
+import com.mangopay.entities.subentities.BankAccountDetailsCA;
+import com.mangopay.entities.subentities.BankAccountDetailsGB;
+import com.mangopay.entities.subentities.BankAccountDetailsIBAN;
+import com.mangopay.entities.subentities.BankAccountDetailsOTHER;
+import com.mangopay.entities.subentities.BankAccountDetailsUS;
+import com.mangopay.core.enumerations.BankAccountType;
 import com.mangopay.core.EntityBase;
-import com.mangopay.core.IBankAccountDetails;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.mangopay.core.interfaces.IBankAccountDetails;
+import java.util.*;
 
 /**
  * Bank Account entity.
@@ -24,7 +23,7 @@ public class BankAccount extends EntityBase {
     /**
      * Type of bank account.
      */
-    public String Type;
+    public BankAccountType Type;
     
     /**
      * Owner name.

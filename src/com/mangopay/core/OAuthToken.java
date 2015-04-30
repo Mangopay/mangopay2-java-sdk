@@ -1,6 +1,5 @@
 package com.mangopay.core;
 
-import com.mangopay.core.Dto;
 import java.io.Serializable;
 
 /**

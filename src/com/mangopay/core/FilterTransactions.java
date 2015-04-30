@@ -1,7 +1,7 @@
 package com.mangopay.core;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.mangopay.core.enumerations.*;
+import java.util.*;
 
 /**
  * Filter for transaction list.
@@ -9,24 +9,24 @@ import java.util.Map;
 public class FilterTransactions extends Dto {
     
     /**
-     * TransactionStatus { CREATED, SUCCEEDED, FAILED }.
+     * Transaction status.
      */
-    public String Status;
+    public TransactionStatus Status;
     
     /**
-     * TransactionType { PAYIN, PAYOUT, TRANSFER }.
+     * Transaction type.
      */
-    public String Type;
+    public TransactionType Type;
     
     /**
-     * TransactionNature { REGULAR, REFUND, REPUDIATION }.
+     * Transaction nature.
      */
-    public String Nature;
+    public TransactionNature Nature;
     
     /**
-     * TransactionDirection { DEBIT, CREDIT }.
+     * Transaction direction.
      */
-    public String Direction;
+    public TransactionDirection Direction;
     
     /**
      * Start date in Unix format: return only transactions that have CreationDate BEFORE this date.
@@ -46,10 +46,10 @@ public class FilterTransactions extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
         
-        if (Status != null && !Status.isEmpty()) result.put("Status", Status);
-        if (Type != null && !Type.isEmpty()) result.put("Type", Type);
-        if (Nature != null && !Nature.isEmpty()) result.put("Nature", Nature);
-        if (Direction != null && !Direction.isEmpty()) result.put("Direction", Direction);
+        if (Status != null && Status != TransactionStatus.NotSpecified) result.put("Status", Status.toString());
+        if (Type != null && Type != TransactionType.NotSpecified) result.put("Type", Type.toString());
+        if (Nature != null && Nature != TransactionNature.NotSpecified) result.put("Nature", Nature.toString());
+        if (Direction != null && Direction != TransactionDirection.NotSpecified) result.put("Direction", Direction.toString());
         if (BeforeDate != null) result.put("BeforeDate", Long.toString(BeforeDate));
         if (AfterDate != null) result.put("AfterDate", Long.toString(AfterDate));
         

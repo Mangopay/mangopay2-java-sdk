@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.mangopay.core.enumerations.*;
 import java.util.ArrayList;
 
 /**
@@ -13,17 +14,9 @@ public class UserLegal extends User {
     public String Name;
     
     /**
-     * Allowed types for legal user.
+     * Type of legal user.
      */
-    public static class LegalPersonTypes {
-        public static final String Business = "BUSINESS";
-        public static final String Organization = "ORGANIZATION";
-    }
-    
-    /**
-     * Type for legal user. One of UserLegal.LegalPersonTypes constants.
-     */
-    public String LegalPersonType;
+    public LegalPersonType LegalPersonType;
     
     /**
      * Headquarters address.
@@ -58,12 +51,12 @@ public class UserLegal extends User {
     /**
      * Legal representative nationality.
      */
-    public String LegalRepresentativeNationality;
+    public CountryIso LegalRepresentativeNationality;
     
     /**
      * Legal representative country of residence.
      */
-    public String LegalRepresentativeCountryOfResidence;
+    public CountryIso LegalRepresentativeCountryOfResidence;
     
     /**
      * Statute.
@@ -84,7 +77,7 @@ public class UserLegal extends User {
      * Instantiates new UserLegal object.
      */
     public UserLegal() {
-        PersonType = Types.Legal;
+        PersonType = PersonType.LEGAL;
     }
     
     /**

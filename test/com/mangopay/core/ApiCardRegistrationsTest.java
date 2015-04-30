@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.CardRegistration;
 import com.mangopay.entities.TemporaryPaymentCard;
 import com.mangopay.entities.UserNatural;
@@ -23,7 +24,7 @@ public class ApiCardRegistrationsTest extends BaseTest {
         assertNotNull(cardRegistration.PreregistrationData);
         assertNotNull(cardRegistration.CardRegistrationURL);
         assertEquals(user.Id, cardRegistration.UserId);
-        assertEquals("EUR", cardRegistration.Currency);
+        assertTrue(cardRegistration.Currency == CurrencyIso.EUR);
         assertEquals("CREATED", cardRegistration.Status);
     }
     

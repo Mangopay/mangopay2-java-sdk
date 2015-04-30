@@ -1,10 +1,9 @@
 package com.mangopay.entities;
 
 import com.mangopay.core.RefundReason;
+import com.mangopay.core.enumerations.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Refund entity.
@@ -19,7 +18,7 @@ public class Refund extends Transaction {
     /**
      * Initial transaction type.
      */
-    public String InitialTransactionType;
+    public InitialTransactionType InitialTransactionType;
     
     /**
      * Debited wallet identifier.

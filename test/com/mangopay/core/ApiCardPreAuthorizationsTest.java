@@ -4,6 +4,9 @@
  */
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.PaymentStatus;
+import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
+import com.mangopay.core.enumerations.PreAuthorizationStatus;
 import com.mangopay.entities.CardPreAuthorization;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -18,9 +21,9 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
         
         assertTrue(!"".equals(cardPreAuthorization.Id));
-        assertEquals("SUCCEEDED", cardPreAuthorization.Status);
-        assertEquals("WAITING", cardPreAuthorization.PaymentStatus);
-        assertEquals("DIRECT", cardPreAuthorization.ExecutionType);
+        assertTrue(cardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
+        assertTrue(cardPreAuthorization.PaymentStatus == PaymentStatus.WAITING);
+        assertTrue(cardPreAuthorization.ExecutionType == PreAuthorizationExecutionType.DIRECT);
         assertNull(cardPreAuthorization.PayInId);
     }
     
@@ -31,19 +34,19 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
         CardPreAuthorization getCardPreAuthorization = this._api.CardPreAuthorizations.get(cardPreAuthorization.Id);
         
         assertEquals(cardPreAuthorization.Id, getCardPreAuthorization.Id);
-        assertEquals("SUCCEEDED", getCardPreAuthorization.Status);
+        assertTrue(getCardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
         assertEquals("000000", getCardPreAuthorization.ResultCode);
     }
     
     @Test
     public void test_CardPreAuthorization_Update() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
-        cardPreAuthorization.PaymentStatus = "CANCELED ";
+        cardPreAuthorization.PaymentStatus = PaymentStatus.CANCELED;
         
         CardPreAuthorization resultCardPreAuthorization = this._api.CardPreAuthorizations.update(cardPreAuthorization);
         
-        assertEquals("SUCCEEDED", resultCardPreAuthorization.Status);
-        assertEquals("CANCELED", resultCardPreAuthorization.PaymentStatus);
+        assertTrue(resultCardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
+        assertTrue(resultCardPreAuthorization.PaymentStatus == PaymentStatus.CANCELED);
     }
     
 }

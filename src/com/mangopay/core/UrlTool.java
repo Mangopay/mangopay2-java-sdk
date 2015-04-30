@@ -2,8 +2,7 @@ package com.mangopay.core;
 
 import com.mangopay.MangoPayApi;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.Map;
 import java.util.Map.Entry;
 

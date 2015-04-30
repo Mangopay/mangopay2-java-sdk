@@ -2,6 +2,7 @@ package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
+import com.mangopay.core.enumerations.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -36,9 +37,9 @@ public class Transaction extends EntityBase {
     public Money Fees;
     
     /**
-     * TransactionStatus { CREATED, SUCCEEDED, FAILED }.
+     * Transaction status.
      */
-    public String Status;
+    public TransactionStatus Status;
     
     /**
      * Result code.
@@ -56,14 +57,14 @@ public class Transaction extends EntityBase {
     public Long ExecutionDate;
     
     /**
-     * TransactionType { PAYIN, PAYOUT, TRANSFER }.
+     * Transaction type.
      */
-    public String Type;
+    public TransactionType Type;
     
     /**
-     * TransactionNature { REGULAR, REFUND, REPUDIATION }.
+     * Transaction nature.
      */
-    public String Nature;
+    public TransactionNature Nature;
     
     /**
      * Gets map which property is an object and what type of object.

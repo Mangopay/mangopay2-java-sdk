@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.EventType;
 import com.mangopay.entities.*;
 import java.util.List;
 import org.junit.Test;

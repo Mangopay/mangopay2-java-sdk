@@ -1,9 +1,7 @@
 package com.mangopay.core;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Base abstract class for entities.

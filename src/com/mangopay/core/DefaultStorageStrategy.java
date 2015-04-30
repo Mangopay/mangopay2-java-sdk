@@ -1,5 +1,7 @@
 package com.mangopay.core;
 
+import com.mangopay.core.interfaces.IStorageStrategy;
+
 /**
  * Default token storage strategy implementation.
  */

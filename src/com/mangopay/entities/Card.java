@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.mangopay.core.enumerations.*;
 import com.mangopay.core.EntityBase;
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class Card extends EntityBase {
     /**
      * Card type.
      */
-    public String CardType;
+    public CardType CardType;
     
     /**
      * Product codes.
@@ -44,14 +45,14 @@ public class Card extends EntityBase {
     public Boolean Active;
     
     /**
-     * The currency accepted in the wallet { EUR, USD, GBP, PLN, CHF }.
+     * The currency accepted in the wallet.
      */
-    public String Currency;
+    public CurrencyIso Currency;
     
     /**
-     * Validity { UNKNOWN, VALID, INVALID }.
+     * Validity.
      */
-    public String Validity;
+    public Validity Validity;
     
     /**
      * Gets the collection of read-only fields names.

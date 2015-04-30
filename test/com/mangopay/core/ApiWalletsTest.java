@@ -1,5 +1,7 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.SortDirection;
+import com.mangopay.core.enumerations.TransactionType;
 import com.mangopay.entities.*;
 import java.util.List;
 import org.junit.Test;
@@ -49,7 +51,7 @@ public class ApiWalletsTest extends BaseTest {
 
         Pagination pagination = new Pagination(1, 1);
         FilterTransactions filter = new FilterTransactions();
-        filter.Type = "PAYIN";
+        filter.Type = TransactionType.PAYIN;
         List<Transaction> transactions = this._api.Wallets.getTransactions(wallet.Id, pagination, filter);
 
         assertTrue(transactions.size() == 1);
@@ -70,7 +72,7 @@ public class ApiWalletsTest extends BaseTest {
         sorting.addField("CreationDate", SortDirection.desc);
         Pagination pagination = new Pagination(1, 20);
         FilterTransactions filter = new FilterTransactions();
-        filter.Type = "PAYIN";
+        filter.Type = TransactionType.PAYIN;
         
         List<Transaction> transactions = this._api.Wallets.getTransactions(wallet.Id, pagination, filter, sorting);
         

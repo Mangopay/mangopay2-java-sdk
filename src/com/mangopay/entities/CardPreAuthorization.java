@@ -2,10 +2,9 @@ package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
+import com.mangopay.core.enumerations.*;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * CardPreAuthorization entity.
@@ -25,15 +24,14 @@ public class CardPreAuthorization extends EntityBase {
     public Money DebitedFunds;
     
     /**
-     * Status of the PreAuthorization: { CREATED, SUCCEEDED, FAILED }
+     * Status of the PreAuthorization.
      */
-    public String Status;
+    public PreAuthorizationStatus Status;
     
     /**
-     * The status of the payment after the PreAuthorization:
-     * { WAITING, CANCELED, EXPIRED, VALIDATED }
+     * The status of the payment after the PreAuthorization.
      */
-    public String PaymentStatus;
+    public PaymentStatus PaymentStatus;
     
     /**
      * The PreAuthorization result code.
@@ -46,17 +44,16 @@ public class CardPreAuthorization extends EntityBase {
     public String ResultMessage;
         
     /**
-     * How the PreAuthorization has been executed. 
-     * Only single value for now: CARD
+     * How the PreAuthorization has been executed.
      */
-    public String ExecutionType;
+    public PreAuthorizationExecutionType ExecutionType;
     
     /**
      * The SecureMode correspond to '3D secure' for CB Visa and MasterCard 
      * or 'Amex Safe Key' for American Express. 
      * This field lets you activate it manually.
      */
-    public String SecureMode;
+    public SecureMode SecureMode;
     
     /**
      * Identifier of the registered card (got through CardRegistration object).

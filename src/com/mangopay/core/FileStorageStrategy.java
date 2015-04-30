@@ -1,12 +1,8 @@
 package com.mangopay.core;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.mangopay.core.interfaces.IStorageStrategy;
+import java.io.*;
+import java.util.logging.*;
 
 /**
  * File token storage strategy implementation.

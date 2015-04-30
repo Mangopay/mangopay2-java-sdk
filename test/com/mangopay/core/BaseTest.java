@@ -1,5 +1,15 @@
 package com.mangopay.core;
 
+import com.mangopay.entities.subentities.BankAccountDetailsOTHER;
+import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
+import com.mangopay.entities.subentities.PayInExecutionDetailsWeb;
+import com.mangopay.entities.subentities.BankAccountDetailsIBAN;
+import com.mangopay.entities.subentities.PayInExecutionDetailsDirect;
+import com.mangopay.entities.subentities.BankAccountDetailsGB;
+import com.mangopay.entities.subentities.BankAccountDetailsCA;
+import com.mangopay.entities.subentities.BankAccountDetailsUS;
+import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
+import com.mangopay.core.enumerations.*;
 import com.mangopay.*;
 import com.mangopay.entities.*;
 import java.io.BufferedReader;
@@ -97,8 +107,8 @@ public abstract class BaseTest {
             user.Email = "john.doe@sample.org";
             user.Address = "Some Address";
             user.Birthday = c.getTimeInMillis() / 1000;
-            user.Nationality = "FR";
-            user.CountryOfResidence = "FR";
+            user.Nationality = CountryIso.FR;
+            user.CountryOfResidence = CountryIso.FR;
             user.Occupation = "programmer";
             user.IncomeRange = 3;
             
@@ -118,8 +128,8 @@ public abstract class BaseTest {
         user.Email = "john.doe@sample.org";
         user.Address = "Some Address";
         user.Birthday = c.getTimeInMillis() / 1000;
-        user.Nationality = "FR";
-        user.CountryOfResidence = "FR";
+        user.Nationality = CountryIso.FR;
+        user.CountryOfResidence = CountryIso.FR;
         user.Occupation = "programmer";
         user.IncomeRange = 3;
         return (UserNatural)this._api.Users.create(user);
@@ -131,7 +141,7 @@ public abstract class BaseTest {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
             user.Name = "MartixSampleOrg";
-            user.LegalPersonType = "BUSINESS";
+            user.LegalPersonType = LegalPersonType.BUSINESS;
             user.HeadquartersAddress = "Some Address";
             user.LegalRepresentativeFirstName = john.FirstName;
             user.LegalRepresentativeLastName = john.LastName;
@@ -155,7 +165,7 @@ public abstract class BaseTest {
         if (BaseTest._johnsAccount == null) {
             UserNatural john = this.getJohn();
             BankAccount account = new BankAccount();
-            account.Type = "IBAN";
+            account.Type = BankAccountType.IBAN;
             account.OwnerName = john.FirstName + " " + john.LastName;
             account.OwnerAddress = john.Address;
             account.UserId = john.Id;
@@ -181,7 +191,7 @@ public abstract class BaseTest {
             wallet.Owners = new ArrayList<>();
             wallet.Owners.add(john.Id);
             
-            wallet.Currency = "EUR";
+            wallet.Currency = CurrencyIso.EUR;
             wallet.Description = "WALLET IN EUR";
             
             BaseTest._johnsWallet = this._api.Wallets.create(wallet);
@@ -214,14 +224,14 @@ public abstract class BaseTest {
             Wallet wallet = new Wallet();
             wallet.Owners = new ArrayList<>();
             wallet.Owners.add(john.Id);
-            wallet.Currency = "EUR";
+            wallet.Currency = CurrencyIso.EUR;
             wallet.Description = "WALLET IN EUR WITH MONEY";
             
             BaseTest._johnsWalletWithMoney = this._api.Wallets.create(wallet);
             
             CardRegistration cardRegistration = new CardRegistration();
             cardRegistration.UserId = BaseTest._johnsWalletWithMoney.Owners.get(0);
-            cardRegistration.Currency = "EUR";
+            cardRegistration.Currency = CurrencyIso.EUR;
             cardRegistration = this._api.CardRegistrations.create(cardRegistration);
             
             cardRegistration.RegistrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
@@ -235,10 +245,10 @@ public abstract class BaseTest {
             payIn.AuthorId = cardRegistration.UserId;
             payIn.DebitedFunds = new Money();
             payIn.DebitedFunds.Amount = amount;
-            payIn.DebitedFunds.Currency = "EUR";
+            payIn.DebitedFunds.Currency = CurrencyIso.EUR;
             payIn.Fees = new Money();
             payIn.Fees.Amount = 0;
-            payIn.Fees.Currency = "EUR";
+            payIn.Fees.Currency = CurrencyIso.EUR;
 
             // payment type as CARD
             payIn.PaymentDetails = new PayInPaymentDetailsCard();
@@ -258,7 +268,7 @@ public abstract class BaseTest {
     private PayInPaymentDetailsCard getPayInPaymentDetailsCard() {
         if (BaseTest._payInPaymentDetailsCard == null) {
             BaseTest._payInPaymentDetailsCard = new PayInPaymentDetailsCard();
-            BaseTest._payInPaymentDetailsCard.CardType = "CB_VISA_MASTERCARD";
+            BaseTest._payInPaymentDetailsCard.CardType = CardType.CB_VISA_MASTERCARD;
         }
         
         return BaseTest._payInPaymentDetailsCard;
@@ -268,8 +278,8 @@ public abstract class BaseTest {
         if (BaseTest._payInExecutionDetailsWeb == null) {
             BaseTest._payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
             BaseTest._payInExecutionDetailsWeb.TemplateURL = "https://TemplateURL.com";
-            BaseTest._payInExecutionDetailsWeb.SecureMode = "DEFAULT";
-            BaseTest._payInExecutionDetailsWeb.Culture = "fr";
+            BaseTest._payInExecutionDetailsWeb.SecureMode = SecureMode.DEFAULT;
+            BaseTest._payInExecutionDetailsWeb.Culture = CountryIso.FR;
             BaseTest._payInExecutionDetailsWeb.ReturnURL = "https://test.com";
         }
         
@@ -285,10 +295,10 @@ public abstract class BaseTest {
             payIn.AuthorId = user.Id;
             payIn.CreditedUserId = user.Id;
             payIn.DebitedFunds = new Money();
-            payIn.DebitedFunds.Currency = "EUR";
+            payIn.DebitedFunds.Currency = CurrencyIso.EUR;
             payIn.DebitedFunds.Amount = 1000;
             payIn.Fees = new Money();
-            payIn.Fees.Currency = "EUR";
+            payIn.Fees.Currency = CurrencyIso.EUR;
             payIn.Fees.Amount = 5;
             payIn.CreditedWalletId = wallet.Id;
             payIn.PaymentDetails = this.getPayInPaymentDetailsCard();
@@ -334,7 +344,7 @@ public abstract class BaseTest {
 
         CardRegistration cardRegistration = new CardRegistration();
         cardRegistration.UserId = userId;
-        cardRegistration.Currency = "EUR";
+        cardRegistration.Currency = CurrencyIso.EUR;
         cardRegistration = this._api.CardRegistrations.create(cardRegistration);
         cardRegistration.RegistrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
         cardRegistration = this._api.CardRegistrations.update(cardRegistration);
@@ -347,10 +357,10 @@ public abstract class BaseTest {
         payIn.AuthorId = userId;
         payIn.DebitedFunds = new Money();
         payIn.DebitedFunds.Amount = 10000;
-        payIn.DebitedFunds.Currency = "EUR";
+        payIn.DebitedFunds.Currency = CurrencyIso.EUR;
         payIn.Fees = new Money();
         payIn.Fees.Amount = 0;
-        payIn.Fees.Currency = "EUR";
+        payIn.Fees.Currency = CurrencyIso.EUR;
 
         // payment type as CARD
         payIn.PaymentDetails = new PayInPaymentDetailsCard();
@@ -375,10 +385,10 @@ public abstract class BaseTest {
             payOut.AuthorId = user.Id;
             payOut.CreditedUserId = user.Id;
             payOut.DebitedFunds = new Money();
-            payOut.DebitedFunds.Currency = "EUR";
+            payOut.DebitedFunds.Currency = CurrencyIso.EUR;
             payOut.DebitedFunds.Amount = 10;
             payOut.Fees = new Money();
-            payOut.Fees.Currency = "EUR";
+            payOut.Fees.Currency = CurrencyIso.EUR;
             payOut.Fees.Amount = 5;
             
             payOut.DebitedWalletId = wallet.Id;
@@ -407,10 +417,10 @@ public abstract class BaseTest {
             payOut.AuthorId = payIn.AuthorId;
             payOut.CreditedUserId = payIn.AuthorId;
             payOut.DebitedFunds = new Money();
-            payOut.DebitedFunds.Currency = "EUR";
+            payOut.DebitedFunds.Currency = CurrencyIso.EUR;
             payOut.DebitedFunds.Amount = 10;
             payOut.Fees = new Money();
-            payOut.Fees.Currency = "EUR";
+            payOut.Fees.Currency = CurrencyIso.EUR;
             payOut.Fees.Amount = 5;
             
             payOut.DebitedWalletId = payIn.CreditedWalletId;
@@ -431,7 +441,7 @@ public abstract class BaseTest {
         Wallet wallet = new Wallet();
         wallet.Owners = new ArrayList<>();
         wallet.Owners.add(user.Id);
-        wallet.Currency = "EUR";
+        wallet.Currency = CurrencyIso.EUR;
         wallet.Description = "WALLET IN EUR FOR TRANSFER";
         wallet = this._api.Wallets.create(wallet);
 
@@ -440,10 +450,10 @@ public abstract class BaseTest {
         transfer.AuthorId = user.Id;
         transfer.CreditedUserId = user.Id;
         transfer.DebitedFunds = new Money();
-        transfer.DebitedFunds.Currency = "EUR";
+        transfer.DebitedFunds.Currency = CurrencyIso.EUR;
         transfer.DebitedFunds.Amount = 100;
         transfer.Fees = new Money();
-        transfer.Fees.Currency = "EUR";
+        transfer.Fees.Currency = CurrencyIso.EUR;
         transfer.Fees.Amount = 0;
 
         transfer.DebitedWalletId = walletWithMoney.Id;
@@ -502,7 +512,7 @@ public abstract class BaseTest {
             
             CardRegistration cardRegistration = new CardRegistration();
             cardRegistration.UserId = user.Id;
-            cardRegistration.Currency = "EUR";
+            cardRegistration.Currency = CurrencyIso.EUR;
 
             BaseTest._johnsCardRegistration = this._api.CardRegistrations.create(cardRegistration);
         }
@@ -517,7 +527,7 @@ public abstract class BaseTest {
             UserNatural user = this.getJohn();
             CardRegistration cardRegistration = new CardRegistration();
             cardRegistration.UserId = user.Id;
-            cardRegistration.Currency = "EUR";
+            cardRegistration.Currency = CurrencyIso.EUR;
             CardRegistration newCardRegistration = this._api.CardRegistrations.create(cardRegistration);
             
             String registrationData = this.getPaylineCorrectRegistartionData(newCardRegistration);
@@ -527,7 +537,7 @@ public abstract class BaseTest {
             CardPreAuthorization cardPreAuthorization = new CardPreAuthorization();
             cardPreAuthorization.AuthorId = user.Id;
             cardPreAuthorization.DebitedFunds = new Money();
-            cardPreAuthorization.DebitedFunds.Currency = "EUR";
+            cardPreAuthorization.DebitedFunds.Currency = CurrencyIso.EUR;
             cardPreAuthorization.DebitedFunds.Amount = 10000;
             cardPreAuthorization.CardId = getCardRegistration.CardId;
             cardPreAuthorization.SecureModeReturnURL = "http://test.com";
@@ -654,23 +664,23 @@ public abstract class BaseTest {
             assertEquals(((BankAccount)entity1).Type, ((BankAccount)entity2).Type);
             assertEquals(((BankAccount)entity1).OwnerName, ((BankAccount)entity2).OwnerName);
             assertEquals(((BankAccount)entity1).OwnerAddress, ((BankAccount)entity2).OwnerAddress);
-            if (((BankAccount)entity1).Type.equals("IBAN")) {
+            if (((BankAccount)entity1).Type == BankAccountType.IBAN) {
                 assertEquals(((BankAccountDetailsIBAN)((BankAccount)entity1).Details).IBAN, ((BankAccountDetailsIBAN)((BankAccount)entity2).Details).IBAN);
                 assertEquals(((BankAccountDetailsIBAN)((BankAccount)entity1).Details).BIC, ((BankAccountDetailsIBAN)((BankAccount)entity2).Details).BIC);
-            } else if (((BankAccount)entity1).Type.equals("GB")) {
+            } else if (((BankAccount)entity1).Type == BankAccountType.GB) {
                 assertEquals(((BankAccountDetailsGB)((BankAccount)entity1).Details).AccountNumber, ((BankAccountDetailsGB)((BankAccount)entity2).Details).AccountNumber);
                 assertEquals(((BankAccountDetailsGB)((BankAccount)entity1).Details).SortCode, ((BankAccountDetailsGB)((BankAccount)entity2).Details).SortCode);
-            } else if (((BankAccount)entity1).Type.equals("US")) {
+            } else if (((BankAccount)entity1).Type == BankAccountType.US) {
                 assertEquals(((BankAccountDetailsUS)((BankAccount)entity1).Details).AccountNumber, ((BankAccountDetailsUS)((BankAccount)entity2).Details).AccountNumber);
                 assertEquals(((BankAccountDetailsUS)((BankAccount)entity1).Details).ABA, ((BankAccountDetailsUS)((BankAccount)entity2).Details).ABA);
-            } else if (((BankAccount)entity1).Type.equals("CA")) {
+            } else if (((BankAccount)entity1).Type == BankAccountType.CA) {
                 assertEquals(((BankAccountDetailsCA)((BankAccount)entity1).Details).AccountNumber, ((BankAccountDetailsCA)((BankAccount)entity2).Details).AccountNumber);
                 assertEquals(((BankAccountDetailsCA)((BankAccount)entity1).Details).BankName, ((BankAccountDetailsCA)((BankAccount)entity2).Details).BankName);
                 assertEquals(((BankAccountDetailsCA)((BankAccount)entity1).Details).InstitutionNumber, ((BankAccountDetailsCA)((BankAccount)entity2).Details).InstitutionNumber);
                 assertEquals(((BankAccountDetailsCA)((BankAccount)entity1).Details).BranchCode, ((BankAccountDetailsCA)((BankAccount)entity2).Details).BranchCode);
-            } else if (((BankAccount)entity1).Type.equals("OTHER")) {
+            } else if (((BankAccount)entity1).Type == BankAccountType.OTHER) {
                 assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).Details).AccountNumber, ((BankAccountDetailsOTHER)((BankAccount)entity2).Details).AccountNumber);
-                assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).Details).Type, ((BankAccountDetailsOTHER)((BankAccount)entity2).Details).Type);
+                //assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).Details).Type, ((BankAccountDetailsOTHER)((BankAccount)entity2).Details).Type);
                 assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).Details).Country, ((BankAccountDetailsOTHER)((BankAccount)entity2).Details).Country);
                 assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).Details).BIC, ((BankAccountDetailsOTHER)((BankAccount)entity2).Details).BIC);
             }

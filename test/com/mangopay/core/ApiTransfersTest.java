@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -48,8 +49,8 @@ public class ApiTransfersTest extends BaseTest {
         assertTrue(refund.Id.length() > 0);
         assertTrue(refund.DebitedFunds.Amount == transfer.DebitedFunds.Amount);
         assertTrue(walletBefore.Balance.Amount == (walletAfter.Balance.Amount - transfer.DebitedFunds.Amount));
-        assertEquals("TRANSFER", refund.Type);
-        assertEquals("REFUND", refund.Nature);
+        assertTrue(refund.Type == TransactionType.TRANSFER);
+        assertTrue(refund.Nature == TransactionNature.REFUND);
     }
     
 }

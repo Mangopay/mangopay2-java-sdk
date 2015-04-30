@@ -1,7 +1,7 @@
 package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
-import com.mangopay.core.KycLevel;
+import com.mangopay.core.enumerations.*;
 import java.util.ArrayList;
 
 /**
@@ -11,18 +11,13 @@ import java.util.ArrayList;
 public abstract class User extends EntityBase {
 
     /**
-     * Allowed types of user.
+     * Type of user.
      */
-    public static class Types {
-        public static final String Natural = "NATURAL";
-        public static final String Legal = "LEGAL";
-    }
-
-    /**
-     * Type of user. One of User.Types constants.
-     */
-    public String PersonType;
+    public PersonType PersonType;
     
+    /**
+     * KYC level.
+     */
     public KycLevel KYCLevel;
 
     /**
@@ -30,7 +25,7 @@ public abstract class User extends EntityBase {
      */
     public String Email;
 
-    public User(String personType) {
+    public User(PersonType personType) {
         PersonType = personType;
     }
 

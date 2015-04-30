@@ -1,5 +1,7 @@
 package com.mangopay.core;
 
+import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
+import com.mangopay.core.enumerations.PayOutPaymentType;
 import com.mangopay.entities.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +21,7 @@ public class ApiPayOutsTest extends BaseTest {
             PayOut payOut = this.getJohnsPayOutBankWire();
 
             assertTrue(payOut.Id.length() > 0);
-            assertEquals(payOut.PaymentType, "BANK_WIRE");
+            assertTrue(payOut.PaymentType == PayOutPaymentType.BANK_WIRE);
             assertTrue(payOut.MeanOfPaymentDetails instanceof PayOutPaymentDetailsBankWire);
         }
         catch (Exception ex) {

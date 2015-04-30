@@ -1,6 +1,7 @@
 package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
+import com.mangopay.core.enumerations.*;
 
 /**
  * KYC document entity.
@@ -8,15 +9,14 @@ import com.mangopay.core.EntityBase;
 public class KycDocument extends EntityBase {
 
     /**
-     * Possible values: { IDENTITY_PROOF, REGISTRATION_PROOF, 
-     * ARTICLES_OF_ASSOCIATION, SHAREHOLDER_DECLARATION, ADDRESS_PROOF }.
+     * Type of KYC document.
      */
-    public String Type;
+    public KycDocumentType Type;
     
     /**
-     * Possible values: { CREATED, VALIDATION_ASKED, VALIDATED, REFUSED }.
+     * Status of KYC document.
      */
-    public String Status;
+    public KycStatus Status;
     
     /**
      * Refused reason type.

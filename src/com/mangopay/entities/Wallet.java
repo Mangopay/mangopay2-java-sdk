@@ -2,10 +2,9 @@ package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
+import com.mangopay.core.enumerations.CurrencyIso;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Wallet entity.
@@ -28,9 +27,9 @@ public class Wallet extends EntityBase {
     public Money Balance;
     
     /**
-     * Currency code in ISO.
+     * Currency.
      */
-    public String Currency;
+    public CurrencyIso Currency;
     
     /**
      * Gets map which property is an object and what type of object.

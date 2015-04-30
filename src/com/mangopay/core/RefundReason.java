@@ -1,7 +1,9 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.RefundReasonType;
+
 /**
- * Class represents reason of refund.
+ * Class represents refund's reason.
  */
 public class RefundReason extends Dto {
     
@@ -11,10 +13,7 @@ public class RefundReason extends Dto {
     public String RefundReasonMessage;
     
     /**
-     * Type of refund reason { BANKACCOUNT_INCORRECT, 
-     *      BANKACCOUNT_HAS_BEEN_CLOSED, OWNER_DOT_NOT_MATCH_BANKACCOUNT, 
-     *      WITHDRAWAL_IMPOSSIBLE_ON_SAVINGS_ACCOUNTS, INITIALIZED_BY_CLIENT, 
-     *      OTHER }.
+     * Type of refund reason.
      */
-    public String RefundReasonType;
+    public RefundReasonType RefundReasonType;
 }

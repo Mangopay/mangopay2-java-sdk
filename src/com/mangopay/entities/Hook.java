@@ -1,7 +1,7 @@
 package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
-import com.mangopay.core.EventType;
+import com.mangopay.core.enumerations.*;
 
 /**
  * Hooks and Notifications entity.
@@ -9,19 +9,19 @@ import com.mangopay.core.EventType;
 public class Hook extends EntityBase {
     
     /**
-     * This is the URL where you receive notification for each EventType.
+     * This is the URL where you receive notification for various event types.
      */
     public String Url;
     
     /**
-     * Status { ENABLED, DISABLED }.
+     * Hook status.
      */
-    public String Status;
+    public HookStatus Status;
     
     /**
-     * Validity { VALID, INVALID }.
+     * Hook validity.
      */
-    public String Validity;
+    public Validity Validity;
     
     /**
      * Event type (the <code>EventType.ALL</code> value is forbidden here).

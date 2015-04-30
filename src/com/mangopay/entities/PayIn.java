@@ -1,6 +1,8 @@
 package com.mangopay.entities;
 
-import com.mangopay.core.*;
+import com.mangopay.entities.subentities.*;
+import com.mangopay.core.interfaces.*;
+import com.mangopay.core.enumerations.*;
 import java.util.*;
 
 /**
@@ -14,9 +16,9 @@ public class PayIn extends Transaction {
     public String CreditedWalletId;
     
     /**
-     * PaymentType {CARD, BANK_WIRE, AUTOMATIC_DEBIT, DIRECT_DEBIT }.
+     * Type of payment.
      */
-    public String PaymentType;
+    public PayInPaymentType PaymentType;
     
     /**
      * One of PayInPaymentDetails implementations, depending on PaymentType.
@@ -24,9 +26,9 @@ public class PayIn extends Transaction {
     public IPayInPaymentDetails PaymentDetails;
     
     /**
-     * ExecutionType { WEB, TOKEN, DIRECT, PREAUTHORIZED, RECURRING_ORDER_EXECUTION }.
+     * Type of execution.
      */
-    public String ExecutionType;
+    public PayInExecutionType ExecutionType;
     
     /**
      * One of PayInExecutionDetails implementations, depending on ExecutionType.

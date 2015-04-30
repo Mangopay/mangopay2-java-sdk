@@ -1,7 +1,7 @@
 package com.mangopay.core;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.mangopay.core.enumerations.EventType;
+import java.util.*;
 
 /**
  * Filter for events list.

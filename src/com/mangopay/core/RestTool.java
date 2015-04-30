@@ -1,4 +1,5 @@
 package com.mangopay.core;
+import com.mangopay.core.enumerations.PersonType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
@@ -556,15 +557,18 @@ public class RestTool {
                 for (Entry<String, JsonElement> entry : response.entrySet()) {
                     
                     if (entry.getKey().equals("PersonType")) {
-                        switch (entry.getValue().getAsString()) {
-                            case User.Types.Natural:
-                                result = (T) new UserNatural();
-                                break;
-                            case User.Types.Legal:
-                                result = (T) new UserLegal();
-                                break;
-                            default:
-                                throw new Exception(String.format("Unknown type of user: %s", entry.getValue().getAsString()));
+                        String userType = entry.getValue().getAsString();
+                        
+                        if (userType.equals(PersonType.NATURAL.toString())) {
+                            result = (T) new UserNatural();
+                            break;
+                        }
+                        else if (userType.equals(PersonType.LEGAL.toString())) {
+                            result = (T) new UserLegal();
+                            break;
+                        }
+                        else {
+                            throw new Exception(String.format("Unknown type of user: %s", entry.getValue().getAsString()));
                         }
                     }
                     

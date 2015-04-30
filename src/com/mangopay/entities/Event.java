@@ -1,6 +1,7 @@
 package com.mangopay.entities;
 
 import com.mangopay.core.EntityBase;
+import com.mangopay.core.enumerations.EventType;
 import java.util.ArrayList;
 
 /**
@@ -16,7 +17,7 @@ public class Event extends EntityBase {
     /**
      * Type of event.
      */
-    public String EventType;
+    public EventType EventType;
     
     /**
      * Date as UNIX timestamp.

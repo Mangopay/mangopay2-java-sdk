@@ -1,6 +1,8 @@
 package com.mangopay.entities;
 
-import com.mangopay.core.*;
+import com.mangopay.entities.subentities.*;
+import com.mangopay.core.interfaces.*;
+import com.mangopay.core.enumerations.*;
 import java.util.*;
 
 /**
@@ -14,9 +16,9 @@ public class PayOut extends Transaction {
     public String DebitedWalletId;
     
     /**
-     * PaymentType { BANK_WIRE, MERCHANT_EXPENSE, AMAZON_GIFTCARD }.
+     * Payment type.
      */
-    public String PaymentType;
+    public PayOutPaymentType PaymentType;
     
     /**
      * One of IPayOutPaymentDetails implementations, depending on PaymentType.
