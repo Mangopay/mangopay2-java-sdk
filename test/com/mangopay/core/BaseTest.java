@@ -507,10 +507,14 @@ public abstract class BaseTest {
      * @return CardRegistration instance returned from API.
      */
     protected CardRegistration getJohnsCardRegistration() throws Exception {
+        return getJohnsCardRegistration(CardType.CB_VISA_MASTERCARD);
+    }
+    
+    protected CardRegistration getJohnsCardRegistration(CardType cardType) throws Exception {
         if (BaseTest._johnsCardRegistration == null) {
             UserNatural user = this.getJohn();
             
-            CardRegistration cardRegistration = new CardRegistration();
+            CardRegistration cardRegistration = new CardRegistration(cardType);
             cardRegistration.UserId = user.Id;
             cardRegistration.Currency = CurrencyIso.EUR;
 
@@ -518,6 +522,12 @@ public abstract class BaseTest {
         }
         
         return BaseTest._johnsCardRegistration;
+    }
+    
+    protected CardRegistration getNewJohnsCardRegistration(CardType cardType) throws Exception {
+        BaseTest._johnsCardRegistration = null;
+        
+        return getJohnsCardRegistration(cardType);
     }
     
     /**

@@ -1,6 +1,7 @@
 package com.mangopay.entities;
 
 import com.mangopay.core.enumerations.CurrencyIso;
+import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.EntityBase;
 import java.util.ArrayList;
 
@@ -8,6 +9,14 @@ import java.util.ArrayList;
  * CardRegistration entity.
  */
 public class CardRegistration extends EntityBase {
+    
+    public CardRegistration() {
+        CardType = CardType.CB_VISA_MASTERCARD;
+    }
+    
+    public CardRegistration(CardType cardType) {
+        CardType = cardType;
+    }
     
     /**
      * User Id.
@@ -53,6 +62,11 @@ public class CardRegistration extends EntityBase {
      * Status.
      */
     public String Status;
+    
+    /**
+     * Card type.
+     */
+    public CardType CardType;
     
     /**
      * Gets the collection of read-only fields names.

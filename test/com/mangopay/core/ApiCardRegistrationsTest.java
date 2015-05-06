@@ -14,18 +14,33 @@ public class ApiCardRegistrationsTest extends BaseTest {
     
     @Test
     public void test_CardRegistrations_Create() throws Exception {
-        CardRegistration cardRegistration = this.getJohnsCardRegistration();
+        CardRegistration cardRegistration_visa = this.getJohnsCardRegistration(CardType.CB_VISA_MASTERCARD);
         UserNatural user = this.getJohn();
 
-        assertNotNull(cardRegistration.Id);
-        assertTrue(cardRegistration.Id.length() > 0);
+        assertNotNull(cardRegistration_visa.Id);
+        assertTrue(cardRegistration_visa.Id.length() > 0);
 
-        assertNotNull(cardRegistration.AccessKey);
-        assertNotNull(cardRegistration.PreregistrationData);
-        assertNotNull(cardRegistration.CardRegistrationURL);
-        assertEquals(user.Id, cardRegistration.UserId);
-        assertTrue(cardRegistration.Currency == CurrencyIso.EUR);
-        assertEquals("CREATED", cardRegistration.Status);
+        assertNotNull(cardRegistration_visa.AccessKey);
+        assertNotNull(cardRegistration_visa.PreregistrationData);
+        assertNotNull(cardRegistration_visa.CardRegistrationURL);
+        assertEquals(user.Id, cardRegistration_visa.UserId);
+        assertTrue(cardRegistration_visa.Currency == CurrencyIso.EUR);
+        assertEquals("CREATED", cardRegistration_visa.Status);
+        assertEquals(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.CardType);
+        
+        
+        CardRegistration cardRegistration_maestro = this.getNewJohnsCardRegistration(CardType.MAESTRO);
+
+        assertNotNull(cardRegistration_maestro.Id);
+        assertTrue(cardRegistration_maestro.Id.length() > 0);
+
+        assertNotNull(cardRegistration_maestro.AccessKey);
+        assertNotNull(cardRegistration_maestro.PreregistrationData);
+        assertNotNull(cardRegistration_maestro.CardRegistrationURL);
+        assertEquals(user.Id, cardRegistration_maestro.UserId);
+        assertTrue(cardRegistration_maestro.Currency == CurrencyIso.EUR);
+        assertEquals("CREATED", cardRegistration_maestro.Status);
+        assertEquals(CardType.MAESTRO, cardRegistration_maestro.CardType);
     }
     
     @Test

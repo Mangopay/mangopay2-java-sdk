@@ -75,6 +75,21 @@ public class ApiUsersTest extends BaseTest {
         
         assertEqualInputProps(user, ret);
     }
+    
+    @Test
+    public void test_Users_GetAll() throws Exception {
+        Sorting sort = new Sorting();
+        sort.addField("CreationDate", SortDirection.desc);
+        List<User> users = this._api.Users.getAll(null, sort);
+        
+        assertTrue(users.get(0).CreationDate > users.get(users.size() - 1).CreationDate);
+        
+        sort = new Sorting();
+        sort.addField("CreationDate", SortDirection.asc);
+        users = this._api.Users.getAll(null, sort);
+        
+        assertTrue(users.get(0).CreationDate < users.get(users.size() - 1).CreationDate);
+    }
 
     @Test
     public void test_Users_GetNatural() throws Exception {
