@@ -170,8 +170,8 @@ public abstract class BaseTest {
             account.OwnerAddress = john.Address;
             account.UserId = john.Id;
             BankAccountDetailsIBAN bankAccountDetails = new BankAccountDetailsIBAN();
-            bankAccountDetails.IBAN = "FR76 1790 6000 3200 0833 5232 973";
-            bankAccountDetails.BIC = "BINAADADXXX";
+            bankAccountDetails.IBAN = "FR7618829754160173622224154";
+            bankAccountDetails.BIC = "CMBRFR2BCME";
             account.Details = bankAccountDetails;
             BaseTest._johnsAccount = this._api.Users.createBankAccount(john.Id, account);
         }
