@@ -32,5 +32,10 @@ public enum CardType {
     /**
     * MAESTRO card type.
     */ 
-    MAESTRO
+    MAESTRO,
+
+    /**
+    * P24 (Przelewy24) card type.
+    */ 
+    P24
 }
