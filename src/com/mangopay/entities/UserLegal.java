@@ -1,7 +1,12 @@
 package com.mangopay.entities;
 
+import com.mangopay.core.Address;
+import com.mangopay.core.Money;
 import com.mangopay.core.enumerations.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * UserLegal entity.
@@ -21,7 +26,7 @@ public class UserLegal extends User {
     /**
      * Headquarters address.
      */
-    public String HeadquartersAddress;
+    public Address HeadquartersAddress;
     
     /**
      * Legal representative first name.
@@ -36,7 +41,7 @@ public class UserLegal extends User {
     /**
      * Legal representative address.
      */
-    public String LegalRepresentativeAddress;
+    public Address LegalRepresentativeAddress;
     
     /**
      * Legal representative email.
@@ -78,6 +83,22 @@ public class UserLegal extends User {
      */
     public UserLegal() {
         PersonType = PersonType.LEGAL;
+    }
+    
+    /**
+     * Gets map which property is an object and what type of object.
+     * @return Collection of field name-field type pairs.
+     */
+    @Override
+    public Map<String, Type> getSubObjects() {
+        
+        Map<String, Type> result = super.getSubObjects();
+        
+        result.put("HeadquartersAddress", Address.class);
+        result.put("LegalRepresentativeAddress", Address.class);
+        
+        return result;
+        
     }
     
     /**

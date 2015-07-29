@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.mangopay.core.Address;
 import com.mangopay.entities.subentities.BankAccountDetailsCA;
 import com.mangopay.entities.subentities.BankAccountDetailsGB;
 import com.mangopay.entities.subentities.BankAccountDetailsIBAN;
@@ -7,7 +8,9 @@ import com.mangopay.entities.subentities.BankAccountDetailsOTHER;
 import com.mangopay.entities.subentities.BankAccountDetailsUS;
 import com.mangopay.core.enumerations.BankAccountType;
 import com.mangopay.core.EntityBase;
+import com.mangopay.core.Money;
 import com.mangopay.core.interfaces.IBankAccountDetails;
+import java.lang.reflect.Type;
 import java.util.*;
 
 /**
@@ -33,12 +36,26 @@ public class BankAccount extends EntityBase {
     /**
      * Owner address.
      */
-    public String OwnerAddress;
+    public Address OwnerAddress;
     
     /**
      * One of BankAccountDetails implementations, depending on Type.
      */
     public IBankAccountDetails Details;
+    
+    /**
+     * Gets map which property is an object and what type of object.
+     * @return Collection of field name-field type pairs.
+     */
+    @Override
+    public Map<String, Type> getSubObjects() {
+        
+        Map<String, Type> result = super.getSubObjects();
+        
+        result.put("OwnerAddress", Address.class);
+        
+        return result;
+    }
     
     /**
      * Gets the structure that maps which property depends on other property.

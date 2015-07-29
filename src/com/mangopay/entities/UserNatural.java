@@ -1,7 +1,11 @@
 package com.mangopay.entities;
 
+import com.mangopay.core.Address;
 import com.mangopay.core.enumerations.*;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * UserNatural entity.
@@ -21,7 +25,7 @@ public final class UserNatural extends User {
      /**
      * Address.
      */
-    public String Address;
+    public Address Address;
     
      /**
      * Date of birth (UNIX timestamp).
@@ -86,6 +90,20 @@ public final class UserNatural extends User {
      */
     public UserNatural() {
         PersonType = PersonType.NATURAL;
+    }
+    
+    /**
+     * Gets map which property is an object and what type of object.
+     * @return Collection of field name-field type pairs.
+     */
+    @Override
+    public Map<String, Type> getSubObjects() {
+        
+        Map<String, Type> result = super.getSubObjects();
+        
+        result.put("Address", Address.class);
+        
+        return result;
     }
     
     /**

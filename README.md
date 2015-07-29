@@ -4,6 +4,11 @@ MangopaySDK is a Java client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
 
 
+Compatibility Note
+-------------------------------------------------
+Since v1.0.6 of this SDK, you must be using at least v2.01 of the API ([more information about the changes required](https://docs.mangopay.com/api-v2-01-overview/))
+
+
 Installation
 -------------------------------------------------
 SDK has been written in Java 7. It depends only on a single external package:

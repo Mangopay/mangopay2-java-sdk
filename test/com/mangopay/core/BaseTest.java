@@ -96,6 +96,19 @@ public abstract class BaseTest {
         }
     }
     
+    protected Address getNewAddress() {
+        Address result = new Address();
+        
+        result.AddressLine1 = "Address line 1";
+        result.AddressLine2 = "Address line 2";
+        result.City = "City";
+        result.Country = CountryIso.PL;
+        result.PostalCode = "11222";
+        result.Region = "Region";
+        
+        return result;
+    }
+    
     protected UserNatural getJohn() throws Exception {
         if (BaseTest._john == null) {
             Calendar c = Calendar.getInstance();
@@ -105,7 +118,7 @@ public abstract class BaseTest {
             user.FirstName = "John";
             user.LastName = "Doe";
             user.Email = "john.doe@sample.org";
-            user.Address = "Some Address";
+            user.Address = this.getNewAddress();
             user.Birthday = c.getTimeInMillis() / 1000;
             user.Nationality = CountryIso.FR;
             user.CountryOfResidence = CountryIso.FR;
@@ -126,7 +139,7 @@ public abstract class BaseTest {
         user.FirstName = "John";
         user.LastName = "Doe";
         user.Email = "john.doe@sample.org";
-        user.Address = "Some Address";
+        user.Address = this.getNewAddress();
         user.Birthday = c.getTimeInMillis() / 1000;
         user.Nationality = CountryIso.FR;
         user.CountryOfResidence = CountryIso.FR;
@@ -142,7 +155,7 @@ public abstract class BaseTest {
             UserLegal user = new UserLegal();
             user.Name = "MartixSampleOrg";
             user.LegalPersonType = LegalPersonType.BUSINESS;
-            user.HeadquartersAddress = "Some Address";
+            user.HeadquartersAddress = this.getNewAddress();
             user.LegalRepresentativeFirstName = john.FirstName;
             user.LegalRepresentativeLastName = john.LastName;
             user.LegalRepresentativeAddress = john.Address;
@@ -647,7 +660,16 @@ public abstract class BaseTest {
             assertEquals(((UserNatural)entity1).FirstName, ((UserNatural)entity2).FirstName);
             assertEquals(((UserNatural)entity1).LastName, ((UserNatural)entity2).LastName);
             assertEquals(((UserNatural)entity1).Email, ((UserNatural)entity2).Email);
-            assertEquals(((UserNatural)entity1).Address, ((UserNatural)entity2).Address);
+            
+            assertNotNull(((UserNatural)entity1).Address);
+            assertNotNull(((UserNatural)entity2).Address);
+            assertEquals(((UserNatural)entity1).Address.AddressLine1, ((UserNatural)entity2).Address.AddressLine1);
+            assertEquals(((UserNatural)entity1).Address.AddressLine2, ((UserNatural)entity2).Address.AddressLine2);
+            assertEquals(((UserNatural)entity1).Address.City, ((UserNatural)entity2).Address.City);
+            assertEquals(((UserNatural)entity1).Address.Country, ((UserNatural)entity2).Address.Country);
+            assertEquals(((UserNatural)entity1).Address.PostalCode, ((UserNatural)entity2).Address.PostalCode);
+            assertEquals(((UserNatural)entity1).Address.Region, ((UserNatural)entity2).Address.Region);
+            
             assertEquals(((UserNatural)entity1).Birthday, ((UserNatural)entity2).Birthday);
             assertEquals(((UserNatural)entity1).Nationality, ((UserNatural)entity2).Nationality);
             assertEquals(((UserNatural)entity1).CountryOfResidence, ((UserNatural)entity2).CountryOfResidence);
@@ -658,7 +680,15 @@ public abstract class BaseTest {
             assertEquals(((UserLegal)entity1).Tag, ((UserLegal)entity2).Tag);
             assertEquals(((UserLegal)entity1).PersonType, ((UserLegal)entity2).PersonType);
             assertEquals(((UserLegal)entity1).Name, ((UserLegal)entity2).Name);
-            assertEquals(((UserLegal)entity1).HeadquartersAddress, ((UserLegal)entity2).HeadquartersAddress);
+            assertNotNull(((UserLegal)entity1).HeadquartersAddress);
+            assertNotNull(((UserLegal)entity2).HeadquartersAddress);
+            assertEquals(((UserLegal)entity1).HeadquartersAddress.AddressLine1, ((UserLegal)entity2).HeadquartersAddress.AddressLine1);
+            assertEquals(((UserLegal)entity1).HeadquartersAddress.AddressLine2, ((UserLegal)entity2).HeadquartersAddress.AddressLine2);
+            assertEquals(((UserLegal)entity1).HeadquartersAddress.City, ((UserLegal)entity2).HeadquartersAddress.City);
+            assertEquals(((UserLegal)entity1).HeadquartersAddress.Country, ((UserLegal)entity2).HeadquartersAddress.Country);
+            assertEquals(((UserLegal)entity1).HeadquartersAddress.PostalCode, ((UserLegal)entity2).HeadquartersAddress.PostalCode);
+            assertEquals(((UserLegal)entity1).HeadquartersAddress.Region, ((UserLegal)entity2).HeadquartersAddress.Region);
+            
             assertEquals(((UserLegal)entity1).LegalRepresentativeFirstName, ((UserLegal)entity2).LegalRepresentativeFirstName);
             assertEquals(((UserLegal)entity1).LegalRepresentativeLastName, ((UserLegal)entity2).LegalRepresentativeLastName);
             //assertEquals("***** TEMPORARY API ISSUE: RETURNED OBJECT MISSES THIS PROP AFTER CREATION *****", ((UserLegal)entity1).LegalRepresentativeAddress, ((UserLegal)entity2).LegalRepresentativeAddress);
@@ -673,7 +703,16 @@ public abstract class BaseTest {
             assertEquals(((BankAccount)entity1).UserId, ((BankAccount)entity2).UserId);
             assertEquals(((BankAccount)entity1).Type, ((BankAccount)entity2).Type);
             assertEquals(((BankAccount)entity1).OwnerName, ((BankAccount)entity2).OwnerName);
-            assertEquals(((BankAccount)entity1).OwnerAddress, ((BankAccount)entity2).OwnerAddress);
+            assertNotNull(((BankAccount)entity1).OwnerAddress);
+            assertNotNull(((BankAccount)entity2).OwnerAddress);
+            assertEquals(((BankAccount)entity1).OwnerAddress.AddressLine1, ((BankAccount)entity2).OwnerAddress.AddressLine1);
+            assertEquals(((BankAccount)entity1).OwnerAddress.AddressLine2, ((BankAccount)entity2).OwnerAddress.AddressLine2);
+            assertEquals(((BankAccount)entity1).OwnerAddress.City, ((BankAccount)entity2).OwnerAddress.City);
+            assertEquals(((BankAccount)entity1).OwnerAddress.Country, ((BankAccount)entity2).OwnerAddress.Country);
+            assertEquals(((BankAccount)entity1).OwnerAddress.PostalCode, ((BankAccount)entity2).OwnerAddress.PostalCode);
+            assertEquals(((BankAccount)entity1).OwnerAddress.Region, ((BankAccount)entity2).OwnerAddress.Region);
+            
+            
             if (((BankAccount)entity1).Type == BankAccountType.IBAN) {
                 assertEquals(((BankAccountDetailsIBAN)((BankAccount)entity1).Details).IBAN, ((BankAccountDetailsIBAN)((BankAccount)entity2).Details).IBAN);
                 assertEquals(((BankAccountDetailsIBAN)((BankAccount)entity1).Details).BIC, ((BankAccountDetailsIBAN)((BankAccount)entity2).Details).BIC);

@@ -56,6 +56,13 @@ public class ApiUsersTest extends BaseTest {
     @Test
     public void test_Users_CreateLegal_PassesIfRequiredPropsProvided() throws Exception {
         UserLegal user = new UserLegal();
+        user.HeadquartersAddress = new Address();
+        user.HeadquartersAddress.AddressLine1 = "AddressLine1";
+        user.HeadquartersAddress.AddressLine2 = "AddressLine2";
+        user.HeadquartersAddress.City = "City";
+        user.HeadquartersAddress.Country = CountryIso.FR;
+        user.HeadquartersAddress.PostalCode = "11222";
+        user.HeadquartersAddress.Region = "Region";
         user.Name = "SomeOtherSampleOrg";
         user.LegalPersonType = LegalPersonType.BUSINESS;
         user.LegalRepresentativeFirstName = "RepFName";
