@@ -882,18 +882,51 @@ public class RestTool {
                 put(501, "Not implemented");
             }};
             
-            String errorMsg = "";
+            ResponseException responseException = new ResponseException(message);
+            responseException.ResponseHttpCode = this._responseCode;
+            
             if (responseCodes.containsKey(this._responseCode)) {
-                errorMsg = responseCodes.get(this._responseCode);
+                responseException.ResponseHttpDescription = responseCodes.get(this._responseCode);
             } else {
-                errorMsg = "Unknown response error";
-            }
-
-            if (message != null) {
-                errorMsg += ". " + message;
+                responseException.ResponseHttpDescription = "Unknown response error";
             }
             
-            throw new ResponseException(errorMsg);
+            if (message != null) {
+                JsonObject error = new JsonParser().parse(message).getAsJsonObject();
+                for (Entry<String, JsonElement> entry : error.entrySet()) {
+                    
+                    switch (entry.getKey().toLowerCase()){
+                        case "message":
+                            responseException.ApiMessage = entry.getValue().getAsString();
+                            break;
+                        case "type":
+                            responseException.Type = entry.getValue().getAsString();
+                            break;
+                        case "id":
+                            responseException.Id = entry.getValue().getAsString();
+                            break;
+                        case "date":
+                            responseException.Date = (int)entry.getValue().getAsDouble();
+                            break;
+                        case "errors":
+                            if (entry.getValue() == null) break;
+                            
+                            for (Entry<String, JsonElement> errorEntry : entry.getValue().getAsJsonObject().entrySet()) {
+                                if (!responseException.Errors.containsKey(errorEntry.getKey()))
+                                    responseException.Errors.put(errorEntry.getKey(), errorEntry.getValue().getAsString());
+                                else {
+                                    String description = responseException.Errors.get(errorEntry.getKey());
+                                    description = " | " + errorEntry.getValue().getAsString();
+
+                                    responseException.Errors.put(errorEntry.getKey(), description);
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+
+            throw responseException;
         }
     }
 }
