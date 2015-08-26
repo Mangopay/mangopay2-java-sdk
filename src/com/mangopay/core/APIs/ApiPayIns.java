@@ -76,7 +76,7 @@ public class ApiPayIns extends ApiBase {
         if (payIn.PaymentDetails == null)
             throw new Exception ("Payment is not defined or it is not object type");
         
-        String className = payIn.PaymentDetails.getClass().getName().replaceAll("com.mangopay.entities.subentities.PayInPaymentDetails", "");
+        String className = payIn.PaymentDetails.getClass().getName().replace("com.mangopay.entities.subentities.PayInPaymentDetails", "");
         return className.toLowerCase();
     }
     
@@ -85,7 +85,7 @@ public class ApiPayIns extends ApiBase {
         if (payIn.ExecutionDetails == null)
             throw new Exception ("Execution is not defined or it is not object type");
         
-        String className = payIn.ExecutionDetails.getClass().getName().replaceAll("com.mangopay.entities.subentities.PayInExecutionDetails", "");
+        String className = payIn.ExecutionDetails.getClass().getName().replace("com.mangopay.entities.subentities.PayInExecutionDetails", "");
         return className.toLowerCase();
     }
     
