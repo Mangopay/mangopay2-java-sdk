@@ -37,5 +37,10 @@ public enum CardType {
     /**
     * P24 (Przelewy24) card type.
     */ 
-    P24
+    P24,
+
+    /**
+    * IDEAL card type.
+    */ 
+    IDEAL
 }
