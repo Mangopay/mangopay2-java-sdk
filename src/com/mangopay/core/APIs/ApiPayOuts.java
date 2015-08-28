@@ -40,7 +40,7 @@ public class ApiPayOuts extends ApiBase {
         if (payOut.MeanOfPaymentDetails == null)
             throw new Exception("Mean of payment is not defined or it is not object type");
         
-        String className = payOut.MeanOfPaymentDetails.getClass().getName().replaceAll("com.mangopay.entities.subentities.PayOutPaymentDetails", "");
+        String className = payOut.MeanOfPaymentDetails.getClass().getSimpleName().replace("PayOutPaymentDetails", "");
         return className.toLowerCase();
         
     }
