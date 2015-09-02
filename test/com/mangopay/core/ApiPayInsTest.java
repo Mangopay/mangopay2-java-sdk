@@ -291,7 +291,7 @@ public class ApiPayInsTest extends BaseTest {
             ((PayInPaymentDetailsDirectDebit)payIn.PaymentDetails).DirectDebitType = DirectDebitType.GIROPAY;
             payIn.ExecutionDetails = new PayInExecutionDetailsWeb();
             ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).ReturnURL = "http://www.mysite.com/returnURL/";
-            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).Culture = CountryIso.FR;
+            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).Culture = CultureCode.FR;
             ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions = new PayInTemplateURLOptions();
             ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions.PAYLINE = "https://www.maysite.com/payline_template/";                
 
@@ -304,7 +304,7 @@ public class ApiPayInsTest extends BaseTest {
             assertTrue(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).DirectDebitType == DirectDebitType.GIROPAY);
             assertTrue(createPayIn.ExecutionType == PayInExecutionType.WEB);
             assertTrue(createPayIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
-            assertTrue(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).Culture == CountryIso.FR);
+            assertTrue(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).Culture == CultureCode.FR);
             assertEquals(user.Id, createPayIn.AuthorId);
             assertTrue(createPayIn.Status == TransactionStatus.CREATED);
             assertTrue(createPayIn.Type == TransactionType.PAYIN);

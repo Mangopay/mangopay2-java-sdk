@@ -19,7 +19,7 @@ public class PayInExecutionDetailsWeb extends Dto implements IPayInExecutionDeta
     /**
      * Culture.
      */
-    public CountryIso Culture;
+    public CultureCode Culture;
     
     /**
      * Secure mode.

@@ -292,7 +292,7 @@ public abstract class BaseTest {
             BaseTest._payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
             BaseTest._payInExecutionDetailsWeb.TemplateURL = "https://TemplateURL.com";
             BaseTest._payInExecutionDetailsWeb.SecureMode = SecureMode.DEFAULT;
-            BaseTest._payInExecutionDetailsWeb.Culture = CountryIso.FR;
+            BaseTest._payInExecutionDetailsWeb.Culture = CultureCode.FR;
             BaseTest._payInExecutionDetailsWeb.ReturnURL = "https://test.com";
         }
         
