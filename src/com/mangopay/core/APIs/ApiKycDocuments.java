@@ -27,4 +27,13 @@ public class ApiKycDocuments extends ApiBase {
         return this.getList(KycDocument[].class, KycDocument.class, "kyc_documents_all", pagination, sorting);
     }
     
+    /**
+     * Gets KYC document.
+     * @param kycDocumentId KYC document identifier.
+     * @return              KYC document returned from API.
+     * @throws Exception
+     */
+    public KycDocument getKycDocument(String kycDocumentId) throws Exception {
+        return this.getObject(KycDocument.class, "kyc_document_get", kycDocumentId);
+    }
 }

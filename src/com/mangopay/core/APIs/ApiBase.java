@@ -94,6 +94,8 @@ public abstract class ApiBase {
         put("kyc_page_create", new String[] { "/users/%s/KYC/documents/%s/pages", RequestType.POST.toString() });
         put("kyc_documents_all", new String[] { "/KYC/documents", RequestType.GET.toString() });
         
+        put("kyc_document_get", new String[] { "/KYC/documents/%s", RequestType.GET.toString() });
+        
         // These are temporary functions and WILL be removed in the future. 
         // Contact support before using these features or if have any queries.
         put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST.toString() });
