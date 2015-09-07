@@ -209,16 +209,16 @@ public class ApiUsersTest extends BaseTest {
             account.OwnerName = john.FirstName + " " + john.LastName;
             account.OwnerAddress = john.Address;
             account.Details = new BankAccountDetailsGB();
-            ((BankAccountDetailsGB)account.Details).AccountNumber = "18329068";
-            ((BankAccountDetailsGB)account.Details).SortCode = "306541";
+            ((BankAccountDetailsGB)account.Details).AccountNumber = "63956474";
+            ((BankAccountDetailsGB)account.Details).SortCode = "200000";
             
             BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
             assertTrue(createAccount.Type == BankAccountType.GB);
-            assertTrue(((BankAccountDetailsGB)createAccount.Details).AccountNumber.equals("18329068"));
-            assertTrue(((BankAccountDetailsGB)createAccount.Details).SortCode.equals("306541"));
+            assertTrue(((BankAccountDetailsGB)createAccount.Details).AccountNumber.equals("63956474"));
+            assertTrue(((BankAccountDetailsGB)createAccount.Details).SortCode.equals("200000"));
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
