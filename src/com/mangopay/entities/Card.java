@@ -9,6 +9,16 @@ import java.util.ArrayList;
  */
 public class Card extends EntityBase {
     
+     /**
+     * User Id.
+     */
+    public String UserId;
+    
+     /**
+     * Country.
+     */
+    public String Country;
+    
     /**
      * Expiration date.
      */
@@ -63,6 +73,8 @@ public class Card extends EntityBase {
         
         ArrayList<String> result = super.getReadOnlyProperties();
         
+        result.add("UserId");
+        result.add("Country");
         result.add("ExpirationDate");
         result.add("Alias");
         result.add("CardProvider");
