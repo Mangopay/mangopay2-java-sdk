@@ -687,6 +687,8 @@ public class RestTool {
                                     f.set(result, entry.getValue().getAsDouble());
                                 } else if (fieldTypeName.equals(String.class.getName())) {
                                     f.set(result, entry.getValue().getAsString());
+                                } else if (fieldTypeName.equals(Boolean.class.getName())) {
+                                    f.set(result, entry.getValue().getAsBoolean());
                                 } else if (f.getType().isEnum()) {// Enumeration, try getting enum by name
                                     Class cls = f.getType();
                                     Object val = Enum.valueOf(cls, entry.getValue().getAsString());
