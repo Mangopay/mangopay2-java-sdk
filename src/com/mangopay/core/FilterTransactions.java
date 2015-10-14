@@ -24,11 +24,6 @@ public class FilterTransactions extends Dto {
     public TransactionNature Nature;
     
     /**
-     * Transaction direction.
-     */
-    public TransactionDirection Direction;
-    
-    /**
      * Start date in Unix format: return only transactions that have CreationDate BEFORE this date.
      */
     public Long BeforeDate;
