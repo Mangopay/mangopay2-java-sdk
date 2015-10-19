@@ -42,5 +42,10 @@ public enum CardType {
     /**
     * IDEAL card type.
     */ 
-    IDEAL
+    IDEAL,
+
+    /**
+    * BCMC card type.
+    */ 
+    BCMC
 }
