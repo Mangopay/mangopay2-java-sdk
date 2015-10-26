@@ -22,5 +22,10 @@ public enum TransactionNature {
     /**
      * REPUDIATION transaction nature.
      */
-    REPUDIATION
+    REPUDIATION,
+    
+    /**
+     * SETTLEMENT transaction nature.
+     */
+    SETTLEMENT
 }

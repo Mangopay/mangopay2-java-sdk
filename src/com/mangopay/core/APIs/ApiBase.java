@@ -96,6 +96,23 @@ public abstract class ApiBase {
         
         put("kyc_document_get", new String[] { "/KYC/documents/%s", RequestType.GET.toString() });
         
+        put("disputes_get", new String[] { "/disputes/%s", RequestType.GET.toString() });
+        put("disputes_save_tag", new String[] { "/disputes/%s", RequestType.PUT.toString() });
+        put("disputes_save_contest_funds", new String[] { "/disputes/%s/submit", RequestType.PUT.toString() });
+        put("disputes_save_close", new String[] { "/disputes/%s/close", RequestType.PUT.toString() });
+        put("disputes_get_transactions", new String[] { "/disputes/%s/transactions", RequestType.GET.toString() });
+        put("disputes_get_all", new String[] { "/disputes", RequestType.GET.toString() });
+        put("disputes_get_for_wallet", new String[] { "/wallets/%s/disputes", RequestType.GET.toString() });
+        put("disputes_get_for_user", new String[] { "/users/%s/disputes", RequestType.GET.toString() });
+        put("disputes_document_create", new String[] { "/disputes/%s/documents", RequestType.POST.toString() });
+        put("disputes_document_page_create", new String[] { "/disputes/%s/documents/%s/pages", RequestType.POST.toString() });
+        put("disputes_document_submit", new String[] { "/disputes/%s/documents/%s", RequestType.PUT.toString() });
+        put("disputes_document_get", new String[] { "/dispute-documents/%s", RequestType.GET.toString() });
+        put("disputes_document_get_for_dispute", new String[] { "/disputes/%s/documents", RequestType.GET.toString() });
+        put("disputes_document_get_for_client", new String[] { "/dispute-documents", RequestType.GET.toString() });
+        put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
+	put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
+        
         // These are temporary functions and WILL be removed in the future. 
         // Contact support before using these features or if have any queries.
         put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST.toString() });
@@ -240,7 +257,7 @@ public abstract class ApiBase {
         
         String urlMethod = "";
         
-        if (entityId.length() > 0)
+        if (entityId != null && entityId.length() > 0)
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId);
         else
             urlMethod = this.getRequestUrl(methodKey);
@@ -353,11 +370,9 @@ public abstract class ApiBase {
             if (entityId.length() == 0)
                 urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
             else {
-                String ggg = this.getRequestUrl(methodKey);
                 urlMethod = String.format(this.getRequestUrl(methodKey), entityId, ((EntityBase)entity).Id);
             }
                 
-
             RestTool rest = new RestTool(this._root, true);
             return rest.request(classOfT, urlMethod, this.getRequestType(methodKey), null, null, entity);
         } else {
