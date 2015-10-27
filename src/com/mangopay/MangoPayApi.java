@@ -34,6 +34,7 @@ public class MangoPayApi {
         CardPreAuthorizations = new ApiCardPreAuthorizations(this);
         Hooks = new ApiHooks(this);
         KycDocuments = new ApiKycDocuments(this);
+        Disputes = new ApiDisputes(this);
     }
     
     ////////////////////////////////////////
@@ -123,5 +124,10 @@ public class MangoPayApi {
      * Provides KYC documents list methods.
      */
     public ApiKycDocuments KycDocuments;
+    
+    /**
+     * Provides Disputes methods.
+     */
+    public ApiDisputes Disputes;
     
 }

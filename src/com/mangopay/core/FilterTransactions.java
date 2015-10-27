@@ -44,7 +44,6 @@ public class FilterTransactions extends Dto {
         if (Status != null && Status != TransactionStatus.NotSpecified) result.put("Status", Status.toString());
         if (Type != null && Type != TransactionType.NotSpecified) result.put("Type", Type.toString());
         if (Nature != null && Nature != TransactionNature.NotSpecified) result.put("Nature", Nature.toString());
-        if (Direction != null && Direction != TransactionDirection.NotSpecified) result.put("Direction", Direction.toString());
         if (BeforeDate != null) result.put("BeforeDate", Long.toString(BeforeDate));
         if (AfterDate != null) result.put("AfterDate", Long.toString(AfterDate));
         
