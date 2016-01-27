@@ -312,11 +312,14 @@ public class ApiDisputesTest extends BaseTest {
         Dispute dispute = null;
         DisputeDocument disputeDocument = null;
         
+        FilterDisputeDocuments filter = new FilterDisputeDocuments();
+        filter.Status = DisputeDocumentStatus.CREATED;
+        
         // search for disputes having any documents created...
         for (Dispute d : _clientDisputes) {
             if (d.Status == DisputeStatus.PENDING_CLIENT_ACTION || d.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION) {
                 
-                List<DisputeDocument> dd = this._api.Disputes.getDocumentsForDispute(d.Id, new Pagination(1, 1), null, null);
+                List<DisputeDocument> dd = this._api.Disputes.getDocumentsForDispute(d.Id, new Pagination(1, 1), filter, null);
                 
                 if (dd != null && dd.size() > 0) {
                     // ...found such
@@ -342,9 +345,9 @@ public class ApiDisputesTest extends BaseTest {
         
         assertNotNull("Cannot test submitting dispute's documents because there's no dispute with expected status in the disputes list.", dispute);
 
+        assertNotNull("Cannot test submitting dispute's documents because there's no dispute document that can be updated.", disputeDocument);
+        
         DisputeDocument result = null;
-
-        disputeDocument = _api.Disputes.getDocumentsForDispute(dispute.Id, new Pagination(1, 1), null, null).get(0);
 
         DisputeDocument disputeDocumentPut = new DisputeDocument();
         disputeDocumentPut.Id = disputeDocument.Id;
