@@ -23,7 +23,18 @@ public class ApiWallets extends ApiBase {
      * @throws Exception
      */
     public Wallet create(Wallet wallet) throws Exception {
-        return this.createObject(Wallet.class, "wallets_create", wallet);
+        return this.create(null, wallet);
+    }
+
+    /**
+     * Creates a new wallet.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param wallet            Wallet instance to be created.
+     * @return                  Wallet instance returned from API.
+     * @throws Exception
+     */
+    public Wallet create(String idempotencyKey, Wallet wallet) throws Exception {
+        return this.createObject(Wallet.class, idempotencyKey, "wallets_create", wallet);
     }
     
     /**

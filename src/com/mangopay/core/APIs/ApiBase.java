@@ -113,6 +113,8 @@ public abstract class ApiBase {
         put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
 	put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
         
+        put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
+        
         // These are temporary functions and WILL be removed in the future. 
         // Contact support before using these features or if have any queries.
         put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST.toString() });
@@ -156,6 +158,7 @@ public abstract class ApiBase {
      * Creates the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
      * @param classOfT          Type on behalf of which the request is being called.
+     * @param idempotencyKey    Idempotency key for this request.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
      * @param entityId          Entity identifier.
@@ -163,7 +166,7 @@ public abstract class ApiBase {
      * @return                  The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
+    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
         
         String urlMethod;
         
@@ -175,7 +178,7 @@ public abstract class ApiBase {
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
         
         RestTool rest = new RestTool(this._root, true);
-        T result = rest.request(classOfT, urlMethod, this.getRequestType(methodKey), null, null, entity);
+        T result = rest.request(classOfT, idempotencyKey, urlMethod, this.getRequestType(methodKey), null, null, entity);
         
         return result;
         
@@ -183,29 +186,31 @@ public abstract class ApiBase {
     
     /**
      * Creates the Dto instance.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
-     * @param methodKey     Relevant method key.
-     * @param entity        Dto instance that is going to be sent.
-     * @param entityId      Entity identifier.
-     * @return              The Dto instance returned from API.
+     * @param <T>               Type on behalf of which the request is being called.
+     * @param classOfT          Type on behalf of which the request is being called.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param methodKey         Relevant method key.
+     * @param entity            Dto instance that is going to be sent.
+     * @param entityId          Entity identifier.
+     * @return                  The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
-        return createObject(classOfT, methodKey, entity, entityId, "");
+    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId) throws Exception {
+        return createObject(classOfT, idempotencyKey, methodKey, entity, entityId, "");
     }
     
     /**
      * Creates the Dto instance.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
-     * @param methodKey     Relevant method key.
-     * @param entity        Dto instance that is going to be sent.
-     * @return              The Dto instance returned from API.
+     * @param <T>               Type on behalf of which the request is being called.
+     * @param classOfT          Type on behalf of which the request is being called.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param methodKey         Relevant method key.
+     * @param entity            Dto instance that is going to be sent.
+     * @return                  The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String methodKey, T entity) throws Exception {
-        return createObject(classOfT, methodKey, entity, "");
+    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity) throws Exception {
+        return createObject(classOfT, idempotencyKey, methodKey, entity, "");
     }
     
     /**
@@ -223,7 +228,7 @@ public abstract class ApiBase {
         String urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
         
         RestTool rest = new RestTool(this._root, true);
-        T response = rest.request(classOfT, urlMethod, this.getRequestType(methodKey));
+        T response = rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
         
         return response;
     }
@@ -374,7 +379,7 @@ public abstract class ApiBase {
             }
                 
             RestTool rest = new RestTool(this._root, true);
-            return rest.request(classOfT, urlMethod, this.getRequestType(methodKey), null, null, entity);
+            return rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey), null, null, entity);
         } else {
             return null;
         }

@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.BankAccount;
+import com.mangopay.entities.IdempotencyResponse;
 import com.mangopay.entities.PayIn;
 import com.mangopay.entities.PayOut;
 import com.mangopay.entities.User;
@@ -134,11 +135,34 @@ public class RestTool {
      * @throws Exception
      */
     public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, T entity) throws Exception {
+        return this.request(classOfT, null, urlMethod, requestType, requestData, pagination, entity);
+    }
+    
+    /**
+     * Makes a call to the MangoPay API.
+     * <p>
+     * This generic method handles calls targeting single 
+     * <code>Dto</code> instances. In order to process collections of objects, 
+     * use <code>requestList</code> method instead.
+     * @param <T>               Type on behalf of which the request is being called.
+     * @param classOfT          Type on behalf of which the request is being called.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param urlMethod         Relevant method key.
+     * @param requestType       HTTP request term, one of the GET, PUT or POST.
+     * @param requestData       Collection of key-value pairs of request 
+                                parameters.
+     * @param pagination        Pagination object.
+     * @param entity            Instance of Dto class that is going to be
+                                sent in case of PUTting or POSTing.
+     * @return                  The Dto instance returned from API.
+     * @throws Exception
+     */
+    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, T entity) throws Exception {
         
         this._requestType = requestType;
         this._requestData = requestData;
         
-        T responseResult = this.doRequest(classOfT, urlMethod, pagination, entity);
+        T responseResult = this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
         
         if(pagination != null){
             pagination = this._pagination;
@@ -160,8 +184,8 @@ public class RestTool {
      * @return              The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType) throws Exception {
-        return request(classOfT, urlMethod, requestType, null, null, null);
+    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType) throws Exception {
+        return request(classOfT, idempotencyKey, urlMethod, requestType, null, null, null);
     }
     
     /**
@@ -179,8 +203,8 @@ public class RestTool {
      * @return              The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData) throws Exception {
-        return request(classOfT, urlMethod, requestType, requestData, null, null);
+    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData) throws Exception {
+        return request(classOfT, idempotencyKey, urlMethod, requestType, requestData, null, null);
     }
     
     /**
@@ -199,8 +223,8 @@ public class RestTool {
      * @return              The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination) throws Exception {
-        return request(classOfT, urlMethod, requestType, requestData, pagination, null);
+    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination) throws Exception {
+        return request(classOfT, idempotencyKey, urlMethod, requestType, requestData, pagination, null);
     }
     
     /**
@@ -294,7 +318,7 @@ public class RestTool {
         return requestList(classOfT, classOfTItem, urlMethod, requestType, requestData, pagination, null);
     }
     
-    private <T extends Dto> T doRequest(Class<T> classOfT, String urlMethod, Pagination pagination, T entity) throws Exception {
+    private <T extends Dto> T doRequest(Class<T> classOfT, String idempotencyKey, String urlMethod, Pagination pagination, T entity) throws Exception {
         
         T response = null;
         
@@ -331,6 +355,10 @@ public class RestTool {
                 
                 if (this._debugMode)
                     _logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
+            }
+            
+            if (idempotencyKey != null && !idempotencyKey.trim().isEmpty()) {
+                _connection.addRequestProperty("Idempotency-Key", idempotencyKey);
             }
             
             // prepare to go
@@ -549,6 +577,34 @@ public class RestTool {
             
             if (_debugMode) {
                 _logger.info("Entity type: {}", classOfT.getName());
+            }
+            
+            if (classOfT.getName().equals(IdempotencyResponse.class.getName())) {
+                
+                // handle the special case here
+                IdempotencyResponse resp = new IdempotencyResponse();
+                
+                for (Entry<String, JsonElement> entry : response.entrySet()) {
+                    
+                    if (entry.getKey().equals("StatusCode")) {
+                        resp.StatusCode = entry.getValue().getAsString();
+                    }
+                    else if (entry.getKey().equals("ContentLength")) {
+                        resp.ContentLength = entry.getValue().getAsString();
+                    }
+                    else if (entry.getKey().equals("ContentType")) {
+                        resp.ContentType = entry.getValue().getAsString();
+                    }
+                    else if (entry.getKey().equals("Date")) {
+                        resp.Date = entry.getValue().getAsString();
+                    }
+                    else if (entry.getKey().equals("Resource")) {
+                        resp.Resource = entry.getValue().toString();
+                    }
+                    
+                }
+                
+                return (T)resp;
             }
             
             T result = null;

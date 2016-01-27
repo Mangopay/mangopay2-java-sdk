@@ -53,13 +53,13 @@ public class ApiDisputesTest extends BaseTest {
         Dispute dispute = null;
         
         for (Dispute d : _clientDisputes) {
-            if (d.DisputeType != DisputeType.RETRIEVAL) {
+            if (d.DisputeType == DisputeType.NOT_CONTESTABLE) {
                 dispute = d;
                 break;
             }
         }
         
-        assertNotNull("Cannot test getting dispute's transactions because there's no dispute of non-RETRIEVAL type in the disputes list.", dispute);
+        assertNotNull("Cannot test getting dispute's transactions because there's no not contestable dispute in the disputes list.", dispute);
         
         List<Transaction> result = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 10), null, null);
 
@@ -93,13 +93,13 @@ public class ApiDisputesTest extends BaseTest {
         Dispute dispute = null;
         
         for (Dispute d : _clientDisputes) {
-            if (d.DisputeType != DisputeType.RETRIEVAL) {
+            if (d.DisputeType == DisputeType.NOT_CONTESTABLE) {
                 dispute = d;
                 break;
             }
         }
         
-        assertNotNull("Cannot test getting disputes for user because there's no dispute of non-RETRIEVAL type in the disputes list.", dispute);
+        assertNotNull("Cannot test getting disputes for user because there's no not contestable dispute in the disputes list.", dispute);
         
         List<Transaction> transactions = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null);
         String userId = transactions.get(0).AuthorId;
@@ -275,7 +275,19 @@ public class ApiDisputesTest extends BaseTest {
             }
         }
         
-        assertNotNull("Cannot test getting dispute's documents because there's no available disputes with SUBMITTED status in the disputes list.", dispute);
+        if (dispute == null) {
+            test_ContestDispute();
+            initialize();
+            
+            for (Dispute d : _clientDisputes) {
+                if (d.Status == DisputeStatus.SUBMITTED) {
+                    dispute = d;
+                    break;
+                }
+            }
+            
+            assertNotNull("Cannot test getting dispute's documents because there's no available disputes with SUBMITTED status in the disputes list.", dispute);
+        }
 
         List<DisputeDocument> result = null;
 
@@ -298,17 +310,37 @@ public class ApiDisputesTest extends BaseTest {
     public void test_SubmitDisputeDocument() throws Exception
     {
         Dispute dispute = null;
+        DisputeDocument disputeDocument = null;
         
+        // search for disputes having any documents created...
         for (Dispute d : _clientDisputes) {
             if (d.Status == DisputeStatus.PENDING_CLIENT_ACTION || d.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION) {
-                dispute = d;
-                break;
+                
+                List<DisputeDocument> dd = this._api.Disputes.getDocumentsForDispute(d.Id, new Pagination(1, 1), null, null);
+                
+                if (dd != null && dd.size() > 0) {
+                    // ...found such
+                    dispute = d;
+                    disputeDocument = dd.get(0);
+                    break;
+                }
+            }
+        }
+        
+        if (dispute == null) {
+            // try to create a dispute document
+            for (Dispute d : _clientDisputes) {
+                if (d.Status == DisputeStatus.PENDING_CLIENT_ACTION || d.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION) {
+                    dispute = d;
+                    DisputeDocument documentPost = new DisputeDocument();
+                    documentPost.Type = DisputeDocumentType.DELIVERY_PROOF;
+                    disputeDocument = this._api.Disputes.createDisputeDocument(documentPost, dispute.Id);
+                    break;
+                }
             }
         }
         
         assertNotNull("Cannot test submitting dispute's documents because there's no dispute with expected status in the disputes list.", dispute);
-
-        DisputeDocument disputeDocument = null;
 
         DisputeDocument result = null;
 
@@ -331,7 +363,7 @@ public class ApiDisputesTest extends BaseTest {
         Dispute dispute = null;
         
         for (Dispute d : _clientDisputes) {
-            if (d.DisputeType != DisputeType.RETRIEVAL) {
+            if (d.DisputeType == DisputeType.NOT_CONTESTABLE && d.InitialTransactionId != null) {
                 dispute = d;
                 break;
             }
@@ -339,7 +371,7 @@ public class ApiDisputesTest extends BaseTest {
         
         Repudiation result = null;
 
-        assertNotNull("Cannot test getting repudiation because there's no dispute of non-RETRIEVAL type in the disputes list.", dispute);
+        assertNotNull("Cannot test getting repudiation because there's no not contestable dispute in the disputes list.", dispute);
 
         String repudiationId = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null).get(0).Id;
 
@@ -354,13 +386,13 @@ public class ApiDisputesTest extends BaseTest {
         Dispute dispute = null;
         
         for (Dispute d : _clientDisputes) {
-            if (d.Status == DisputeStatus.CLOSED && d.DisputeType != DisputeType.RETRIEVAL) {
+            if (d.Status == DisputeStatus.CLOSED && d.DisputeType == DisputeType.NOT_CONTESTABLE) {
                 dispute = d;
                 break;
             }
         }
 
-        assertNotNull("Cannot test creating settlement transfer because there's no closed disputes in the disputes list.", dispute);
+        assertNotNull("Cannot test creating settlement transfer because there's no closed and not contestable disputes in the disputes list.", dispute);
 
         String repudiationId = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null).get(0).Id;
 
@@ -418,7 +450,7 @@ public class ApiDisputesTest extends BaseTest {
         long now = c.getTime().getTime() / 1000;
         FilterDisputeDocuments filterAfter = new FilterDisputeDocuments();
         FilterDisputeDocuments filterBefore = new FilterDisputeDocuments();
-        filterAfter.AfterDate = now;
+        filterAfter.AfterDate = now + 10000;
         filterBefore.BeforeDate = now;
         
         result1 = _api.Disputes.getDocumentsForClient(new Pagination(1, 100), filterAfter, null);

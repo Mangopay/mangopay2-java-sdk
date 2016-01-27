@@ -21,7 +21,18 @@ public class ApiTransfers extends ApiBase {
      * @throws Exception
      */
     public Transfer create(Transfer transfer) throws Exception {
-        return this.createObject(Transfer.class, "transfers_create", transfer);
+        return this.create(null, transfer);
+    }
+    
+    /**
+     * Creates new transfer.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param transfer          Instance of Transfer class to be created.
+     * @return                  Transfer object returned from API.
+     * @throws Exception
+     */
+    public Transfer create(String idempotencyKey, Transfer transfer) throws Exception {
+        return this.createObject(Transfer.class, idempotencyKey, "transfers_create", transfer);
     }
     
     /**
@@ -42,7 +53,19 @@ public class ApiTransfers extends ApiBase {
      * @throws Exception
      */
     public Refund createRefund(String transferId, Refund refund) throws Exception {
-        return this.createObject(Refund.class, "transfers_createrefunds", refund, transferId);
+        return this.createRefund(null, transferId, refund);
+    }
+    
+    /**
+     * Creates refund for transfer object.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param transferId        Transfer identifier.
+     * @param refund            Refund object to create.
+     * @return Refund entity instance returned from API.
+     * @throws Exception
+     */
+    public Refund createRefund(String idempotencyKey, String transferId, Refund refund) throws Exception {
+        return this.createObject(Refund.class, idempotencyKey, "transfers_createrefunds", refund, transferId);
     }
     
     /**

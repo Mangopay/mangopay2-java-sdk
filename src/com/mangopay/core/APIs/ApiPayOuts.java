@@ -21,8 +21,19 @@ public class ApiPayOuts extends ApiBase {
      * @throws Exception
      */
     public PayOut create(PayOut payOut) throws Exception {
+        return this.create(null, payOut);
+    }
+    
+    /**
+     * Creates new PayOut object.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param payOut            The PayOut object to be created.
+     * @return                  Created PayOut object returned by API.
+     * @throws Exception
+     */
+    public PayOut create(String idempotencyKey, PayOut payOut) throws Exception {
         String paymentKey = this.getPaymentKey(payOut);
-        return this.createObject(PayOut.class, String.format("payouts_%s_create", paymentKey), payOut);
+        return this.createObject(PayOut.class, idempotencyKey, String.format("payouts_%s_create", paymentKey), payOut);
     }
     
     /**

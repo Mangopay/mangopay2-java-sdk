@@ -21,7 +21,18 @@ public class ApiCardPreAuthorizations extends ApiBase {
      * @throws Exception
      */
     public CardPreAuthorization create(CardPreAuthorization cardPreAuthorization) throws Exception {
-        return this.createObject(CardPreAuthorization.class, "preauthorization_create", cardPreAuthorization);
+        return this.create(null, cardPreAuthorization);
+    }
+    
+    /**
+     * Creates new pre-authorization object.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param cardPreAuthorization PreAuthorization object to be created.
+     * @return Card pre-authorization instance returned from API.
+     * @throws Exception
+     */
+    public CardPreAuthorization create(String idempotencyKey, CardPreAuthorization cardPreAuthorization) throws Exception {
+        return this.createObject(CardPreAuthorization.class, idempotencyKey, "preauthorization_create", cardPreAuthorization);
     }
     
     /**

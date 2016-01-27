@@ -163,11 +163,23 @@ public class ApiDisputes extends ApiBase {
      * @throws Exception
      */
         public Transfer createSettlementTransfer(SettlementTransfer settlementTransfer, String repudiationId) throws Exception {
+            return this.createSettlementTransfer(null, settlementTransfer, repudiationId);
+    }
+    
+    /**
+     * Creates settlement transfer.
+     * @param idempotencyKey        Idempotency key for this request.
+     * @param settlementTransfer    Settlement transfer.
+     * @param repudiationId         Repudiation identifier.
+     * @return                      Transfer instance returned from API.
+     * @throws Exception
+     */
+        public Transfer createSettlementTransfer(String idempotencyKey, SettlementTransfer settlementTransfer, String repudiationId) throws Exception {
             Transfer settlement = new Transfer();
             settlement.AuthorId = settlementTransfer.AuthorId;
             settlement.DebitedFunds = settlementTransfer.DebitedFunds;
             settlement.Fees = settlementTransfer.Fees;
-            return this.createObject(Transfer.class, "disputes_repudiation_create_settlement", settlement, repudiationId);
+            return this.createObject(Transfer.class, idempotencyKey, "disputes_repudiation_create_settlement", settlement, repudiationId);
     }
     
     /**
@@ -238,7 +250,19 @@ public class ApiDisputes extends ApiBase {
      * @throws Exception
      */
     public DisputeDocument createDisputeDocument(DisputeDocument disputeDocument, String disputeId) throws Exception {
-        return this.createObject(DisputeDocument.class, "disputes_document_create", disputeDocument, disputeId);
+        return this.createDisputeDocument(null, disputeDocument, disputeId);
+    }
+    
+    /**
+     * Creates document for dispute.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param disputeDocument   Dispute document to be created.
+     * @param disputeId         Dispute identifier.
+     * @return                  Dispute document returned from API.
+     * @throws Exception
+     */
+    public DisputeDocument createDisputeDocument(String idempotencyKey, DisputeDocument disputeDocument, String disputeId) throws Exception {
+        return this.createObject(DisputeDocument.class, idempotencyKey, "disputes_document_create", disputeDocument, disputeId);
     }
     
     /**
@@ -249,13 +273,25 @@ public class ApiDisputes extends ApiBase {
      * @throws Exception
      */
     public void createDisputePage(String disputeId, String documentId, byte[] binaryData) throws Exception {
+        this.createDisputePage(null, disputeId, documentId);
+    }
+    
+    /**
+     * Creates document's page for dispute.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param disputeId     Dispute identifier.
+     * @param documentId    Dispute document identifier.
+     * @param binaryData    The byte array the DisputePage will be created from.
+     * @throws Exception
+     */
+    public void createDisputePage(String idempotencyKey, String disputeId, String documentId, byte[] binaryData) throws Exception {
         DisputePage disputePage = new DisputePage();
         
         String fileContent = new String(Base64.encodeBase64(binaryData));
         
         disputePage.File = fileContent;
         
-        this.createObject(DisputePage.class, "disputes_document_page_create", disputePage, disputeId, documentId);
+        this.createObject(DisputePage.class, idempotencyKey, "disputes_document_page_create", disputePage, disputeId, documentId);
     }
     
     /**
@@ -268,10 +304,24 @@ public class ApiDisputes extends ApiBase {
      */
     public void createDisputePage(String disputeId, String documentId, String filePath) throws IOException, Exception {
         
+        createDisputePage(null, disputeId, documentId, filePath);
+    }
+    
+    /**
+     * Creates document's page for dispute.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param disputeId     Dispute identifier.
+     * @param documentId    Dispute document identifier.
+     * @param filePath      Path to the file the DisputePage will be created from.
+     * @throws IOException
+     * @throws Exception
+     */
+    public void createDisputePage(String idempotencyKey, String disputeId, String documentId, String filePath) throws IOException, Exception {
+        
         byte[] fileArray;
         Path path = Paths.get(filePath);
         fileArray = Files.readAllBytes(path);
         
-        createDisputePage(disputeId, documentId, fileArray);
+        createDisputePage(idempotencyKey, disputeId, documentId, fileArray);
     }
 }

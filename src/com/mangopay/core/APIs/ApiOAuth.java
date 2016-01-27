@@ -43,7 +43,7 @@ public class ApiOAuth extends ApiBase {
             Logger.getLogger(ApiOAuth.class.getName()).log(Level.SEVERE, null, ex);
         }
         rest.addRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
-        OAuthToken response = rest.request(OAuthToken.class, urlMethod, requestType, requestData);
+        OAuthToken response = rest.request(OAuthToken.class, null, urlMethod, requestType, requestData);
         
         return response;
     }

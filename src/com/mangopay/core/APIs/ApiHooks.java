@@ -18,12 +18,23 @@ public class ApiHooks extends ApiBase {
     
     /**
      * Creates new hook.
-     * @param Hook      Hook instance to be created.
+     * @param hook      Hook instance to be created.
      * @return          Hook instance returned from API.
      * @throws Exception
      */
     public Hook create(Hook hook) throws Exception {
-        return this.createObject(Hook.class, "hooks_create", hook);
+        return this.create(null, hook);
+    }
+    
+    /**
+     * Creates new hook.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param hook              Hook instance to be created.
+     * @return                  Hook instance returned from API.
+     * @throws Exception
+     */
+    public Hook create(String idempotencyKey, Hook hook) throws Exception {
+        return this.createObject(Hook.class, idempotencyKey, "hooks_create", hook);
     }
     
     /**

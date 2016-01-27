@@ -37,13 +37,24 @@ public class ApiUsers extends ApiBase {
      * @throws Exception
      */
     public User create(User user) throws Exception {
+        return create(null, user);
+    }
+    
+    /**
+     * Creates new user.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param user              User object to be created.
+     * @return                  User instance returned from API, which is either of UserNatural or UserLegal type.
+     * @throws Exception
+     */
+    public User create(String idempotencyKey, User user) throws Exception {
         
         User response = null;
         
         if (user instanceof UserNatural)
-            response = this.createObject(UserNatural.class, "users_createnaturals", (UserNatural)user);
+            response = this.createObject(UserNatural.class, idempotencyKey, "users_createnaturals", (UserNatural)user);
         else if (user instanceof UserLegal)
-            response = this.createObject(UserLegal.class, "users_createlegals", (UserLegal)user);
+            response = this.createObject(UserLegal.class, idempotencyKey, "users_createlegals", (UserLegal)user);
         else
             throw new Exception("Unsupported user entity type.");
         
@@ -106,7 +117,7 @@ public class ApiUsers extends ApiBase {
             throw new Exception("Unsupported user entity type.");
         
         return this.updateObject(User.class, methodKey, user);
-    }    
+    }
     
     /**
      * Creates bank account for user.
@@ -116,9 +127,21 @@ public class ApiUsers extends ApiBase {
      * @throws Exception
      */
     public BankAccount createBankAccount(String userId, BankAccount bankAccount) throws Exception {
+        return this.createBankAccount(null, userId, bankAccount);
+    }
+    
+    /**
+     * Creates bank account for user.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param userId            User identifier to create bank account for.
+     * @param bankAccount       Bank account object.
+     * @return                  Created bank account object returned from API.
+     * @throws Exception
+     */
+    public BankAccount createBankAccount(String idempotencyKey, String userId, BankAccount bankAccount) throws Exception {
         String type = this.getBankAccountType(bankAccount);
-        return this.createObject(BankAccount.class, "users_createbankaccounts_" + type, bankAccount, userId);
-    }    
+        return this.createObject(BankAccount.class, idempotencyKey, "users_createbankaccounts_" + type, bankAccount, userId);
+    }
     
     /**
      * Gets all bank accounts of user.
@@ -207,13 +230,25 @@ public class ApiUsers extends ApiBase {
      * @throws Exception
      */
     public void createKycPage(String userId, String kycDocumentId, byte[] binaryData) throws Exception {
+        createKycPage(null, userId, kycDocumentId, binaryData);
+    }
+    
+    /**
+     * Creates KycPage from byte array.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param userId            User identifier.
+     * @param kycDocumentId     Kyc document identifier.
+     * @param binaryData        The byte array the KycPage will be created from.
+     * @throws Exception
+     */
+    public void createKycPage(String idempotencyKey, String userId, String kycDocumentId, byte[] binaryData) throws Exception {
         KycPage kycPage = new KycPage();
         
         String fileContent = new String(Base64.encodeBase64(binaryData));
         
         kycPage.File = fileContent;
         
-        this.createObject(KycPage.class, "kyc_page_create", kycPage, userId, kycDocumentId);
+        this.createObject(KycPage.class, idempotencyKey, "kyc_page_create", kycPage, userId, kycDocumentId);
     }
     
     /**
@@ -232,6 +267,22 @@ public class ApiUsers extends ApiBase {
     }
     
     /**
+     * Creates KycPage from file.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param userId            User identifier.
+     * @param kycDocumentId     Kyc document identifier.
+     * @param filePath          Path to the file the KycPage will be created from.
+     * @throws Exception
+     */
+    public void createKycPage(String idempotencyKey, String userId, String kycDocumentId, String filePath) throws Exception {
+        byte[] fileArray;
+        Path path = Paths.get(filePath);
+        fileArray = Files.readAllBytes(path);
+        
+        createKycPage(idempotencyKey, userId, kycDocumentId, fileArray);
+    }
+    
+    /**
      * Creates KycDocument.
      * @param userId        User identifier.
      * @param type          Type of KycDocument.
@@ -239,10 +290,22 @@ public class ApiUsers extends ApiBase {
      * @throws Exception
      */
     public KycDocument createKycDocument(String userId, KycDocumentType type) throws Exception {
+        return createKycDocument(null, userId, type);
+    }
+    
+    /**
+     * Creates KycDocument.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param userId            User identifier.
+     * @param type              Type of KycDocument.
+     * @return                  KycDocument object returned from API.
+     * @throws Exception
+     */
+    public KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type) throws Exception {
         KycDocument kycDocument = new KycDocument();
         kycDocument.Type = type;
         
-        return this.createObject(KycDocument.class, "users_createkycdocument", kycDocument, userId);
+        return this.createObject(KycDocument.class, idempotencyKey, "users_createkycdocument", kycDocument, userId);
     }
     
     /**

@@ -21,9 +21,20 @@ public class ApiPayIns extends ApiBase {
      * @throws Exception
      */
     public PayIn create(PayIn payIn) throws Exception {
+        return this.create(null, payIn);
+    }
+    
+    /**
+     * Creates new PayIn object.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param payIn             The PayIn object to be created.
+     * @return                  Created PayIn object returned by API.
+     * @throws Exception
+     */
+    public PayIn create(String idempotencyKey, PayIn payIn) throws Exception {
         String paymentKey = this.getPaymentKey(payIn);
         String executionKey = this.getExecutionKey(payIn);
-        return this.createObject(PayIn.class, String.format("payins_%s-%s_create", paymentKey, executionKey), payIn);
+        return this.createObject(PayIn.class, idempotencyKey, String.format("payins_%s-%s_create", paymentKey, executionKey), payIn);
     }
     
     /**
@@ -38,13 +49,25 @@ public class ApiPayIns extends ApiBase {
     
     /**
      * Creates refund for PayIn object.
-     * @param payInId PayIn identifier.
-     * @param refund Refund object to be created.
-     * @return Refund entity instance returned by REST API.
+     * @param payInId   PayIn identifier.
+     * @param refund    Refund object to be created.
+     * @return          Refund entity instance returned by REST API.
      * @throws Exception
      */
     public Refund createRefund(String payInId, Refund refund) throws Exception {
-        return this.createObject(Refund.class, "payins_createrefunds", refund, payInId);
+        return this.createRefund(null, payInId, refund);
+    }
+    
+    /**
+     * Creates refund for PayIn object.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param payInId           PayIn identifier.
+     * @param refund            Refund object to be created.
+     * @return                  Refund entity instance returned by REST API.
+     * @throws Exception
+     */
+    public Refund createRefund(String idempotencyKey, String payInId, Refund refund) throws Exception {
+        return this.createObject(Refund.class, idempotencyKey, "payins_createrefunds", refund, payInId);
     }
 
     /**
@@ -68,7 +91,22 @@ public class ApiPayIns extends ApiBase {
      * @throws Exception
      */
     public TemporaryImmediatePayIn createTemporaryImmediatePayIn(TemporaryImmediatePayIn immediatePayIn) throws Exception {
-        return this.createObject(TemporaryImmediatePayIn.class, "temp_immediatepayins_create", immediatePayIn);
+        return this.createTemporaryImmediatePayIn(null, immediatePayIn);
+    }
+    
+    /**
+     * WARNING! 
+     * This is temporary entity and will be removed in future.
+     * Contact support before using these features or if have any queries.
+     * 
+     * Creates new temporary immediate pay-in.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param immediatePayIn    Immediate pay-in object to create.
+     * @return                  Immediate pay-in object returned from API.
+     * @throws Exception
+     */
+    public TemporaryImmediatePayIn createTemporaryImmediatePayIn(String idempotencyKey, TemporaryImmediatePayIn immediatePayIn) throws Exception {
+        return this.createObject(TemporaryImmediatePayIn.class, idempotencyKey, "temp_immediatepayins_create", immediatePayIn);
     }
     
     private String getPaymentKey(PayIn payIn) throws Exception {

@@ -21,7 +21,18 @@ public class ApiCardRegistrations extends ApiBase {
      * @throws Exception
      */
     public CardRegistration create(CardRegistration cardRegistration) throws Exception {
-        return this.createObject(CardRegistration.class, "cardregistration_create", cardRegistration);
+        return this.create(null, cardRegistration);
+    }
+    
+    /**
+     * Creates new card registration.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param cardRegistration Card registration object to create.
+     * @return Card registration instance returned from API.
+     * @throws Exception
+     */
+    public CardRegistration create(String idempotencyKey, CardRegistration cardRegistration) throws Exception {
+        return this.createObject(CardRegistration.class, idempotencyKey, "cardregistration_create", cardRegistration);
     }
     
     /**

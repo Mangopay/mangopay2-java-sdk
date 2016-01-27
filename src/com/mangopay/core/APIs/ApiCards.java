@@ -57,7 +57,22 @@ public class ApiCards extends ApiBase {
      * @throws Exception
      */
     public TemporaryPaymentCard createTemporaryPaymentCard(TemporaryPaymentCard paymentCard) throws Exception {
-        return this.createObject(TemporaryPaymentCard.class, "temp_paymentcards_create", paymentCard);
+        return createTemporaryPaymentCard(null, paymentCard);
+    }
+    
+    /**
+     * WARNING! 
+     * This is temporary entity and will be removed in future.
+     * Contact support before using these features or if have any queries.
+     * 
+     * Creates new temporary payment card.
+     * @param idempotencyKey    Idempotency key for this request.
+     * @param paymentCard       Payment card object to create.
+     * @return                  Payment card object returned from API.
+     * @throws Exception
+     */
+    public TemporaryPaymentCard createTemporaryPaymentCard(String idempotencyKey, TemporaryPaymentCard paymentCard) throws Exception {
+        return this.createObject(TemporaryPaymentCard.class, idempotencyKey, "temp_paymentcards_create", paymentCard);
     }
     
     /**
