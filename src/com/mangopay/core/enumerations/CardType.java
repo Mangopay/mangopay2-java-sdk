@@ -48,4 +48,10 @@ public enum CardType {
     * BCMC card type.
     */ 
     BCMC
+    ,
+
+    /**
+    * PAYLIB card type.
+    */ 
+    PAYLIB
 }
