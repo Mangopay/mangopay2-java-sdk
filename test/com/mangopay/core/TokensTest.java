@@ -40,4 +40,30 @@ public class TokensTest extends BaseTest {
         
         assertEquals(token1.access_token, token2.access_token);
     }
+    
+    @Test
+    public void test_IsolateTokensBetweenEnvironments() throws Exception {
+        MangoPayApi api = new MangoPayApi();
+        api.Config.ClientId = "sdk-unit-tests";
+        api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
+        api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+        
+        OAuthToken token1 = api.OAuthTokenManager.getToken();
+        
+        api.Config.ClientId = "sdk_example";
+        api.Config.ClientPassword = "Vfp9eMKSzGkxivCwt15wE082pTTKsx90vBenc9hjLsf5K46ciF";
+        api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+        
+        OAuthToken token2 = api.OAuthTokenManager.getToken();
+        
+        assertNotEquals(token1.access_token, token2.access_token);
+        
+        api.Config.ClientId = "sdk-unit-tests";
+        api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";
+        api.Config.BaseUrl = "https://api.sandbox.mangopay.com";
+        
+        OAuthToken token3 = api.OAuthTokenManager.getToken();
+        
+        assertEquals(token1.access_token, token3.access_token);
+    }
 }

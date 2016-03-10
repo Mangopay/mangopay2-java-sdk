@@ -3,6 +3,8 @@ package com.mangopay.core;
 import com.mangopay.core.interfaces.IStorageStrategy;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.MangoPayApi;
+import java.security.*;
+import java.math.*;
 
 /**
  * Authorization token manager. This class cannot be inherited.
@@ -30,13 +32,13 @@ public final class AuthorizationTokenManager extends ApiBase {
      * @throws Exception
      */
     public OAuthToken getToken() throws Exception {
-        OAuthToken token = _storageStrategy.get();
+        OAuthToken token = _storageStrategy.get(GetEnvKey());
         
         if (token == null || token.IsExpired()) {
             storeToken(this._root.AuthenticationManager.createToken());
         }
         
-        return _storageStrategy.get();
+        return _storageStrategy.get(GetEnvKey());
     }
     
     /**
@@ -44,7 +46,7 @@ public final class AuthorizationTokenManager extends ApiBase {
      * @param token Token instance to be stored.
      */
     public void storeToken(OAuthToken token) {
-        _storageStrategy.store(token);
+        _storageStrategy.store(token, GetEnvKey());
     }
     
     /**
@@ -57,5 +59,21 @@ public final class AuthorizationTokenManager extends ApiBase {
      */
     public void registerCustomStorageStrategy(IStorageStrategy customStorageStrategy) {
         _storageStrategy = customStorageStrategy;
+    }
+    
+    private String GetEnvKey() {
+        
+        String input = _root.Config.BaseUrl + _root.Config.ClientId;
+        String md5 = "";
+        
+        try {
+            MessageDigest m = MessageDigest.getInstance("MD5");
+            m.update(input.getBytes(), 0, input.length());
+            md5 = new BigInteger(1,m.digest()).toString(16);
+        }
+        catch (NoSuchAlgorithmException nsaex) {
+            /* Intentionally suppress exception here, as MD5 algorithm for sure exists. */
+        }
+        return md5;
     }
 }

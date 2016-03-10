@@ -21,13 +21,14 @@ public class FileStorageStrategy implements IStorageStrategy {
     
     /**
      * Gets the currently stored token.
+     * @param envKey Environment key for token.
      * @return Currently stored token instance or null.
      */
     @Override
-    public OAuthToken get() {
+    public OAuthToken get(String envKey) {
         try
         {
-           FileInputStream fileIn = new FileInputStream(getFilePath());
+           FileInputStream fileIn = new FileInputStream(getFilePath(envKey));
            ObjectInputStream in = new ObjectInputStream(fileIn);
            OAuthToken token = (OAuthToken) in.readObject();
            in.close();
@@ -42,12 +43,13 @@ public class FileStorageStrategy implements IStorageStrategy {
     /**
      * Stores authorization token passed as an argument.
      * @param token Token instance to be stored.
+     * @param envKey Environment key for token.
      */
     @Override
-    public void store(OAuthToken token) {
+    public void store(OAuthToken token, String envKey) {
         FileOutputStream fileOut;
         try {
-            fileOut = new FileOutputStream(getFilePath());
+            fileOut = new FileOutputStream(getFilePath(envKey));
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(token);
             out.close();
@@ -57,5 +59,7 @@ public class FileStorageStrategy implements IStorageStrategy {
         }
     }
     
-    private String getFilePath() { return _tempDir + getClass().getName() + ".tmp"; }
+    private String getFilePath(String envKey) { 
+        return _tempDir + getClass().getName() + envKey + ".tmp"; 
+    }
 }

@@ -7,8 +7,8 @@ import com.mangopay.core.OAuthToken;
  */
 public interface IStorageStrategy {
     
-    OAuthToken get();
+    OAuthToken get(String envKey);
     
-    void store(OAuthToken token);
+    void store(OAuthToken token, String envKey);
     
 }
