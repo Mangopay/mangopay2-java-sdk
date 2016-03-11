@@ -63,7 +63,7 @@ public final class AuthorizationTokenManager extends ApiBase {
     
     private String GetEnvKey() {
         
-        String input = _root.Config.BaseUrl + _root.Config.ClientId;
+        String input = _root.Config.BaseUrl + _root.Config.ClientId + _root.Config.ClientPassword;
         String md5 = "";
         
         try {
