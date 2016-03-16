@@ -20,6 +20,10 @@ public abstract class ApiBase {
      */
     private Map<String, String[]> methods = new HashMap<String, String[]>(){{
         
+        put("client_get", new String[] { "/clients/", RequestType.GET.toString() });
+        put("client_save", new String[] { "/clients/", RequestType.PUT.toString() });
+        put("client_upload_logo", new String[] { "/clients/logo/", RequestType.PUT.toString() });
+        
         put("authentication_base", new String[] { "/api/clients/", RequestType.POST.toString() });
         put("authentication_oauth", new String[] { "/oauth/token ", RequestType.POST.toString() });
 
