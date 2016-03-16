@@ -32,5 +32,10 @@ public enum PayInPaymentType {
     /**
      * PREAUTHORIZED payment type.
      */
-    PREAUTHORIZED
+    PREAUTHORIZED,
+    
+    /**
+     * PAYPAL payment type.
+     */
+    PAYPAL
 }

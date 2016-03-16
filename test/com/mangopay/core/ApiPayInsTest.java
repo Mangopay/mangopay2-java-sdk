@@ -8,6 +8,7 @@ import com.mangopay.entities.subentities.PayInExecutionDetailsDirect;
 import com.mangopay.entities.subentities.BankAccountDetailsIBAN;
 import com.mangopay.entities.subentities.PayInPaymentDetailsDirectDebit;
 import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
+import com.mangopay.entities.subentities.PayInPaymentDetailsPayPal;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.BankAccount;
 import com.mangopay.entities.CardPreAuthorization;
@@ -25,6 +26,37 @@ import org.junit.Test;
  * API PayIns test methods
  */
 public class ApiPayInsTest extends BaseTest {
+    
+    @Test
+    public void test_PayIns_Create_PayPalWeb() {
+        try {
+            Wallet wallet = this.getJohnsWallet();
+            UserNatural user = this.getJohn();
+                                
+            PayIn payInPost = new PayIn();
+            payInPost.AuthorId = user.Id;
+            payInPost.DebitedFunds = new Money();
+            payInPost.DebitedFunds.Amount = 1000;
+            payInPost.DebitedFunds.Currency = CurrencyIso.EUR;
+            payInPost.Fees = new Money();
+            payInPost.Fees.Amount = 0;
+            payInPost.Fees.Currency = CurrencyIso.EUR;
+            payInPost.CreditedWalletId = wallet.Id;
+            payInPost.PaymentDetails = new PayInPaymentDetailsPayPal();
+            payInPost.ExecutionDetails = new PayInExecutionDetailsWeb();
+            ((PayInExecutionDetailsWeb)payInPost.ExecutionDetails).ReturnURL = "http://test.test";
+            
+            PayIn payIn = this._api.PayIns.create(payInPost);
+
+            assertTrue(payIn.Id.length() > 0);
+            assertTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
+            assertTrue(payIn.PaymentDetails instanceof PayInPaymentDetailsPayPal);
+            assertTrue(payIn.ExecutionType == PayInExecutionType.WEB);
+            assertTrue(payIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
     
     @Test
     public void test_PayIns_Create_CardWeb() {
