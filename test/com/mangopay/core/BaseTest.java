@@ -199,6 +199,11 @@ public abstract class BaseTest {
         return BaseTest._johnsAccount;
     }
     
+    protected BankAccount getNewBankAccount() throws Exception {
+        BaseTest._johnsAccount = null;		
+        return getJohnsAccount();
+    }
+    
     protected Wallet getJohnsWallet() throws Exception {
         if (BaseTest._johnsWallet == null) {
             UserNatural john = this.getJohn();
