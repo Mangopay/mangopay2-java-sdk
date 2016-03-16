@@ -36,6 +36,7 @@ public class MangoPayApi {
         KycDocuments = new ApiKycDocuments(this);
         Disputes = new ApiDisputes(this);
 	Idempotency = new ApiIdempotency(this);
+	Mandates = new ApiMandates(this);
     }
     
     ////////////////////////////////////////
@@ -135,5 +136,10 @@ public class MangoPayApi {
      * Provides Idempotency methods.
      */
     public ApiIdempotency Idempotency;
+    
+    /**
+     * Provides Mandates methods.
+     */
+    public ApiMandates Mandates;
     
 }
