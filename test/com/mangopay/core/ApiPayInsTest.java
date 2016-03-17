@@ -15,6 +15,7 @@ import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Refund;
 import com.mangopay.entities.UserNatural;
 import com.mangopay.entities.Wallet;
+import com.mangopay.entities.Mandate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import junit.framework.Assert;
@@ -324,5 +325,57 @@ public class ApiPayInsTest extends BaseTest {
         } catch (Exception ex){
             Assert.fail(ex.getMessage());
         }
+    }
+    
+    @Test
+    public void test_PayIns_DirectDebitDirect_Create() throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+        UserNatural user = this.getJohn();
+
+        String bankAccountId = this.getJohnsAccount().Id;
+        String returnUrl = "http://test.test";
+        Mandate mandatePost = new Mandate();
+        mandatePost.BankAccountId = bankAccountId;
+        mandatePost.Culture = CultureCode.EN;
+        mandatePost.ReturnURL = returnUrl;
+        Mandate mandate = this._api.Mandates.create(mandatePost);
+
+        /*	
+         *	! IMPORTANT NOTE !
+         *	
+         *	In order to make this test pass, at this place you have to set a breakpoint,
+         *	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
+         * 
+         */
+
+        PayIn payIn = new PayIn();
+        payIn.AuthorId = user.Id;
+        payIn.DebitedFunds = new Money();
+        payIn.DebitedFunds.Amount = 1000;
+        payIn.DebitedFunds.Currency = CurrencyIso.EUR;
+        payIn.Fees = new Money();
+        payIn.Fees.Amount = 0;
+        payIn.Fees.Currency = CurrencyIso.EUR;
+        payIn.CreditedWalletId = wallet.Id;
+        PayInPaymentDetailsDirectDebit paymentDetails = new PayInPaymentDetailsDirectDebit();
+        paymentDetails.MandateId = mandate.Id;
+        payIn.PaymentDetails = paymentDetails;
+        PayInExecutionDetailsDirect executionDetails = new PayInExecutionDetailsDirect();
+        payIn.ExecutionDetails = executionDetails;
+        
+        PayIn createPayIn = this._api.PayIns.create(payIn);
+
+        assertNotNull(createPayIn);
+        assertNotEquals("In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.", TransactionStatus.FAILED, createPayIn.Status);
+
+        assertFalse(createPayIn.Id.isEmpty());
+        assertEquals(wallet.Id, createPayIn.CreditedWalletId);
+        assertEquals(PayInPaymentType.DIRECT_DEBIT, createPayIn.PaymentType);
+        assertEquals(PayInExecutionType.DIRECT, createPayIn.ExecutionType);
+        assertEquals(user.Id, createPayIn.AuthorId);
+        assertEquals(TransactionStatus.CREATED, createPayIn.Status);
+        assertEquals(TransactionType.PAYIN, createPayIn.Type);
+        assertNotNull(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).MandateId);
+        assertEquals(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).MandateId, mandate.Id);
     }
 }

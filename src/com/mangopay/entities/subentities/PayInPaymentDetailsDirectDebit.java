@@ -13,4 +13,9 @@ public class PayInPaymentDetailsDirectDebit extends Dto implements IPayInPayment
      * Direct debit type.
      */
     public DirectDebitType DirectDebitType;
+    
+    /**
+     * Mandate identifier.
+     */
+    public String MandateId;
 }
