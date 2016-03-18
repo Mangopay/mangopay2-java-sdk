@@ -737,6 +737,8 @@ public class RestTool {
                             if (!entry.getValue().isJsonNull()) {
                                 if (fieldTypeName.equals(int.class.getName())) {
                                     f.setInt(result, entry.getValue().getAsInt());
+                                } else if (fieldTypeName.equals(Integer.class.getName())) {
+                                    f.set(result, entry.getValue().getAsInt());
                                 } else if (fieldTypeName.equals(long.class.getName())) {
                                     f.setLong(result, entry.getValue().getAsLong());
                                 } else if (fieldTypeName.equals(Double.class.getName())) {
