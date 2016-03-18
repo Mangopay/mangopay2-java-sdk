@@ -1,5 +1,13 @@
-/dist/
-/dist/README.TXT
-/build/
-/nbproject/private/
-/dist/mangopaysdk.jar
+
+# Created by https://www.gitignore.io/api/netbeans
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+.nb-gradle/
+
+
