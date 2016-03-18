@@ -1,5 +1,6 @@
 package com.mangopay.core;
 import com.mangopay.core.enumerations.CultureCode;
+import com.mangopay.core.enumerations.MandateStatus;
 import com.mangopay.entities.*;
 import java.util.List;
 import org.junit.Test;
@@ -38,6 +39,33 @@ public class ApiMandatesTest extends BaseTest {
         assertNotNull(mandate);
         assertFalse(mandate.Id.isEmpty());
         assertEquals(mandateCreated.Id, mandate.Id);
+    }
+    
+    @Test
+    public void test_Mandate_Cancel() throws Exception {
+        String bankAccountId = this.getJohnsAccount().Id;
+        String returnUrl = "http://test.test";
+        
+        Mandate mandatePost = new Mandate();
+        mandatePost.BankAccountId = bankAccountId;
+        mandatePost.Culture = CultureCode.EN;
+        mandatePost.ReturnURL = returnUrl;
+        
+        Mandate mandate = this._api.Mandates.create(mandatePost);
+        
+        //	! IMPORTANT NOTE !
+        //	
+        //	In order to make this test pass, at this place you have to set a breakpoint,
+        //	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
+        
+        mandate = this._api.Mandates.get(mandate.Id);
+        
+        assertTrue("In order to make this test pass, after creating mandate and before cancelling it you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.", mandate.Status == MandateStatus.SUBMITTED);
+        
+        mandate = this._api.Mandates.cancel(mandate.Id);
+        
+        assertNotNull(mandate);
+        assertTrue(mandate.Status == MandateStatus.FAILED);
     }
 
     @Test
