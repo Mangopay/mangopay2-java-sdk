@@ -42,6 +42,7 @@ public abstract class ApiBase {
         put("card_save", new String[] { "/cards/%s", RequestType.PUT.toString() });
 
                 // pay ins URLs
+        put("payins_paypal-web_create", new String[] { "/payins/paypal/web/", RequestType.POST.toString() });
         put("payins_card-web_create", new String[] { "/payins/card/web/", RequestType.POST.toString() });
         put("payins_card-direct_create", new String[] { "/payins/card/direct/", RequestType.POST.toString() });
         put("payins_preauthorized-direct_create", new String[] { "/payins/preauthorized/direct/", RequestType.POST.toString() });
