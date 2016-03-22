@@ -341,8 +341,10 @@ public class RestTool {
             */
             
             _connection = (HttpURLConnection)url.openConnection();
-            _connection.setConnectTimeout(60000);
-            _connection.setReadTimeout(60000);
+            // Get connection timeout from config
+            _connection.setConnectTimeout(this._root.Config.getConnectTimeout());
+            // Get read timeout from config
+            _connection.setReadTimeout(this._root.Config.getReadTimeout());
             
             // set request method
             _connection.setRequestMethod(this._requestType);
