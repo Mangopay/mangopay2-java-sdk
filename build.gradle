@@ -1,0 +1,49 @@
+plugins {
+    id "java"
+    id "maven"
+    id "maven-publish"
+    id "com.jfrog.bintray" version "1.6"
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.7'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'commons-codec:commons-codec:1.8'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.slf4j:slf4j-simple:1.7.7'
+}
+
+group = 'com.mangopay'
+version = '1.0.6'
+sourceCompatibility = '1.7'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+}
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['maven']
+    pkg {
+        repo = 'maven'
+        name = 'mangopay2-java-sdk'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/Mangopay/mangopay2-java-sdk'
+
+        version {
+            name = '1.0.6'
+            desc = 'Java SDK for Mangopay api V2!'
+            released = new Date()
+            vcsTag = 'v1.0.6'
+        }
+    }
+}
