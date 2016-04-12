@@ -122,7 +122,7 @@ public abstract class ApiBase {
         put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
         
         put("mandate_create", new String[] { "/mandates/directdebit/web", RequestType.POST.toString() });
-        put("mandate_cancel", new String[] { "/mandates/%s", RequestType.PUT.toString() });
+        put("mandate_cancel", new String[] { "/mandates/%s/cancel", RequestType.PUT.toString() });
         put("mandate_get", new String[] { "/mandates/%s", RequestType.GET.toString() });
         put("mandates_get_all", new String[] { "/mandates", RequestType.GET.toString() });
         put("mandates_get_for_user", new String[] { "/users/%s/mandates", RequestType.GET.toString() });
