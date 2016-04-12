@@ -110,7 +110,11 @@ public abstract class BaseTest {
     }
     
     protected UserNatural getJohn() throws Exception {
-        if (BaseTest._john == null) {
+        return getJohn(false);
+    }
+    
+    protected UserNatural getJohn(Boolean recreate) throws Exception {
+        if (BaseTest._john == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
             
@@ -175,7 +179,11 @@ public abstract class BaseTest {
     }
 
     protected BankAccount getJohnsAccount() throws Exception {
-        if (BaseTest._johnsAccount == null) {
+        return getJohnsAccount(false);
+    }
+    
+    protected BankAccount getJohnsAccount(Boolean recreate) throws Exception {
+        if (BaseTest._johnsAccount == null || recreate) {
             UserNatural john = this.getJohn();
             BankAccount account = new BankAccount();
             account.Type = BankAccountType.IBAN;
@@ -192,7 +200,7 @@ public abstract class BaseTest {
     }
     
     protected BankAccount getNewBankAccount() throws Exception {
-        BaseTest._johnsAccount = null;
+        BaseTest._johnsAccount = null;		
         return getJohnsAccount();
     }
     

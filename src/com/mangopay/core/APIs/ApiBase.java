@@ -55,6 +55,7 @@ public abstract class ApiBase {
         put("payins_get", new String[] { "/payins/%s", RequestType.GET.toString() });
         put("payins_getrefunds", new String[] { "/payins/%s/refunds", RequestType.GET.toString() });
         put("payins_createrefunds", new String[] { "/payins/%s/refunds", RequestType.POST.toString() });
+        put("payins_directdebit-direct_create", new String[] { "/payins/directdebit/direct", RequestType.POST.toString() });
 
         put("payouts_bankwire_create", new String[] { "/payouts/bankwire/", RequestType.POST.toString() });
         put("payouts_get", new String[] { "/payouts/%s", RequestType.GET.toString() });
@@ -119,6 +120,13 @@ public abstract class ApiBase {
 	put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
         
         put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
+        
+        put("mandate_create", new String[] { "/mandates/directdebit/web", RequestType.POST.toString() });
+        put("mandate_cancel", new String[] { "/mandates/%s", RequestType.PUT.toString() });
+        put("mandate_get", new String[] { "/mandates/%s", RequestType.GET.toString() });
+        put("mandates_get_all", new String[] { "/mandates", RequestType.GET.toString() });
+        put("mandates_get_for_user", new String[] { "/users/%s/mandates", RequestType.GET.toString() });
+        put("mandates_get_for_bank_account", new String[] { "/users/%s/bankaccounts/%s/mandates", RequestType.GET.toString() });
         
         // These are temporary functions and WILL be removed in the future. 
         // Contact support before using these features or if have any queries.
@@ -263,11 +271,13 @@ public abstract class ApiBase {
      * @return                      The array of Dto instances returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, Map<String, String> filter, Sorting sorting) throws Exception {
+    protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, String secondEntityId, Map<String, String> filter, Sorting sorting) throws Exception {
         
         String urlMethod = "";
         
-        if (entityId != null && entityId.length() > 0)
+        if (entityId != null && entityId.length() > 0 && secondEntityId != null && secondEntityId.length() > 0)
+            urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
+        else if (entityId != null && entityId.length() > 0)
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId);
         else
             urlMethod = this.getRequestUrl(methodKey);
@@ -292,6 +302,10 @@ public abstract class ApiBase {
                 
     }
     
+    protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, Map<String, String> filter, Sorting sorting) throws Exception {
+        return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, null, sorting);
+    }
+    
     /**
      * Gets the array of Dto instances from API.
      * @param <T>           Type on behalf of which the request is being called.
@@ -304,7 +318,7 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, Sorting sorting) throws Exception {
-        return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, sorting);
+        return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, null, sorting);
     }
     
     /**
@@ -318,7 +332,7 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId) throws Exception {
-        return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, null);
+        return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, null, null);
     }
     
     /**
