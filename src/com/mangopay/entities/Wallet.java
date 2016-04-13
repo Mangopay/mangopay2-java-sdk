@@ -3,6 +3,7 @@ package com.mangopay.entities;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 import com.mangopay.core.enumerations.CurrencyIso;
+import com.mangopay.core.enumerations.FundsType;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -30,6 +31,11 @@ public class Wallet extends EntityBase {
      * Currency.
      */
     public CurrencyIso Currency;
+    
+    /**
+     * The funds usage type.
+     */
+    public FundsType FundsType;
     
     /**
      * Gets map which property is an object and what type of object.

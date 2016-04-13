@@ -24,7 +24,15 @@ public abstract class ApiBase {
         put("client_save", new String[] { "/clients/", RequestType.PUT.toString() });
         put("client_upload_logo", new String[] { "/clients/logo/", RequestType.PUT.toString() });
         
-        put("authentication_base", new String[] { "/api/clients/", RequestType.POST.toString() });
+        put("client_get_wallets_default", new String[] { "/clients/wallets", RequestType.GET.toString() });
+        put("client_get_wallets_fees", new String[] { "/clients/wallets/fees", RequestType.GET.toString() });
+        put("client_get_wallets_credit", new String[] { "/clients/wallets/credit", RequestType.GET.toString() });
+        put("client_get_wallets_default_with_currency", new String[] { "/clients/wallets/%s", RequestType.GET.toString() });
+        put("client_get_wallets_fees_with_currency", new String[] { "/clients/wallets/fees/%s", RequestType.GET.toString() });
+        put("client_get_wallets_credit_with_currency", new String[] { "/clients/wallets/credit/%s", RequestType.GET.toString() });
+        put("client_get_wallet_transactions", new String[] { "/clients/wallets/%s/%s/transactions", RequestType.GET.toString() });
+        
+        put("authentication_base", new String[] { "/clients/", RequestType.POST.toString() });
         put("authentication_oauth", new String[] { "/oauth/token ", RequestType.POST.toString() });
 
         put("events_all", new String[] { "/events", RequestType.GET.toString() });

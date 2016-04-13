@@ -1,9 +1,12 @@
 package com.mangopay.core;
+import com.mangopay.core.enumerations.FundsType;
 import com.mangopay.entities.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Random;
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -64,5 +67,98 @@ public class ApiClientsTest extends BaseTest {
         this._api.Clients.uploadLogo(filePath);
         
         this._api.Clients.uploadLogo(Files.readAllBytes(Paths.get(filePath)));
+    }
+    
+    @Test
+    public void test_Client_GetWallets()
+    {
+        List<Wallet> feesWallets = null;
+        List<Wallet> creditWallets = null;
+        try
+        {
+            feesWallets = this._api.Clients.getWallets(FundsType.FEES, new Pagination(1, 100));
+            creditWallets = this._api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 100));
+        }
+        catch (Exception ex)
+        {
+            Assert.fail(ex.getMessage());
+        }
+        assertNotNull(feesWallets);
+        assertNotNull(creditWallets);
+    }
+
+    @Test
+    public void test_Client_GetWallet() throws Exception
+    {
+        List<Wallet> feesWallets = null;
+        List<Wallet> creditWallets = null;
+        List<Wallet> defaultWallets = null;
+        try
+        {
+            feesWallets = this._api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
+            creditWallets = this._api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
+            defaultWallets = this._api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
+        }
+        catch (Exception ex)
+        {
+            Assert.fail(ex.getMessage());
+        }
+
+        if ((feesWallets == null || feesWallets.isEmpty()) ||
+            (creditWallets == null || creditWallets.isEmpty()) ||
+            (defaultWallets == null || defaultWallets.isEmpty()))
+            Assert.fail("Cannot test getting client's wallet because there is no any wallet for client.");
+
+        Wallet wallet = null;
+        Wallet result = null;
+        if (feesWallets != null && feesWallets.size() > 0)
+            wallet = feesWallets.get(0);
+        else if (creditWallets != null && creditWallets.size() > 0)
+            wallet = creditWallets.get(0);
+        else
+            wallet = defaultWallets.get(0);
+
+        result = this._api.Clients.getWallet(wallet.FundsType, wallet.Currency);
+
+        assertNotNull(result);
+        assertTrue(result.FundsType == wallet.FundsType);
+        assertTrue(result.Currency == wallet.Currency);
+    }
+
+    @Test
+    public void test_Client_GetWalletTransactions() throws Exception
+    {
+        List<Wallet> feesWallets = null;
+        List<Wallet> creditWallets = null;
+        List<Wallet> defaultWallets = null;
+        try
+        {
+            feesWallets = this._api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
+            creditWallets = this._api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
+            defaultWallets = this._api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
+        }
+        catch (Exception ex)
+        {
+            Assert.fail(ex.getMessage());
+        }
+
+        if ((feesWallets == null || feesWallets.isEmpty()) ||
+            (creditWallets == null || creditWallets.isEmpty()) ||
+            (defaultWallets == null || defaultWallets.isEmpty()))
+            Assert.fail("Cannot test getting client's wallet transactions because there is no any wallet for client.");
+
+        Wallet wallet = null;
+        List<Transaction> result = null;
+        if (feesWallets != null && feesWallets.size() > 0)
+            wallet = feesWallets.get(0);
+        else if (creditWallets != null && creditWallets.size() > 0)
+            wallet = creditWallets.get(0);
+        else
+            wallet = defaultWallets.get(0);
+
+        result = this._api.Clients.getWalletTransactions(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null, null);
+
+        assertNotNull(result);
+        assertTrue(result.size() > 0);
     }
 }

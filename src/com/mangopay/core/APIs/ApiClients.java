@@ -1,9 +1,16 @@
 package com.mangopay.core.APIs;
 
 import com.mangopay.MangoPayApi;
+import com.mangopay.core.FilterTransactions;
+import com.mangopay.core.Pagination;
 import com.mangopay.core.RestTool;
+import com.mangopay.core.Sorting;
+import com.mangopay.core.enumerations.CurrencyIso;
+import com.mangopay.core.enumerations.FundsType;
 import com.mangopay.entities.Client;
 import com.mangopay.entities.ClientLogo;
+import com.mangopay.entities.Transaction;
+import com.mangopay.entities.Wallet;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -68,5 +75,46 @@ public class ApiClients extends ApiBase {
         fileArray = Files.readAllBytes(path);
         
         uploadLogo(fileArray);
+    }
+    
+    public List<Wallet> getWallets(FundsType fundsType, Pagination pagination) throws Exception {
+        
+        switch (fundsType)
+        {
+            case DEFAULT:
+                return this.getList(Wallet[].class, Wallet.class, "client_get_wallets_default", pagination, null, null, null);
+            case FEES:
+                return this.getList(Wallet[].class, Wallet.class, "client_get_wallets_fees", pagination, null, null, null);
+            case CREDIT:
+                return this.getList(Wallet[].class, Wallet.class, "client_get_wallets_credit", pagination, null, null, null);
+        }
+
+        return null;
+        
+    }
+    
+    public Wallet getWallet(FundsType fundsType, CurrencyIso currency) throws Exception
+    {
+        if (currency == CurrencyIso.NotSpecified) return null;
+
+        switch (fundsType)
+        {
+            case DEFAULT:
+                return this.getObject(Wallet.class, "client_get_wallets_default_with_currency", currency.toString());
+            case FEES:
+                return this.getObject(Wallet.class, "client_get_wallets_fees_with_currency", currency.toString());
+            case CREDIT:
+                return this.getObject(Wallet.class, "client_get_wallets_credit_with_currency", currency.toString());
+        }
+
+        return null;
+    }
+    
+    public List<Transaction> getWalletTransactions(FundsType fundsType, CurrencyIso currency, Pagination pagination, FilterTransactions filter, Sorting sort) throws Exception {
+        
+        if (filter == null) filter = new FilterTransactions();
+
+        return this.getList(Transaction[].class, Transaction.class, "client_get_wallet_transactions", pagination, fundsType.toString(), currency.toString(), filter.getValues(), sort);
+        
     }
 }
