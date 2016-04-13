@@ -415,7 +415,6 @@ public abstract class BaseTest {
             payOut.DebitedWalletId = wallet.Id;
             payOut.MeanOfPaymentDetails = new PayOutPaymentDetailsBankWire();
             ((PayOutPaymentDetailsBankWire)payOut.MeanOfPaymentDetails).BankAccountId = account.Id;
-            ((PayOutPaymentDetailsBankWire)payOut.MeanOfPaymentDetails).Communication = "Communication text";
             
             BaseTest._johnsPayOutBankWire = this._api.PayOuts.create(payOut);
         }
@@ -447,7 +446,6 @@ public abstract class BaseTest {
             payOut.DebitedWalletId = payIn.CreditedWalletId;
             payOut.MeanOfPaymentDetails = new PayOutPaymentDetailsBankWire();
             ((PayOutPaymentDetailsBankWire)payOut.MeanOfPaymentDetails).BankAccountId = account.Id;
-            ((PayOutPaymentDetailsBankWire)payOut.MeanOfPaymentDetails).Communication = "Communication text";
 
             BaseTest._johnsPayOutForCardDirect = this._api.PayOuts.create(payOut);
         }
@@ -788,7 +786,6 @@ public abstract class BaseTest {
             
         } else if (entity1 instanceof PayOutPaymentDetailsBankWire) {
             assertEquals(((PayOutPaymentDetailsBankWire)entity1).BankAccountId, ((PayOutPaymentDetailsBankWire)entity2).BankAccountId);
-            assertEquals(((PayOutPaymentDetailsBankWire)entity1).Communication, ((PayOutPaymentDetailsBankWire)entity2).Communication);
             
         } else if (entity1 instanceof Transaction) {
             assertEquals(((Transaction)entity1).Tag, ((Transaction)entity2).Tag);

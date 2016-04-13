@@ -43,7 +43,6 @@ public class ApiIdempotencyTest extends BaseTest {
             PayOutPaymentDetailsBankWire paymentDetails = new PayOutPaymentDetailsBankWire();
             paymentDetails.BankAccountId = account.Id;
             paymentDetails.BankWireRef = "Johns bank wire ref";
-            paymentDetails.Communication = "Communication text";
             payOutPost.MeanOfPaymentDetails = paymentDetails;
             
             payOutPost.Tag = "DefaultTag";
