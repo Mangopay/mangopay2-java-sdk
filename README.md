@@ -11,15 +11,27 @@ Since v1.0.6 of this SDK, you must be using at least v2.01 of the API ([more inf
 
 Installation
 -------------------------------------------------
-SDK has been written in Java 7. It depends only on a single external package:
-[gson](http://code.google.com/p/google-gson/) 2.2.4.
+SDK has been written in Java 7.
 
-The installation is as easy as downloading the two jar files and storing them
-under any classpath/location that will be available for imports in your project:
+The SDK is published as a Maven artifact on jCenter and can be used with Gradle or Maven.
 
-- [mangopaysdk](https://github.com/MangoPay/mangopay2-java-sdk/raw/master/dist/mangopaysdk.jar)
-- [gson](https://github.com/MangoPay/mangopay2-java-sdk/raw/master/lib/google-gson-2.2.4/gson-2.2.4.jar)
+````
+repositories {
+    jcenter()
+}
 
+dependencies {
+    compile 'com.mangopay:mangopay2-java-sdk:1.0.6'
+}
+````
+
+````
+<dependency>
+  <groupId>com.mangopay</groupId>
+  <artifactId>mangopay2-java-sdk</artifactId>
+  <version>1.0.6</version>
+</dependency>
+````
 
 License
 -------------------------------------------------
@@ -29,7 +41,7 @@ MangopaySDK is distributed under MIT license, see LICENSE file.
 Unit Tests
 -------------------------------------------------
 JUnit tests are placed under
-[tests directory](https://github.com/MangoPay/mangopay2-java-sdk/tree/master/test/com/mangopay).
+[tests directory](https://github.com/MangoPay/mangopay2-java-sdk/tree/master/src/test/java/com/mangopay).
 
 
 Contacts
