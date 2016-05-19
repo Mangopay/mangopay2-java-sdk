@@ -61,6 +61,11 @@ public class CardPreAuthorization extends EntityBase {
     public String CardId;
     
     /**
+     * An optional value to be specified on the user's bank statement
+     */
+    public String StatementDescriptor;
+    
+    /**
      * Boolean. The value is 'true' if the SecureMode was used.
      */
     public String SecureModeNeeded;
