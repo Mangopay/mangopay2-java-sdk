@@ -18,4 +18,9 @@ public class PayInPaymentDetailsCard extends Dto implements IPayInPaymentDetails
      * Card identifier.
      */
     public String CardId;
+    
+    /**
+     * An optional value to be specified on the user's bank statement
+     */
+    public String StatementDescriptor;
 }
