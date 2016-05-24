@@ -578,7 +578,7 @@ public enum CurrencyIso {
     */ 
     TND,
     /**
-    * Tongan pa‘anga
+    * Tongan pa'anga
     */ 
     TOP,
     /**
