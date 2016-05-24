@@ -973,6 +973,8 @@ public class RestTool {
                         case "errors":
                             if (entry.getValue() == null) break;
                             
+                            if (entry.getValue().isJsonNull()) break;
+                            
                             for (Entry<String, JsonElement> errorEntry : entry.getValue().getAsJsonObject().entrySet()) {
                                 if (!responseException.Errors.containsKey(errorEntry.getKey()))
                                     responseException.Errors.put(errorEntry.getKey(), errorEntry.getValue().getAsString());

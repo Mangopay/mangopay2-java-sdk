@@ -73,17 +73,21 @@ public class ApiIdempotencyTest extends BaseTest {
 
 
         // test not existing key
-        result = null;
         try
         {
-            result = this._api.Idempotency.get(key + "_no");
+            this._api.Idempotency.get(key + "_no");
 
-            // expect a response error
+            // expecting a ResponseException to be thrown
             Assert.fail();
+        }
+        catch (ResponseException rex)
+        {
+            assertTrue(rex.ResponseHttpCode == 400);
+            assertTrue(rex.Type.equals("correlationid_not_found"));
         }
         catch (Exception ex)
         {
-            /* catch block intentionally left empty */
+            Assert.fail(ex.getMessage());
         }
         
     }
