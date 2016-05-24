@@ -10,21 +10,27 @@ import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import org.junit.Ignore;
+
+
+/* IMPORTANT NOTE!
+* 
+* Due to the fact the disputes CANNOT be created on user's side,
+* a special approach in testing is needed. 
+* In order to get the tests below pass, a bunch of disputes has
+* to be prepared on the API's side - if it's not, the tests won't pass.
+* 
+* Comment out the @Ignore attribute of ApiDisputesTest class to include
+* disputes unit tests into the testing queue.
+* 
+*/
+
 
 /**
  * ApiDisputes test methods.
  */
+@Ignore("Comment this line out to allow ApiDisputes unit tests run")
 public class ApiDisputesTest extends BaseTest {
-    
-    /* IMPORTANT NOTE!
-    * 
-    * Due to the fact the disputes CANNOT be created on user's side,
-    * a special approach in testing is needed. 
-    * In order to get the tests below pass, a bunch of disputes has
-    * to be prepared on the API's side - if it is not, you can
-    * just skip these tests, as they won't pass.
-    * 
-    */
     
     private List<Dispute> _clientDisputes = null;
     
