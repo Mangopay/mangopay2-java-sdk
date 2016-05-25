@@ -29,37 +29,6 @@ import org.junit.Test;
 public class ApiPayInsTest extends BaseTest {
     
     @Test
-    public void test_PayIns_Create_PayPalWeb() {
-        try {
-            Wallet wallet = this.getJohnsWallet();
-            UserNatural user = this.getJohn();
-                                
-            PayIn payInPost = new PayIn();
-            payInPost.AuthorId = user.Id;
-            payInPost.DebitedFunds = new Money();
-            payInPost.DebitedFunds.Amount = 1000;
-            payInPost.DebitedFunds.Currency = CurrencyIso.EUR;
-            payInPost.Fees = new Money();
-            payInPost.Fees.Amount = 0;
-            payInPost.Fees.Currency = CurrencyIso.EUR;
-            payInPost.CreditedWalletId = wallet.Id;
-            payInPost.PaymentDetails = new PayInPaymentDetailsPayPal();
-            payInPost.ExecutionDetails = new PayInExecutionDetailsWeb();
-            ((PayInExecutionDetailsWeb)payInPost.ExecutionDetails).ReturnURL = "http://test.test";
-            
-            PayIn payIn = this._api.PayIns.create(payInPost);
-
-            assertTrue(payIn.Id.length() > 0);
-            assertTrue(payIn.PaymentType == PayInPaymentType.PAYPAL);
-            assertTrue(payIn.PaymentDetails instanceof PayInPaymentDetailsPayPal);
-            assertTrue(payIn.ExecutionType == PayInExecutionType.WEB);
-            assertTrue(payIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
-        } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
-        }
-    }
-    
-    @Test
     public void test_PayIns_Create_CardWeb() {
         try {
             PayIn payIn = null;
@@ -359,6 +328,7 @@ public class ApiPayInsTest extends BaseTest {
         }
     }
     
+    /*
     @Test
     public void test_PayIns_DirectDebitDirect_Create() throws Exception {
         Wallet wallet = this.getJohnsWallet();
@@ -372,13 +342,10 @@ public class ApiPayInsTest extends BaseTest {
         mandatePost.ReturnURL = returnUrl;
         Mandate mandate = this._api.Mandates.create(mandatePost);
 
-        /*	
-         *	! IMPORTANT NOTE !
-         *	
-         *	In order to make this test pass, at this place you have to set a breakpoint,
-         *	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
-         * 
-         */
+        //	! IMPORTANT NOTE !
+        //	
+        //	In order to make this test pass, at this place you have to set a breakpoint,
+        //	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
 
         PayIn payIn = new PayIn();
         payIn.AuthorId = user.Id;
@@ -410,4 +377,5 @@ public class ApiPayInsTest extends BaseTest {
         assertNotNull(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).MandateId);
         assertEquals(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).MandateId, mandate.Id);
     }
+    */
 }

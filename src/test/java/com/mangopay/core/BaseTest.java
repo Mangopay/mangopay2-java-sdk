@@ -120,6 +120,16 @@ public abstract class BaseTest {
             user.IncomeRange = 3;
             
             BaseTest._john = (UserNatural)this._api.Users.create(user);
+            BaseTest._johnsWallet = null;
+            BaseTest._johnsWalletWithMoney = null;
+            BaseTest._johnsAccount = null;
+            BaseTest._johnsCardRegistration = null;
+            BaseTest._johnsHook = null;
+            BaseTest._johnsKycDocument = null;
+            BaseTest._johnsPayInCardWeb = null;
+            BaseTest._johnsPayOutBankWire = null;
+            BaseTest._johnsPayOutForCardDirect = null;
+            BaseTest._johnsPayOutForCardDirect = null;
         }
         return BaseTest._john;
     }

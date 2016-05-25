@@ -44,6 +44,7 @@ public class ApiMandatesTest extends BaseTest {
         assertEquals(mandateCreated.Id, mandate.Id);
     }
     
+    /*
     @Test
     public void test_Mandate_Cancel() throws Exception {
         String bankAccountId = this.getJohnsAccount().Id;
@@ -70,6 +71,7 @@ public class ApiMandatesTest extends BaseTest {
         assertNotNull(mandate);
         assertTrue(mandate.Status == MandateStatus.FAILED);
     }
+    */
 
     @Test
     public void test_Mandates_GetAll() throws Exception
