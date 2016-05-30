@@ -10,12 +10,17 @@ public enum LegalPersonType {
     NotSpecified,
 
     /**
-     * BUSINESS person type.
+     * BUSINESS legal person type.
      */
     BUSINESS,
     
     /**
-     * ORGANIZATION person type.
+     * ORGANIZATION legal person type.
      */
     ORGANIZATION
+    
+    /**
+     * SOLETRADER legal person type.
+     */
+    SOLETRADER
 }
