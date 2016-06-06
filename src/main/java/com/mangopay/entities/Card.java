@@ -86,4 +86,14 @@ public class Card extends EntityBase {
         
         return result;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s ID: %s Active: %s", super.toString(), super.Id, Active);
+    }
+    
+    
+    
+    
+    
 }
