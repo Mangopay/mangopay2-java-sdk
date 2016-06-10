@@ -83,6 +83,8 @@ public abstract class ApiBase {
         put("users_createbankaccounts_us", new String[] { "/users/%s/bankaccounts/us", RequestType.POST.toString() });
         put("users_createbankaccounts_ca", new String[] { "/users/%s/bankaccounts/ca", RequestType.POST.toString() });
         put("users_createbankaccounts_other", new String[] { "/users/%s/bankaccounts/other", RequestType.POST.toString() });
+        
+        put("users_savebankaccount", new String[] { "/users/%s/bankaccounts/%s", RequestType.PUT.toString() });
 
         put("users_all", new String[] { "/users", RequestType.GET.toString() });
         put("users_allwallets", new String[] { "/users/%s/wallets", RequestType.GET.toString() });
@@ -380,29 +382,46 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity) throws Exception {
-        return updateObject(classOfT, methodKey, entity, "");
+        return updateObject(classOfT, methodKey, entity, "", "");
+    }
+    
+        /**
+     * Saves the Dto instance.
+     * @param <T>               Type on behalf of which the request is being called.
+     * @param classOfT          Type on behalf of which the request is being called.
+     * @param methodKey         Relevant method key.
+     * @param entity            Dto instance that is going to be sent.
+     * @param entityId          Entity identifier.
+     * @return                  The Dto instance returned from API.
+     * @throws Exception
+     */
+    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
+        return updateObject(classOfT, methodKey, entity, entityId, "");
     }
     
     /**
      * Saves the Dto instance.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
-     * @param methodKey     Relevant method key.
-     * @param entity        Dto instance that is going to be sent.
-     * @param entityId      Entity identifier.
-     * @return              The Dto instance returned from API.
+     * @param <T>               Type on behalf of which the request is being called.
+     * @param classOfT          Type on behalf of which the request is being called.
+     * @param methodKey         Relevant method key.
+     * @param entity            Dto instance that is going to be sent.
+     * @param entityId          Entity identifier.
+     * @param secondEntityId    Second entity identifier.
+     * @return                  The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
+    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
         
         if (entity instanceof EntityBase) {
             
             String urlMethod;
         
-            if (entityId.length() == 0)
-                urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
-            else {
+            if (secondEntityId.length() > 0) {
+                urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
+            } else if (entityId.length() > 0) {
                 urlMethod = String.format(this.getRequestUrl(methodKey), entityId, ((EntityBase)entity).Id);
+            } else {
+                urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
             }
                 
             RestTool rest = new RestTool(this._root, true);

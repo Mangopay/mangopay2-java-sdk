@@ -39,6 +39,11 @@ public class BankAccount extends EntityBase {
     public Address OwnerAddress;
     
     /**
+     * Denotes whether bank account is active or not.
+     */
+    public Boolean Active;
+    
+    /**
      * One of BankAccountDetails implementations, depending on Type.
      */
     public IBankAccountDetails Details;

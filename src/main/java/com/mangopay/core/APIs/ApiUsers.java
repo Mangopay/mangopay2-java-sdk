@@ -144,9 +144,22 @@ public class ApiUsers extends ApiBase {
     }
     
     /**
+     * Updates bank account.
+     * @param userId            User identifier.
+     * @param bankAccount       Bank account object.
+     * @param bankAccountId     Bank account identifier.
+     * @return                  Updated bank account object returned from API.
+     * @throws Exception
+     */
+    public BankAccount updateBankAccount(String userId, BankAccount bankAccount, String bankAccountId) throws Exception {
+        return this.updateObject(BankAccount.class, "users_savebankaccount", bankAccount, userId, bankAccountId);
+    }
+    
+    /**
      * Gets all bank accounts of user.
      * @param userId        User identifier to get bank accounts of.
      * @param pagination    Pagination object.
+     * @param sorting       Sorting object.
      * @return              Collection of bank accounts of user.
      * @throws Exception
      */

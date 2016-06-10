@@ -315,6 +315,29 @@ public class ApiUsersTest extends BaseTest {
         assertTrue(account.Id.length() > 0);
         assertTrue(account.UserId.equals(john.Id));
     }
+    
+    @Test
+    public void test_Users_SaveBankAccount() throws Exception {
+        try {
+            UserNatural john = this.getJohn();
+            BankAccount account = this.getJohnsAccount();
+
+            assertTrue(account.Id.length() > 0);
+            assertTrue(account.UserId.equals(john.Id));
+            
+            // disactivate bank account
+            BankAccount disactivateBankAccount = new BankAccount();
+            disactivateBankAccount.Active = false;
+
+            BankAccount result = this._api.Users.updateBankAccount(john.Id, disactivateBankAccount, account.Id);
+
+            assertNotNull(result);
+            assertTrue(account.Id.equals(result.Id));
+            assertFalse(result.Active);
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
 
     @Test
     public void test_Users_BankAccount() throws Exception {
