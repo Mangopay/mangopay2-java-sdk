@@ -30,8 +30,14 @@ dependencies {
   <groupId>com.mangopay</groupId>
   <artifactId>mangopay2-java-sdk</artifactId>
   <version>1.1.0</version>
-  <type>pom</type>
 </dependency>
+
+<repositories>
+  <repository>
+    <id>mangopay-bintray</id>
+    <url>https://dl.bintray.com/mangopay/mangopay2-java-sdk</url>
+  </repository>
+</repositories>
 ````
 
 License
