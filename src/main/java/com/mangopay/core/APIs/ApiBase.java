@@ -313,7 +313,7 @@ public abstract class ApiBase {
     }
     
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, Map<String, String> filter, Sorting sorting) throws Exception {
-        return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, null, sorting);
+        return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, filter, sorting);
     }
     
     /**
