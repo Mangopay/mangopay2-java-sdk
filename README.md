@@ -34,8 +34,8 @@ dependencies {
 
 <repositories>
   <repository>
-    <id>mangopay-bintray</id>
-    <url>https://dl.bintray.com/mangopay/mangopay2-java-sdk</url>
+    <id>jcenter</id>
+    <url>http://jcenter.bintray.com</url>
   </repository>
 </repositories>
 ````
