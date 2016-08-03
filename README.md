@@ -1,4 +1,4 @@
-Mangopay SDK
+Mangopay SDK [![Build Status](https://travis-ci.org/peertopark/mangopay2-java-sdk.svg?branch=master)](https://travis-ci.org/peertopark/mangopay2-java-sdk)
 =================================================
 MangopaySDK is a Java client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
