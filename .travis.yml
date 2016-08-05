@@ -3,3 +3,13 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
+
+before_install:
+  #
+  # The following block will resolve OpenJDK7 crash issue in Travis
+  # Refer to https://github.com/travis-ci/travis-ci/issues/5227#issuecomment-165131913
+  #
+  - cat /etc/hosts # optionally check the content *before*
+  - sudo hostname "$(hostname | cut -c1-63)"
+  - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts | sudo tee /etc/hosts
+  - cat /etc/hosts # optionally check the content *after*
