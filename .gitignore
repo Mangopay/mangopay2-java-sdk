@@ -10,3 +10,4 @@ nbactions.xml
 ### Gradle ###
 build/
 .gradle
+/target/

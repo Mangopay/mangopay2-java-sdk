@@ -764,6 +764,10 @@ public class RestTool {
                 
             }
             
+            if (classOfT.getName().equals(Address.class.getName())) {
+                if (!((Address)result).isValid()) result = null;
+            }
+            
             return result;
             
         } catch (Exception e) {

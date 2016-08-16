@@ -667,14 +667,17 @@ public abstract class BaseTest {
             assertEquals(((UserNatural)entity1).LastName, ((UserNatural)entity2).LastName);
             assertEquals(((UserNatural)entity1).Email, ((UserNatural)entity2).Email);
             
-            assertNotNull(((UserNatural)entity1).Address);
-            assertNotNull(((UserNatural)entity2).Address);
-            assertEquals(((UserNatural)entity1).Address.AddressLine1, ((UserNatural)entity2).Address.AddressLine1);
-            assertEquals(((UserNatural)entity1).Address.AddressLine2, ((UserNatural)entity2).Address.AddressLine2);
-            assertEquals(((UserNatural)entity1).Address.City, ((UserNatural)entity2).Address.City);
-            assertEquals(((UserNatural)entity1).Address.Country, ((UserNatural)entity2).Address.Country);
-            assertEquals(((UserNatural)entity1).Address.PostalCode, ((UserNatural)entity2).Address.PostalCode);
-            assertEquals(((UserNatural)entity1).Address.Region, ((UserNatural)entity2).Address.Region);
+            if (((UserNatural)entity1).Address == null) {
+                assertNull(((UserNatural)entity2).Address);
+            } else {
+                assertNotNull(((UserNatural)entity2).Address);
+                assertEquals(((UserNatural)entity1).Address.AddressLine1, ((UserNatural)entity2).Address.AddressLine1);
+                assertEquals(((UserNatural)entity1).Address.AddressLine2, ((UserNatural)entity2).Address.AddressLine2);
+                assertEquals(((UserNatural)entity1).Address.City, ((UserNatural)entity2).Address.City);
+                assertEquals(((UserNatural)entity1).Address.Country, ((UserNatural)entity2).Address.Country);
+                assertEquals(((UserNatural)entity1).Address.PostalCode, ((UserNatural)entity2).Address.PostalCode);
+                assertEquals(((UserNatural)entity1).Address.Region, ((UserNatural)entity2).Address.Region);
+            }
             
             assertEquals(((UserNatural)entity1).Birthday, ((UserNatural)entity2).Birthday);
             assertEquals(((UserNatural)entity1).Nationality, ((UserNatural)entity2).Nationality);

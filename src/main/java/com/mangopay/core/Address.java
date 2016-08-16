@@ -36,4 +36,19 @@ public class Address extends Dto {
      * Country.
      */
     public CountryIso Country;
+    
+    /**
+     * Provides information whether this Address instance is valid or not.
+     * @return
+     */
+    public Boolean isValid() {
+        
+        return AddressLine1 != null &&
+                AddressLine2 != null &&
+                City != null &&
+                Region != null &&
+                PostalCode != null &&
+                Country != CountryIso.NotSpecified;
+        
+    }
 }
