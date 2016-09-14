@@ -10,7 +10,7 @@ public class OAuthToken extends Dto implements Serializable {
     /**
      * Creation time.
      */
-    private Long create_time;
+    public Long create_time;
     
     /**
      * Value of token.
