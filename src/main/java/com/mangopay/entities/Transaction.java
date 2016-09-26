@@ -113,12 +113,8 @@ public class Transaction extends EntityBase {
      * Get ResultCode in Integer format
      * @return Integer
      */
-    public Integer getResultCode() {
-        if (ResultCode == null) {
-            return null;
-        } else {
-            return Integer.valueOf(ResultCode);
-        }
+    public String getResultCode() {
+        return ResultCode;
     }
 
     /**
