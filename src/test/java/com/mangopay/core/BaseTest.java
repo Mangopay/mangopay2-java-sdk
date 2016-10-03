@@ -39,6 +39,7 @@ public abstract class BaseTest {
     private static KycDocument _johnsKycDocument;
     private static PayOut _johnsPayOutForCardDirect;
     private static Hook _johnsHook;
+    private static ReportRequest _johnsReport;
 
     public BaseTest() {
         this._api = buildNewMangoPayApi();
@@ -656,6 +657,27 @@ public abstract class BaseTest {
         }
         
         return BaseTest._johnsHook;
+    }
+    
+    protected ReportRequest getJohnsReport() throws Exception
+    {
+        if (BaseTest._johnsReport == null)
+        {
+            ReportRequest reportPost = new ReportRequest();
+            reportPost.ReportType = ReportType.TRANSACTIONS;
+            BaseTest._johnsReport = this._api.Reports.create(reportPost);
+        }
+
+        return BaseTest._johnsReport;
+    }
+    
+    protected ReportRequest getNewJohnsReport() throws Exception
+    {
+        ReportRequest reportPost = new ReportRequest();
+        reportPost.ReportType = ReportType.TRANSACTIONS;
+        BaseTest._johnsReport = this._api.Reports.create(reportPost);
+
+        return BaseTest._johnsReport;
     }
     
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {

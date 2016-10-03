@@ -37,6 +37,7 @@ public class MangoPayApi {
         Disputes = new ApiDisputes(this);
 	Idempotency = new ApiIdempotency(this);
 	Mandates = new ApiMandates(this);
+        Reports = new ApiReports(this);
     }
     
     ////////////////////////////////////////
@@ -141,5 +142,10 @@ public class MangoPayApi {
      * Provides Mandates methods.
      */
     public ApiMandates Mandates;
+    
+    /**
+     * Provides Reports methods.
+     */
+    public ApiReports Reports;
     
 }

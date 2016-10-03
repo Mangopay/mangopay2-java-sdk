@@ -53,4 +53,8 @@ public class Sorting {
         
         return sortValues;
     }
+    
+    public String getFields() {
+        return this._getFields();
+    }
 }

@@ -138,6 +138,10 @@ public abstract class ApiBase {
         put("mandates_get_for_user", new String[] { "/users/%s/mandates", RequestType.GET.toString() });
         put("mandates_get_for_bank_account", new String[] { "/users/%s/bankaccounts/%s/mandates", RequestType.GET.toString() });
         
+        put("reports_request", new String[]{ "/reports/%s", RequestType.POST.toString() });
+        put("reports_get_all", new String[]{ "/reports", RequestType.GET.toString() });
+        put("reports_get", new String[]{ "/reports/%s", RequestType.GET.toString() });
+        
         // These are temporary functions and WILL be removed in the future. 
         // Contact support before using these features or if have any queries.
         put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST.toString() });
