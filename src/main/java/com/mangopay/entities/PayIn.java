@@ -98,4 +98,11 @@ public class PayIn extends Transaction {
         
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "PayIn{" + "Id=" + super.Id + ", CreditedWalletId=" + CreditedWalletId + ", Status=" + super.Status + ", ResultCode=" + super.ResultCode + ", ResultMessage=" + super.ResultMessage + '}';
+    }
+    
+    
 }
