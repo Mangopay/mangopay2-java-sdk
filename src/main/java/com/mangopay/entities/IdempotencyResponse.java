@@ -15,6 +15,7 @@ public class IdempotencyResponse extends EntityBase {
 
     public String Date;
 
-    public String Resource;
+    public Object Resource;
     
+    public String RequestURL;
 }

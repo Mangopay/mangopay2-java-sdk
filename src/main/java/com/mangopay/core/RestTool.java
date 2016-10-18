@@ -569,7 +569,7 @@ public class RestTool {
         
     }
     
-    private <T> T castResponseToEntity(Class<T> classOfT, JsonObject response) throws Exception {
+    public <T> T castResponseToEntity(Class<T> classOfT, JsonObject response) throws Exception {
         return castResponseToEntity(classOfT, response, false);
     }
     
@@ -602,6 +602,9 @@ public class RestTool {
                     }
                     else if (entry.getKey().equals("Resource")) {
                         resp.Resource = entry.getValue().toString();
+                    }
+                    else if (entry.getKey().equals("RequestURL")) {
+                        resp.RequestURL = entry.getValue().toString();
                     }
                     
                 }
