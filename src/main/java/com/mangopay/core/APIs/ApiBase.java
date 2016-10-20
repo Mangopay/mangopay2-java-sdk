@@ -31,6 +31,9 @@ public abstract class ApiBase {
         put("client_get_wallets_fees_with_currency", new String[] { "/clients/wallets/fees/%s", RequestType.GET.toString() });
         put("client_get_wallets_credit_with_currency", new String[] { "/clients/wallets/credit/%s", RequestType.GET.toString() });
         put("client_get_wallet_transactions", new String[] { "/clients/wallets/%s/%s/transactions", RequestType.GET.toString() });
+        put("client_get_transactions", new String[] { "/clients/transactions", RequestType.GET.toString() });
+        put("client_get_kyc_documents", new String[] { "/KYC/documents", RequestType.GET.toString() });
+        put("client_create_bankwire_direct", new String[] { "/clients/payins/bankwire/direct", RequestType.POST.toString() });
         
         put("authentication_base", new String[] { "/clients/", RequestType.POST.toString() });
         put("authentication_oauth", new String[] { "/oauth/token ", RequestType.POST.toString() });

@@ -1,16 +1,20 @@
 package com.mangopay.core.APIs;
 
 import com.mangopay.MangoPayApi;
+import com.mangopay.core.FilterKycDocuments;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
-import com.mangopay.core.RestTool;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.FundsType;
 import com.mangopay.entities.Client;
+import com.mangopay.entities.ClientBankWireDirect;
 import com.mangopay.entities.ClientLogo;
+import com.mangopay.entities.KycDocument;
+import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Transaction;
 import com.mangopay.entities.Wallet;
+import com.mangopay.entities.subentities.PayInPaymentDetailsBankWire;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,28 +31,11 @@ public class ApiClients extends ApiBase {
      */
     public ApiClients(MangoPayApi root) { super(root); }
 
-    /**
-     * Gets client data for Basic Access Authentication.
-     * @param clientId      Client identifier.
-     * @param clientName    Beautiful name for presentation.
-     * @param clientEmail   Client's email.
-     * @return              Client instance returned from API.
-     * @throws Exception
-     */
-    public Client create(final String clientId, final String clientName, final String clientEmail) throws Exception {
-
-        String urlMethod = this.getRequestUrl("authentication_base");
-        String requestType = this.getRequestType("authentication_base");
+    public List<KycDocument> getKycDocuments(Pagination pagination, FilterKycDocuments filter, Sorting sort) throws Exception
+    {
+        if (filter == null) filter = new FilterKycDocuments();
         
-        Map<String, String> requestData = new HashMap<String, String>() {{
-            put("ClientId", clientId);
-            put("Name", clientName);
-            put("Email", clientEmail);
-        }};
-        
-        RestTool rest = new RestTool(this._root, false);
-        rest.addRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
-        return rest.request(Client.class, null, urlMethod, requestType, requestData);
+        return this.getList(KycDocument[].class, KycDocument.class, "client_get_kyc_documents", pagination, null, null, filter.getValues(), sort);
     }
     
     public Client get() throws Exception {
@@ -116,5 +103,27 @@ public class ApiClients extends ApiBase {
 
         return this.getList(Transaction[].class, Transaction.class, "client_get_wallet_transactions", pagination, fundsType.toString(), currency.toString(), filter.getValues(), sort);
         
+    }
+    
+    public List<Transaction> getTransactions(Pagination pagination, FilterTransactions filter, Sorting sort) throws Exception
+    {
+        if (filter == null) filter = new FilterTransactions();
+
+        return this.getList(Transaction[].class, Transaction.class, "client_get_transactions", pagination, null, null, filter.getValues(), sort);
+    }
+    
+    public PayIn createBankWireDirect(ClientBankWireDirect bankWireDirect) throws Exception
+    {
+        return createBankWireDirect(null, bankWireDirect);
+    }
+    
+    public PayIn createBankWireDirect(String idempotencyKey, ClientBankWireDirect bankWireDirect) throws Exception
+    {
+        PayIn payIn = new PayIn();
+        payIn.CreditedWalletId = bankWireDirect.CreditedWalletId;
+        payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
+        ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds = bankWireDirect.DeclaredDebitedFunds;
+        
+        return this.createObject(PayIn.class, idempotencyKey, "client_create_bankwire_direct", payIn);
     }
 }

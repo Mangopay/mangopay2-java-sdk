@@ -1,6 +1,9 @@
 package com.mangopay.core;
-import com.mangopay.core.enumerations.FundsType;
+import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.Client;
+import com.mangopay.entities.ClientBankWireDirect;
+import com.mangopay.entities.KycDocument;
+import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Transaction;
 import com.mangopay.entities.Wallet;
 import org.junit.Assert;
@@ -21,19 +24,36 @@ import static org.junit.Assert.*;
 public class ApiClientsTest extends BaseTest {
     
     @Test
-    public void test_ClientsCreateClient() throws Exception {        
-        Random rand = new Random();
-        String id = Integer.toString(rand.nextInt(1000000000) + 1);
-        Client client = this._api.Clients.create(id, "test",  "test@o2.pl");
-        assertTrue("test".equals(client.Name));
-        assertTrue(client.Passphrase.length() > 0);
-    }
-    
-    @Test(expected = ResponseException.class)
-    public void test_Clients_TryCreateInvalidClient() throws Exception {
-        // invalid id
-        Client client = this._api.Clients.create("0", "test",  "test@o2.pl");
-        assertTrue(client == null);
+    public void test_Client_GetKycDocuments() throws Exception
+    {
+        List<KycDocument> result = null;
+        List<KycDocument> result2 = null;
+
+        try
+        {
+            result = this._api.Clients.getKycDocuments(null, null, null);
+            assertNotNull(result);
+            assertTrue(result.size() > 0);
+
+            Pagination pagination = new Pagination(1, 2);
+            Sorting sort = new Sorting();
+            sort.addField("CreationDate", SortDirection.asc);
+            result = this._api.Clients.getKycDocuments(pagination, null, sort);
+            assertNotNull(result);
+            assertTrue(result.size() > 0);
+
+            sort = new Sorting();
+            sort.addField("CreationDate", SortDirection.desc);
+            result2 = this._api.Clients.getKycDocuments(pagination, null, sort);
+            assertNotNull(result2);
+            assertTrue(result2.size() > 0);
+
+            assertTrue((result.get(0).Id == null ? result2.get(0).Id != null : !result.get(0).Id.equals(result2.get(0).Id)));
+        }
+        catch (Exception ex)
+        {
+            Assert.fail(ex.getMessage());
+        }
     }
     
     @Test
@@ -164,5 +184,64 @@ public class ApiClientsTest extends BaseTest {
 
         assertNotNull(result);
         assertTrue(result.size() > 0);
+    }
+    
+    @Test
+    public void test_Client_GetTransactions()
+    {
+        List<Transaction> result = null;
+
+        try
+        {
+            result = this._api.Clients.getTransactions(null, null, null);
+        }
+        catch (Exception ex)
+        {
+            Assert.fail(ex.getMessage());
+        }
+
+        assertNotNull(result);
+    }
+    
+    @Test
+    public void test_Client_CreateBankWireDirect()
+    {
+        try
+        {
+            Money money = new Money();
+            money.Amount = 1000;
+            money.Currency = CurrencyIso.EUR;
+            ClientBankWireDirect bankwireDirectPost = new ClientBankWireDirect("CREDIT_EUR", money);
+
+            PayIn result = this._api.Clients.createBankWireDirect(bankwireDirectPost);
+
+            assertTrue(result.Id.length() > 0);
+            assertEquals("CREDIT_EUR", result.CreditedWalletId);
+            assertEquals(PayInPaymentType.BANK_WIRE, result.PaymentType);
+            assertEquals(PayInExecutionType.DIRECT, result.ExecutionType);
+            assertEquals(TransactionStatus.CREATED, result.Status);
+            assertEquals(TransactionType.PAYIN, result.Type);
+        }
+        catch (Exception ex)
+        {
+            Assert.fail(ex.getMessage());
+        }
+    }
+    
+    public void Test_Client_SaveAddressNull() throws Exception
+    {
+        Client client = new Client();
+
+        Random rand = new Random();
+        String color1 = Integer.toString(rand.nextInt(100000) + 100000);
+        String color2 = Integer.toString(rand.nextInt(100000) + 100000);
+
+        client.PrimaryButtonColour = "#" + color1;
+        client.PrimaryThemeColour = "#" + color2;
+        client.HeadquartersAddress = new Address();
+
+        Client clientNew = this._api.Clients.save(client);
+
+        assertNotNull(clientNew);			
     }
 }

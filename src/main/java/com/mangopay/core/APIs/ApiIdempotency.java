@@ -89,6 +89,7 @@ public class ApiIdempotency extends ApiBase {
             put("disputes_document_create", DisputeDocument.class);
             put("disputes_repudiation_create_settlement", SettlementTransfer.class);
             put("mandate_create", Mandate.class);
+            put("client_create_bankwire_direct", PayIn.class);
         }};
     }
 }

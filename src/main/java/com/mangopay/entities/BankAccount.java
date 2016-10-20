@@ -109,6 +109,7 @@ public class BankAccount extends EntityBase {
         
         result.add("UserId");
         result.add("Type");
+        result.add("Active");
         
         return result;
     }
