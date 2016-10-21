@@ -58,7 +58,7 @@ public class ApiReportsTest extends BaseTest {
     @Test
     public void Test_Reports_All() throws Exception
     {
-        ReportRequest report = this.getNewJohnsReport();
+        ReportRequest report = this.getJohnsReport();
         Pagination pagination = new Pagination(1, 1);
         Sorting sort = new Sorting();
         sort.addField("CreationDate", SortDirection.desc);
