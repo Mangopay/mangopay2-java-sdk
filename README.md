@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.mangopay:mangopay2-java-sdk:1.1.2'
+    compile 'com.mangopay:mangopay2-java-sdk:1.2.0'
 }
 ````
 
@@ -29,7 +29,7 @@ dependencies {
 <dependency>
   <groupId>com.mangopay</groupId>
   <artifactId>mangopay2-java-sdk</artifactId>
-  <version>1.1.2</version>
+  <version>1.2.0</version>
 </dependency>
 
 <repositories>

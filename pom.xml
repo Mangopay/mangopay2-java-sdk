@@ -3,7 +3,7 @@
     <groupId>com.mangopay</groupId>
     <artifactId>mangopay2-java-sdk</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.2</version>
+    <version>1.2.0</version>
     <name>mangopay2-java-sdk</name>
     <url>https://github.com/mangopay/mangopay2-java-sdk</url>
     <licenses>
