@@ -24,27 +24,27 @@ import static org.junit.Assert.*;
 public class ApiClientsTest extends BaseTest {
     
     @Test
-    public void test_Client_GetKycDocuments() throws Exception
+    public void getKycDocuments() throws Exception
     {
         List<KycDocument> result = null;
         List<KycDocument> result2 = null;
 
         try
         {
-            result = this._api.Clients.getKycDocuments(null, null, null);
+            result = this.api.Clients.getKycDocuments(null, null, null);
             assertNotNull(result);
             assertTrue(result.size() > 0);
 
             Pagination pagination = new Pagination(1, 2);
             Sorting sort = new Sorting();
             sort.addField("CreationDate", SortDirection.asc);
-            result = this._api.Clients.getKycDocuments(pagination, null, sort);
+            result = this.api.Clients.getKycDocuments(pagination, null, sort);
             assertNotNull(result);
             assertTrue(result.size() > 0);
 
             sort = new Sorting();
             sort.addField("CreationDate", SortDirection.desc);
-            result2 = this._api.Clients.getKycDocuments(pagination, null, sort);
+            result2 = this.api.Clients.getKycDocuments(pagination, null, sort);
             assertNotNull(result2);
             assertTrue(result2.size() > 0);
 
@@ -57,16 +57,16 @@ public class ApiClientsTest extends BaseTest {
     }
     
     @Test
-    public void test_ClientGet() throws Exception {
-        Client client = this._api.Clients.get();
+    public void getClient() throws Exception {
+        Client client = this.api.Clients.get();
         
         assertNotNull(client);
         assertTrue("sdk-unit-tests".equals(client.ClientId));
     }
     
     @Test
-    public void test_ClientSave() throws Exception {
-        Client client = this._api.Clients.get();
+    public void updateClient() throws Exception {
+        Client client = this.api.Clients.get();
         
         Random rand = new Random();
         String color1 = Integer.toString(rand.nextInt(100000) + 100000);
@@ -75,7 +75,7 @@ public class ApiClientsTest extends BaseTest {
         client.PrimaryButtonColour = "#" + color1;
         client.PrimaryThemeColour = "#" + color2;
         
-        Client clientNew = this._api.Clients.save(client);
+        Client clientNew = this.api.Clients.save(client);
         
         assertNotNull(clientNew);
         assertEquals(client.PrimaryButtonColour, clientNew.PrimaryButtonColour);
@@ -83,25 +83,25 @@ public class ApiClientsTest extends BaseTest {
     }
     
     @Test 
-    public void test_ClientLogo() throws Exception {
+    public void uploadClientLogo() throws Exception {
         
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
 
-        this._api.Clients.uploadLogo(filePath);
+        this.api.Clients.uploadLogo(filePath);
         
-        this._api.Clients.uploadLogo(Files.readAllBytes(Paths.get(filePath)));
+        this.api.Clients.uploadLogo(Files.readAllBytes(Paths.get(filePath)));
     }
     
     @Test
-    public void test_Client_GetWallets()
+    public void getWallets()
     {
         List<Wallet> feesWallets = null;
         List<Wallet> creditWallets = null;
         try
         {
-            feesWallets = this._api.Clients.getWallets(FundsType.FEES, new Pagination(1, 100));
-            creditWallets = this._api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 100));
+            feesWallets = this.api.Clients.getWallets(FundsType.FEES, new Pagination(1, 100));
+            creditWallets = this.api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 100));
         }
         catch (Exception ex)
         {
@@ -112,16 +112,16 @@ public class ApiClientsTest extends BaseTest {
     }
 
     @Test
-    public void test_Client_GetWallet() throws Exception
+    public void getWallet() throws Exception
     {
         List<Wallet> feesWallets = null;
         List<Wallet> creditWallets = null;
         List<Wallet> defaultWallets = null;
         try
         {
-            feesWallets = this._api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
-            creditWallets = this._api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
-            defaultWallets = this._api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
+            feesWallets = this.api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
+            creditWallets = this.api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
+            defaultWallets = this.api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
         }
         catch (Exception ex)
         {
@@ -142,7 +142,7 @@ public class ApiClientsTest extends BaseTest {
         else
             wallet = defaultWallets.get(0);
 
-        result = this._api.Clients.getWallet(wallet.FundsType, wallet.Currency);
+        result = this.api.Clients.getWallet(wallet.FundsType, wallet.Currency);
 
         assertNotNull(result);
         assertTrue(result.FundsType == wallet.FundsType);
@@ -150,16 +150,16 @@ public class ApiClientsTest extends BaseTest {
     }
 
     @Test
-    public void test_Client_GetWalletTransactions() throws Exception
+    public void getWalletTransactions() throws Exception
     {
         List<Wallet> feesWallets = null;
         List<Wallet> creditWallets = null;
         List<Wallet> defaultWallets = null;
         try
         {
-            feesWallets = this._api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
-            creditWallets = this._api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
-            defaultWallets = this._api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
+            feesWallets = this.api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
+            creditWallets = this.api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
+            defaultWallets = this.api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
         }
         catch (Exception ex)
         {
@@ -180,20 +180,20 @@ public class ApiClientsTest extends BaseTest {
         else
             wallet = defaultWallets.get(0);
 
-        result = this._api.Clients.getWalletTransactions(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null, null);
+        result = this.api.Clients.getWalletTransactions(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null, null);
 
         assertNotNull(result);
         assertTrue(result.size() > 0);
     }
     
     @Test
-    public void test_Client_GetTransactions()
+    public void getTransactions()
     {
         List<Transaction> result = null;
 
         try
         {
-            result = this._api.Clients.getTransactions(null, null, null);
+            result = this.api.Clients.getTransactions(null, null, null);
         }
         catch (Exception ex)
         {
@@ -204,7 +204,7 @@ public class ApiClientsTest extends BaseTest {
     }
     
     @Test
-    public void test_Client_CreateBankWireDirect()
+    public void createBankWireDirect()
     {
         try
         {
@@ -213,7 +213,7 @@ public class ApiClientsTest extends BaseTest {
             money.Currency = CurrencyIso.EUR;
             ClientBankWireDirect bankwireDirectPost = new ClientBankWireDirect("CREDIT_EUR", money);
 
-            PayIn result = this._api.Clients.createBankWireDirect(bankwireDirectPost);
+            PayIn result = this.api.Clients.createBankWireDirect(bankwireDirectPost);
 
             assertTrue(result.Id.length() > 0);
             assertEquals("CREDIT_EUR", result.CreditedWalletId);
@@ -228,7 +228,7 @@ public class ApiClientsTest extends BaseTest {
         }
     }
     
-    public void Test_Client_SaveAddressNull() throws Exception
+    public void saveAddressNull() throws Exception
     {
         Client client = new Client();
 
@@ -240,7 +240,7 @@ public class ApiClientsTest extends BaseTest {
         client.PrimaryThemeColour = "#" + color2;
         client.HeadquartersAddress = new Address();
 
-        Client clientNew = this._api.Clients.save(client);
+        Client clientNew = this.api.Clients.save(client);
 
         assertNotNull(clientNew);			
     }

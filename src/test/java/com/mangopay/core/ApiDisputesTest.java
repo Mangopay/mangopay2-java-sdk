@@ -40,16 +40,16 @@ public class ApiDisputesTest extends BaseTest {
         Sorting sort = new Sorting();
         sort.addField("CreationDate", SortDirection.desc);
 
-        _clientDisputes = _api.Disputes.getAll(new Pagination(1, 100), null, sort);
+        _clientDisputes = api.Disputes.getAll(new Pagination(1, 100), null, sort);
 
         assertTrue("INITIALIZATION FAILURE - cannot test disputes", _clientDisputes != null && !_clientDisputes.isEmpty());
         
     }
     
     @Test
-    public void test_GetDispute() throws Exception {
+    public void getDispute() throws Exception {
         
-        Dispute dispute = _api.Disputes.get(_clientDisputes.get(0).Id);
+        Dispute dispute = api.Disputes.get(_clientDisputes.get(0).Id);
 
         assertNotNull(dispute);
         assertEquals(dispute.Id, _clientDisputes.get(0).Id);
@@ -57,7 +57,7 @@ public class ApiDisputesTest extends BaseTest {
     }
     
     @Test
-    public void test_GetTransactions() throws Exception
+    public void getTransactions() throws Exception
     {
         Dispute dispute = null;
         
@@ -70,14 +70,14 @@ public class ApiDisputesTest extends BaseTest {
         
         assertNotNull("Cannot test getting dispute's transactions because there's no not contestable dispute in the disputes list.", dispute);
         
-        List<Transaction> result = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 10), null, null);
+        List<Transaction> result = api.Disputes.getTransactions(dispute.Id, new Pagination(1, 10), null, null);
 
         assertNotNull(result);
         assertFalse(result.isEmpty());  
     }
 
     @Test
-    public void test_GetDisputesForWallet() throws Exception
+    public void getDisputesForWallet() throws Exception
     {
         Dispute dispute = null;
         
@@ -90,14 +90,14 @@ public class ApiDisputesTest extends BaseTest {
 
         assertNotNull("Cannot test getting disputes for wallet because there's no disputes with transaction ID in the disputes list.", dispute);
 
-        String walletId = _api.PayIns.get(dispute.InitialTransactionId).CreditedWalletId;
-        List<Dispute> result = _api.Disputes.getDisputesForWallet(walletId, new Pagination(1, 10), null, null);
+        String walletId = api.PayIns.get(dispute.InitialTransactionId).CreditedWalletId;
+        List<Dispute> result = api.Disputes.getDisputesForWallet(walletId, new Pagination(1, 10), null, null);
 
         assertNotNull(result);
     }
 
     @Test
-    public void test_GetDisputesForUser() throws Exception
+    public void getDisputesForUser() throws Exception
     {
         Dispute dispute = null;
         
@@ -110,16 +110,16 @@ public class ApiDisputesTest extends BaseTest {
         
         assertNotNull("Cannot test getting disputes for user because there's no not contestable dispute in the disputes list.", dispute);
         
-        List<Transaction> transactions = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null);
+        List<Transaction> transactions = api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null);
         String userId = transactions.get(0).AuthorId;
-        List<Dispute> result = _api.Disputes.getDisputesForUser(userId, new Pagination(1, 20), null, null);
+        List<Dispute> result = api.Disputes.getDisputesForUser(userId, new Pagination(1, 20), null, null);
             
         assertNotNull(result);
         assertFalse(result.isEmpty());
     }
 
     @Test
-    public void test_CreateDisputeDocument() throws Exception
+    public void createDisputeDocument() throws Exception
     {
         Dispute dispute = null;
         
@@ -137,14 +137,14 @@ public class ApiDisputesTest extends BaseTest {
         DisputeDocument documentPost = new DisputeDocument();
         documentPost.Type = DisputeDocumentType.DELIVERY_PROOF;
 
-        result = _api.Disputes.createDisputeDocument(documentPost, dispute.Id);
+        result = api.Disputes.createDisputeDocument(documentPost, dispute.Id);
 
         assertNotNull(result);
         assertEquals(result.Type, DisputeDocumentType.DELIVERY_PROOF);
     }
 
     @Test
-    public void test_CreateDisputePage() throws Exception
+    public void createDisputePage() throws Exception
     {
         Dispute dispute = null;
         
@@ -161,19 +161,19 @@ public class ApiDisputesTest extends BaseTest {
     
         DisputeDocument documentPost = new DisputeDocument();
         documentPost.Type = DisputeDocumentType.DELIVERY_PROOF;
-        result = _api.Disputes.createDisputeDocument(documentPost, dispute.Id);
+        result = api.Disputes.createDisputeDocument(documentPost, dispute.Id);
 
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
 
-        _api.Disputes.createDisputePage(dispute.Id, result.Id, filePath);
+        api.Disputes.createDisputePage(dispute.Id, result.Id, filePath);
 
         assertNotNull(result);
         assertEquals(result.Type, DisputeDocumentType.DELIVERY_PROOF);
     }
 
     @Test
-    public void test_ContestDispute() throws Exception
+    public void contestDispute() throws Exception
     {
         Dispute notContestedDispute = null;
                 
@@ -196,28 +196,28 @@ public class ApiDisputesTest extends BaseTest {
             contestedFunds.Currency = CurrencyIso.EUR;
         }
 
-        result = _api.Disputes.contestDispute(contestedFunds, notContestedDispute.Id);
+        result = api.Disputes.contestDispute(contestedFunds, notContestedDispute.Id);
 
         assertNotNull(result);
         assertEquals(result.Id, notContestedDispute.Id);
     }
 
     @Test
-    public void test_SaveTag() throws Exception
+    public void saveTag() throws Exception
     {
         Dispute result = null;
         
         Calendar c = Calendar.getInstance();
         String newTag = "New tag: " + Long.toString(c.getTimeInMillis() / 1000);
 
-        result = _api.Disputes.updateTag(newTag, _clientDisputes.get(0).Id);
+        result = api.Disputes.updateTag(newTag, _clientDisputes.get(0).Id);
         
         assertNotNull(result);
         assertEquals(result.Tag, newTag);
     }
 
     @Test
-    public void test_CloseDispute() throws Exception
+    public void closeDispute() throws Exception
     {
         Dispute dispute = null;
         
@@ -232,13 +232,13 @@ public class ApiDisputesTest extends BaseTest {
 
         Dispute result = null;
 
-        result = _api.Disputes.closeDispute(dispute.Id);
+        result = api.Disputes.closeDispute(dispute.Id);
 
         assertNotNull(result);
     }
 
     @Test
-    public void test_GetDocument() throws Exception
+    public void getDocument() throws Exception
     {
         Dispute dispute = null;
         
@@ -256,9 +256,9 @@ public class ApiDisputesTest extends BaseTest {
 
         DisputeDocument documentPost = new DisputeDocument();
         documentPost.Type = DisputeDocumentType.OTHER;
-        document = _api.Disputes.createDisputeDocument(documentPost, dispute.Id);
+        document = api.Disputes.createDisputeDocument(documentPost, dispute.Id);
 
-        result = _api.Disputes.getDocument(document.Id);
+        result = api.Disputes.getDocument(document.Id);
 
         assertNotNull(result);
         assertEquals(result.CreationDate, document.CreationDate);
@@ -272,7 +272,7 @@ public class ApiDisputesTest extends BaseTest {
     }
 
     @Test
-    public void test_GetDocumentsForDispute() throws Exception
+    public void getDocumentsForDispute() throws Exception
     {
         Dispute dispute = null;
         
@@ -284,7 +284,7 @@ public class ApiDisputesTest extends BaseTest {
         }
         
         if (dispute == null) {
-            test_ContestDispute();
+            contestDispute();
             initialize();
             
             for (Dispute d : _clientDisputes) {
@@ -299,23 +299,23 @@ public class ApiDisputesTest extends BaseTest {
 
         List<DisputeDocument> result = null;
 
-        result = _api.Disputes.getDocumentsForDispute(dispute.Id, new Pagination(1, 1), null, null);
+        result = api.Disputes.getDocumentsForDispute(dispute.Id, new Pagination(1, 1), null, null);
         
         assertNotNull(result);
     }
 
     @Test
-    public void test_GetDocumentsForClient() throws Exception
+    public void getDocumentsForClient() throws Exception
     {
         List<DisputeDocument> result = null;
 
-        result = _api.Disputes.getDocumentsForClient(new Pagination(1, 1), null, null);
+        result = api.Disputes.getDocumentsForClient(new Pagination(1, 1), null, null);
 
         assertNotNull(result);
     }
 
     @Test
-    public void test_SubmitDisputeDocument() throws Exception
+    public void submitDisputeDocument() throws Exception
     {
         Dispute dispute = null;
         DisputeDocument disputeDocument = null;
@@ -327,7 +327,7 @@ public class ApiDisputesTest extends BaseTest {
         for (Dispute d : _clientDisputes) {
             if (d.Status == DisputeStatus.PENDING_CLIENT_ACTION || d.Status == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION) {
                 
-                List<DisputeDocument> dd = this._api.Disputes.getDocumentsForDispute(d.Id, new Pagination(1, 1), filter, null);
+                List<DisputeDocument> dd = this.api.Disputes.getDocumentsForDispute(d.Id, new Pagination(1, 1), filter, null);
                 
                 if (dd != null && dd.size() > 0) {
                     // ...found such
@@ -345,7 +345,7 @@ public class ApiDisputesTest extends BaseTest {
                     dispute = d;
                     DisputeDocument documentPost = new DisputeDocument();
                     documentPost.Type = DisputeDocumentType.DELIVERY_PROOF;
-                    disputeDocument = this._api.Disputes.createDisputeDocument(documentPost, dispute.Id);
+                    disputeDocument = this.api.Disputes.createDisputeDocument(documentPost, dispute.Id);
                     break;
                 }
             }
@@ -361,7 +361,7 @@ public class ApiDisputesTest extends BaseTest {
         disputeDocumentPut.Id = disputeDocument.Id;
         disputeDocumentPut.Status = DisputeDocumentStatus.VALIDATION_ASKED;
 
-        result = _api.Disputes.submitDisputeDocument(disputeDocumentPut, dispute.Id);
+        result = api.Disputes.submitDisputeDocument(disputeDocumentPut, dispute.Id);
 
         assertNotNull(result);
         assertTrue(disputeDocument.Type == result.Type);
@@ -369,7 +369,7 @@ public class ApiDisputesTest extends BaseTest {
     }
 
     @Test
-    public void test_GetRepudiation() throws Exception
+    public void getRepudiation() throws Exception
     {
         Dispute dispute = null;
         
@@ -384,15 +384,15 @@ public class ApiDisputesTest extends BaseTest {
 
         assertNotNull("Cannot test getting repudiation because there's no not contestable dispute in the disputes list.", dispute);
 
-        String repudiationId = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null).get(0).Id;
+        String repudiationId = api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null).get(0).Id;
 
-        result = _api.Disputes.getRepudiation(repudiationId);
+        result = api.Disputes.getRepudiation(repudiationId);
 
         assertNotNull(result);
     }
 
     @Test
-    public void test_CreateSettlementTransfer() throws Exception
+    public void createSettlementTransfer() throws Exception
     {
         Dispute dispute = null;
         
@@ -405,11 +405,11 @@ public class ApiDisputesTest extends BaseTest {
 
         assertNotNull("Cannot test creating settlement transfer because there's no closed and not contestable disputes in the disputes list.", dispute);
 
-        String repudiationId = _api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null).get(0).Id;
+        String repudiationId = api.Disputes.getTransactions(dispute.Id, new Pagination(1, 1), null, null).get(0).Id;
 
         Repudiation repudiation = null;
         
-        repudiation = _api.Disputes.getRepudiation(repudiationId);
+        repudiation = api.Disputes.getRepudiation(repudiationId);
 
         Money debitedFunds = new Money();
         Money fees = new Money();
@@ -424,13 +424,13 @@ public class ApiDisputesTest extends BaseTest {
         post.Fees = fees;
 
         Transfer result = null;
-        result = _api.Disputes.createSettlementTransfer(post, repudiationId);
+        result = api.Disputes.createSettlementTransfer(post, repudiationId);
 
         assertNotNull(result);
     }
 
     @Test
-    public void test_GetFilteredDisputes() throws Exception
+    public void getFilteredDisputes() throws Exception
     {
         List<Dispute> result1 = null;
         List<Dispute> result2 = null;
@@ -441,8 +441,8 @@ public class ApiDisputesTest extends BaseTest {
         FilterDisputes filterBefore = new FilterDisputes();
         filterAfter.AfterDate = now;
         filterBefore.BeforeDate = now;
-        result1 = _api.Disputes.getAll(new Pagination(1, 100), filterAfter, null);
-        result2 = _api.Disputes.getAll(new Pagination(1, 100), filterBefore, null);
+        result1 = api.Disputes.getAll(new Pagination(1, 100), filterAfter, null);
+        result2 = api.Disputes.getAll(new Pagination(1, 100), filterBefore, null);
         
         assertNotNull(result1);
         assertNotNull(result2);
@@ -451,7 +451,7 @@ public class ApiDisputesTest extends BaseTest {
     }
 
     @Test
-    public void test_GetFilteredDisputeDocuments() throws Exception
+    public void getFilteredDisputeDocuments() throws Exception
     {
         List<DisputeDocument> result1 = null;
         List<DisputeDocument> result2 = null;
@@ -464,8 +464,8 @@ public class ApiDisputesTest extends BaseTest {
         filterAfter.AfterDate = now + 10000;
         filterBefore.BeforeDate = now;
         
-        result1 = _api.Disputes.getDocumentsForClient(new Pagination(1, 100), filterAfter, null);
-        result2 = _api.Disputes.getDocumentsForClient(new Pagination(1, 100), filterBefore, null);
+        result1 = api.Disputes.getDocumentsForClient(new Pagination(1, 100), filterAfter, null);
+        result2 = api.Disputes.getDocumentsForClient(new Pagination(1, 100), filterBefore, null);
 
         assertNotNull(result1);
         assertNotNull(result2);
@@ -474,7 +474,7 @@ public class ApiDisputesTest extends BaseTest {
 
         FilterDisputeDocuments filterType = new FilterDisputeDocuments();
         filterType.Type = result2.get(0).Type;
-        result3 = _api.Disputes.getDocumentsForClient(new Pagination(1, 100), filterType, null);
+        result3 = api.Disputes.getDocumentsForClient(new Pagination(1, 100), filterType, null);
 
         assertNotNull(result3);
         assertFalse(result3.isEmpty());
@@ -485,7 +485,7 @@ public class ApiDisputesTest extends BaseTest {
     }
 
     @Test
-    public void test_ResubmitDispute() throws Exception
+    public void resubmitDispute() throws Exception
     {
         Dispute dispute = null;
         
@@ -500,7 +500,7 @@ public class ApiDisputesTest extends BaseTest {
 
         assertNotNull("Cannot test resubmitting dispute because there's no re-opened disputes in the disputes list.", dispute);
 
-        result = _api.Disputes.resubmitDispute(dispute.Id);
+        result = api.Disputes.resubmitDispute(dispute.Id);
 
         assertNotNull(result);
         assertTrue(result.Status == DisputeStatus.SUBMITTED);

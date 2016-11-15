@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class ApiHooksTest extends BaseTest {
     
     @Test
-    public void test_Hooks_Create() {
+    public void createHook() {
         try {
             Hook hook = this.getJohnsHook();
             assertTrue(hook.Id.length() > 0);
@@ -22,10 +22,10 @@ public class ApiHooksTest extends BaseTest {
     }
     
     @Test
-    public void test_Hooks_Get() {
+    public void getHook() {
         try {
             Hook hook = this.getJohnsHook();
-            Hook getHook = this._api.Hooks.get(hook.Id);
+            Hook getHook = this.api.Hooks.get(hook.Id);
             
             assertEquals(getHook.EventType, hook.EventType);
             assertEquals(getHook.Id, hook.Id);
@@ -35,12 +35,12 @@ public class ApiHooksTest extends BaseTest {
     }
     
     @Test
-    public void test_Hooks_Update() {
+    public void updateHook() {
         try {
             Hook hook = this.getJohnsHook();
             hook.Url = "http://test123.com";
             
-            Hook saveHook = this._api.Hooks.update(hook);
+            Hook saveHook = this.api.Hooks.update(hook);
             
             assertEquals(saveHook.Id, hook.Id);
             assertEquals(saveHook.Url, "http://test123.com");
@@ -50,12 +50,12 @@ public class ApiHooksTest extends BaseTest {
     }
     
     @Test
-    public void test_Hooks_All() {
+    public void getHooks() {
         try {
             Hook hook = this.getJohnsHook();
             Pagination pagination = new Pagination(1, 1);
             
-            List<Hook> list = this._api.Hooks.getAll(pagination, null);
+            List<Hook> list = this.api.Hooks.getAll(pagination, null);
             
             assertTrue(list.get(0) instanceof Hook);
             assertEquals(hook.Id, list.get(0).Id);

@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class ApiWalletsTest extends BaseTest {
     
     @Test
-    public void test_Wallets_Create() throws Exception {
+    public void createWallet() throws Exception {
         UserNatural john = this.getJohn();
         Wallet wallet = this.getJohnsWallet();
         
@@ -22,29 +22,29 @@ public class ApiWalletsTest extends BaseTest {
     }
     
     @Test
-    public void test_Wallets_Get() throws Exception {
+    public void getWallet() throws Exception {
         UserNatural john = this.getJohn();
         Wallet wallet = this.getJohnsWallet();
         
-        Wallet getWallet = this._api.Wallets.get(wallet.Id);
+        Wallet getWallet = this.api.Wallets.get(wallet.Id);
         
         assertEquals(wallet.Id, getWallet.Id);
         assertTrue(wallet.Owners.contains(john.Id));
     }
     
     @Test
-    public void test_Wallets_Save() throws Exception {
+    public void updateWallet() throws Exception {
         Wallet wallet = this.getJohnsWallet();
         wallet.Description = "New description to test";
         
-        Wallet saveWallet = this._api.Wallets.update(wallet);
+        Wallet saveWallet = this.api.Wallets.update(wallet);
         
         assertEquals(wallet.Id, saveWallet.Id);
         assertEquals("New description to test", saveWallet.Description);
     }
     
     @Test
-    public void test_Wallets_Transactions() throws Exception {
+    public void getWalletTransactions() throws Exception {
         UserNatural john = this.getJohn();
         Wallet wallet = this.getJohnsWallet();
         PayIn payIn = this.getJohnsPayInCardWeb();
@@ -52,7 +52,7 @@ public class ApiWalletsTest extends BaseTest {
         Pagination pagination = new Pagination(1, 1);
         FilterTransactions filter = new FilterTransactions();
         filter.Type = TransactionType.PAYIN;
-        List<Transaction> transactions = this._api.Wallets.getTransactions(wallet.Id, pagination, filter);
+        List<Transaction> transactions = this.api.Wallets.getTransactions(wallet.Id, pagination, filter);
 
         assertTrue(transactions.size() == 1);
         assertTrue(transactions.get(0) instanceof Transaction);
@@ -61,7 +61,7 @@ public class ApiWalletsTest extends BaseTest {
     }
     
     @Test
-    public void test_Wallets_Transactions_SortByCreationDate() throws Exception {
+    public void getWalletTransactionsAndSortByCreationDate() throws Exception {
         Wallet wallet = this.getJohnsWallet();
         
         // create two payin objects
@@ -74,7 +74,7 @@ public class ApiWalletsTest extends BaseTest {
         FilterTransactions filter = new FilterTransactions();
         filter.Type = TransactionType.PAYIN;
         
-        List<Transaction> transactions = this._api.Wallets.getTransactions(wallet.Id, pagination, filter, sorting);
+        List<Transaction> transactions = this.api.Wallets.getTransactions(wallet.Id, pagination, filter, sorting);
         
         assertNotNull(transactions);
         assertTrue(transactions.size() > 1);

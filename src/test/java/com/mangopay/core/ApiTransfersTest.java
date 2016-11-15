@@ -11,11 +11,11 @@ import static org.junit.Assert.*;
 public class ApiTransfersTest extends BaseTest {
 
     @Test
-    public void test_Transfers_Create() throws Exception {
+    public void createTransfer() throws Exception {
         UserNatural john = this.getJohn();
         
         Transfer transfer = this.getNewTransfer();
-        Wallet creditedWallet = this._api.Wallets.get(transfer.CreditedWalletId);
+        Wallet creditedWallet = this.api.Wallets.get(transfer.CreditedWalletId);
         
         assertTrue(transfer.Id.length() > 0);
         assertEquals(transfer.AuthorId, john.Id);
@@ -24,11 +24,11 @@ public class ApiTransfersTest extends BaseTest {
     }
     
     @Test
-    public void test_Transfers_Get() throws Exception {
+    public void getTransfer() throws Exception {
         UserNatural john = this.getJohn();
         Transfer transfer = this.getNewTransfer();
         
-        Transfer getTransfer = this._api.Transfers.get(transfer.Id);
+        Transfer getTransfer = this.api.Transfers.get(transfer.Id);
         
         assertEquals(transfer.Id, getTransfer.Id);
         assertEquals(getTransfer.AuthorId, john.Id);
@@ -37,14 +37,14 @@ public class ApiTransfersTest extends BaseTest {
     }
     
     @Test
-    public void test_Transfers_CreateRefund() throws Exception {
+    public void createTransferRefund() throws Exception {
         Transfer transfer = this.getNewTransfer();
         Wallet wallet = this.getJohnsWalletWithMoney();
-        Wallet walletBefore = this._api.Wallets.get(wallet.Id);
+        Wallet walletBefore = this.api.Wallets.get(wallet.Id);
         
                 
         Refund refund = this.getNewRefundForTransfer(transfer);
-        Wallet walletAfter = this._api.Wallets.get(wallet.Id);
+        Wallet walletAfter = this.api.Wallets.get(wallet.Id);
 
         assertTrue(refund.Id.length() > 0);
         assertTrue(refund.DebitedFunds.Amount == transfer.DebitedFunds.Amount);

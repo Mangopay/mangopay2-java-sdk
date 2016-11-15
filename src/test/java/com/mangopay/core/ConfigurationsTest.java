@@ -7,9 +7,9 @@ import org.junit.Test;
 public class ConfigurationsTest extends BaseTest {
 
     @Test(expected = ResponseException.class)
-    public void test_ConfInConstruct() throws Exception {
-        this._api.Config.ClientId = "test_asd";
-        this._api.Config.ClientPassword = "00000";        
-        this._api.Users.getAll();
+    public void confInConstruct() throws Exception {
+        this.api.Config.ClientId = "test_asd";
+        this.api.Config.ClientPassword = "00000";        
+        this.api.Users.getAll();
     }
 }

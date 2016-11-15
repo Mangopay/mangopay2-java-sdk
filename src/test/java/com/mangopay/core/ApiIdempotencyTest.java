@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class ApiIdempotencyTest extends BaseTest {
     
     @Test
-    public void test_Idempotency() {
+    public void idempotentRequest() {
         
         Calendar c = Calendar.getInstance();
         String key = Long.toString(c.getTimeInMillis());
@@ -48,7 +48,7 @@ public class ApiIdempotencyTest extends BaseTest {
             payOutPost.Tag = "DefaultTag";
             payOutPost.CreditedUserId = user.Id;
 
-            payOut = this._api.PayOuts.create(key, payOutPost);
+            payOut = this.api.PayOuts.create(key, payOutPost);
         }
         catch (Exception ex)
         {
@@ -62,7 +62,7 @@ public class ApiIdempotencyTest extends BaseTest {
         IdempotencyResponse result = null;
         try
         {
-            result = this._api.Idempotency.get(key);
+            result = this.api.Idempotency.get(key);
         }
         catch (Exception ex)
         {
@@ -75,7 +75,7 @@ public class ApiIdempotencyTest extends BaseTest {
         // test not existing key
         try
         {
-            this._api.Idempotency.get(key + "_no");
+            this.api.Idempotency.get(key + "_no");
 
             // expecting a ResponseException to be thrown
             Assert.fail();

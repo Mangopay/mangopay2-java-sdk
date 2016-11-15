@@ -11,12 +11,12 @@ import org.junit.Test;
 public class ApiRefundsTest extends BaseTest {
     
     @Test
-    public void test_Refund_GetForTransfer() throws Exception {
+    public void getRefundForTransfer() throws Exception {
         Transfer transfer = this.getNewTransfer();
         Refund refund = this.getNewRefundForTransfer(transfer);
         UserNatural user = this.getJohn();
         
-        Refund getRefund = this._api.Refunds.get(refund.Id);
+        Refund getRefund = this.api.Refunds.get(refund.Id);
         
         assertEquals(getRefund.Id, refund.Id);
         assertEquals(getRefund.InitialTransactionId, transfer.Id);
@@ -28,12 +28,12 @@ public class ApiRefundsTest extends BaseTest {
     }
     
     @Test
-    public void test_Refund_GetForPayIn() throws Exception {
+    public void getRefundForPayIn() throws Exception {
         PayIn payIn = this.getNewPayInCardDirect();
         Refund refund = this.getNewRefundForPayIn(payIn);
         UserNatural user = this.getJohn();
 
-        Refund getRefund = this._api.Refunds.get(refund.Id);
+        Refund getRefund = this.api.Refunds.get(refund.Id);
         
         assertEquals(getRefund.Id, refund.Id);
         assertEquals(getRefund.InitialTransactionId, payIn.Id);

@@ -14,18 +14,18 @@ import org.junit.Test;
 public class ApiReportsTest extends BaseTest {
     
     @Test
-    public void Test_Report_Create() throws Exception
+    public void createReport() throws Exception
     {
         ReportRequest reportPost = new ReportRequest();
         reportPost.ReportType = ReportType.TRANSACTIONS;
 
-        ReportRequest report = this._api.Reports.create(reportPost);
+        ReportRequest report = this.api.Reports.create(reportPost);
         assertNotNull(report);
         assertTrue(report.Id.length() > 0);
     }
 
     @Test
-    public void Test_Report_Filtered_Create() throws Exception
+    public void createFilteredReport() throws Exception
     {
         ReportRequest reportPost = new ReportRequest();
         reportPost.ReportType = ReportType.TRANSACTIONS;
@@ -36,7 +36,7 @@ public class ApiReportsTest extends BaseTest {
         reportPost.Filters.AuthorId = johnsId;
         reportPost.Filters.WalletId = walletId;
 
-        ReportRequest report = this._api.Reports.create(reportPost);
+        ReportRequest report = this.api.Reports.create(reportPost);
         assertNotNull(report);
         assertNotNull(report.Filters);
         assertNotNull(report.Filters.AuthorId);
@@ -47,23 +47,23 @@ public class ApiReportsTest extends BaseTest {
     }
 
     @Test
-    public void Test_Report_Get() throws Exception
+    public void getReport() throws Exception
     {
         ReportRequest report = this.getJohnsReport();
-        ReportRequest getReport = this._api.Reports.get(report.Id);
+        ReportRequest getReport = this.api.Reports.get(report.Id);
 
         assertEquals(getReport.Id, report.Id);
     }
     
     @Test
-    public void Test_Reports_All() throws Exception
+    public void getReports() throws Exception
     {
         ReportRequest report = this.getJohnsReport();
         Pagination pagination = new Pagination(1, 1);
         Sorting sort = new Sorting();
         sort.addField("CreationDate", SortDirection.desc);
 
-        List<ReportRequest> list = this._api.Reports.getAll(pagination, null, sort);
+        List<ReportRequest> list = this.api.Reports.getAll(pagination, null, sort);
 
         assertNotNull(list.get(0));
         assertEquals(report.Id, list.get(0).Id);
@@ -79,7 +79,7 @@ public class ApiReportsTest extends BaseTest {
         c.set(Calendar.MILLISECOND, 0);
         filters.BeforeDate = c.getTimeInMillis() / 1000;
 
-        list = this._api.Reports.getAll(pagination, filters, sort);
+        list = this.api.Reports.getAll(pagination, filters, sort);
 
         assertNotNull(list);
         assertTrue(list.isEmpty());
@@ -88,7 +88,7 @@ public class ApiReportsTest extends BaseTest {
         c.set(Calendar.YEAR, c.get(Calendar.YEAR)-10);
         filters.AfterDate = c.getTimeInMillis() / 1000;
 
-        list = this._api.Reports.getAll(pagination, filters, sort);
+        list = this.api.Reports.getAll(pagination, filters, sort);
 
         assertNotNull(list);
         assertTrue(list.size() > 0);

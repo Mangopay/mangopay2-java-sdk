@@ -15,29 +15,29 @@ import static org.junit.Assert.*;
 public class ApiMandatesTest extends BaseTest {
     
     @Test
-    public void test_Mandate_Create() throws Exception
+    public void createMandate() throws Exception
     {
         Mandate mandatePost = new Mandate();
         mandatePost.BankAccountId = this.getJohnsAccount().Id;
         mandatePost.ReturnURL = "http://test.test";
         mandatePost.Culture = CultureCode.EN;
 
-        Mandate mandate = this._api.Mandates.create(mandatePost);
+        Mandate mandate = this.api.Mandates.create(mandatePost);
         assertNotNull(mandate);
         assertFalse(mandate.Id.isEmpty());
     }
 
     @Test
-    public void test_Mandate_Get() throws Exception
+    public void getMandate() throws Exception
     {
         Mandate mandatePost = new Mandate();
         mandatePost.BankAccountId = this.getJohnsAccount().Id;
         mandatePost.ReturnURL = "http://test.test";
         mandatePost.Culture = CultureCode.EN;
 
-        Mandate mandateCreated = this._api.Mandates.create(mandatePost);
+        Mandate mandateCreated = this.api.Mandates.create(mandatePost);
 
-        Mandate mandate = this._api.Mandates.get(mandateCreated.Id);
+        Mandate mandate = this.api.Mandates.get(mandateCreated.Id);
 
         assertNotNull(mandate);
         assertFalse(mandate.Id.isEmpty());
@@ -46,7 +46,7 @@ public class ApiMandatesTest extends BaseTest {
     
     /*
     @Test
-    public void test_Mandate_Cancel() throws Exception {
+    public void cancelMandate() throws Exception {
         String bankAccountId = this.getJohnsAccount().Id;
         String returnUrl = "http://test.test";
         
@@ -74,17 +74,17 @@ public class ApiMandatesTest extends BaseTest {
     */
 
     @Test
-    public void test_Mandates_GetAll() throws Exception
+    public void getAllMandates() throws Exception
     {
         FilterMandates filters = new FilterMandates();
-        List<Mandate> mandates = this._api.Mandates.getAll(filters, null, null);
+        List<Mandate> mandates = this.api.Mandates.getAll(filters, null, null);
 
         assertNotNull(mandates);
         assertTrue(mandates.size() > 0);
     }
     
     @Test
-    public void test_Mandates_GetForUser() throws Exception
+    public void getMandatesForUser() throws Exception
     {
         UserNatural user = this.getJohn(true);
         
@@ -93,9 +93,9 @@ public class ApiMandatesTest extends BaseTest {
         mandatePost.ReturnURL = "http://test.test";
         mandatePost.Culture = CultureCode.EN;
 
-        Mandate mandateCreated = this._api.Mandates.create(mandatePost);
+        Mandate mandateCreated = this.api.Mandates.create(mandatePost);
 
-        List<Mandate> mandates = this._api.Mandates.getForUser(user.Id, new FilterMandates(), new Pagination(1, 1), null);
+        List<Mandate> mandates = this.api.Mandates.getForUser(user.Id, new FilterMandates(), new Pagination(1, 1), null);
 
         assertNotNull(mandates);
         assertTrue(mandates.size() > 0);
@@ -106,7 +106,7 @@ public class ApiMandatesTest extends BaseTest {
     }
     
     @Test
-    public void test_Mandates_GetForBankAccount() throws Exception
+    public void getMandatesForBankAccount() throws Exception
     {
         UserNatural user = this.getJohn(true);
         
@@ -115,9 +115,9 @@ public class ApiMandatesTest extends BaseTest {
         mandatePost.ReturnURL = "http://test.test";
         mandatePost.Culture = CultureCode.EN;
 
-        Mandate mandateCreated = this._api.Mandates.create(mandatePost);
+        Mandate mandateCreated = this.api.Mandates.create(mandatePost);
 
-        List<Mandate> mandates = this._api.Mandates.getForBankAccount(user.Id, mandatePost.BankAccountId, new FilterMandates(), new Pagination(1, 1), null);
+        List<Mandate> mandates = this.api.Mandates.getForBankAccount(user.Id, mandatePost.BankAccountId, new FilterMandates(), new Pagination(1, 1), null);
 
         assertNotNull(mandates);
         assertTrue(mandates.size() > 0);

@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 public class ApiCardPreAuthorizationsTest extends BaseTest {
     
     @Test
-    public void test_CardPreAuthorization_Create() throws Exception {
+    public void createCardPreAuthorization() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
         
         assertTrue(!"".equals(cardPreAuthorization.Id));
@@ -28,10 +28,10 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
     }
     
     @Test
-    public void test_CardPreAuthorization_Get() throws Exception {
+    public void getCardPreAuthorization() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
         
-        CardPreAuthorization getCardPreAuthorization = this._api.CardPreAuthorizations.get(cardPreAuthorization.Id);
+        CardPreAuthorization getCardPreAuthorization = this.api.CardPreAuthorizations.get(cardPreAuthorization.Id);
         
         assertEquals(cardPreAuthorization.Id, getCardPreAuthorization.Id);
         assertTrue(getCardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
@@ -39,11 +39,11 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
     }
     
     @Test
-    public void test_CardPreAuthorization_Update() throws Exception {
+    public void updateCardPreAuthorization() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
         cardPreAuthorization.PaymentStatus = PaymentStatus.CANCELED;
         
-        CardPreAuthorization resultCardPreAuthorization = this._api.CardPreAuthorizations.update(cardPreAuthorization);
+        CardPreAuthorization resultCardPreAuthorization = this.api.CardPreAuthorizations.update(cardPreAuthorization);
         
         assertTrue(resultCardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
         assertTrue(resultCardPreAuthorization.PaymentStatus == PaymentStatus.CANCELED);

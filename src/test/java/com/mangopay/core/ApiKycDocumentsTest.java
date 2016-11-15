@@ -11,22 +11,22 @@ import org.junit.Test;
 public class ApiKycDocumentsTest extends BaseTest {
     
     @Test
-    public void Test_Client_GetKycDocuments() throws Exception {
+    public void getKycDocuments() throws Exception {
         
-        List<KycDocument> result = this._api.KycDocuments.getAll(null, null);
+        List<KycDocument> result = this.api.KycDocuments.getAll(null, null);
         assertNotNull(result);
         assertTrue(result.size() > 0);
 
         Pagination pagination = new Pagination(1, 2);
         Sorting sort = new Sorting();
         sort.addField("CreationDate", SortDirection.asc);
-        result = this._api.KycDocuments.getAll(pagination, sort);
+        result = this.api.KycDocuments.getAll(pagination, sort);
         assertNotNull(result);
         assertTrue(result.size() > 0);
 
         sort = new Sorting();
         sort.addField("CreationDate", SortDirection.desc);
-        List<KycDocument> result2 = this._api.KycDocuments.getAll(pagination, sort);
+        List<KycDocument> result2 = this.api.KycDocuments.getAll(pagination, sort);
         assertNotNull(result2);
         assertTrue(result2.size() > 0);
 
@@ -34,9 +34,9 @@ public class ApiKycDocumentsTest extends BaseTest {
     }
     
     @Test
-    public void Test_GetKycDocument() throws Exception {
+    public void getKycDocument() throws Exception {
         KycDocument kycDocument = this.getJohnsKycDocument();
-        KycDocument result = this._api.KycDocuments.getKycDocument(kycDocument.Id);
+        KycDocument result = this.api.KycDocuments.getKycDocument(kycDocument.Id);
 
         assertNotNull(result);
         assertTrue(result.Id.equals(kycDocument.Id));

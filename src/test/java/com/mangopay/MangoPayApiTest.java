@@ -11,8 +11,8 @@ public class MangoPayApiTest extends BaseTest {
     
     @Test
     public void ApiAndUsersConstructionTest() {
-        MangoPayApi api = new MangoPayApi();
-        assertNotNull(api);
-        assertNotNull(api.Users);
+        MangoPayApi mangoPayApi = new MangoPayApi();
+        assertNotNull(mangoPayApi);
+        assertNotNull(mangoPayApi.Users);
     }
 }

@@ -12,15 +12,15 @@ import static org.junit.Assert.*;
 public class ApiEventsTest extends BaseTest {
     
     @Test
-    public void test_Events_Get() throws Exception {
+    public void getEvents() throws Exception {
         
         FilterEvents eventsFilter = new FilterEvents();
         eventsFilter.Type = EventType.PAYIN_NORMAL_CREATED;
         
-        List<Event> getEvents = this._api.Events.get(eventsFilter, null, null);
+        List<Event> getEvents = this.api.Events.get(eventsFilter, null, null);
         
         eventsFilter.Type = EventType.ALL;
-        List<Event> getAllEvents = this._api.Events.get(eventsFilter, null, null);
+        List<Event> getAllEvents = this.api.Events.get(eventsFilter, null, null);
         
         assertNotNull(getEvents);
         assertNotNull(getAllEvents);

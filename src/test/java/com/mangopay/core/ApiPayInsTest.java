@@ -29,7 +29,7 @@ import org.junit.Test;
 public class ApiPayInsTest extends BaseTest {
     
     @Test
-    public void test_PayIns_Create_CardWeb() {
+    public void createCardWeb() {
         try {
             PayIn payIn = null;
             payIn = this.getJohnsPayInCardWeb();
@@ -45,12 +45,12 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_Get_CardWeb() {
+    public void getCardWeb() {
         try {
             PayIn payIn = null;
             payIn = this.getJohnsPayInCardWeb();
             
-            PayIn getPayIn = this._api.PayIns.get(payIn.Id);
+            PayIn getPayIn = this.api.PayIns.get(payIn.Id);
             
             assertTrue(payIn.Id.equals(getPayIn.Id));
             assertTrue(payIn.PaymentType == PayInPaymentType.CARD);
@@ -71,13 +71,13 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_Create_CardDirect() {
+    public void createCardDirect() {
         try {
             Wallet johnWallet = this.getJohnsWalletWithMoney();
-            Wallet beforeWallet = this._api.Wallets.get(johnWallet.Id);
+            Wallet beforeWallet = this.api.Wallets.get(johnWallet.Id);
             
             PayIn payIn = this.getNewPayInCardDirect();
-            Wallet wallet = this._api.Wallets.get(johnWallet.Id);
+            Wallet wallet = this.api.Wallets.get(johnWallet.Id);
             UserNatural user = this.getJohn();
             
             assertTrue(payIn.Id.length() > 0);
@@ -99,11 +99,11 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_Get_CardDirect() {
+    public void getCardDirect() {
         try {
             PayIn payIn = this.getNewPayInCardDirect();
             
-            PayIn getPayIn = this._api.PayIns.get(payIn.Id);
+            PayIn getPayIn = this.api.PayIns.get(payIn.Id);
             
             assertTrue(payIn.Id.equals(getPayIn.Id));
             assertTrue(payIn.PaymentType == PayInPaymentType.CARD);
@@ -118,14 +118,14 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_CreateRefund_CardDirect() {
+    public void createRefundCardDirect() {
         try {
             PayIn payIn = this.getNewPayInCardDirect();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            Wallet walletBefore = this._api.Wallets.get(wallet.Id);
+            Wallet walletBefore = this.api.Wallets.get(wallet.Id);
                     
             Refund refund = this.getNewRefundForPayIn(payIn);
-            Wallet walletAfter = this._api.Wallets.get(wallet.Id);
+            Wallet walletAfter = this.api.Wallets.get(wallet.Id);
 
             assertTrue(refund.Id.length() > 0);
             assertTrue(refund.DebitedFunds.Amount == payIn.DebitedFunds.Amount);
@@ -138,7 +138,7 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_PreAuthorizedDirect() {
+    public void createPreAuthorizedDirect() {
         try {
             CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
             Wallet wallet = this.getJohnsWalletWithMoney();
@@ -163,7 +163,7 @@ public class ApiPayInsTest extends BaseTest {
             payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
             ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).SecureModeReturnURL = "http://test.com";
             
-            PayIn createPayIn = this._api.PayIns.create(payIn);
+            PayIn createPayIn = this.api.PayIns.create(payIn);
             
             assertTrue(!"".equals(createPayIn.Id));
             assertEquals(wallet.Id, createPayIn.CreditedWalletId);
@@ -183,7 +183,7 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_BankWireDirect_Create() {
+    public void createBankWireDirect() {
         try {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
@@ -203,7 +203,7 @@ public class ApiPayInsTest extends BaseTest {
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Currency = CurrencyIso.EUR;
             payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
             
-            PayIn createPayIn = this._api.PayIns.create(payIn);
+            PayIn createPayIn = this.api.PayIns.create(payIn);
             
             assertTrue(!"".equals(createPayIn.Id));
             assertEquals(wallet.Id, createPayIn.CreditedWalletId);
@@ -228,7 +228,7 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_BankWireDirect_Get() {
+    public void getBankWireDirect() {
         try {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
@@ -247,9 +247,9 @@ public class ApiPayInsTest extends BaseTest {
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Amount = 0;
             ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Currency = CurrencyIso.EUR;
             payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
-            PayIn createdPayIn = this._api.PayIns.create(payIn);
+            PayIn createdPayIn = this.api.PayIns.create(payIn);
 
-            PayIn getPayIn = this._api.PayIns.get(createdPayIn.Id);
+            PayIn getPayIn = this.api.PayIns.get(createdPayIn.Id);
             
             assertEquals(getPayIn.Id, createdPayIn.Id);
             assertTrue(getPayIn.PaymentType == PayInPaymentType.BANK_WIRE);
@@ -272,7 +272,7 @@ public class ApiPayInsTest extends BaseTest {
     }
     
     @Test
-    public void test_PayIns_DirectDebitWeb_Create() {
+    public void createDirectDebitWeb() {
         try {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
@@ -297,7 +297,7 @@ public class ApiPayInsTest extends BaseTest {
             ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions = new PayInTemplateURLOptions();
             ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions.PAYLINE = "https://www.maysite.com/payline_template/";                
 
-            PayIn createPayIn = this._api.PayIns.create(payIn);
+            PayIn createPayIn = this.api.PayIns.create(payIn);
 
             assertNotNull(createPayIn.Id);
             assertEquals(wallet.Id, createPayIn.CreditedWalletId);
@@ -330,7 +330,7 @@ public class ApiPayInsTest extends BaseTest {
     
     /*
     @Test
-    public void test_PayIns_DirectDebitDirect_Create() throws Exception {
+    public void createDirectDebitDirect() throws Exception {
         Wallet wallet = this.getJohnsWallet();
         UserNatural user = this.getJohn();
 

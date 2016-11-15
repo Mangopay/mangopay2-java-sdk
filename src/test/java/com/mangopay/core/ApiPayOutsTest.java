@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 public class ApiPayOutsTest extends BaseTest {
     
     @Test
-    public void test_PayOuts_Create_BankWire() {
+    public void createBankWire() {
         try {
             PayIn payIn = this.getJohnsPayInCardWeb();
             PayOut payOut = this.getJohnsPayOutBankWire();

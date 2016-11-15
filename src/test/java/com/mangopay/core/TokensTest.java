@@ -9,40 +9,40 @@ import com.mangopay.MangoPayApi;
 public class TokensTest extends BaseTest {
 
     @Test
-    public void test_ForceToken() throws Exception {
+    public void forceToken() throws Exception {
         
-        OAuthToken oldToken = this._api.OAuthTokenManager.getToken();
-        OAuthToken newToken = this._api.AuthenticationManager.createToken();
+        OAuthToken oldToken = this.api.OAuthTokenManager.getToken();
+        OAuthToken newToken = this.api.AuthenticationManager.createToken();
         
         assertFalse(oldToken.access_token.equals(newToken.access_token));
         
-        this._api.OAuthTokenManager.storeToken(newToken);
-        OAuthToken storedToken = this._api.OAuthTokenManager.getToken();
+        this.api.OAuthTokenManager.storeToken(newToken);
+        OAuthToken storedToken = this.api.OAuthTokenManager.getToken();
         
         assertEquals(newToken.access_token, storedToken.access_token);
     }
     
     @Test
-    public void test_StandardUseToken() throws Exception {
-        this._api.Users.getAll();
-        OAuthToken token = this._api.OAuthTokenManager.getToken();
-        this._api.Users.getAll();
+    public void standardUseOfToken() throws Exception {
+        this.api.Users.getAll();
+        OAuthToken token = this.api.OAuthTokenManager.getToken();
+        this.api.Users.getAll();
         
-        assertEquals(token.access_token, this._api.OAuthTokenManager.getToken().access_token);
+        assertEquals(token.access_token, this.api.OAuthTokenManager.getToken().access_token);
     }
     
     @Test
-    public void test_ShareTokenBetweenInstances() throws Exception {
+    public void shareTokenBetweenInstances() throws Exception {
         MangoPayApi api = this.buildNewMangoPayApi();
         
-        OAuthToken token1 = this._api.OAuthTokenManager.getToken();
+        OAuthToken token1 = this.api.OAuthTokenManager.getToken();
         OAuthToken token2 = api.OAuthTokenManager.getToken();
         
         assertEquals(token1.access_token, token2.access_token);
     }
     
     @Test
-    public void test_IsolateTokensBetweenEnvironments() throws Exception {
+    public void isolateTokensBetweenEnvironments() throws Exception {
         MangoPayApi api = new MangoPayApi();
         api.Config.ClientId = "sdk-unit-tests";
         api.Config.ClientPassword = "cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju";

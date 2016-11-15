@@ -21,27 +21,27 @@ import static org.junit.Assert.*;
 public class ApiUsersTest extends BaseTest {
     
     @Test
-    public void test_Users_CreateNatural() throws Exception {
+    public void createNatural() throws Exception {
         UserNatural john = this.getJohn();
         assertTrue(john.Id.length() > 0);
         assertTrue(john.PersonType.equals(PersonType.NATURAL));
     }
 
     @Test
-    public void test_Users_CreateLegal() throws Exception {
+    public void createLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
         assertTrue(matrix.Id.length() > 0);
         assertTrue(matrix.PersonType.equals(PersonType.LEGAL));
     }
 
     @Test
-    public void test_Users_CreateLegal_FailsIfRequiredPropsNotProvided() throws Exception {
+    public void createLegalFailsIfRequiredPropsNotProvided() throws Exception {
         UserLegal user = new UserLegal();
         
         User ret = null;
         
         try {
-            ret = this._api.Users.create(user);
+            ret = this.api.Users.create(user);
             
             Assert.fail("CreateLegal() should throw an exception when required props are not provided");
         } catch (ResponseException ex) {
@@ -50,7 +50,7 @@ public class ApiUsersTest extends BaseTest {
     }
 
     @Test
-    public void test_Users_CreateLegal_PassesIfRequiredPropsProvided() throws Exception {
+    public void createLegalPassesIfRequiredPropsProvided() throws Exception {
         UserLegal user = new UserLegal();
         user.HeadquartersAddress = new Address();
         user.HeadquartersAddress.AddressLine1 = "AddressLine1";
@@ -72,7 +72,7 @@ public class ApiUsersTest extends BaseTest {
         
         User ret = null;
         
-        ret = this._api.Users.create(user);
+        ret = this.api.Users.create(user);
         
         assertTrue("Created successfully after required props set", ret.Id.length() > 0);
         
@@ -80,26 +80,26 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_GetAll() throws Exception {
+    public void getAllUsers() throws Exception {
         Sorting sort = new Sorting();
         sort.addField("CreationDate", SortDirection.desc);
-        List<User> users = this._api.Users.getAll(null, sort);
+        List<User> users = this.api.Users.getAll(null, sort);
         
         assertTrue(users.get(0).CreationDate > users.get(users.size() - 1).CreationDate);
         
         sort = new Sorting();
         sort.addField("CreationDate", SortDirection.asc);
-        users = this._api.Users.getAll(null, sort);
+        users = this.api.Users.getAll(null, sort);
         
         assertTrue(users.get(0).CreationDate < users.get(users.size() - 1).CreationDate);
     }
 
     @Test
-    public void test_Users_GetNatural() throws Exception {
+    public void getNatural() throws Exception {
         UserNatural john = this.getJohn();
 
-        User user1 = this._api.Users.get(john.Id);
-        UserNatural user2 = this._api.Users.getNatural(john.Id);
+        User user1 = this.api.Users.get(john.Id);
+        UserNatural user2 = this.api.Users.getNatural(john.Id);
 
         assertTrue(user1.PersonType.equals(PersonType.NATURAL));
         assertTrue(user1.Id.equals(john.Id));
@@ -110,12 +110,12 @@ public class ApiUsersTest extends BaseTest {
     }
 
     @Test
-    public void test_Users_GetNatural_FailsForLegalUser() throws Exception {
+    public void getNaturalFailsForLegalUser() throws Exception {
         UserLegal matrix = this.getMatrix();
         
         UserNatural user = null;
         try {
-            user = this._api.Users.getNatural(matrix.Id);
+            user = this.api.Users.getNatural(matrix.Id);
             
             Assert.fail("GetUser() should throw an exception when called with legal user id");
         } catch (ResponseException ex) {
@@ -124,12 +124,12 @@ public class ApiUsersTest extends BaseTest {
     }
 
     @Test
-    public void test_Users_GetLegal_FailsForNaturalUser() throws Exception {
+    public void getLegalFailsForNaturalUser() throws Exception {
         UserNatural john = this.getJohn();
         
         User user = null;
         try {
-            user = this._api.Users.getLegal(john.Id);
+            user = this.api.Users.getLegal(john.Id);
             
             Assert.fail("GetLegal() should throw an exception when called with natural user id");
         } catch (ResponseException ex) {
@@ -138,54 +138,54 @@ public class ApiUsersTest extends BaseTest {
     }
 
     @Test
-    public void test_Users_GetLegal() throws Exception {
+    public void getLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
 
-        User user1 = this._api.Users.get(matrix.Id);
-        User user2 = this._api.Users.getLegal(matrix.Id);
+        User user1 = this.api.Users.get(matrix.Id);
+        User user2 = this.api.Users.getLegal(matrix.Id);
 
         assertEqualInputProps((UserLegal)user1, matrix);
         assertEqualInputProps((UserLegal)user2, matrix);
     }
 
     @Test
-    public void test_Users_Save_Natural() throws Exception {
+    public void updateNatural() throws Exception {
         UserNatural john = this.getJohn();
         john.LastName += " - CHANGED";
         
-        User userSaved = this._api.Users.update(john);
-        User userFetched = this._api.Users.get(john.Id);
+        User userSaved = this.api.Users.update(john);
+        User userFetched = this.api.Users.get(john.Id);
         
         assertEqualInputProps(john, userSaved);
         assertEqualInputProps(john, userFetched);
     }
 
     @Test
-    public void test_Users_Save_Natural_NonASCII() throws Exception {
+    public void updateNaturalNonASCII() throws Exception {
         UserNatural john = this.getJohn();
         john.LastName += " - CHANGED";
         
-        User userSaved = this._api.Users.update(john);
-        User userFetched = this._api.Users.get(john.Id);
+        User userSaved = this.api.Users.update(john);
+        User userFetched = this.api.Users.get(john.Id);
         
         assertEqualInputProps(john, userSaved);
         assertEqualInputProps(john, userFetched);
     }
 
     @Test
-    public void test_Users_Save_Legal() throws Exception {
+    public void updateLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
         matrix.LegalRepresentativeLastName += " - CHANGED";
         
-        User userSaved = this._api.Users.update(matrix);
-        User userFetched = this._api.Users.get(matrix.Id);
+        User userSaved = this.api.Users.update(matrix);
+        User userFetched = this.api.Users.get(matrix.Id);
         
         assertEqualInputProps(userSaved, matrix);
         assertEqualInputProps(userFetched, matrix);
     }
     
     @Test
-    public void test_Users_CreateBankAccount_IBAN() {
+    public void createBankAccountIBAN() {
         try {
             UserNatural john = this.getJohn();
             BankAccount account = this.getJohnsAccount();
@@ -198,7 +198,7 @@ public class ApiUsersTest extends BaseTest {
     }
 
     @Test
-    public void test_Users_CreateBankAccount_GB() {
+    public void createBankAccountGB() {
         try {
             UserNatural john = this.getJohn();
             BankAccount account = new BankAccount();
@@ -208,7 +208,7 @@ public class ApiUsersTest extends BaseTest {
             ((BankAccountDetailsGB)account.Details).AccountNumber = "63956474";
             ((BankAccountDetailsGB)account.Details).SortCode = "200000";
             
-            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            BankAccount createAccount = this.api.Users.createBankAccount(john.Id, account);
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
@@ -221,7 +221,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_CreateBankAccount_US() {
+    public void createBankAccountUS() {
         try {
             UserNatural john = this.getJohn();
             BankAccount account = new BankAccount();
@@ -231,7 +231,7 @@ public class ApiUsersTest extends BaseTest {
             ((BankAccountDetailsUS)account.Details).AccountNumber = "234234234234";
             ((BankAccountDetailsUS)account.Details).ABA = "234334789";
             
-            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            BankAccount createAccount = this.api.Users.createBankAccount(john.Id, account);
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
@@ -241,7 +241,7 @@ public class ApiUsersTest extends BaseTest {
             assertTrue(((BankAccountDetailsUS)createAccount.Details).DepositAccountType.equals(DepositAccountType.CHECKING));
 
             ((BankAccountDetailsUS)account.Details).DepositAccountType = DepositAccountType.SAVINGS;
-            BankAccount createAccountSavings = this._api.Users.createBankAccount(john.Id, account);
+            BankAccount createAccountSavings = this.api.Users.createBankAccount(john.Id, account);
 
             assertTrue(createAccountSavings.Id.length() > 0);
             assertTrue(createAccountSavings.UserId.equals(john.Id));
@@ -255,7 +255,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_CreateBankAccount_CA() {
+    public void createBankAccountCA() {
         try {
             UserNatural john = this.getJohn();
             BankAccount account = new BankAccount();
@@ -267,7 +267,7 @@ public class ApiUsersTest extends BaseTest {
             ((BankAccountDetailsCA)account.Details).AccountNumber = "234234234234";
             ((BankAccountDetailsCA)account.Details).InstitutionNumber = "123";
             
-            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            BankAccount createAccount = this.api.Users.createBankAccount(john.Id, account);
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
@@ -282,7 +282,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_CreateBankAccount_OTHER() {
+    public void createBankAccountOTHER() {
         try {
             UserNatural john = this.getJohn();
             BankAccount account = new BankAccount();
@@ -294,7 +294,7 @@ public class ApiUsersTest extends BaseTest {
             ((BankAccountDetailsOTHER)account.Details).AccountNumber = "234234234234";
             ((BankAccountDetailsOTHER)account.Details).BIC = "BINAADADXXX";
             
-            BankAccount createAccount = this._api.Users.createBankAccount(john.Id, account);
+            BankAccount createAccount = this.api.Users.createBankAccount(john.Id, account);
             
             assertTrue(createAccount.Id.length() > 0);
             assertTrue(createAccount.UserId.equals(john.Id));
@@ -308,7 +308,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_CreateBankAccount() throws Exception {
+    public void createBankAccount() throws Exception {
         UserNatural john = this.getJohn();
         BankAccount account = this.getJohnsAccount();
         
@@ -317,7 +317,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_SaveBankAccount() throws Exception {
+    public void updateBankAccount() throws Exception {
         try {
             UserNatural john = this.getJohn();
             BankAccount account = this.getJohnsAccount();
@@ -329,7 +329,7 @@ public class ApiUsersTest extends BaseTest {
             BankAccount disactivateBankAccount = new BankAccount();
             disactivateBankAccount.Active = false;
 
-            BankAccount result = this._api.Users.updateBankAccount(john.Id, disactivateBankAccount, account.Id);
+            BankAccount result = this.api.Users.updateBankAccount(john.Id, disactivateBankAccount, account.Id);
 
             assertNotNull(result);
             assertTrue(account.Id.equals(result.Id));
@@ -340,22 +340,22 @@ public class ApiUsersTest extends BaseTest {
     }
 
     @Test
-    public void test_Users_BankAccount() throws Exception {
+    public void getBankAccount() throws Exception {
         UserNatural john = this.getJohn();
         BankAccount account = this.getJohnsAccount();
         
-        BankAccount accountFetched = this._api.Users.getBankAccount(john.Id, account.Id);
+        BankAccount accountFetched = this.api.Users.getBankAccount(john.Id, account.Id);
         
         assertEqualInputProps(account, accountFetched);
     }
     
     @Test
-    public void test_Users_BankAccounts() throws Exception {
+    public void getBankAccounts() throws Exception {
         UserNatural john = this.getJohn();
         BankAccount account = this.getJohnsAccount();
         Pagination pagination = new Pagination(1, 12);
         
-        List<BankAccount> list = this._api.Users.getBankAccounts(john.Id, pagination, null);
+        List<BankAccount> list = this.api.Users.getBankAccounts(john.Id, pagination, null);
         
         int index = -1;
         for (int i=0; i<list.size(); i++)
@@ -374,7 +374,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_BankAccounts_SortByCreationDate() throws Exception {
+    public void getBankAccountsAndSortByCreationDate() throws Exception {
         UserNatural john = this.getJohn();
         this.getJohnsAccount();
         this.holdOn(2);
@@ -383,7 +383,7 @@ public class ApiUsersTest extends BaseTest {
         Sorting sorting = new Sorting();
         sorting.addField("CreationDate", SortDirection.desc);
         
-        List<BankAccount> list = this._api.Users.getBankAccounts(john.Id, pagination, sorting);
+        List<BankAccount> list = this.api.Users.getBankAccounts(john.Id, pagination, sorting);
         
         assertNotNull(list);
         assertTrue(list.get(0) instanceof BankAccount);
@@ -393,7 +393,7 @@ public class ApiUsersTest extends BaseTest {
     
     
     @Test
-    public void test_Users_CreateKycDocument() throws Exception {
+    public void createKycDocument() throws Exception {
         KycDocument kycDocument = this.getJohnsKycDocument();
         
         assertNotNull(kycDocument);
@@ -401,13 +401,13 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_SaveKycDocument() throws Exception {
+    public void updateKycDocument() throws Exception {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getJohnsKycDocument();
         
         kycDocument.Status = KycStatus.VALIDATION_ASKED;
         
-        KycDocument result = this._api.Users.updateKycDocument(john.Id, kycDocument);
+        KycDocument result = this.api.Users.updateKycDocument(john.Id, kycDocument);
         
         assertNotNull(result);
         assertTrue(kycDocument.Type.equals(result.Type));
@@ -415,11 +415,11 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_GetKycDocument() throws Exception {
+    public void getKycDocument() throws Exception {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getJohnsKycDocument();
         
-        KycDocument result = this._api.Users.getKycDocument(john.Id, kycDocument.Id);
+        KycDocument result = this.api.Users.getKycDocument(john.Id, kycDocument.Id);
         
         assertNotNull(result);
         assertTrue(kycDocument.Id.equals(result.Id));
@@ -429,34 +429,34 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test 
-    public void test_Users_CreateKycPage() throws Exception {
+    public void createKycPage() throws Exception {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getNewKycDocument();
 
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
 
-        this._api.Users.createKycPage(john.Id, kycDocument.Id, filePath);
+        this.api.Users.createKycPage(john.Id, kycDocument.Id, filePath);
         
         kycDocument = this.getNewKycDocument();
-        this._api.Users.createKycPage(john.Id, kycDocument.Id, Files.readAllBytes(Paths.get(filePath)));
+        this.api.Users.createKycPage(john.Id, kycDocument.Id, Files.readAllBytes(Paths.get(filePath)));
     }
     
     @Test
-    public void test_Users_AllCards() throws Exception {
+    public void getCards() throws Exception {
         UserNatural john = this.getJohn();
         Pagination pagination = new Pagination(1, 20);
-        List<Card> cardsBefore = this._api.Users.getCards(john.Id, pagination, null);
+        List<Card> cardsBefore = this.api.Users.getCards(john.Id, pagination, null);
         PayIn payIn = this.getNewPayInCardDirect();
-        Card card = this._api.Cards.get(((PayInPaymentDetailsCard)payIn.PaymentDetails).CardId);
-        List<Card> cardsAfter = this._api.Users.getCards(john.Id, pagination, null);
+        Card card = this.api.Cards.get(((PayInPaymentDetailsCard)payIn.PaymentDetails).CardId);
+        List<Card> cardsAfter = this.api.Users.getCards(john.Id, pagination, null);
         
         assertNotNull(cardsBefore);
         assertTrue(cardsAfter.size() > cardsBefore.size());
     }
     
     @Test
-    public void test_Users_AllCards_SortByCreationDate() throws Exception {
+    public void getCardsAndSortByCreationDate() throws Exception {
         UserNatural john = this.getJohn();
         this.getNewPayInCardDirect();
         this.holdOn(2);
@@ -464,7 +464,7 @@ public class ApiUsersTest extends BaseTest {
         Pagination pagination = new Pagination(1, 20);
         Sorting sorting = new Sorting();
         sorting.addField("CreationDate", SortDirection.desc);
-        List<Card> cards = this._api.Users.getCards(john.Id, pagination, sorting);
+        List<Card> cards = this.api.Users.getCards(john.Id, pagination, sorting);
         
         assertNotNull(cards);
         assertTrue(cards.size() > 1);
@@ -472,12 +472,12 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_Transactions() throws Exception {
+    public void getTransactions() throws Exception {
         UserNatural john = this.getJohn();
         Transfer transfer = this.getNewTransfer();
         Pagination pagination = new Pagination(1, 20);
         
-        List<Transaction> transactions = this._api.Users.getTransactions(john.Id, pagination, new FilterTransactions(), null);
+        List<Transaction> transactions = this.api.Users.getTransactions(john.Id, pagination, new FilterTransactions(), null);
         
         assertTrue(transactions.size() > 0);
         assertTrue(transactions.get(0).Type != null);
@@ -485,7 +485,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-    public void test_Users_Transactions_SortByCreationDate() throws Exception {
+    public void getTransactionsAndSortByCreationDate() throws Exception {
         UserNatural john = this.getJohn();
         this.getNewTransfer();
         this.holdOn(2);
@@ -494,7 +494,7 @@ public class ApiUsersTest extends BaseTest {
         Sorting sorting = new Sorting();
         sorting.addField("CreationDate", SortDirection.desc);
         
-        List<Transaction> transactions = this._api.Users.getTransactions(john.Id, pagination, new FilterTransactions(), sorting);
+        List<Transaction> transactions = this.api.Users.getTransactions(john.Id, pagination, new FilterTransactions(), sorting);
         
         assertNotNull(transactions);
         assertTrue(transactions.size() > 1);
@@ -502,12 +502,12 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-     public void test_Users_GetKycDocuments() throws Exception{
+     public void getKycDocuments() throws Exception{
         KycDocument kycDocument = this.getJohnsKycDocument();
         UserNatural user = this.getJohn();
         Pagination pagination = new Pagination(1, 20);
         
-        List<KycDocument> getKycDocuments = this._api.Users.getKycDocuments(user.Id, pagination, null);
+        List<KycDocument> getKycDocuments = this.api.Users.getKycDocuments(user.Id, pagination, null);
         
         assertTrue(getKycDocuments.get(0) instanceof KycDocument);
         KycDocument kycFromList = null;
@@ -523,7 +523,7 @@ public class ApiUsersTest extends BaseTest {
     }
     
     @Test
-     public void test_Users_GetKycDocuments_SortByCreationDate() throws Exception{
+     public void getKycDocumentsAndSortByCreationDate() throws Exception{
         this.getJohnsKycDocument();
         this.holdOn(2);
         this.getNewKycDocument();
@@ -532,7 +532,7 @@ public class ApiUsersTest extends BaseTest {
         Sorting sorting = new Sorting();
         sorting.addField("CreationDate", SortDirection.desc);
         
-        List<KycDocument> getKycDocuments = this._api.Users.getKycDocuments(user.Id, pagination, sorting);
+        List<KycDocument> getKycDocuments = this.api.Users.getKycDocuments(user.Id, pagination, sorting);
         
         assertNotNull(getKycDocuments);
         assertTrue(getKycDocuments.get(0) instanceof KycDocument);
