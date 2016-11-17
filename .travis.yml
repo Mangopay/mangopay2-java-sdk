@@ -4,6 +4,14 @@ jdk:
   - oraclejdk7
   - openjdk7
 
+env:
+# - SONATYPE_USERNAME
+  - secure: "J1VVM/G7xB4muDCutegl+n2EwLLM+tPKXwS+6aYIYmBspJsavXNEMePHKvCo31Tu/WzvbmhP9PeGP16tUAmvi7+RPTPTrS6x8/qMv2O2/KadnFRUADeQD0R7LWVXjHkIbOwBmHaZ7ClgA/KJGhEdKhzExTXXoJYNrrIlyYKfTLU="
+# - SONATYPE_PASSWORD
+  - secure: "Q7SltuEOnWN7aGLEo7Ytv/tbH7+pZGyl7/1s5RBj2YLmSvMxQgxoTdqKRfoTSV2oCye3koAY+S2qMR6KcLAk4t3K02mDRFZuXlgX0K//BC2z5b4CixBPs+Gnw6uGUk79ct+sf8khk0XnexTVe7W8a/vZx8s8OykePlsnI1/4SL8="
+# - SIGNING_PASSWORD
+  - secure: "dEyKQVXdYGzH32I6u0bz8XSi7wVeFrDtaXlRy3irEw04r43zYVO1f2Q5ErzLuCAuLZwO9WfgIdJodbcg09ZzyuevhxM5pvntuK9yqrPXJcUfdvnELaLSVhwTuCkfERM0hxSHmvvuevFddCr87UpedIR23ePm+hTekT5rSJU/S/o="
+
 before_install:
   #
   # The following block will resolve OpenJDK7 crash issue in Travis
@@ -14,3 +22,6 @@ before_install:
   - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts > /tmp/hosts
   - sudo mv /tmp/hosts /etc/hosts
   - cat /etc/hosts # optionally check the content *after*
+
+after_success:
+     - .utility/initiate-publish.sh

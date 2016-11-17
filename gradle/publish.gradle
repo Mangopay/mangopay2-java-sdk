@@ -1,0 +1,51 @@
+apply plugin: 'com.bmuschko.nexus'
+apply plugin: 'io.codearte.nexus-staging'
+
+modifyPom {
+    project {
+        name 'mangopay2-java-sdk'
+        description 'Java SDK for Mangopay'
+        packaging 'jar'
+        organization {
+            name 'Codegile'
+            url 'http://www.codegile.com'
+        }
+        licenses {
+            license {
+                name 'MIT License'
+                url 'http://www.opensource.org/licenses/mit-license.php'
+                distribution 'repo'
+            }
+        }
+        scm {
+            url 'git@github.com:mangopay/mangopay2-java-sdk.git'
+            connection 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+            developerConnection 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+        }
+
+        developers {
+            developer {
+                id 'cata.craciun'
+                name 'Catalin Craciun'
+                email 'catalin.craciun@codegile.com'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = false
+    tests = true
+    javadoc = false
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+}
+
+nexusStaging {
+    packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
+//    stagingProfileId = "yourStagingProfileId" // when not defined will be got from server using "packageGroup"
+}
