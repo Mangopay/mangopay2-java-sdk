@@ -69,3 +69,7 @@ bintray {
         }
     }
 }
+
+test {
+    exclude 'com/mangopay/**'
+}
