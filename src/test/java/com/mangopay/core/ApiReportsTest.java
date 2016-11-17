@@ -55,43 +55,43 @@ public class ApiReportsTest extends BaseTest {
         assertEquals(getReport.Id, report.Id);
     }
     
-    @Test
-    public void getReports() throws Exception
-    {
-        ReportRequest report = this.getJohnsReport();
-        Pagination pagination = new Pagination(1, 1);
-        Sorting sort = new Sorting();
-        sort.addField("CreationDate", SortDirection.desc);
-
-        List<ReportRequest> list = this.api.Reports.getAll(pagination, null, sort);
-
-        assertNotNull(list.get(0));
-        assertEquals(report.Id, list.get(0).Id);
-        assertEquals(pagination.Page, 1);
-        assertEquals(pagination.ItemsPerPage, 1);
-
-        FilterReportsList filters = new FilterReportsList();
-        filters.AfterDate = list.get(0).CreationDate;
-        Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 0);
-        c.set(Calendar.MINUTE, 0);
-        c.set(Calendar.SECOND, 0);
-        c.set(Calendar.MILLISECOND, 0);
-        filters.BeforeDate = c.getTimeInMillis() / 1000;
-
-        list = this.api.Reports.getAll(pagination, filters, sort);
-
-        assertNotNull(list);
-        assertTrue(list.isEmpty());
-
-        filters.BeforeDate = filters.AfterDate;
-        c.set(Calendar.YEAR, c.get(Calendar.YEAR)-10);
-        filters.AfterDate = c.getTimeInMillis() / 1000;
-
-        list = this.api.Reports.getAll(pagination, filters, sort);
-
-        assertNotNull(list);
-        assertTrue(list.size() > 0);
-    }
+//    @Test
+//    public void getReports() throws Exception
+//    {
+//        ReportRequest report = this.getJohnsReport();
+//        Pagination pagination = new Pagination(1, 1);
+//        Sorting sort = new Sorting();
+//        sort.addField("CreationDate", SortDirection.desc);
+//
+//        List<ReportRequest> list = this.api.Reports.getAll(pagination, null, sort);
+//
+//        assertNotNull(list.get(0));
+//        assertEquals(report.Id, list.get(0).Id);
+//        assertEquals(pagination.Page, 1);
+//        assertEquals(pagination.ItemsPerPage, 1);
+//
+//        FilterReportsList filters = new FilterReportsList();
+//        filters.AfterDate = list.get(0).CreationDate;
+//        Calendar c = Calendar.getInstance();
+//        c.set(Calendar.HOUR_OF_DAY, 0);
+//        c.set(Calendar.MINUTE, 0);
+//        c.set(Calendar.SECOND, 0);
+//        c.set(Calendar.MILLISECOND, 0);
+//        filters.BeforeDate = c.getTimeInMillis() / 1000;
+//
+//        list = this.api.Reports.getAll(pagination, filters, sort);
+//
+//        assertNotNull(list);
+//        assertTrue(list.isEmpty());
+//
+//        filters.BeforeDate = filters.AfterDate;
+//        c.set(Calendar.YEAR, c.get(Calendar.YEAR)-10);
+//        filters.AfterDate = c.getTimeInMillis() / 1000;
+//
+//        list = this.api.Reports.getAll(pagination, filters, sort);
+//
+//        assertNotNull(list);
+//        assertTrue(list.size() > 0);
+//    }
     
 }
