@@ -14,8 +14,3 @@ before_install:
 - cat /etc/hosts
 after_success:
 - ".utility/initiate-publish.sh"
-env:
-  matrix:
-  - secure: Ihf3LLLv+3OcKwlOFeu6WXQISit8bVoEIjV/Lfz6qZrFnlKvGSaum0tXnbpqZ7YssdVBeh8SEfj+SqvwRiBvg2Yyr7UlnMbVw8G9arF/520fqnkhIui32lKcM9ScPB4XekAQdGAlROfGJlzIEyEq8ijY7hM9ielrKr4y67Rf1yw=
-  - secure: LG387iGQ4UXZRDuG5Y5mN+rmwojcZyQVc3aKX1WYYWxUWgFuRHXACXsVrNcjWPJJtjHV1stwNxFxYU6E4YRbshIH/829uJognkwn0teG+ZQLeXy//A7O3hgbPUZKXWtlikJuZFGpMOg9EOz3d+GPPJMvV/04Dx3bU4Uzz9chh54=
-  - secure: fu71urSBD4ktXrgLLRlyt3WaTnBznAXTZ3k5ulLMUfJXhg0Ud6dnbFKa/YPM9EvaS2eO8fO11vVAe9mJ91RSYs6SB6gHcVuPYNavbgzCHE3HPlx5fMbl5/jv+h9vS+9gkDLg+CtQnw/lO60fdlRpwaWPDkybkBGYEeOcGfvw2tk=
