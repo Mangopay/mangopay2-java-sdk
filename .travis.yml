@@ -1,28 +1,21 @@
 language: java
 jdk:
-  - oraclejdk8
-  - oraclejdk7
-  - openjdk7
-
-# - SONATYPE_USERNAME
-  - secure: "J1VVM/G7xB4muDCutegl+n2EwLLM+tPKXwS+6aYIYmBspJsavXNEMePHKvCo31Tu/WzvbmhP9PeGP16tUAmvi7+RPTPTrS6x8/qMv2O2/KadnFRUADeQD0R7LWVXjHkIbOwBmHaZ7ClgA/KJGhEdKhzExTXXoJYNrrIlyYKfTLU="
-# - SONATYPE_PASSWORD
-  - secure: "Q7SltuEOnWN7aGLEo7Ytv/tbH7+pZGyl7/1s5RBj2YLmSvMxQgxoTdqKRfoTSV2oCye3koAY+S2qMR6KcLAk4t3K02mDRFZuXlgX0K//BC2z5b4CixBPs+Gnw6uGUk79ct+sf8khk0XnexTVe7W8a/vZx8s8OykePlsnI1/4SL8="
-# - SIGNING_PASSWORD
-  - secure: "dEyKQVXdYGzH32I6u0bz8XSi7wVeFrDtaXlRy3irEw04r43zYVO1f2Q5ErzLuCAuLZwO9WfgIdJodbcg09ZzyuevhxM5pvntuK9yqrPXJcUfdvnELaLSVhwTuCkfERM0hxSHmvvuevFddCr87UpedIR23ePm+hTekT5rSJU/S/o="
-
+- oraclejdk8
+- oraclejdk7
+- openjdk7
 before_install:
-  #
-  # The following block will resolve OpenJDK7 crash issue in Travis
-  # Refer to https://github.com/travis-ci/travis-ci/issues/5227#issuecomment-165131913
-  #
-  - chmod +x .utility/initiate-publish.sh
-  - openssl aes-256-cbc -K $encrypted_5977194fb850_key -iv $encrypted_5977194fb850_iv -in .utility/keyfile.gpg.enc -out .utility/keyfile.gpg -d
-  - cat /etc/hosts # optionally check the content *before*
-  - sudo hostname "$(hostname | cut -c1-63)"
-  - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts > /tmp/hosts
-  - sudo mv /tmp/hosts /etc/hosts
-  - cat /etc/hosts # optionally check the content *after*
-
+- chmod +x .utility/initiate-publish.sh
+- openssl aes-256-cbc -K $encrypted_5977194fb850_key -iv $encrypted_5977194fb850_iv
+  -in .utility/keyfile.gpg.enc -out .utility/keyfile.gpg -d
+- cat /etc/hosts
+- sudo hostname "$(hostname | cut -c1-63)"
+- sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts > /tmp/hosts
+- sudo mv /tmp/hosts /etc/hosts
+- cat /etc/hosts
 after_success:
-     - .utility/initiate-publish.sh
+- ".utility/initiate-publish.sh"
+env:
+  matrix:
+  - secure: Ihf3LLLv+3OcKwlOFeu6WXQISit8bVoEIjV/Lfz6qZrFnlKvGSaum0tXnbpqZ7YssdVBeh8SEfj+SqvwRiBvg2Yyr7UlnMbVw8G9arF/520fqnkhIui32lKcM9ScPB4XekAQdGAlROfGJlzIEyEq8ijY7hM9ielrKr4y67Rf1yw=
+  - secure: LG387iGQ4UXZRDuG5Y5mN+rmwojcZyQVc3aKX1WYYWxUWgFuRHXACXsVrNcjWPJJtjHV1stwNxFxYU6E4YRbshIH/829uJognkwn0teG+ZQLeXy//A7O3hgbPUZKXWtlikJuZFGpMOg9EOz3d+GPPJMvV/04Dx3bU4Uzz9chh54=
+  - secure: fu71urSBD4ktXrgLLRlyt3WaTnBznAXTZ3k5ulLMUfJXhg0Ud6dnbFKa/YPM9EvaS2eO8fO11vVAe9mJ91RSYs6SB6gHcVuPYNavbgzCHE3HPlx5fMbl5/jv+h9vS+9gkDLg+CtQnw/lO60fdlRpwaWPDkybkBGYEeOcGfvw2tk=
