@@ -5,7 +5,7 @@ jdk:
 - openjdk7
 before_install:
 - openssl aes-256-cbc -K $encrypted_5977194fb850_key -iv $encrypted_5977194fb850_iv
-- in .utility/secretkey.gpg.enc -out .utility/secretkey.gpg -d
+  -in .utility/secretkey.gpg.enc -out .utility/secretkey.gpg -d
 - chmod +x .utility/initiate-publish.sh
 - cat /etc/hosts
 - sudo hostname "$(hostname | cut -c1-63)"
