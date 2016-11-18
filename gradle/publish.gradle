@@ -6,6 +6,7 @@ modifyPom {
         name 'mangopay2-java-sdk'
         description 'Java SDK for Mangopay'
         packaging 'jar'
+        url 'https://github.com/Mangopay/mangopay2-java-sdk'
         organization {
             name 'Codegile'
             url 'http://www.codegile.com'
@@ -36,7 +37,7 @@ modifyPom {
 extraArchive {
     sources = false
     tests = true
-    javadoc = false
+    javadoc = true
 }
 
 nexus {
@@ -47,5 +48,6 @@ nexus {
 
 nexusStaging {
     packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
-//    stagingProfileId = "yourStagingProfileId" // when not defined will be got from server using "packageGroup"
+    stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup"
+    delayBetweenRetriesInMillis = 10000
 }
