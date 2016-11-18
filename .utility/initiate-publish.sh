@@ -7,6 +7,10 @@ if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ] && [ "$TRAVIS_PULL_R
 
   echo -e "Starting publish to Sonatype...\n"
 
+  echo -e "${SONATYPE_USERNAME}"
+  echo -e "${SONATYPE_PASSWORD}"
+  echo -e "${SIGNING_PASSWORD}"
+
   ./gradlew uploadArchives --stacktrace -PnexusUsername="${SONATYPE_USERNAME}" -PnexusPassword="${SONATYPE_PASSWORD}" -Psigning.keyId=06974C6E -Psigning.password="${SIGNING_PASSWORD}" -Psigning.secretKeyRingFile=.utility/signingkey.gpg
   RETVAL=$?
 
