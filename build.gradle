@@ -13,11 +13,10 @@ plugins {
     id "java"
     id "maven"
     id "maven-publish"
-    id "com.jfrog.bintray" version "1.6"
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -49,25 +48,6 @@ publishing {
         maven(MavenPublication) {
             from components.java
             artifact sourcesJar
-        }
-    }
-}
-
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['maven']
-    pkg {
-        repo = 'maven'
-        name = 'mangopay2-java-sdk'
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/Mangopay/mangopay2-java-sdk'
-
-        version {
-            name = '1.0.6'
-            desc = 'Java SDK for Mangopay api V2!'
-            released = new Date()
-            vcsTag = 'v1.0.6'
         }
     }
 }
