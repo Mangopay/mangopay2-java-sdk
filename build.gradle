@@ -52,10 +52,6 @@ publishing {
     }
 }
 
-test {
-    exclude 'com/mangopay/**'
-}
-
 tasks.withType(Javadoc) {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
