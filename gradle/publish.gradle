@@ -49,5 +49,7 @@ nexus {
 nexusStaging {
     packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
     stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup"
+    System.out.println(System.getenv('SONATYPE_USERNAME'))
+    System.out.println(System.getenv('SONATYPE_PASSWORD'))
     delayBetweenRetriesInMillis = 10000
 }

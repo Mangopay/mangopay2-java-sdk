@@ -3,7 +3,7 @@
 # NOTE: Travis-CI can only publish SNAPSHOT versions. To release a version, you need
 #       to use the internal ReadyTalk Jenkins job.
 
-if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "sonatype" ]; then
+if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "release" ]; then
 
   echo -e "Starting publish to Sonatype...\n"
 
@@ -12,7 +12,7 @@ if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ] && [ "$TRAVIS_PULL_R
 
   if [ $RETVAL -eq 0 ]; then
     echo 'Completed publish!'
-    #./gradlew closeAndPromoteRepository
+    ./gradlew closeAndPromoteRepository
   else
     echo 'Publish failed.'
   fi
