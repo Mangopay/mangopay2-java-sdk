@@ -13,32 +13,25 @@ Installation
 -------------------------------------------------
 SDK has been written in Java 7.
 
-The SDK is published as a Maven artifact on jCenter and can be used with Gradle or Maven.
+The SDK is published as a Maven artifact on Maven Central Repository (http://search.maven.org/) and can be used with Gradle or Maven.
 
-````
+```
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     compile 'com.mangopay:mangopay2-java-sdk:1.2.0'
 }
-````
+```
 
-````
+```
 <dependency>
   <groupId>com.mangopay</groupId>
   <artifactId>mangopay2-java-sdk</artifactId>
   <version>1.2.0</version>
 </dependency>
-
-<repositories>
-  <repository>
-    <id>jcenter</id>
-    <url>http://jcenter.bintray.com</url>
-  </repository>
-</repositories>
-````
+```
 
 License
 -------------------------------------------------
@@ -68,7 +61,7 @@ Using the credential info from the signup process above, you should then set `ap
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production
 environment, set it to `https://api.mangopay.com`.
-
+```
     import com.mangopay.MangoPayApi;
 
     // ...
@@ -82,11 +75,11 @@ environment, set it to `https://api.mangopay.com`.
 
     // call some API methods...
     List<User> users = api.Users.getAll();
-
+```
 
 Sample usage
 -------------------------------------------------
-
+```
     import com.mangopay.MangoPayApi;
     import com.mangopay.entities.User;
     import com.mangopay.entities.BankAccount;
@@ -111,3 +104,4 @@ Sample usage
     // get his bank accounts
     pagination = new Pagination(2, 10); // get 2nd page, 10 items per page
     List<BankAccount> accounts = api.Users.getBankAccounts(john.Id, pagination);
+```
