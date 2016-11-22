@@ -1,12 +1,22 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-nexus-plugin:2.3.1'
+        classpath 'io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.5.3'
+    }
+}
+
 plugins {
     id "java"
     id "maven"
     id "maven-publish"
-    id "com.jfrog.bintray" version "1.6"
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
@@ -17,6 +27,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.slf4j:slf4j-simple:1.7.7'
 }
+
+apply from: 'gradle/publish.gradle'
 
 group = 'com.mangopay'
 version = '1.2.0'
@@ -39,21 +51,8 @@ publishing {
         }
     }
 }
-bintray {
-    user = System.getenv('BINTRAY_USER')
-    key = System.getenv('BINTRAY_KEY')
-    publications = ['maven']
-    pkg {
-        repo = 'maven'
-        name = 'mangopay2-java-sdk'
-        licenses = ['MIT']
-        vcsUrl = 'https://github.com/Mangopay/mangopay2-java-sdk'
 
-        version {
-            name = '1.0.6'
-            desc = 'Java SDK for Mangopay api V2!'
-            released = new Date()
-            vcsTag = 'v1.0.6'
-        }
-    }
+tasks.withType(Javadoc) {
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
 }
