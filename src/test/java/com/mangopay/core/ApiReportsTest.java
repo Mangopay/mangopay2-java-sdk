@@ -58,20 +58,35 @@ public class ApiReportsTest extends BaseTest {
     @Test
     public void getReports() throws Exception
     {
-        ReportRequest report = this.getJohnsReport();
-        Pagination pagination = new Pagination(1, 1);
+        ReportRequest report = this.getNewJohnsReport();
+        Pagination pagination = new Pagination(1, 10);
         Sorting sort = new Sorting();
         sort.addField("CreationDate", SortDirection.desc);
 
         List<ReportRequest> list = this.api.Reports.getAll(pagination, null, sort);
 
-        assertNotNull(list.get(0));
-        assertEquals(report.Id, list.get(0).Id);
+        /*
+            Due to concurrent nature of how unit tests are launched, 
+            it is not guaranteed that report created in this method
+            will be the newest one in the reports list received from
+            API. Therefore another solution is needed here, such as
+            looking for the report among few the newest ones (here 10).
+        */
+        int j = -1;
+        for (int i = 0; i < list.size(); i++) {
+            if (report.Id.equals(list.get(i).Id)) {
+                j = i;
+                break;
+            }
+        }
+        assertTrue(j > -1);
+        
+        assertEquals(report.Id, list.get(j).Id);
         assertEquals(pagination.Page, 1);
-        assertEquals(pagination.ItemsPerPage, 1);
+        assertEquals(pagination.ItemsPerPage, 10);
 
         FilterReportsList filters = new FilterReportsList();
-        filters.AfterDate = list.get(0).CreationDate;
+        filters.AfterDate = list.get(j).CreationDate;
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, 0);
         c.set(Calendar.MINUTE, 0);
