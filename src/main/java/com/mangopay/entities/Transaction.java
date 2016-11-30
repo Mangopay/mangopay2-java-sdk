@@ -97,4 +97,54 @@ public class Transaction extends EntityBase {
         
         return result;
     }
+
+    /**
+     * Get Transaction Status
+     * @return {@link TransactionStatus }
+     */
+    public TransactionStatus getStatus() {
+        if (Status == null) {
+            return TransactionStatus.NotSpecified;
+        } else {
+            return Status;
+        }
+    }
+
+    /**
+     * Set Transaction Status
+     * @param Status {@link TransactionStatus }
+     */
+    public void setStatus(TransactionStatus Status) {
+        this.Status = Status;
+    }
+    
+    
+    
+    /**
+     * Is Transaction Created Status
+     * @return True if transaction is created
+     */
+    public boolean isCreated() {
+        return getStatus() == TransactionStatus.CREATED;
+    }
+    
+    /**
+     * Is Transaction Failed Status
+     * @return True if transaction is failed
+     */
+    public boolean isFailed() {
+        return getStatus() == TransactionStatus.FAILED;
+    }
+    
+    
+    /**
+     * Is Transaction Succeeded Status
+     * @return True if transaction is succeeded
+     */
+    public boolean isSucceeded() {
+        return getStatus() == TransactionStatus.SUCCEEDED;
+    }
+    
+    
+    
 }
