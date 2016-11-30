@@ -4,7 +4,7 @@ jdk:
 before_install:
 - chmod +x .utility/initiate-publish.sh
 - > 
-  if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ]; then  
+  if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then  
     openssl aes-256-cbc -K $encrypted_1689c6b91eac_key -iv $encrypted_1689c6b91eac_iv -in .utility/signingkey.gpg.enc -out .utility/signingkey.gpg -d;
   fi;
 - cat /etc/hosts
