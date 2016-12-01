@@ -38,6 +38,10 @@ public enum CountryIso {
     */  
     AM,
     /**
+    * Netherlands Antilles
+    */ 
+    AN,
+    /**
     * Angola
     */  
     AO,

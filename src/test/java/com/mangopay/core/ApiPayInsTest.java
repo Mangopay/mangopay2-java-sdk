@@ -8,7 +8,6 @@ import com.mangopay.entities.subentities.PayInExecutionDetailsDirect;
 import com.mangopay.entities.subentities.BankAccountDetailsIBAN;
 import com.mangopay.entities.subentities.PayInPaymentDetailsDirectDebit;
 import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
-import com.mangopay.entities.subentities.PayInPaymentDetailsPayPal;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.BankAccount;
 import com.mangopay.entities.CardPreAuthorization;
@@ -16,10 +15,6 @@ import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Refund;
 import com.mangopay.entities.UserNatural;
 import com.mangopay.entities.Wallet;
-import com.mangopay.entities.Mandate;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import junit.framework.Assert;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -40,7 +35,7 @@ public class ApiPayInsTest extends BaseTest {
             assertTrue(payIn.ExecutionType == PayInExecutionType.WEB);
             assertTrue(payIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -66,7 +61,7 @@ public class ApiPayInsTest extends BaseTest {
             assertNotNull(((PayInExecutionDetailsWeb)getPayIn.ExecutionDetails).RedirectURL);
             assertNotNull(((PayInExecutionDetailsWeb)getPayIn.ExecutionDetails).ReturnURL);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -94,7 +89,7 @@ public class ApiPayInsTest extends BaseTest {
             assertTrue(payIn.Status == TransactionStatus.SUCCEEDED);
             assertTrue(payIn.Type == TransactionType.PAYIN);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -113,7 +108,7 @@ public class ApiPayInsTest extends BaseTest {
             this.assertEqualInputProps(payIn, getPayIn);
             assertNotNull(((PayInPaymentDetailsCard)getPayIn.PaymentDetails).CardId);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -133,7 +128,7 @@ public class ApiPayInsTest extends BaseTest {
             assertTrue(refund.Type == TransactionType.PAYOUT);
             assertTrue(refund.Nature == TransactionNature.REFUND);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -178,7 +173,7 @@ public class ApiPayInsTest extends BaseTest {
             assertTrue(createPayIn.Status == TransactionStatus.SUCCEEDED);
             assertTrue(createPayIn.Type == TransactionType.PAYIN);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -223,7 +218,7 @@ public class ApiPayInsTest extends BaseTest {
             assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).BankAccount.Details).IBAN);
             assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).BankAccount.Details).BIC);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -267,7 +262,7 @@ public class ApiPayInsTest extends BaseTest {
             assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Details).IBAN);
             assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Details).BIC);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
@@ -324,7 +319,7 @@ public class ApiPayInsTest extends BaseTest {
             assertNotNull(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).TemplateURL);
     
         } catch (Exception ex){
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
     }
     
