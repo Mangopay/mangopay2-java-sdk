@@ -42,7 +42,7 @@ public class TransactionTest {
     public void testGetStatus() {
         Transaction transaction = new Transaction();
         assertEquals(TransactionStatus.NotSpecified, transaction.getStatus());
-        transaction.setStatus(TransactionStatus.SUCCEEDED);
+        transaction.Status = TransactionStatus.SUCCEEDED;
         assertEquals(TransactionStatus.SUCCEEDED, transaction.getStatus());
     }
     
@@ -51,9 +51,9 @@ public class TransactionTest {
     public void testIsCreated() {
         Transaction transaction = new Transaction();
         assertFalse(transaction.isCreated());
-        transaction.setStatus(TransactionStatus.NotSpecified);
+        transaction.Status = TransactionStatus.NotSpecified;
         assertFalse(transaction.isCreated());
-        transaction.setStatus(TransactionStatus.CREATED);
+        transaction.Status = TransactionStatus.CREATED;
         assertTrue(transaction.isCreated());
     }
     
@@ -61,9 +61,9 @@ public class TransactionTest {
     public void testIsFailed() {
         Transaction transaction = new Transaction();
         assertFalse(transaction.isFailed());
-        transaction.setStatus(TransactionStatus.CREATED);
+        transaction.Status = TransactionStatus.CREATED;
         assertFalse(transaction.isFailed());
-        transaction.setStatus(TransactionStatus.FAILED);
+        transaction.Status = TransactionStatus.FAILED;
         assertTrue(transaction.isFailed());
     }
     
@@ -71,9 +71,9 @@ public class TransactionTest {
     public void testIsSucceeded() {
         Transaction transaction = new Transaction();
         assertFalse(transaction.isSucceeded());
-        transaction.setStatus(TransactionStatus.CREATED);
+        transaction.Status = TransactionStatus.CREATED;
         assertFalse(transaction.isSucceeded());
-        transaction.setStatus(TransactionStatus.SUCCEEDED);
+        transaction.Status = TransactionStatus.SUCCEEDED;
         assertTrue(transaction.isSucceeded());
     }
     

@@ -110,16 +110,7 @@ public class Transaction extends EntityBase {
         }
     }
 
-    /**
-     * Set Transaction Status
-     * @param Status {@link TransactionStatus }
-     */
-    public void setStatus(TransactionStatus Status) {
-        this.Status = Status;
-    }
-    
-    
-    
+        
     /**
      * Is Transaction Created Status
      * @return True if transaction is created
