@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * User entity abstract class. 
- * Parent for <code>UserNatural</code> or <code>UserLegal<code> child types.
+ * Parent for <code>UserNatural</code> or <code>UserLegal</code> child types.
  */
 public abstract class User extends EntityBase {
 

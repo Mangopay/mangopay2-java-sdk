@@ -28,10 +28,10 @@ public class Pagination extends Dto {
     /**
      * Four-elements array with links to navigation. 
      * All values are optional. Format:
-     * Links[0] -> first,
-     * Links[1] -> previous, 
-     * Links[2] -> next, 
-     * Links[3] -> last.
+     * Links[0] {@literal -> } first,
+     * Links[1] {@literal -> } previous, 
+     * Links[2] {@literal -> } next, 
+     * Links[3] {@literal -> } last.
      */
     public String[] Links;
     
