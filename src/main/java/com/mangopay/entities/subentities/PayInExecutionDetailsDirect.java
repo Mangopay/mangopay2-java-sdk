@@ -34,5 +34,26 @@ public class PayInExecutionDetailsDirect extends Dto implements IPayInExecutionD
      * Secure mode needed.
      */
     public String SecureModeNeeded;
+
+    public PayInExecutionDetailsDirect() {
+    }
+
+    public PayInExecutionDetailsDirect(String cardId, String secureModeReturnURL) {
+        this.CardId = cardId;
+        this.SecureModeReturnURL = secureModeReturnURL;
+    }
     
+    public static PayInExecutionDetailsDirect build(String cardId, String secureModeReturnURL) {
+        return new PayInExecutionDetailsDirect(cardId, secureModeReturnURL);
+    }
+    
+    public PayInExecutionDetailsDirect(String cardId, SecureMode secureMode, String secureModeReturnURL) {
+        this.CardId = cardId;
+        this.SecureMode = secureMode;
+        this.SecureModeReturnURL = secureModeReturnURL;
+    }
+    
+    public static PayInExecutionDetailsDirect build(String cardId, SecureMode secureMode, String secureModeReturnURL) {
+        return new PayInExecutionDetailsDirect(cardId, secureMode, secureModeReturnURL);
+    }
 }

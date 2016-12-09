@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author hector
+ * @author Hector Espert hespert@peertopark.com
  */
 public class TransactionTest {
     
