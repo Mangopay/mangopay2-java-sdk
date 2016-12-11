@@ -17,4 +17,26 @@ public class PayOutPaymentDetailsBankWire extends Dto implements IPayOutPaymentD
      * Bank wire reference.
      */
     public String BankWireRef;
+
+    public PayOutPaymentDetailsBankWire() {
+    }
+
+    public PayOutPaymentDetailsBankWire(String bankAccountId) {
+        this.BankAccountId = bankAccountId;
+    }
+    
+    public static PayOutPaymentDetailsBankWire build(String bankAccountId) {
+        return new PayOutPaymentDetailsBankWire(bankAccountId);
+    }
+
+    public PayOutPaymentDetailsBankWire(String bankAccountId, String bankWireRef) {
+        this.BankAccountId = bankAccountId;
+        this.BankWireRef = bankWireRef;
+    }
+    
+    public static PayOutPaymentDetailsBankWire build(String bankAccountId, String bankWireRef) {
+        return new PayOutPaymentDetailsBankWire(bankAccountId, bankWireRef);
+    }
+    
+    
 }
