@@ -6,6 +6,7 @@
 package com.mangopay.entities.subentities;
 
 import com.mangopay.core.enumerations.SecureMode;
+import com.mangopay.core.interfaces.IPayInExecutionDetails;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -61,6 +62,27 @@ public class PayInExecutionDetailsDirectTest {
         assertEquals(cardId, executionDetailsDirect.CardId);
         assertEquals(secureMode, executionDetailsDirect.SecureMode);
         assertEquals(secureModeReturnURL, executionDetailsDirect.SecureModeReturnURL);
+    }
+    
+    @Test
+    public void testIsSecureModeNeeded() {
+        PayInExecutionDetailsDirect executionDetailsDirect = new PayInExecutionDetailsDirect();
+        assertFalse(executionDetailsDirect.isSecureModeNeeded());
+        executionDetailsDirect.SecureModeNeeded = "False";
+        assertFalse(executionDetailsDirect.isSecureModeNeeded());
+        executionDetailsDirect.SecureModeNeeded = "True";
+        assertTrue(executionDetailsDirect.isSecureModeNeeded());
+    }
+    
+    
+    @Test
+    public void testConvert() throws Exception {
+        PayInExecutionDetailsDirect executionDetailsDirect = new PayInExecutionDetailsDirect();
+        assertNotNull(executionDetailsDirect);
+        IPayInExecutionDetails iPayInExecutionDetails = executionDetailsDirect;
+        assertNotNull(iPayInExecutionDetails);
+        executionDetailsDirect = PayInExecutionDetailsDirect.convert(iPayInExecutionDetails);
+        assertNotNull(executionDetailsDirect);
     }
     
 }
