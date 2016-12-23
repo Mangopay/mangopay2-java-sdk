@@ -18,4 +18,9 @@ public class PayInPaymentDetailsDirectDebit extends Dto implements IPayInPayment
      * Mandate identifier.
      */
     public String MandateId;
+    
+    /**
+     * An optional value to be specified on the user's bank statement
+     */
+    public String StatementDescriptor;
 }
