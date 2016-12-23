@@ -25,5 +25,26 @@ public enum CultureCode {
     PT,
     SK,
     SV,
-    CS
+    CS,
+    
+    /*
+    * Temporary values to be removed in the future
+    */
+    de,
+    en,
+    da,
+    es,
+    et,
+    fi,
+    fr,
+    el,
+    hu,
+    it,
+    nl,
+    no,
+    pl,
+    pt,
+    sk,
+    sv,
+    cs
 }
