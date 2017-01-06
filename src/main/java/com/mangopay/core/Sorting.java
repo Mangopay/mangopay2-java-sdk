@@ -7,6 +7,8 @@ import java.util.*;
  * Base sorting object.
  */
 public class Sorting {
+
+    public static final Sorting NONE = null;
     
     /**
      * Fields separator in sort parameters for URL query.

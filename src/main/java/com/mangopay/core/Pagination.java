@@ -5,6 +5,10 @@ package com.mangopay.core;
  */
 public class Pagination extends Dto {
     
+    public static final Pagination NONE = null;
+    public static final Pagination FIRST = Pagination.first();
+    
+    
     /**
      * Page number.
      */
@@ -40,6 +44,14 @@ public class Pagination extends Dto {
      */
     public Pagination() {
         this(1, 10);
+    }
+    
+    /**
+     * First page pagination object
+     * @return Pagination
+     */
+    public static Pagination first() {
+        return new Pagination();
     }
     
     /**
