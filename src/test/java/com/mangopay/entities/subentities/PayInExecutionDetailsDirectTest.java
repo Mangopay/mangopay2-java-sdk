@@ -7,31 +7,27 @@ package com.mangopay.entities.subentities;
 
 import com.mangopay.core.enumerations.SecureMode;
 import com.mangopay.core.interfaces.PayInExecutionDetails;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 
 /**
- *
  * @author Hector Espert hespert@peertopark.com
  */
 public class PayInExecutionDetailsDirectTest {
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -45,8 +41,8 @@ public class PayInExecutionDetailsDirectTest {
         String secureModeReturnURL = "RETURNURL";
         PayInExecutionDetailsDirect executionDetailsDirect = PayInExecutionDetailsDirect.build(cardId, secureModeReturnURL);
         assertNotNull(executionDetailsDirect);
-        assertEquals(cardId, executionDetailsDirect.CardId);
-        assertEquals(secureModeReturnURL, executionDetailsDirect.SecureModeReturnURL);
+        assertEquals(cardId, executionDetailsDirect.getCardId());
+        assertEquals(secureModeReturnURL, executionDetailsDirect.getSecureModeReturnURL());
     }
 
     /**
@@ -59,22 +55,22 @@ public class PayInExecutionDetailsDirectTest {
         String secureModeReturnURL = "RETURNURL";
         PayInExecutionDetailsDirect executionDetailsDirect = PayInExecutionDetailsDirect.build(cardId, secureMode, secureModeReturnURL);
         assertNotNull(executionDetailsDirect);
-        assertEquals(cardId, executionDetailsDirect.CardId);
-        assertEquals(secureMode, executionDetailsDirect.SecureMode);
-        assertEquals(secureModeReturnURL, executionDetailsDirect.SecureModeReturnURL);
+        assertEquals(cardId, executionDetailsDirect.getCardId());
+        assertEquals(secureMode, executionDetailsDirect.getSecureMode());
+        assertEquals(secureModeReturnURL, executionDetailsDirect.getSecureModeReturnURL());
     }
-    
+
     @Test
     public void testIsSecureModeNeeded() {
         PayInExecutionDetailsDirect executionDetailsDirect = new PayInExecutionDetailsDirect();
         assertFalse(executionDetailsDirect.isSecureModeNeeded());
-        executionDetailsDirect.SecureModeNeeded = "False";
+        executionDetailsDirect.setSecureModeNeeded("False");
         assertFalse(executionDetailsDirect.isSecureModeNeeded());
-        executionDetailsDirect.SecureModeNeeded = "True";
+        executionDetailsDirect.setSecureModeNeeded("True");
         assertTrue(executionDetailsDirect.isSecureModeNeeded());
     }
-    
-    
+
+
     @Test
     public void testConvert() throws Exception {
         PayInExecutionDetailsDirect executionDetailsDirect = new PayInExecutionDetailsDirect();
@@ -84,5 +80,5 @@ public class PayInExecutionDetailsDirectTest {
         executionDetailsDirect = PayInExecutionDetailsDirect.convert(payInExecutionDetails);
         assertNotNull(executionDetailsDirect);
     }
-    
+
 }

@@ -10,7 +10,7 @@ public abstract class EntityBase extends Dto {
     /**
      * Unique identifier.
      *
-     * @deprecated Use {@link #getId()} instead.
+     * @deprecated Use {@link #getId()} and {@link #setId(String)} instead.
      */
     @Deprecated
     public String Id;
@@ -26,13 +26,17 @@ public abstract class EntityBase extends Dto {
     /**
      * Date of creation (UNIX timestamp).
      *
-     * @deprecated Use {@link #getCreationDate()} instead.
+     * @deprecated Use {@link #getCreationDate()} and {@link #setCreationDate(long)} instead.
      */
     @Deprecated
     public long CreationDate;
 
     public String getId() {
         return Id;
+    }
+
+    public void setId(String id) {
+        this.Id = id;
     }
 
     public String getTag() {
@@ -45,6 +49,10 @@ public abstract class EntityBase extends Dto {
 
     public long getCreationDate() {
         return CreationDate;
+    }
+
+    public void setCreationDate(long creationDate) {
+        this.CreationDate = creationDate;
     }
 
     /**

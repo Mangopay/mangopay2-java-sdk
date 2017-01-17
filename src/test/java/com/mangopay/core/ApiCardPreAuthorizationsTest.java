@@ -20,33 +20,33 @@ public class ApiCardPreAuthorizationsTest extends BaseTest {
     public void createCardPreAuthorization() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
         
-        assertTrue(!"".equals(cardPreAuthorization.Id));
-        assertTrue(cardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
-        assertTrue(cardPreAuthorization.PaymentStatus == PaymentStatus.WAITING);
-        assertTrue(cardPreAuthorization.ExecutionType == PreAuthorizationExecutionType.DIRECT);
-        assertNull(cardPreAuthorization.PayInId);
+        assertTrue(!"".equals(cardPreAuthorization.getId()));
+        assertTrue(cardPreAuthorization.getStatus() == PreAuthorizationStatus.SUCCEEDED);
+        assertTrue(cardPreAuthorization.getPaymentStatus() == PaymentStatus.WAITING);
+        assertTrue(cardPreAuthorization.getExecutionType() == PreAuthorizationExecutionType.DIRECT);
+        assertNull(cardPreAuthorization.getPayInId());
     }
     
     @Test
     public void getCardPreAuthorization() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
         
-        CardPreAuthorization getCardPreAuthorization = this.api.CardPreAuthorizations.get(cardPreAuthorization.Id);
+        CardPreAuthorization getCardPreAuthorization = this.api.getCardPreAuthorizations().get(cardPreAuthorization.getId());
         
-        assertEquals(cardPreAuthorization.Id, getCardPreAuthorization.Id);
-        assertTrue(getCardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
-        assertEquals("000000", getCardPreAuthorization.ResultCode);
+        assertEquals(cardPreAuthorization.getId(), getCardPreAuthorization.getId());
+        assertTrue(getCardPreAuthorization.getStatus() == PreAuthorizationStatus.SUCCEEDED);
+        assertEquals("000000", getCardPreAuthorization.getResultCode());
     }
     
     @Test
     public void updateCardPreAuthorization() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
-        cardPreAuthorization.PaymentStatus = PaymentStatus.CANCELED;
+        cardPreAuthorization.setPaymentStatus(PaymentStatus.CANCELED);
         
-        CardPreAuthorization resultCardPreAuthorization = this.api.CardPreAuthorizations.update(cardPreAuthorization);
+        CardPreAuthorization resultCardPreAuthorization = this.api.getCardPreAuthorizations().update(cardPreAuthorization);
         
-        assertTrue(resultCardPreAuthorization.Status == PreAuthorizationStatus.SUCCEEDED);
-        assertTrue(resultCardPreAuthorization.PaymentStatus == PaymentStatus.CANCELED);
+        assertTrue(resultCardPreAuthorization.getStatus() == PreAuthorizationStatus.SUCCEEDED);
+        assertTrue(resultCardPreAuthorization.getPaymentStatus() == PaymentStatus.CANCELED);
     }
     
 }

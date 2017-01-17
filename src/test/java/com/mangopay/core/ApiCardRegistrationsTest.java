@@ -5,102 +5,103 @@ import com.mangopay.entities.CardRegistration;
 import com.mangopay.entities.TemporaryPaymentCard;
 import com.mangopay.entities.UserNatural;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**
  * ApiCardRegistrations test methods.
  */
 public class ApiCardRegistrationsTest extends BaseTest {
-    
+
     @Test
     public void createCardRegistration() throws Exception {
         CardRegistration cardRegistration_visa = this.getJohnsCardRegistration(CardType.CB_VISA_MASTERCARD);
         UserNatural user = this.getJohn();
 
-        assertNotNull(cardRegistration_visa.Id);
-        assertTrue(cardRegistration_visa.Id.length() > 0);
+        assertNotNull(cardRegistration_visa.getId());
+        assertTrue(cardRegistration_visa.getId().length() > 0);
 
-        assertNotNull(cardRegistration_visa.AccessKey);
-        assertNotNull(cardRegistration_visa.PreregistrationData);
-        assertNotNull(cardRegistration_visa.CardRegistrationURL);
-        assertEquals(user.Id, cardRegistration_visa.UserId);
-        assertTrue(cardRegistration_visa.Currency == CurrencyIso.EUR);
-        assertEquals("CREATED", cardRegistration_visa.Status);
-        assertEquals(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.CardType);
-        
-        
+        assertNotNull(cardRegistration_visa.getAccessKey());
+        assertNotNull(cardRegistration_visa.getPreregistrationData());
+        assertNotNull(cardRegistration_visa.getCardRegistrationURL());
+        assertEquals(user.Id, cardRegistration_visa.getUserId());
+        assertTrue(cardRegistration_visa.getCurrency() == CurrencyIso.EUR);
+        assertEquals("CREATED", cardRegistration_visa.getStatus());
+        assertEquals(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.getCardType());
+
+
         CardRegistration cardRegistration_maestro = this.getNewJohnsCardRegistration(CardType.MAESTRO);
 
-        assertNotNull(cardRegistration_maestro.Id);
-        assertTrue(cardRegistration_maestro.Id.length() > 0);
+        assertNotNull(cardRegistration_maestro.getId());
+        assertTrue(cardRegistration_maestro.getId().length() > 0);
 
-        assertNotNull(cardRegistration_maestro.AccessKey);
-        assertNotNull(cardRegistration_maestro.PreregistrationData);
-        assertNotNull(cardRegistration_maestro.CardRegistrationURL);
-        assertEquals(user.Id, cardRegistration_maestro.UserId);
-        assertTrue(cardRegistration_maestro.Currency == CurrencyIso.EUR);
-        assertEquals("CREATED", cardRegistration_maestro.Status);
-        assertEquals(CardType.MAESTRO, cardRegistration_maestro.CardType);
+        assertNotNull(cardRegistration_maestro.getAccessKey());
+        assertNotNull(cardRegistration_maestro.getPreregistrationData());
+        assertNotNull(cardRegistration_maestro.getCardRegistrationURL());
+        assertEquals(user.Id, cardRegistration_maestro.getUserId());
+        assertTrue(cardRegistration_maestro.getCurrency() == CurrencyIso.EUR);
+        assertEquals("CREATED", cardRegistration_maestro.getStatus());
+        assertEquals(CardType.MAESTRO, cardRegistration_maestro.getCardType());
     }
-    
+
     @Test
     public void getCardRegistration() throws Exception {
         CardRegistration cardRegistration = this.getJohnsCardRegistration();
 
-        CardRegistration getCardRegistration = this.api.CardRegistrations.get(cardRegistration.Id);
-        
-        assertTrue(getCardRegistration.Id.length() > 0);
-        assertEquals(cardRegistration.Id, getCardRegistration.Id);
+        CardRegistration getCardRegistration = this.api.getCardRegistrations().get(cardRegistration.getId());
+
+        assertTrue(getCardRegistration.getId().length() > 0);
+        assertEquals(cardRegistration.getId(), getCardRegistration.getId());
     }
-    
+
     @Test
     public void updateCardRegistration() throws Exception {
         CardRegistration cardRegistration = this.getJohnsCardRegistration();
         String registrationData = this.getPaylineCorrectRegistartionData(cardRegistration);
-        cardRegistration.RegistrationData = registrationData;
-        
-        CardRegistration getCardRegistration = this.api.CardRegistrations.update(cardRegistration);
-        
-        assertEquals(registrationData, getCardRegistration.RegistrationData);
-        assertNotNull(getCardRegistration.CardId);
-        assertEquals("VALIDATED", getCardRegistration.Status);
-        assertEquals("000000", getCardRegistration.ResultCode);
+        cardRegistration.setRegistrationData(registrationData);
+
+        CardRegistration getCardRegistration = this.api.getCardRegistrations().update(cardRegistration);
+
+        assertEquals(registrationData, getCardRegistration.getRegistrationData());
+        assertNotNull(getCardRegistration.getCardId());
+        assertEquals("VALIDATED", getCardRegistration.getStatus());
+        assertEquals("000000", getCardRegistration.getResultCode());
     }
     
     
     /* The two tests below are added to cover temporary use cases, which will be
      * removed in future. */
-    
+
     @Test
     public void temporaryPaymentCardCreate() throws Exception {
         UserNatural user = this.getJohn();
         TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
-        paymentCard.UserId = user.Id;
-        paymentCard.Tag = "Test tag";
-        paymentCard.Culture = "FR";
-        paymentCard.ReturnURL = "http://test.com/test";
-        paymentCard.TemplateURL = "https://test.com/test";
-                       
-        TemporaryPaymentCard paymentCardCreated = this.api.Cards.createTemporaryPaymentCard(paymentCard);
-        
-        assertTrue(paymentCardCreated.Id.length() > 0);
-        assertEquals(paymentCardCreated.UserId, user.Id);
+        paymentCard.setUserId(user.getId());
+        paymentCard.setTag("Test tag");
+        paymentCard.setCulture("FR");
+        paymentCard.setReturnURL("http://test.com/test");
+        paymentCard.setTemplateURL("https://test.com/test");
+
+        TemporaryPaymentCard paymentCardCreated = this.api.getCards().createTemporaryPaymentCard(paymentCard);
+
+        assertTrue(paymentCardCreated.getId().length() > 0);
+        assertEquals(paymentCardCreated.getUserId(), user.getId());
     }
-    
+
     @Test
     public void temporaryPaymentCardGet() throws Exception {
         UserNatural user = this.getJohn();
         TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
-        paymentCard.UserId = user.Id;
-        paymentCard.Tag = "Test tag";
-        paymentCard.Culture = "FR";
-        paymentCard.ReturnURL = "http://test.com/test";
-        paymentCard.TemplateURL = "https://test.com/test";
-        TemporaryPaymentCard paymentCardCreated = this.api.Cards.createTemporaryPaymentCard(paymentCard);
-        
-        TemporaryPaymentCard paymentCardGet = this.api.Cards.getTemporaryPaymentCard(paymentCardCreated.Id);
-        
-        assertTrue(paymentCardGet.Id.length() > 0);
-        assertEquals(paymentCardGet.Id, paymentCardCreated.Id);
+        paymentCard.setUserId(user.getId());
+        paymentCard.setTag("Test tag");
+        paymentCard.setCulture("FR");
+        paymentCard.setReturnURL("http://test.com/test");
+        paymentCard.setTemplateURL("https://test.com/test");
+        TemporaryPaymentCard paymentCardCreated = this.api.getCards().createTemporaryPaymentCard(paymentCard);
+
+        TemporaryPaymentCard paymentCardGet = this.api.getCards().getTemporaryPaymentCard(paymentCardCreated.getId());
+
+        assertTrue(paymentCardGet.getId().length() > 0);
+        assertEquals(paymentCardGet.getId(), paymentCardCreated.getId());
     }
 }

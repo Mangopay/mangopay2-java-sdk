@@ -1,4 +1,5 @@
 package com.mangopay.core;
+
 import org.junit.Test;
 
 /**
@@ -8,8 +9,8 @@ public class ConfigurationsTest extends BaseTest {
 
     @Test(expected = ResponseException.class)
     public void confInConstruct() throws Exception {
-        this.api.Config.ClientId = "test_asd";
-        this.api.Config.ClientPassword = "00000";        
-        this.api.Users.getAll();
+        this.api.getConfig().setClientId("test_asd");
+        this.api.getConfig().setClientPassword("00000");
+        this.api.getUsers().getAll();
     }
 }

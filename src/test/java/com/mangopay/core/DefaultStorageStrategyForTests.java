@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class DefaultStorageStrategyForTests implements StorageStrategy {
 
-    private static Map<String, OAuthToken> _oAuthToken = new HashMap<>();
+    private static Map<String, OAuthToken> oAuthToken = new HashMap<>();
     
     /**
      * Gets the currently stored token.
@@ -18,9 +18,9 @@ public class DefaultStorageStrategyForTests implements StorageStrategy {
      */
     @Override
     public OAuthToken get(String envKey) {
-        if (!_oAuthToken.containsKey(envKey)) return null;
+        if (!oAuthToken.containsKey(envKey)) return null;
         
-        return _oAuthToken.get(envKey);
+        return oAuthToken.get(envKey);
     }
 
     /**
@@ -30,7 +30,7 @@ public class DefaultStorageStrategyForTests implements StorageStrategy {
      */
     @Override
     public void store(OAuthToken token, String envKey) {
-        _oAuthToken.put(envKey, token);
+        oAuthToken.put(envKey, token);
     }
     
 }

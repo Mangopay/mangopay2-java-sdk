@@ -310,7 +310,7 @@ public abstract class ApiBase {
         }
         
         if (sorting != null) {
-            additionalUrlParams.putAll(sorting.GetSortParameter());
+            additionalUrlParams.putAll(sorting.getSortParameter());
         }
         
         RestTool rest = new RestTool(this.root, true);

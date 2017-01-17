@@ -1,11 +1,7 @@
 package com.mangopay.core;
+
 import com.mangopay.core.enumerations.*;
-import com.mangopay.entities.Client;
-import com.mangopay.entities.ClientBankWireDirect;
-import com.mangopay.entities.KycDocument;
-import com.mangopay.entities.PayIn;
-import com.mangopay.entities.Transaction;
-import com.mangopay.entities.Wallet;
+import com.mangopay.entities.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,89 +18,81 @@ import static org.junit.Assert.*;
  * ApiClients test methods
  */
 public class ApiClientsTest extends BaseTest {
-    
+
     @Test
-    public void getKycDocuments() throws Exception
-    {
+    public void getKycDocuments() throws Exception {
         List<KycDocument> result = null;
         List<KycDocument> result2 = null;
 
-        try
-        {
-            result = this.api.Clients.getKycDocuments(null, null, null);
+        try {
+            result = this.api.getClients().getKycDocuments(null, null, null);
             assertNotNull(result);
             assertTrue(result.size() > 0);
 
             Pagination pagination = new Pagination(1, 2);
             Sorting sort = new Sorting();
             sort.addField("CreationDate", SortDirection.asc);
-            result = this.api.Clients.getKycDocuments(pagination, null, sort);
+            result = this.api.getClients().getKycDocuments(pagination, null, sort);
             assertNotNull(result);
             assertTrue(result.size() > 0);
 
             sort = new Sorting();
             sort.addField("CreationDate", SortDirection.desc);
-            result2 = this.api.Clients.getKycDocuments(pagination, null, sort);
+            result2 = this.api.getClients().getKycDocuments(pagination, null, sort);
             assertNotNull(result2);
             assertTrue(result2.size() > 0);
 
-            assertTrue((result.get(0).Id == null ? result2.get(0).Id != null : !result.get(0).Id.equals(result2.get(0).Id)));
-        }
-        catch (Exception ex)
-        {
+            assertTrue((result.get(0).getId() == null ? result2.get(0).getId() != null : !result.get(0).getId().equals(result2.get(0).getId())));
+        } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void getClient() throws Exception {
-        Client client = this.api.Clients.get();
-        
+        Client client = this.api.getClients().get();
+
         assertNotNull(client);
-        assertTrue("sdk-unit-tests".equals(client.ClientId));
+        assertTrue("sdk-unit-tests".equals(client.getClientId()));
     }
-    
+
     @Test
     public void updateClient() throws Exception {
-        Client client = this.api.Clients.get();
-        
+        Client client = this.api.getClients().get();
+
         Random rand = new Random();
         String color1 = Integer.toString(rand.nextInt(100000) + 100000);
         String color2 = Integer.toString(rand.nextInt(100000) + 100000);
-        
-        client.PrimaryButtonColour = "#" + color1;
-        client.PrimaryThemeColour = "#" + color2;
-        
-        Client clientNew = this.api.Clients.save(client);
-        
+
+        client.setPrimaryButtonColour("#" + color1);
+        client.setPrimaryThemeColour("#" + color2);
+
+        Client clientNew = this.api.getClients().save(client);
+
         assertNotNull(clientNew);
-        assertEquals(client.PrimaryButtonColour, clientNew.PrimaryButtonColour);
-        assertEquals(client.PrimaryThemeColour, clientNew.PrimaryThemeColour);
+        assertEquals(client.getPrimaryButtonColour(), clientNew.getPrimaryButtonColour());
+        assertEquals(client.getPrimaryThemeColour(), clientNew.getPrimaryThemeColour());
     }
-    
-    @Test 
+
+    @Test
     public void uploadClientLogo() throws Exception {
-        
+
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
 
-        this.api.Clients.uploadLogo(filePath);
-        
-        this.api.Clients.uploadLogo(Files.readAllBytes(Paths.get(filePath)));
+        this.api.getClients().uploadLogo(filePath);
+
+        this.api.getClients().uploadLogo(Files.readAllBytes(Paths.get(filePath)));
     }
-    
+
     @Test
-    public void getWallets()
-    {
+    public void getWallets() {
         List<Wallet> feesWallets = null;
         List<Wallet> creditWallets = null;
-        try
-        {
-            feesWallets = this.api.Clients.getWallets(FundsType.FEES, new Pagination(1, 100));
-            creditWallets = this.api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 100));
-        }
-        catch (Exception ex)
-        {
+        try {
+            feesWallets = this.api.getClients().getWallets(FundsType.FEES, new Pagination(1, 100));
+            creditWallets = this.api.getClients().getWallets(FundsType.CREDIT, new Pagination(1, 100));
+        } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
         assertNotNull(feesWallets);
@@ -112,25 +100,21 @@ public class ApiClientsTest extends BaseTest {
     }
 
     @Test
-    public void getWallet() throws Exception
-    {
+    public void getWallet() throws Exception {
         List<Wallet> feesWallets = null;
         List<Wallet> creditWallets = null;
         List<Wallet> defaultWallets = null;
-        try
-        {
-            feesWallets = this.api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
-            creditWallets = this.api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
-            defaultWallets = this.api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
-        }
-        catch (Exception ex)
-        {
+        try {
+            feesWallets = this.api.getClients().getWallets(FundsType.FEES, new Pagination(1, 1));
+            creditWallets = this.api.getClients().getWallets(FundsType.CREDIT, new Pagination(1, 1));
+            defaultWallets = this.api.getClients().getWallets(FundsType.DEFAULT, new Pagination(1, 1));
+        } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
 
         if ((feesWallets == null || feesWallets.isEmpty()) ||
-            (creditWallets == null || creditWallets.isEmpty()) ||
-            (defaultWallets == null || defaultWallets.isEmpty()))
+                (creditWallets == null || creditWallets.isEmpty()) ||
+                (defaultWallets == null || defaultWallets.isEmpty()))
             Assert.fail("Cannot test getting client's wallet because there is no any wallet for client.");
 
         Wallet wallet = null;
@@ -142,33 +126,29 @@ public class ApiClientsTest extends BaseTest {
         else
             wallet = defaultWallets.get(0);
 
-        result = this.api.Clients.getWallet(wallet.FundsType, wallet.Currency);
+        result = this.api.getClients().getWallet(wallet.getFundsType(), wallet.getCurrency());
 
         assertNotNull(result);
-        assertTrue(result.FundsType == wallet.FundsType);
-        assertTrue(result.Currency == wallet.Currency);
+        assertTrue(result.getFundsType() == wallet.getFundsType());
+        assertTrue(result.getCurrency() == wallet.getCurrency());
     }
 
     @Test
-    public void getWalletTransactions() throws Exception
-    {
+    public void getWalletTransactions() throws Exception {
         List<Wallet> feesWallets = null;
         List<Wallet> creditWallets = null;
         List<Wallet> defaultWallets = null;
-        try
-        {
-            feesWallets = this.api.Clients.getWallets(FundsType.FEES, new Pagination(1, 1));
-            creditWallets = this.api.Clients.getWallets(FundsType.CREDIT, new Pagination(1, 1));
-            defaultWallets = this.api.Clients.getWallets(FundsType.DEFAULT, new Pagination(1, 1));
-        }
-        catch (Exception ex)
-        {
+        try {
+            feesWallets = this.api.getClients().getWallets(FundsType.FEES, new Pagination(1, 1));
+            creditWallets = this.api.getClients().getWallets(FundsType.CREDIT, new Pagination(1, 1));
+            defaultWallets = this.api.getClients().getWallets(FundsType.DEFAULT, new Pagination(1, 1));
+        } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
 
         if ((feesWallets == null || feesWallets.isEmpty()) ||
-            (creditWallets == null || creditWallets.isEmpty()) ||
-            (defaultWallets == null || defaultWallets.isEmpty()))
+                (creditWallets == null || creditWallets.isEmpty()) ||
+                (defaultWallets == null || defaultWallets.isEmpty()))
             Assert.fail("Cannot test getting client's wallet transactions because there is no any wallet for client.");
 
         Wallet wallet = null;
@@ -180,68 +160,59 @@ public class ApiClientsTest extends BaseTest {
         else
             wallet = defaultWallets.get(0);
 
-        result = this.api.Clients.getWalletTransactions(wallet.FundsType, wallet.Currency, new Pagination(1, 1), null, null);
+        result = this.api.getClients().getWalletTransactions(wallet.getFundsType(), wallet.getCurrency(), new Pagination(1, 1), null, null);
 
         assertNotNull(result);
         assertTrue(result.size() > 0);
     }
-    
+
     @Test
-    public void getTransactions()
-    {
+    public void getTransactions() {
         List<Transaction> result = null;
 
-        try
-        {
-            result = this.api.Clients.getTransactions(null, null, null);
-        }
-        catch (Exception ex)
-        {
+        try {
+            result = this.api.getClients().getTransactions(null, null, null);
+        } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
 
         assertNotNull(result);
     }
-    
+
     @Test
-    public void createBankWireDirect()
-    {
-        try
-        {
+    public void createBankWireDirect() {
+        try {
             Money money = new Money();
-            money.Amount = 1000;
-            money.Currency = CurrencyIso.EUR;
+            money.setAmount(1000);
+            money.setCurrency(CurrencyIso.EUR);
             ClientBankWireDirect bankwireDirectPost = new ClientBankWireDirect("CREDIT_EUR", money);
 
-            PayIn result = this.api.Clients.createBankWireDirect(bankwireDirectPost);
+            PayIn result = this.api.getClients().createBankWireDirect(bankwireDirectPost);
 
-            assertTrue(result.Id.length() > 0);
-            assertEquals("CREDIT_EUR", result.CreditedWalletId);
-            assertEquals(PayInPaymentType.BANK_WIRE, result.PaymentType);
-            assertEquals(PayInExecutionType.DIRECT, result.ExecutionType);
-            assertEquals(TransactionStatus.CREATED, result.Status);
-            assertEquals(TransactionType.PAYIN, result.Type);
-        }
-        catch (Exception ex)
-        {
+            assertTrue(result.getId().length() > 0);
+            assertEquals("CREDIT_EUR", result.getCreditedWalletId());
+            assertEquals(PayInPaymentType.BANK_WIRE, result.getPaymentType());
+            assertEquals(PayInExecutionType.DIRECT, result.getExecutionType());
+            assertEquals(TransactionStatus.CREATED, result.getStatus());
+            assertEquals(TransactionType.PAYIN, result.getType());
+        } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
     }
-    
-    public void saveAddressNull() throws Exception
-    {
+
+    public void saveAddressNull() throws Exception {
         Client client = new Client();
 
         Random rand = new Random();
         String color1 = Integer.toString(rand.nextInt(100000) + 100000);
         String color2 = Integer.toString(rand.nextInt(100000) + 100000);
 
-        client.PrimaryButtonColour = "#" + color1;
-        client.PrimaryThemeColour = "#" + color2;
-        client.HeadquartersAddress = new Address();
+        client.setPrimaryButtonColour("#" + color1);
+        client.setPrimaryThemeColour("#" + color2);
+        client.setHeadquartersAddress(new Address());
 
-        Client clientNew = this.api.Clients.save(client);
+        Client clientNew = this.api.getClients().save(client);
 
-        assertNotNull(clientNew);			
+        assertNotNull(clientNew);
     }
 }

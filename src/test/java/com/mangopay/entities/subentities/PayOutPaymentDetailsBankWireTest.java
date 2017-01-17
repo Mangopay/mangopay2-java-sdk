@@ -6,34 +6,31 @@
 package com.mangopay.entities.subentities;
 
 import com.mangopay.core.interfaces.PayOutPaymentDetails;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
- *
  * @author Hector Espert hespert@peertopark.com
  */
 public class PayOutPaymentDetailsBankWireTest {
-    
+
     public PayOutPaymentDetailsBankWireTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -46,7 +43,7 @@ public class PayOutPaymentDetailsBankWireTest {
         String bankAccountId = "12345678";
         PayOutPaymentDetailsBankWire detailsBankWire = PayOutPaymentDetailsBankWire.build(bankAccountId);
         assertNotNull(detailsBankWire);
-        assertEquals(bankAccountId, detailsBankWire.BankAccountId);
+        assertEquals(bankAccountId, detailsBankWire.getBankAccountId());
     }
 
     /**
@@ -58,11 +55,11 @@ public class PayOutPaymentDetailsBankWireTest {
         String bankWireRef = "WireRef";
         PayOutPaymentDetailsBankWire detailsBankWire = PayOutPaymentDetailsBankWire.build(bankAccountId, bankWireRef);
         assertNotNull(detailsBankWire);
-        assertEquals(bankAccountId, detailsBankWire.BankAccountId);
-        assertEquals(bankWireRef, detailsBankWire.BankWireRef);
+        assertEquals(bankAccountId, detailsBankWire.getBankAccountId());
+        assertEquals(bankWireRef, detailsBankWire.getBankWireRef());
     }
-    
-    
+
+
     @Test
     public void testConvert() throws Exception {
         PayOutPaymentDetailsBankWire payOutPaymentDetailsBankWire = new PayOutPaymentDetailsBankWire();
@@ -72,5 +69,5 @@ public class PayOutPaymentDetailsBankWireTest {
         payOutPaymentDetailsBankWire = PayOutPaymentDetailsBankWire.convert(payOutPaymentDetails);
         assertNotNull(payOutPaymentDetailsBankWire);
     }
-    
+
 }

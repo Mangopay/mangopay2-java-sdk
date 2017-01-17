@@ -1,271 +1,260 @@
 package com.mangopay.core;
 
-import com.mangopay.entities.subentities.PayInPaymentDetailsPreAuthorized;
-import com.mangopay.entities.subentities.PayInPaymentDetailsBankWire;
-import com.mangopay.entities.subentities.PayInTemplateURLOptions;
-import com.mangopay.entities.subentities.PayInExecutionDetailsWeb;
-import com.mangopay.entities.subentities.PayInExecutionDetailsDirect;
-import com.mangopay.entities.subentities.BankAccountDetailsIBAN;
-import com.mangopay.entities.subentities.PayInPaymentDetailsDirectDebit;
-import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
 import com.mangopay.core.enumerations.*;
-import com.mangopay.entities.BankAccount;
-import com.mangopay.entities.CardPreAuthorization;
-import com.mangopay.entities.PayIn;
-import com.mangopay.entities.Refund;
-import com.mangopay.entities.UserNatural;
-import com.mangopay.entities.Wallet;
-import static org.junit.Assert.*;
+import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.*;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * API PayIns test methods
  */
 public class ApiPayInsTest extends BaseTest {
-    
+
     @Test
     public void createCardWeb() {
         try {
             PayIn payIn = null;
             payIn = this.getJohnsPayInCardWeb();
 
-            assertTrue(payIn.Id.length() > 0);
-            assertTrue(payIn.PaymentType == PayInPaymentType.CARD);
-            assertTrue(payIn.PaymentDetails instanceof PayInPaymentDetailsCard);
-            assertTrue(payIn.ExecutionType == PayInExecutionType.WEB);
-            assertTrue(payIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
+            assertTrue(payIn.getId().length() > 0);
+            assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
+            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
+            assertTrue(payIn.getExecutionType() == PayInExecutionType.WEB);
+            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsWeb);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void getCardWeb() {
         try {
             PayIn payIn = null;
             payIn = this.getJohnsPayInCardWeb();
-            
-            PayIn getPayIn = this.api.PayIns.get(payIn.Id);
-            
-            assertTrue(payIn.Id.equals(getPayIn.Id));
-            assertTrue(payIn.PaymentType == PayInPaymentType.CARD);
-            assertTrue(payIn.PaymentDetails instanceof PayInPaymentDetailsCard);
-            assertTrue(payIn.ExecutionType == PayInExecutionType.WEB);
-            assertTrue(payIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
-            
-            assertEqualInputProps(payIn, getPayIn);
-            
-            assertTrue(getPayIn.Status == TransactionStatus.CREATED);
-            assertTrue(getPayIn.ExecutionDate == null);
 
-            assertNotNull(((PayInExecutionDetailsWeb)getPayIn.ExecutionDetails).RedirectURL);
-            assertNotNull(((PayInExecutionDetailsWeb)getPayIn.ExecutionDetails).ReturnURL);
+            PayIn getPayIn = this.api.getPayIns().get(payIn.Id);
+
+            assertTrue(payIn.getId().equals(getPayIn.Id));
+            assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
+            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
+            assertTrue(payIn.getExecutionType() == PayInExecutionType.WEB);
+            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsWeb);
+
+            assertEqualInputProps(payIn, getPayIn);
+
+            assertTrue(getPayIn.getStatus() == TransactionStatus.CREATED);
+            assertTrue(getPayIn.getExecutionDate() == null);
+
+            assertNotNull(((PayInExecutionDetailsWeb) getPayIn.getExecutionDetails()).getRedirectURL());
+            assertNotNull(((PayInExecutionDetailsWeb) getPayIn.getExecutionDetails()).getReturnURL());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void createCardDirect() {
         try {
             Wallet johnWallet = this.getJohnsWalletWithMoney();
-            Wallet beforeWallet = this.api.Wallets.get(johnWallet.Id);
-            
+            Wallet beforeWallet = this.api.getWallets().get(johnWallet.Id);
+
             PayIn payIn = this.getNewPayInCardDirect();
-            Wallet wallet = this.api.Wallets.get(johnWallet.Id);
+            Wallet wallet = this.api.getWallets().get(johnWallet.Id);
             UserNatural user = this.getJohn();
-            
-            assertTrue(payIn.Id.length() > 0);
-            assertEquals(wallet.Id, payIn.CreditedWalletId);
-            assertTrue(payIn.PaymentType == PayInPaymentType.CARD);
-            assertTrue(payIn.PaymentDetails instanceof PayInPaymentDetailsCard);
-            assertTrue(payIn.ExecutionType == PayInExecutionType.DIRECT);
-            assertTrue(payIn.ExecutionDetails instanceof PayInExecutionDetailsDirect);
-            assertTrue(payIn.DebitedFunds instanceof Money);
-            assertTrue(payIn.CreditedFunds instanceof Money);
-            assertTrue(payIn.Fees instanceof Money);
-            assertEquals(user.Id, payIn.AuthorId);
-            assertTrue(wallet.Balance.Amount == beforeWallet.Balance.Amount + payIn.CreditedFunds.Amount);
-            assertTrue(payIn.Status == TransactionStatus.SUCCEEDED);
-            assertTrue(payIn.Type == TransactionType.PAYIN);
+
+            assertTrue(payIn.getId().length() > 0);
+            assertEquals(wallet.getId(), payIn.getCreditedWalletId());
+            assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
+            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
+            assertTrue(payIn.getExecutionType() == PayInExecutionType.DIRECT);
+            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
+            assertTrue(payIn.getDebitedFunds() instanceof Money);
+            assertTrue(payIn.getCreditedFunds() instanceof Money);
+            assertTrue(payIn.getFees() instanceof Money);
+            assertEquals(user.getId(), payIn.getAuthorId());
+            assertTrue(wallet.getBalance().getAmount() == beforeWallet.getBalance().getAmount() + payIn.getCreditedFunds().getAmount());
+            assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
+            assertTrue(payIn.getType() == TransactionType.PAYIN);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void getCardDirect() {
         try {
             PayIn payIn = this.getNewPayInCardDirect();
-            
-            PayIn getPayIn = this.api.PayIns.get(payIn.Id);
-            
-            assertTrue(payIn.Id.equals(getPayIn.Id));
-            assertTrue(payIn.PaymentType == PayInPaymentType.CARD);
-            assertTrue(payIn.PaymentDetails instanceof PayInPaymentDetailsCard);
-            assertTrue(payIn.ExecutionType == PayInExecutionType.DIRECT);
-            assertTrue(payIn.ExecutionDetails instanceof PayInExecutionDetailsDirect);
+
+            PayIn getPayIn = this.api.getPayIns().get(payIn.getId());
+
+            assertTrue(payIn.getId().equals(getPayIn.getId()));
+            assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
+            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
+            assertTrue(payIn.getExecutionType() == PayInExecutionType.DIRECT);
+            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
             this.assertEqualInputProps(payIn, getPayIn);
-            assertNotNull(((PayInPaymentDetailsCard)getPayIn.PaymentDetails).CardId);
+            assertNotNull(((PayInPaymentDetailsCard) getPayIn.getPaymentDetails()).getCardId());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void createRefundCardDirect() {
         try {
             PayIn payIn = this.getNewPayInCardDirect();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            Wallet walletBefore = this.api.Wallets.get(wallet.Id);
-                    
-            Refund refund = this.getNewRefundForPayIn(payIn);
-            Wallet walletAfter = this.api.Wallets.get(wallet.Id);
+            Wallet walletBefore = this.api.getWallets().get(wallet.getId());
 
-            assertTrue(refund.Id.length() > 0);
-            assertTrue(refund.DebitedFunds.Amount == payIn.DebitedFunds.Amount);
-            assertTrue(walletBefore.Balance.Amount == (walletAfter.Balance.Amount + payIn.DebitedFunds.Amount));
-            assertTrue(refund.Type == TransactionType.PAYOUT);
-            assertTrue(refund.Nature == TransactionNature.REFUND);
+            Refund refund = this.getNewRefundForPayIn(payIn);
+            Wallet walletAfter = this.api.getWallets().get(wallet.getId());
+
+            assertTrue(refund.getId().length() > 0);
+            assertTrue(refund.getDebitedFunds().getAmount() == payIn.getDebitedFunds().getAmount());
+            assertTrue(walletBefore.getBalance().getAmount() == (walletAfter.getBalance().getAmount() + payIn.getDebitedFunds().getAmount()));
+            assertTrue(refund.getType() == TransactionType.PAYOUT);
+            assertTrue(refund.getNature() == TransactionNature.REFUND);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void createPreAuthorizedDirect() {
         try {
             CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
             Wallet wallet = this.getJohnsWalletWithMoney();
             UserNatural user = this.getJohn();
-            
+
             // create pay-in PRE-AUTHORIZED DIRECT
             PayIn payIn = new PayIn();
-            payIn.CreditedWalletId = wallet.Id;
-            payIn.AuthorId = user.Id;
-            payIn.DebitedFunds = new Money();
-            payIn.DebitedFunds.Amount = 10000;
-            payIn.DebitedFunds.Currency = CurrencyIso.EUR;
-            payIn.Fees = new Money();
-            payIn.Fees.Amount = 0;
-            payIn.Fees.Currency = CurrencyIso.EUR;
-            
+            payIn.setCreditedWalletId(wallet.getId());
+            payIn.setAuthorId(user.getId());
+            payIn.setDebitedFunds(new Money());
+            payIn.getDebitedFunds().setAmount(10000);
+            payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+            payIn.setFees(new Money());
+            payIn.getFees().setAmount(0);
+            payIn.getFees().setCurrency(CurrencyIso.EUR);
+
             // payment type as CARD
-            payIn.PaymentDetails = new PayInPaymentDetailsPreAuthorized();
-            ((PayInPaymentDetailsPreAuthorized)payIn.PaymentDetails).PreauthorizationId = cardPreAuthorization.Id;
-            
+            payIn.setPaymentDetails(new PayInPaymentDetailsPreAuthorized());
+            ((PayInPaymentDetailsPreAuthorized) payIn.getPaymentDetails()).setPreauthorizationId(cardPreAuthorization.getId());
+
             // execution type as DIRECT
-            payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
-            ((PayInExecutionDetailsDirect)payIn.ExecutionDetails).SecureModeReturnURL = "http://test.com";
-            
-            PayIn createPayIn = this.api.PayIns.create(payIn);
-            
-            assertTrue(!"".equals(createPayIn.Id));
-            assertEquals(wallet.Id, createPayIn.CreditedWalletId);
-            assertTrue(createPayIn.PaymentType == PayInPaymentType.PREAUTHORIZED);
-            assertTrue(createPayIn.PaymentDetails instanceof PayInPaymentDetailsPreAuthorized);
-            assertTrue(createPayIn.ExecutionType == PayInExecutionType.DIRECT);
-            assertTrue(createPayIn.ExecutionDetails instanceof PayInExecutionDetailsDirect);
-            assertTrue(createPayIn.DebitedFunds instanceof Money);
-            assertTrue(createPayIn.CreditedFunds instanceof Money);
-            assertTrue(createPayIn.Fees instanceof Money);
-            assertEquals(user.Id, createPayIn.AuthorId);
-            assertTrue(createPayIn.Status == TransactionStatus.SUCCEEDED);
-            assertTrue(createPayIn.Type == TransactionType.PAYIN);
+            payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnURL("http://test.com");
+
+            PayIn createPayIn = this.api.getPayIns().create(payIn);
+
+            assertTrue(!"".equals(createPayIn.getId()));
+            assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
+            assertTrue(createPayIn.getPaymentType() == PayInPaymentType.PREAUTHORIZED);
+            assertTrue(createPayIn.getPaymentDetails() instanceof PayInPaymentDetailsPreAuthorized);
+            assertTrue(createPayIn.getExecutionType() == PayInExecutionType.DIRECT);
+            assertTrue(createPayIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
+            assertTrue(createPayIn.getDebitedFunds() instanceof Money);
+            assertTrue(createPayIn.getCreditedFunds() instanceof Money);
+            assertTrue(createPayIn.getFees() instanceof Money);
+            assertEquals(user.getId(), createPayIn.getAuthorId());
+            assertTrue(createPayIn.getStatus() == TransactionStatus.SUCCEEDED);
+            assertTrue(createPayIn.getType() == TransactionType.PAYIN);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void createBankWireDirect() {
         try {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
-            
+
             // create pay-in PRE-AUTHORIZED DIRECT
             PayIn payIn = new PayIn();
-            payIn.CreditedWalletId = wallet.Id;
-            payIn.AuthorId = user.Id;
-            
+            payIn.setCreditedWalletId(wallet.getId());
+            payIn.setAuthorId(user.getId());
+
             // payment type as CARD
-            payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Amount = 10000;
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Currency = CurrencyIso.EUR;
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Amount = 0;
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Currency = CurrencyIso.EUR;
-            payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
-            
-            PayIn createPayIn = this.api.PayIns.create(payIn);
-            
-            assertTrue(!"".equals(createPayIn.Id));
-            assertEquals(wallet.Id, createPayIn.CreditedWalletId);
-            assertTrue(createPayIn.PaymentType == PayInPaymentType.BANK_WIRE);
-            assertTrue(createPayIn.PaymentDetails instanceof PayInPaymentDetailsBankWire);
-            assertTrue(((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).DeclaredDebitedFunds instanceof Money);
-            assertTrue(((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).DeclaredFees instanceof Money);
-            assertTrue(createPayIn.ExecutionType == PayInExecutionType.DIRECT);
-            assertTrue(createPayIn.ExecutionDetails instanceof PayInExecutionDetailsDirect);
-            assertEquals(user.Id, createPayIn.AuthorId);
-            assertTrue(createPayIn.Status == TransactionStatus.CREATED);
-            assertTrue(createPayIn.Type == TransactionType.PAYIN);
-            assertNotNull(((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).WireReference);
-            assertTrue(((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).BankAccount instanceof BankAccount);
-            assertTrue(((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).BankAccount.Type == BankAccountType.IBAN);
-            assertTrue(((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).BankAccount.Details instanceof BankAccountDetailsIBAN);
-            assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).BankAccount.Details).IBAN);
-            assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)createPayIn.PaymentDetails).BankAccount.Details).BIC);
+            payIn.setPaymentDetails(new PayInPaymentDetailsBankWire());
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).setDeclaredDebitedFunds(new Money());
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredDebitedFunds().setAmount(10000);
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredDebitedFunds().setCurrency(CurrencyIso.EUR);
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).setDeclaredFees(new Money());
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredFees().setAmount(0);
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredFees().setCurrency(CurrencyIso.EUR);
+            payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+
+            PayIn createPayIn = this.api.getPayIns().create(payIn);
+
+            assertTrue(!"".equals(createPayIn.getId()));
+            assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
+            assertTrue(createPayIn.getPaymentType() == PayInPaymentType.BANK_WIRE);
+            assertTrue(createPayIn.getPaymentDetails() instanceof PayInPaymentDetailsBankWire);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredDebitedFunds() instanceof Money);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredFees() instanceof Money);
+            assertTrue(createPayIn.getExecutionType() == PayInExecutionType.DIRECT);
+            assertTrue(createPayIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
+            assertEquals(user.getId(), createPayIn.getAuthorId());
+            assertTrue(createPayIn.getStatus() == TransactionStatus.CREATED);
+            assertTrue(createPayIn.getType() == TransactionType.PAYIN);
+            assertNotNull(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getWireReference());
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount() instanceof BankAccount);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getType() == BankAccountType.IBAN);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails() instanceof BankAccountDetailsIBAN);
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIBAN());
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getBIC());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void getBankWireDirect() {
         try {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
-            
+
             // create pay-in PRE-AUTHORIZED DIRECT
             PayIn payIn = new PayIn();
-            payIn.CreditedWalletId = wallet.Id;
-            payIn.AuthorId = user.Id;
-            
-            // payment type as CARD
-            payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Amount = 10000;
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredDebitedFunds.Currency = CurrencyIso.EUR;
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees = new Money();
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Amount = 0;
-            ((PayInPaymentDetailsBankWire)payIn.PaymentDetails).DeclaredFees.Currency = CurrencyIso.EUR;
-            payIn.ExecutionDetails = new PayInExecutionDetailsDirect();
-            PayIn createdPayIn = this.api.PayIns.create(payIn);
+            payIn.setCreditedWalletId(wallet.getId());
+            payIn.setAuthorId(user.getId());
 
-            PayIn getPayIn = this.api.PayIns.get(createdPayIn.Id);
-            
-            assertEquals(getPayIn.Id, createdPayIn.Id);
-            assertTrue(getPayIn.PaymentType == PayInPaymentType.BANK_WIRE);
-            assertTrue(getPayIn.PaymentDetails instanceof PayInPaymentDetailsBankWire);
-            assertTrue(((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).DeclaredDebitedFunds instanceof Money);
-            assertTrue(((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).DeclaredFees instanceof Money);
-            assertTrue(getPayIn.ExecutionType == PayInExecutionType.DIRECT);
-            assertTrue(getPayIn.ExecutionDetails instanceof PayInExecutionDetailsDirect);
-            assertEquals(user.Id, getPayIn.AuthorId);
-            assertTrue(getPayIn.Type == TransactionType.PAYIN);
-            assertNotNull(((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).WireReference);
-            assertTrue(((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount instanceof BankAccount);
-            assertTrue(((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Type == BankAccountType.IBAN);
-            assertTrue(((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Details instanceof BankAccountDetailsIBAN);
-            assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Details).IBAN);
-            assertNotNull(((BankAccountDetailsIBAN)((PayInPaymentDetailsBankWire)getPayIn.PaymentDetails).BankAccount.Details).BIC);
+            // payment type as CARD
+            payIn.setPaymentDetails(new PayInPaymentDetailsBankWire());
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).setDeclaredDebitedFunds(new Money());
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredDebitedFunds().setAmount(10000);
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredDebitedFunds().setCurrency(CurrencyIso.EUR);
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).setDeclaredFees(new Money());
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredFees().setAmount(0);
+            ((PayInPaymentDetailsBankWire) payIn.getPaymentDetails()).getDeclaredFees().setCurrency(CurrencyIso.EUR);
+            payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+            PayIn createdPayIn = this.api.getPayIns().create(payIn);
+
+            PayIn getPayIn = this.api.getPayIns().get(createdPayIn.getId());
+
+            assertEquals(getPayIn.getId(), createdPayIn.getId());
+            assertTrue(getPayIn.getPaymentType() == PayInPaymentType.BANK_WIRE);
+            assertTrue(getPayIn.getPaymentDetails() instanceof PayInPaymentDetailsBankWire);
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getDeclaredDebitedFunds() instanceof Money);
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getDeclaredFees() instanceof Money);
+            assertTrue(getPayIn.getExecutionType() == PayInExecutionType.DIRECT);
+            assertTrue(getPayIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
+            assertEquals(user.getId(), getPayIn.getAuthorId());
+            assertTrue(getPayIn.getType() == TransactionType.PAYIN);
+            assertNotNull(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getWireReference());
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount() instanceof BankAccount);
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getType() == BankAccountType.IBAN);
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails() instanceof BankAccountDetailsIBAN);
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIBAN());
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails()).getBIC());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     @Test
     public void createDirectDebitWeb() {
         try {
@@ -274,68 +263,68 @@ public class ApiPayInsTest extends BaseTest {
 
             // create pay-in PRE-AUTHORIZED DIRECT
             PayIn payIn = new PayIn();
-            payIn.CreditedWalletId = wallet.Id;
-            payIn.AuthorId = user.Id;
-            payIn.DebitedFunds = new Money();
-            payIn.DebitedFunds.Amount = 10000;
-            payIn.DebitedFunds.Currency = CurrencyIso.EUR;
-            payIn.Fees = new Money();
-            payIn.Fees.Amount = 100;
-            payIn.Fees.Currency = CurrencyIso.EUR;
+            payIn.setCreditedWalletId(wallet.getId());
+            payIn.setAuthorId(user.getId());
+            payIn.setDebitedFunds(new Money());
+            payIn.getDebitedFunds().setAmount(10000);
+            payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+            payIn.setFees(new Money());
+            payIn.getFees().setAmount(100);
+            payIn.getFees().setCurrency(CurrencyIso.EUR);
 
             // payment type as CARD
-            payIn.PaymentDetails = new PayInPaymentDetailsDirectDebit();
-            ((PayInPaymentDetailsDirectDebit)payIn.PaymentDetails).DirectDebitType = DirectDebitType.GIROPAY;
-            payIn.ExecutionDetails = new PayInExecutionDetailsWeb();
-            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).ReturnURL = "http://www.mysite.com/returnURL/";
-            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).Culture = CultureCode.FR;
-            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions = new PayInTemplateURLOptions();
-            ((PayInExecutionDetailsWeb)payIn.ExecutionDetails).TemplateURLOptions.PAYLINE = "https://www.maysite.com/payline_template/";                
+            payIn.setPaymentDetails(new PayInPaymentDetailsDirectDebit());
+            ((PayInPaymentDetailsDirectDebit) payIn.getPaymentDetails()).setDirectDebitType(DirectDebitType.GIROPAY);
+            payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
+            ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).setReturnURL("http://www.mysite.com/returnURL/");
+            ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).setCulture(CultureCode.FR);
+            ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).setTemplateURLOptions(new PayInTemplateURLOptions());
+            ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).getTemplateURLOptions().PAYLINE = "https://www.maysite.com/payline_template/";
 
-            PayIn createPayIn = this.api.PayIns.create(payIn);
+            PayIn createPayIn = this.api.getPayIns().create(payIn);
 
-            assertNotNull(createPayIn.Id);
-            assertEquals(wallet.Id, createPayIn.CreditedWalletId);
-            assertTrue(createPayIn.PaymentType == PayInPaymentType.DIRECT_DEBIT);
-            assertTrue(createPayIn.PaymentDetails instanceof PayInPaymentDetailsDirectDebit);
-            assertTrue(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).DirectDebitType == DirectDebitType.GIROPAY);
-            assertTrue(createPayIn.ExecutionType == PayInExecutionType.WEB);
-            assertTrue(createPayIn.ExecutionDetails instanceof PayInExecutionDetailsWeb);
-            assertTrue(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).Culture == CultureCode.FR);
-            assertEquals(user.Id, createPayIn.AuthorId);
-            assertTrue(createPayIn.Status == TransactionStatus.CREATED);
-            assertTrue(createPayIn.Type == TransactionType.PAYIN);
-            assertTrue(createPayIn.DebitedFunds instanceof Money);
-            assertTrue(10000 == createPayIn.DebitedFunds.Amount);
-            assertTrue(createPayIn.DebitedFunds.Currency == CurrencyIso.EUR);
-            assertTrue(createPayIn.CreditedFunds instanceof Money);
-            assertTrue(9900 == createPayIn.CreditedFunds.Amount);
-            assertTrue(createPayIn.CreditedFunds.Currency == CurrencyIso.EUR);
-            assertTrue(createPayIn.Fees instanceof Money);
-            assertTrue(100 == createPayIn.Fees.Amount);
-            assertTrue(createPayIn.Fees.Currency == CurrencyIso.EUR);
-            assertNotNull(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).ReturnURL);
-            assertNotNull(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).RedirectURL);
-            assertNotNull(((PayInExecutionDetailsWeb)createPayIn.ExecutionDetails).TemplateURL);
-    
-        } catch (Exception ex){
+            assertNotNull(createPayIn.getId());
+            assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
+            assertTrue(createPayIn.getPaymentType() == PayInPaymentType.DIRECT_DEBIT);
+            assertTrue(createPayIn.getPaymentDetails() instanceof PayInPaymentDetailsDirectDebit);
+            assertTrue(((PayInPaymentDetailsDirectDebit) createPayIn.getPaymentDetails()).getDirectDebitType() == DirectDebitType.GIROPAY);
+            assertTrue(createPayIn.getExecutionType() == PayInExecutionType.WEB);
+            assertTrue(createPayIn.getExecutionDetails() instanceof PayInExecutionDetailsWeb);
+            assertTrue(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getCulture() == CultureCode.FR);
+            assertEquals(user.getId(), createPayIn.getAuthorId());
+            assertTrue(createPayIn.getStatus() == TransactionStatus.CREATED);
+            assertTrue(createPayIn.getType() == TransactionType.PAYIN);
+            assertTrue(createPayIn.getDebitedFunds() instanceof Money);
+            assertTrue(10000 == createPayIn.getDebitedFunds().getAmount());
+            assertTrue(createPayIn.getDebitedFunds().getCurrency() == CurrencyIso.EUR);
+            assertTrue(createPayIn.getCreditedFunds() instanceof Money);
+            assertTrue(9900 == createPayIn.getCreditedFunds().getAmount());
+            assertTrue(createPayIn.getCreditedFunds().getCurrency() == CurrencyIso.EUR);
+            assertTrue(createPayIn.getFees() instanceof Money);
+            assertTrue(100 == createPayIn.getFees().getAmount());
+            assertTrue(createPayIn.getFees().getCurrency() == CurrencyIso.EUR);
+            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getReturnURL());
+            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getRedirectURL());
+            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getTemplateURL());
+
+        } catch (Exception ex) {
             fail(ex.getMessage());
         }
     }
-    
+
     /*
     @Test
     public void createDirectDebitDirect() throws Exception {
         Wallet wallet = this.getJohnsWallet();
         UserNatural user = this.getJohn();
 
-        String bankAccountId = this.getJohnsAccount().Id;
+        String bankAccountId = this.getJohnsAccount().getId();
         String returnUrl = "http://test.test";
         Mandate mandatePost = new Mandate();
-        mandatePost.BankAccountId = bankAccountId;
-        mandatePost.Culture = CultureCode.EN;
-        mandatePost.ReturnURL = returnUrl;
-        Mandate mandate = this._api.Mandates.create(mandatePost);
+        mandatePost.setBankAccountId(bankAccountId);
+        mandatePost.setCulture(CultureCode.EN);
+        mandatePost.setReturnURL(returnUrl);
+        Mandate mandate = this.api.getMandates().create(mandatePost);
 
         //	! IMPORTANT NOTE !
         //	
@@ -343,34 +332,34 @@ public class ApiPayInsTest extends BaseTest {
         //	navigate to URL the mandate.RedirectURL property points to and click "CONFIRM" button.
 
         PayIn payIn = new PayIn();
-        payIn.AuthorId = user.Id;
-        payIn.DebitedFunds = new Money();
-        payIn.DebitedFunds.Amount = 1000;
-        payIn.DebitedFunds.Currency = CurrencyIso.EUR;
-        payIn.Fees = new Money();
-        payIn.Fees.Amount = 0;
-        payIn.Fees.Currency = CurrencyIso.EUR;
-        payIn.CreditedWalletId = wallet.Id;
+        payIn.setAuthorId(user.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+        payIn.setCreditedWalletId(wallet.getId());
         PayInPaymentDetailsDirectDebit paymentDetails = new PayInPaymentDetailsDirectDebit();
-        paymentDetails.MandateId = mandate.Id;
-        payIn.PaymentDetails = paymentDetails;
+        paymentDetails.setMandateId(mandate.getId());
+        payIn.setPaymentDetails(paymentDetails);
         PayInExecutionDetailsDirect executionDetails = new PayInExecutionDetailsDirect();
-        payIn.ExecutionDetails = executionDetails;
-        
-        PayIn createPayIn = this._api.PayIns.create(payIn);
+        payIn.setExecutionDetails(executionDetails);
+
+        PayIn createPayIn = this.api.getPayIns().create(payIn);
 
         assertNotNull(createPayIn);
         assertNotEquals("In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.", TransactionStatus.FAILED, createPayIn.Status);
 
-        assertFalse(createPayIn.Id.isEmpty());
-        assertEquals(wallet.Id, createPayIn.CreditedWalletId);
-        assertEquals(PayInPaymentType.DIRECT_DEBIT, createPayIn.PaymentType);
-        assertEquals(PayInExecutionType.DIRECT, createPayIn.ExecutionType);
-        assertEquals(user.Id, createPayIn.AuthorId);
-        assertEquals(TransactionStatus.CREATED, createPayIn.Status);
-        assertEquals(TransactionType.PAYIN, createPayIn.Type);
-        assertNotNull(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).MandateId);
-        assertEquals(((PayInPaymentDetailsDirectDebit)createPayIn.PaymentDetails).MandateId, mandate.Id);
+        assertFalse(createPayIn.getId().isEmpty());
+        assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
+        assertEquals(PayInPaymentType.DIRECT_DEBIT, createPayIn.getPaymentType());
+        assertEquals(PayInExecutionType.DIRECT, createPayIn.getExecutionType());
+        assertEquals(user.getId(), createPayIn.getAuthorId());
+        assertEquals(TransactionStatus.CREATED, createPayIn.getStatus());
+        assertEquals(TransactionType.PAYIN, createPayIn.getType());
+        assertNotNull(((PayInPaymentDetailsDirectDebit) createPayIn.getPaymentDetails()).getMandateId());
+        assertEquals(((PayInPaymentDetailsDirectDebit) createPayIn.getPaymentDetails()).getMandateId(), mandate.getId());
     }
     */
 }

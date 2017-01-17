@@ -60,11 +60,11 @@ public class AuthenticationHelper {
         
         final OAuthToken token = root.getOAuthTokenManager().getToken();
         
-        if (token == null || token.access_token.length() == 0 || token.token_type.length() == 0)
+        if (token == null || token.getAccessToken().length() == 0 || token.getTokenType().length() == 0)
             throw new Exception ("OAuth token is not created (or is invalid) for strong authentication");
                 
         return new HashMap<String, String>(){{
-            put("Authorization", token.token_type + " " + token.access_token);
+            put("Authorization", token.getTokenType() + " " + token.getAccessToken());
         }};
     }
 }

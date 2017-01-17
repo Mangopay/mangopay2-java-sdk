@@ -23,35 +23,33 @@ public class ApiIdempotencyTest extends BaseTest {
         PayOut payOut = null;
 
         // create bankwire
-        try
-        {
+        try {
             Wallet wallet = this.getJohnsWallet();
             UserNatural user = this.getJohn();
             BankAccount account = this.getJohnsAccount();
 
             PayOut payOutPost = new PayOut();
-            payOutPost.AuthorId = user.Id;
-            payOutPost.DebitedWalletId = wallet.Id;
+            payOutPost.setAuthorId(user.getId());
+            payOutPost.setDebitedWalletId(wallet.getId());
             Money debitedFunds = new Money();
-            debitedFunds.Amount = 10;
-            debitedFunds.Currency = CurrencyIso.EUR;
-            payOutPost.DebitedFunds = debitedFunds;
+            debitedFunds.setAmount(10);
+            debitedFunds.setCurrency(CurrencyIso.EUR);
+            payOutPost.setDebitedFunds(debitedFunds);
             Money fees = new Money();
-            fees.Amount = 5;
-            fees.Currency = CurrencyIso.EUR;
-            payOutPost.Fees = fees;
+            fees.setAmount(5);
+            fees.setCurrency(CurrencyIso.EUR);
+            payOutPost.setFees(fees);
             PayOutPaymentDetailsBankWire paymentDetails = new PayOutPaymentDetailsBankWire();
-            paymentDetails.BankAccountId = account.Id;
-            paymentDetails.BankWireRef = "Johns bank wire ref";
-            payOutPost.MeanOfPaymentDetails = paymentDetails;
+            paymentDetails.setBankAccountId(account.getId());
+            paymentDetails.setBankWireRef("Johns bank wire ref");
+            payOutPost.setMeanOfPaymentDetails(paymentDetails);
             
-            payOutPost.Tag = "DefaultTag";
-            payOutPost.CreditedUserId = user.Id;
+            payOutPost.setTag("DefaultTag");
+            payOutPost.setCreditedUserId(user.getId());
 
-            payOut = this.api.PayOuts.create(key, payOutPost);
+            payOut = this.api.getPayOuts().create(key, payOutPost);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
 
@@ -62,7 +60,7 @@ public class ApiIdempotencyTest extends BaseTest {
         IdempotencyResponse result = null;
         try
         {
-            result = this.api.Idempotency.get(key);
+            result = this.api.getIdempotency().get(key);
         }
         catch (Exception ex)
         {
@@ -75,15 +73,15 @@ public class ApiIdempotencyTest extends BaseTest {
         // test not existing key
         try
         {
-            this.api.Idempotency.get(key + "_no");
+            this.api.getIdempotency().get(key + "_no");
 
             // expecting a ResponseException to be thrown
             Assert.fail();
         }
         catch (ResponseException rex)
         {
-            assertTrue(rex.ResponseHttpCode == 400);
-            assertTrue(rex.Type.equals("correlationid_not_found"));
+            assertTrue(rex.getResponseHttpCode() == 400);
+            assertTrue(rex.getType().equals("correlationid_not_found"));
         }
         catch (Exception ex)
         {

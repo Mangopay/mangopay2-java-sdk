@@ -35,7 +35,7 @@ public class Configuration {
      * @deprecated Use {@link #isDebugMode()} and {@link #setDebugMode(boolean)} instead.
      */
     @Deprecated
-    public boolean DebugMode = true;
+    public boolean DebugMode = false;
 
     /**
      * Connection Timeout.

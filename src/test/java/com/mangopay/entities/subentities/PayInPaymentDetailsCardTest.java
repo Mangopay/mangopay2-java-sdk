@@ -48,8 +48,8 @@ public class PayInPaymentDetailsCardTest {
         String cardId = "12345678";
         PayInPaymentDetailsCard paymentDetailsCard = PayInPaymentDetailsCard.build(cardType, cardId);
         assertNotNull(paymentDetailsCard);
-        assertEquals(cardId, paymentDetailsCard.CardId);
-        assertEquals(cardType, paymentDetailsCard.CardType);
+        assertEquals(cardId, paymentDetailsCard.getCardId());
+        assertEquals(cardType, paymentDetailsCard.getCardType());
     }
 
     /**
@@ -62,9 +62,9 @@ public class PayInPaymentDetailsCardTest {
         String cardId = "12345678";
         PayInPaymentDetailsCard paymentDetailsCard = PayInPaymentDetailsCard.build(cardType, cardId, statementDescriptor);
         assertNotNull(paymentDetailsCard);
-        assertEquals(cardId, paymentDetailsCard.CardId);
-        assertEquals(cardType, paymentDetailsCard.CardType);
-        assertEquals(statementDescriptor, paymentDetailsCard.StatementDescriptor);
+        assertEquals(cardId, paymentDetailsCard.getCardId());
+        assertEquals(cardType, paymentDetailsCard.getCardType());
+        assertEquals(statementDescriptor, paymentDetailsCard.getStatementDescriptor());
     }
     
     @Test
