@@ -6,7 +6,7 @@
 package com.mangopay.entities.subentities;
 
 import com.mangopay.core.enumerations.SecureMode;
-import com.mangopay.core.interfaces.IPayInExecutionDetails;
+import com.mangopay.core.interfaces.PayInExecutionDetails;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -79,9 +79,9 @@ public class PayInExecutionDetailsDirectTest {
     public void testConvert() throws Exception {
         PayInExecutionDetailsDirect executionDetailsDirect = new PayInExecutionDetailsDirect();
         assertNotNull(executionDetailsDirect);
-        IPayInExecutionDetails iPayInExecutionDetails = executionDetailsDirect;
-        assertNotNull(iPayInExecutionDetails);
-        executionDetailsDirect = PayInExecutionDetailsDirect.convert(iPayInExecutionDetails);
+        PayInExecutionDetails payInExecutionDetails = executionDetailsDirect;
+        assertNotNull(payInExecutionDetails);
+        executionDetailsDirect = PayInExecutionDetailsDirect.convert(payInExecutionDetails);
         assertNotNull(executionDetailsDirect);
     }
     

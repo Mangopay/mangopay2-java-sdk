@@ -6,7 +6,7 @@
 package com.mangopay.entities.subentities;
 
 import com.mangopay.core.enumerations.CardType;
-import com.mangopay.core.interfaces.IPayInPaymentDetails;
+import com.mangopay.core.interfaces.PayInPaymentDetails;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -71,9 +71,9 @@ public class PayInPaymentDetailsCardTest {
     public void testConvert() throws Exception {
         PayInPaymentDetailsCard payInPaymentDetailsCard = new PayInPaymentDetailsCard();
         assertNotNull(payInPaymentDetailsCard);
-        IPayInPaymentDetails iPayInPaymentDetails = payInPaymentDetailsCard;
-        assertNotNull(iPayInPaymentDetails);
-        payInPaymentDetailsCard = PayInPaymentDetailsCard.convert(iPayInPaymentDetails);
+        PayInPaymentDetails payInPaymentDetails = payInPaymentDetailsCard;
+        assertNotNull(payInPaymentDetails);
+        payInPaymentDetailsCard = PayInPaymentDetailsCard.convert(payInPaymentDetails);
         assertNotNull(payInPaymentDetailsCard);
     }
     

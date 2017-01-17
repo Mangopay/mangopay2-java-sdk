@@ -57,7 +57,7 @@ public class ApiIdempotency extends ApiBase {
             return;
         
         // create instance
-        RestTool rt = new RestTool(_root, true);
+        RestTool rt = new RestTool(root, true);
         response.Resource = rt.castResponseToEntity(targetType, new JsonParser().parse((String)response.Resource).getAsJsonObject());
         
     }

@@ -11,17 +11,17 @@ public class Sorting {
     /**
      * Fields separator in sort parameters for URL query.
      */
-    public final String SortFieldSeparator = "_";
+    private final String sortFieldSeparator = "_";
     
     /**
      * Sort query parameter name.
      */
-    public final String SortUrlParameterName = "Sort";
+    private final String sortUrlParameterName = "Sort";
     
     /**
      * Collection of fields to sort by and sort directions.
      */
-    private Map<String, SortDirection> _sortFields;
+    private Map<String, SortDirection> sortFields;
     
     /**
      * Adds field to sort by.
@@ -29,9 +29,9 @@ public class Sorting {
      * @param sortDirection Sort direction.
      */
     public void addField(String fieldName, SortDirection sortDirection) {
-        if (_sortFields == null) _sortFields = new HashMap<>();
+        if (sortFields == null) sortFields = new HashMap<>();
         
-        _sortFields.put(fieldName, sortDirection);
+        sortFields.put(fieldName, sortDirection);
     }
     
     /**
@@ -39,22 +39,18 @@ public class Sorting {
      * @return 
      */
     public Map<String, String> GetSortParameter() {
-        return new HashMap<String, String>() {{ put(SortUrlParameterName, _getFields()); }};
+        return new HashMap<String, String>() {{ put(sortUrlParameterName, getFields()); }};
     }
     
-    private String _getFields() {
+    public String getFields() {
         String sortValues = "";
-        for (Map.Entry<String, SortDirection> entry : _sortFields.entrySet()) {
+        for (Map.Entry<String, SortDirection> entry : sortFields.entrySet()) {
             if (!sortValues.equals(""))
-                sortValues += SortFieldSeparator;
+                sortValues += sortFieldSeparator;
      
             sortValues += entry.getKey() + ":" + entry.getValue();
         }
         
         return sortValues;
-    }
-    
-    public String getFields() {
-        return this._getFields();
     }
 }

@@ -29,11 +29,11 @@ public class ApiOAuth extends ApiBase {
             put("grant_type", "client_credentials");
         }};
         
-        RestTool rest = new RestTool(this._root, false);
-        AuthenticationHelper authHlp = new AuthenticationHelper(_root);
+        RestTool rest = new RestTool(this.root, false);
+        AuthenticationHelper authHlp = new AuthenticationHelper(root);
         
         try {
-            rest.addRequestHttpHeader("Host", (new URL(_root.Config.BaseUrl)).getHost());
+            rest.addRequestHttpHeader("Host", (new URL(root.Config.BaseUrl)).getHost());
         } catch (MalformedURLException ex) {
             Logger.getLogger(ApiOAuth.class.getName()).log(Level.SEVERE, null, ex);
         }

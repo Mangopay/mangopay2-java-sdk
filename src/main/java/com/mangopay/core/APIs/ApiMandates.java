@@ -22,8 +22,7 @@ public class ApiMandates extends ApiBase {
      * @return          Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate create(Mandate mandate) throws Exception
-    {
+    public Mandate create(Mandate mandate) throws Exception {
         return create(null, mandate);
     }
 
@@ -34,8 +33,7 @@ public class ApiMandates extends ApiBase {
      * @return                  Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate create(String idempotencyKey, Mandate mandate) throws Exception
-    {
+    public Mandate create(String idempotencyKey, Mandate mandate) throws Exception {
         return this.createObject(Mandate.class, idempotencyKey, "mandate_create", mandate);
     }
 
@@ -45,8 +43,7 @@ public class ApiMandates extends ApiBase {
      * @return              Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate get(String mandateId) throws Exception
-    {
+    public Mandate get(String mandateId) throws Exception {
         return this.getObject(Mandate.class, "mandate_get", mandateId);
     }
 
@@ -64,8 +61,7 @@ public class ApiMandates extends ApiBase {
      * @return              List of Mandate instances returned from API.
      * @throws Exception
      */
-    public List<Mandate> getAll(FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception
-    {
+    public List<Mandate> getAll(FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception {
         if (filters == null) filters = new FilterMandates();
 
         return this.getList(Mandate[].class, Mandate.class, "mandates_get_all", pagination, "", filters.getValues(), sorting);
@@ -80,8 +76,7 @@ public class ApiMandates extends ApiBase {
      * @return              List of Mandate instances returned from API.
      * @throws Exception
      */
-    public List<Mandate> getForUser(String userId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception
-    {
+    public List<Mandate> getForUser(String userId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception {
         if (filters == null) filters = new FilterMandates();
 
         return this.getList(Mandate[].class, Mandate.class, "mandates_get_for_user", pagination, userId, filters.getValues(), sorting);
@@ -97,8 +92,7 @@ public class ApiMandates extends ApiBase {
      * @return                  List of Mandate instances returned from API.
      * @throws Exception
      */
-    public List<Mandate> getForBankAccount(String userId, String bankAccountId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception
-    {
+    public List<Mandate> getForBankAccount(String userId, String bankAccountId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception {
         if (filters == null) filters = new FilterMandates();
             
         return this.getList(Mandate[].class, Mandate.class, "mandates_get_for_bank_account", pagination, userId, bankAccountId, filters.getValues(), sorting);
@@ -110,8 +104,7 @@ public class ApiMandates extends ApiBase {
      * @return              Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate cancel(String mandateId) throws Exception
-    {
+    public Mandate cancel(String mandateId) throws Exception {
         return this.updateObject(Mandate.class, "mandate_cancel", new Mandate(), mandateId);
     }
 }

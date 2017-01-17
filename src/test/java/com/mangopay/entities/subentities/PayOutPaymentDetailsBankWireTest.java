@@ -5,7 +5,7 @@
  */
 package com.mangopay.entities.subentities;
 
-import com.mangopay.core.interfaces.IPayOutPaymentDetails;
+import com.mangopay.core.interfaces.PayOutPaymentDetails;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -67,7 +67,7 @@ public class PayOutPaymentDetailsBankWireTest {
     public void testConvert() throws Exception {
         PayOutPaymentDetailsBankWire payOutPaymentDetailsBankWire = new PayOutPaymentDetailsBankWire();
         assertNotNull(payOutPaymentDetailsBankWire);
-        IPayOutPaymentDetails payOutPaymentDetails = payOutPaymentDetailsBankWire;
+        PayOutPaymentDetails payOutPaymentDetails = payOutPaymentDetailsBankWire;
         assertNotNull(payOutPaymentDetails);
         payOutPaymentDetailsBankWire = PayOutPaymentDetailsBankWire.convert(payOutPaymentDetails);
         assertNotNull(payOutPaymentDetailsBankWire);

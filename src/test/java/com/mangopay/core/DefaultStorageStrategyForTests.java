@@ -1,13 +1,13 @@
 package com.mangopay.core;
 
-import com.mangopay.core.interfaces.IStorageStrategy;
+import com.mangopay.core.interfaces.StorageStrategy;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Default token storage strategy implementation for tests.
  */
-public class DefaultStorageStrategyForTests implements IStorageStrategy {
+public class DefaultStorageStrategyForTests implements StorageStrategy {
 
     private static Map<String, OAuthToken> _oAuthToken = new HashMap<>();
     
