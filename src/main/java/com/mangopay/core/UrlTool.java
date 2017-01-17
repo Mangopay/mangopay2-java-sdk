@@ -28,10 +28,10 @@ class UrlTool {
 
     private String getHost() throws Exception {
 
-        if (root.Config.getBaseUrl() == null || root.Config.getBaseUrl().length() == 0)
+        if (root.getConfig().getBaseUrl() == null || root.Config.getBaseUrl().length() == 0)
             throw new Exception("MangoPayApi.Config.BaseUrl setting is not defined.");
 
-        URL baseUrl = new URL(root.Config.getBaseUrl());
+        URL baseUrl = new URL(root.getConfig().getBaseUrl());
 
         return baseUrl.getHost();
     }
@@ -89,7 +89,7 @@ class UrlTool {
         if (!addClientId) {
             url = "/v2.01" + urlKey;
         } else {
-            url = "/v2.01/" + root.Config.getClientId() + urlKey;
+            url = "/v2.01/" + root.getConfig().getClientId() + urlKey;
         }
 
         Boolean paramsAdded = false;
@@ -120,7 +120,7 @@ class UrlTool {
         String result = "";
 
         try {
-            result = (new URL(root.Config.getBaseUrl())).getProtocol() + "://" + this.getHost() + restUrl;
+            result = (new URL(root.getConfig().getBaseUrl())).getProtocol() + "://" + this.getHost() + restUrl;
         } catch (Exception ex) {
         }
 

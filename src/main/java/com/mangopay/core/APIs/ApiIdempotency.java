@@ -45,7 +45,7 @@ public class ApiIdempotency extends ApiBase {
             sourceUrl = sourceUrl.replace("/", "\\/");
             
             Pattern ex = Pattern.compile(sourceUrl);
-            Matcher matcher = ex.matcher(response.RequestURL);
+            Matcher matcher = ex.matcher(response.getRequestURL());
             if (matcher.find())
             {
                 targetType = entry.getValue();
@@ -58,8 +58,8 @@ public class ApiIdempotency extends ApiBase {
         
         // create instance
         RestTool rt = new RestTool(root, true);
-        response.Resource = rt.castResponseToEntity(targetType, new JsonParser().parse((String)response.Resource).getAsJsonObject());
-        
+        response.setResource(rt.castResponseToEntity(targetType, new JsonParser().parse((String)response.getResource()).getAsJsonObject()));
+
     }
     
     private Map<String, Class<?>> getMapForResource(){

@@ -48,10 +48,10 @@ public class ApiPayOuts extends ApiBase {
     
     private String getPaymentKey(PayOut payOut) throws Exception {
         
-        if (payOut.MeanOfPaymentDetails == null)
+        if (payOut.getMeanOfPaymentDetails() == null)
             throw new Exception("Mean of payment is not defined or it is not object type");
         
-        String className = payOut.MeanOfPaymentDetails.getClass().getSimpleName().replace("PayOutPaymentDetails", "");
+        String className = payOut.getMeanOfPaymentDetails().getClass().getSimpleName().replace("PayOutPaymentDetails", "");
         return className.toLowerCase();
         
     }

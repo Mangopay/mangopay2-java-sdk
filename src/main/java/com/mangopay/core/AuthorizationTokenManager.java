@@ -36,7 +36,7 @@ public final class AuthorizationTokenManager extends ApiBase {
         OAuthToken token = storageStrategy.get(getEnvKey());
         
         if (token == null || token.IsExpired()) {
-            storeToken(this.root.AuthenticationManager.createToken());
+            storeToken(this.root.getAuthenticationManager().createToken());
         }
         
         return storageStrategy.get(getEnvKey());
@@ -64,7 +64,7 @@ public final class AuthorizationTokenManager extends ApiBase {
     
     private String getEnvKey() {
         
-        String input = root.Config.BaseUrl + root.Config.ClientId + root.Config.ClientPassword;
+        String input = root.getConfig().getBaseUrl() + root.getConfig().getClientId() + root.getConfig().getClientPassword();
         String md5 = "";
         
         try {

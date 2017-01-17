@@ -259,7 +259,7 @@ public class ApiUsers extends ApiBase {
         
         String fileContent = new String(Base64.encodeBase64(binaryData));
         
-        kycPage.File = fileContent;
+        kycPage.setFile(fileContent);
         
         this.createObject(KycPage.class, idempotencyKey, "kyc_page_create", kycPage, userId, kycDocumentId);
     }
@@ -316,7 +316,7 @@ public class ApiUsers extends ApiBase {
      */
     public KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type) throws Exception {
         KycDocument kycDocument = new KycDocument();
-        kycDocument.Type = type;
+        kycDocument.setType(type);
         
         return this.createObject(KycDocument.class, idempotencyKey, "users_createkycdocument", kycDocument, userId);
     }
@@ -357,7 +357,7 @@ public class ApiUsers extends ApiBase {
     
     private String getBankAccountType(BankAccount bankAccount) throws Exception {
         
-        if (bankAccount.Details == null)
+        if (bankAccount.getDetails() == null)
             throw new Exception("Details is not defined.");
         
         String className = bankAccount.Details.getClass().getSimpleName().replace("BankAccountDetails", "");

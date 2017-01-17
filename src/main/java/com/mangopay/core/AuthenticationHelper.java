@@ -36,13 +36,13 @@ public class AuthenticationHelper {
      * @throws Exception
      */
     public String getHttpHeaderBasicKey() throws Exception {
-        if (root.Config.ClientId == null || root.Config.ClientId.length() == 0)
+        if (root.getConfig().getClientId() == null || root.getConfig().getClientId().length() == 0)
             throw new Exception ("MangoPay.Config.ClientId is not set.");
         
-        if (root.Config.ClientPassword == null || root.Config.ClientPassword.length() == 0)
+        if (root.getConfig().getClientPassword() == null || root.getConfig().getClientPassword().length() == 0)
             throw new Exception ("MangoPay.Config.ClientPassword is not set.");
         
-        String signature = root.Config.ClientId + ':' + root.Config.ClientPassword;
+        String signature = root.getConfig().getClientId() + ':' + root.getConfig().getClientPassword();
         
         return Base64Encoder.encode(signature);
     }
@@ -58,7 +58,7 @@ public class AuthenticationHelper {
     // gets HTTP header value with authorization string for strong authentication
     private Map<String, String> getHttpHeaderStrong() throws Exception {
         
-        final OAuthToken token = root.OAuthTokenManager.getToken();
+        final OAuthToken token = root.getOAuthTokenManager().getToken();
         
         if (token == null || token.access_token.length() == 0 || token.token_type.length() == 0)
             throw new Exception ("OAuth token is not created (or is invalid) for strong authentication");

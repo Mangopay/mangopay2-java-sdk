@@ -111,19 +111,19 @@ public class ApiPayIns extends ApiBase {
     
     private String getPaymentKey(PayIn payIn) throws Exception {
         
-        if (payIn.PaymentDetails == null)
+        if (payIn.getPaymentDetails() == null)
             throw new Exception ("Payment is not defined or it is not object type");
         
-        String className = payIn.PaymentDetails.getClass().getSimpleName().replace("PayInPaymentDetails", "");
+        String className = payIn.getPaymentDetails().getClass().getSimpleName().replace("PayInPaymentDetails", "");
         return className.toLowerCase();
     }
     
     private String getExecutionKey(PayIn payIn) throws Exception {
         
-        if (payIn.ExecutionDetails == null)
+        if (payIn.getExecutionDetails() == null)
             throw new Exception ("Execution is not defined or it is not object type");
         
-        String className = payIn.ExecutionDetails.getClass().getSimpleName().replace("PayInExecutionDetails", "");
+        String className = payIn.getExecutionDetails().getClass().getSimpleName().replace("PayInExecutionDetails", "");
         return className.toLowerCase();
     }
     

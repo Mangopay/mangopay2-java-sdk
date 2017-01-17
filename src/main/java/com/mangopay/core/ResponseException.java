@@ -67,7 +67,7 @@ public class ResponseException extends Exception {
      * Instantiates new ResponseException object.
      */
     public ResponseException() {
-        Errors = new HashMap<>();
+        this.Errors = new HashMap<>();
     }
 
     /**
@@ -77,7 +77,7 @@ public class ResponseException extends Exception {
      */
     public ResponseException(String message) {
         super(message);
-        Errors = new HashMap<>();
+        this.Errors = new HashMap<>();
     }
 
     /**
@@ -87,7 +87,7 @@ public class ResponseException extends Exception {
      */
     public ResponseException(Throwable cause) {
         super(cause);
-        Errors = new HashMap<>();
+        this.Errors = new HashMap<>();
     }
 
     /**
@@ -98,7 +98,7 @@ public class ResponseException extends Exception {
      */
     public ResponseException(String message, Throwable cause) {
         super(message, cause);
-        Errors = new HashMap<>();
+        this.Errors = new HashMap<>();
     }
 
     public int getResponseHttpCode() {

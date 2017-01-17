@@ -42,7 +42,7 @@ public class ApiCards extends ApiBase {
      * @throws Exception
      */
     public Card disable(Card card) throws Exception {
-        card.Validity = Validity.INVALID;
+        card.setValidity(Validity.INVALID);
         return update(card);
     }
     

@@ -61,7 +61,7 @@ public class RestTool {
     public RestTool(MangoPayApi root, Boolean authRequired) throws Exception {
         this.root = root;
         this.authRequired = authRequired;
-        this.debugMode = this.root.Config.DebugMode;
+        this.debugMode = this.root.getConfig().isDebugMode();
 
         logger = LoggerFactory.getLogger(RestTool.class);
     }
@@ -325,9 +325,9 @@ public class RestTool {
 
             connection = (HttpURLConnection) url.openConnection();
             // Get connection timeout from config
-            connection.setConnectTimeout(this.root.Config.getConnectTimeout());
+            connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
             // Get read timeout from config
-            connection.setReadTimeout(this.root.Config.getReadTimeout());
+            connection.setReadTimeout(this.root.getConfig().getReadTimeout());
 
             // set request method
             connection.setRequestMethod(this.requestType);

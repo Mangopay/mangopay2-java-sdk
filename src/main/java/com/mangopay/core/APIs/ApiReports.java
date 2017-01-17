@@ -19,17 +19,17 @@ public class ApiReports extends ApiBase {
     public ApiReports(MangoPayApi root) { super(root); }
     
     public ReportRequest create(ReportRequest reportRequest) throws Exception {
-        if (reportRequest.ReportType == ReportType.NotSpecified) reportRequest.ReportType = ReportType.TRANSACTIONS;
+        if (reportRequest.getReportType() == ReportType.NotSpecified) reportRequest.setReportType(ReportType.TRANSACTIONS);
 
         return create(null, reportRequest);
     }
     
     public ReportRequest create(String idempotencyKey, ReportRequest reportRequest) throws Exception {
-        if (reportRequest.ReportType == ReportType.NotSpecified)  reportRequest.ReportType = ReportType.TRANSACTIONS;
+        if (reportRequest.getReportType() == ReportType.NotSpecified)  reportRequest.setReportType(ReportType.TRANSACTIONS);
 
         //ReportRequestTransport reportRequestTransport = ReportRequestTransport.CreateFromBusinessObject(reportRequest);
         //return this.createObject(ReportRequestTransport.class, idempotencyKey, "MethodKey.ReportRequest", reportRequestTransport, reportRequestTransport.ReportType.ToString()).GetBusinessObject();
-        return this.createObject(ReportRequest.class, idempotencyKey, "reports_request", reportRequest, reportRequest.ReportType.toString());
+        return this.createObject(ReportRequest.class, idempotencyKey, "reports_request", reportRequest, reportRequest.getReportType().toString());
     }
     
     public ReportRequest get(String reportId) throws Exception {

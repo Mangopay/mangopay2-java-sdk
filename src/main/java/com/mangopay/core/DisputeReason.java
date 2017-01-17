@@ -23,11 +23,11 @@ public class DisputeReason extends Dto {
     @Deprecated
     public String DisputeReasonMessage;
 
-    public com.mangopay.core.enumerations.DisputeReasonType getDisputeReasonType() {
+    public DisputeReasonType getDisputeReasonType() {
         return DisputeReasonType;
     }
 
-    public void setDisputeReasonType(com.mangopay.core.enumerations.DisputeReasonType disputeReasonType) {
+    public void setDisputeReasonType(DisputeReasonType disputeReasonType) {
         this.DisputeReasonType = disputeReasonType;
     }
 

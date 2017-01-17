@@ -33,7 +33,7 @@ public class ApiOAuth extends ApiBase {
         AuthenticationHelper authHlp = new AuthenticationHelper(root);
         
         try {
-            rest.addRequestHttpHeader("Host", (new URL(root.Config.BaseUrl)).getHost());
+            rest.addRequestHttpHeader("Host", (new URL(root.getConfig().getBaseUrl())).getHost());
         } catch (MalformedURLException ex) {
             Logger.getLogger(ApiOAuth.class.getName()).log(Level.SEVERE, null, ex);
         }
