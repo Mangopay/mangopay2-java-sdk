@@ -1,0 +1,39 @@
+package com.mangopay.core.APIs.implementation;
+
+import com.mangopay.MangoPayApi;
+import com.mangopay.core.APIs.ApiBase;
+import com.mangopay.core.APIs.declaration.ApiCardRegistrations;
+import com.mangopay.entities.CardRegistration;
+
+/**
+ * API for card registrations.
+ */
+public class ApiCardRegistrationsImpl extends ApiBase implements ApiCardRegistrations {
+    
+    /**
+     * Instantiates new ApiCardRegistration object.
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
+     */
+    public ApiCardRegistrationsImpl(MangoPayApi root) { super(root); }
+    
+    @Override
+    public CardRegistration create(CardRegistration cardRegistration) throws Exception {
+        return this.create(null, cardRegistration);
+    }
+    
+    @Override
+    public CardRegistration create(String idempotencyKey, CardRegistration cardRegistration) throws Exception {
+        return this.createObject(CardRegistration.class, idempotencyKey, "cardregistration_create", cardRegistration);
+    }
+    
+    @Override
+    public CardRegistration get(String cardRegistrationId) throws Exception {
+        return this.getObject(CardRegistration.class, "cardregistration_get", cardRegistrationId);
+    }
+    
+    @Override
+    public CardRegistration update(CardRegistration cardRegistration) throws Exception {
+        return this.updateObject(CardRegistration.class, "cardregistration_save", cardRegistration);
+    }
+    
+}

@@ -1,6 +1,7 @@
 package com.mangopay;
 
-import com.mangopay.core.APIs.*;
+import com.mangopay.core.APIs.declaration.*;
+import com.mangopay.core.APIs.implementation.*;
 import com.mangopay.core.AuthorizationTokenManager;
 import com.mangopay.core.Configuration;
 
@@ -21,24 +22,24 @@ public class MangoPayApi {
         this.OAuthTokenManager = new AuthorizationTokenManager(this);
 
         // API managers
-        this.AuthenticationManager = new ApiOAuth(this);
-        this.Clients = new ApiClients(this);
-        this.Users = new ApiUsers(this);
-        this.Wallets = new ApiWallets(this);
-        this.PayIns = new ApiPayIns(this);
-        this.PayOuts = new ApiPayOuts(this);
-        this.Refunds = new ApiRefunds(this);
-        this.Transfers = new ApiTransfers(this);
-        this.CardRegistrations = new ApiCardRegistrations(this);
-        this.Cards = new ApiCards(this);
-        this.Events = new ApiEvents(this);
-        this.CardPreAuthorizations = new ApiCardPreAuthorizations(this);
-        this.Hooks = new ApiHooks(this);
-        this.KycDocuments = new ApiKycDocuments(this);
-        this.Disputes = new ApiDisputes(this);
-        this.Idempotency = new ApiIdempotency(this);
-        this.Mandates = new ApiMandates(this);
-        this.Reports = new ApiReports(this);
+        this.AuthenticationManager = new ApiOAuthImpl(this);
+        this.Clients = new ApiClientsImpl(this);
+        this.Users = new ApiUsersImpl(this);
+        this.Wallets = new ApiWalletsImpl(this);
+        this.PayIns = new ApiPayInsImpl(this);
+        this.PayOuts = new ApiPayOutsImpl(this);
+        this.Refunds = new ApiRefundsImpl(this);
+        this.Transfers = new ApiTransfersImpl(this);
+        this.CardRegistrations = new ApiCardRegistrationsImpl(this);
+        this.Cards = new ApiCardsImpl(this);
+        this.Events = new ApiEventsImpl(this);
+        this.CardPreAuthorizations = new ApiCardPreAuthorizationsImpl(this);
+        this.Hooks = new ApiHooksImpl(this);
+        this.KycDocuments = new ApiKycDocumentsImpl(this);
+        this.Disputes = new ApiDisputesImpl(this);
+        this.Idempotency = new ApiIdempotencyImpl(this);
+        this.Mandates = new ApiMandatesImpl(this);
+        this.Reports = new ApiReportsImpl(this);
     }
 
     ////////////////////////////////////////
