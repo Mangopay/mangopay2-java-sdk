@@ -3,7 +3,7 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiMandates;
+import com.mangopay.core.APIs.ApiMandates;
 import com.mangopay.entities.Mandate;
 import java.util.List;
 

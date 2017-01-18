@@ -1,4 +1,4 @@
-package com.mangopay.core.APIs.declaration;
+package com.mangopay.core.APIs;
 
 import com.mangopay.core.FilterKycDocuments;
 import com.mangopay.core.FilterTransactions;

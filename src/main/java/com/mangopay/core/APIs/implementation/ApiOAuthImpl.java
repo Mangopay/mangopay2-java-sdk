@@ -2,7 +2,7 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiOAuth;
+import com.mangopay.core.APIs.ApiOAuth;
 import com.mangopay.core.AuthenticationHelper;
 import com.mangopay.core.OAuthToken;
 import com.mangopay.core.RestTool;

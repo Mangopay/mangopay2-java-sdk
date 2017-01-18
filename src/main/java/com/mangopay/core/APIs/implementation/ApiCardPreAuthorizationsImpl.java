@@ -2,7 +2,7 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiCardPreAuthorizations;
+import com.mangopay.core.APIs.ApiCardPreAuthorizations;
 import com.mangopay.entities.CardPreAuthorization;
 
 /**

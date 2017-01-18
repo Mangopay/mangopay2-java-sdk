@@ -1,7 +1,7 @@
 package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiUsers;
+import com.mangopay.core.APIs.ApiUsers;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;

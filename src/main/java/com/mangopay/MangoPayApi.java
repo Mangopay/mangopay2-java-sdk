@@ -1,6 +1,6 @@
 package com.mangopay;
 
-import com.mangopay.core.APIs.declaration.*;
+import com.mangopay.core.APIs.*;
 import com.mangopay.core.APIs.implementation.*;
 import com.mangopay.core.AuthorizationTokenManager;
 import com.mangopay.core.Configuration;

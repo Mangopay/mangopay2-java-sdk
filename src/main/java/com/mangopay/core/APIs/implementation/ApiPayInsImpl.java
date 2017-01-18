@@ -2,7 +2,7 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiPayIns;
+import com.mangopay.core.APIs.ApiPayIns;
 import com.mangopay.entities.*;
 
 /**

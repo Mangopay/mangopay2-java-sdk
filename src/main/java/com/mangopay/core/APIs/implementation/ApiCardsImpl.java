@@ -1,7 +1,7 @@
 package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiCards;
+import com.mangopay.core.APIs.ApiCards;
 import com.mangopay.core.enumerations.Validity;
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.*;

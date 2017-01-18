@@ -3,10 +3,10 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiReports;
+import com.mangopay.core.APIs.ApiReports;
 import com.mangopay.core.enumerations.ReportType;
 import com.mangopay.entities.ReportRequest;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**

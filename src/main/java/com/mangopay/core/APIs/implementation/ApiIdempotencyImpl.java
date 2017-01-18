@@ -1,10 +1,9 @@
 package com.mangopay.core.APIs.implementation;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiIdempotency;
+import com.mangopay.core.APIs.ApiIdempotency;
 import com.mangopay.core.RestTool;
 import com.mangopay.entities.*;
 

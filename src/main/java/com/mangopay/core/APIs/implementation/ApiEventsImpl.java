@@ -2,7 +2,7 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiEvents;
+import com.mangopay.core.APIs.ApiEvents;
 import com.mangopay.core.FilterEvents;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;

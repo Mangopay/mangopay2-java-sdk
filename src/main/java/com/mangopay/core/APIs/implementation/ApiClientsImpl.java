@@ -2,7 +2,7 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.declaration.ApiClients;
+import com.mangopay.core.APIs.ApiClients;
 import com.mangopay.core.FilterKycDocuments;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
