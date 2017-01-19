@@ -26,7 +26,7 @@ public class OAuthToken extends Dto implements Serializable {
     /**
      * Token type.
      *
-     * @deprecated Use {@link #getTokenType()} and {@link #setToken_type(String)} instead.
+     * @deprecated Use {@link #getTokenType()} and {@link #setTokenType(String)} instead.
      */
     @Deprecated
     public String token_type;
@@ -66,7 +66,7 @@ public class OAuthToken extends Dto implements Serializable {
         return token_type;
     }
 
-    public void setToken_type(String tokenType) {
+    public void setTokenType(String tokenType) {
         this.token_type = tokenType;
     }
 
