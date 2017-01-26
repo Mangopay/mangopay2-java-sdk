@@ -26,9 +26,9 @@ public class TokensTest extends BaseTest {
 
     @Test
     public void standardUseOfToken() throws Exception {
-        this.api.getUsers().getAll();
+        this.api.getUserApi().getAll();
         OAuthToken token = this.api.getOAuthTokenManager().getToken();
-        this.api.getUsers().getAll();
+        this.api.getUserApi().getAll();
 
         assertEquals(token.getAccessToken(), this.api.getOAuthTokenManager().getToken().getAccessToken());
     }

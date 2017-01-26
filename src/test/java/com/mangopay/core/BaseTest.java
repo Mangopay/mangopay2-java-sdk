@@ -117,7 +117,7 @@ public abstract class BaseTest {
             user.setOccupation("programmer");
             user.setIncomeRange(3);
 
-            BaseTest.JOHN = (UserNatural) this.api.getUsers().create(user);
+            BaseTest.JOHN = (UserNatural) this.api.getUserApi().create(user);
             BaseTest.JOHNS_WALLET = null;
             BaseTest.JOHNS_WALLET_WITH_MONEY = null;
             BaseTest.JOHNS_ACCOUNT = null;
@@ -147,7 +147,7 @@ public abstract class BaseTest {
         user.setCountryOfResidence(CountryIso.FR);
         user.setOccupation("programmer");
         user.setIncomeRange(3);
-        return (UserNatural) this.api.getUsers().create(user);
+        return (UserNatural) this.api.getUserApi().create(user);
 
     }
 
@@ -171,7 +171,7 @@ public abstract class BaseTest {
             user.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
             user.setEmail(john.getEmail());
 
-            BaseTest.MATRIX = (UserLegal) this.api.getUsers().create(user);
+            BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX;
     }
@@ -192,7 +192,7 @@ public abstract class BaseTest {
             bankAccountDetails.setIBAN("FR7618829754160173622224154");
             bankAccountDetails.setBIC("CMBRFR2BCME");
             account.setDetails(bankAccountDetails);
-            BaseTest.JOHNS_ACCOUNT = this.api.getUsers().createBankAccount(john.getId(), account);
+            BaseTest.JOHNS_ACCOUNT = this.api.getUserApi().createBankAccount(john.getId(), account);
         }
         return BaseTest.JOHNS_ACCOUNT;
     }
@@ -213,7 +213,7 @@ public abstract class BaseTest {
             wallet.setCurrency(CurrencyIso.EUR);
             wallet.setDescription("WALLET IN EUR");
 
-            BaseTest.JOHNS_WALLET = this.api.getWallets().create(wallet);
+            BaseTest.JOHNS_WALLET = this.api.getWalletApi().create(wallet);
         }
 
         return BaseTest.JOHNS_WALLET;
@@ -248,17 +248,17 @@ public abstract class BaseTest {
             wallet.setCurrency(CurrencyIso.EUR);
             wallet.setDescription("WALLET IN EUR WITH MONEY");
 
-            BaseTest.JOHNS_WALLET_WITH_MONEY = this.api.getWallets().create(wallet);
+            BaseTest.JOHNS_WALLET_WITH_MONEY = this.api.getWalletApi().create(wallet);
 
             CardRegistration cardRegistration = new CardRegistration();
             cardRegistration.setUserId(BaseTest.JOHNS_WALLET_WITH_MONEY.getOwners().get(0));
             cardRegistration.setCurrency(CurrencyIso.EUR);
-            cardRegistration = this.api.getCardRegistrations().create(cardRegistration);
+            cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
 
             cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData(cardRegistration));
-            cardRegistration = this.api.getCardRegistrations().update(cardRegistration);
+            cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
 
-            Card card = this.api.getCards().get(cardRegistration.getCardId());
+            Card card = this.api.getCardApi().get(cardRegistration.getCardId());
 
             // create pay-in CARD DIRECT
             PayIn payIn = new PayIn();
@@ -280,10 +280,10 @@ public abstract class BaseTest {
             ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
             ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnURL("http://test.com");
             // create Pay-In
-            this.api.getPayIns().create(payIn);
+            this.api.getPayInApi().create(payIn);
         }
 
-        return this.api.getWallets().get(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
+        return this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
     }
 
     private PayInPaymentDetailsCard getPayInPaymentDetailsCard() {
@@ -325,7 +325,7 @@ public abstract class BaseTest {
             payIn.setPaymentDetails(this.getPayInPaymentDetailsCard());
             payIn.setExecutionDetails(this.getPayInExecutionDetailsWeb());
 
-            BaseTest.JOHNS_PAYIN_CARD_WEB = this.api.getPayIns().create(payIn);
+            BaseTest.JOHNS_PAYIN_CARD_WEB = this.api.getPayInApi().create(payIn);
         }
 
         return BaseTest.JOHNS_PAYIN_CARD_WEB;
@@ -368,11 +368,11 @@ public abstract class BaseTest {
         CardRegistration cardRegistration = new CardRegistration();
         cardRegistration.setUserId(userId);
         cardRegistration.setCurrency(CurrencyIso.EUR);
-        cardRegistration = this.api.getCardRegistrations().create(cardRegistration);
+        cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
         cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData(cardRegistration));
-        cardRegistration = this.api.getCardRegistrations().update(cardRegistration);
+        cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
 
-        Card card = this.api.getCards().get(cardRegistration.getCardId());
+        Card card = this.api.getCardApi().get(cardRegistration.getCardId());
 
         // create pay-in CARD DIRECT
         PayIn payIn = new PayIn();
@@ -394,7 +394,7 @@ public abstract class BaseTest {
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnURL("http://test.com");
 
-        return this.api.getPayIns().create(payIn);
+        return this.api.getPayInApi().create(payIn);
     }
 
     protected PayOut getJohnsPayOutBankWire() throws Exception {
@@ -418,7 +418,7 @@ public abstract class BaseTest {
             payOut.setMeanOfPaymentDetails(new PayOutPaymentDetailsBankWire());
             ((PayOutPaymentDetailsBankWire) payOut.getMeanOfPaymentDetails()).setBankAccountId(account.getId());
 
-            BaseTest.JOHNS_PAYOUT_BANKWIRE = this.api.getPayOuts().create(payOut);
+            BaseTest.JOHNS_PAYOUT_BANKWIRE = this.api.getPayOutApi().create(payOut);
         }
 
         return BaseTest.JOHNS_PAYOUT_BANKWIRE;
@@ -450,7 +450,7 @@ public abstract class BaseTest {
             payOut.setMeanOfPaymentDetails(new PayOutPaymentDetailsBankWire());
             ((PayOutPaymentDetailsBankWire) payOut.getMeanOfPaymentDetails()).setBankAccountId(account.getId());
 
-            BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = this.api.getPayOuts().create(payOut);
+            BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = this.api.getPayOutApi().create(payOut);
         }
 
         return BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT;
@@ -465,7 +465,7 @@ public abstract class BaseTest {
         wallet.getOwners().add(user.getId());
         wallet.setCurrency(CurrencyIso.EUR);
         wallet.setDescription("WALLET IN EUR FOR TRANSFER");
-        wallet = this.api.getWallets().create(wallet);
+        wallet = this.api.getWalletApi().create(wallet);
 
         Transfer transfer = new Transfer();
         transfer.setTag("DefaultTag");
@@ -481,7 +481,7 @@ public abstract class BaseTest {
         transfer.setDebitedWalletId(walletWithMoney.getId());
         transfer.setCreditedWalletId(wallet.getId());
 
-        return this.api.getTransfers().create(transfer);
+        return this.api.getTransferApi().create(transfer);
     }
 
     /**
@@ -501,7 +501,7 @@ public abstract class BaseTest {
         refund.getFees().setAmount(transfer.getFees().getAmount());
         refund.getFees().setCurrency(transfer.getFees().getCurrency());
 
-        return this.api.getTransfers().createRefund(transfer.getId(), refund);
+        return this.api.getTransferApi().createRefund(transfer.getId(), refund);
     }
 
     /**
@@ -522,7 +522,7 @@ public abstract class BaseTest {
         refund.getFees().setAmount(payIn.getFees().getAmount());
         refund.getFees().setCurrency(payIn.getFees().getCurrency());
 
-        return this.api.getPayIns().createRefund(payIn.getId(), refund);
+        return this.api.getPayInApi().createRefund(payIn.getId(), refund);
     }
 
     /**
@@ -542,7 +542,7 @@ public abstract class BaseTest {
             cardRegistration.setUserId(user.getId());
             cardRegistration.setCurrency(CurrencyIso.EUR);
 
-            BaseTest.JOHNS_CARD_REGISTRATION = this.api.getCardRegistrations().create(cardRegistration);
+            BaseTest.JOHNS_CARD_REGISTRATION = this.api.getCardRegistrationApi().create(cardRegistration);
         }
 
         return BaseTest.JOHNS_CARD_REGISTRATION;
@@ -562,11 +562,11 @@ public abstract class BaseTest {
         CardRegistration cardRegistration = new CardRegistration();
         cardRegistration.setUserId(user.getId());
         cardRegistration.setCurrency(CurrencyIso.EUR);
-        CardRegistration newCardRegistration = this.api.getCardRegistrations().create(cardRegistration);
+        CardRegistration newCardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
 
         String registrationData = this.getPaylineCorrectRegistartionData(newCardRegistration);
         newCardRegistration.setRegistrationData(registrationData);
-        CardRegistration getCardRegistration = this.api.getCardRegistrations().update(newCardRegistration);
+        CardRegistration getCardRegistration = this.api.getCardRegistrationApi().update(newCardRegistration);
 
         CardPreAuthorization cardPreAuthorization = new CardPreAuthorization();
         cardPreAuthorization.setAuthorId(user.getId());
@@ -576,14 +576,14 @@ public abstract class BaseTest {
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnURL("http://test.com");
 
-        return this.api.getCardPreAuthorizations().create(cardPreAuthorization);
+        return this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
     }
 
     protected KycDocument getJohnsKycDocument() throws Exception {
         if (BaseTest.JOHNS_KYC_DOCUMENT == null) {
             String johnsId = this.getJohn().getId();
 
-            BaseTest.JOHNS_KYC_DOCUMENT = this.api.getUsers().createKycDocument(johnsId, KycDocumentType.IDENTITY_PROOF);
+            BaseTest.JOHNS_KYC_DOCUMENT = this.api.getUserApi().createKycDocument(johnsId, KycDocumentType.IDENTITY_PROOF);
         }
 
         return BaseTest.JOHNS_KYC_DOCUMENT;
@@ -649,7 +649,7 @@ public abstract class BaseTest {
         if (BaseTest.JOHNS_HOOK == null) {
 
             Pagination pagination = new Pagination(1, 1);
-            List<Hook> list = this.api.getHooks().getAll(pagination, null);
+            List<Hook> list = this.api.getHookApi().getAll(pagination, null);
 
             if (list != null && list.size() > 0 && list.get(0) != null) {
                 BaseTest.JOHNS_HOOK = list.get(0);
@@ -657,7 +657,7 @@ public abstract class BaseTest {
                 Hook hook = new Hook();
                 hook.setEventType(EventType.PAYIN_NORMAL_CREATED);
                 hook.setUrl("http://test.com");
-                BaseTest.JOHNS_HOOK = this.api.getHooks().create(hook);
+                BaseTest.JOHNS_HOOK = this.api.getHookApi().create(hook);
             }
         }
 
@@ -668,7 +668,7 @@ public abstract class BaseTest {
         if (BaseTest.JOHNS_REPORT == null) {
             ReportRequest reportPost = new ReportRequest();
             reportPost.setReportType(ReportType.TRANSACTIONS);
-            BaseTest.JOHNS_REPORT = this.api.getReports().create(reportPost);
+            BaseTest.JOHNS_REPORT = this.api.getReportApi().create(reportPost);
         }
 
         return BaseTest.JOHNS_REPORT;
@@ -677,7 +677,7 @@ public abstract class BaseTest {
     protected ReportRequest getNewJohnsReport() throws Exception {
         ReportRequest reportPost = new ReportRequest();
         reportPost.setReportType(ReportType.TRANSACTIONS);
-        BaseTest.JOHNS_REPORT = this.api.getReports().create(reportPost);
+        BaseTest.JOHNS_REPORT = this.api.getReportApi().create(reportPost);
 
         return BaseTest.JOHNS_REPORT;
     }

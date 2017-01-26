@@ -13,6 +13,6 @@ public class MangoPayApiTest extends BaseTest {
     public void ApiAndUsersConstructionTest() {
         MangoPayApi mangoPayApi = new MangoPayApi();
         assertNotNull(mangoPayApi);
-        assertNotNull(mangoPayApi.getUsers());
+        assertNotNull(mangoPayApi.getUserApi());
     }
 }

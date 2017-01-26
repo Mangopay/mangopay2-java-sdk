@@ -22,24 +22,24 @@ public class MangoPayApi {
         this.OAuthTokenManager = new AuthorizationTokenManager(this);
 
         // API managers
-        this.AuthenticationManager = new ApiOAuthImpl(this);
-        this.Clients = new ApiClientsImpl(this);
-        this.Users = new ApiUsersImpl(this);
-        this.Wallets = new ApiWalletsImpl(this);
-        this.PayIns = new ApiPayInsImpl(this);
-        this.PayOuts = new ApiPayOutsImpl(this);
-        this.Refunds = new ApiRefundsImpl(this);
-        this.Transfers = new ApiTransfersImpl(this);
-        this.CardRegistrations = new ApiCardRegistrationsImpl(this);
-        this.Cards = new ApiCardsImpl(this);
-        this.Events = new ApiEventsImpl(this);
-        this.CardPreAuthorizations = new ApiCardPreAuthorizationsImpl(this);
-        this.Hooks = new ApiHooksImpl(this);
-        this.KycDocuments = new ApiKycDocumentsImpl(this);
-        this.Disputes = new ApiDisputesImpl(this);
-        this.Idempotency = new ApiIdempotencyImpl(this);
-        this.Mandates = new ApiMandatesImpl(this);
-        this.Reports = new ApiReportsImpl(this);
+        this.AuthenticationManager = new OAuthApiImpl(this);
+        this.Clients = new ClientApiImpl(this);
+        this.Users = new UserApiImpl(this);
+        this.Wallets = new WalletApiImpl(this);
+        this.PayIns = new PayInApiImpl(this);
+        this.PayOuts = new PayOutApiImpl(this);
+        this.Refunds = new RefundApiImpl(this);
+        this.Transfers = new TransferApiImpl(this);
+        this.CardRegistrations = new CardRegistrationApiImpl(this);
+        this.Cards = new CardApiImpl(this);
+        this.Events = new EventApiImpl(this);
+        this.CardPreAuthorizations = new CardPreAuthorizationApiImpl(this);
+        this.Hooks = new HookApiImpl(this);
+        this.KycDocuments = new KycDocumentApiImpl(this);
+        this.Disputes = new DisputeApiImpl(this);
+        this.Idempotency = new IdempotencyApiImpl(this);
+        this.Mandates = new MandateApiImpl(this);
+        this.Reports = new ReportApiImpl(this);
     }
 
     ////////////////////////////////////////
@@ -77,7 +77,7 @@ public class MangoPayApi {
     /**
      * Provides Clients methods.
      *
-     * @deprecated Use {@link #getClients()} and {@link #setClients(ApiClients)} instead.
+     * @deprecated Use {@link #getClientApi()} and {@link #setClientApi(ApiClients)} instead.
      */
     @Deprecated
     public ApiClients Clients;
@@ -85,7 +85,7 @@ public class MangoPayApi {
     /**
      * Provides Users methods.
      *
-     * @deprecated Use {@link #getUsers()} and {@link #setUsers(ApiUsers)} instead.
+     * @deprecated Use {@link #getUserApi()} and {@link #setUserApi(ApiUsers)} instead.
      */
     @Deprecated
     public ApiUsers Users;
@@ -93,7 +93,7 @@ public class MangoPayApi {
     /**
      * Provides Wallets methods.
      *
-     * @deprecated Use {@link #getWallets()} and {@link #setWallets(ApiWallets)} instead.
+     * @deprecated Use {@link #getWalletApi()} and {@link #setWalletApi(ApiWallets)} instead.
      */
     @Deprecated
     public ApiWallets Wallets;
@@ -101,7 +101,7 @@ public class MangoPayApi {
     /**
      * Provides PayIns methods.
      *
-     * @deprecated Use {@link #getPayIns()} and {@link #setPayIns(ApiPayIns)} instead.
+     * @deprecated Use {@link #getPayInApi()} and {@link #setPayInApi(ApiPayIns)} instead.
      */
     @Deprecated
     public ApiPayIns PayIns;
@@ -109,7 +109,7 @@ public class MangoPayApi {
     /**
      * Provides PayOuts methods.
      *
-     * @deprecated Use {@link #getPayOuts()} and {@link #setPayOuts(ApiPayOuts)} instead.
+     * @deprecated Use {@link #getPayOutApi()} and {@link #setPayOutApi(ApiPayOuts)} instead.
      */
     @Deprecated
     public ApiPayOuts PayOuts;
@@ -117,7 +117,7 @@ public class MangoPayApi {
     /**
      * Provides Transfer methods.
      *
-     * @deprecated Use {@link #getTransfers()} and {@link #setTransfers(ApiTransfers)} instead.
+     * @deprecated Use {@link #getTransferApi()} and {@link #setTransferApi(ApiTransfers)} instead.
      */
     @Deprecated
     public ApiTransfers Transfers;
@@ -125,7 +125,7 @@ public class MangoPayApi {
     /**
      * Provides CardRegistrations methods.
      *
-     * @deprecated Use {@link #getCardRegistrations()} and {@link #setCardRegistrations(ApiCardRegistrations)} instead.
+     * @deprecated Use {@link #getCardRegistrationApi()} and {@link #setCardRegistrationApi(ApiCardRegistrations)} instead.
      */
     @Deprecated
     public ApiCardRegistrations CardRegistrations;
@@ -133,7 +133,7 @@ public class MangoPayApi {
     /**
      * Provides CardPreAuthorizations methods.
      *
-     * @deprecated Use {@link #getCardPreAuthorizations()} and {@link #setCardPreAuthorizations(ApiCardPreAuthorizations)} instead.
+     * @deprecated Use {@link #getCardPreAuthorizationApi()} and {@link #setCardPreAuthorizationApi(ApiCardPreAuthorizations)} instead.
      */
     @Deprecated
     public ApiCardPreAuthorizations CardPreAuthorizations;
@@ -141,7 +141,7 @@ public class MangoPayApi {
     /**
      * Provides Cards methods.
      *
-     * @deprecated Use {@link #getCards()} and {@link #setCards(ApiCards)} instead.
+     * @deprecated Use {@link #getCardApi()} and {@link #setCardApi(ApiCards)} instead.
      */
     @Deprecated
     public ApiCards Cards;
@@ -149,7 +149,7 @@ public class MangoPayApi {
     /**
      * Provides Refunds methods.
      *
-     * @deprecated Use {@link #getRefunds()} and {@link #setRefunds(ApiRefunds)} instead.
+     * @deprecated Use {@link #getRefundApi()} and {@link #setRefundApi(ApiRefunds)} instead.
      */
     @Deprecated
     public ApiRefunds Refunds;
@@ -157,7 +157,7 @@ public class MangoPayApi {
     /**
      * Provides Events methods.
      *
-     * @deprecated Use {@link #getEvents()} and {@link #setEvents(ApiEvents)} instead.
+     * @deprecated Use {@link #getEventApi()} and {@link #setEventApi(ApiEvents)} instead.
      */
     @Deprecated
     public ApiEvents Events;
@@ -165,7 +165,7 @@ public class MangoPayApi {
     /**
      * Provides Hooks methods.
      *
-     * @deprecated Use {@link #getHooks()} and {@link #setHooks(ApiHooks)} instead.
+     * @deprecated Use {@link #getHookApi()} and {@link #setHookApi(ApiHooks)} instead.
      */
     @Deprecated
     public ApiHooks Hooks;
@@ -173,7 +173,7 @@ public class MangoPayApi {
     /**
      * Provides KYC documents list methods.
      *
-     * @deprecated Use {@link #getKycDocuments()} and {@link #setKycDocuments(ApiKycDocuments)} instead.
+     * @deprecated Use {@link #getKycDocumentApi()} and {@link #setKycDocumentApi(ApiKycDocuments)} instead.
      */
     @Deprecated
     public ApiKycDocuments KycDocuments;
@@ -181,7 +181,7 @@ public class MangoPayApi {
     /**
      * Provides Disputes methods.
      *
-     * @deprecated Use {@link #getDisputes()} and {@link #setDisputes(ApiDisputes)} instead.
+     * @deprecated Use {@link #getDisputeApi()} and {@link #setDisputeApi(ApiDisputes)} instead.
      */
     @Deprecated
     public ApiDisputes Disputes;
@@ -189,7 +189,7 @@ public class MangoPayApi {
     /**
      * Provides Idempotency methods.
      *
-     * @deprecated Use {@link #getIdempotency()} and {@link #setIdempotency(ApiIdempotency)} instead.
+     * @deprecated Use {@link #getIdempotencyApi()} and {@link #setIdempotencyApi(ApiIdempotency)} instead.
      */
     @Deprecated
     public ApiIdempotency Idempotency;
@@ -197,7 +197,7 @@ public class MangoPayApi {
     /**
      * Provides Mandates methods.
      *
-     * @deprecated Use {@link #getMandates()} and {@link #setMandates(ApiMandates)} instead.
+     * @deprecated Use {@link #getMandateApi()} and {@link #setMandateApi(ApiMandates)} instead.
      */
     @Deprecated
     public ApiMandates Mandates;
@@ -205,7 +205,7 @@ public class MangoPayApi {
     /**
      * Provides Reports methods.
      *
-     * @deprecated Use {@link #getReports()} and {@link #setReports(ApiReports)} instead.
+     * @deprecated Use {@link #getReportApi()} and {@link #setReportApi(ApiReports)} instead.
      */
     @Deprecated
     public ApiReports Reports;
@@ -234,139 +234,139 @@ public class MangoPayApi {
         this.AuthenticationManager = authenticationManager;
     }
 
-    public ApiClients getClients() {
+    public ApiClients getClientApi() {
         return Clients;
     }
 
-    public void setClients(ApiClients clients) {
+    public void setClientApi(ApiClients clients) {
         this.Clients = clients;
     }
 
-    public ApiUsers getUsers() {
+    public ApiUsers getUserApi() {
         return Users;
     }
 
-    public void setUsers(ApiUsers users) {
+    public void setUserApi(ApiUsers users) {
         this.Users = users;
     }
 
-    public ApiWallets getWallets() {
+    public ApiWallets getWalletApi() {
         return Wallets;
     }
 
-    public void setWallets(ApiWallets wallets) {
+    public void setWalletApi(ApiWallets wallets) {
         this.Wallets = wallets;
     }
 
-    public ApiPayIns getPayIns() {
+    public ApiPayIns getPayInApi() {
         return PayIns;
     }
 
-    public void setPayIns(ApiPayIns payIns) {
+    public void setPayInApi(ApiPayIns payIns) {
         this.PayIns = payIns;
     }
 
-    public ApiPayOuts getPayOuts() {
+    public ApiPayOuts getPayOutApi() {
         return PayOuts;
     }
 
-    public void setPayOuts(ApiPayOuts payOuts) {
+    public void setPayOutApi(ApiPayOuts payOuts) {
         this.PayOuts = payOuts;
     }
 
-    public ApiTransfers getTransfers() {
+    public ApiTransfers getTransferApi() {
         return Transfers;
     }
 
-    public void setTransfers(ApiTransfers transfers) {
+    public void setTransferApi(ApiTransfers transfers) {
         this.Transfers = transfers;
     }
 
-    public ApiCardRegistrations getCardRegistrations() {
+    public ApiCardRegistrations getCardRegistrationApi() {
         return CardRegistrations;
     }
 
-    public void setCardRegistrations(ApiCardRegistrations cardRegistrations) {
+    public void setCardRegistrationApi(ApiCardRegistrations cardRegistrations) {
         this.CardRegistrations = cardRegistrations;
     }
 
-    public ApiCardPreAuthorizations getCardPreAuthorizations() {
+    public ApiCardPreAuthorizations getCardPreAuthorizationApi() {
         return CardPreAuthorizations;
     }
 
-    public void setCardPreAuthorizations(ApiCardPreAuthorizations cardPreAuthorizations) {
+    public void setCardPreAuthorizationApi(ApiCardPreAuthorizations cardPreAuthorizations) {
         this.CardPreAuthorizations = cardPreAuthorizations;
     }
 
-    public ApiCards getCards() {
+    public ApiCards getCardApi() {
         return Cards;
     }
 
-    public void setCards(ApiCards cards) {
+    public void setCardApi(ApiCards cards) {
         this.Cards = cards;
     }
 
-    public ApiRefunds getRefunds() {
+    public ApiRefunds getRefundApi() {
         return Refunds;
     }
 
-    public void setRefunds(ApiRefunds refunds) {
+    public void setRefundApi(ApiRefunds refunds) {
         this.Refunds = refunds;
     }
 
-    public ApiEvents getEvents() {
+    public ApiEvents getEventApi() {
         return Events;
     }
 
-    public void setEvents(ApiEvents events) {
+    public void setEventApi(ApiEvents events) {
         this.Events = events;
     }
 
-    public ApiHooks getHooks() {
+    public ApiHooks getHookApi() {
         return Hooks;
     }
 
-    public void setHooks(ApiHooks hooks) {
+    public void setHookApi(ApiHooks hooks) {
         this.Hooks = hooks;
     }
 
-    public ApiKycDocuments getKycDocuments() {
+    public ApiKycDocuments getKycDocumentApi() {
         return KycDocuments;
     }
 
-    public void setKycDocuments(ApiKycDocuments kycDocuments) {
+    public void setKycDocumentApi(ApiKycDocuments kycDocuments) {
         this.KycDocuments = kycDocuments;
     }
 
-    public ApiDisputes getDisputes() {
+    public ApiDisputes getDisputeApi() {
         return Disputes;
     }
 
-    public void setDisputes(ApiDisputes disputes) {
+    public void setDisputeApi(ApiDisputes disputes) {
         this.Disputes = disputes;
     }
 
-    public ApiIdempotency getIdempotency() {
+    public ApiIdempotency getIdempotencyApi() {
         return Idempotency;
     }
 
-    public void setIdempotency(ApiIdempotency idempotency) {
+    public void setIdempotencyApi(ApiIdempotency idempotency) {
         this.Idempotency = idempotency;
     }
 
-    public ApiMandates getMandates() {
+    public ApiMandates getMandateApi() {
         return Mandates;
     }
 
-    public void setMandates(ApiMandates mandates) {
+    public void setMandateApi(ApiMandates mandates) {
         this.Mandates = mandates;
     }
 
-    public ApiReports getReports() {
+    public ApiReports getReportApi() {
         return Reports;
     }
 
-    public void setReports(ApiReports reports) {
+    public void setReportApi(ApiReports reports) {
         this.Reports = reports;
     }
 }

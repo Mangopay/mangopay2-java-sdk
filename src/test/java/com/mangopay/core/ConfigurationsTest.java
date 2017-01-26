@@ -11,6 +11,6 @@ public class ConfigurationsTest extends BaseTest {
     public void confInConstruct() throws Exception {
         this.api.getConfig().setClientId("test_asd");
         this.api.getConfig().setClientPassword("00000");
-        this.api.getUsers().getAll();
+        this.api.getUserApi().getAll();
     }
 }
