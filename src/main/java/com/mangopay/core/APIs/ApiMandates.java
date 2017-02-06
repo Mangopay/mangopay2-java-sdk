@@ -1,31 +1,23 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
+import com.mangopay.core.FilterMandates;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.Mandate;
+
 import java.util.List;
 
 /**
- * API for mandates.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiMandates extends ApiBase {
-    
-    /**
-     * Instantiates new ApiMandates object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
-     */
-    public ApiMandates(MangoPayApi root) { super(root); }
-    
+public interface ApiMandates {
     /**
      * Creates new mandate.
      * @param mandate   Mandate instance to be created.
      * @return          Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate create(Mandate mandate) throws Exception
-    {
-        return create(null, mandate);
-    }
+    Mandate create(Mandate mandate) throws Exception;
 
     /**
      * Creates new mandate.
@@ -34,10 +26,7 @@ public class ApiMandates extends ApiBase {
      * @return                  Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate create(String idempotencyKey, Mandate mandate) throws Exception
-    {
-        return this.createObject(Mandate.class, idempotencyKey, "mandate_create", mandate);
-    }
+    Mandate create(String idempotencyKey, Mandate mandate) throws Exception;
 
     /**
      * Gets mandate.
@@ -45,16 +34,7 @@ public class ApiMandates extends ApiBase {
      * @return              Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate get(String mandateId) throws Exception
-    {
-        return this.getObject(Mandate.class, "mandate_get", mandateId);
-    }
-
-    /// <summary>Gets all mandates.</summary>
-    /// <param name="pagination">Pagination.</param>
-    /// <param name="filters">Filters.</param>
-    /// <param name="sort">Sort.</param>
-    /// <returns>List of Mandate instances returned from API.</returns>
+    Mandate get(String mandateId) throws Exception;
 
     /**
      * Gets all mandates.
@@ -64,12 +44,7 @@ public class ApiMandates extends ApiBase {
      * @return              List of Mandate instances returned from API.
      * @throws Exception
      */
-    public List<Mandate> getAll(FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception
-    {
-        if (filters == null) filters = new FilterMandates();
-
-        return this.getList(Mandate[].class, Mandate.class, "mandates_get_all", pagination, "", filters.getValues(), sorting);
-    }
+    List<Mandate> getAll(FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception;
 
     /**
      * Gets mandates for user.
@@ -80,12 +55,7 @@ public class ApiMandates extends ApiBase {
      * @return              List of Mandate instances returned from API.
      * @throws Exception
      */
-    public List<Mandate> getForUser(String userId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception
-    {
-        if (filters == null) filters = new FilterMandates();
-
-        return this.getList(Mandate[].class, Mandate.class, "mandates_get_for_user", pagination, userId, filters.getValues(), sorting);
-    }
+    List<Mandate> getForUser(String userId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception;
 
     /**
      * Gets mandates for bank account.
@@ -97,12 +67,7 @@ public class ApiMandates extends ApiBase {
      * @return                  List of Mandate instances returned from API.
      * @throws Exception
      */
-    public List<Mandate> getForBankAccount(String userId, String bankAccountId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception
-    {
-        if (filters == null) filters = new FilterMandates();
-            
-        return this.getList(Mandate[].class, Mandate.class, "mandates_get_for_bank_account", pagination, userId, bankAccountId, filters.getValues(), sorting);
-    }
+    List<Mandate> getForBankAccount(String userId, String bankAccountId, FilterMandates filters, Pagination pagination, Sorting sorting) throws Exception;
 
     /**
      * Cancels mandate.
@@ -110,8 +75,5 @@ public class ApiMandates extends ApiBase {
      * @return              Mandate instance returned from API.
      * @throws Exception
      */
-    public Mandate cancel(String mandateId) throws Exception
-    {
-        return this.updateObject(Mandate.class, "mandate_cancel", new Mandate(), mandateId);
-    }
+    Mandate cancel(String mandateId) throws Exception;
 }

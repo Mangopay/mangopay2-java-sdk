@@ -1,29 +1,20 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
-import com.mangopay.entities.*;
+import com.mangopay.entities.Refund;
+import com.mangopay.entities.Transfer;
 
 /**
- * API for transfers.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiTransfers extends ApiBase {
-
-    /**
-     * Instantiates new ApiTransfers object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
-     */
-    public ApiTransfers(MangoPayApi root) { super(root); }
-    
+public interface ApiTransfers {
     /**
      * Creates new transfer.
      * @param transfer  Instance of Transfer class to be created.
      * @return          Transfer object returned from API.
      * @throws Exception
      */
-    public Transfer create(Transfer transfer) throws Exception {
-        return this.create(null, transfer);
-    }
-    
+    Transfer create(Transfer transfer) throws Exception;
+
     /**
      * Creates new transfer.
      * @param idempotencyKey    Idempotency key for this request.
@@ -31,20 +22,16 @@ public class ApiTransfers extends ApiBase {
      * @return                  Transfer object returned from API.
      * @throws Exception
      */
-    public Transfer create(String idempotencyKey, Transfer transfer) throws Exception {
-        return this.createObject(Transfer.class, idempotencyKey, "transfers_create", transfer);
-    }
-    
+    Transfer create(String idempotencyKey, Transfer transfer) throws Exception;
+
     /**
      * Gets the transfer.
      * @param transferId    Transfer identifier.
      * @return              Transfer instance returned from API.
      * @throws Exception
      */
-    public Transfer get(String transferId) throws Exception {
-        return this.getObject(Transfer.class, "transfers_get", transferId);
-    }
-    
+    Transfer get(String transferId) throws Exception;
+
     /**
      * Creates refund for transfer object.
      * @param transferId Transfer identifier.
@@ -52,10 +39,8 @@ public class ApiTransfers extends ApiBase {
      * @return Refund entity instance returned from API.
      * @throws Exception
      */
-    public Refund createRefund(String transferId, Refund refund) throws Exception {
-        return this.createRefund(null, transferId, refund);
-    }
-    
+    Refund createRefund(String transferId, Refund refund) throws Exception;
+
     /**
      * Creates refund for transfer object.
      * @param idempotencyKey    Idempotency key for this request.
@@ -64,18 +49,13 @@ public class ApiTransfers extends ApiBase {
      * @return Refund entity instance returned from API.
      * @throws Exception
      */
-    public Refund createRefund(String idempotencyKey, String transferId, Refund refund) throws Exception {
-        return this.createObject(Refund.class, idempotencyKey, "transfers_createrefunds", refund, transferId);
-    }
-    
+    Refund createRefund(String idempotencyKey, String transferId, Refund refund) throws Exception;
+
     /**
      * Gets refund for transfer object.
      * @param transferId Transfer identifier.
      * @return Refund entity instance returned from API.
      * @throws Exception
      */
-    public Refund getRefund(String transferId) throws Exception {
-        return this.getObject(Refund.class, "transfers_getrefunds", transferId);
-    }
-    
+    Refund getRefund(String transferId) throws Exception;
 }

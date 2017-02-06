@@ -13,7 +13,7 @@ public abstract class ApiBase {
     /**
      * Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    protected MangoPayApi _root;
+    protected MangoPayApi root;
 
     /**
      * Array with REST URL and request type.
@@ -157,7 +157,7 @@ public abstract class ApiBase {
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiBase(MangoPayApi root) {
-        _root = root;
+        this.root = root;
     }
 
     /**
@@ -207,7 +207,7 @@ public abstract class ApiBase {
         else
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
         
-        RestTool rest = new RestTool(this._root, true);
+        RestTool rest = new RestTool(this.root, true);
         T result = rest.request(classOfT, idempotencyKey, urlMethod, this.getRequestType(methodKey), null, null, entity);
         
         return result;
@@ -257,7 +257,7 @@ public abstract class ApiBase {
         
         String urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
         
-        RestTool rest = new RestTool(this._root, true);
+        RestTool rest = new RestTool(this.root, true);
         T response = rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
         
         return response;
@@ -310,10 +310,10 @@ public abstract class ApiBase {
         }
         
         if (sorting != null) {
-            additionalUrlParams.putAll(sorting.GetSortParameter());
+            additionalUrlParams.putAll(sorting.getSortParameter());
         }
         
-        RestTool rest = new RestTool(this._root, true);
+        RestTool rest = new RestTool(this.root, true);
         
         return rest.requestList(classOfT, classOfTItem, urlMethod, this.getRequestType(methodKey), null, pagination, additionalUrlParams);
                 
@@ -431,7 +431,7 @@ public abstract class ApiBase {
                 urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
             }
                 
-            RestTool rest = new RestTool(this._root, true);
+            RestTool rest = new RestTool(this.root, true);
             return rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey), null, null, entity);
         } else {
             return null;

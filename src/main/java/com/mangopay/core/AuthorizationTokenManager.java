@@ -1,8 +1,9 @@
 package com.mangopay.core;
 
-import com.mangopay.core.interfaces.IStorageStrategy;
+import com.mangopay.core.interfaces.StorageStrategy;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.MangoPayApi;
+
 import java.security.*;
 import java.math.*;
 
@@ -11,7 +12,7 @@ import java.math.*;
  */
 public final class AuthorizationTokenManager extends ApiBase {
     
-    private IStorageStrategy _storageStrategy;
+    private StorageStrategy storageStrategy;
     
     /**
      * Instantiates new AuthorizationTokenManager object.
@@ -32,13 +33,13 @@ public final class AuthorizationTokenManager extends ApiBase {
      * @throws Exception
      */
     public OAuthToken getToken() throws Exception {
-        OAuthToken token = _storageStrategy.get(GetEnvKey());
+        OAuthToken token = storageStrategy.get(getEnvKey());
         
         if (token == null || token.IsExpired()) {
-            storeToken(this._root.AuthenticationManager.createToken());
+            storeToken(this.root.getAuthenticationManager().createToken());
         }
         
-        return _storageStrategy.get(GetEnvKey());
+        return storageStrategy.get(getEnvKey());
     }
     
     /**
@@ -46,7 +47,7 @@ public final class AuthorizationTokenManager extends ApiBase {
      * @param token Token instance to be stored.
      */
     public void storeToken(OAuthToken token) {
-        _storageStrategy.store(token, GetEnvKey());
+        storageStrategy.store(token, getEnvKey());
     }
     
     /**
@@ -55,15 +56,15 @@ public final class AuthorizationTokenManager extends ApiBase {
      * By default, the <code>DefaultStorageStrategy</code> instance is used. 
      * There is no need to explicitly call this method until some more complex 
      * storage implementation is needed.
-     * @param customStorageStrategy IStorageStrategy interface implementation.
+     * @param customStorageStrategy StorageStrategy interface implementation.
      */
-    public void registerCustomStorageStrategy(IStorageStrategy customStorageStrategy) {
-        _storageStrategy = customStorageStrategy;
+    public void registerCustomStorageStrategy(StorageStrategy customStorageStrategy) {
+        storageStrategy = customStorageStrategy;
     }
     
-    private String GetEnvKey() {
+    private String getEnvKey() {
         
-        String input = _root.Config.BaseUrl + _root.Config.ClientId + _root.Config.ClientPassword;
+        String input = root.getConfig().getBaseUrl() + root.getConfig().getClientId() + root.getConfig().getClientPassword();
         String md5 = "";
         
         try {

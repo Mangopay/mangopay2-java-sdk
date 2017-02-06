@@ -1,29 +1,21 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
-import com.mangopay.entities.*;
+import com.mangopay.entities.PayIn;
+import com.mangopay.entities.Refund;
+import com.mangopay.entities.TemporaryImmediatePayIn;
 
 /**
- * API for PayIns.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiPayIns extends ApiBase {
-
-    /**
-     * Instantiates new ApiPayIns object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
-     */
-    public ApiPayIns(MangoPayApi root) { super(root); }
-    
+public interface ApiPayIns {
     /**
      * Creates new PayIn object.
      * @param payIn     The PayIn object to be created.
      * @return          Created PayIn object returned by API.
      * @throws Exception
      */
-    public PayIn create(PayIn payIn) throws Exception {
-        return this.create(null, payIn);
-    }
-    
+    PayIn create(PayIn payIn) throws Exception;
+
     /**
      * Creates new PayIn object.
      * @param idempotencyKey    Idempotency key for this request.
@@ -31,22 +23,16 @@ public class ApiPayIns extends ApiBase {
      * @return                  Created PayIn object returned by API.
      * @throws Exception
      */
-    public PayIn create(String idempotencyKey, PayIn payIn) throws Exception {
-        String paymentKey = this.getPaymentKey(payIn);
-        String executionKey = this.getExecutionKey(payIn);
-        return this.createObject(PayIn.class, idempotencyKey, String.format("payins_%s-%s_create", paymentKey, executionKey), payIn);
-    }
-    
+    PayIn create(String idempotencyKey, PayIn payIn) throws Exception;
+
     /**
      * Gets PayIn entity by its identifier.
      * @param payInId   PayIn identifier.
      * @return          PayIn object returned by API.
      * @throws Exception
      */
-    public PayIn get(String payInId) throws Exception {
-        return this.getObject(PayIn.class, "payins_get", payInId);
-    }
-    
+    PayIn get(String payInId) throws Exception;
+
     /**
      * Creates refund for PayIn object.
      * @param payInId   PayIn identifier.
@@ -54,10 +40,8 @@ public class ApiPayIns extends ApiBase {
      * @return          Refund entity instance returned by REST API.
      * @throws Exception
      */
-    public Refund createRefund(String payInId, Refund refund) throws Exception {
-        return this.createRefund(null, payInId, refund);
-    }
-    
+    Refund createRefund(String payInId, Refund refund) throws Exception;
+
     /**
      * Creates refund for PayIn object.
      * @param idempotencyKey    Idempotency key for this request.
@@ -66,9 +50,7 @@ public class ApiPayIns extends ApiBase {
      * @return                  Refund entity instance returned by REST API.
      * @throws Exception
      */
-    public Refund createRefund(String idempotencyKey, String payInId, Refund refund) throws Exception {
-        return this.createObject(Refund.class, idempotencyKey, "payins_createrefunds", refund, payInId);
-    }
+    Refund createRefund(String idempotencyKey, String payInId, Refund refund) throws Exception;
 
     /**
      * Gets refund for PayIn object.
@@ -76,55 +58,31 @@ public class ApiPayIns extends ApiBase {
      * @return Refund entity instance returned by REST API.
      * @throws Exception
      */
-    public Refund getRefund(String payInId) throws Exception {
-        return this.getObject(Refund.class, "payins_getrefunds", payInId);
-    }
-    
+    Refund getRefund(String payInId) throws Exception;
+
     /**
-     * WARNING! 
+     * WARNING!
      * This is temporary entity and will be removed in future.
      * Contact support before using these features or if have any queries.
-     * 
+     *
      * Creates new temporary immediate pay-in.
      * @param immediatePayIn    Immediate pay-in object to create.
      * @return                  Immediate pay-in object returned from API.
      * @throws Exception
      */
-    public TemporaryImmediatePayIn createTemporaryImmediatePayIn(TemporaryImmediatePayIn immediatePayIn) throws Exception {
-        return this.createTemporaryImmediatePayIn(null, immediatePayIn);
-    }
-    
+    TemporaryImmediatePayIn createTemporaryImmediatePayIn(TemporaryImmediatePayIn immediatePayIn) throws Exception;
+
     /**
-     * WARNING! 
+     * WARNING!
      * This is temporary entity and will be removed in future.
      * Contact support before using these features or if have any queries.
-     * 
+     *
      * Creates new temporary immediate pay-in.
      * @param idempotencyKey    Idempotency key for this request.
      * @param immediatePayIn    Immediate pay-in object to create.
      * @return                  Immediate pay-in object returned from API.
      * @throws Exception
      */
-    public TemporaryImmediatePayIn createTemporaryImmediatePayIn(String idempotencyKey, TemporaryImmediatePayIn immediatePayIn) throws Exception {
-        return this.createObject(TemporaryImmediatePayIn.class, idempotencyKey, "temp_immediatepayins_create", immediatePayIn);
-    }
-    
-    private String getPaymentKey(PayIn payIn) throws Exception {
-        
-        if (payIn.PaymentDetails == null)
-            throw new Exception ("Payment is not defined or it is not object type");
-        
-        String className = payIn.PaymentDetails.getClass().getSimpleName().replace("PayInPaymentDetails", "");
-        return className.toLowerCase();
-    }
-    
-    private String getExecutionKey(PayIn payIn) throws Exception {
-        
-        if (payIn.ExecutionDetails == null)
-            throw new Exception ("Execution is not defined or it is not object type");
-        
-        String className = payIn.ExecutionDetails.getClass().getSimpleName().replace("PayInExecutionDetails", "");
-        return className.toLowerCase();
-    }
-    
+    TemporaryImmediatePayIn createTemporaryImmediatePayIn(String idempotencyKey, TemporaryImmediatePayIn immediatePayIn) throws Exception;
+
 }

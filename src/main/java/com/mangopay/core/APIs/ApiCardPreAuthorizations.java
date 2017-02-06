@@ -1,56 +1,46 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
 import com.mangopay.entities.CardPreAuthorization;
 
 /**
- * API for card pre-authorizations.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiCardPreAuthorizations extends ApiBase {
-    
-    /**
-     * Instantiates new ApiCardPreAuthorizations object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
-     */
-    public ApiCardPreAuthorizations(MangoPayApi root) { super(root); }
-    
+public interface ApiCardPreAuthorizations {
+
     /**
      * Creates new pre-authorization object.
+     *
      * @param cardPreAuthorization PreAuthorization object to be created.
      * @return Card pre-authorization instance returned from API.
      * @throws Exception
      */
-    public CardPreAuthorization create(CardPreAuthorization cardPreAuthorization) throws Exception {
-        return this.create(null, cardPreAuthorization);
-    }
-    
+    CardPreAuthorization create(CardPreAuthorization cardPreAuthorization) throws Exception;
+
     /**
      * Creates new pre-authorization object.
-     * @param idempotencyKey    Idempotency key for this request.
+     *
+     * @param idempotencyKey       Idempotency key for this request.
      * @param cardPreAuthorization PreAuthorization object to be created.
      * @return Card pre-authorization instance returned from API.
      * @throws Exception
      */
-    public CardPreAuthorization create(String idempotencyKey, CardPreAuthorization cardPreAuthorization) throws Exception {
-        return this.createObject(CardPreAuthorization.class, idempotencyKey, "preauthorization_create", cardPreAuthorization);
-    }
-    
+    CardPreAuthorization create(String idempotencyKey, CardPreAuthorization cardPreAuthorization) throws Exception;
+
     /**
      * Gets pre-authorization object.
+     *
      * @param cardPreAuthorizationId PreAuthorization identifier.
      * @return Card pre-authorization instance returned from API.
      * @throws Exception
      */
-    public CardPreAuthorization get(String cardPreAuthorizationId) throws Exception {
-        return this.getObject(CardPreAuthorization.class, "preauthorization_get", cardPreAuthorizationId);
-    }
+    CardPreAuthorization get(String cardPreAuthorizationId) throws Exception;
+
     /**
      * Updates pre-authorization object.
+     *
      * @param cardPreAuthorization PreAuthorization object to be updated.
      * @return Card pre-authorization instance returned from API.
      * @throws Exception
      */
-    public CardPreAuthorization update(CardPreAuthorization cardPreAuthorization) throws Exception {
-        return this.updateObject(CardPreAuthorization.class, "preauthorization_save", cardPreAuthorization);
-    }
+    CardPreAuthorization update(CardPreAuthorization cardPreAuthorization) throws Exception;
 }

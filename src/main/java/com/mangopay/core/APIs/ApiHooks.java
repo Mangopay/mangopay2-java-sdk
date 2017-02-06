@@ -1,31 +1,23 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.Hook;
+
 import java.util.List;
 
 /**
- * API for hooks.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiHooks extends ApiBase {
-    
-    /**
-     * Instantiates new ApiHooks object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
-     */
-    public ApiHooks(MangoPayApi root) { super(root); }
-    
+public interface ApiHooks {
     /**
      * Creates new hook.
      * @param hook      Hook instance to be created.
      * @return          Hook instance returned from API.
      * @throws Exception
      */
-    public Hook create(Hook hook) throws Exception {
-        return this.create(null, hook);
-    }
-    
+    Hook create(Hook hook) throws Exception;
+
     /**
      * Creates new hook.
      * @param idempotencyKey    Idempotency key for this request.
@@ -33,47 +25,36 @@ public class ApiHooks extends ApiBase {
      * @return                  Hook instance returned from API.
      * @throws Exception
      */
-    public Hook create(String idempotencyKey, Hook hook) throws Exception {
-        return this.createObject(Hook.class, idempotencyKey, "hooks_create", hook);
-    }
-    
+    Hook create(String idempotencyKey, Hook hook) throws Exception;
+
     /**
      * Gets hook.
      * @param hookId    Hook identifier.
      * @return          Hook instance returned from API.
      * @throws Exception
      */
-    public Hook get(String hookId) throws Exception {
-        return this.getObject(Hook.class, "hooks_get", hookId);
-    }
-    
+    Hook get(String hookId) throws Exception;
+
     /**
      * Saves hook.
      * @param hook      Hook instance to be saved.
      * @return          Hook instance returned from API.
      * @throws Exception
      */
-    public Hook update(Hook hook) throws Exception {
-        return this.updateObject(Hook.class, "hooks_save", hook);
-    }
-    
+    Hook update(Hook hook) throws Exception;
+
     /**
      * Gets all hooks.
      * @param pagination    Pagination.
      * @return              List of Hook instances returned from API.
      * @throws Exception
      */
-    public List<Hook> getAll(Pagination pagination, Sorting sorting) throws Exception {
-        return this.getList(Hook[].class, Hook.class, "hooks_all", pagination, sorting);
-    }
-    
+    List<Hook> getAll(Pagination pagination, Sorting sorting) throws Exception;
+
     /**
      * Gets all hooks.
      * @return              List of Hook instances returned from API.
      * @throws Exception
      */
-    public List<Hook> getAll() throws Exception {
-        return this.getAll(null, null);
-    }
-    
+    List<Hook> getAll() throws Exception;
 }

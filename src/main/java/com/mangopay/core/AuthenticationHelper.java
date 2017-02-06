@@ -11,14 +11,14 @@ public class AuthenticationHelper {
     /**
      * Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private MangoPayApi _root;
+    private MangoPayApi root;
     
     /**
      * Instantiates new AuthenticationHelper object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public AuthenticationHelper(MangoPayApi root) throws Exception {
-        this._root = root;
+        this.root = root;
     }
     
     /**
@@ -36,13 +36,13 @@ public class AuthenticationHelper {
      * @throws Exception
      */
     public String getHttpHeaderBasicKey() throws Exception {
-        if (_root.Config.ClientId == null || _root.Config.ClientId.length() == 0)
+        if (root.getConfig().getClientId() == null || root.getConfig().getClientId().length() == 0)
             throw new Exception ("MangoPay.Config.ClientId is not set.");
         
-        if (_root.Config.ClientPassword == null || _root.Config.ClientPassword.length() == 0)
+        if (root.getConfig().getClientPassword() == null || root.getConfig().getClientPassword().length() == 0)
             throw new Exception ("MangoPay.Config.ClientPassword is not set.");
         
-        String signature = _root.Config.ClientId + ':' + _root.Config.ClientPassword;
+        String signature = root.getConfig().getClientId() + ':' + root.getConfig().getClientPassword();
         
         return Base64Encoder.encode(signature);
     }
@@ -58,13 +58,13 @@ public class AuthenticationHelper {
     // gets HTTP header value with authorization string for strong authentication
     private Map<String, String> getHttpHeaderStrong() throws Exception {
         
-        final OAuthToken token = _root.OAuthTokenManager.getToken();
+        final OAuthToken token = root.getOAuthTokenManager().getToken();
         
-        if (token == null || token.access_token.length() == 0 || token.token_type.length() == 0)
+        if (token == null || token.getAccessToken().length() == 0 || token.getTokenType().length() == 0)
             throw new Exception ("OAuth token is not created (or is invalid) for strong authentication");
                 
         return new HashMap<String, String>(){{
-            put("Authorization", token.token_type + " " + token.access_token);
+            put("Authorization", token.getTokenType() + " " + token.getAccessToken());
         }};
     }
 }

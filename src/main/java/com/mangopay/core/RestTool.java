@@ -22,34 +22,34 @@ import java.util.regex.Matcher;
 public class RestTool {
 
     // root/parent instance that holds the OAuthToken and Configuration instance
-    private MangoPayApi _root;
+    private MangoPayApi root;
 
     // enable/disable debugging
-    private Boolean _debugMode;
+    private Boolean debugMode;
 
     // variable to flag that in request authentication data are required
-    private Boolean _authRequired;
+    private Boolean authRequired;
 
     // array with HTTP header to send with request
-    private Map<String, String> _requestHttpHeaders;
+    private Map<String, String> requestHttpHeaders;
 
     // HTTP communication object
-    private HttpURLConnection _connection;
+    private HttpURLConnection connection;
 
     // request type for current request
-    private String _requestType;
+    private String requestType;
 
     // key-value collection pass in the request
-    private Map<String, String> _requestData;
+    private Map<String, String> requestData;
 
     // code get from response
-    private int _responseCode;
+    private int responseCode;
 
     // pagination object
-    private Pagination _pagination;
+    private Pagination pagination;
 
     // slf4j logger facade
-    private Logger _logger;
+    private Logger logger;
 
     /**
      * Instantiates new RestTool object.
@@ -59,11 +59,11 @@ public class RestTool {
      * @throws Exception
      */
     public RestTool(MangoPayApi root, Boolean authRequired) throws Exception {
-        this._root = root;
-        this._authRequired = authRequired;
-        this._debugMode = this._root.Config.DebugMode;
+        this.root = root;
+        this.authRequired = authRequired;
+        this.debugMode = this.root.getConfig().isDebugMode();
 
-        _logger = LoggerFactory.getLogger(RestTool.class);
+        logger = LoggerFactory.getLogger(RestTool.class);
     }
 
     /**
@@ -73,10 +73,10 @@ public class RestTool {
      */
     public void addRequestHttpHeader(Map<String, String> httpHeader) {
 
-        if (this._requestHttpHeaders == null)
-            this._requestHttpHeaders = new HashMap<>();
+        if (this.requestHttpHeaders == null)
+            this.requestHttpHeaders = new HashMap<>();
 
-        this._requestHttpHeaders.putAll(httpHeader);
+        this.requestHttpHeaders.putAll(httpHeader);
     }
 
     /**
@@ -136,13 +136,13 @@ public class RestTool {
      */
     public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, T entity) throws Exception {
 
-        this._requestType = requestType;
-        this._requestData = requestData;
+        this.requestType = requestType;
+        this.requestData = requestData;
 
         T responseResult = this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
 
         if (pagination != null) {
-            pagination = this._pagination;
+            pagination = this.pagination;
         }
 
         return responseResult;
@@ -228,13 +228,13 @@ public class RestTool {
      */
     public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, Map<String, String> additionalUrlParams) throws Exception {
 
-        this._requestType = requestType;
-        this._requestData = requestData;
+        this.requestType = requestType;
+        this.requestData = requestData;
 
         List<T> responseResult = this.doRequestList(classOfT, classOfTItem, urlMethod, pagination, additionalUrlParams);
 
         if (pagination != null) {
-            pagination = this._pagination;
+            pagination = this.pagination;
         }
 
         return responseResult;
@@ -307,58 +307,58 @@ public class RestTool {
         T response = null;
 
         try {
-            UrlTool urlTool = new UrlTool(_root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this._authRequired, pagination, null);
+            UrlTool urlTool = new UrlTool(root);
+            String restUrl = urlTool.getRestUrl(urlMethod, this.authRequired, pagination, null);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
 
-            if (this._debugMode) {
-                _logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
+            if (this.debugMode) {
+                logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
             }
 
             /*  FOR WEB DEBUG PURPOSES
             SocketAddress addr = new InetSocketAddress("localhost", 8888);
             Proxy proxy = new Proxy(Proxy.Type.HTTP, addr);
-            _connection = (HttpURLConnection)url.openConnection(proxy);
+            connection = (HttpURLConnection)url.openConnection(proxy);
             */
 
-            _connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
             // Get connection timeout from config
-            _connection.setConnectTimeout(this._root.Config.getConnectTimeout());
+            connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
             // Get read timeout from config
-            _connection.setReadTimeout(this._root.Config.getReadTimeout());
+            connection.setReadTimeout(this.root.getConfig().getReadTimeout());
 
             // set request method
-            _connection.setRequestMethod(this._requestType);
+            connection.setRequestMethod(this.requestType);
 
             // set headers
             Map<String, String> httpHeaders = this.getHttpHeaders(restUrl);
 
             for (Entry<String, String> entry : httpHeaders.entrySet()) {
-                _connection.addRequestProperty(entry.getKey(), entry.getValue());
+                connection.addRequestProperty(entry.getKey(), entry.getValue());
 
-                if (this._debugMode)
-                    _logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
+                if (this.debugMode)
+                    logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
             }
 
             if (idempotencyKey != null && !idempotencyKey.trim().isEmpty()) {
-                _connection.addRequestProperty("Idempotency-Key", idempotencyKey);
+                connection.addRequestProperty("Idempotency-Key", idempotencyKey);
             }
 
             // prepare to go
-            _connection.setUseCaches(false);
-            _connection.setDoInput(true);
-            _connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
 
             if (pagination != null) {
-                this._pagination = pagination;
+                this.pagination = pagination;
             }
 
-            if (this._debugMode)
-                _logger.info("RequestType: {}", this._requestType);
+            if (this.debugMode)
+                logger.info("RequestType: {}", this.requestType);
 
-            if (this._requestData != null || entity != null) {
+            if (this.requestData != null || entity != null) {
 
                 String requestBody = "";
                 if (entity != null) {
@@ -367,20 +367,20 @@ public class RestTool {
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
                     requestBody = gson.toJson(requestData);
                 }
-                if (this._requestData != null) {
+                if (this.requestData != null) {
                     String params = "";
-                    for (Entry<String, String> entry : this._requestData.entrySet()) {
+                    for (Entry<String, String> entry : this.requestData.entrySet()) {
                         params += String.format("&%s=%s", URLEncoder.encode(entry.getKey(), "UTF-8"), URLEncoder.encode(entry.getValue(), "UTF-8"));
                     }
                     requestBody = params.replaceFirst("&", "");
                 }
 
-                if (this._debugMode) {
-                    _logger.info("RequestData: {}", this._requestData);
-                    _logger.info("RequestBody: {}", requestBody);
+                if (this.debugMode) {
+                    logger.info("RequestData: {}", this.requestData);
+                    logger.info("RequestBody: {}", requestBody);
                 }
 
-                try (OutputStreamWriter osw = new OutputStreamWriter(_connection.getOutputStream(), "UTF-8")) {
+                try (OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream(), "UTF-8")) {
                     osw.write(requestBody);
                     osw.flush();
                 }
@@ -388,12 +388,12 @@ public class RestTool {
 
 
             // get response
-            this._responseCode = _connection.getResponseCode();
+            this.responseCode = connection.getResponseCode();
             InputStream is;
-            if (this._responseCode != 200 && this._responseCode != 204) {
-                is = _connection.getErrorStream();
+            if (this.responseCode != 200 && this.responseCode != 204) {
+                is = connection.getErrorStream();
             } else {
-                is = _connection.getInputStream();
+                is = connection.getInputStream();
             }
 
             StringBuffer resp;
@@ -406,28 +406,28 @@ public class RestTool {
             }
             String responseString = resp.toString();
 
-            if (this._debugMode) {
-                if (this._responseCode == 200 || this._responseCode == 204) {
-                    _logger.info("Response OK: {}", responseString);
+            if (this.debugMode) {
+                if (this.responseCode == 200 || this.responseCode == 204) {
+                    logger.info("Response OK: {}", responseString);
                 } else {
-                    _logger.info("Response ERROR: {}", responseString);
+                    logger.info("Response ERROR: {}", responseString);
                 }
             }
 
-            if (this._responseCode == 200) {
+            if (this.responseCode == 200) {
 
-                this.readResponseHeaders(_connection);
+                this.readResponseHeaders(connection);
 
                 response = castResponseToEntity(classOfT, new JsonParser().parse(responseString).getAsJsonObject());
 
-                if (this._debugMode) _logger.info("Response object: {}", response.toString());
+                if (this.debugMode) logger.info("Response object: {}", response.toString());
             }
 
             this.checkResponseCode(responseString);
 
         } catch (Exception ex) {
             //ex.printStackTrace();
-            if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
+            if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
             throw ex;
         }
 
@@ -438,15 +438,15 @@ public class RestTool {
         for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
             for (String v : k.getValue()) {
 
-                if (this._debugMode) _logger.info("Response header: {}", k.getKey() + ":" + v);
+                if (this.debugMode) logger.info("Response header: {}", k.getKey() + ":" + v);
 
                 if (k.getKey() == null) continue;
 
                 if (k.getKey().equals("X-Number-Of-Pages")) {
-                    this._pagination.TotalPages = Integer.parseInt(v);
+                    this.pagination.setTotalPages(Integer.parseInt(v));
                 }
                 if (k.getKey().equals("X-Number-Of-Items")) {
-                    this._pagination.TotalItems = Integer.parseInt(v);
+                    this.pagination.setTotalItems(Integer.parseInt(v));
                 }
                 if (k.getKey().equals("Link")) {
                     String linkValue = v;
@@ -463,7 +463,7 @@ public class RestTool {
 
                             if (oneLink != null && oneLink.length > 1) {
                                 if (oneLink[0] != null && oneLink[1] != null) {
-                                    this._pagination.Links = oneLink;
+                                    this.pagination.setLinks(oneLink);
                                 }
                             }
                         }
@@ -508,7 +508,7 @@ public class RestTool {
                     Method m = RestTool.class.getDeclaredMethod("buildRequestData", Class.class, Dto.class);
                     subRequestData = (HashMap<String, Object>) m.invoke(this, f.getType(), f.get(entity));
                 } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                    if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
+                    if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
                 }
 
                 for (Entry<String, Object> e : subRequestData.entrySet()) {
@@ -558,8 +558,8 @@ public class RestTool {
 
         try {
 
-            if (_debugMode) {
-                _logger.info("Entity type: {}", classOfT.getName());
+            if (debugMode) {
+                logger.info("Entity type: {}", classOfT.getName());
             }
 
             if (classOfT.getName().equals(IdempotencyResponse.class.getName())) {
@@ -570,17 +570,17 @@ public class RestTool {
                 for (Entry<String, JsonElement> entry : response.entrySet()) {
 
                     if (entry.getKey().equals("StatusCode")) {
-                        resp.StatusCode = entry.getValue().getAsString();
+                        resp.setStatusCode(entry.getValue().getAsString());
                     } else if (entry.getKey().equals("ContentLength")) {
-                        resp.ContentLength = entry.getValue().getAsString();
+                        resp.setContentLength(entry.getValue().getAsString());
                     } else if (entry.getKey().equals("ContentType")) {
-                        resp.ContentType = entry.getValue().getAsString();
+                        resp.setContentType(entry.getValue().getAsString());
                     } else if (entry.getKey().equals("Date")) {
-                        resp.Date = entry.getValue().getAsString();
+                        resp.setDate(entry.getValue().getAsString());
                     } else if (entry.getKey().equals("Resource")) {
-                        resp.Resource = entry.getValue().toString();
+                        resp.setResource(entry.getValue().toString());
                     } else if (entry.getKey().equals("RequestURL")) {
-                        resp.RequestURL = entry.getValue().toString();
+                        resp.setRequestURL(entry.getValue().toString());
                     }
 
                 }
@@ -677,8 +677,8 @@ public class RestTool {
                             }
                         }
 
-                        if (_debugMode) {
-                            _logger.info("Recognized field: {}", String.format("[%s] %s%s", name, fieldTypeName, fieldIsArray ? "[]" : ""));
+                        if (debugMode) {
+                            logger.info("Recognized field: {}", String.format("[%s] %s%s", name, fieldTypeName, fieldIsArray ? "[]" : ""));
                         }
 
                         if (fieldIsArray) {
@@ -756,7 +756,7 @@ public class RestTool {
             return result;
 
         } catch (Exception e) {
-            if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(e.getStackTrace()));
+            if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(e.getStackTrace()));
 
             throw e;
         }
@@ -772,69 +772,69 @@ public class RestTool {
         List<T> response = new ArrayList<>();
 
         try {
-            UrlTool urlTool = new UrlTool(_root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this._authRequired, pagination, additionalUrlParams);
+            UrlTool urlTool = new UrlTool(root);
+            String restUrl = urlTool.getRestUrl(urlMethod, this.authRequired, pagination, additionalUrlParams);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
-            if (this._debugMode)
-                _logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
+            if (this.debugMode)
+                logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
 
-            _connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
 
             // set request method
-            _connection.setRequestMethod(this._requestType);
+            connection.setRequestMethod(this.requestType);
 
             // set headers
             Map<String, String> httpHeaders = this.getHttpHeaders(restUrl);
 
             for (Entry<String, String> entry : httpHeaders.entrySet()) {
-                _connection.addRequestProperty(entry.getKey(), entry.getValue());
+                connection.addRequestProperty(entry.getKey(), entry.getValue());
 
-                if (this._debugMode)
-                    _logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
+                if (this.debugMode)
+                    logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
             }
 
             // prepare to go
-            _connection.setUseCaches(false);
-            _connection.setDoInput(true);
-            _connection.setDoOutput(true);
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
 
             if (pagination != null) {
-                this._pagination = pagination;
+                this.pagination = pagination;
             }
 
-            if (this._debugMode)
-                _logger.info("RequestType: {}", this._requestType);
+            if (this.debugMode)
+                logger.info("RequestType: {}", this.requestType);
 
-            if (this._requestData != null) {
+            if (this.requestData != null) {
 
                 String requestBody;
                 String params = "";
-                for (Entry<String, String> entry : this._requestData.entrySet()) {
+                for (Entry<String, String> entry : this.requestData.entrySet()) {
                     params += String.format("&%s=%s", URLEncoder.encode(entry.getKey(), "UTF-8"), URLEncoder.encode(entry.getValue(), "UTF-8"));
                 }
                 requestBody = params.replaceFirst("&", "");
 
-                try (DataOutputStream wr = new DataOutputStream(_connection.getOutputStream())) {
+                try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
                     wr.writeBytes(requestBody);
                     wr.flush();
                 }
 
-                if (this._debugMode) {
-                    _logger.info("RequestData: {}", this._requestData);
-                    _logger.info("RequestBody: {}", requestBody);
+                if (this.debugMode) {
+                    logger.info("RequestData: {}", this.requestData);
+                    logger.info("RequestBody: {}", requestBody);
                 }
             }
 
 
             //Get Response	
-            this._responseCode = _connection.getResponseCode();
+            this.responseCode = connection.getResponseCode();
             InputStream is;
-            if (this._responseCode != 200) {
-                is = _connection.getErrorStream();
+            if (this.responseCode != 200) {
+                is = connection.getErrorStream();
             } else {
-                is = _connection.getInputStream();
+                is = connection.getInputStream();
             }
 
             StringBuffer resp;
@@ -848,17 +848,17 @@ public class RestTool {
             }
             String responseString = resp.toString();
 
-            if (this._debugMode) {
-                if (this._responseCode == 200) {
-                    _logger.info("Response OK: {}", responseString);
+            if (this.debugMode) {
+                if (this.responseCode == 200) {
+                    logger.info("Response OK: {}", responseString);
                 } else {
-                    _logger.info("Response ERROR: {}", responseString);
+                    logger.info("Response ERROR: {}", responseString);
                 }
             }
 
-            if (this._responseCode == 200) {
+            if (this.responseCode == 200) {
 
-                this.readResponseHeaders(_connection);
+                this.readResponseHeaders(connection);
 
                 JsonArray ja = new JsonParser().parse(responseString).getAsJsonArray();
 
@@ -868,16 +868,16 @@ public class RestTool {
                     response.add(toAdd);
                 }
 
-                if (this._debugMode) {
-                    _logger.info("Response object: {}", response.toString());
-                    _logger.info("Elements count: {}", response.size());
+                if (this.debugMode) {
+                    logger.info("Response object: {}", response.toString());
+                    logger.info("Elements count: {}", response.size());
                 }
             }
 
             this.checkResponseCode(responseString);
 
         } catch (Exception ex) {
-            if (this._debugMode) _logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
+            if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
             throw ex;
         }
 
@@ -893,8 +893,8 @@ public class RestTool {
      */
     private Map<String, String> getHttpHeaders(String restUrl) throws Exception {
         // return if already created...
-        if (this._requestHttpHeaders != null)
-            return this._requestHttpHeaders;
+        if (this.requestHttpHeaders != null)
+            return this.requestHttpHeaders;
 
         // ...or initialize with default headers
         Map<String, String> httpHeaders = new HashMap<>();
@@ -903,8 +903,8 @@ public class RestTool {
         httpHeaders.put("Content-Type", "application/json");
 
         // AuthenticationHelper http header
-        if (this._authRequired) {
-            AuthenticationHelper authHlp = new AuthenticationHelper(_root);
+        if (this.authRequired) {
+            AuthenticationHelper authHlp = new AuthenticationHelper(root);
             httpHeaders.putAll(authHlp.getHttpHeaderKey());
         }
 
@@ -919,7 +919,7 @@ public class RestTool {
      */
     private void checkResponseCode(String message) throws ResponseException {
 
-        if (this._responseCode != 200 && this._responseCode != 204) {
+        if (this.responseCode != 200 && this.responseCode != 204) {
 
             HashMap<Integer, String> responseCodes = new HashMap<Integer, String>() {{
                 put(206, "PartialContent");
@@ -935,12 +935,12 @@ public class RestTool {
             }};
 
             ResponseException responseException = new ResponseException(message);
-            responseException.ResponseHttpCode = this._responseCode;
+            responseException.setResponseHttpCode(this.responseCode);
 
-            if (responseCodes.containsKey(this._responseCode)) {
-                responseException.ResponseHttpDescription = responseCodes.get(this._responseCode);
+            if (responseCodes.containsKey(this.responseCode)) {
+                responseException.setResponseHttpDescription(responseCodes.get(this.responseCode));
             } else {
-                responseException.ResponseHttpDescription = "Unknown response error";
+                responseException.setResponseHttpDescription("Unknown response error");
             }
 
             if (message != null) {
@@ -949,16 +949,16 @@ public class RestTool {
 
                     switch (entry.getKey().toLowerCase()) {
                         case "message":
-                            responseException.ApiMessage = entry.getValue().getAsString();
+                            responseException.setApiMessage(entry.getValue().getAsString());
                             break;
                         case "type":
-                            responseException.Type = entry.getValue().getAsString();
+                            responseException.setType(entry.getValue().getAsString());
                             break;
                         case "id":
-                            responseException.Id = entry.getValue().getAsString();
+                            responseException.setId(entry.getValue().getAsString());
                             break;
                         case "date":
-                            responseException.Date = (int) entry.getValue().getAsDouble();
+                            responseException.setDate((int) entry.getValue().getAsDouble());
                             break;
                         case "errors":
                             if (entry.getValue() == null) break;
@@ -966,13 +966,13 @@ public class RestTool {
                             if (entry.getValue().isJsonNull()) break;
 
                             for (Entry<String, JsonElement> errorEntry : entry.getValue().getAsJsonObject().entrySet()) {
-                                if (!responseException.Errors.containsKey(errorEntry.getKey()))
-                                    responseException.Errors.put(errorEntry.getKey(), errorEntry.getValue().getAsString());
+                                if (!responseException.getErrors().containsKey(errorEntry.getKey()))
+                                    responseException.getErrors().put(errorEntry.getKey(), errorEntry.getValue().getAsString());
                                 else {
-                                    String description = responseException.Errors.get(errorEntry.getKey());
+                                    String description = responseException.getErrors().get(errorEntry.getKey());
                                     description = " | " + errorEntry.getValue().getAsString();
 
-                                    responseException.Errors.put(errorEntry.getKey(), description);
+                                    responseException.getErrors().put(errorEntry.getKey(), description);
                                 }
                             }
                             break;
