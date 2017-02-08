@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.enumerations.PersonType;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.PayInPaymentDetailsBankingAlias;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -543,6 +544,10 @@ public class RestTool {
         }
 
         if (classOfT.getName().equals(BankAccount.class.getName()) && fieldName.equals("Details")) {
+            return true;
+        }
+
+        if(classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
             return true;
         }
 

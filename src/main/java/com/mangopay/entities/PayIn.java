@@ -115,6 +115,7 @@ public class PayIn extends Transaction {
                         );
                         put("BANK_WIRE", new HashMap<String, Class<?>>() {{
                                     put("PaymentDetails", PayInPaymentDetailsBankWire.class);
+                                    put("PaymentDetails", PayInPaymentDetailsBankingAlias.class);
                                 }}
                         );
                         put("DIRECT_DEBIT", new HashMap<String, Class<?>>() {{

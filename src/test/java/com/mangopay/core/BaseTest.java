@@ -36,6 +36,7 @@ public abstract class BaseTest {
     private static PayOut JOHNS_PAYOUT_FOR_CARD_DIRECT;
     private static Hook JOHNS_HOOK;
     private static ReportRequest JOHNS_REPORT;
+    private static BankingAlias JOHNS_BANKING_ALIAS;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -128,6 +129,7 @@ public abstract class BaseTest {
             BaseTest.JOHNS_PAYOUT_BANKWIRE = null;
             BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
             BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
+            BaseTest.JOHNS_BANKING_ALIAS = null;
         }
         return BaseTest.JOHN;
     }
@@ -680,6 +682,24 @@ public abstract class BaseTest {
         BaseTest.JOHNS_REPORT = this.api.getReportApi().create(reportPost);
 
         return BaseTest.JOHNS_REPORT;
+    }
+
+    protected BankingAlias getJohnsBankingAlias() throws Exception {
+        if (BaseTest.JOHNS_BANKING_ALIAS == null) {
+            BankingAlias bankingAlias = new BankingAlias();
+            bankingAlias.setOwnerName(getJohn().getFirstName() + " " + getJohn().getLastName());
+            bankingAlias.setCountry(CountryIso.FR);
+            BaseTest.JOHNS_BANKING_ALIAS = api.getBankingAliases().create(getJohnsWallet().getId(), bankingAlias);
+        }
+        return BaseTest.JOHNS_BANKING_ALIAS;
+    }
+
+    protected BankingAlias getNewJohnsBankingAlias() throws Exception {
+        BankingAlias bankingAlias = new BankingAlias();
+        bankingAlias.setOwnerName(getJohn().getFirstName() + " " + getJohn().getLastName());
+        bankingAlias.setCountry(CountryIso.FR);
+        BaseTest.JOHNS_BANKING_ALIAS = api.getBankingAliases().create(getJohnsWallet().getId(), bankingAlias);
+        return BaseTest.JOHNS_BANKING_ALIAS;
     }
 
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {

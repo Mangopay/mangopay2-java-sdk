@@ -32,5 +32,10 @@ public enum PayInExecutionType {
     /**
      * RECURRING ORDER execution type.
      */
-    RECURRING_ORDER_EXECUTION
+    RECURRING_ORDER_EXECUTION,
+
+    /**
+     * EXTERNAL INSTRUCTION execution type.
+     */
+    EXTERNAL_INSTRUCTION
 }
