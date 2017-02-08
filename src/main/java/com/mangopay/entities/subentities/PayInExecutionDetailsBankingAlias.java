@@ -1,7 +1,7 @@
 package com.mangopay.entities.subentities;
 
 import com.mangopay.core.Dto;
-import com.mangopay.core.interfaces.PayInPaymentDetails;
+import com.mangopay.core.interfaces.PayInExecutionDetails;
 import com.mangopay.entities.DebitedBankAccount;
 
 import java.lang.reflect.Type;
@@ -11,7 +11,7 @@ import java.util.Map;
 /**
  * Payment details for banking alias pay-in.
  */
-public class PayInPaymentDetailsBankingAlias extends Dto implements PayInPaymentDetails {
+public class PayInExecutionDetailsBankingAlias extends Dto implements PayInExecutionDetails {
 
     /**
      * ID of the banking alias.
