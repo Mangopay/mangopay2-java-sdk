@@ -7,10 +7,14 @@ import com.mangopay.core.AuthenticationHelper;
 import com.mangopay.core.OAuthToken;
 import com.mangopay.core.RestTool;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,8 +55,21 @@ public class OAuthApiImpl extends ApiBase implements ApiOAuth {
             Logger.getLogger(OAuthApiImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         rest.addRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
+        rest.addRequestHttpHeader("User-Agent", "MangoPay V2 JAVA/" + getProjectVersion());
         OAuthToken response = rest.request(OAuthToken.class, null, urlMethod, requestType, requestData);
 
         return response;
+    }
+
+    private String getProjectVersion() {
+        Properties prop = new Properties();
+        try (InputStream input = new FileInputStream("version.properties")) {
+            // load a properties file
+            prop.load(input);
+            return prop.getProperty("version");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }
