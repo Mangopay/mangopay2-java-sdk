@@ -1,29 +1,19 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
 import com.mangopay.entities.CardRegistration;
 
 /**
- * API for card registrations.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiCardRegistrations extends ApiBase {
-    
-    /**
-     * Instantiates new ApiCardRegistration object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
-     */
-    public ApiCardRegistrations(MangoPayApi root) { super(root); }
-    
+public interface ApiCardRegistrations {
     /**
      * Creates new card registration.
      * @param cardRegistration Card registration object to create.
      * @return Card registration instance returned from API.
      * @throws Exception
      */
-    public CardRegistration create(CardRegistration cardRegistration) throws Exception {
-        return this.create(null, cardRegistration);
-    }
-    
+    CardRegistration create(CardRegistration cardRegistration) throws Exception;
+
     /**
      * Creates new card registration.
      * @param idempotencyKey    Idempotency key for this request.
@@ -31,28 +21,21 @@ public class ApiCardRegistrations extends ApiBase {
      * @return Card registration instance returned from API.
      * @throws Exception
      */
-    public CardRegistration create(String idempotencyKey, CardRegistration cardRegistration) throws Exception {
-        return this.createObject(CardRegistration.class, idempotencyKey, "cardregistration_create", cardRegistration);
-    }
-    
+    CardRegistration create(String idempotencyKey, CardRegistration cardRegistration) throws Exception;
+
     /**
      * Gets card registration.
      * @param cardRegistrationId Card Registration identifier.
      * @return Card registration instance returned from API.
      * @throws Exception
      */
-    public CardRegistration get(String cardRegistrationId) throws Exception {
-        return this.getObject(CardRegistration.class, "cardregistration_get", cardRegistrationId);
-    }
-    
+    CardRegistration get(String cardRegistrationId) throws Exception;
+
     /**
      * Updates card registration.
      * @param cardRegistration Card registration object to be updated.
      * @return Card registration instance returned from API.
      * @throws Exception
      */
-    public CardRegistration update(CardRegistration cardRegistration) throws Exception {
-        return this.updateObject(CardRegistration.class, "cardregistration_save", cardRegistration);
-    }
-    
+    CardRegistration update(CardRegistration cardRegistration) throws Exception;
 }

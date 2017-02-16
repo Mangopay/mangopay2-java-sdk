@@ -1,24 +1,17 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.FilterTransactions;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.KycDocumentType;
-import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
 import com.mangopay.entities.*;
-import java.nio.file.*;
-import java.util.List;
-import org.apache.commons.codec.binary.Base64;
 
+import java.util.List;
 
 /**
- * API for users.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiUsers extends ApiBase {
-
-    /**
-     * Instantiates new ApiUsers object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
-     */
-    public ApiUsers(MangoPayApi root) { super(root); }
+public interface ApiUsers {
 
     /**
      * Gets user.
@@ -26,20 +19,16 @@ public class ApiUsers extends ApiBase {
      * @return          User instance returned from API, which is either of UserNatural or UserLegal type.
      * @throws Exception
      */
-    public User get(String userId) throws Exception {
-        return this.getObject(User.class, "users_get", userId);
-    }
-    
+    User get(String userId) throws Exception;
+
     /**
      * Creates new user.
      * @param user  User object to be created.
      * @return      User instance returned from API, which is either of UserNatural or UserLegal type.
      * @throws Exception
      */
-    public User create(User user) throws Exception {
-        return create(null, user);
-    }
-    
+    User create(User user) throws Exception;
+
     /**
      * Creates new user.
      * @param idempotencyKey    Idempotency key for this request.
@@ -47,19 +36,7 @@ public class ApiUsers extends ApiBase {
      * @return                  User instance returned from API, which is either of UserNatural or UserLegal type.
      * @throws Exception
      */
-    public User create(String idempotencyKey, User user) throws Exception {
-        
-        User response = null;
-        
-        if (user instanceof UserNatural)
-            response = this.createObject(UserNatural.class, idempotencyKey, "users_createnaturals", (UserNatural)user);
-        else if (user instanceof UserLegal)
-            response = this.createObject(UserLegal.class, idempotencyKey, "users_createlegals", (UserLegal)user);
-        else
-            throw new Exception("Unsupported user entity type.");
-        
-        return response;
-    }
+    User create(String idempotencyKey, User user) throws Exception;
 
     /**
      * Gets page of users.
@@ -67,58 +44,39 @@ public class ApiUsers extends ApiBase {
      * @return              Collection of User instances.
      * @throws Exception
      */
-    public List<User> getAll(Pagination pagination, Sorting sorting) throws Exception {
-        return this.getList(User[].class, User.class, "users_all", pagination, sorting);
-    }
-    
+    List<User> getAll(Pagination pagination, Sorting sorting) throws Exception;
+
     /**
      * Gets first page of users.
      * @return      Collection of User instances.
      * @throws Exception
      */
-    public List<User> getAll() throws Exception {
-        return getAll(null, null);
-    }
-    
+    List<User> getAll() throws Exception;
+
     /**
      * Gets natural user by its identifier,
      * @param userId    UserNatural identifier.
      * @return          UserNatural object returned from API.
      * @throws Exception
      */
-    public UserNatural getNatural(String userId) throws Exception {
-        return this.getObject(UserNatural.class, "users_getnaturals", userId);
-    }
-    
+    UserNatural getNatural(String userId) throws Exception;
+
     /**
      * Gets legal user by its identifier.
      * @param userId    UserLegal identifier.
      * @return          UserLegal object returned from API.
      * @throws Exception
      */
-    public UserLegal getLegal(String userId) throws Exception {
-        return this.getObject(UserLegal.class, "users_getlegals", userId);
-    }
-    
+    UserLegal getLegal(String userId) throws Exception;
+
     /**
      * Updates the user.
      * @param user      Instance of UserNatural or UserLegal class to be updated.
      * @return          Updated User object returned from API.
      * @throws Exception
      */
-    public User update(User user) throws Exception {
-        
-        String methodKey = "";
-        if (user instanceof UserNatural)
-            methodKey = "users_savenaturals";
-        else if (user instanceof UserLegal)
-            methodKey = "users_savelegals";
-        else
-            throw new Exception("Unsupported user entity type.");
-        
-        return this.updateObject(User.class, methodKey, user);
-    }
-    
+    User update(User user) throws Exception;
+
     /**
      * Creates bank account for user.
      * @param userId        User identifier to create bank account for.
@@ -126,10 +84,8 @@ public class ApiUsers extends ApiBase {
      * @return              Created bank account object returned from API.
      * @throws Exception
      */
-    public BankAccount createBankAccount(String userId, BankAccount bankAccount) throws Exception {
-        return this.createBankAccount(null, userId, bankAccount);
-    }
-    
+    BankAccount createBankAccount(String userId, BankAccount bankAccount) throws Exception;
+
     /**
      * Creates bank account for user.
      * @param idempotencyKey    Idempotency key for this request.
@@ -138,11 +94,8 @@ public class ApiUsers extends ApiBase {
      * @return                  Created bank account object returned from API.
      * @throws Exception
      */
-    public BankAccount createBankAccount(String idempotencyKey, String userId, BankAccount bankAccount) throws Exception {
-        String type = this.getBankAccountType(bankAccount);
-        return this.createObject(BankAccount.class, idempotencyKey, "users_createbankaccounts_" + type, bankAccount, userId);
-    }
-    
+    BankAccount createBankAccount(String idempotencyKey, String userId, BankAccount bankAccount) throws Exception;
+
     /**
      * Updates bank account.
      * @param userId            User identifier.
@@ -151,10 +104,8 @@ public class ApiUsers extends ApiBase {
      * @return                  Updated bank account object returned from API.
      * @throws Exception
      */
-    public BankAccount updateBankAccount(String userId, BankAccount bankAccount, String bankAccountId) throws Exception {
-        return this.updateObject(BankAccount.class, "users_savebankaccount", bankAccount, userId, bankAccountId);
-    }
-    
+    BankAccount updateBankAccount(String userId, BankAccount bankAccount, String bankAccountId) throws Exception;
+
     /**
      * Gets all bank accounts of user.
      * @param userId        User identifier to get bank accounts of.
@@ -163,20 +114,16 @@ public class ApiUsers extends ApiBase {
      * @return              Collection of bank accounts of user.
      * @throws Exception
      */
-    public List<BankAccount> getBankAccounts(String userId, Pagination pagination, Sorting sorting) throws Exception {
-        return this.getList(BankAccount[].class, BankAccount.class, "users_allbankaccount", pagination, userId, sorting);
-    }
-    
+    List<BankAccount> getBankAccounts(String userId, Pagination pagination, Sorting sorting) throws Exception;
+
     /**
      * Gets first page of all bank accounts of user.
      * @param userId        User identifier to get bank accounts of.
      * @return              Collection of bank accounts of user.
      * @throws Exception
      */
-    public List<BankAccount> getBankAccounts(String userId) throws Exception {
-        return getBankAccounts(userId, null, null);
-    }
-    
+    List<BankAccount> getBankAccounts(String userId) throws Exception;
+
     /**
      * Gets bank account of user.
      * @param userId        User identifier.
@@ -184,10 +131,8 @@ public class ApiUsers extends ApiBase {
      * @return              Bank account object returned from API.
      * @throws Exception
      */
-    public BankAccount getBankAccount(String userId, String bankAccountId) throws Exception {
-        return this.getObject(BankAccount.class, "users_getbankaccount", userId, bankAccountId);
-    }
-    
+    BankAccount getBankAccount(String userId, String bankAccountId) throws Exception;
+
     /**
      * Gets all wallets of user.
      * @param userId        User identifier to get bank accounts of.
@@ -196,20 +141,16 @@ public class ApiUsers extends ApiBase {
      * @return              Collection of wallets of user.
      * @throws Exception
      */
-    public List<Wallet> getWallets(String userId, Pagination pagination, Sorting sorting) throws Exception {
-        return this.getList(Wallet[].class, Wallet.class, "users_allwallets", pagination, userId, sorting);
-    }
-    
+    List<Wallet> getWallets(String userId, Pagination pagination, Sorting sorting) throws Exception;
+
     /**
      * Gets first page of all wallets of user.
      * @param userId        User identifier to get bank accounts of.
      * @return              Collection of wallets of user.
      * @throws Exception
      */
-    public List<Wallet> getWallets(String userId) throws Exception {
-        return getWallets(userId, null, null);
-    }
-    
+    List<Wallet> getWallets(String userId) throws Exception;
+
     /**
      * Gets transactions for user.
      * @param userId        User identifier.
@@ -219,10 +160,8 @@ public class ApiUsers extends ApiBase {
      * @return              Collection of transactions of user.
      * @throws Exception
      */
-    public List<Transaction> getTransactions(String userId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception {
-        return this.getList(Transaction[].class, Transaction.class, "users_alltransactions", pagination, userId, filter.getValues(), sorting);
-    }
-    
+    List<Transaction> getTransactions(String userId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception;
+
     /**
      * Gets all cards for user.
      * @param userId        User identifier.
@@ -231,10 +170,8 @@ public class ApiUsers extends ApiBase {
      * @return              Collection of user's cards.
      * @throws Exception
      */
-    public List<Card> getCards(String userId, Pagination pagination, Sorting sorting) throws Exception {
-        return this.getList(Card[].class, Card.class, "users_allcards", pagination, userId, sorting);
-    }
-    
+    List<Card> getCards(String userId, Pagination pagination, Sorting sorting) throws Exception;
+
     /**
      * Creates KycPage from byte array.
      * @param userId            User identifier.
@@ -242,10 +179,8 @@ public class ApiUsers extends ApiBase {
      * @param binaryData        The byte array the KycPage will be created from.
      * @throws Exception
      */
-    public void createKycPage(String userId, String kycDocumentId, byte[] binaryData) throws Exception {
-        createKycPage(null, userId, kycDocumentId, binaryData);
-    }
-    
+    void createKycPage(String userId, String kycDocumentId, byte[] binaryData) throws Exception;
+
     /**
      * Creates KycPage from byte array.
      * @param idempotencyKey    Idempotency key for this request.
@@ -254,16 +189,8 @@ public class ApiUsers extends ApiBase {
      * @param binaryData        The byte array the KycPage will be created from.
      * @throws Exception
      */
-    public void createKycPage(String idempotencyKey, String userId, String kycDocumentId, byte[] binaryData) throws Exception {
-        KycPage kycPage = new KycPage();
-        
-        String fileContent = new String(Base64.encodeBase64(binaryData));
-        
-        kycPage.File = fileContent;
-        
-        this.createObject(KycPage.class, idempotencyKey, "kyc_page_create", kycPage, userId, kycDocumentId);
-    }
-    
+    void createKycPage(String idempotencyKey, String userId, String kycDocumentId, byte[] binaryData) throws Exception;
+
     /**
      * Creates KycPage from file.
      * @param userId            User identifier.
@@ -271,14 +198,8 @@ public class ApiUsers extends ApiBase {
      * @param filePath          Path to the file the KycPage will be created from.
      * @throws Exception
      */
-    public void createKycPage(String userId, String kycDocumentId, String filePath) throws Exception {
-        byte[] fileArray;
-        Path path = Paths.get(filePath);
-        fileArray = Files.readAllBytes(path);
-        
-        createKycPage(userId, kycDocumentId, fileArray);
-    }
-    
+    void createKycPage(String userId, String kycDocumentId, String filePath) throws Exception;
+
     /**
      * Creates KycPage from file.
      * @param idempotencyKey    Idempotency key for this request.
@@ -287,14 +208,8 @@ public class ApiUsers extends ApiBase {
      * @param filePath          Path to the file the KycPage will be created from.
      * @throws Exception
      */
-    public void createKycPage(String idempotencyKey, String userId, String kycDocumentId, String filePath) throws Exception {
-        byte[] fileArray;
-        Path path = Paths.get(filePath);
-        fileArray = Files.readAllBytes(path);
-        
-        createKycPage(idempotencyKey, userId, kycDocumentId, fileArray);
-    }
-    
+    void createKycPage(String idempotencyKey, String userId, String kycDocumentId, String filePath) throws Exception;
+
     /**
      * Creates KycDocument.
      * @param userId        User identifier.
@@ -302,10 +217,8 @@ public class ApiUsers extends ApiBase {
      * @return              KycDocument object returned from API.
      * @throws Exception
      */
-    public KycDocument createKycDocument(String userId, KycDocumentType type) throws Exception {
-        return createKycDocument(null, userId, type);
-    }
-    
+    KycDocument createKycDocument(String userId, KycDocumentType type) throws Exception;
+
     /**
      * Creates KycDocument.
      * @param idempotencyKey    Idempotency key for this request.
@@ -314,13 +227,8 @@ public class ApiUsers extends ApiBase {
      * @return                  KycDocument object returned from API.
      * @throws Exception
      */
-    public KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type) throws Exception {
-        KycDocument kycDocument = new KycDocument();
-        kycDocument.Type = type;
-        
-        return this.createObject(KycDocument.class, idempotencyKey, "users_createkycdocument", kycDocument, userId);
-    }
-    
+    KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type) throws Exception;
+
     /**
      * Gets KycDocument.
      * @param userId        User identifier.
@@ -328,10 +236,8 @@ public class ApiUsers extends ApiBase {
      * @return              KycDocument object returned from API.
      * @throws Exception
      */
-    public KycDocument getKycDocument(String userId, String kycDocumentId) throws Exception {
-        return this.getObject(KycDocument.class, "users_getkycdocument", userId, kycDocumentId);
-    }
-    
+    KycDocument getKycDocument(String userId, String kycDocumentId) throws Exception;
+
     /**
      * Updates KycDocument.
      * @param userId        User identifier.
@@ -339,10 +245,8 @@ public class ApiUsers extends ApiBase {
      * @return              KycDocument object returned from API.
      * @throws Exception
      */
-    public KycDocument updateKycDocument(String userId, KycDocument kycDocument) throws Exception {
-        return this.updateObject(KycDocument.class, "users_savekycdocument", kycDocument, userId);
-    }
-    
+    KycDocument updateKycDocument(String userId, KycDocument kycDocument) throws Exception;
+
     /**
      * Gets all KYC documents for single user.
      * @param userId        User identifier.
@@ -351,16 +255,6 @@ public class ApiUsers extends ApiBase {
      * @return              List of KycDocuments returned from API.
      * @throws Exception
      */
-    public List<KycDocument> getKycDocuments(String userId, Pagination pagination, Sorting sorting) throws Exception{
-        return this.getList(KycDocument[].class, KycDocument.class, "users_allkycdocuments", pagination, userId, sorting);
-    }
-    
-    private String getBankAccountType(BankAccount bankAccount) throws Exception {
-        
-        if (bankAccount.Details == null)
-            throw new Exception("Details is not defined.");
-        
-        String className = bankAccount.Details.getClass().getSimpleName().replace("BankAccountDetails", "");
-        return className.toLowerCase();
-    }
+    List<KycDocument> getKycDocuments(String userId, Pagination pagination, Sorting sorting) throws Exception;
+
 }

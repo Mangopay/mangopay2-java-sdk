@@ -1,21 +1,15 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.KycDocument;
+
 import java.util.List;
 
 /**
- * API for KycDocuments.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiKycDocuments extends ApiBase {
-    
-    /**
-     * Instantiates new ApiWallets object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
-     */
-    public ApiKycDocuments(MangoPayApi root) { super(root); }
-    
+public interface ApiKycDocuments {
     /**
      * Gets all KYC documents.
      * @param pagination    Pagination object.
@@ -23,17 +17,13 @@ public class ApiKycDocuments extends ApiBase {
      * @return              Collection of KycDocuments returned from API.
      * @throws Exception
      */
-    public List<KycDocument> getAll(Pagination pagination, Sorting sorting) throws Exception {
-        return this.getList(KycDocument[].class, KycDocument.class, "kyc_documents_all", pagination, sorting);
-    }
-    
+    List<KycDocument> getAll(Pagination pagination, Sorting sorting) throws Exception;
+
     /**
      * Gets KYC document.
      * @param kycDocumentId KYC document identifier.
      * @return              KYC document returned from API.
      * @throws Exception
      */
-    public KycDocument getKycDocument(String kycDocumentId) throws Exception {
-        return this.getObject(KycDocument.class, "kyc_document_get", kycDocumentId);
-    }
+    KycDocument getKycDocument(String kycDocumentId) throws Exception;
 }

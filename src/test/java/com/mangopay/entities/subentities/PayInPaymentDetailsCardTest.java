@@ -6,7 +6,7 @@
 package com.mangopay.entities.subentities;
 
 import com.mangopay.core.enumerations.CardType;
-import com.mangopay.core.interfaces.IPayInPaymentDetails;
+import com.mangopay.core.interfaces.PayInPaymentDetails;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -48,8 +48,8 @@ public class PayInPaymentDetailsCardTest {
         String cardId = "12345678";
         PayInPaymentDetailsCard paymentDetailsCard = PayInPaymentDetailsCard.build(cardType, cardId);
         assertNotNull(paymentDetailsCard);
-        assertEquals(cardId, paymentDetailsCard.CardId);
-        assertEquals(cardType, paymentDetailsCard.CardType);
+        assertEquals(cardId, paymentDetailsCard.getCardId());
+        assertEquals(cardType, paymentDetailsCard.getCardType());
     }
 
     /**
@@ -62,18 +62,18 @@ public class PayInPaymentDetailsCardTest {
         String cardId = "12345678";
         PayInPaymentDetailsCard paymentDetailsCard = PayInPaymentDetailsCard.build(cardType, cardId, statementDescriptor);
         assertNotNull(paymentDetailsCard);
-        assertEquals(cardId, paymentDetailsCard.CardId);
-        assertEquals(cardType, paymentDetailsCard.CardType);
-        assertEquals(statementDescriptor, paymentDetailsCard.StatementDescriptor);
+        assertEquals(cardId, paymentDetailsCard.getCardId());
+        assertEquals(cardType, paymentDetailsCard.getCardType());
+        assertEquals(statementDescriptor, paymentDetailsCard.getStatementDescriptor());
     }
     
     @Test
     public void testConvert() throws Exception {
         PayInPaymentDetailsCard payInPaymentDetailsCard = new PayInPaymentDetailsCard();
         assertNotNull(payInPaymentDetailsCard);
-        IPayInPaymentDetails iPayInPaymentDetails = payInPaymentDetailsCard;
-        assertNotNull(iPayInPaymentDetails);
-        payInPaymentDetailsCard = PayInPaymentDetailsCard.convert(iPayInPaymentDetails);
+        PayInPaymentDetails payInPaymentDetails = payInPaymentDetailsCard;
+        assertNotNull(payInPaymentDetails);
+        payInPaymentDetailsCard = PayInPaymentDetailsCard.convert(payInPaymentDetails);
         assertNotNull(payInPaymentDetailsCard);
     }
     

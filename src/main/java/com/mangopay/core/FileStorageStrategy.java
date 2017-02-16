@@ -1,22 +1,23 @@
 package com.mangopay.core;
 
-import com.mangopay.core.interfaces.IStorageStrategy;
+import com.mangopay.core.interfaces.StorageStrategy;
+
 import java.io.*;
 import java.util.logging.*;
 
 /**
  * File token storage strategy implementation.
  */
-public class FileStorageStrategy implements IStorageStrategy {
+public class FileStorageStrategy implements StorageStrategy {
 
-    private String _tempDir = null;
+    private String tempDir = null;
     
     /**
      * Instantiates FileStorageStrategy object.
      * @param tempDir Temporary directory path.
      */
     public FileStorageStrategy(String tempDir) {
-        _tempDir = tempDir;
+        this.tempDir = tempDir;
     }
     
     /**
@@ -60,6 +61,6 @@ public class FileStorageStrategy implements IStorageStrategy {
     }
     
     private String getFilePath(String envKey) { 
-        return _tempDir + getClass().getName() + envKey + ".tmp"; 
+        return tempDir + getClass().getName() + envKey + ".tmp";
     }
 }

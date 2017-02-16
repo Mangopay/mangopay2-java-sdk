@@ -1,20 +1,17 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
-import com.mangopay.entities.*;
+import com.mangopay.core.FilterTransactions;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
+import com.mangopay.entities.Transaction;
+import com.mangopay.entities.Wallet;
+
 import java.util.List;
 
 /**
- * API for wallets.
+ * Created by thepa on 18-Jan-17.
  */
-public class ApiWallets extends ApiBase {
-    
-    /**
-     * Instantiates new ApiWallets object.
-     * @param root Root/parent instance that holds the OAuthToken and Configuration instance
-     */
-    public ApiWallets(MangoPayApi root) { super(root); }
+public interface ApiWallets {
 
     /**
      * Creates a new wallet.
@@ -22,9 +19,7 @@ public class ApiWallets extends ApiBase {
      * @return              Wallet instance returned from API.
      * @throws Exception
      */
-    public Wallet create(Wallet wallet) throws Exception {
-        return this.create(null, wallet);
-    }
+    Wallet create(Wallet wallet) throws Exception;
 
     /**
      * Creates a new wallet.
@@ -33,41 +28,23 @@ public class ApiWallets extends ApiBase {
      * @return                  Wallet instance returned from API.
      * @throws Exception
      */
-    public Wallet create(String idempotencyKey, Wallet wallet) throws Exception {
-        return this.createObject(Wallet.class, idempotencyKey, "wallets_create", wallet);
-    }
-    
+    Wallet create(String idempotencyKey, Wallet wallet) throws Exception;
+
     /**
      * Gets the wallet.
      * @param walletId      Wallet identifier.
      * @return              Wallet instance returned from API.
      * @throws Exception
      */
-    public Wallet get(String walletId) throws Exception {
-        return this.getObject(Wallet.class, "wallets_get", walletId);
-    }
-    
+    Wallet get(String walletId) throws Exception;
+
     /**
      * Updates the wallet.
      * @param wallet        Wallet object to save.
      * @return              Wallet instance returned from API.
      * @throws Exception
      */
-    public Wallet update(Wallet wallet) throws Exception {
-        return this.updateObject(Wallet.class, "wallets_save", wallet);
-    }
-    
-    /**
-     * Gets transactions for the wallet.
-     * @param walletId      Wallet identifier.
-     * @param pagination    Pagination object.
-     * @param filter        Object to filter data.
-     * @return              Transactions for wallet returned from API.
-     * @throws Exception
-     */
-    public List<Transaction> getTransactions(String walletId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception {
-        return this.getList(Transaction[].class, Transaction.class, "wallets_alltransactions", pagination, walletId, filter.getValues(), sorting);
-    }
+    Wallet update(Wallet wallet) throws Exception;
 
     /**
      * Gets transactions for the wallet.
@@ -77,10 +54,18 @@ public class ApiWallets extends ApiBase {
      * @return              Transactions for wallet returned from API.
      * @throws Exception
      */
-    public List<Transaction> getTransactions(String walletId, Pagination pagination, FilterTransactions filter) throws Exception {
-        return getTransactions(walletId, pagination, filter, null);
-    }
-    
+    List<Transaction> getTransactions(String walletId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception;
+
+    /**
+     * Gets transactions for the wallet.
+     * @param walletId      Wallet identifier.
+     * @param pagination    Pagination object.
+     * @param filter        Object to filter data.
+     * @return              Transactions for wallet returned from API.
+     * @throws Exception
+     */
+    List<Transaction> getTransactions(String walletId, Pagination pagination, FilterTransactions filter) throws Exception;
+
     /**
      * Gets transactions for the wallet.
      * @param walletId      Wallet identifier.
@@ -88,18 +73,13 @@ public class ApiWallets extends ApiBase {
      * @return              Transactions for wallet returned from API.
      * @throws Exception
      */
-    public List<Transaction> getTransactions(String walletId, Pagination pagination) throws Exception {
-        return getTransactions(walletId, pagination, new FilterTransactions());
-    }
-    
+    List<Transaction> getTransactions(String walletId, Pagination pagination) throws Exception;
+
     /**
      * Gets transactions for the wallet.
      * @param walletId      Wallet identifier.
      * @return              Transactions for wallet returned from API.
      * @throws Exception
      */
-    public List<Transaction> getTransactions(String walletId) throws Exception {
-        return getTransactions(walletId, null, new FilterTransactions());
-    }
-    
+    List<Transaction> getTransactions(String walletId) throws Exception;
 }

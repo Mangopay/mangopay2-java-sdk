@@ -13,17 +13,17 @@ public abstract class ApiBase {
     /**
      * Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    protected MangoPayApi _root;
+    protected MangoPayApi root;
 
     /**
      * Array with REST URL and request type.
      */
     private Map<String, String[]> methods = new HashMap<String, String[]>(){{
-        
+
         put("client_get", new String[] { "/clients/", RequestType.GET.toString() });
         put("client_save", new String[] { "/clients/", RequestType.PUT.toString() });
         put("client_upload_logo", new String[] { "/clients/logo/", RequestType.PUT.toString() });
-        
+
         put("client_get_wallets_default", new String[] { "/clients/wallets", RequestType.GET.toString() });
         put("client_get_wallets_fees", new String[] { "/clients/wallets/fees", RequestType.GET.toString() });
         put("client_get_wallets_credit", new String[] { "/clients/wallets/credit", RequestType.GET.toString() });
@@ -34,7 +34,7 @@ public abstract class ApiBase {
         put("client_get_transactions", new String[] { "/clients/transactions", RequestType.GET.toString() });
         put("client_get_kyc_documents", new String[] { "/KYC/documents", RequestType.GET.toString() });
         put("client_create_bankwire_direct", new String[] { "/clients/payins/bankwire/direct", RequestType.POST.toString() });
-        
+
         put("authentication_base", new String[] { "/clients/", RequestType.POST.toString() });
         put("authentication_oauth", new String[] { "/oauth/token ", RequestType.POST.toString() });
 
@@ -86,7 +86,7 @@ public abstract class ApiBase {
         put("users_createbankaccounts_us", new String[] { "/users/%s/bankaccounts/us", RequestType.POST.toString() });
         put("users_createbankaccounts_ca", new String[] { "/users/%s/bankaccounts/ca", RequestType.POST.toString() });
         put("users_createbankaccounts_other", new String[] { "/users/%s/bankaccounts/other", RequestType.POST.toString() });
-        
+
         put("users_savebankaccount", new String[] { "/users/%s/bankaccounts/%s", RequestType.PUT.toString() });
 
         put("users_all", new String[] { "/users", RequestType.GET.toString() });
@@ -112,9 +112,9 @@ public abstract class ApiBase {
         put("users_savekycdocument", new String[] { "/users/%s/KYC/documents/%s", RequestType.PUT.toString() });
         put("kyc_page_create", new String[] { "/users/%s/KYC/documents/%s/pages", RequestType.POST.toString() });
         put("kyc_documents_all", new String[] { "/KYC/documents", RequestType.GET.toString() });
-        
+
         put("kyc_document_get", new String[] { "/KYC/documents/%s", RequestType.GET.toString() });
-        
+
         put("disputes_get", new String[] { "/disputes/%s", RequestType.GET.toString() });
         put("disputes_save_tag", new String[] { "/disputes/%s", RequestType.PUT.toString() });
         put("disputes_save_contest_funds", new String[] { "/disputes/%s/submit", RequestType.PUT.toString() });
@@ -131,33 +131,38 @@ public abstract class ApiBase {
         put("disputes_document_get_for_client", new String[] { "/dispute-documents", RequestType.GET.toString() });
         put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
 	put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
-        
+
         put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
-        
+
         put("mandate_create", new String[] { "/mandates/directdebit/web", RequestType.POST.toString() });
         put("mandate_cancel", new String[] { "/mandates/%s/cancel", RequestType.PUT.toString() });
         put("mandate_get", new String[] { "/mandates/%s", RequestType.GET.toString() });
         put("mandates_get_all", new String[] { "/mandates", RequestType.GET.toString() });
         put("mandates_get_for_user", new String[] { "/users/%s/mandates", RequestType.GET.toString() });
         put("mandates_get_for_bank_account", new String[] { "/users/%s/bankaccounts/%s/mandates", RequestType.GET.toString() });
-        
+
         put("reports_request", new String[]{ "/reports/%s", RequestType.POST.toString() });
         put("reports_get_all", new String[]{ "/reports", RequestType.GET.toString() });
         put("reports_get", new String[]{ "/reports/%s", RequestType.GET.toString() });
-        
+
+        put("banking_alias_create_iban", new String[]{ "/wallets/%s/bankingaliases/iban", RequestType.POST.toString() });
+        put("banking_alias_deactivate", new String[]{ "/bankingaliases/%s", RequestType.PUT.toString()});
+        put("banking_alias_get", new String[]{ "/bankingaliases/%s", RequestType.GET.toString()});
+        put("banking_aliases_get_for_wallet", new String[]{ "/wallets/%s/bankingaliases", RequestType.GET.toString()});
+
         // These are temporary functions and WILL be removed in the future. 
         // Contact support before using these features or if have any queries.
         put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST.toString() });
         put("temp_paymentcards_get", new String[] { "/temp/paymentcards/%s", RequestType.GET.toString() });
         put("temp_immediatepayins_create", new String[] { "/temp/immediate-payins", RequestType.POST.toString() });
     }};
-    
+
     /**
      * Creates new API instance.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
     public ApiBase(MangoPayApi root) {
-        _root = root;
+        this.root = root;
     }
 
     /**
@@ -174,7 +179,7 @@ public abstract class ApiBase {
         }
         return result;
     }
-    
+
     /**
      * Gets the HTTP request verb.
      * @param key   The method key.
@@ -183,7 +188,7 @@ public abstract class ApiBase {
     protected String getRequestType(String key) {
         return this.methods.get(key)[1];
     }
-    
+
     /**
      * Creates the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
@@ -197,23 +202,23 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
-        
+
         String urlMethod;
-        
+
         if (entityId.length() == 0)
             urlMethod = this.getRequestUrl(methodKey);
         else if (secondEntityId.length() == 0)
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId);
         else
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
-        
-        RestTool rest = new RestTool(this._root, true);
+
+        RestTool rest = new RestTool(this.root, true);
         T result = rest.request(classOfT, idempotencyKey, urlMethod, this.getRequestType(methodKey), null, null, entity);
-        
+
         return result;
-        
+
     }
-    
+
     /**
      * Creates the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
@@ -228,7 +233,7 @@ public abstract class ApiBase {
     protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId) throws Exception {
         return createObject(classOfT, idempotencyKey, methodKey, entity, entityId, "");
     }
-    
+
     /**
      * Creates the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
@@ -242,7 +247,7 @@ public abstract class ApiBase {
     protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity) throws Exception {
         return createObject(classOfT, idempotencyKey, methodKey, entity, "");
     }
-    
+
     /**
      * Gets the Dto instance from API.
      * @param <T>               Type on behalf of which the request is being called.
@@ -254,15 +259,15 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, String entityId, String secondEntityId) throws Exception {
-        
+
         String urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
-        
-        RestTool rest = new RestTool(this._root, true);
+
+        RestTool rest = new RestTool(this.root, true);
         T response = rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
-        
+
         return response;
     }
-    
+
     /**
      * Gets the Dto instance from API.
      * @param <T>           Type on behalf of which the request is being called.
@@ -275,7 +280,7 @@ public abstract class ApiBase {
     protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, String entityId) throws Exception {
         return getObject(classOfT, methodKey, entityId, "");
     }
-    
+
     /**
      * Gets the array of Dto instances from API.
      * @param <T>                   Type on behalf of which the request is being called.
@@ -289,40 +294,40 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, String secondEntityId, Map<String, String> filter, Sorting sorting) throws Exception {
-        
+
         String urlMethod = "";
-        
+
         if (entityId != null && entityId.length() > 0 && secondEntityId != null && secondEntityId.length() > 0)
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
         else if (entityId != null && entityId.length() > 0)
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId);
         else
             urlMethod = this.getRequestUrl(methodKey);
-        
+
         if (pagination == null) {
             pagination = new Pagination();
         }
-        
+
         Map<String, String> additionalUrlParams = new HashMap<>();
-        
+
         if (filter != null) {
             additionalUrlParams.putAll(filter);
         }
-        
+
         if (sorting != null) {
-            additionalUrlParams.putAll(sorting.GetSortParameter());
+            additionalUrlParams.putAll(sorting.getSortParameter());
         }
-        
-        RestTool rest = new RestTool(this._root, true);
-        
+
+        RestTool rest = new RestTool(this.root, true);
+
         return rest.requestList(classOfT, classOfTItem, urlMethod, this.getRequestType(methodKey), null, pagination, additionalUrlParams);
-                
+
     }
-    
+
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, Map<String, String> filter, Sorting sorting) throws Exception {
         return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, filter, sorting);
     }
-    
+
     /**
      * Gets the array of Dto instances from API.
      * @param <T>           Type on behalf of which the request is being called.
@@ -337,7 +342,7 @@ public abstract class ApiBase {
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, Sorting sorting) throws Exception {
         return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, null, sorting);
     }
-    
+
     /**
      * Gets the array of Dto instances from API.
      * @param <T>           Type on behalf of which the request is being called.
@@ -351,7 +356,7 @@ public abstract class ApiBase {
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId) throws Exception {
         return getList(classOfT, classOfTItem, methodKey, pagination, entityId, null, null, null);
     }
-    
+
     /**
      * Gets the array of Dto instances from API.
      * @param <T>           Type on behalf of which the request is being called.
@@ -364,7 +369,7 @@ public abstract class ApiBase {
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination) throws Exception {
         return getList(classOfT, classOfTItem, methodKey, pagination, "", null);
     }
-    
+
     /**
      * Gets the array of Dto instances from API.
      * @param <T>           Type on behalf of which the request is being called.
@@ -378,7 +383,7 @@ public abstract class ApiBase {
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, Sorting sorting) throws Exception {
         return getList(classOfT, classOfTItem, methodKey, pagination, "", sorting);
     }
-    
+
     /**
      * Saves the Dto instance.
      * @param <T>           Type on behalf of which the request is being called.
@@ -391,7 +396,7 @@ public abstract class ApiBase {
     protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity) throws Exception {
         return updateObject(classOfT, methodKey, entity, "", "");
     }
-    
+
         /**
      * Saves the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
@@ -405,7 +410,7 @@ public abstract class ApiBase {
     protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
         return updateObject(classOfT, methodKey, entity, entityId, "");
     }
-    
+
     /**
      * Saves the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
@@ -418,11 +423,11 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
-        
+
         if (entity instanceof EntityBase) {
-            
+
             String urlMethod;
-        
+
             if (secondEntityId.length() > 0) {
                 urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
             } else if (entityId.length() > 0) {
@@ -430,8 +435,8 @@ public abstract class ApiBase {
             } else {
                 urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
             }
-                
-            RestTool rest = new RestTool(this._root, true);
+
+            RestTool rest = new RestTool(this.root, true);
             return rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey), null, null, entity);
         } else {
             return null;
