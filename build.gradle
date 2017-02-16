@@ -28,6 +28,10 @@ dependencies {
     testCompile 'org.slf4j:slf4j-simple:1.7.7'
 }
 
+test {
+    exclude 'com/mangopay/core/BankingAliasApiImplTest.class'
+}
+
 apply from: 'gradle/publish.gradle'
 
 group = 'com.mangopay'

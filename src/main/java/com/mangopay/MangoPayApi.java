@@ -40,6 +40,7 @@ public class MangoPayApi {
         this.Idempotency = new IdempotencyApiImpl(this);
         this.Mandates = new MandateApiImpl(this);
         this.Reports = new ReportApiImpl(this);
+        this.bankingAliases = new BankingAliasApiImpl(this);
     }
 
     ////////////////////////////////////////
@@ -210,6 +211,11 @@ public class MangoPayApi {
     @Deprecated
     public ApiReports Reports;
 
+    /**
+     * Provides Banking Alias methods.
+     */
+    public BankingAliasApi bankingAliases;
+
     public AuthorizationTokenManager getOAuthTokenManager() {
         return OAuthTokenManager;
     }
@@ -368,5 +374,13 @@ public class MangoPayApi {
 
     public void setReportApi(ApiReports reports) {
         this.Reports = reports;
+    }
+
+    public BankingAliasApi getBankingAliases() {
+        return bankingAliases;
+    }
+
+    public void setBankingAliases(BankingAliasApi bankingAliases) {
+        this.bankingAliases = bankingAliases;
     }
 }
