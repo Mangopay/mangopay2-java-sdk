@@ -15,11 +15,6 @@ public enum PayInExecutionType {
     WEB, 
 
     /**
-     * TOKEN execution type.
-     */
-    TOKEN, 
-
-    /**
      * DIRECT execution type.
      */
     DIRECT, 
@@ -27,15 +22,5 @@ public enum PayInExecutionType {
     /**
      * PREAUTHORIZED execution type.
      */
-    PREAUTHORIZED, 
-
-    /**
-     * RECURRING ORDER execution type.
-     */
-    RECURRING_ORDER_EXECUTION,
-
-    /**
-     * EXTERNAL INSTRUCTION execution type.
-     */
-    EXTERNAL_INSTRUCTION
+    PREAUTHORIZED
 }

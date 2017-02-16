@@ -60,3 +60,13 @@ tasks.withType(Javadoc) {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
+
+void createVersionFile() {
+    Properties props = new Properties()
+    props.setProperty("version", (String) version)
+    File f = new File("version.properties")
+    OutputStream out = new FileOutputStream(f)
+    props.store(out, "Version file.")
+}
+
+createVersionFile()
