@@ -35,7 +35,7 @@ test {
 apply from: 'gradle/publish.gradle'
 
 group = 'com.mangopay'
-version = '1.2.3'
+version = '1.3.0'
 sourceCompatibility = '1.7'
 
 task sourcesJar(type: Jar, dependsOn: classes) {
