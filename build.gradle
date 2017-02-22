@@ -61,12 +61,17 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 
-void createVersionFile() {
-    Properties props = new Properties()
-    props.setProperty("version", (String) version)
-    File f = new File("version.properties")
-    OutputStream out = new FileOutputStream(f)
-    props.store(out, "Version file.")
+task updatePropertiesFile {
+    doLast {
+        logger.quiet('Update Mangopay Properties File')
+        def propertyFile = file "src/main/resources/com/mangopay/core/mangopay.properties"
+        def props = new Properties()
+        propertyFile.withReader { props.load(it) }
+        props.setProperty("version", (String) version)
+        propertyFile.withWriter { props.store(it, null) }
+    }
 }
 
-createVersionFile()
+
+processResources.dependsOn updatePropertiesFile
+

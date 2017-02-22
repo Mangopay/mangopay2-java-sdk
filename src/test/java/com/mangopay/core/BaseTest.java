@@ -58,6 +58,10 @@ public abstract class BaseTest {
     public void tearDown() {
     }
 
+    protected MangoPayApi getApi() {
+        return api;
+    }
+
     protected final MangoPayApi buildNewMangoPayApi() {
         MangoPayApi newApi = new MangoPayApi();
 

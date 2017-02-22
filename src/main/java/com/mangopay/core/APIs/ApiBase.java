@@ -15,6 +15,10 @@ public abstract class ApiBase {
      */
     protected MangoPayApi root;
 
+    protected MangoPayApi getRoot() {
+        return root;
+    }
+    
     /**
      * Array with REST URL and request type.
      */
