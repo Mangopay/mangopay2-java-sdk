@@ -149,12 +149,6 @@ public abstract class ApiBase {
         put("banking_alias_deactivate", new String[]{ "/bankingaliases/%s", RequestType.PUT.toString()});
         put("banking_alias_get", new String[]{ "/bankingaliases/%s", RequestType.GET.toString()});
         put("banking_aliases_get_for_wallet", new String[]{ "/wallets/%s/bankingaliases", RequestType.GET.toString()});
-
-        // These are temporary functions and WILL be removed in the future. 
-        // Contact support before using these features or if have any queries.
-        put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST.toString() });
-        put("temp_paymentcards_get", new String[] { "/temp/paymentcards/%s", RequestType.GET.toString() });
-        put("temp_immediatepayins_create", new String[] { "/temp/immediate-payins", RequestType.POST.toString() });
     }};
 
     /**
