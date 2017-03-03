@@ -2,7 +2,6 @@ package com.mangopay.core;
 
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.CardRegistration;
-import com.mangopay.entities.TemporaryPaymentCard;
 import com.mangopay.entities.UserNatural;
 import org.junit.Test;
 
@@ -67,41 +66,5 @@ public class CardRegistrationApiImplTest extends BaseTest {
         assertEquals("VALIDATED", getCardRegistration.getStatus());
         assertEquals("000000", getCardRegistration.getResultCode());
     }
-    
-    
-    /* The two tests below are added to cover temporary use cases, which will be
-     * removed in future. */
 
-    @Test
-    public void temporaryPaymentCardCreate() throws Exception {
-        UserNatural user = this.getJohn();
-        TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
-        paymentCard.setUserId(user.getId());
-        paymentCard.setTag("Test tag");
-        paymentCard.setCulture("FR");
-        paymentCard.setReturnURL("http://test.com/test");
-        paymentCard.setTemplateURL("https://test.com/test");
-
-        TemporaryPaymentCard paymentCardCreated = this.api.getCardApi().createTemporaryPaymentCard(paymentCard);
-
-        assertTrue(paymentCardCreated.getId().length() > 0);
-        assertEquals(paymentCardCreated.getUserId(), user.getId());
-    }
-
-    @Test
-    public void temporaryPaymentCardGet() throws Exception {
-        UserNatural user = this.getJohn();
-        TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
-        paymentCard.setUserId(user.getId());
-        paymentCard.setTag("Test tag");
-        paymentCard.setCulture("FR");
-        paymentCard.setReturnURL("http://test.com/test");
-        paymentCard.setTemplateURL("https://test.com/test");
-        TemporaryPaymentCard paymentCardCreated = this.api.getCardApi().createTemporaryPaymentCard(paymentCard);
-
-        TemporaryPaymentCard paymentCardGet = this.api.getCardApi().getTemporaryPaymentCard(paymentCardCreated.getId());
-
-        assertTrue(paymentCardGet.getId().length() > 0);
-        assertEquals(paymentCardGet.getId(), paymentCardCreated.getId());
-    }
 }

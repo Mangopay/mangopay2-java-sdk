@@ -32,19 +32,5 @@ public class CardApiImpl extends ApiBase implements ApiCards {
         card.setValidity(Validity.INVALID);
         return update(card);
     }
-    
-    @Override
-    public TemporaryPaymentCard createTemporaryPaymentCard(TemporaryPaymentCard paymentCard) throws Exception {
-        return createTemporaryPaymentCard(null, paymentCard);
-    }
-    
-    @Override
-    public TemporaryPaymentCard createTemporaryPaymentCard(String idempotencyKey, TemporaryPaymentCard paymentCard) throws Exception {
-        return this.createObject(TemporaryPaymentCard.class, idempotencyKey, "temp_paymentcards_create", paymentCard);
-    }
-    
-    @Override
-    public TemporaryPaymentCard getTemporaryPaymentCard(String paymentCardId) throws Exception {
-        return this.getObject(TemporaryPaymentCard.class, "temp_paymentcards_get", paymentCardId);
-    }
+
 }
