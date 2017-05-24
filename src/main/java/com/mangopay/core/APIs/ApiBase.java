@@ -106,6 +106,7 @@ public abstract class ApiBase {
         put("users_savenaturals", new String[] { "/users/natural/%s", RequestType.PUT.toString() });
         put("users_savelegals", new String[] { "/users/legal/%s", RequestType.PUT.toString() });
         put("users_emoney", new String[] {"/users/%s/emoney", RequestType.GET.toString() });
+        put("users_emoney_currency", new String[] {"/users/%s/emoney?Currency=%s", RequestType.GET.toString() });
 
         put("wallets_create", new String[] { "/wallets", RequestType.POST.toString() });
         put("wallets_alltransactions", new String[] { "/wallets/%s/transactions", RequestType.GET.toString() });

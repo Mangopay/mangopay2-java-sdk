@@ -12,7 +12,6 @@ import java.nio.file.*;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -206,18 +205,23 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
         if (bankAccount.getDetails() == null)
             throw new Exception("Details is not defined.");
 
-        String className = bankAccount.Details.getClass().getSimpleName().replace("BankAccountDetails", "");
+        String className = bankAccount.getDetails().getClass().getSimpleName().replace("BankAccountDetails", "");
         return className.toLowerCase();
     }
 
     @Override
     public EMoney getEMoney(String userId) throws Exception {
+        if (userId == null) {
+            throw new Exception("Cannot get EMoney without specifying the userId");
+        }
         return this.getObject(EMoney.class, "users_emoney", userId);
     }
 
     @Override
-    public EMoney getEMoney(String userId, CurrencyIso currencyIso) {
-        // TODO: Implement currency parameter inclusion into request.
-        throw new NotImplementedException();
+    public EMoney getEMoney(String userId, CurrencyIso currencyIso) throws Exception {
+        if (currencyIso == null) {
+            return this.getEMoney(userId);
+        }
+        return this.getObject(EMoney.class, "users_emoney_currency", userId, currencyIso.name());
     }
 }
