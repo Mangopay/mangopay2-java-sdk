@@ -33,5 +33,35 @@ public enum DisputeReasonType {
     /**
      * REFUND_CONVERSION_RATE dispute reason type.
      */
-    REFUND_CONVERSION_RATE
+    REFUND_CONVERSION_RATE,
+    
+    /**
+     * LATE_FAILURE_INSUFFICIENT_FUNDS dispute reason type.
+     */
+    LATE_FAILURE_INSUFFICIENT_FUNDS,
+    
+    /**
+     * LATE_FAILURE_CONTACT_USER dispute reason type.
+     */
+    LATE_FAILURE_CONTACT_USER,
+        
+    /**
+     * LATE_FAILURE_BANKACCOUNT_CLOSED dispute reason type.
+     */
+    LATE_FAILURE_BANKACCOUNT_CLOSED,
+        
+    /**
+     * LATE_FAILURE_BANKACCOUNT_INCOMPATIBLE dispute reason type.
+     */
+    LATE_FAILURE_BANKACCOUNT_INCOMPATIBLE,
+        
+    /**
+     * LATE_FAILURE_BANKACCOUNT_INCORRECT dispute reason type.
+     */
+    LATE_FAILURE_BANKACCOUNT_INCORRECT,
+    
+    /**
+     * AUTHORISATION_DISPUTED dispute reason type.
+     */
+    AUTHORISATION_DISPUTED
 }
