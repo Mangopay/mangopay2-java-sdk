@@ -543,4 +543,43 @@ public class UserApiImplTest extends BaseTest {
         assertTrue(getKycDocuments.size() > 1);
         assertTrue(getKycDocuments.get(0).getCreationDate() > getKycDocuments.get(1).getCreationDate());
     }
+
+    @Test
+    public void getUserEMoney() throws Exception {
+        User john = getJohn();
+
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId());
+
+        assertNotNull(eMoney);
+        assertEquals(eMoney.getUserId(), john.getId());
+    }
+
+    @Test
+    public void getUserEMoneyChf() throws Exception {
+        getUserEMoney(CurrencyIso.CHF);
+    }
+
+    @Test
+    public void getUserEMoneyUsd() throws Exception {
+        getUserEMoney(CurrencyIso.USD);
+    }
+
+    @Test
+    public void testUserEMoneyNullCurrency() throws Exception {
+        getUserEMoney(null, CurrencyIso.EUR);
+    }
+
+    private void getUserEMoney(CurrencyIso currencySentInRequest) throws Exception {
+        getUserEMoney(currencySentInRequest, currencySentInRequest);
+    }
+
+    private void getUserEMoney(CurrencyIso currencySentInRequest, CurrencyIso currencyExpected) throws Exception {
+        User john = getJohn();
+
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), currencySentInRequest);
+
+        assertNotNull(eMoney);
+        assertEquals(john.getId(), eMoney.getUserId());
+        assertEquals(currencyExpected, eMoney.getCreditedEMoney().getCurrency());
+    }
 }
