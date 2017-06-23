@@ -403,7 +403,12 @@ public class UserApiImplTest extends BaseTest {
     public void updateKycDocument() throws Exception {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getJohnsKycDocument();
+        
+        URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
+        String filePath = new File(url.toURI()).getAbsolutePath();
 
+        this.api.getUserApi().createKycPage(john.getId(), kycDocument.getId(), filePath);
+        
         kycDocument.setStatus(KycStatus.VALIDATION_ASKED);
 
         KycDocument result = this.api.getUserApi().updateKycDocument(john.getId(), kycDocument);

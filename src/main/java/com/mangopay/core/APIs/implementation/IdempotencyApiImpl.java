@@ -89,6 +89,7 @@ public class IdempotencyApiImpl extends ApiBase implements ApiIdempotency {
             put("disputes_repudiation_create_settlement", SettlementTransfer.class);
             put("mandate_create", Mandate.class);
             put("client_create_bankwire_direct", PayIn.class);
+            put("banking_alias_create_iban", BankingAlias.class);
         }};
     }
 }

@@ -28,10 +28,20 @@ dependencies {
     testCompile 'org.slf4j:slf4j-simple:1.7.7'
 }
 
+test {
+    exclude 'com/mangopay/core/BankingAliasApiImplTest.class'
+    systemProperty "https.protocols", "TLSv1.2,TLSv1.1,TLSv1"
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+        showStackTraces true
+    }
+}
+
 apply from: 'gradle/publish.gradle'
 
 group = 'com.mangopay'
-version = '1.2.3'
+version = '1.3.1'
 sourceCompatibility = '1.7'
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -56,3 +66,18 @@ tasks.withType(Javadoc) {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
 }
+
+task updatePropertiesFile {
+    doLast {
+        logger.quiet('Update Mangopay Properties File')
+        def propertyFile = file "src/main/resources/com/mangopay/core/mangopay.properties"
+        def props = new Properties()
+        propertyFile.withReader { props.load(it) }
+        props.setProperty("version", (String) version)
+        propertyFile.withWriter { props.store(it, null) }
+    }
+}
+
+
+processResources.dependsOn updatePropertiesFile
+

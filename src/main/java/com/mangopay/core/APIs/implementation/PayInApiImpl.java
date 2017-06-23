@@ -48,16 +48,6 @@ public class PayInApiImpl extends ApiBase implements ApiPayIns {
         return this.getObject(Refund.class, "payins_getrefunds", payInId);
     }
 
-    @Override
-    public TemporaryImmediatePayIn createTemporaryImmediatePayIn(TemporaryImmediatePayIn immediatePayIn) throws Exception {
-        return this.createTemporaryImmediatePayIn(null, immediatePayIn);
-    }
-
-    @Override
-    public TemporaryImmediatePayIn createTemporaryImmediatePayIn(String idempotencyKey, TemporaryImmediatePayIn immediatePayIn) throws Exception {
-        return this.createObject(TemporaryImmediatePayIn.class, idempotencyKey, "temp_immediatepayins_create", immediatePayIn);
-    }
-
     private String getPaymentKey(PayIn payIn) throws Exception {
 
         if (payIn.getPaymentDetails() == null)

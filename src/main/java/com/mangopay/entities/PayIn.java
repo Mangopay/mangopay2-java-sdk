@@ -137,6 +137,10 @@ public class PayIn extends Transaction {
                                     put("ExecutionDetails", PayInExecutionDetailsDirect.class);
                                 }}
                         );
+                        put("EXTERNAL_INSTRUCTION", new HashMap<String, Class<?>>() {{
+                                    put("ExecutionDetails", PayInExecutionDetailsBankingAlias.class);
+                                }}
+                        );
                         // ...and more in future...
                     }}
             );
