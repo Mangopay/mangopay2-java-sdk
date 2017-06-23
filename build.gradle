@@ -30,6 +30,12 @@ dependencies {
 
 test {
     exclude 'com/mangopay/core/BankingAliasApiImplTest.class'
+    systemProperty "https.protocols", "TLSv1.2,TLSv1.1,TLSv1"
+    testLogging {
+        events "failed"
+        exceptionFormat "full"
+        showStackTraces true
+    }
 }
 
 apply from: 'gradle/publish.gradle'
