@@ -3,7 +3,7 @@ package com.mangopay.core.APIs.implementation;
 import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiIdempotency;
+import com.mangopay.core.APIs.IdempotencyApi;
 import com.mangopay.core.RestTool;
 import com.mangopay.entities.*;
 
@@ -13,9 +13,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * API for Idempotency.
+ * API for idempotency.
  */
-public class IdempotencyApiImpl extends ApiBase implements ApiIdempotency {
+public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
     /**
      * Instantiates new IdempotencyApiImpl object.
      *
@@ -46,7 +46,7 @@ public class IdempotencyApiImpl extends ApiBase implements ApiIdempotency {
             sourceUrl = sourceUrl.replace("/", "\\/");
 
             Pattern ex = Pattern.compile(sourceUrl);
-            Matcher matcher = ex.matcher(response.getRequestURL());
+            Matcher matcher = ex.matcher(response.getRequestUrl());
             if (matcher.find()) {
                 targetType = entry.getValue();
                 break;

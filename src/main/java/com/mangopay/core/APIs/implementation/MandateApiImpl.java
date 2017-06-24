@@ -3,14 +3,14 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiMandates;
+import com.mangopay.core.APIs.MandateApi;
 import com.mangopay.entities.Mandate;
 import java.util.List;
 
 /**
  * API for mandates.
  */
-public class MandateApiImpl extends ApiBase implements ApiMandates {
+public class MandateApiImpl extends ApiBase implements MandateApi {
     
     /**
      * Instantiates new MandateApiImpl object.

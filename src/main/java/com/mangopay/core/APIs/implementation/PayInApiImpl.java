@@ -2,13 +2,13 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiPayIns;
+import com.mangopay.core.APIs.PayInApi;
 import com.mangopay.entities.*;
 
 /**
- * API for PayIns.
+ * API for payIns.
  */
-public class PayInApiImpl extends ApiBase implements ApiPayIns {
+public class PayInApiImpl extends ApiBase implements PayInApi {
 
     /**
      * Instantiates new PayInApiImpl object.

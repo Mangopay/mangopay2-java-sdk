@@ -229,7 +229,7 @@ public class UserApiImplTest extends BaseTest {
             account.setOwnerAddress(john.getAddress());
             account.setDetails(new BankAccountDetailsUS());
             ((BankAccountDetailsUS) account.getDetails()).setAccountNumber("234234234234");
-            ((BankAccountDetailsUS) account.getDetails()).setABA("234334789");
+            ((BankAccountDetailsUS) account.getDetails()).setAba("234334789");
 
             BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
 
@@ -237,7 +237,7 @@ public class UserApiImplTest extends BaseTest {
             assertTrue(createAccount.getUserId().equals(john.getId()));
             assertTrue(createAccount.getType() == BankAccountType.US);
             assertTrue(((BankAccountDetailsUS) createAccount.getDetails()).getAccountNumber().equals("234234234234"));
-            assertTrue(((BankAccountDetailsUS) createAccount.getDetails()).getABA().equals("234334789"));
+            assertTrue(((BankAccountDetailsUS) createAccount.getDetails()).getAba().equals("234334789"));
             assertTrue(((BankAccountDetailsUS) createAccount.getDetails()).getDepositAccountType().equals(DepositAccountType.CHECKING));
 
             ((BankAccountDetailsUS) account.getDetails()).setDepositAccountType(DepositAccountType.SAVINGS);
@@ -247,7 +247,7 @@ public class UserApiImplTest extends BaseTest {
             assertTrue(createAccountSavings.getUserId().equals(john.getId()));
             assertTrue(createAccountSavings.getType() == BankAccountType.US);
             assertTrue(((BankAccountDetailsUS) createAccountSavings.getDetails()).getAccountNumber().equals("234234234234"));
-            assertTrue(((BankAccountDetailsUS) createAccountSavings.getDetails()).getABA().equals("234334789"));
+            assertTrue(((BankAccountDetailsUS) createAccountSavings.getDetails()).getAba().equals("234334789"));
             assertTrue(((BankAccountDetailsUS) createAccountSavings.getDetails()).getDepositAccountType().equals(DepositAccountType.SAVINGS));
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
@@ -292,7 +292,7 @@ public class UserApiImplTest extends BaseTest {
             account.setType(BankAccountType.OTHER);
             ((BankAccountDetailsOTHER) account.getDetails()).setCountry(CountryIso.FR);
             ((BankAccountDetailsOTHER) account.getDetails()).setAccountNumber("234234234234");
-            ((BankAccountDetailsOTHER) account.getDetails()).setBIC("BINAADADXXX");
+            ((BankAccountDetailsOTHER) account.getDetails()).setBic("BINAADADXXX");
 
             BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
 
@@ -301,7 +301,7 @@ public class UserApiImplTest extends BaseTest {
             assertTrue(createAccount.getType() == BankAccountType.OTHER);
             assertTrue(((BankAccountDetailsOTHER) createAccount.getDetails()).getCountry().equals(CountryIso.FR));
             assertTrue(((BankAccountDetailsOTHER) createAccount.getDetails()).getAccountNumber().equals("234234234234"));
-            assertTrue(((BankAccountDetailsOTHER) createAccount.getDetails()).getBIC().equals("BINAADADXXX"));
+            assertTrue(((BankAccountDetailsOTHER) createAccount.getDetails()).getBic().equals("BINAADADXXX"));
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }

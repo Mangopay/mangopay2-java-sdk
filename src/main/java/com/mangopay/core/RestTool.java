@@ -123,7 +123,7 @@ public class RestTool {
      *
      * @param <T>            Type on behalf of which the request is being called.
      * @param classOfT       Type on behalf of which the request is being called.
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param urlMethod      Relevant method key.
      * @param requestType    HTTP request term, one of the GET, PUT or POST.
      * @param requestData    Collection of key-value pairs of request
@@ -343,7 +343,7 @@ public class RestTool {
             }
 
             if (idempotencyKey != null && !idempotencyKey.trim().isEmpty()) {
-                connection.addRequestProperty("Idempotency-Key", idempotencyKey);
+                connection.addRequestProperty("idempotency-Key", idempotencyKey);
             }
 
             // prepare to go
@@ -478,8 +478,17 @@ public class RestTool {
 
         ArrayList<String> readOnlyProperties = entity.getReadOnlyProperties();
 
-        String fieldName = "";
-        for (Field f : entity.getClass().getFields()) {
+        Class c = entity.getClass();
+        List<Field> fields = new ArrayList<>();
+        fields.addAll(Arrays.asList(c.getDeclaredFields()));
+        while (c.getSuperclass() != null) {
+            fields.addAll(Arrays.asList(c.getSuperclass().getDeclaredFields()));
+            c = c.getSuperclass();
+        }
+
+        String fieldName;
+        for (Field f : fields) {
+            f.setAccessible(true);
 
             boolean isList = false;
             for (Class<?> i : f.getType().getInterfaces()) {
@@ -489,7 +498,7 @@ public class RestTool {
                 }
             }
 
-            fieldName = f.getName();
+            fieldName = fromCamelCase(f.getName());
 
             boolean isReadOnly = false;
             for (String s : readOnlyProperties) {
@@ -580,7 +589,7 @@ public class RestTool {
                     } else if (entry.getKey().equals("Resource")) {
                         resp.setResource(entry.getValue().toString());
                     } else if (entry.getKey().equals("RequestURL")) {
-                        resp.setRequestURL(entry.getValue().toString());
+                        resp.setRequestUrl(entry.getValue().toString());
                     }
 
                 }
@@ -615,8 +624,17 @@ public class RestTool {
             Map<String, Type> subObjects = ((Dto) result).getSubObjects();
             Map<String, Map<String, Map<String, Class<?>>>> dependentObjects = ((Dto) result).getDependentObjects();
 
-            for (Field f : result.getClass().getFields()) {
-                String name = f.getName();
+            Class c = result.getClass();
+            List<Field> fields = new ArrayList<>();
+            fields.addAll(Arrays.asList(c.getDeclaredFields()));
+            while (c.getSuperclass() != null) {
+                fields.addAll(Arrays.asList(c.getSuperclass().getDeclaredFields()));
+                c = c.getSuperclass();
+            }
+
+            for (Field f : fields) {
+                f.setAccessible(true);
+                String name = fromCamelCase(f.getName());
 
                 boolean isList = false;
                 for (Class<?> i : f.getType().getInterfaces()) {
@@ -639,7 +657,8 @@ public class RestTool {
 
                                 for (Entry<String, Class<?>> e : targetObjectsDef.entrySet()) {
 
-                                    Field targetField = classOfT.getDeclaredField(e.getKey());
+                                    Field targetField = classOfT.getDeclaredField(toCamelCase(e.getKey()));
+                                    targetField.setAccessible(true);
 
                                     if (isList) {
                                         targetField.set(result, Arrays.asList(castResponseToEntity(e.getValue(), response, true)));
@@ -761,6 +780,39 @@ public class RestTool {
             throw e;
         }
 
+    }
+
+    private String toCamelCase(String fieldName) {
+        if (fieldName.toUpperCase().equals(fieldName)) {
+            return fieldName.toLowerCase();
+        }
+        String camelCase = (fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1, fieldName.length())).replace("URL", "Url");
+        while (camelCase.contains("_")) {
+            int index = camelCase.indexOf("_");
+            String letterAfter = ("" + camelCase.charAt(index + 1)).toUpperCase();
+            camelCase = camelCase.substring(0, index) + letterAfter + camelCase.substring(index + 2);
+        }
+        return camelCase;
+    }
+
+    private String fromCamelCase(String fieldName) {
+        if (fieldName.equals("iban") || fieldName.equals("bic") || fieldName.equals("aba")) {
+            return fieldName.toUpperCase();
+        }
+        if (fieldName.equals("accessToken")) {
+            return "access_token";
+        }
+        if (fieldName.equals("tokenType")) {
+
+            return "token_type";
+        }
+        if (fieldName.equals("expiresIn")) {
+            return "expires_in";
+        }
+        if(fieldName.equals("url")) {
+            return "Url";
+        }
+        return (fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)).replace("Url", "URL");
     }
 
     private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination) throws Exception {

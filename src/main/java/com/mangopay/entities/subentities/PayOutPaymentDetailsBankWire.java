@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.ObjectTool;
 import com.mangopay.core.interfaces.PayOutPaymentDetails;
@@ -11,25 +12,21 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
 
     /**
      * Bank account identifier.
-     *
-     * @deprecated Use {@link #getBankAccountId()} and {@link #setBankAccountId(String)} instead.
      */
-    @Deprecated
-    public String BankAccountId;
+    @SerializedName("BankAccountId")
+    private String bankAccountId;
 
     /**
      * Bank wire reference.
-     *
-     * @deprecated Use {@link #getBankWireRef()} and {@link #setBankWireRef(String)} instead.
      */
-    @Deprecated
-    public String BankWireRef;
+    @SerializedName("BankWireRef")
+    private String bankWireRef;
 
     public PayOutPaymentDetailsBankWire() {
     }
 
     public PayOutPaymentDetailsBankWire(String bankAccountId) {
-        this.BankAccountId = bankAccountId;
+        this.bankAccountId = bankAccountId;
     }
 
     public static PayOutPaymentDetailsBankWire build(String bankAccountId) {
@@ -37,24 +34,24 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     }
 
     public PayOutPaymentDetailsBankWire(String bankAccountId, String bankWireRef) {
-        this.BankAccountId = bankAccountId;
-        this.BankWireRef = bankWireRef;
+        this.bankAccountId = bankAccountId;
+        this.bankWireRef = bankWireRef;
     }
 
     public String getBankAccountId() {
-        return BankAccountId;
+        return bankAccountId;
     }
 
     public void setBankAccountId(String bankAccountId) {
-        this.BankAccountId = bankAccountId;
+        this.bankAccountId = bankAccountId;
     }
 
     public String getBankWireRef() {
-        return BankWireRef;
+        return bankWireRef;
     }
 
     public void setBankWireRef(String bankWireRef) {
-        this.BankWireRef = bankWireRef;
+        this.bankWireRef = bankWireRef;
     }
 
     public static PayOutPaymentDetailsBankWire build(String bankAccountId, String bankWireRef) {

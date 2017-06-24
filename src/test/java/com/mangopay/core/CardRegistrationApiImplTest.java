@@ -23,8 +23,8 @@ public class CardRegistrationApiImplTest extends BaseTest {
 
         assertNotNull(cardRegistration_visa.getAccessKey());
         assertNotNull(cardRegistration_visa.getPreregistrationData());
-        assertNotNull(cardRegistration_visa.getCardRegistrationURL());
-        assertEquals(user.Id, cardRegistration_visa.getUserId());
+        assertNotNull(cardRegistration_visa.getCardRegistrationUrl());
+        assertEquals(user.getId(), cardRegistration_visa.getUserId());
         assertTrue(cardRegistration_visa.getCurrency() == CurrencyIso.EUR);
         assertEquals("CREATED", cardRegistration_visa.getStatus());
         assertEquals(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.getCardType());
@@ -37,8 +37,8 @@ public class CardRegistrationApiImplTest extends BaseTest {
 
         assertNotNull(cardRegistration_maestro.getAccessKey());
         assertNotNull(cardRegistration_maestro.getPreregistrationData());
-        assertNotNull(cardRegistration_maestro.getCardRegistrationURL());
-        assertEquals(user.Id, cardRegistration_maestro.getUserId());
+        assertNotNull(cardRegistration_maestro.getCardRegistrationUrl());
+        assertEquals(user.getId(), cardRegistration_maestro.getUserId());
         assertTrue(cardRegistration_maestro.getCurrency() == CurrencyIso.EUR);
         assertEquals("CREATED", cardRegistration_maestro.getStatus());
         assertEquals(CardType.MAESTRO, cardRegistration_maestro.getCardType());
@@ -72,36 +72,36 @@ public class CardRegistrationApiImplTest extends BaseTest {
     /* The two tests below are added to cover temporary use cases, which will be
      * removed in future. */
 
-    @Test
-    public void temporaryPaymentCardCreate() throws Exception {
-        UserNatural user = this.getJohn();
-        TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
-        paymentCard.setUserId(user.getId());
-        paymentCard.setTag("Test tag");
-        paymentCard.setCulture("FR");
-        paymentCard.setReturnURL("http://test.com/test");
-        paymentCard.setTemplateURL("https://test.com/test");
-
-        TemporaryPaymentCard paymentCardCreated = this.api.getCardApi().createTemporaryPaymentCard(paymentCard);
-
-        assertTrue(paymentCardCreated.getId().length() > 0);
-        assertEquals(paymentCardCreated.getUserId(), user.getId());
-    }
-
-    @Test
-    public void temporaryPaymentCardGet() throws Exception {
-        UserNatural user = this.getJohn();
-        TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
-        paymentCard.setUserId(user.getId());
-        paymentCard.setTag("Test tag");
-        paymentCard.setCulture("FR");
-        paymentCard.setReturnURL("http://test.com/test");
-        paymentCard.setTemplateURL("https://test.com/test");
-        TemporaryPaymentCard paymentCardCreated = this.api.getCardApi().createTemporaryPaymentCard(paymentCard);
-
-        TemporaryPaymentCard paymentCardGet = this.api.getCardApi().getTemporaryPaymentCard(paymentCardCreated.getId());
-
-        assertTrue(paymentCardGet.getId().length() > 0);
-        assertEquals(paymentCardGet.getId(), paymentCardCreated.getId());
-    }
+//    @Test
+//    public void temporaryPaymentCardCreate() throws Exception {
+//        UserNatural user = this.getJohn();
+//        TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
+//        paymentCard.setUserId(user.getId());
+//        paymentCard.setTag("Test tag");
+//        paymentCard.setCulture("FR");
+//        paymentCard.setReturnUrl("http://test.com/test");
+//        paymentCard.setTemplateUrl("https://test.com/test");
+//
+//        TemporaryPaymentCard paymentCardCreated = this.api.getCardApi().createTemporaryPaymentCard(paymentCard);
+//
+//        assertTrue(paymentCardCreated.getId().length() > 0);
+//        assertEquals(paymentCardCreated.getUserId(), user.getId());
+//    }
+//
+//    @Test
+//    public void temporaryPaymentCardGet() throws Exception {
+//        UserNatural user = this.getJohn();
+//        TemporaryPaymentCard paymentCard = new TemporaryPaymentCard();
+//        paymentCard.setUserId(user.getId());
+//        paymentCard.setTag("Test tag");
+//        paymentCard.setCulture("FR");
+//        paymentCard.setReturnUrl("http://test.com/test");
+//        paymentCard.setTemplateUrl("https://test.com/test");
+//        TemporaryPaymentCard paymentCardCreated = this.api.getCardApi().createTemporaryPaymentCard(paymentCard);
+//
+//        TemporaryPaymentCard paymentCardGet = this.api.getCardApi().getTemporaryPaymentCard(paymentCardCreated.getId());
+//
+//        assertTrue(paymentCardGet.getId().length() > 0);
+//        assertEquals(paymentCardGet.getId(), paymentCardCreated.getId());
+//    }
 }

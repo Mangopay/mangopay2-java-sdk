@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.DisputeReasonType;
 
 /**
@@ -9,33 +10,29 @@ public class DisputeReason extends Dto {
 
     /**
      * Dispute's reason type.
-     *
-     * @deprecated Use {@link #getDisputeReasonType()} and {@link #setDisputeReasonType(DisputeReasonType)} instead.
      */
-    @Deprecated
-    public DisputeReasonType DisputeReasonType;
+    @SerializedName("DisputeReasonType")
+    private DisputeReasonType disputeReasonType;
 
     /**
      * Dispute's reason message.
-     *
-     * @deprecated Use {@link #getDisputeReasonMessage()} and {@link #setDisputeReasonMessage(String)} instead.
      */
-    @Deprecated
-    public String DisputeReasonMessage;
+    @SerializedName("DisputeReasonMessage")
+    private String disputeReasonMessage;
 
     public DisputeReasonType getDisputeReasonType() {
-        return DisputeReasonType;
+        return disputeReasonType;
     }
 
     public void setDisputeReasonType(DisputeReasonType disputeReasonType) {
-        this.DisputeReasonType = disputeReasonType;
+        this.disputeReasonType = disputeReasonType;
     }
 
     public String getDisputeReasonMessage() {
-        return DisputeReasonMessage;
+        return disputeReasonMessage;
     }
 
     public void setDisputeReasonMessage(String disputeReasonMessage) {
-        this.DisputeReasonMessage = disputeReasonMessage;
+        this.disputeReasonMessage = disputeReasonMessage;
     }
 }

@@ -42,7 +42,7 @@ public class PayInExecutionDetailsDirectTest {
         PayInExecutionDetailsDirect executionDetailsDirect = PayInExecutionDetailsDirect.build(cardId, secureModeReturnURL);
         assertNotNull(executionDetailsDirect);
         assertEquals(cardId, executionDetailsDirect.getCardId());
-        assertEquals(secureModeReturnURL, executionDetailsDirect.getSecureModeReturnURL());
+        assertEquals(secureModeReturnURL, executionDetailsDirect.getSecureModeReturnUrl());
     }
 
     /**
@@ -57,7 +57,7 @@ public class PayInExecutionDetailsDirectTest {
         assertNotNull(executionDetailsDirect);
         assertEquals(cardId, executionDetailsDirect.getCardId());
         assertEquals(secureMode, executionDetailsDirect.getSecureMode());
-        assertEquals(secureModeReturnURL, executionDetailsDirect.getSecureModeReturnURL());
+        assertEquals(secureModeReturnURL, executionDetailsDirect.getSecureModeReturnUrl());
     }
 
     @Test

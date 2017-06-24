@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.ObjectTool;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
@@ -12,58 +13,52 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
 
     /**
      * Card type.
-     *
-     * @deprecated Use {@link #getCardType()} and {@link #setCardType(com.mangopay.core.enumerations.CardType)} instead.
      */
-    @Deprecated
-    public CardType CardType;
+    @SerializedName("CardType")
+    private CardType cardType;
     
     /**
      * Card identifier.
-     *
-     * @deprecated Use {@link #getCardId()} and {@link #setCardId(String)} instead.
      */
-    @Deprecated
-    public String CardId;
+    @SerializedName("CardId")
+    private String cardId;
     
     /**
      * An optional value to be specified on the user's bank statement
-     *
-     * @deprecated Use {@link #getStatementDescriptor()} and {@link #setStatementDescriptor(String)} instead.
      */
-    @Deprecated
-    public String StatementDescriptor;
+    @SerializedName("StatementDescriptor")
+    private String statementDescriptor;
 
     public PayInPaymentDetailsCard() {
     }
 
     public PayInPaymentDetailsCard(CardType cardType, String cardId) {
-        this.CardType = cardType;
-        this.CardId = cardId;
+        this.cardType = cardType;
+        this.cardId = cardId;
     }
 
     public CardType getCardType() {
-        return CardType;
+        return cardType;
     }
 
     public void setCardType(CardType cardType) {
-        this.CardType = cardType;
+        this.cardType = cardType;
     }
 
     public String getCardId() {
-        return CardId;
+        return cardId;
     }
 
     public void setCardId(String cardId) {
-        this.CardId = cardId;
+        this.cardId = cardId;
     }
 
     public String getStatementDescriptor() {
-        return StatementDescriptor;
+        return statementDescriptor;
     }
 
     public void setStatementDescriptor(String statementDescriptor) {
-        this.StatementDescriptor = statementDescriptor;
+        this.statementDescriptor = statementDescriptor;
     }
 
     public static PayInPaymentDetailsCard build(CardType cardType, String cardId) {
@@ -71,9 +66,9 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
     }
 
     public PayInPaymentDetailsCard(CardType cardType, String cardId, String statementDescriptor) {
-        this.CardType = cardType;
-        this.CardId = cardId;
-        this.StatementDescriptor = statementDescriptor;
+        this.cardType = cardType;
+        this.cardId = cardId;
+        this.statementDescriptor = statementDescriptor;
     }
     
     public static PayInPaymentDetailsCard build(CardType cardType, String cardId, String statementDescriptor) {

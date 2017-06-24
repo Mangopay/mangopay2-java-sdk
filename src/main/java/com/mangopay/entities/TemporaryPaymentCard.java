@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 
 /**
@@ -13,97 +14,85 @@ public class TemporaryPaymentCard extends EntityBase {
 
     /**
      * User identifier.
-     *
-     * @deprecated Use {@link #getUserId()} and {@link #setUserId(String)} instead.
      */
-    @Deprecated
-    public String UserId;
+    @SerializedName("UserId")
+    private String userId;
 
     /**
      * Culture.
-     *
-     * @deprecated Use {@link #getCulture()} and {@link #setCulture(String)} instead.
      */
-    @Deprecated
-    public String Culture;
+    @SerializedName("Culture")
+    private String culture;
 
     /**
      * Return URL.
-     *
-     * @deprecated Use {@link #getReturnURL()} and {@link #setReturnURL(String)} instead.
      */
-    @Deprecated
-    public String ReturnURL;
+    @SerializedName("ReturnURL")
+    private String returnUrl;
 
     /**
      * Template URL.
-     *
-     * @deprecated Use {@link #getTemplateURL()} and {@link #setTemplateURL(String)} instead.
      */
-    @Deprecated
-    public String TemplateURL;
+    @SerializedName("TemplateURL")
+    private String templateUrl;
 
     /**
      * Redirect URL.
-     *
-     * @deprecated Use {@link #getRedirectURL()} and {@link #setRedirectURL(String)} instead.
      */
-    @Deprecated
-    public String RedirectURL;
+    @SerializedName("RedirectURL")
+    private String redirectUrl;
 
     /**
      * Alias.
-     *
-     * @deprecated Use {@link #getAlias()} and {@link #setAlias(String)} instead.
      */
-    @Deprecated
-    public String Alias;
+    @SerializedName("Alias")
+    private String alias;
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.UserId = userId;
+        this.userId = userId;
     }
 
     public String getCulture() {
-        return Culture;
+        return culture;
     }
 
     public void setCulture(String culture) {
-        this.Culture = culture;
+        this.culture = culture;
     }
 
-    public String getReturnURL() {
-        return ReturnURL;
+    public String getReturnUrl() {
+        return returnUrl;
     }
 
-    public void setReturnURL(String returnURL) {
-        this.ReturnURL = returnURL;
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
     }
 
-    public String getTemplateURL() {
-        return TemplateURL;
+    public String getTemplateUrl() {
+        return templateUrl;
     }
 
-    public void setTemplateURL(String templateURL) {
-        this.TemplateURL = templateURL;
+    public void setTemplateUrl(String templateUrl) {
+        this.templateUrl = templateUrl;
     }
 
-    public String getRedirectURL() {
-        return RedirectURL;
+    public String getRedirectUrl() {
+        return redirectUrl;
     }
 
-    public void setRedirectURL(String redirectURL) {
-        this.RedirectURL = redirectURL;
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 
     public String getAlias() {
-        return Alias;
+        return alias;
     }
 
     public void setAlias(String alias) {
-        this.Alias = alias;
+        this.alias = alias;
     }
 }

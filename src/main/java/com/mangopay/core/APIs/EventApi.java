@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiEvents {
+public interface EventApi {
     /**
      * Gets the events.
      * @param filter        Filters for events.

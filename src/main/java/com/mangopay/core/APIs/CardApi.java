@@ -6,7 +6,7 @@ import com.mangopay.entities.TemporaryPaymentCard;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiCards {
+public interface CardApi {
     /**
      * Gets card.
      * @param cardId Card identifier.
@@ -49,7 +49,7 @@ public interface ApiCards {
      * Contact support before using these features or if have any queries.
      *
      * Creates new temporary payment card.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param paymentCard       Payment card object to create.
      * @return                  Payment card object returned from API.
      * @throws Exception

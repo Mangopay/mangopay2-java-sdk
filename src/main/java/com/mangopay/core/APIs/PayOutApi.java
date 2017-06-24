@@ -5,7 +5,7 @@ import com.mangopay.entities.PayOut;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiPayOuts {
+public interface PayOutApi {
     /**
      * Creates new PayOut object.
      * @param payOut    The PayOut object to be created.
@@ -16,7 +16,7 @@ public interface ApiPayOuts {
 
     /**
      * Creates new PayOut object.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param payOut            The PayOut object to be created.
      * @return                  Created PayOut object returned by API.
      * @throws Exception

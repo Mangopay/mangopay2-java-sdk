@@ -3,7 +3,7 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiDisputes;
+import com.mangopay.core.APIs.DisputeApi;
 import com.mangopay.entities.Dispute;
 import com.mangopay.entities.DisputeDocument;
 import com.mangopay.entities.DisputePage;
@@ -23,7 +23,7 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * API for disputes.
  */
-public class DisputeApiImpl extends ApiBase implements ApiDisputes {
+public class DisputeApiImpl extends ApiBase implements DisputeApi {
 
     /**
      * Instantiates new DisputeApiImpl object.

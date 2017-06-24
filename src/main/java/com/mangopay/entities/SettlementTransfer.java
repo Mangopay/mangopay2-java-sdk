@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 
@@ -14,19 +15,15 @@ public class SettlementTransfer extends EntityBase {
 
     /**
      * The Id of the author of the original PayIn that was repudiated.
-     *
-     * @deprecated Use {@link #getAuthorId()} and {@link #setAuthorId(String)} instead.
      */
-    @Deprecated
-    public String AuthorId;
+    @SerializedName("AuthorId")
+    private String authorId;
 
     /**
      * The funds debited from the debited wallet.
-     *
-     * @deprecated Use {@link #getDebitedFunds()} and {@link #setDebitedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money DebitedFunds;
+    @SerializedName("DebitedFunds")
+    private Money debitedFunds;
 
     /**
      * The amount you wish to charge for this settlement.
@@ -35,34 +32,32 @@ public class SettlementTransfer extends EntityBase {
      * the original settlement (eg. DebitedFunds of 1000 and Fees of -200 will
      * transfer 800 from the original wallet to the credit wallet, and transfer
      * 200 from your Fees wallet to your Credit wallet.
-     *
-     * @deprecated Use {@link #getFees()} and {@link #setFees(Money)} instead.
      */
-    @Deprecated
-    public Money Fees;
+    @SerializedName("Fees")
+    private Money fees;
 
     public String getAuthorId() {
-        return AuthorId;
+        return authorId;
     }
 
     public void setAuthorId(String authorId) {
-        this.AuthorId = authorId;
+        this.authorId = authorId;
     }
 
     public Money getDebitedFunds() {
-        return DebitedFunds;
+        return debitedFunds;
     }
 
     public void setDebitedFunds(Money debitedFunds) {
-        this.DebitedFunds = debitedFunds;
+        this.debitedFunds = debitedFunds;
     }
 
     public Money getFees() {
-        return Fees;
+        return fees;
     }
 
     public void setFees(Money fees) {
-        this.Fees = fees;
+        this.fees = fees;
     }
 
     /**

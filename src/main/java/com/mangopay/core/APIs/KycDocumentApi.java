@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiKycDocuments {
+public interface KycDocumentApi {
     /**
      * Gets all KYC documents.
      * @param pagination    Pagination object.

@@ -1,7 +1,7 @@
 package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiUsers;
+import com.mangopay.core.APIs.UserApi;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.MangoPayApi;
@@ -18,7 +18,7 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 /**
  * API for users.
  */
-public class UserApiImpl extends ApiBase implements ApiUsers {
+public class UserApiImpl extends ApiBase implements UserApi {
 
     /**
      * Instantiates new UserApiImpl object.
@@ -206,7 +206,7 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
         if (bankAccount.getDetails() == null)
             throw new Exception("Details is not defined.");
 
-        String className = bankAccount.Details.getClass().getSimpleName().replace("BankAccountDetails", "");
+        String className = bankAccount.getDetails().getClass().getSimpleName().replace("BankAccountDetails", "");
         return className.toLowerCase();
     }
 

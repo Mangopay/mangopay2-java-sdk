@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 import com.mangopay.core.enumerations.PaymentStatus;
@@ -19,248 +20,218 @@ public class CardPreAuthorization extends EntityBase {
 
     /**
      * The user Id of the author of the pre-authorization.
-     *
-     * @deprecated Use {@link #getAuthorId()} and {@link #setAuthorId(String)} instead.
      */
-    @Deprecated
-    public String AuthorId;
+    @SerializedName("AuthorId")
+    private String authorId;
 
     /**
      * Represents the amount debited on the bank account
      * of the Author. DebitedFunds = Fees + CreditedFunds
      * (amount received on wallet)
-     *
-     * @deprecated Use {@link #getDebitedFunds()} and {@link #setDebitedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money DebitedFunds;
+    @SerializedName("DebitedFunds")
+    private Money debitedFunds;
 
     /**
      * Status of the PreAuthorization.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(PreAuthorizationStatus)} instead.
      */
-    @Deprecated
-    public PreAuthorizationStatus Status;
+    @SerializedName("Status")
+    private PreAuthorizationStatus status;
 
     /**
      * The status of the payment after the PreAuthorization.
-     *
-     * @deprecated Use {@link #getPaymentStatus()} and {@link #setPaymentStatus(PaymentStatus)} instead.
      */
-    @Deprecated
-    public PaymentStatus PaymentStatus;
+    @SerializedName("PaymentStatus")
+    private PaymentStatus paymentStatus;
 
     /**
      * The PreAuthorization result code.
-     *
-     * @deprecated Use {@link #getResultCode()} and {@link #setResultCode(String)} instead.
      */
-    @Deprecated
-    public String ResultCode;
+    @SerializedName("ResultCode")
+    private String resultCode;
 
     /**
      * The PreAuthorization result Message explaining the result code.
-     *
-     * @deprecated Use {@link #getResultMessage()} and {@link #setResultMessage(String)} instead.
      */
-    @Deprecated
-    public String ResultMessage;
+    @SerializedName("ResultMessage")
+    private String resultMessage;
 
     /**
      * How the PreAuthorization has been executed.
-     *
-     * @deprecated Use {@link #getExecutionType()} and {@link #setExecutionType(PreAuthorizationExecutionType)} instead.
      */
-    @Deprecated
-    public PreAuthorizationExecutionType ExecutionType;
+    @SerializedName("ExecutionType")
+    private PreAuthorizationExecutionType executionType;
 
     /**
      * The SecureMode correspond to '3D secure' for CB Visa and MasterCard
      * or 'Amex Safe Key' for American Express.
      * This field lets you activate it manually.
-     *
-     * @deprecated Use {@link #getSecureMode()} and {@link #setSecureMode(SecureMode)} instead.
      */
-    @Deprecated
-    public SecureMode SecureMode;
+    @SerializedName("SecureMode")
+    private SecureMode secureMode;
 
     /**
      * Identifier of the registered card (got through CardRegistration object).
-     *
-     * @deprecated Use {@link #getCardId()} and {@link #setCardId(String)} instead.
      */
-    @Deprecated
-    public String CardId;
+    @SerializedName("CardId")
+    private String cardId;
 
     /**
      * An optional value to be specified on the user's bank statement
-     *
-     * @deprecated Use {@link #getStatementDescriptor()} and {@link #setStatementDescriptor(String)} instead.
      */
-    @Deprecated
-    public String StatementDescriptor;
+    @SerializedName("StatementDescriptor")
+    private String statementDescriptor;
 
     /**
      * Boolean. The value is 'true' if the SecureMode was used.
-     *
-     * @deprecated Use {@link #getSecureModeNeeded()} and {@link #setSecureModeNeeded(String)} instead.
      */
-    @Deprecated
-    public String SecureModeNeeded;
+    @SerializedName("SecureModeNeeded")
+    private String secureModeNeeded;
 
     /**
      * This is the URL where to redirect users to proceed
      * to 3D secure validation.
-     *
-     * @deprecated Use {@link #getSecureModeRedirectURL()} and {@link #setSecureModeRedirectURL(String)} instead.
      */
-    @Deprecated
-    public String SecureModeRedirectURL;
+    @SerializedName("SecureModeRedirectURL")
+    private String secureModeRedirectUrl;
 
     /**
      * This is the URL where users are automatically redirected
      * after 3D secure validation (if activated).
-     *
-     * @deprecated Use {@link #getSecureModeReturnURL()} and {@link #setSecureModeReturnURL(String)} instead.
      */
-    @Deprecated
-    public String SecureModeReturnURL;
+    @SerializedName("SecureModeReturnURL")
+    private String secureModeReturnUrl;
 
     /**
      * The date when the payment has been processed (UNIX timestamp).
-     *
-     * @deprecated Use {@link #getExpirationDate()} and {@link #setExpirationDate(Long)} instead.
      */
-    @Deprecated
-    public Long ExpirationDate;
+    @SerializedName("ExpirationDate")
+    private Long expirationDate;
 
     /**
      * Identifier of the associated PayIn.
-     *
-     * @deprecated Use {@link #getPayInId()} and {@link #setPayInId(String)} instead.
      */
-    @Deprecated
-    public String PayInId;
+    @SerializedName("PayInId")
+    private String payInId;
 
     public String getAuthorId() {
-        return AuthorId;
+        return authorId;
     }
 
     public void setAuthorId(String authorId) {
-        this.AuthorId = authorId;
+        this.authorId = authorId;
     }
 
     public Money getDebitedFunds() {
-        return DebitedFunds;
+        return debitedFunds;
     }
 
     public void setDebitedFunds(Money debitedFunds) {
-        this.DebitedFunds = debitedFunds;
+        this.debitedFunds = debitedFunds;
     }
 
     public PreAuthorizationStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(PreAuthorizationStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public PaymentStatus getPaymentStatus() {
-        return PaymentStatus;
+        return paymentStatus;
     }
 
     public void setPaymentStatus(PaymentStatus paymentStatus) {
-        this.PaymentStatus = paymentStatus;
+        this.paymentStatus = paymentStatus;
     }
 
     public String getResultCode() {
-        return ResultCode;
+        return resultCode;
     }
 
     public void setResultCode(String resultCode) {
-        this.ResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public String getResultMessage() {
-        return ResultMessage;
+        return resultMessage;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.ResultMessage = resultMessage;
+        this.resultMessage = resultMessage;
     }
 
     public PreAuthorizationExecutionType getExecutionType() {
-        return ExecutionType;
+        return executionType;
     }
 
     public void setExecutionType(PreAuthorizationExecutionType executionType) {
-        this.ExecutionType = executionType;
+        this.executionType = executionType;
     }
 
     public SecureMode getSecureMode() {
-        return SecureMode;
+        return secureMode;
     }
 
     public void setSecureMode(SecureMode secureMode) {
-        this.SecureMode = secureMode;
+        this.secureMode = secureMode;
     }
 
     public String getCardId() {
-        return CardId;
+        return cardId;
     }
 
     public void setCardId(String cardId) {
-        this.CardId = cardId;
+        this.cardId = cardId;
     }
 
     public String getStatementDescriptor() {
-        return StatementDescriptor;
+        return statementDescriptor;
     }
 
     public void setStatementDescriptor(String statementDescriptor) {
-        this.StatementDescriptor = statementDescriptor;
+        this.statementDescriptor = statementDescriptor;
     }
 
     public String getSecureModeNeeded() {
-        return SecureModeNeeded;
+        return secureModeNeeded;
     }
 
     public void setSecureModeNeeded(String secureModeNeeded) {
-        this.SecureModeNeeded = secureModeNeeded;
+        this.secureModeNeeded = secureModeNeeded;
     }
 
-    public String getSecureModeRedirectURL() {
-        return SecureModeRedirectURL;
+    public String getSecureModeRedirectUrl() {
+        return secureModeRedirectUrl;
     }
 
-    public void setSecureModeRedirectURL(String secureModeRedirectURL) {
-        this.SecureModeRedirectURL = secureModeRedirectURL;
+    public void setSecureModeRedirectUrl(String secureModeRedirectUrl) {
+        this.secureModeRedirectUrl = secureModeRedirectUrl;
     }
 
-    public String getSecureModeReturnURL() {
-        return SecureModeReturnURL;
+    public String getSecureModeReturnUrl() {
+        return secureModeReturnUrl;
     }
 
-    public void setSecureModeReturnURL(String secureModeReturnURL) {
-        this.SecureModeReturnURL = secureModeReturnURL;
+    public void setSecureModeReturnUrl(String secureModeReturnUrl) {
+        this.secureModeReturnUrl = secureModeReturnUrl;
     }
 
     public Long getExpirationDate() {
-        return ExpirationDate;
+        return expirationDate;
     }
 
     public void setExpirationDate(Long expirationDate) {
-        this.ExpirationDate = expirationDate;
+        this.expirationDate = expirationDate;
     }
 
     public String getPayInId() {
-        return PayInId;
+        return payInId;
     }
 
     public void setPayInId(String payInId) {
-        this.PayInId = payInId;
+        this.payInId = payInId;
     }
 
     /**

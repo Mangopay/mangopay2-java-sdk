@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 
@@ -10,17 +11,15 @@ public class PayInPaymentDetailsPreAuthorized extends Dto implements PayInPaymen
 
     /**
      * Pre-authorization identifier.
-     *
-     * @deprecated Use {@link #getPreauthorizationId()} and {@link #setPreauthorizationId(String)} instead.
      */
-    @Deprecated
-    public String PreauthorizationId;
+    @SerializedName("PreauthorizationId")
+    private String preauthorizationId;
 
     public String getPreauthorizationId() {
-        return PreauthorizationId;
+        return preauthorizationId;
     }
 
     public void setPreauthorizationId(String preauthorizationId) {
-        this.PreauthorizationId = preauthorizationId;
+        this.preauthorizationId = preauthorizationId;
     }
 }

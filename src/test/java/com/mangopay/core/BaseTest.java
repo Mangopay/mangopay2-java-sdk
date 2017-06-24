@@ -189,8 +189,8 @@ public abstract class BaseTest {
             account.setOwnerAddress(john.getAddress());
             account.setUserId(john.getId());
             BankAccountDetailsIBAN bankAccountDetails = new BankAccountDetailsIBAN();
-            bankAccountDetails.setIBAN("FR7618829754160173622224154");
-            bankAccountDetails.setBIC("CMBRFR2BCME");
+            bankAccountDetails.setIban("FR7618829754160173622224154");
+            bankAccountDetails.setBic("CMBRFR2BCME");
             account.setDetails(bankAccountDetails);
             BaseTest.JOHNS_ACCOUNT = this.api.getUserApi().createBankAccount(john.getId(), account);
         }
@@ -278,7 +278,7 @@ public abstract class BaseTest {
             // execution type as DIRECT
             payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
             ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
-            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnURL("http://test.com");
+            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
             // create Pay-In
             this.api.getPayInApi().create(payIn);
         }
@@ -298,10 +298,10 @@ public abstract class BaseTest {
     private PayInExecutionDetailsWeb getPayInExecutionDetailsWeb() {
         if (BaseTest.PAYIN_EXECUTION_DETAILS_WEB == null) {
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB = new PayInExecutionDetailsWeb();
-            BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setTemplateURL("https://TemplateURL.com");
+            BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setTemplateUrl("https://TemplateURL.com");
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setSecureMode(SecureMode.DEFAULT);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setCulture(CultureCode.FR);
-            BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setReturnURL("https://test.com");
+            BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setReturnUrl("https://test.com");
         }
 
         return BaseTest.PAYIN_EXECUTION_DETAILS_WEB;
@@ -392,7 +392,7 @@ public abstract class BaseTest {
         // execution type as DIRECT
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
-        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnURL("http://test.com");
+        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -574,7 +574,7 @@ public abstract class BaseTest {
         cardPreAuthorization.getDebitedFunds().setCurrency(CurrencyIso.EUR);
         cardPreAuthorization.getDebitedFunds().setAmount(10000);
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
-        cardPreAuthorization.setSecureModeReturnURL("http://test.com");
+        cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
 
         return this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
     }
@@ -608,7 +608,7 @@ public abstract class BaseTest {
                 "&cardExpirationDate=1218" +
                 "&cardCvx=123";
 
-        URL url = new URL(cardRegistration.getCardRegistrationURL());
+        URL url = new URL(cardRegistration.getCardRegistrationUrl());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("POST");
@@ -747,14 +747,14 @@ public abstract class BaseTest {
 
 
             if (((BankAccount) entity1).getType() == BankAccountType.IBAN) {
-                assertEquals(((BankAccountDetailsIBAN) ((BankAccount) entity1).getDetails()).getIBAN(), ((BankAccountDetailsIBAN) ((BankAccount) entity2).getDetails()).getIBAN());
-                assertEquals(((BankAccountDetailsIBAN) ((BankAccount) entity1).getDetails()).getBIC(), ((BankAccountDetailsIBAN) ((BankAccount) entity2).getDetails()).getBIC());
+                assertEquals(((BankAccountDetailsIBAN) ((BankAccount) entity1).getDetails()).getIban(), ((BankAccountDetailsIBAN) ((BankAccount) entity2).getDetails()).getIban());
+                assertEquals(((BankAccountDetailsIBAN) ((BankAccount) entity1).getDetails()).getBic(), ((BankAccountDetailsIBAN) ((BankAccount) entity2).getDetails()).getBic());
             } else if (((BankAccount) entity1).getType() == BankAccountType.GB) {
                 assertEquals(((BankAccountDetailsGB) ((BankAccount) entity1).getDetails()).getAccountNumber(), ((BankAccountDetailsGB) ((BankAccount) entity2).getDetails()).getAccountNumber());
                 assertEquals(((BankAccountDetailsGB) ((BankAccount) entity1).getDetails()).getSortCode(), ((BankAccountDetailsGB) ((BankAccount) entity2).getDetails()).getSortCode());
             } else if (((BankAccount) entity1).getType() == BankAccountType.US) {
                 assertEquals(((BankAccountDetailsUS) ((BankAccount) entity1).getDetails()).getAccountNumber(), ((BankAccountDetailsUS) ((BankAccount) entity2).getDetails()).getAccountNumber());
-                assertEquals(((BankAccountDetailsUS) ((BankAccount) entity1).getDetails()).getABA(), ((BankAccountDetailsUS) ((BankAccount) entity2).getDetails()).getABA());
+                assertEquals(((BankAccountDetailsUS) ((BankAccount) entity1).getDetails()).getAba(), ((BankAccountDetailsUS) ((BankAccount) entity2).getDetails()).getAba());
             } else if (((BankAccount) entity1).getType() == BankAccountType.CA) {
                 assertEquals(((BankAccountDetailsCA) ((BankAccount) entity1).getDetails()).getAccountNumber(), ((BankAccountDetailsCA) ((BankAccount) entity2).getDetails()).getAccountNumber());
                 assertEquals(((BankAccountDetailsCA) ((BankAccount) entity1).getDetails()).getBankName(), ((BankAccountDetailsCA) ((BankAccount) entity2).getDetails()).getBankName());
@@ -764,7 +764,7 @@ public abstract class BaseTest {
                 assertEquals(((BankAccountDetailsOTHER) ((BankAccount) entity1).getDetails()).getAccountNumber(), ((BankAccountDetailsOTHER) ((BankAccount) entity2).getDetails()).getAccountNumber());
                 //assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).getDetails()).Type, ((BankAccountDetailsOTHER)((BankAccount)entity2).getDetails()).Type);
                 assertEquals(((BankAccountDetailsOTHER) ((BankAccount) entity1).getDetails()).getCountry(), ((BankAccountDetailsOTHER) ((BankAccount) entity2).getDetails()).getCountry());
-                assertEquals(((BankAccountDetailsOTHER) ((BankAccount) entity1).getDetails()).getBIC(), ((BankAccountDetailsOTHER) ((BankAccount) entity2).getDetails()).getBIC());
+                assertEquals(((BankAccountDetailsOTHER) ((BankAccount) entity1).getDetails()).getBic(), ((BankAccountDetailsOTHER) ((BankAccount) entity2).getDetails()).getBic());
             }
 
         } else if (entity1 instanceof PayIn) {
@@ -786,11 +786,11 @@ public abstract class BaseTest {
             assertEquals(((PayInPaymentDetailsCard) entity1).getCardType(), ((PayInPaymentDetailsCard) entity2).getCardType());
 
         } else if (entity1 instanceof PayInExecutionDetailsWeb) {
-            assertEquals(((PayInExecutionDetailsWeb) entity1).getTemplateURL(), ((PayInExecutionDetailsWeb) entity2).getTemplateURL());
+            assertEquals(((PayInExecutionDetailsWeb) entity1).getTemplateUrl(), ((PayInExecutionDetailsWeb) entity2).getTemplateUrl());
             assertEquals(((PayInExecutionDetailsWeb) entity1).getCulture(), ((PayInExecutionDetailsWeb) entity2).getCulture());
             assertEquals(((PayInExecutionDetailsWeb) entity1).getSecureMode(), ((PayInExecutionDetailsWeb) entity2).getSecureMode());
-            assertEquals(((PayInExecutionDetailsWeb) entity1).getRedirectURL(), ((PayInExecutionDetailsWeb) entity2).getRedirectURL());
-            assertEquals(((PayInExecutionDetailsWeb) entity1).getReturnURL(), ((PayInExecutionDetailsWeb) entity2).getReturnURL());
+            assertEquals(((PayInExecutionDetailsWeb) entity1).getRedirectUrl(), ((PayInExecutionDetailsWeb) entity2).getRedirectUrl());
+            assertEquals(((PayInExecutionDetailsWeb) entity1).getReturnUrl(), ((PayInExecutionDetailsWeb) entity2).getReturnUrl());
 
         } else if (entity1 instanceof PayOut) {
             assertEquals(((PayOut) entity1).getTag(), ((PayOut) entity2).getTag());

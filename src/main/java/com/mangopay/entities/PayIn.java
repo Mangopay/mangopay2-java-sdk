@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.PayInExecutionType;
 import com.mangopay.core.enumerations.PayInPaymentType;
 import com.mangopay.core.interfaces.PayInExecutionDetails;
@@ -17,82 +18,72 @@ public class PayIn extends Transaction {
 
     /**
      * Credited wallet identifier.
-     *
-     * @deprecated Use {@link #getCreditedWalletId()} and {@link #setCreditedWalletId(String)} instead.
      */
-    @Deprecated
-    public String CreditedWalletId;
+    @SerializedName("CreditedWalletId")
+    private String creditedWalletId;
 
     /**
      * Type of payment.
-     *
-     * @deprecated Use {@link #getPaymentType()} and {@link #setPaymentType(PayInPaymentType)} instead.
      */
-    @Deprecated
-    public PayInPaymentType PaymentType;
+    @SerializedName("PaymentType")
+    private PayInPaymentType paymentType;
 
     /**
      * One of PayInPaymentDetails implementations, depending on PaymentType.
-     *
-     * @deprecated Use {@link #getPaymentDetails()} and {@link #setPaymentDetails(PayInPaymentDetails)} instead.
      */
-    @Deprecated
-    public PayInPaymentDetails PaymentDetails;
+    @SerializedName("PaymentDetails")
+    private PayInPaymentDetails paymentDetails;
 
     /**
      * Type of execution.
-     *
-     * @deprecated Use {@link #getExecutionType()} and {@link #setExecutionType(PayInExecutionType)} instead.
      */
-    @Deprecated
-    public PayInExecutionType ExecutionType;
+    @SerializedName("ExecutionType")
+    private PayInExecutionType executionType;
 
     /**
      * One of PayInExecutionDetails implementations, depending on ExecutionType.
-     *
-     * @deprecated Use {@link #getExecutionDetails()} and {@link #setExecutionDetails(PayInExecutionDetails)} instead.
      */
-    @Deprecated
-    public PayInExecutionDetails ExecutionDetails;
+    @SerializedName("ExecutionDetails")
+    private PayInExecutionDetails executionDetails;
 
     public String getCreditedWalletId() {
-        return CreditedWalletId;
+        return creditedWalletId;
     }
 
     public void setCreditedWalletId(String creditedWalletId) {
-        this.CreditedWalletId = creditedWalletId;
+        this.creditedWalletId = creditedWalletId;
     }
 
     public PayInPaymentType getPaymentType() {
-        return PaymentType;
+        return paymentType;
     }
 
     public void setPaymentType(PayInPaymentType paymentType) {
-        this.PaymentType = paymentType;
+        this.paymentType = paymentType;
     }
 
     public PayInPaymentDetails getPaymentDetails() {
-        return PaymentDetails;
+        return paymentDetails;
     }
 
     public void setPaymentDetails(PayInPaymentDetails paymentDetails) {
-        this.PaymentDetails = paymentDetails;
+        this.paymentDetails = paymentDetails;
     }
 
     public PayInExecutionType getExecutionType() {
-        return ExecutionType;
+        return executionType;
     }
 
     public void setExecutionType(PayInExecutionType executionType) {
-        this.ExecutionType = executionType;
+        this.executionType = executionType;
     }
 
     public PayInExecutionDetails getExecutionDetails() {
-        return ExecutionDetails;
+        return executionDetails;
     }
 
     public void setExecutionDetails(PayInExecutionDetails executionDetails) {
-        this.ExecutionDetails = executionDetails;
+        this.executionDetails = executionDetails;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.Money;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
@@ -16,66 +17,58 @@ public class PayInPaymentDetailsBankWire extends Dto implements PayInPaymentDeta
 
     /**
      * Declared debited funds.
-     *
-     * @deprecated Use {@link #getDeclaredDebitedFunds()} and {@link #setDeclaredDebitedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money DeclaredDebitedFunds;
+    @SerializedName("DeclaredDebitedFunds")
+    private Money declaredDebitedFunds;
 
     /**
      * Declared fees.
-     *
-     * @deprecated Use {@link #getDeclaredFees()} and {@link #setDeclaredFees(Money)} instead.
      */
-    @Deprecated
-    public Money DeclaredFees;
+    @SerializedName("DeclaredFees")
+    private Money declaredFees;
 
     /**
      * Bank account details.
-     *
-     * @deprecated Use {@link #getBankAccount()} and {@link #setBankAccount(BankAccount)} instead.
      */
-    @Deprecated
-    public BankAccount BankAccount;
+    @SerializedName("BankAccount")
+    private BankAccount bankAccount;
 
     /**
      * Wire reference.
-     *
-     * @deprecated Use {@link #getWireReference()} and {@link #setWireReference(String)} instead.
      */
-    @Deprecated
-    public String WireReference;
+    @SerializedName("WireReference")
+    private String wireReference;
 
     public Money getDeclaredDebitedFunds() {
-        return DeclaredDebitedFunds;
+        return declaredDebitedFunds;
     }
 
     public void setDeclaredDebitedFunds(Money declaredDebitedFunds) {
-        this.DeclaredDebitedFunds = declaredDebitedFunds;
+        this.declaredDebitedFunds = declaredDebitedFunds;
     }
 
     public Money getDeclaredFees() {
-        return DeclaredFees;
+        return declaredFees;
     }
 
     public void setDeclaredFees(Money declaredFees) {
-        this.DeclaredFees = declaredFees;
+        this.declaredFees = declaredFees;
     }
 
     public BankAccount getBankAccount() {
-        return BankAccount;
+        return bankAccount;
     }
 
     public void setBankAccount(BankAccount bankAccount) {
-        this.BankAccount = bankAccount;
+        this.bankAccount = bankAccount;
     }
 
     public String getWireReference() {
-        return WireReference;
+        return wireReference;
     }
 
     public void setWireReference(String wireReference) {
-        this.WireReference = wireReference;
+        this.wireReference = wireReference;
     }
 
     /**

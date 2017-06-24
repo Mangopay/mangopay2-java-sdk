@@ -1,5 +1,7 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,34 +12,30 @@ public class FilterDisputes extends Dto {
 
     /**
      * Start date in Unix format: return only disputes that have CreationDate BEFORE this date.
-     *
-     * @deprecated Use {@link #getBeforeDate()} and {@link #setBeforeDate(Long)} instead.
      */
-    @Deprecated
-    public Long BeforeDate;
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
 
     /**
      * End date in Unix format: return only disputes that have CreationDate AFTER this date.
-     *
-     * @deprecated Use {@link #getAfterDate()} and {@link #setAfterDate(Long)} instead.
      */
-    @Deprecated
-    public Long AfterDate;
+    @SerializedName("AfterDate")
+    private Long afterDate;
 
     public Long getBeforeDate() {
-        return BeforeDate;
+        return beforeDate;
     }
 
     public void setBeforeDate(Long beforeDate) {
-        this.BeforeDate = beforeDate;
+        this.beforeDate = beforeDate;
     }
 
     public Long getAfterDate() {
-        return AfterDate;
+        return afterDate;
     }
 
     public void setAfterDate(Long afterDate) {
-        this.AfterDate = afterDate;
+        this.afterDate = afterDate;
     }
 
     /**
@@ -49,8 +47,8 @@ public class FilterDisputes extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
 
-        if (BeforeDate != null) result.put("BeforeDate", Long.toString(BeforeDate));
-        if (AfterDate != null) result.put("AfterDate", Long.toString(AfterDate));
+        if (beforeDate != null) result.put("BeforeDate", Long.toString(beforeDate));
+        if (afterDate != null) result.put("AfterDate", Long.toString(afterDate));
 
         return result;
     }

@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.interfaces.BankAccountDetails;
 import com.mangopay.core.enumerations.CountryIso;
@@ -16,49 +17,43 @@ public class BankAccountDetailsOTHER extends Dto implements BankAccountDetails {
     
     /**
      * The Country associated to the BankAccount.
-     *
-     * @deprecated Use {@link #getCountry()} and {@link #setCountry(CountryIso)} instead.
      */
-    @Deprecated
-    public CountryIso Country;
+    @SerializedName("Country")
+    private CountryIso country;
     
     /**
      * Valid BIC format.
-     *
-     * @deprecated Use {@link #getBIC()} and {@link #setBIC(String)} instead.
      */
-    @Deprecated
-    public String BIC;
+    @SerializedName("BIC")
+    private String bic;
     
     /**
      * Account number.
-     *
-     * @deprecated Use {@link #getAccountNumber()} and {@link #setAccountNumber(String)} instead.
      */
-    @Deprecated
-    public String AccountNumber;
+    @SerializedName("AccountNumber")
+    private String accountNumber;
 
     public CountryIso getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(CountryIso country) {
-        this.Country = country;
+        this.country = country;
     }
 
-    public String getBIC() {
-        return BIC;
+    public String getBic() {
+        return bic;
     }
 
-    public void setBIC(String BIC) {
-        this.BIC = BIC;
+    public void setBic(String bic) {
+        this.bic = bic;
     }
 
     public String getAccountNumber() {
-        return AccountNumber;
+        return accountNumber;
     }
 
     public void setAccountNumber(String accountNumber) {
-        this.AccountNumber = accountNumber;
+        this.accountNumber = accountNumber;
     }
 }

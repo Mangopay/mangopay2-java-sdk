@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.EventType;
 
 import java.util.HashMap;
@@ -12,50 +13,44 @@ public class FilterEvents extends Dto {
 
     /**
      * Type of events.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(EventType)} instead.
      */
-    @Deprecated
-    public EventType Type;
+    @SerializedName("Type")
+    private EventType type;
 
     /**
      * Start date in Unix format.
-     *
-     * @deprecated Use {@link #getBeforeDate()} and {@link #setBeforeDate(Long)} instead.
      */
-    @Deprecated
-    public Long BeforeDate;
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
 
     /**
      * End date in Unix format.
-     *
-     * @deprecated Use {@link #getAfterDate()} and {@link #setAfterDate(Long)} instead.
      */
-    @Deprecated
-    public Long AfterDate;
+    @SerializedName("AfterDate")
+    private Long afterDate;
 
     public EventType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(EventType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public Long getBeforeDate() {
-        return BeforeDate;
+        return beforeDate;
     }
 
     public void setBeforeDate(Long beforeDate) {
-        this.BeforeDate = beforeDate;
+        this.beforeDate = beforeDate;
     }
 
     public Long getAfterDate() {
-        return AfterDate;
+        return afterDate;
     }
 
     public void setAfterDate(Long afterDate) {
-        this.AfterDate = afterDate;
+        this.afterDate = afterDate;
     }
 
     /**
@@ -67,12 +62,12 @@ public class FilterEvents extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
 
-        if (Type != EventType.ALL) {
-            result.put("eventtype", Type.name());
+        if (type != EventType.ALL) {
+            result.put("eventtype", type.name());
         }
 
-        if (BeforeDate != null) result.put("beforeDate", Long.toString(BeforeDate));
-        if (AfterDate != null) result.put("afterDate", Long.toString(AfterDate));
+        if (beforeDate != null) result.put("beforeDate", Long.toString(beforeDate));
+        if (afterDate != null) result.put("afterDate", Long.toString(afterDate));
 
         return result;
     }

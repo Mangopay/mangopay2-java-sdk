@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.RefundReason;
 import com.mangopay.core.enumerations.InitialTransactionType;
 
@@ -14,82 +15,72 @@ public class Refund extends Transaction {
 
     /**
      * Initial transaction identifier.
-     *
-     * @deprecated Use {@link #getInitialTransactionId()} and {@link #setInitialTransactionId(String)} instead.
      */
-    @Deprecated
-    public String InitialTransactionId;
+    @SerializedName("InitialTransactionId")
+    private String initialTransactionId;
 
     /**
      * Initial transaction type.
-     *
-     * @deprecated Use {@link #getInitialTransactionType()} and {@link #setInitialTransactionType(InitialTransactionType)} instead.
      */
-    @Deprecated
-    public InitialTransactionType InitialTransactionType;
+    @SerializedName("InitialTransactionType")
+    private InitialTransactionType initialTransactionType;
 
     /**
      * Debited wallet identifier.
-     *
-     * @deprecated Use {@link #getDebitedWalletId()} and {@link #setDebitedWalletId(String)} instead.
      */
-    @Deprecated
-    public String DebitedWalletId;
+    @SerializedName("DebitedWalletId")
+    private String debitedWalletId;
 
     /**
      * Credited wallet identifier.
-     *
-     * @deprecated Use {@link #getCreditedWalletId()} and {@link #setCreditedWalletId(String)} instead.
      */
-    @Deprecated
-    public String CreditedWalletId;
+    @SerializedName("CreditedWalletId")
+    private String creditedWalletId;
 
     /**
      * Contains info about the reason for refund.
-     *
-     * @deprecated Use {@link #getRefundReason()} and {@link #setRefundReason(RefundReason)} instead.
      */
-    @Deprecated
-    public RefundReason RefundReason;
+    @SerializedName("RefundReason")
+    private RefundReason refundReason;
 
     public String getInitialTransactionId() {
-        return InitialTransactionId;
+        return initialTransactionId;
     }
 
     public void setInitialTransactionId(String initialTransactionId) {
-        this.InitialTransactionId = initialTransactionId;
+        this.initialTransactionId = initialTransactionId;
     }
 
     public InitialTransactionType getInitialTransactionType() {
-        return InitialTransactionType;
+        return initialTransactionType;
     }
 
     public void setInitialTransactionType(InitialTransactionType initialTransactionType) {
-        this.InitialTransactionType = initialTransactionType;
+        this.initialTransactionType = initialTransactionType;
     }
 
     public String getDebitedWalletId() {
-        return DebitedWalletId;
+        return debitedWalletId;
     }
 
     public void setDebitedWalletId(String debitedWalletId) {
-        this.DebitedWalletId = debitedWalletId;
+        this.debitedWalletId = debitedWalletId;
     }
 
     public String getCreditedWalletId() {
-        return CreditedWalletId;
+        return creditedWalletId;
     }
 
     public void setCreditedWalletId(String creditedWalletId) {
-        this.CreditedWalletId = creditedWalletId;
+        this.creditedWalletId = creditedWalletId;
     }
 
     public com.mangopay.core.RefundReason getRefundReason() {
-        return RefundReason;
+        return refundReason;
     }
 
     public void setRefundReason(com.mangopay.core.RefundReason refundReason) {
-        this.RefundReason = refundReason;
+        this.refundReason = refundReason;
     }
 
     /**

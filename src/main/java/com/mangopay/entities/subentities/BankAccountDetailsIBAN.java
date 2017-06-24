@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.interfaces.BankAccountDetails;
 
@@ -10,33 +11,29 @@ public class BankAccountDetailsIBAN extends Dto implements BankAccountDetails {
 
     /**
      * IBAN number.
-     *
-     * @deprecated Use {@link #getIBAN()} and {@link #setIBAN(String)} instead.
      */
-    @Deprecated
-    public String IBAN;
+    @SerializedName("IBAN")
+    private String iban;
 
     /**
      * BIC.
-     *
-     * @deprecated Use {@link #getBIC()} and {@link #setBIC(String)} instead.
      */
-    @Deprecated
-    public String BIC;
+    @SerializedName("BIC")
+    private String bic;
 
-    public String getIBAN() {
-        return IBAN;
+    public String getIban() {
+        return iban;
     }
 
-    public void setIBAN(String IBAN) {
-        this.IBAN = IBAN;
+    public void setIban(String iban) {
+        this.iban = iban;
     }
 
-    public String getBIC() {
-        return BIC;
+    public String getBic() {
+        return bic;
     }
 
-    public void setBIC(String BIC) {
-        this.BIC = BIC;
+    public void setBic(String bic) {
+        this.bic = bic;
     }
 }

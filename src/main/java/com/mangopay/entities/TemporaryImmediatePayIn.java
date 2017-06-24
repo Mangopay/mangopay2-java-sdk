@@ -1,5 +1,7 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * WARNING!
  * This is temporary entity and will be removed in future.
@@ -11,33 +13,29 @@ public class TemporaryImmediatePayIn extends Transaction {
 
     /**
      * Payment card identifier.
-     *
-     * @deprecated Use {@link #getPaymentCardId()} and {@link #setPaymentCardId(String)} instead.
      */
-    @Deprecated
-    public String PaymentCardId;
+    @SerializedName("PaymentCardId")
+    private String paymentCardId;
 
     /**
      * Credited wallet identifier.
-     *
-     * @deprecated Use {@link #getCreditedWalletId()} and {@link #setCreditedWalletId(String)} instead.
      */
-    @Deprecated
-    public String CreditedWalletId;
+    @SerializedName("CreditedWalletId")
+    private String creditedWalletId;
 
     public String getPaymentCardId() {
-        return PaymentCardId;
+        return paymentCardId;
     }
 
     public void setPaymentCardId(String paymentCardId) {
-        this.PaymentCardId = paymentCardId;
+        this.paymentCardId = paymentCardId;
     }
 
     public String getCreditedWalletId() {
-        return CreditedWalletId;
+        return creditedWalletId;
     }
 
     public void setCreditedWalletId(String creditedWalletId) {
-        this.CreditedWalletId = creditedWalletId;
+        this.creditedWalletId = creditedWalletId;
     }
 }

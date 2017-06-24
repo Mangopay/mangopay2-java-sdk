@@ -7,7 +7,7 @@ import com.mangopay.entities.TemporaryImmediatePayIn;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiPayIns {
+public interface PayInApi {
     /**
      * Creates new PayIn object.
      * @param payIn     The PayIn object to be created.
@@ -18,7 +18,7 @@ public interface ApiPayIns {
 
     /**
      * Creates new PayIn object.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param payIn             The PayIn object to be created.
      * @return                  Created PayIn object returned by API.
      * @throws Exception
@@ -44,7 +44,7 @@ public interface ApiPayIns {
 
     /**
      * Creates refund for PayIn object.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param payInId           PayIn identifier.
      * @param refund            Refund object to be created.
      * @return                  Refund entity instance returned by REST API.
@@ -78,7 +78,7 @@ public interface ApiPayIns {
      * Contact support before using these features or if have any queries.
      *
      * Creates new temporary immediate pay-in.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param immediatePayIn    Immediate pay-in object to create.
      * @return                  Immediate pay-in object returned from API.
      * @throws Exception
