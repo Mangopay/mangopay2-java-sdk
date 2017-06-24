@@ -29,10 +29,10 @@ public class MangoPayApi {
         setPayInApi(new PayInApiImpl(this));
         setPayOutApi(new PayOutApiImpl(this));
         setRefundApi(new RefundApiImpl(this));
-        setTransferApi(TransferApiImpl(this));
+        setTransferApi(new TransferApiImpl(this));
         setCardRegistrationApi(new CardRegistrationApiImpl(this));
         setCardApi(new CardApiImpl(this));
-        setEventApi(new EventApiImpl(this);
+        setEventApi(new EventApiImpl(this));
         setCardPreAuthorizationApi(new CardPreAuthorizationApiImpl(this));
         setHookApi(new HookApiImpl(this));
         setKycDocumentApi(new KycDocumentApiImpl(this));
