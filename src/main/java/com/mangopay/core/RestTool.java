@@ -555,6 +555,10 @@ public class RestTool {
             return true;
         }
 
+        if(classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
+            return true;
+        }
+
         return false;
 
     }

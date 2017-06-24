@@ -106,6 +106,7 @@ public abstract class ApiBase {
         put("users_savenaturals", new String[] { "/users/natural/%s", RequestType.PUT.toString() });
         put("users_savelegals", new String[] { "/users/legal/%s", RequestType.PUT.toString() });
         put("users_emoney", new String[] {"/users/%s/emoney", RequestType.GET.toString() });
+        put("users_emoney_currency", new String[] {"/users/%s/emoney?Currency=%s", RequestType.GET.toString() });
 
         put("wallets_create", new String[] { "/wallets", RequestType.POST.toString() });
         put("wallets_alltransactions", new String[] { "/wallets/%s/transactions", RequestType.GET.toString() });
@@ -135,7 +136,8 @@ public abstract class ApiBase {
         put("disputes_document_get_for_dispute", new String[] { "/disputes/%s/documents", RequestType.GET.toString() });
         put("disputes_document_get_for_client", new String[] { "/dispute-documents", RequestType.GET.toString() });
         put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
-	    put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
+	put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
+
         put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
 
         put("mandate_create", new String[] { "/mandates/directdebit/web", RequestType.POST.toString() });
@@ -148,12 +150,12 @@ public abstract class ApiBase {
         put("reports_request", new String[]{ "/reports/%s", RequestType.POST.toString() });
         put("reports_get_all", new String[]{ "/reports", RequestType.GET.toString() });
         put("reports_get", new String[]{ "/reports/%s", RequestType.GET.toString() });
+        
 
-        // These are temporary functions and WILL be removed in the future.
-        // Contact support before using these features or if have any queries.
-        put("temp_paymentcards_create", new String[] { "/temp/paymentcards", RequestType.POST.toString() });
-        put("temp_paymentcards_get", new String[] { "/temp/paymentcards/%s", RequestType.GET.toString() });
-        put("temp_immediatepayins_create", new String[] { "/temp/immediate-payins", RequestType.POST.toString() });
+        put("banking_alias_create_iban", new String[] { "/wallets/%s/bankingaliases/iban", RequestType.POST.toString() });
+        put("banking_alias_deactivate", new String[] { "/bankingaliases/%s", RequestType.PUT.toString()});
+        put("banking_alias_get", new String[]{ "/bankingaliases/%s", RequestType.GET.toString() });
+        put("banking_aliases_get_for_wallet", new String[] { "/wallets/%s/bankingaliases", RequestType.GET.toString() });
     }};
 
     /**

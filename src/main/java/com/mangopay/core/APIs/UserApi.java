@@ -288,7 +288,7 @@ public interface UserApi {
 
     /**
      * Shows the e-money cash-in/cash-out amounts for a particular user.
-     * Result will be in EUR due to lack of a specified currency.
+     * Result will be in <code>EUR</code> due to lack of a specified currency.
      *
      * @param userId Id of the user whose e-money data to get.
      * @return EMoney data for the specified user.
@@ -301,10 +301,11 @@ public interface UserApi {
      * The Currency parameter can be used to have the amounts specified in a certain currency.
      *
      * @param userId Id of the user whose e-money data to get.
-     * @param currencyIso Currency in which to format money amounts.
+     * @param currencyIso Currency in which to format money amounts. If <code>null</code>, will be considered
+     *                   as <code>EUR</code>.
      * @return EMoney data for the specified user.
      * @throws Exception
      */
-    EMoney getEMoney(String userId, CurrencyIso currencyIso);
+    EMoney getEMoney(String userId, CurrencyIso currencyIso) throws Exception;
 
 }

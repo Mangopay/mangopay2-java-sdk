@@ -1,5 +1,11 @@
 package com.mangopay.core;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Configuration settings.
  */
@@ -34,6 +40,12 @@ public class Configuration {
      * Connection Read Timeout.
      */
     private int readTimeout = 60000;
+    
+    /**
+     * Mangopay SDK Version
+     */
+    private String version;
+    
 
     public String getClientId() {
         return clientId;
@@ -101,5 +113,33 @@ public class Configuration {
      */
     public void setReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
+    }
+
+    
+    /**
+     * Get Mangopay SDK Version
+     * @return String Mangopay Version
+     */
+    public String getVersion() {
+        if (ObjectTool.isNull(version)) {
+            version = readMangopayVersion();
+        }
+        return version;
+    }
+
+    /**
+     * Read Mangopay version from mangopay properties
+     * @return String Mangopay Version
+     */
+    private String readMangopayVersion() {
+        try {
+            Properties prop = new Properties();
+            InputStream input = getClass().getResourceAsStream("mangopay.properties");
+            prop.load(input);
+            return prop.getProperty("version");
+        } catch (IOException ex) {
+            Logger.getLogger(Configuration.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return "unknown";
     }
 }

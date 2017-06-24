@@ -18,32 +18,33 @@ public class MangoPayApi {
     public MangoPayApi() {
 
         // default config setup
-        this.config = new Configuration();
-        this.oAuthTokenManager = new AuthorizationTokenManager(this);
+        setConfig(new Configuration());
+        setOAuthTokenManager(new AuthorizationTokenManager(this));
 
         // API managers
-        this.authenticationManager = new OAuthApiImpl(this);
-        this.clients = new ClientApiImpl(this);
-        this.users = new UserApiImpl(this);
-        this.wallets = new WalletApiImpl(this);
-        this.payIns = new PayInApiImpl(this);
-        this.payOuts = new PayOutApiImpl(this);
-        this.refunds = new RefundApiImpl(this);
-        this.transfers = new TransferApiImpl(this);
-        this.cardRegistrations = new CardRegistrationApiImpl(this);
-        this.cards = new CardApiImpl(this);
-        this.events = new EventApiImpl(this);
-        this.cardPreAuthorizations = new CardPreAuthorizationApiImpl(this);
-        this.hooks = new HookApiImpl(this);
-        this.kycDocuments = new KycDocumentApiImpl(this);
-        this.disputes = new DisputeApiImpl(this);
-        this.idempotency = new IdempotencyApiImpl(this);
-        this.mandates = new MandateApiImpl(this);
-        this.reports = new ReportApiImpl(this);
+        setAuthenticationManager(new OAuthApiImpl(this));
+        setClientApi(new ClientApiImpl(this));
+        setUserApi(new UserApiImpl(this));
+        setWalletApi(new WalletApiImpl(this));
+        setPayInApi(new PayInApiImpl(this));
+        setPayOutApi(new PayOutApiImpl(this));
+        setRefundApi(new RefundApiImpl(this));
+        setTransferApi(TransferApiImpl(this));
+        setCardRegistrationApi(new CardRegistrationApiImpl(this));
+        setCardApi(new CardApiImpl(this));
+        setEventApi(new EventApiImpl(this);
+        setCardPreAuthorizationApi(new CardPreAuthorizationApiImpl(this));
+        setHookApi(new HookApiImpl(this));
+        setKycDocumentApi(new KycDocumentApiImpl(this));
+        setDisputeApi(new DisputeApiImpl(this));
+        setIdempotencyApi(new IdempotencyApiImpl(this));
+        setMandateApi(new MandateApiImpl(this));
+        setReportApi(new ReportApiImpl(this));
+        setBankingAliasApi(new BankingAliasApiImpl(this));
     }
 
     ////////////////////////////////////////
-    // config/authorization related fields
+    // Config/authorization related fields
     ////////////////////////////////////////
 
     /**
@@ -66,27 +67,27 @@ public class MangoPayApi {
     private OAuthApi authenticationManager;
 
     /**
-     * Provides clients methods.
+     * Provides Clients methods.
      */
     private ClientApi clients;
 
     /**
-     * Provides users methods.
+     * Provides Users methods.
      */
     private UserApi users;
 
     /**
-     * Provides wallets methods.
+     * Provides Wallets methods.
      */
     private WalletApi wallets;
 
     /**
-     * Provides payIns methods.
+     * Provides PayIns methods.
      */
     private PayInApi payIns;
 
     /**
-     * Provides payOuts methods.
+     * Provides PayOuts methods.
      */
     private PayOutApi payOuts;
 
@@ -96,59 +97,64 @@ public class MangoPayApi {
     private TransferApi transfers;
 
     /**
-     * Provides cardRegistrations methods.
+     * Provides CardRegistrations methods.
      */
     private CardRegistrationApi cardRegistrations;
 
     /**
-     * Provides cardPreAuthorizations methods.
+     * Provides CardPreAuthorizations methods.
      */
     private CardPreAuthorizationApi cardPreAuthorizations;
 
     /**
-     * Provides cards methods.
+     * Provides Cards methods.
      */
     private CardApi cards;
 
     /**
-     * Provides refunds methods.
+     * Provides Refunds methods.
      */
     private RefundApi refunds;
 
     /**
-     * Provides events methods.
+     * Provides Events methods.
      */
     private EventApi events;
 
     /**
-     * Provides hooks methods.
+     * Provides Hooks methods.
      */
     private HookApi hooks;
 
     /**
-     * Provides KYC documents list methods.
+     * Provides KYC Documents list methods.
      */
     private KycDocumentApi kycDocuments;
 
     /**
-     * Provides disputes methods.
+     * Provides Disputes methods.
      */
     private DisputeApi disputes;
 
     /**
-     * Provides idempotency methods.
+     * Provides Idempotency methods.
      */
     private IdempotencyApi idempotency;
 
     /**
-     * Provides mandates methods.
+     * Provides Mandates methods.
      */
     private MandateApi mandates;
 
     /**
-     * Provides reports methods.
+     * Provides Reports methods.
      */
     private ReportApi reports;
+
+    /**
+     * Provides Banking Alias methods.
+     */
+    private BankingAliasApi bankingAliases;
 
     public AuthorizationTokenManager getOAuthTokenManager() {
         return oAuthTokenManager;
@@ -308,5 +314,13 @@ public class MangoPayApi {
 
     private void setReportApi(ReportApi reports) {
         this.reports = reports;
+    }
+
+    public BankingAliasApi getBankingAliases() {
+        return bankingAliases;
+    }
+
+    public void setBankingAliasApi(BankingAliasApi bankingAliases) {
+        this.bankingAliases = bankingAliases;
     }
 }

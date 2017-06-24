@@ -12,7 +12,6 @@ import java.nio.file.*;
 import java.util.List;
 
 import org.apache.commons.codec.binary.Base64;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 
 /**
@@ -212,12 +211,17 @@ public class UserApiImpl extends ApiBase implements UserApi {
 
     @Override
     public EMoney getEMoney(String userId) throws Exception {
+        if (userId == null) {
+            throw new Exception("Cannot get EMoney without specifying the userId");
+        }
         return this.getObject(EMoney.class, "users_emoney", userId);
     }
 
     @Override
-    public EMoney getEMoney(String userId, CurrencyIso currencyIso) {
-        // TODO: Implement currency parameter inclusion into request.
-        throw new NotImplementedException();
+    public EMoney getEMoney(String userId, CurrencyIso currencyIso) throws Exception {
+        if (currencyIso == null) {
+            return this.getEMoney(userId);
+        }
+        return this.getObject(EMoney.class, "users_emoney_currency", userId, currencyIso.name());
     }
 }
