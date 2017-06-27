@@ -343,7 +343,7 @@ public class RestTool {
             }
 
             if (idempotencyKey != null && !idempotencyKey.trim().isEmpty()) {
-                connection.addRequestProperty("idempotency-Key", idempotencyKey);
+                connection.addRequestProperty("Idempotency-Key", idempotencyKey);
             }
 
             // prepare to go
@@ -478,13 +478,7 @@ public class RestTool {
 
         ArrayList<String> readOnlyProperties = entity.getReadOnlyProperties();
 
-        Class c = entity.getClass();
-        List<Field> fields = new ArrayList<>();
-        fields.addAll(Arrays.asList(c.getDeclaredFields()));
-        while (c.getSuperclass() != null) {
-            fields.addAll(Arrays.asList(c.getSuperclass().getDeclaredFields()));
-            c = c.getSuperclass();
-        }
+        List<Field> fields = getAllFields(entity.getClass());
 
         String fieldName;
         for (Field f : fields) {
@@ -540,6 +534,16 @@ public class RestTool {
         return result;
     }
 
+    private List<Field> getAllFields(Class<?> c) {
+        List<Field> fields = new ArrayList<>();
+        fields.addAll(Arrays.asList(c.getDeclaredFields()));
+        while (c.getSuperclass() != null) {
+            fields.addAll(Arrays.asList(c.getSuperclass().getDeclaredFields()));
+            c = c.getSuperclass();
+        }
+        return fields;
+    }
+
     private <T> Boolean canReadSubRequestData(Class<T> classOfT, String fieldName) {
 
         if (classOfT.getName().equals(PayIn.class.getName()) &&
@@ -555,7 +559,7 @@ public class RestTool {
             return true;
         }
 
-        if(classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
+        if (classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
             return true;
         }
 
@@ -628,13 +632,7 @@ public class RestTool {
             Map<String, Type> subObjects = ((Dto) result).getSubObjects();
             Map<String, Map<String, Map<String, Class<?>>>> dependentObjects = ((Dto) result).getDependentObjects();
 
-            Class c = result.getClass();
-            List<Field> fields = new ArrayList<>();
-            fields.addAll(Arrays.asList(c.getDeclaredFields()));
-            while (c.getSuperclass() != null) {
-                fields.addAll(Arrays.asList(c.getSuperclass().getDeclaredFields()));
-                c = c.getSuperclass();
-            }
+            List<Field> fields = getAllFields(result.getClass());
 
             for (Field f : fields) {
                 f.setAccessible(true);
@@ -813,7 +811,7 @@ public class RestTool {
         if (fieldName.equals("expiresIn")) {
             return "expires_in";
         }
-        if(fieldName.equals("url")) {
+        if (fieldName.equals("url")) {
             return "Url";
         }
         return (fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)).replace("Url", "URL");
