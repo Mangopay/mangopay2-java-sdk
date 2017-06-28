@@ -2,12 +2,15 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.ApiUsers;
+import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.entities.*;
+
 import java.nio.file.*;
 import java.util.List;
+
 import org.apache.commons.codec.binary.Base64;
 
 
@@ -18,9 +21,12 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
 
     /**
      * Instantiates new UserApiImpl object.
+     *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public UserApiImpl(MangoPayApi root) { super(root); }
+    public UserApiImpl(MangoPayApi root) {
+        super(root);
+    }
 
     @Override
     public User get(String userId) throws Exception {
@@ -34,16 +40,16 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
 
     @Override
     public User create(String idempotencyKey, User user) throws Exception {
-        
+
         User response = null;
-        
+
         if (user instanceof UserNatural)
-            response = this.createObject(UserNatural.class, idempotencyKey, "users_createnaturals", (UserNatural)user);
+            response = this.createObject(UserNatural.class, idempotencyKey, "users_createnaturals", (UserNatural) user);
         else if (user instanceof UserLegal)
-            response = this.createObject(UserLegal.class, idempotencyKey, "users_createlegals", (UserLegal)user);
+            response = this.createObject(UserLegal.class, idempotencyKey, "users_createlegals", (UserLegal) user);
         else
             throw new Exception("Unsupported user entity type.");
-        
+
         return response;
     }
 
@@ -69,7 +75,7 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
 
     @Override
     public User update(User user) throws Exception {
-        
+
         String methodKey = "";
         if (user instanceof UserNatural)
             methodKey = "users_savenaturals";
@@ -77,7 +83,7 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
             methodKey = "users_savelegals";
         else
             throw new Exception("Unsupported user entity type.");
-        
+
         return this.updateObject(User.class, methodKey, user);
     }
 
@@ -140,11 +146,11 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
     @Override
     public void createKycPage(String idempotencyKey, String userId, String kycDocumentId, byte[] binaryData) throws Exception {
         KycPage kycPage = new KycPage();
-        
+
         String fileContent = new String(Base64.encodeBase64(binaryData));
-        
+
         kycPage.setFile(fileContent);
-        
+
         this.createObject(KycPage.class, idempotencyKey, "kyc_page_create", kycPage, userId, kycDocumentId);
     }
 
@@ -153,7 +159,7 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
         byte[] fileArray;
         Path path = Paths.get(filePath);
         fileArray = Files.readAllBytes(path);
-        
+
         createKycPage(userId, kycDocumentId, fileArray);
     }
 
@@ -162,7 +168,7 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
         byte[] fileArray;
         Path path = Paths.get(filePath);
         fileArray = Files.readAllBytes(path);
-        
+
         createKycPage(idempotencyKey, userId, kycDocumentId, fileArray);
     }
 
@@ -175,7 +181,7 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
     public KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type) throws Exception {
         KycDocument kycDocument = new KycDocument();
         kycDocument.setType(type);
-        
+
         return this.createObject(KycDocument.class, idempotencyKey, "users_createkycdocument", kycDocument, userId);
     }
 
@@ -190,16 +196,32 @@ public class UserApiImpl extends ApiBase implements ApiUsers {
     }
 
     @Override
-    public List<KycDocument> getKycDocuments(String userId, Pagination pagination, Sorting sorting) throws Exception{
+    public List<KycDocument> getKycDocuments(String userId, Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(KycDocument[].class, KycDocument.class, "users_allkycdocuments", pagination, userId, sorting);
     }
-    
+
     private String getBankAccountType(BankAccount bankAccount) throws Exception {
-        
+
         if (bankAccount.getDetails() == null)
             throw new Exception("Details is not defined.");
-        
-        String className = bankAccount.Details.getClass().getSimpleName().replace("BankAccountDetails", "");
+
+        String className = bankAccount.getDetails().getClass().getSimpleName().replace("BankAccountDetails", "");
         return className.toLowerCase();
+    }
+
+    @Override
+    public EMoney getEMoney(String userId) throws Exception {
+        if (userId == null) {
+            throw new Exception("Cannot get EMoney without specifying the userId");
+        }
+        return this.getObject(EMoney.class, "users_emoney", userId);
+    }
+
+    @Override
+    public EMoney getEMoney(String userId, CurrencyIso currencyIso) throws Exception {
+        if (currencyIso == null) {
+            return this.getEMoney(userId);
+        }
+        return this.getObject(EMoney.class, "users_emoney_currency", userId, currencyIso.name());
     }
 }

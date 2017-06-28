@@ -18,7 +18,7 @@ public abstract class ApiBase {
     protected MangoPayApi getRoot() {
         return root;
     }
-    
+
     /**
      * Array with REST URL and request type.
      */
@@ -105,6 +105,8 @@ public abstract class ApiBase {
         put("users_getbankaccount", new String[] { "/users/%s/bankaccounts/%s", RequestType.GET.toString() });
         put("users_savenaturals", new String[] { "/users/natural/%s", RequestType.PUT.toString() });
         put("users_savelegals", new String[] { "/users/legal/%s", RequestType.PUT.toString() });
+        put("users_emoney", new String[] {"/users/%s/emoney", RequestType.GET.toString() });
+        put("users_emoney_currency", new String[] {"/users/%s/emoney?Currency=%s", RequestType.GET.toString() });
 
         put("wallets_create", new String[] { "/wallets", RequestType.POST.toString() });
         put("wallets_alltransactions", new String[] { "/wallets/%s/transactions", RequestType.GET.toString() });
@@ -148,11 +150,12 @@ public abstract class ApiBase {
         put("reports_request", new String[]{ "/reports/%s", RequestType.POST.toString() });
         put("reports_get_all", new String[]{ "/reports", RequestType.GET.toString() });
         put("reports_get", new String[]{ "/reports/%s", RequestType.GET.toString() });
+        
 
-        put("banking_alias_create_iban", new String[]{ "/wallets/%s/bankingaliases/iban", RequestType.POST.toString() });
-        put("banking_alias_deactivate", new String[]{ "/bankingaliases/%s", RequestType.PUT.toString()});
-        put("banking_alias_get", new String[]{ "/bankingaliases/%s", RequestType.GET.toString()});
-        put("banking_aliases_get_for_wallet", new String[]{ "/wallets/%s/bankingaliases", RequestType.GET.toString()});
+        put("banking_alias_create_iban", new String[] { "/wallets/%s/bankingaliases/iban", RequestType.POST.toString() });
+        put("banking_alias_deactivate", new String[] { "/bankingaliases/%s", RequestType.PUT.toString()});
+        put("banking_alias_get", new String[]{ "/bankingaliases/%s", RequestType.GET.toString() });
+        put("banking_aliases_get_for_wallet", new String[] { "/wallets/%s/bankingaliases", RequestType.GET.toString() });
     }};
 
     /**

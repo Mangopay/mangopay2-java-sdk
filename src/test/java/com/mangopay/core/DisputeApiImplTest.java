@@ -343,6 +343,10 @@ public class DisputeApiImplTest extends BaseTest {
         assertNotNull("Cannot test submitting dispute's documents because there's no dispute with expected status in the disputes list.", dispute);
 
         assertNotNull("Cannot test submitting dispute's documents because there's no dispute document that can be updated.", disputeDocument);
+    
+        URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
+        String filePath = new File(url.toURI()).getAbsolutePath();
+        api.getDisputeApi().createDisputePage(dispute.getId(), disputeDocument.getId(), filePath);
 
         DisputeDocument result = null;
 
