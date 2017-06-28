@@ -13,5 +13,10 @@ public enum ReportType {
     /**
      * Transactions type.
      */
-    TRANSACTIONS
+    TRANSACTIONS,
+    
+    /**
+    * Wallets type.
+    */
+    WALLETS
 }
