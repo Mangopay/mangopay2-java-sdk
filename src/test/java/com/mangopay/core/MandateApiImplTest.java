@@ -18,7 +18,7 @@ public class MandateApiImplTest extends BaseTest {
     public void createMandate() throws Exception {
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(this.getJohnsAccount().getId());
-        mandatePost.setReturnURL("http://test.test");
+        mandatePost.setReturnUrl("http://test.test");
         mandatePost.setCulture(CultureCode.EN);
 
         Mandate mandate = this.api.getMandateApi().create(mandatePost);
@@ -30,7 +30,7 @@ public class MandateApiImplTest extends BaseTest {
     public void getMandate() throws Exception {
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(this.getJohnsAccount().getId());
-        mandatePost.setReturnURL("http://test.test");
+        mandatePost.setReturnUrl("http://test.test");
         mandatePost.setCulture(CultureCode.EN);
 
         Mandate mandateCreated = this.api.getMandateApi().create(mandatePost);
@@ -86,7 +86,7 @@ public class MandateApiImplTest extends BaseTest {
 
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(this.getJohnsAccount(true).getId());
-        mandatePost.setReturnURL("http://test.test");
+        mandatePost.setReturnUrl("http://test.test");
         mandatePost.setCulture(CultureCode.EN);
 
         Mandate mandateCreated = this.api.getMandateApi().create(mandatePost);
@@ -107,7 +107,7 @@ public class MandateApiImplTest extends BaseTest {
 
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(this.getJohnsAccount(true).getId());
-        mandatePost.setReturnURL("http://test.test");
+        mandatePost.setReturnUrl("http://test.test");
         mandatePost.setCulture(CultureCode.EN);
 
         Mandate mandateCreated = this.api.getMandateApi().create(mandatePost);

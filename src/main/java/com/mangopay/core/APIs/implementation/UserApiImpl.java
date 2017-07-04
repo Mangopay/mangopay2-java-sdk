@@ -1,7 +1,7 @@
 package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiUsers;
+import com.mangopay.core.APIs.UserApi;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.MangoPayApi;
@@ -17,7 +17,7 @@ import org.apache.commons.codec.binary.Base64;
 /**
  * API for users.
  */
-public class UserApiImpl extends ApiBase implements ApiUsers {
+public class UserApiImpl extends ApiBase implements UserApi {
 
     /**
      * Instantiates new UserApiImpl object.

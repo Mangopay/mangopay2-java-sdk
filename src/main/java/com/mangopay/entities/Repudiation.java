@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 import com.mangopay.core.enumerations.TransactionStatus;
@@ -15,197 +16,173 @@ public class Repudiation extends EntityBase {
 
     /**
      * The Id of the origin payin author.
-     *
-     * @deprecated Use {@link #getAuthorId()} and {@link #setAuthorId(String)} instead.
      */
-    @Deprecated
-    public String AuthorId;
+    @SerializedName("AuthorId")
+    private String authorId;
 
     /**
      * The funds repudiated from the wallet.
-     *
-     * @deprecated Use {@link #getDebitedFunds()} and {@link #setDebitedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money DebitedFunds;
+    @SerializedName("DebitedFunds")
+    private Money debitedFunds;
 
     /**
      * The fees taken on the repudiation – will always be 0 at this stage.
-     *
-     * @deprecated Use {@link #getFees()} and {@link #setFees(Money)} instead.
      */
-    @Deprecated
-    public Money Fees;
+    @SerializedName("Fees")
+    private Money fees;
 
     /**
      * The amount of credited funds – since there are currently no fees,
      * this will be equal to the DebitedFunds.
-     *
-     * @deprecated Use {@link #getCreditedFunds()} and {@link #setCreditedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money CreditedFunds;
+    @SerializedName("CreditedFunds")
+    private Money creditedFunds;
 
     /**
      * The wallet from where the repudiation was taken.
-     *
-     * @deprecated Use {@link #getDebitedWalletId()} and {@link #setDebitedWalletId(String)} instead.
      */
-    @Deprecated
-    public String DebitedWalletId;
+    @SerializedName("DebitedWalletId")
+    private String debitedWalletId;
 
     /**
      * The status of the transfer.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(TransactionStatus)} instead.
      */
-    @Deprecated
-    public TransactionStatus Status;
+    @SerializedName("Status")
+    private TransactionStatus status;
 
     /**
      * The transaction result code.
-     *
-     * @deprecated Use {@link #getResultCode()} and {@link #setResultCode(String)} instead.
      */
-    @Deprecated
-    public String ResultCode;
+    @SerializedName("ResultCode")
+    private String resultCode;
 
     /**
      * The transaction result message.
-     *
-     * @deprecated Use {@link #getResultMessage()} and {@link #setResultMessage(String)} instead.
      */
-    @Deprecated
-    public String ResultMessage;
+    @SerializedName("ResultMessage")
+    private String resultMessage;
 
     /**
      * The execution date of the repudiation.
-     *
-     * @deprecated Use {@link #getExecutionDate()} and {@link #setExecutionDate(Long)} instead.
      */
-    @Deprecated
-    public Long ExecutionDate;
+    @SerializedName("ExecutionDate")
+    private Long executionDate;
 
     /**
      * The Id of the dispute to which this repudiation corresponds.
      * Note that this value may be null (if it was created before the Dispute
      * objects started to be used – October 2015).
-     *
-     * @deprecated Use {@link #getDisputeId()} and {@link #setDisputeId(String)} instead.
      */
-    @Deprecated
-    public String DisputeId;
+    @SerializedName("DisputeId")
+    private String disputeId;
 
     /**
      * The Id of the transaction that was repudiated.
-     *
-     * @deprecated Use {@link #getInitialTransactionId()} and {@link #setInitialTransactionId(String)} instead.
      */
-    @Deprecated
-    public String InitialTransactionId;
+    @SerializedName("InitialTransactionId")
+    private String initialTransactionId;
 
     /**
      * The initial transaction type.
-     *
-     * @deprecated Use {@link #getInitialTransactionType()} and {@link #setInitialTransactionType(String)} instead.
      */
-    @Deprecated
-    public String InitialTransactionType;
+    @SerializedName("InitialTransactionType")
+    private String initialTransactionType;
 
     public String getAuthorId() {
-        return AuthorId;
+        return authorId;
     }
 
     public void setAuthorId(String authorId) {
-        this.AuthorId = authorId;
+        this.authorId = authorId;
     }
 
     public Money getDebitedFunds() {
-        return DebitedFunds;
+        return debitedFunds;
     }
 
     public void setDebitedFunds(Money debitedFunds) {
-        this.DebitedFunds = debitedFunds;
+        this.debitedFunds = debitedFunds;
     }
 
     public Money getFees() {
-        return Fees;
+        return fees;
     }
 
     public void setFees(Money fees) {
-        this.Fees = fees;
+        this.fees = fees;
     }
 
     public Money getCreditedFunds() {
-        return CreditedFunds;
+        return creditedFunds;
     }
 
     public void setCreditedFunds(Money creditedFunds) {
-        this.CreditedFunds = creditedFunds;
+        this.creditedFunds = creditedFunds;
     }
 
     public String getDebitedWalletId() {
-        return DebitedWalletId;
+        return debitedWalletId;
     }
 
     public void setDebitedWalletId(String debitedWalletId) {
-        this.DebitedWalletId = debitedWalletId;
+        this.debitedWalletId = debitedWalletId;
     }
 
     public TransactionStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(TransactionStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public String getResultCode() {
-        return ResultCode;
+        return resultCode;
     }
 
     public void setResultCode(String resultCode) {
-        this.ResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public String getResultMessage() {
-        return ResultMessage;
+        return resultMessage;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.ResultMessage = resultMessage;
+        this.resultMessage = resultMessage;
     }
 
     public Long getExecutionDate() {
-        return ExecutionDate;
+        return executionDate;
     }
 
     public void setExecutionDate(Long executionDate) {
-        this.ExecutionDate = executionDate;
+        this.executionDate = executionDate;
     }
 
     public String getDisputeId() {
-        return DisputeId;
+        return disputeId;
     }
 
     public void setDisputeId(String disputeId) {
-        this.DisputeId = disputeId;
+        this.disputeId = disputeId;
     }
 
     public String getInitialTransactionId() {
-        return InitialTransactionId;
+        return initialTransactionId;
     }
 
     public void setInitialTransactionId(String initialTransactionId) {
-        this.InitialTransactionId = initialTransactionId;
+        this.initialTransactionId = initialTransactionId;
     }
 
     public String getInitialTransactionType() {
-        return InitialTransactionType;
+        return initialTransactionType;
     }
 
     public void setInitialTransactionType(String initialTransactionType) {
-        this.InitialTransactionType = initialTransactionType;
+        this.initialTransactionType = initialTransactionType;
     }
 
     /**

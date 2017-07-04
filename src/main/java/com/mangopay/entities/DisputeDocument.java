@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.DisputeDocumentStatus;
 import com.mangopay.core.enumerations.DisputeDocumentType;
@@ -11,81 +12,71 @@ public class DisputeDocument extends EntityBase {
 
     /**
      * Type of dispute document.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(DisputeDocumentType)} instead.
      */
-    @Deprecated
-    public DisputeDocumentType Type;
+    @SerializedName("Type")
+    private DisputeDocumentType type;
 
     /**
      * Status of dispute document.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(DisputeDocumentStatus)} instead.
      */
-    @Deprecated
-    public DisputeDocumentStatus Status;
+    @SerializedName("Status")
+    private DisputeDocumentStatus status;
 
     /**
      * The Dispute that this document belongs to.
-     *
-     * @deprecated Use {@link #getDisputeId()} and {@link #setDisputeId(String)} instead.
      */
-    @Deprecated
-    public String DisputeId;
+    @SerializedName("DisputeId")
+    private String disputeId;
 
     /**
      * Refused reason type.
-     *
-     * @deprecated Use {@link #getRefusedReasonType()} and {@link #setRefusedReasonType(String)} instead.
      */
-    @Deprecated
-    public String RefusedReasonType;
+    @SerializedName("RefusedReasonType")
+    private String refusedReasonType;
 
     /**
      * Refused reason message.
-     *
-     * @deprecated Use {@link #getRefusedReasonMessage()} and {@link #setRefusedReasonMessage(String)} instead.
      */
-    @Deprecated
-    public String RefusedReasonMessage;
+    @SerializedName("RefusedReasonMessage")
+    private String refusedReasonMessage;
 
     public DisputeDocumentType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(DisputeDocumentType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public DisputeDocumentStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(DisputeDocumentStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public String getDisputeId() {
-        return DisputeId;
+        return disputeId;
     }
 
     public void setDisputeId(String disputeId) {
-        this.DisputeId = disputeId;
+        this.disputeId = disputeId;
     }
 
     public String getRefusedReasonType() {
-        return RefusedReasonType;
+        return refusedReasonType;
     }
 
     public void setRefusedReasonType(String refusedReasonType) {
-        this.RefusedReasonType = refusedReasonType;
+        this.refusedReasonType = refusedReasonType;
     }
 
     public String getRefusedReasonMessage() {
-        return RefusedReasonMessage;
+        return refusedReasonMessage;
     }
 
     public void setRefusedReasonMessage(String refusedReasonMessage) {
-        this.RefusedReasonMessage = refusedReasonMessage;
+        this.refusedReasonMessage = refusedReasonMessage;
     }
 }

@@ -5,12 +5,12 @@ import com.mangopay.entities.IdempotencyResponse;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiIdempotency {
+public interface IdempotencyApi {
     /**
      * Gets idempotency response.
      *
-     * @param idempotencyKey Idempotency key.
-     * @return Idempotency response instance returned from API.
+     * @param idempotencyKey idempotency key.
+     * @return idempotency response instance returned from API.
      * @throws Exception
      */
     IdempotencyResponse get(String idempotencyKey) throws Exception;

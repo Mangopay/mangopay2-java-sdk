@@ -1,5 +1,7 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 /**
@@ -9,50 +11,44 @@ public abstract class EntityBase extends Dto {
 
     /**
      * Unique identifier.
-     *
-     * @deprecated Use {@link #getId()} and {@link #setId(String)} instead.
      */
-    @Deprecated
-    public String Id;
+    @SerializedName("Id")
+    private String id;
 
     /**
      * Custom data.
-     *
-     * @deprecated Use {@link #getTag()} and {@link #setTag(String)} instead.
      */
-    @Deprecated
-    public String Tag;
+    @SerializedName("Tag")
+    private String tag;
 
     /**
      * Date of creation (UNIX timestamp).
-     *
-     * @deprecated Use {@link #getCreationDate()} and {@link #setCreationDate(long)} instead.
      */
-    @Deprecated
-    public long CreationDate;
+    @SerializedName("CreationDate")
+    private long creationDate;
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public String getTag() {
-        return Tag;
+        return tag;
     }
 
     public void setTag(String tag) {
-        this.Tag = tag;
+        this.tag = tag;
     }
 
     public long getCreationDate() {
-        return CreationDate;
+        return creationDate;
     }
 
     public void setCreationDate(long creationDate) {
-        this.CreationDate = creationDate;
+        this.creationDate = creationDate;
     }
 
     /**

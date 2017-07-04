@@ -5,7 +5,7 @@ import com.mangopay.entities.CardPreAuthorization;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiCardPreAuthorizations {
+public interface CardPreAuthorizationApi {
 
     /**
      * Creates new pre-authorization object.
@@ -19,7 +19,7 @@ public interface ApiCardPreAuthorizations {
     /**
      * Creates new pre-authorization object.
      *
-     * @param idempotencyKey       Idempotency key for this request.
+     * @param idempotencyKey       idempotency key for this request.
      * @param cardPreAuthorization PreAuthorization object to be created.
      * @return Card pre-authorization instance returned from API.
      * @throws Exception

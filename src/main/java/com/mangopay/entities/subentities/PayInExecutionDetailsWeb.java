@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.enumerations.SecureMode;
@@ -16,43 +17,33 @@ public class PayInExecutionDetailsWeb extends Dto implements PayInExecutionDetai
 
     /**
      * URL format expected.
-     *
-     * @deprecated Use {@link #getTemplateURL()} and {@link #setTemplateURL(String)} instead.
      */
-    @Deprecated
-    public String TemplateURL;
+    @SerializedName("TemplateURL")
+    private String templateUrl;
 
     /**
      * Culture.
-     *
-     * @deprecated Use {@link #getCulture()} and {@link #setCulture(CultureCode)} instead.
      */
-    @Deprecated
-    public CultureCode Culture;
+    @SerializedName("Culture")
+    private CultureCode culture;
 
     /**
      * Secure mode.
-     *
-     * @deprecated Use {@link #getSecureMode()} and {@link #setSecureMode(SecureMode)} instead.
      */
-    @Deprecated
-    public SecureMode SecureMode;
+    @SerializedName("SecureMode")
+    private SecureMode secureMode;
 
     /**
      * Redirect URL.
-     *
-     * @deprecated Use {@link #getRedirectURL()} instead.
      */
-    @Deprecated
-    public String RedirectURL;
+    @SerializedName("RedirectURL")
+    private String redirectUrl;
 
     /**
      * Return URL.
-     *
-     * @deprecated Use {@link #getReturnURL()} and {@link #setReturnURL(String)} instead.
      */
-    @Deprecated
-    public String ReturnURL;
+    @SerializedName("ReturnURL")
+    private String returnUrl;
 
     /**
      * The URL where you host the iFramed template.
@@ -67,40 +58,40 @@ public class PayInExecutionDetailsWeb extends Dto implements PayInExecutionDetai
     @Deprecated
     public PayInTemplateURLOptions TemplateURLOptions;
 
-    public String getTemplateURL() {
-        return TemplateURL;
+    public String getTemplateUrl() {
+        return templateUrl;
     }
 
-    public void setTemplateURL(String templateURL) {
-        this.TemplateURL = templateURL;
+    public void setTemplateUrl(String templateUrl) {
+        this.templateUrl = templateUrl;
     }
 
     public CultureCode getCulture() {
-        return Culture;
+        return culture;
     }
 
     public void setCulture(CultureCode culture) {
-        this.Culture = culture;
+        this.culture = culture;
     }
 
     public SecureMode getSecureMode() {
-        return SecureMode;
+        return secureMode;
     }
 
     public void setSecureMode(SecureMode secureMode) {
-        this.SecureMode = secureMode;
+        this.secureMode = secureMode;
     }
 
-    public String getRedirectURL() {
-        return RedirectURL;
+    public String getRedirectUrl() {
+        return redirectUrl;
     }
 
-    public String getReturnURL() {
-        return ReturnURL;
+    public String getReturnUrl() {
+        return returnUrl;
     }
 
-    public void setReturnURL(String returnURL) {
-        this.ReturnURL = returnURL;
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
     }
 
     public PayInTemplateURLOptions getTemplateURLOptions() {

@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 import com.mangopay.core.enumerations.CurrencyIso;
@@ -17,82 +18,72 @@ public class Wallet extends EntityBase {
 
     /**
      * Collection of owners identifiers.
-     *
-     * @deprecated Use {@link #getOwners()} and {@link #setOwners(ArrayList)} instead.
      */
-    @Deprecated
-    public ArrayList<String> Owners;
+    @SerializedName("Owners")
+    private ArrayList<String> owners;
 
     /**
      * Wallet description.
-     *
-     * @deprecated Use {@link #getDescription()} and {@link #setDescription(String)} instead.
      */
-    @Deprecated
-    public String Description;
+    @SerializedName("Description")
+    private String description;
 
     /**
      * Money in wallet.
-     *
-     * @deprecated Use {@link #getBalance()} and {@link #setBalance(Money)} instead.
      */
-    @Deprecated
-    public Money Balance;
+    @SerializedName("Balance")
+    private Money balance;
 
     /**
      * Currency.
-     *
-     * @deprecated Use {@link #getCurrency()} and {@link #setCurrency(CurrencyIso)} instead.
      */
-    @Deprecated
-    public CurrencyIso Currency;
+    @SerializedName("Currency")
+    private CurrencyIso currency;
 
     /**
      * The funds usage type.
-     *
-     * @deprecated Use {@link #getFundsType()} and {@link #setFundsType(com.mangopay.core.enumerations.FundsType)} instead.
      */
-    @Deprecated
-    public FundsType FundsType;
+    @SerializedName("FundsType")
+    private FundsType fundsType;
 
     public ArrayList<String> getOwners() {
-        return Owners;
+        return owners;
     }
 
     public void setOwners(ArrayList<String> owners) {
-        this.Owners = owners;
+        this.owners = owners;
     }
 
     public String getDescription() {
-        return Description;
+        return description;
     }
 
     public void setDescription(String description) {
-        this.Description = description;
+        this.description = description;
     }
 
     public Money getBalance() {
-        return Balance;
+        return balance;
     }
 
     public void setBalance(Money balance) {
-        this.Balance = balance;
+        this.balance = balance;
     }
 
     public CurrencyIso getCurrency() {
-        return Currency;
+        return currency;
     }
 
     public void setCurrency(CurrencyIso currency) {
-        this.Currency = currency;
+        this.currency = currency;
     }
 
     public com.mangopay.core.enumerations.FundsType getFundsType() {
-        return FundsType;
+        return fundsType;
     }
 
     public void setFundsType(com.mangopay.core.enumerations.FundsType fundsType) {
-        this.FundsType = fundsType;
+        this.fundsType = fundsType;
     }
 
     /**

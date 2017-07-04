@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 
@@ -15,40 +16,43 @@ public class EMoney extends EntityBase {
     /**
      * The object owner's UserId
      */
-    public String UserId;
+    @SerializedName("UserId")
+    private String userId;
 
     /**
      * The amount of money that has been credited to this user
      */
-    public Money CreditedEMoney;
+    @SerializedName("CreditedEMoney")
+    private Money creditedEMoney;
 
     /**
      * The amount of money that has been debited from this user
      */
-    public Money DebitedEMoney;
+    @SerializedName("DebitedEMoney")
+    private Money debitedEMoney;
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.UserId = userId;
+        this.userId = userId;
     }
 
     public Money getCreditedEMoney() {
-        return CreditedEMoney;
+        return creditedEMoney;
     }
 
     public void setCreditedEMoney(Money creditedEMoney) {
-        CreditedEMoney = creditedEMoney;
+        this.creditedEMoney = creditedEMoney;
     }
 
     public Money getDebitedEMoney() {
-        return DebitedEMoney;
+        return debitedEMoney;
     }
 
     public void setDebitedEMoney(Money debitedEMoney) {
-        DebitedEMoney = debitedEMoney;
+        this.debitedEMoney = debitedEMoney;
     }
 
     /**

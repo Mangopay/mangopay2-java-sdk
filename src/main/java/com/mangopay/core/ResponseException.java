@@ -1,5 +1,7 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
 
 /**
@@ -9,65 +11,51 @@ public class ResponseException extends Exception {
 
     /**
      * HTTP error code.
-     *
-     * @deprecated Use {@link #getResponseHttpCode()} and {@link #setResponseHttpCode(int)} instead.
      */
-    @Deprecated
-    public int ResponseHttpCode;
+    @SerializedName("ResponseHttpCode")
+    private int responseHttpCode;
 
     /**
      * HTTP error description.
-     *
-     * @deprecated Use {@link #getResponseHttpDescription()} and {@link #setResponseHttpDescription(String)} instead.
      */
-    @Deprecated
-    public String ResponseHttpDescription;
+    @SerializedName("ResponseHttpDescription")
+    private String responseHttpDescription;
 
     /**
      * API error message.
-     *
-     * @deprecated Use {@link #getApiMessage()} and {@link #setApiMessage(String)} instead.
      */
-    @Deprecated
-    public String ApiMessage;
+    @SerializedName("ApiMessage")
+    private String apiMessage;
 
     /**
      * API error type.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(String)} instead.
      */
-    @Deprecated
-    public String Type;
+    @SerializedName("Type")
+    private String type;
 
     /**
      * API error identifier.
-     *
-     * @deprecated Use {@link #getId()} and {@link #setId(String)} instead.
      */
-    @Deprecated
-    public String Id;
+    @SerializedName("Id")
+    private String id;
 
     /**
      * API error timestamp.
-     *
-     * @deprecated Use {@link #getDate()} and {@link #setDate(int)} instead.
      */
-    @Deprecated
-    public int Date;
+    @SerializedName("Date")
+    private int date;
 
     /**
      * List of detailed errors.
-     *
-     * @deprecated Use {@link #getErrors()} and {@link #setErrors(HashMap)} instead.
      */
-    @Deprecated
-    public HashMap<String, String> Errors;
+    @SerializedName("Errors")
+    private HashMap<String, String> errors;
 
     /**
      * Instantiates new ResponseException object.
      */
     public ResponseException() {
-        this.Errors = new HashMap<>();
+        this.errors = new HashMap<>();
     }
 
     /**
@@ -77,7 +65,7 @@ public class ResponseException extends Exception {
      */
     public ResponseException(String message) {
         super(message);
-        this.Errors = new HashMap<>();
+        this.errors = new HashMap<>();
     }
 
     /**
@@ -87,7 +75,7 @@ public class ResponseException extends Exception {
      */
     public ResponseException(Throwable cause) {
         super(cause);
-        this.Errors = new HashMap<>();
+        this.errors = new HashMap<>();
     }
 
     /**
@@ -98,62 +86,62 @@ public class ResponseException extends Exception {
      */
     public ResponseException(String message, Throwable cause) {
         super(message, cause);
-        this.Errors = new HashMap<>();
+        this.errors = new HashMap<>();
     }
 
     public int getResponseHttpCode() {
-        return ResponseHttpCode;
+        return responseHttpCode;
     }
 
     public void setResponseHttpCode(int responseHttpCode) {
-        this.ResponseHttpCode = responseHttpCode;
+        this.responseHttpCode = responseHttpCode;
     }
 
     public String getResponseHttpDescription() {
-        return ResponseHttpDescription;
+        return responseHttpDescription;
     }
 
     public void setResponseHttpDescription(String responseHttpDescription) {
-        this.ResponseHttpDescription = responseHttpDescription;
+        this.responseHttpDescription = responseHttpDescription;
     }
 
     public String getApiMessage() {
-        return ApiMessage;
+        return apiMessage;
     }
 
     public void setApiMessage(String apiMessage) {
-        this.ApiMessage = apiMessage;
+        this.apiMessage = apiMessage;
     }
 
     public String getType() {
-        return Type;
+        return type;
     }
 
     public void setType(String type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public int getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(int date) {
-        this.Date = date;
+        this.date = date;
     }
 
     public HashMap<String, String> getErrors() {
-        return Errors;
+        return errors;
     }
 
     public void setErrors(HashMap<String, String> errors) {
-        this.Errors = errors;
+        this.errors = errors;
     }
 }

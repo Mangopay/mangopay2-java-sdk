@@ -18,29 +18,29 @@ public class MangoPayApi {
     public MangoPayApi() {
 
         // default config setup
-        this.Config = new Configuration();
-        this.OAuthTokenManager = new AuthorizationTokenManager(this);
+        setConfig(new Configuration());
+        setOAuthTokenManager(new AuthorizationTokenManager(this));
 
         // API managers
-        this.AuthenticationManager = new OAuthApiImpl(this);
-        this.Clients = new ClientApiImpl(this);
-        this.Users = new UserApiImpl(this);
-        this.Wallets = new WalletApiImpl(this);
-        this.PayIns = new PayInApiImpl(this);
-        this.PayOuts = new PayOutApiImpl(this);
-        this.Refunds = new RefundApiImpl(this);
-        this.Transfers = new TransferApiImpl(this);
-        this.CardRegistrations = new CardRegistrationApiImpl(this);
-        this.Cards = new CardApiImpl(this);
-        this.Events = new EventApiImpl(this);
-        this.CardPreAuthorizations = new CardPreAuthorizationApiImpl(this);
-        this.Hooks = new HookApiImpl(this);
-        this.KycDocuments = new KycDocumentApiImpl(this);
-        this.Disputes = new DisputeApiImpl(this);
-        this.Idempotency = new IdempotencyApiImpl(this);
-        this.Mandates = new MandateApiImpl(this);
-        this.Reports = new ReportApiImpl(this);
-        this.bankingAliases = new BankingAliasApiImpl(this);
+        setAuthenticationManager(new OAuthApiImpl(this));
+        setClientApi(new ClientApiImpl(this));
+        setUserApi(new UserApiImpl(this));
+        setWalletApi(new WalletApiImpl(this));
+        setPayInApi(new PayInApiImpl(this));
+        setPayOutApi(new PayOutApiImpl(this));
+        setRefundApi(new RefundApiImpl(this));
+        setTransferApi(new TransferApiImpl(this));
+        setCardRegistrationApi(new CardRegistrationApiImpl(this));
+        setCardApi(new CardApiImpl(this));
+        setEventApi(new EventApiImpl(this));
+        setCardPreAuthorizationApi(new CardPreAuthorizationApiImpl(this));
+        setHookApi(new HookApiImpl(this));
+        setKycDocumentApi(new KycDocumentApiImpl(this));
+        setDisputeApi(new DisputeApiImpl(this));
+        setIdempotencyApi(new IdempotencyApiImpl(this));
+        setMandateApi(new MandateApiImpl(this));
+        setReportApi(new ReportApiImpl(this));
+        setBankingAliasApi(new BankingAliasApiImpl(this));
     }
 
     ////////////////////////////////////////
@@ -49,19 +49,13 @@ public class MangoPayApi {
 
     /**
      * Provides Authorization token methods.
-     *
-     * @deprecated Use {@link #getOAuthTokenManager()} and {@link #setOAuthTokenManager(AuthorizationTokenManager)} instead.
      */
-    @Deprecated
-    public AuthorizationTokenManager OAuthTokenManager;
+    private AuthorizationTokenManager oAuthTokenManager;
 
     /**
      * Configuration instance with default settings (to be reset if required).
-     *
-     * @deprecated Use {@link #getConfig()} and {@link #setConfig(Configuration)} instead.
      */
-    @Deprecated
-    public Configuration Config;
+    private Configuration config;
 
     ////////////////////////////////////////
     // API managers fields
@@ -69,318 +63,264 @@ public class MangoPayApi {
 
     /**
      * Provides OAuth methods.
-     *
-     * @deprecated Use {@link #getAuthenticationManager()} and {@link #setAuthenticationManager(ApiOAuth)} instead.
      */
-    @Deprecated
-    public ApiOAuth AuthenticationManager;
+    private OAuthApi authenticationManager;
 
     /**
      * Provides Clients methods.
-     *
-     * @deprecated Use {@link #getClientApi()} and {@link #setClientApi(ApiClients)} instead.
      */
-    @Deprecated
-    public ApiClients Clients;
+    private ClientApi clients;
 
     /**
      * Provides Users methods.
-     *
-     * @deprecated Use {@link #getUserApi()} and {@link #setUserApi(ApiUsers)} instead.
      */
-    @Deprecated
-    public ApiUsers Users;
+    private UserApi users;
 
     /**
      * Provides Wallets methods.
-     *
-     * @deprecated Use {@link #getWalletApi()} and {@link #setWalletApi(ApiWallets)} instead.
      */
-    @Deprecated
-    public ApiWallets Wallets;
+    private WalletApi wallets;
 
     /**
      * Provides PayIns methods.
-     *
-     * @deprecated Use {@link #getPayInApi()} and {@link #setPayInApi(ApiPayIns)} instead.
      */
-    @Deprecated
-    public ApiPayIns PayIns;
+    private PayInApi payIns;
 
     /**
      * Provides PayOuts methods.
-     *
-     * @deprecated Use {@link #getPayOutApi()} and {@link #setPayOutApi(ApiPayOuts)} instead.
      */
-    @Deprecated
-    public ApiPayOuts PayOuts;
+    private PayOutApi payOuts;
 
     /**
      * Provides Transfer methods.
-     *
-     * @deprecated Use {@link #getTransferApi()} and {@link #setTransferApi(ApiTransfers)} instead.
      */
-    @Deprecated
-    public ApiTransfers Transfers;
+    private TransferApi transfers;
 
     /**
      * Provides CardRegistrations methods.
-     *
-     * @deprecated Use {@link #getCardRegistrationApi()} and {@link #setCardRegistrationApi(ApiCardRegistrations)} instead.
      */
-    @Deprecated
-    public ApiCardRegistrations CardRegistrations;
+    private CardRegistrationApi cardRegistrations;
 
     /**
      * Provides CardPreAuthorizations methods.
-     *
-     * @deprecated Use {@link #getCardPreAuthorizationApi()} and {@link #setCardPreAuthorizationApi(ApiCardPreAuthorizations)} instead.
      */
-    @Deprecated
-    public ApiCardPreAuthorizations CardPreAuthorizations;
+    private CardPreAuthorizationApi cardPreAuthorizations;
 
     /**
      * Provides Cards methods.
-     *
-     * @deprecated Use {@link #getCardApi()} and {@link #setCardApi(ApiCards)} instead.
      */
-    @Deprecated
-    public ApiCards Cards;
+    private CardApi cards;
 
     /**
      * Provides Refunds methods.
-     *
-     * @deprecated Use {@link #getRefundApi()} and {@link #setRefundApi(ApiRefunds)} instead.
      */
-    @Deprecated
-    public ApiRefunds Refunds;
+    private RefundApi refunds;
 
     /**
      * Provides Events methods.
-     *
-     * @deprecated Use {@link #getEventApi()} and {@link #setEventApi(ApiEvents)} instead.
      */
-    @Deprecated
-    public ApiEvents Events;
+    private EventApi events;
 
     /**
      * Provides Hooks methods.
-     *
-     * @deprecated Use {@link #getHookApi()} and {@link #setHookApi(ApiHooks)} instead.
      */
-    @Deprecated
-    public ApiHooks Hooks;
+    private HookApi hooks;
 
     /**
-     * Provides KYC documents list methods.
-     *
-     * @deprecated Use {@link #getKycDocumentApi()} and {@link #setKycDocumentApi(ApiKycDocuments)} instead.
+     * Provides KYC Documents list methods.
      */
-    @Deprecated
-    public ApiKycDocuments KycDocuments;
+    private KycDocumentApi kycDocuments;
 
     /**
      * Provides Disputes methods.
-     *
-     * @deprecated Use {@link #getDisputeApi()} and {@link #setDisputeApi(ApiDisputes)} instead.
      */
-    @Deprecated
-    public ApiDisputes Disputes;
+    private DisputeApi disputes;
 
     /**
      * Provides Idempotency methods.
-     *
-     * @deprecated Use {@link #getIdempotencyApi()} and {@link #setIdempotencyApi(ApiIdempotency)} instead.
      */
-    @Deprecated
-    public ApiIdempotency Idempotency;
+    private IdempotencyApi idempotency;
 
     /**
      * Provides Mandates methods.
-     *
-     * @deprecated Use {@link #getMandateApi()} and {@link #setMandateApi(ApiMandates)} instead.
      */
-    @Deprecated
-    public ApiMandates Mandates;
+    private MandateApi mandates;
 
     /**
      * Provides Reports methods.
-     *
-     * @deprecated Use {@link #getReportApi()} and {@link #setReportApi(ApiReports)} instead.
      */
-    @Deprecated
-    public ApiReports Reports;
+    private ReportApi reports;
 
     /**
      * Provides Banking Alias methods.
      */
-    public BankingAliasApi bankingAliases;
+    private BankingAliasApi bankingAliases;
 
     public AuthorizationTokenManager getOAuthTokenManager() {
-        return OAuthTokenManager;
+        return oAuthTokenManager;
     }
 
-    public void setOAuthTokenManager(AuthorizationTokenManager OAuthTokenManager) {
-        this.OAuthTokenManager = OAuthTokenManager;
+    public void setOAuthTokenManager(AuthorizationTokenManager oAuthTokenManager) {
+        this.oAuthTokenManager = oAuthTokenManager;
     }
 
     public Configuration getConfig() {
-        return Config;
+        return config;
     }
 
     public void setConfig(Configuration config) {
-        this.Config = config;
+        this.config = config;
     }
 
-    public ApiOAuth getAuthenticationManager() {
-        return AuthenticationManager;
+    public OAuthApi getAuthenticationManager() {
+        return authenticationManager;
     }
 
-    public void setAuthenticationManager(ApiOAuth authenticationManager) {
-        this.AuthenticationManager = authenticationManager;
+    public void setAuthenticationManager(OAuthApi authenticationManager) {
+        this.authenticationManager = authenticationManager;
     }
 
-    public ApiClients getClientApi() {
-        return Clients;
+    public ClientApi getClientApi() {
+        return clients;
     }
 
-    public void setClientApi(ApiClients clients) {
-        this.Clients = clients;
+    public void setClientApi(ClientApi clients) {
+        this.clients = clients;
     }
 
-    public ApiUsers getUserApi() {
-        return Users;
+    public UserApi getUserApi() {
+        return users;
     }
 
-    public void setUserApi(ApiUsers users) {
-        this.Users = users;
+    public void setUserApi(UserApi users) {
+        this.users = users;
     }
 
-    public ApiWallets getWalletApi() {
-        return Wallets;
+    public WalletApi getWalletApi() {
+        return wallets;
     }
 
-    public void setWalletApi(ApiWallets wallets) {
-        this.Wallets = wallets;
+    public void setWalletApi(WalletApi wallets) {
+        this.wallets = wallets;
     }
 
-    public ApiPayIns getPayInApi() {
-        return PayIns;
+    public PayInApi getPayInApi() {
+        return payIns;
     }
 
-    public void setPayInApi(ApiPayIns payIns) {
-        this.PayIns = payIns;
+    public void setPayInApi(PayInApi payIns) {
+        this.payIns = payIns;
     }
 
-    public ApiPayOuts getPayOutApi() {
-        return PayOuts;
+    public PayOutApi getPayOutApi() {
+        return payOuts;
     }
 
-    public void setPayOutApi(ApiPayOuts payOuts) {
-        this.PayOuts = payOuts;
+    public void setPayOutApi(PayOutApi payOuts) {
+        this.payOuts = payOuts;
     }
 
-    public ApiTransfers getTransferApi() {
-        return Transfers;
+    public TransferApi getTransferApi() {
+        return transfers;
     }
 
-    public void setTransferApi(ApiTransfers transfers) {
-        this.Transfers = transfers;
+    public void setTransferApi(TransferApi transfers) {
+        this.transfers = transfers;
     }
 
-    public ApiCardRegistrations getCardRegistrationApi() {
-        return CardRegistrations;
+    public CardRegistrationApi getCardRegistrationApi() {
+        return cardRegistrations;
     }
 
-    public void setCardRegistrationApi(ApiCardRegistrations cardRegistrations) {
-        this.CardRegistrations = cardRegistrations;
+    public void setCardRegistrationApi(CardRegistrationApi cardRegistrations) {
+        this.cardRegistrations = cardRegistrations;
     }
 
-    public ApiCardPreAuthorizations getCardPreAuthorizationApi() {
-        return CardPreAuthorizations;
+    public CardPreAuthorizationApi getCardPreAuthorizationApi() {
+        return cardPreAuthorizations;
     }
 
-    public void setCardPreAuthorizationApi(ApiCardPreAuthorizations cardPreAuthorizations) {
-        this.CardPreAuthorizations = cardPreAuthorizations;
+    private void setCardPreAuthorizationApi(CardPreAuthorizationApi cardPreAuthorizations) {
+        this.cardPreAuthorizations = cardPreAuthorizations;
     }
 
-    public ApiCards getCardApi() {
-        return Cards;
+    public CardApi getCardApi() {
+        return cards;
     }
 
-    public void setCardApi(ApiCards cards) {
-        this.Cards = cards;
+    private void setCardApi(CardApi cards) {
+        this.cards = cards;
     }
 
-    public ApiRefunds getRefundApi() {
-        return Refunds;
+    public RefundApi getRefundApi() {
+        return refunds;
     }
 
-    public void setRefundApi(ApiRefunds refunds) {
-        this.Refunds = refunds;
+    private void setRefundApi(RefundApi refunds) {
+        this.refunds = refunds;
     }
 
-    public ApiEvents getEventApi() {
-        return Events;
+    public EventApi getEventApi() {
+        return events;
     }
 
-    public void setEventApi(ApiEvents events) {
-        this.Events = events;
+    private void setEventApi(EventApi events) {
+        this.events = events;
     }
 
-    public ApiHooks getHookApi() {
-        return Hooks;
+    public HookApi getHookApi() {
+        return hooks;
     }
 
-    public void setHookApi(ApiHooks hooks) {
-        this.Hooks = hooks;
+    private void setHookApi(HookApi hooks) {
+        this.hooks = hooks;
     }
 
-    public ApiKycDocuments getKycDocumentApi() {
-        return KycDocuments;
+    public KycDocumentApi getKycDocumentApi() {
+        return kycDocuments;
     }
 
-    public void setKycDocumentApi(ApiKycDocuments kycDocuments) {
-        this.KycDocuments = kycDocuments;
+    private void setKycDocumentApi(KycDocumentApi kycDocuments) {
+        this.kycDocuments = kycDocuments;
     }
 
-    public ApiDisputes getDisputeApi() {
-        return Disputes;
+    public DisputeApi getDisputeApi() {
+        return disputes;
     }
 
-    public void setDisputeApi(ApiDisputes disputes) {
-        this.Disputes = disputes;
+    private void setDisputeApi(DisputeApi disputes) {
+        this.disputes = disputes;
     }
 
-    public ApiIdempotency getIdempotencyApi() {
-        return Idempotency;
+    public IdempotencyApi getIdempotencyApi() {
+        return idempotency;
     }
 
-    public void setIdempotencyApi(ApiIdempotency idempotency) {
-        this.Idempotency = idempotency;
+    private void setIdempotencyApi(IdempotencyApi idempotency) {
+        this.idempotency = idempotency;
     }
 
-    public ApiMandates getMandateApi() {
-        return Mandates;
+    public MandateApi getMandateApi() {
+        return mandates;
     }
 
-    public void setMandateApi(ApiMandates mandates) {
-        this.Mandates = mandates;
+    private void setMandateApi(MandateApi mandates) {
+        this.mandates = mandates;
     }
 
-    public ApiReports getReportApi() {
-        return Reports;
+    public ReportApi getReportApi() {
+        return reports;
     }
 
-    public void setReportApi(ApiReports reports) {
-        this.Reports = reports;
+    private void setReportApi(ReportApi reports) {
+        this.reports = reports;
     }
 
     public BankingAliasApi getBankingAliases() {
         return bankingAliases;
     }
 
-    public void setBankingAliases(BankingAliasApi bankingAliases) {
+    public void setBankingAliasApi(BankingAliasApi bankingAliases) {
         this.bankingAliases = bankingAliases;
     }
 }

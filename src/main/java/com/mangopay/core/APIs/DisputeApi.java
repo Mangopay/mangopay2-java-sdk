@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiDisputes {
+public interface DisputeApi {
     /**
      * Gets dispute.
      *
@@ -128,7 +128,7 @@ public interface ApiDisputes {
     /**
      * Creates settlement transfer.
      *
-     * @param idempotencyKey     Idempotency key for this request.
+     * @param idempotencyKey     idempotency key for this request.
      * @param settlementTransfer Settlement transfer.
      * @param repudiationId      Repudiation identifier.
      * @return Transfer instance returned from API.
@@ -197,7 +197,7 @@ public interface ApiDisputes {
     /**
      * Creates document for dispute.
      *
-     * @param idempotencyKey  Idempotency key for this request.
+     * @param idempotencyKey  idempotency key for this request.
      * @param disputeDocument Dispute document to be created.
      * @param disputeId       Dispute identifier.
      * @return Dispute document returned from API.
@@ -218,7 +218,7 @@ public interface ApiDisputes {
     /**
      * Creates document's page for dispute.
      *
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param disputeId      Dispute identifier.
      * @param documentId     Dispute document identifier.
      * @param binaryData     The byte array the DisputePage will be created from.
@@ -240,7 +240,7 @@ public interface ApiDisputes {
     /**
      * Creates document's page for dispute.
      *
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param disputeId      Dispute identifier.
      * @param documentId     Dispute document identifier.
      * @param filePath       Path to the file the DisputePage will be created from.

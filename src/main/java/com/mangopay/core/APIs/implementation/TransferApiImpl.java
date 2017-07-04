@@ -2,13 +2,13 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiTransfers;
+import com.mangopay.core.APIs.TransferApi;
 import com.mangopay.entities.*;
 
 /**
  * API for transfers.
  */
-public class TransferApiImpl extends ApiBase implements ApiTransfers {
+public class TransferApiImpl extends ApiBase implements TransferApi {
 
     /**
      * Instantiates new TransferApiImpl object.

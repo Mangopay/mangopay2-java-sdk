@@ -3,14 +3,14 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiWallets;
+import com.mangopay.core.APIs.WalletApi;
 import com.mangopay.entities.*;
 import java.util.List;
 
 /**
  * API for wallets.
  */
-public class WalletApiImpl extends ApiBase implements ApiWallets {
+public class WalletApiImpl extends ApiBase implements WalletApi {
     
     /**
      * Instantiates new WalletApiImpl object.
