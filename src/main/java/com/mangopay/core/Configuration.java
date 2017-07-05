@@ -146,8 +146,13 @@ public class Configuration {
         return apiVersion;
     }
 
+    /**
+     * Set the Mangopay API Version to use
+     *
+     * @param apiVersion The API Version to use (as defined in {@link Configuration}
+     */
     public void setApiVersion(String apiVersion) {
-        if(!(apiVersion.equals(VERSION_2) || apiVersion.equals(VERSION_2_01))) {
+        if (!(apiVersion.equals(VERSION_2) || apiVersion.equals(VERSION_2_01))) {
             throw new RuntimeException("Invalid API Version");
         }
         this.apiVersion = apiVersion;

@@ -110,6 +110,46 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getLegacyNatural() throws Exception {
+        this.api.getConfig().setApiVersion(Configuration.VERSION_2);
+
+        LegacyUserNatural legacyJohn = this.getLegacyJohn();
+        User user1 = this.api.getLegacyUserApi().get(legacyJohn.getId());
+        LegacyUserNatural user2 = this.api.getLegacyUserApi().getNatural(legacyJohn.getId());
+
+        assertTrue(user1.getPersonType().equals(PersonType.NATURAL));
+        assertTrue(user1.getId().equals(legacyJohn.getId()));
+        assertTrue(user2.getPersonType().equals(PersonType.NATURAL));
+        assertTrue(user2.getId().equals(legacyJohn.getId()));
+
+        assertEqualInputProps(user1, legacyJohn);
+    }
+
+    @Test
+    public void getLegal() throws Exception {
+        UserLegal matrix = this.getMatrix();
+
+        User user1 = this.api.getUserApi().get(matrix.getId());
+        User user2 = this.api.getUserApi().getLegal(matrix.getId());
+
+        assertEqualInputProps(user1, matrix);
+        assertEqualInputProps(user2, matrix);
+    }
+
+    @Test
+    public void getLegacyLegal() throws Exception {
+        this.api.getConfig().setApiVersion(Configuration.VERSION_2);
+
+        LegacyUserLegal legacyMatrix = this.getLegacyMatrix();
+
+        User user1 = this.api.getLegacyUserApi().get(legacyMatrix.getId());
+        User user2 = this.api.getLegacyUserApi().getLegal(legacyMatrix.getId());
+
+        assertEqualInputProps(user1, legacyMatrix);
+        assertEqualInputProps(user2, legacyMatrix);
+    }
+
+    @Test
     public void getNaturalFailsForLegalUser() throws Exception {
         UserLegal matrix = this.getMatrix();
 
@@ -135,17 +175,6 @@ public class UserApiImplTest extends BaseTest {
         } catch (ResponseException ex) {
             assertNull(user);
         }
-    }
-
-    @Test
-    public void getLegal() throws Exception {
-        UserLegal matrix = this.getMatrix();
-
-        User user1 = this.api.getUserApi().get(matrix.getId());
-        User user2 = this.api.getUserApi().getLegal(matrix.getId());
-
-        assertEqualInputProps(user1, matrix);
-        assertEqualInputProps(user2, matrix);
     }
 
     @Test
@@ -403,12 +432,12 @@ public class UserApiImplTest extends BaseTest {
     public void updateKycDocument() throws Exception {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getJohnsKycDocument();
-        
+
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
 
         this.api.getUserApi().createKycPage(john.getId(), kycDocument.getId(), filePath);
-        
+
         kycDocument.setStatus(KycStatus.VALIDATION_ASKED);
 
         KycDocument result = this.api.getUserApi().updateKycDocument(john.getId(), kycDocument);

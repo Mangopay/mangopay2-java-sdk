@@ -23,7 +23,9 @@ public abstract class BaseTest {
     protected MangoPayApi api;
 
     private static UserNatural JOHN;
+    private static LegacyUserNatural LEGACY_JOHN;
     private static UserLegal MATRIX;
+    private static LegacyUserLegal LEGACY_MATRIX;
     private static BankAccount JOHNS_ACCOUNT;
     private static Wallet JOHNS_WALLET;
     private static Wallet JOHNS_WALLET_WITH_MONEY;
@@ -69,7 +71,6 @@ public abstract class BaseTest {
         newApi.getConfig().setClientId("sdk-unit-tests");
         newApi.getConfig().setClientPassword("cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju");
         newApi.getConfig().setDebugMode(true);
-        newApi.getConfig().setApiVersion(Configuration.VERSION_2);
 
         // register storage strategy for tests
         newApi.getOAuthTokenManager().registerCustomStorageStrategy(new DefaultStorageStrategyForTests());
@@ -139,6 +140,18 @@ public abstract class BaseTest {
         return BaseTest.JOHN;
     }
 
+    protected LegacyUserNatural getLegacyJohn() throws Exception {
+        if (BaseTest.JOHN == null) {
+            String initialVersion = api.getConfig().getApiVersion();
+            api.getConfig().setApiVersion(Configuration.VERSION_2_01);
+            getJohn();
+            api.getConfig().setApiVersion(initialVersion);
+
+            BaseTest.LEGACY_JOHN = (LegacyUserNatural) this.api.getLegacyUserApi().get(BaseTest.JOHN.getId());
+        }
+        return BaseTest.LEGACY_JOHN;
+    }
+
     protected UserNatural getNewJohn() throws Exception {
 
         Calendar c = Calendar.getInstance();
@@ -181,6 +194,18 @@ public abstract class BaseTest {
             BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX;
+    }
+
+    protected LegacyUserLegal getLegacyMatrix() throws Exception {
+        if (BaseTest.MATRIX == null) {
+            String initialVersion = api.getConfig().getApiVersion();
+            api.getConfig().setApiVersion(Configuration.VERSION_2_01);
+            getMatrix();
+            api.getConfig().setApiVersion(initialVersion);
+
+            BaseTest.LEGACY_MATRIX = (LegacyUserLegal) this.api.getLegacyUserApi().get(BaseTest.MATRIX.getId());
+        }
+        return BaseTest.LEGACY_MATRIX;
     }
 
     protected BankAccount getJohnsAccount() throws Exception {
@@ -734,6 +759,25 @@ public abstract class BaseTest {
             assertEquals(((UserNatural) entity1).getOccupation(), ((UserNatural) entity2).getOccupation());
             assertEquals(((UserNatural) entity1).getIncomeRange(), ((UserNatural) entity2).getIncomeRange());
 
+        } else if (entity1 instanceof LegacyUserNatural) {
+            assertEquals(((LegacyUserNatural) entity1).getTag(), ((LegacyUserNatural) entity2).getTag());
+            assertEquals(((LegacyUserNatural) entity1).getPersonType(), ((LegacyUserNatural) entity2).getPersonType());
+            assertEquals(((LegacyUserNatural) entity1).getFirstName(), ((LegacyUserNatural) entity2).getFirstName());
+            assertEquals(((LegacyUserNatural) entity1).getLastName(), ((LegacyUserNatural) entity2).getLastName());
+            assertEquals(((LegacyUserNatural) entity1).getEmail(), ((LegacyUserNatural) entity2).getEmail());
+
+            if (((LegacyUserNatural) entity1).getAddress() == null) {
+                assertNull(((LegacyUserNatural) entity2).getAddress());
+            } else {
+                assertNotNull(((LegacyUserNatural) entity2).getAddress());
+                assertEquals(((LegacyUserNatural) entity1).getAddress(), ((LegacyUserNatural) entity2).getAddress());
+            }
+
+            assertEquals(((LegacyUserNatural) entity1).getBirthday(), ((LegacyUserNatural) entity2).getBirthday());
+            assertEquals(((LegacyUserNatural) entity1).getNationality(), ((LegacyUserNatural) entity2).getNationality());
+            assertEquals(((LegacyUserNatural) entity1).getCountryOfResidence(), ((LegacyUserNatural) entity2).getCountryOfResidence());
+            assertEquals(((LegacyUserNatural) entity1).getOccupation(), ((LegacyUserNatural) entity2).getOccupation());
+            assertEquals(((LegacyUserNatural) entity1).getIncomeRange(), ((LegacyUserNatural) entity2).getIncomeRange());
         } else if (entity1 instanceof UserLegal) {
             assertEquals(((UserLegal) entity1).getTag(), ((UserLegal) entity2).getTag());
             assertEquals(((UserLegal) entity1).getPersonType(), ((UserLegal) entity2).getPersonType());
@@ -756,6 +800,22 @@ public abstract class BaseTest {
             assertEquals(((UserLegal) entity1).getLegalRepresentativeNationality(), ((UserLegal) entity2).getLegalRepresentativeNationality());
             assertEquals(((UserLegal) entity1).getLegalRepresentativeCountryOfResidence(), ((UserLegal) entity2).getLegalRepresentativeCountryOfResidence());
 
+        } else if (entity1 instanceof LegacyUserLegal) {
+            assertEquals(((LegacyUserLegal) entity1).getTag(), ((LegacyUserLegal) entity2).getTag());
+            assertEquals(((LegacyUserLegal) entity1).getPersonType(), ((LegacyUserLegal) entity2).getPersonType());
+            assertEquals(((LegacyUserLegal) entity1).getName(), ((LegacyUserLegal) entity2).getName());
+            assertNotNull(((LegacyUserLegal) entity1).getHeadquartersAddress());
+            assertNotNull(((LegacyUserLegal) entity2).getHeadquartersAddress());
+            assertEquals(((LegacyUserLegal) entity1).getHeadquartersAddress(), ((LegacyUserLegal) entity2).getHeadquartersAddress());
+
+            assertEquals(((LegacyUserLegal) entity1).getLegalRepresentativeFirstName(), ((LegacyUserLegal) entity2).getLegalRepresentativeFirstName());
+            assertEquals(((LegacyUserLegal) entity1).getLegalRepresentativeLastName(), ((LegacyUserLegal) entity2).getLegalRepresentativeLastName());
+            //assertEquals("***** TEMPORARY API ISSUE: RETURNED OBJECT MISSES THIS PROP AFTER CREATION *****", ((LegacyUserLegal)entity1).LegalRepresentativeAddress, ((LegacyUserLegal)entity2).LegalRepresentativeAddress);
+            assertEquals(((LegacyUserLegal) entity1).getLegalRepresentativeEmail(), ((LegacyUserLegal) entity2).getLegalRepresentativeEmail());
+            //assertEquals("***** TEMPORARY API ISSUE: RETURNED OBJECT HAS THIS PROP CHANGED FROM TIMESTAMP INTO ISO STRING AFTER CREATION *****", ((LegacyUserLegal)entity1).LegalRepresentativeBirthday, ((LegacyUserLegal)entity2).LegalRepresentativeBirthday);
+            assertEquals(((LegacyUserLegal) entity1).getLegalRepresentativeBirthday(), ((LegacyUserLegal) entity2).getLegalRepresentativeBirthday());
+            assertEquals(((LegacyUserLegal) entity1).getLegalRepresentativeNationality(), ((LegacyUserLegal) entity2).getLegalRepresentativeNationality());
+            assertEquals(((LegacyUserLegal) entity1).getLegalRepresentativeCountryOfResidence(), ((LegacyUserLegal) entity2).getLegalRepresentativeCountryOfResidence());
         } else if (entity1 instanceof BankAccount) {
             assertEquals(((BankAccount) entity1).getTag(), ((BankAccount) entity2).getTag());
             assertEquals(((BankAccount) entity1).getUserId(), ((BankAccount) entity2).getUserId());

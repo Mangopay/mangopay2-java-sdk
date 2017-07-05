@@ -2,7 +2,6 @@ package com.mangopay.core;
 
 import com.google.gson.*;
 import com.mangopay.MangoPayApi;
-import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.PersonType;
 import com.mangopay.entities.*;
 import org.slf4j.Logger;
@@ -520,18 +519,10 @@ public class RestTool {
                 }
             } else {
                 try {
-                    if (fieldName.toLowerCase().contains("address") && root.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
-                        if (f.get(entity) == null) {
-                            result.put(fieldName, null);
-                        } else {
-                            result.put(fieldName, f.get(entity).toString());
-                        }
+                    if (!isList) {
+                        result.put(fieldName, f.get(entity));
                     } else {
-                        if (!isList) {
-                            result.put(fieldName, f.get(entity));
-                        } else {
-                            result.put(fieldName, ((List) f.get(entity)).toArray());
-                        }
+                        result.put(fieldName, ((List) f.get(entity)).toArray());
                     }
                 } catch (IllegalArgumentException | IllegalAccessException ex) {
                     continue;
@@ -623,10 +614,18 @@ public class RestTool {
                         String userType = entry.getValue().getAsString();
 
                         if (userType.equals(PersonType.NATURAL.toString())) {
-                            result = (T) new UserNatural();
+                            if (root.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
+                                result = (T) new LegacyUserNatural();
+                            } else {
+                                result = (T) new UserNatural();
+                            }
                             break;
                         } else if (userType.equals(PersonType.LEGAL.toString())) {
-                            result = (T) new UserLegal();
+                            if (root.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
+                                result = (T) new LegacyUserLegal();
+                            } else {
+                                result = (T) new UserLegal();
+                            }
                             break;
                         } else {
                             throw new Exception(String.format("Unknown type of user: %s", entry.getValue().getAsString()));
@@ -693,16 +692,7 @@ public class RestTool {
                             if (entry.getValue() instanceof JsonNull) {
                                 f.set(result, null);
                             } else {
-                                if (name.toLowerCase().contains("address")
-                                        && root.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
-                                    if (f.getType().equals(Address.class)) {
-                                        f.set(result, parseAddress(String.valueOf(entry.getValue())));
-                                    } else if (f.getType().equals(String.class)) {
-                                        f.set(result, String.valueOf(entry.getValue()));
-                                    }
-                                } else {
-                                    f.set(result, castResponseToEntity(f.getType(), entry.getValue().getAsJsonObject()));
-                                }
+                                f.set(result, castResponseToEntity(f.getType(), entry.getValue().getAsJsonObject()));
                             }
                             break;
                         }
@@ -799,58 +789,6 @@ public class RestTool {
 
             throw e;
         }
-    }
-
-    private Address parseAddress(String addressString) {
-        Address address = new Address();
-        if (addressString.startsWith("\"")) addressString = addressString.substring(1);
-        if (addressString.endsWith("\"")) addressString = addressString.substring(0, addressString.length() - 1);
-        int index = addressString.lastIndexOf(",");
-        if (index == -1) {
-            address.setAddressLine1(addressString);
-            return address;
-        }
-        String country = addressString.substring(index + 1).trim();
-        try {
-            address.setCountry(CountryIso.valueOf(country));
-        } catch (IllegalArgumentException e) {
-            // Bad ISO.
-        }
-        addressString = addressString.substring(0, index);
-        index = addressString.lastIndexOf(",");
-        if (index == -1) {
-            address.setAddressLine1(addressString);
-            return address;
-        }
-        String postCode = addressString.substring(index + 1).trim();
-        address.setPostalCode(postCode);
-        addressString = addressString.substring(0, index);
-        index = addressString.lastIndexOf(",");
-        if (index == -1) {
-            address.setAddressLine1(addressString);
-            return address;
-        }
-        String region = addressString.substring(index + 1).trim();
-        address.setRegion(region);
-        addressString = addressString.substring(0, index);
-        index = addressString.lastIndexOf(",");
-        if (index == -1) {
-            address.setAddressLine1(addressString);
-            return address;
-        }
-        String city = addressString.substring(index + 1).trim();
-        address.setCity(city);
-        addressString = addressString.substring(0, index);
-        index = addressString.lastIndexOf(",");
-        if (index == -1) {
-            address.setAddressLine1(addressString);
-            return address;
-        }
-        String line2 = addressString.substring(index + 1).trim();
-        address.setAddressLine2(line2);
-        addressString = addressString.substring(0, index);
-        address.setAddressLine1(addressString);
-        return address;
     }
 
     private String toCamelCase(String fieldName) {

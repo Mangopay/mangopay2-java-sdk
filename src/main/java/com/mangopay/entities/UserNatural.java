@@ -13,7 +13,7 @@ import static com.mangopay.core.enumerations.PersonType.NATURAL;
 /**
  * UserNatural entity.
  */
-public final class UserNatural extends User {
+public class UserNatural extends User {
 
     /**
      * First name.

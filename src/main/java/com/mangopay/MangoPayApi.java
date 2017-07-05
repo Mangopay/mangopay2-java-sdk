@@ -25,6 +25,7 @@ public class MangoPayApi {
         setAuthenticationManager(new OAuthApiImpl(this));
         setClientApi(new ClientApiImpl(this));
         setUserApi(new UserApiImpl(this));
+        setLegacyUserApi(new LegacyUserApiImpl(this));
         setWalletApi(new WalletApiImpl(this));
         setPayInApi(new PayInApiImpl(this));
         setPayOutApi(new PayOutApiImpl(this));
@@ -42,6 +43,10 @@ public class MangoPayApi {
         setReportApi(new ReportApiImpl(this));
         setBankingAliasApi(new BankingAliasApiImpl(this));
     }
+
+    /**
+     * Instantiates a new MangoPayApi object for a certain API version.
+     */
 
     ////////////////////////////////////////
     // Config/authorization related fields
@@ -75,6 +80,11 @@ public class MangoPayApi {
      * Provides Users methods.
      */
     private UserApi users;
+
+    /**
+     * Provides compatibility Users methods.
+     */
+    private LegacyUserApi legacyUsers;
 
     /**
      * Provides Wallets methods.
@@ -189,11 +199,25 @@ public class MangoPayApi {
     }
 
     public UserApi getUserApi() {
+        if (config.getApiVersion().equals(Configuration.VERSION_2)) {
+            throw new IllegalStateException("Standard version of API requires setting a higher API version in the Configuration");
+        }
         return users;
     }
 
     public void setUserApi(UserApi users) {
         this.users = users;
+    }
+
+    public LegacyUserApi getLegacyUserApi() {
+        if (!config.getApiVersion().equals(Configuration.VERSION_2)) {
+            throw new IllegalStateException("Legacy version of API requires setting a lower API version in the Configuration");
+        }
+        return legacyUsers;
+    }
+
+    public void setLegacyUserApi(LegacyUserApi legacyUsers) {
+        this.legacyUsers = legacyUsers;
     }
 
     public WalletApi getWalletApi() {
