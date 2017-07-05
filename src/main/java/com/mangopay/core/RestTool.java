@@ -2,6 +2,7 @@ package com.mangopay.core;
 
 import com.google.gson.*;
 import com.mangopay.MangoPayApi;
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.PersonType;
 import com.mangopay.entities.*;
 import org.slf4j.Logger;
@@ -435,7 +436,7 @@ public class RestTool {
     }
 
     private void readResponseHeaders(HttpURLConnection conn) {
-        for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
+        for (Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
             for (String v : k.getValue()) {
 
                 if (this.debugMode) logger.info("Response header: {}", k.getKey() + ":" + v);
@@ -516,10 +517,18 @@ public class RestTool {
                 }
             } else {
                 try {
-                    if (!isList) {
-                        result.put(fieldName, f.get(entity));
+                    if (fieldName.toLowerCase().contains("address") && root.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
+                        if (f.get(entity) == null) {
+                            result.put(fieldName, null);
+                        } else {
+                            result.put(fieldName, f.get(entity).toString());
+                        }
                     } else {
-                        result.put(fieldName, ((List) f.get(entity)).toArray());
+                        if (!isList) {
+                            result.put(fieldName, f.get(entity));
+                        } else {
+                            result.put(fieldName, ((List) f.get(entity)).toArray());
+                        }
                     }
                 } catch (IllegalArgumentException | IllegalAccessException ex) {
                     continue;
@@ -546,7 +555,7 @@ public class RestTool {
             return true;
         }
 
-        if(classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
+        if (classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
             return true;
         }
 
@@ -667,7 +676,16 @@ public class RestTool {
                             if (entry.getValue() instanceof JsonNull) {
                                 f.set(result, null);
                             } else {
-                                f.set(result, castResponseToEntity(f.getType(), entry.getValue().getAsJsonObject()));
+                                if (name.toLowerCase().contains("address")
+                                        && root.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
+                                    if (f.getType().equals(Address.class)) {
+                                        f.set(result, parseAddress(String.valueOf(entry.getValue())));
+                                    } else if (f.getType().equals(String.class)) {
+                                        f.set(result, String.valueOf(entry.getValue()));
+                                    }
+                                } else {
+                                    f.set(result, castResponseToEntity(f.getType(), entry.getValue().getAsJsonObject()));
+                                }
                             }
                             break;
                         }
@@ -764,7 +782,58 @@ public class RestTool {
 
             throw e;
         }
+    }
 
+    private Address parseAddress(String addressString) {
+        Address address = new Address();
+        if (addressString.startsWith("\"")) addressString = addressString.substring(1);
+        if (addressString.endsWith("\"")) addressString = addressString.substring(0, addressString.length() - 1);
+        int index = addressString.lastIndexOf(",");
+        if (index == -1) {
+            address.setAddressLine1(addressString);
+            return address;
+        }
+        String country = addressString.substring(index + 1).trim();
+        try {
+            address.setCountry(CountryIso.valueOf(country));
+        } catch (IllegalArgumentException e) {
+            // Bad ISO.
+        }
+        addressString = addressString.substring(0, index);
+        index = addressString.lastIndexOf(",");
+        if (index == -1) {
+            address.setAddressLine1(addressString);
+            return address;
+        }
+        String postCode = addressString.substring(index + 1).trim();
+        address.setPostalCode(postCode);
+        addressString = addressString.substring(0, index);
+        index = addressString.lastIndexOf(",");
+        if (index == -1) {
+            address.setAddressLine1(addressString);
+            return address;
+        }
+        String region = addressString.substring(index + 1).trim();
+        address.setRegion(region);
+        addressString = addressString.substring(0, index);
+        index = addressString.lastIndexOf(",");
+        if (index == -1) {
+            address.setAddressLine1(addressString);
+            return address;
+        }
+        String city = addressString.substring(index + 1).trim();
+        address.setCity(city);
+        addressString = addressString.substring(0, index);
+        index = addressString.lastIndexOf(",");
+        if (index == -1) {
+            address.setAddressLine1(addressString);
+            return address;
+        }
+        String line2 = addressString.substring(index + 1).trim();
+        address.setAddressLine2(line2);
+        addressString = addressString.substring(0, index);
+        address.setAddressLine1(addressString);
+        return address;
     }
 
     private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination) throws Exception {

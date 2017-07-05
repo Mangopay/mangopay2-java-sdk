@@ -87,9 +87,9 @@ class UrlTool {
         String url;
 
         if (!addClientId) {
-            url = "/v2.01" + urlKey;
+            url = "/" + root.getConfig().getApiVersion() + urlKey;
         } else {
-            url = "/v2.01/" + root.getConfig().getClientId() + urlKey;
+            url = "/" + root.getConfig().getApiVersion() + "/" + root.getConfig().getClientId() + urlKey;
         }
 
         Boolean paramsAdded = false;

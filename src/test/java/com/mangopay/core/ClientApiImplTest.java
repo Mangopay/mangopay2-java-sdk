@@ -50,6 +50,9 @@ public class ClientApiImplTest extends BaseTest {
 
     @Test
     public void getClient() throws Exception {
+        if (this.api.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
+            return;
+        }
         Client client = this.api.getClientApi().get();
 
         assertNotNull(client);
@@ -58,6 +61,9 @@ public class ClientApiImplTest extends BaseTest {
 
     @Test
     public void updateClient() throws Exception {
+        if (api.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
+            return;
+        }
         Client client = this.api.getClientApi().get();
 
         Random rand = new Random();
@@ -76,7 +82,9 @@ public class ClientApiImplTest extends BaseTest {
 
     @Test
     public void uploadClientLogo() throws Exception {
-
+        if (api.getConfig().getApiVersion().equals(Configuration.VERSION_2)) {
+            return;
+        }
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
 

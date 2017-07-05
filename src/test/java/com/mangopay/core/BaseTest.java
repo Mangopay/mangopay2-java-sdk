@@ -69,6 +69,7 @@ public abstract class BaseTest {
         newApi.getConfig().setClientId("sdk-unit-tests");
         newApi.getConfig().setClientPassword("cqFfFrWfCcb7UadHNxx2C9Lo6Djw8ZduLi7J9USTmu8bhxxpju");
         newApi.getConfig().setDebugMode(true);
+        newApi.getConfig().setApiVersion(Configuration.VERSION_2);
 
         // register storage strategy for tests
         newApi.getOAuthTokenManager().registerCustomStorageStrategy(new DefaultStorageStrategyForTests());

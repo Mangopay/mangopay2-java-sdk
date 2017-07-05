@@ -118,4 +118,21 @@ public class Address extends Dto {
                 (Country != null && Country != CountryIso.NotSpecified);
 
     }
+
+    @Override
+    public String toString() {
+        String address = "";
+        address += getAddressLine1() != null && !getAddressLine1().isEmpty() ? getAddressLine1() : "";
+        address += getAddressLine2() != null && !getAddressLine2().isEmpty() ? (!address.isEmpty() ? ", " : "") + getAddressLine2() : "";
+        String details = !address.isEmpty() ? ", " : "";
+        details += getCity() != null && !getCity().isEmpty() ? getCity() + ", " : "";
+        details += getRegion() != null && !getRegion().isEmpty() ? getRegion() + ", " : "";
+        details += getPostalCode() != null && !getPostalCode().isEmpty() ? getPostalCode() + ", " : "";
+        details += getCountry() != null ? getCountry() : "";
+        details = details.trim();
+        if (details.endsWith(",")) {
+            details = details.substring(0, details.length() - 1);
+        }
+        return (!address.isEmpty() ? address : "") + (!details.isEmpty() ? details : "");
+    }
 }
