@@ -44,10 +44,6 @@ public class MangoPayApi {
         setBankingAliasApi(new BankingAliasApiImpl(this));
     }
 
-    /**
-     * Instantiates a new MangoPayApi object for a certain API version.
-     */
-
     ////////////////////////////////////////
     // Config/authorization related fields
     ////////////////////////////////////////

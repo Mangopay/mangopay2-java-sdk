@@ -141,12 +141,13 @@ public abstract class BaseTest {
     }
 
     protected LegacyUserNatural getLegacyJohn() throws Exception {
-        if (BaseTest.JOHN == null) {
-            String initialVersion = api.getConfig().getApiVersion();
-            api.getConfig().setApiVersion(Configuration.VERSION_2_01);
-            getJohn();
-            api.getConfig().setApiVersion(initialVersion);
-
+        if (BaseTest.LEGACY_JOHN == null) {
+            if (BaseTest.JOHN == null) {
+                String initialVersion = api.getConfig().getApiVersion();
+                api.getConfig().setApiVersion(Configuration.VERSION_2_01);
+                getJohn();
+                api.getConfig().setApiVersion(initialVersion);
+            }
             BaseTest.LEGACY_JOHN = (LegacyUserNatural) this.api.getLegacyUserApi().get(BaseTest.JOHN.getId());
         }
         return BaseTest.LEGACY_JOHN;
@@ -197,12 +198,13 @@ public abstract class BaseTest {
     }
 
     protected LegacyUserLegal getLegacyMatrix() throws Exception {
-        if (BaseTest.MATRIX == null) {
-            String initialVersion = api.getConfig().getApiVersion();
-            api.getConfig().setApiVersion(Configuration.VERSION_2_01);
-            getMatrix();
-            api.getConfig().setApiVersion(initialVersion);
-
+        if (BaseTest.LEGACY_MATRIX == null) {
+            if (BaseTest.MATRIX == null) {
+                String initialVersion = api.getConfig().getApiVersion();
+                api.getConfig().setApiVersion(Configuration.VERSION_2_01);
+                getMatrix();
+                api.getConfig().setApiVersion(initialVersion);
+            }
             BaseTest.LEGACY_MATRIX = (LegacyUserLegal) this.api.getLegacyUserApi().get(BaseTest.MATRIX.getId());
         }
         return BaseTest.LEGACY_MATRIX;
