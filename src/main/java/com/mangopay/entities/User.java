@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.KycLevel;
 import com.mangopay.core.enumerations.PersonType;
@@ -14,30 +15,24 @@ public abstract class User extends EntityBase {
 
     /**
      * Type of user.
-     *
-     * @deprecated Use {@link #getPersonType()} and {@link #setPersonType(PersonType)} instead.
      */
-    @Deprecated
-    public PersonType PersonType;
+    @SerializedName("PersonType")
+    PersonType personType;
 
     /**
      * KYC level.
-     *
-     * @deprecated Use {@link #getKYCLevel()} and {@link #setKYCLevel(KycLevel)} instead.
      */
-    @Deprecated
-    public KycLevel KYCLevel;
+    @SerializedName("KYCLevel")
+    private KycLevel kycLevel;
 
     /**
      * Email address.
-     *
-     * @deprecated Use {@link #getEmail()} and {@link #setEmail(String)} instead.
      */
-    @Deprecated
-    public String Email;
+    @SerializedName("Email")
+    private String email;
 
     public User(PersonType personType) {
-        PersonType = personType;
+        this.personType = personType;
     }
 
     /**
@@ -47,27 +42,27 @@ public abstract class User extends EntityBase {
     }
 
     public com.mangopay.core.enumerations.PersonType getPersonType() {
-        return PersonType;
+        return personType;
     }
 
     public void setPersonType(com.mangopay.core.enumerations.PersonType personType) {
-        this.PersonType = personType;
+        this.personType = personType;
     }
 
-    public KycLevel getKYCLevel() {
-        return KYCLevel;
+    public KycLevel getKycLevel() {
+        return kycLevel;
     }
 
-    public void setKYCLevel(KycLevel KYCLevel) {
-        this.KYCLevel = KYCLevel;
+    public void setKycLevel(KycLevel kycLevel) {
+        this.kycLevel = kycLevel;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        this.Email = email;
+        this.email = email;
     }
 
     /**

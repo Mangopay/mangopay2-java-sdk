@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.*;
 
@@ -10,59 +11,45 @@ public class Mandate extends EntityBase {
 
     /**
      * The bank account ID to associate this mandate against (and hence from where the payins will come from).
-     *
-     * @deprecated Use {@link #getBankAccountId()} and {@link #setBankAccountId(String)} instead.
      */
-    @Deprecated
-    public String BankAccountId;
+    @SerializedName("BankAccountId")
+    private String bankAccountId;
 
     /**
      * The type of mandate – it will be SEPA or BACS but will only be completed once the mandate has been submitted.
-     *
-     * @deprecated Use {@link #getScheme()} and {@link #setScheme(MandateScheme)} instead.
      */
-    @Deprecated
-    public MandateScheme Scheme;
+    @SerializedName("Scheme")
+    private MandateScheme scheme;
 
     /**
      * The language to use for the confirmation web page presented to your user.
-     *
-     * @deprecated Use {@link #getCulture()} and {@link #setCulture(CultureCode)} instead.
      */
-    @Deprecated
-    public CultureCode Culture;
+    @SerializedName("Culture")
+    private CultureCode culture;
 
     /**
      * The URL to view/download the mandate document.
-     *
-     * @deprecated Use {@link #getDocumentURL()} and {@link #setDocumentURL(String)} instead.
      */
-    @Deprecated
-    public String DocumentURL;
+    @SerializedName("DocumentURL")
+    private String documentUrl;
 
     /**
      * The URL where you must redirect the user for them to confirm the setup of their mandate and then he will be redirected to the ReturnURL.
-     *
-     * @deprecated Use {@link #getRedirectURL()} and {@link #setRedirectURL(String)} instead.
      */
-    @Deprecated
-    public String RedirectURL;
+    @SerializedName("RedirectURL")
+    private String redirectUrl;
 
     /**
      * URL format expected.
-     *
-     * @deprecated Use {@link #getReturnURL()} and {@link #setReturnURL(String)} instead.
      */
-    @Deprecated
-    public String ReturnURL;
+    @SerializedName("ReturnURL")
+    private String returnUrl;
 
     /**
      * ID of the user to which this mandate belongs.
-     *
-     * @deprecated Use {@link #getUserId()} and {@link #setUserId(String)} instead.
      */
-    @Deprecated
-    public String UserId;
+    @SerializedName("UserId")
+    private String userId;
 
     /**
      * The status of the mandate:
@@ -70,137 +57,127 @@ public class Mandate extends EntityBase {
      * SUBMITTED (the mandate has been submitted to the banks and you can now do payments with this mandate),
      * ACTIVE (the mandate is active and has been accepted by the banks and/or successfully used in a payment),
      * FAILED (the mandate has failed for a variety of reasons and is no longer available for payments).
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(MandateStatus)} instead.
      */
-    @Deprecated
-    public MandateStatus Status;
+    @SerializedName("Status")
+    private MandateStatus status;
 
     /**
      * Mandate result code.
-     *
-     * @deprecated Use {@link #getResultCode()} and {@link #setResultCode(String)} instead.
      */
-    @Deprecated
-    public String ResultCode;
+    @SerializedName("ResultCode")
+    private String resultCode;
 
     /**
      * Mandate result message.
-     *
-     * @deprecated Use {@link #getResultMessage()} and {@link #setResultMessage(String)} instead.
      */
-    @Deprecated
-    public String ResultMessage;
+    @SerializedName("ResultMessage")
+    private String resultMessage;
 
     /**
      * Type of mandate.
-     *
-     * @deprecated Use {@link #getMandateType()} and {@link #setMandateType(MandateType)} instead.
      */
-    @Deprecated
-    public MandateType MandateType;
+    @SerializedName("MandateType")
+    private MandateType mandateType;
 
     /**
      * How the mandate has been created.
-     *
-     * @deprecated Use {@link #getExecutionType()} and {@link #setExecutionType(MandateExecutionType)} instead.
      */
-    @Deprecated
-    public MandateExecutionType ExecutionType;
+    @SerializedName("ExecutionType")
+    private MandateExecutionType executionType;
 
     public String getBankAccountId() {
-        return BankAccountId;
+        return bankAccountId;
     }
 
     public void setBankAccountId(String bankAccountId) {
-        this.BankAccountId = bankAccountId;
+        this.bankAccountId = bankAccountId;
     }
 
     public MandateScheme getScheme() {
-        return Scheme;
+        return scheme;
     }
 
     public void setScheme(MandateScheme scheme) {
-        this.Scheme = scheme;
+        this.scheme = scheme;
     }
 
     public CultureCode getCulture() {
-        return Culture;
+        return culture;
     }
 
     public void setCulture(CultureCode culture) {
-        this.Culture = culture;
+        this.culture = culture;
     }
 
-    public String getDocumentURL() {
-        return DocumentURL;
+    public String getDocumentUrl() {
+        return documentUrl;
     }
 
-    public void setDocumentURL(String documentURL) {
-        this.DocumentURL = documentURL;
+    public void setDocumentUrl(String documentUrl) {
+        this.documentUrl = documentUrl;
     }
 
-    public String getRedirectURL() {
-        return RedirectURL;
+    public String getRedirectUrl() {
+        return redirectUrl;
     }
 
-    public void setRedirectURL(String redirectURL) {
-        this.RedirectURL = redirectURL;
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 
-    public String getReturnURL() {
-        return ReturnURL;
+    public String getReturnUrl() {
+        return returnUrl;
     }
 
-    public void setReturnURL(String returnURL) {
-        this.ReturnURL = returnURL;
+    public void setReturnUrl(String returnUrl) {
+        this.returnUrl = returnUrl;
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.UserId = userId;
+        this.userId = userId;
     }
 
     public MandateStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(MandateStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public String getResultCode() {
-        return ResultCode;
+        return resultCode;
     }
 
     public void setResultCode(String resultCode) {
-        this.ResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public String getResultMessage() {
-        return ResultMessage;
+        return resultMessage;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.ResultMessage = resultMessage;
+        this.resultMessage = resultMessage;
     }
 
     public MandateType getMandateType() {
-        return MandateType;
+        return mandateType;
     }
 
     public void setMandateType(MandateType mandateType) {
-        this.MandateType = mandateType;
+        this.mandateType = mandateType;
     }
 
     public MandateExecutionType getExecutionType() {
-        return ExecutionType;
+        return executionType;
     }
 
     public void setExecutionType(MandateExecutionType executionType) {
-        this.ExecutionType = executionType;
+        this.executionType = executionType;
     }
 }

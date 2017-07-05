@@ -1,7 +1,7 @@
 package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiCards;
+import com.mangopay.core.APIs.CardApi;
 import com.mangopay.core.enumerations.Validity;
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.*;
@@ -9,7 +9,7 @@ import com.mangopay.entities.*;
 /**
  * API for cards.
  */
-public class CardApiImpl extends ApiBase implements ApiCards {
+public class CardApiImpl extends ApiBase implements CardApi {
     
     /**
      * Instantiates new CardApiImpl object.

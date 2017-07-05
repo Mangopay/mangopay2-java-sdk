@@ -1,5 +1,7 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Transfer entity.
  */
@@ -7,33 +9,29 @@ public class Transfer extends Transaction {
 
     /**
      * Debited wallet identifier.
-     *
-     * @deprecated Use {@link #getDebitedWalletId()} and {@link #setDebitedWalletId(String)} instead.
      */
-    @Deprecated
-    public String DebitedWalletId;
+    @SerializedName("DebitedWalletId")
+    private String debitedWalletId;
 
     /**
      * Credited wallet identifier.
-     *
-     * @deprecated Use {@link #getCreditedWalletId()} and {@link #setCreditedWalletId(String)} instead.
      */
-    @Deprecated
-    public String CreditedWalletId;
+    @SerializedName("CreditedWalletId")
+    private String creditedWalletId;
 
     public String getDebitedWalletId() {
-        return DebitedWalletId;
+        return debitedWalletId;
     }
 
     public void setDebitedWalletId(String debitedWalletId) {
-        this.DebitedWalletId = debitedWalletId;
+        this.debitedWalletId = debitedWalletId;
     }
 
     public String getCreditedWalletId() {
-        return CreditedWalletId;
+        return creditedWalletId;
     }
 
     public void setCreditedWalletId(String creditedWalletId) {
-        this.CreditedWalletId = creditedWalletId;
+        this.creditedWalletId = creditedWalletId;
     }
 }

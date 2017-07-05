@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.DisputeDocumentStatus;
 import com.mangopay.core.enumerations.DisputeDocumentType;
 
@@ -13,66 +14,58 @@ public class FilterDisputeDocuments extends Dto {
 
     /**
      * Dispute document status.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(DisputeDocumentStatus)} instead.
      */
-    @Deprecated
-    public DisputeDocumentStatus Status;
+    @SerializedName("Status")
+    private DisputeDocumentStatus status;
 
     /**
      * Dispute document type.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(DisputeDocumentType)} instead.
      */
-    @Deprecated
-    public DisputeDocumentType Type;
+    @SerializedName("Type")
+    private DisputeDocumentType type;
 
     /**
      * Start date in Unix format: return only dispute documents that have CreationDate BEFORE this date.
-     *
-     * @deprecated Use {@link #getBeforeDate()} and {@link #setBeforeDate(Long)} instead.
      */
-    @Deprecated
-    public Long BeforeDate;
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
 
     /**
      * End date in Unix format: return only dispute documents that have CreationDate AFTER this date.
-     *
-     * @deprecated Use {@link #getAfterDate()} and {@link #setAfterDate(Long)} instead.
      */
-    @Deprecated
-    public Long AfterDate;
+    @SerializedName("AfterDate")
+    private Long afterDate;
 
     public DisputeDocumentStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(DisputeDocumentStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public DisputeDocumentType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(DisputeDocumentType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public Long getBeforeDate() {
-        return BeforeDate;
+        return beforeDate;
     }
 
     public void setBeforeDate(Long beforeDate) {
-        this.BeforeDate = beforeDate;
+        this.beforeDate = beforeDate;
     }
 
     public Long getAfterDate() {
-        return AfterDate;
+        return afterDate;
     }
 
     public void setAfterDate(Long afterDate) {
-        this.AfterDate = afterDate;
+        this.afterDate = afterDate;
     }
 
     /**
@@ -84,10 +77,10 @@ public class FilterDisputeDocuments extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
 
-        if (Status != null) result.put("Status", Status.toString());
-        if (Type != null) result.put("Type", Type.toString());
-        if (BeforeDate != null) result.put("BeforeDate", Long.toString(BeforeDate));
-        if (AfterDate != null) result.put("AfterDate", Long.toString(AfterDate));
+        if (status != null) result.put("Status", status.toString());
+        if (type != null) result.put("Type", type.toString());
+        if (beforeDate != null) result.put("BeforeDate", Long.toString(beforeDate));
+        if (afterDate != null) result.put("AfterDate", Long.toString(afterDate));
 
         return result;
     }

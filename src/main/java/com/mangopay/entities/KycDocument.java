@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.core.enumerations.KycStatus;
@@ -11,81 +12,71 @@ public class KycDocument extends EntityBase {
 
     /**
      * Type of KYC document.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(KycDocumentType)} instead.
      */
-    @Deprecated
-    public KycDocumentType Type;
+    @SerializedName("Type")
+    private KycDocumentType type;
 
     /**
      * Status of KYC document.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(KycStatus)} instead.
      */
-    @Deprecated
-    public KycStatus Status;
+    @SerializedName("Status")
+    private KycStatus status;
 
     /**
      * Refused reason type.
-     *
-     * @deprecated Use {@link #getRefusedReasonType()} and {@link #setRefusedReasonType(String)} instead.
      */
-    @Deprecated
-    public String RefusedReasonType;
+    @SerializedName("RefusedReasonType")
+    private String refusedReasonType;
 
     /**
      * Refused reason message.
-     *
-     * @deprecated Use {@link #getRefusedReasonMessage()} and {@link #setRefusedReasonMessage(String)} instead.
      */
-    @Deprecated
-    public String RefusedReasonMessage;
+    @SerializedName("RefusedReasonMessage")
+    private String refusedReasonMessage;
 
     /**
      * User identifier.
-     *
-     * @deprecated Use {@link #getUserId()} and {@link #setUserId(String)} instead.
      */
-    @Deprecated
-    public String UserId;
+    @SerializedName("UserId")
+    private String userId;
 
     public KycDocumentType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(KycDocumentType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public KycStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(KycStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public String getRefusedReasonType() {
-        return RefusedReasonType;
+        return refusedReasonType;
     }
 
     public void setRefusedReasonType(String refusedReasonType) {
-        this.RefusedReasonType = refusedReasonType;
+        this.refusedReasonType = refusedReasonType;
     }
 
     public String getRefusedReasonMessage() {
-        return RefusedReasonMessage;
+        return refusedReasonMessage;
     }
 
     public void setRefusedReasonMessage(String refusedReasonMessage) {
-        this.RefusedReasonMessage = refusedReasonMessage;
+        this.refusedReasonMessage = refusedReasonMessage;
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.UserId = userId;
+        this.userId = userId;
     }
 }

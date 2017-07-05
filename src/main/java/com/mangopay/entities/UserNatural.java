@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Address;
 import com.mangopay.core.enumerations.CountryIso;
 
@@ -16,67 +17,51 @@ public final class UserNatural extends User {
 
     /**
      * First name.
-     *
-     * @deprecated Use {@link #getFirstName()} and {@link #setFirstName(String)} instead.
      */
-    @Deprecated
-    public String FirstName;
+    @SerializedName("FirstName")
+    private String firstName;
 
     /**
      * Last name.
-     *
-     * @deprecated Use {@link #getLastName()} and {@link #setLastName(String)} instead.
      */
-    @Deprecated
-    public String LastName;
+    @SerializedName("LastName")
+    private String lastName;
 
     /**
      * Address.
-     *
-     * @deprecated Use {@link #getAddress()} and {@link #setAddress(com.mangopay.core.Address)} instead.
      */
-    @Deprecated
-    public Address Address;
+    @SerializedName("Address")
+    private Address address;
 
     /**
      * Date of birth (UNIX timestamp).
-     *
-     * @deprecated Use {@link #getBirthday()} and {@link #setBirthday(long)} instead.
      */
-    @Deprecated
-    public long Birthday;
+    @SerializedName("Birthday")
+    private long birthday;
 
     /**
      * Place of birth.
-     *
-     * @deprecated Use {@link #getBirthplace()} and {@link #getBirthplace()} instead.
      */
-    @Deprecated
-    public String Birthplace;
+    @SerializedName("Birthplace")
+    private String birthplace;
 
     /**
      * User's country.
-     *
-     * @deprecated Use {@link #getNationality()} and {@link #setNationality(CountryIso)} instead.
      */
-    @Deprecated
-    public CountryIso Nationality;
+    @SerializedName("Nationality")
+    private CountryIso nationality;
 
     /**
      * Country of residence.
-     *
-     * @deprecated Use {@link #getCountryOfResidence()} and {@link #setCountryOfResidence(CountryIso)} instead.
      */
-    @Deprecated
-    public CountryIso CountryOfResidence;
+    @SerializedName("CountryOfResidence")
+    private CountryIso countryOfResidence;
 
     /**
      * User's occupation.
-     *
-     * @deprecated Use {@link #getOccupation()} and {@link #setOccupation(String)} instead.
      */
-    @Deprecated
-    public String Occupation;
+    @SerializedName("Occupation")
+    private String occupation;
 
     /**
      * Income ranges:
@@ -98,121 +83,115 @@ public final class UserNatural extends User {
 
     /**
      * Income range. One of UserNatural.IncomeRanges constants.
-     *
-     * @deprecated Use {@link #getIncomeRange()} and {@link #setIncomeRange(Integer)} instead.
      */
-    @Deprecated
-    public Integer IncomeRange;
+    @SerializedName("IncomeRange")
+    private Integer incomeRange;
 
     /**
      * Proof of identity.
-     *
-     * @deprecated Use {@link #getProofOfIdentity()} and {@link #setProofOfIdentity(String)} instead.
      */
-    @Deprecated
-    protected String ProofOfIdentity;
+    @SerializedName("ProofOfIdentity")
+    protected String proofOfIdentity;
 
     /**
      * Proof of address.
-     *
-     * @deprecated Use {@link #getProofOfAddress()} and {@link #setProofOfAddress(String)} instead.
      */
-    @Deprecated
-    protected String ProofOfAddress;
+    @SerializedName("ProofOfAddress")
+    protected String proofOfAddress;
 
     /**
      * Instantiates new UserNatural object.
      */
     public UserNatural() {
-        this.PersonType = NATURAL;
+        this.personType = NATURAL;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        this.FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        this.LastName = lastName;
+        this.lastName = lastName;
     }
 
     public com.mangopay.core.Address getAddress() {
-        return Address;
+        return address;
     }
 
     public void setAddress(com.mangopay.core.Address address) {
-        this.Address = address;
+        this.address = address;
     }
 
     public long getBirthday() {
-        return Birthday;
+        return birthday;
     }
 
     public void setBirthday(long birthday) {
-        this.Birthday = birthday;
+        this.birthday = birthday;
     }
 
     public String getBirthplace() {
-        return Birthplace;
+        return birthplace;
     }
 
     public void setBirthplace(String birthplace) {
-        this.Birthplace = birthplace;
+        this.birthplace = birthplace;
     }
 
     public CountryIso getNationality() {
-        return Nationality;
+        return nationality;
     }
 
     public void setNationality(CountryIso nationality) {
-        this.Nationality = nationality;
+        this.nationality = nationality;
     }
 
     public CountryIso getCountryOfResidence() {
-        return CountryOfResidence;
+        return countryOfResidence;
     }
 
     public void setCountryOfResidence(CountryIso countryOfResidence) {
-        this.CountryOfResidence = countryOfResidence;
+        this.countryOfResidence = countryOfResidence;
     }
 
     public String getOccupation() {
-        return Occupation;
+        return occupation;
     }
 
     public void setOccupation(String occupation) {
-        this.Occupation = occupation;
+        this.occupation = occupation;
     }
 
     public Integer getIncomeRange() {
-        return IncomeRange;
+        return incomeRange;
     }
 
     public void setIncomeRange(Integer incomeRange) {
-        this.IncomeRange = incomeRange;
+        this.incomeRange = incomeRange;
     }
 
     public String getProofOfIdentity() {
-        return ProofOfIdentity;
+        return proofOfIdentity;
     }
 
     public void setProofOfIdentity(String proofOfIdentity) {
-        this.ProofOfIdentity = proofOfIdentity;
+        this.proofOfIdentity = proofOfIdentity;
     }
 
     public String getProofOfAddress() {
-        return ProofOfAddress;
+        return proofOfAddress;
     }
 
     public void setProofOfAddress(String proofOfAddress) {
-        this.ProofOfAddress = proofOfAddress;
+        this.proofOfAddress = proofOfAddress;
     }
 
     /**

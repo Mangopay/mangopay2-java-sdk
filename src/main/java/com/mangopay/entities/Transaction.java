@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 import com.mangopay.core.enumerations.TransactionNature;
@@ -18,130 +19,108 @@ public class Transaction extends EntityBase {
 
     /**
      * Author identifier.
-     *
-     * @deprecated Use {@link #getAuthorId()} and {@link #setAuthorId(String)} instead.
      */
-    @Deprecated
-    public String AuthorId;
+    @SerializedName("AuthorId")
+    private String authorId;
 
     /**
      * Credited user identifier.
-     *
-     * @deprecated Use {@link #getCreditedUserId()} and {@link #setCreditedUserId(String)} instead.
      */
-    @Deprecated
-    public String CreditedUserId;
+    @SerializedName("CreditedUserId")
+    private String creditedUserId;
 
     /**
      * Debited funds.
-     *
-     * @deprecated Use {@link #getDebitedFunds()} and {@link #setDebitedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money DebitedFunds;
+    @SerializedName("DebitedFunds")
+    private Money debitedFunds;
 
     /**
      * Credited funds.
-     *
-     * @deprecated Use {@link #getCreditedFunds()} and {@link #setCreditedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money CreditedFunds;
+    @SerializedName("CreditedFunds")
+    private Money creditedFunds;
 
     /**
      * Fees.
-     *
-     * @deprecated Use {@link #getFees()} and {@link #setFees(Money)} instead.
      */
-    @Deprecated
-    public Money Fees;
+    @SerializedName("Fees")
+    private Money fees;
 
     /**
      * Transaction status.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(TransactionStatus)} instead.
      */
-    @Deprecated
-    public TransactionStatus Status;
+    @SerializedName("Status")
+    private TransactionStatus status;
 
     /**
      * Result code.
-     *
-     * @deprecated Use {@link #getResultCode()} and {@link #setResultCode(String)} instead.
      */
-    @Deprecated
-    public String ResultCode;
+    @SerializedName("ResultCode")
+    private String resultCode;
 
     /**
      * The PreAuthorization result Message explaining the result code.
-     *
-     * @deprecated Use {@link #getResultMessage()} and {@link #setResultMessage(String)} instead.
      */
-    @Deprecated
-    public String ResultMessage;
+    @SerializedName("ResultMessage")
+    private String resultMessage;
 
     /**
      * ExecutionDate (UNIX timestamp).
-     *
-     * @deprecated Use {@link #getExecutionDate()} and {@link #setExecutionDate(Long)} instead.
      */
-    @Deprecated
-    public Long ExecutionDate;
+    @SerializedName("ExecutionDate")
+    private Long executionDate;
 
     /**
      * Transaction type.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(TransactionType)} instead.
      */
-    @Deprecated
-    public TransactionType Type;
+    @SerializedName("Type")
+    private TransactionType type;
 
     /**
      * Transaction nature.
-     *
-     * @deprecated Use {@link #getNature()} and {@link #setNature(TransactionNature)} instead.
      */
-    @Deprecated
-    public TransactionNature Nature;
+    @SerializedName("Nature")
+    private TransactionNature nature;
 
     public String getAuthorId() {
-        return AuthorId;
+        return authorId;
     }
 
     public void setAuthorId(String authorId) {
-        this.AuthorId = authorId;
+        this.authorId = authorId;
     }
 
     public String getCreditedUserId() {
-        return CreditedUserId;
+        return creditedUserId;
     }
 
     public void setCreditedUserId(String creditedUserId) {
-        this.CreditedUserId = creditedUserId;
+        this.creditedUserId = creditedUserId;
     }
 
     public Money getDebitedFunds() {
-        return DebitedFunds;
+        return debitedFunds;
     }
 
     public void setDebitedFunds(Money debitedFunds) {
-        this.DebitedFunds = debitedFunds;
+        this.debitedFunds = debitedFunds;
     }
 
     public Money getCreditedFunds() {
-        return CreditedFunds;
+        return creditedFunds;
     }
 
     public void setCreditedFunds(Money creditedFunds) {
-        this.CreditedFunds = creditedFunds;
+        this.creditedFunds = creditedFunds;
     }
 
     public Money getFees() {
-        return Fees;
+        return fees;
     }
 
     public void setFees(Money fees) {
-        this.Fees = fees;
+        this.fees = fees;
     }
 
     /**
@@ -150,55 +129,55 @@ public class Transaction extends EntityBase {
      * @return {@link TransactionStatus }
      */
     public TransactionStatus getStatus() {
-        if (Status == null) {
+        if (status == null) {
             return TransactionStatus.NotSpecified;
         } else {
-            return Status;
+            return status;
         }
     }
 
     public void setStatus(TransactionStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public String getResultCode() {
-        return ResultCode;
+        return resultCode;
     }
 
     public void setResultCode(String resultCode) {
-        this.ResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public String getResultMessage() {
-        return ResultMessage;
+        return resultMessage;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.ResultMessage = resultMessage;
+        this.resultMessage = resultMessage;
     }
 
     public Long getExecutionDate() {
-        return ExecutionDate;
+        return executionDate;
     }
 
     public void setExecutionDate(Long executionDate) {
-        this.ExecutionDate = executionDate;
+        this.executionDate = executionDate;
     }
 
     public TransactionType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(TransactionType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public TransactionNature getNature() {
-        return Nature;
+        return nature;
     }
 
     public void setNature(TransactionNature nature) {
-        this.Nature = nature;
+        this.nature = nature;
     }
 
     /**

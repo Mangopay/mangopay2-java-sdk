@@ -6,7 +6,7 @@ import com.mangopay.entities.Refund;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiPayIns {
+public interface PayInApi {
     /**
      * Creates new PayIn object.
      * @param payIn     The PayIn object to be created.

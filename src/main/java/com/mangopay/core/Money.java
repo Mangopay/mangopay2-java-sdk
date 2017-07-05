@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.CurrencyIso;
 
 /**
@@ -9,33 +10,29 @@ public class Money extends Dto {
 
     /**
      * Currency code in ISO 4217 standard.
-     *
-     * @deprecated Use {@link #getCurrency()} and {@link #setCurrency(CurrencyIso)} instead.
      */
-    @Deprecated
-    public CurrencyIso Currency;
+    @SerializedName("Currency")
+    private CurrencyIso currency;
 
     /**
      * The currency amount of money, in cents
-     *
-     * @deprecated Use {@link #getAmount()} and {@link #setAmount(int)} instead.
      */
-    @Deprecated
-    public int Amount;
+    @SerializedName("Amount")
+    private int amount;
 
     public CurrencyIso getCurrency() {
-        return Currency;
+        return currency;
     }
 
     public void setCurrency(CurrencyIso currency) {
-        this.Currency = currency;
+        this.currency = currency;
     }
 
     public int getAmount() {
-        return Amount;
+        return amount;
     }
 
     public void setAmount(int amount) {
-        this.Amount = amount;
+        this.amount = amount;
     }
 }

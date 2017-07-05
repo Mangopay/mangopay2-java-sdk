@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiWallets {
+public interface WalletApi {
 
     /**
      * Creates a new wallet.
@@ -23,7 +23,7 @@ public interface ApiWallets {
 
     /**
      * Creates a new wallet.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param wallet            Wallet instance to be created.
      * @return                  Wallet instance returned from API.
      * @throws Exception

@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.MandateStatus;
 
 import java.util.HashMap;
@@ -12,50 +13,44 @@ public class FilterMandates extends Dto {
 
     /**
      * Status of mandates.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(MandateStatus)} instead.
      */
-    @Deprecated
-    public MandateStatus Status;
+    @SerializedName("Status")
+    private MandateStatus status;
 
     /**
      * Start date in Unix format.
-     *
-     * @deprecated Use {@link #getBeforeDate()} and {@link #setBeforeDate(Long)} instead.
      */
-    @Deprecated
-    public Long BeforeDate;
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
 
     /**
      * End date in Unix format.
-     *
-     * @deprecated Use {@link #getAfterDate()} and {@link #setAfterDate(Long)} instead.
      */
-    @Deprecated
-    public Long AfterDate;
+    @SerializedName("AfterDate")
+    private Long afterDate;
 
     public MandateStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(MandateStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public Long getBeforeDate() {
-        return BeforeDate;
+        return beforeDate;
     }
 
     public void setBeforeDate(Long beforeDate) {
-        this.BeforeDate = beforeDate;
+        this.beforeDate = beforeDate;
     }
 
     public Long getAfterDate() {
-        return AfterDate;
+        return afterDate;
     }
 
     public void setAfterDate(Long afterDate) {
-        this.AfterDate = afterDate;
+        this.afterDate = afterDate;
     }
 
     /**
@@ -67,12 +62,12 @@ public class FilterMandates extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
 
-        if (Status != null && Status != MandateStatus.NotSpecified) {
-            result.put("status", Status.name());
+        if (status != null && status != MandateStatus.NotSpecified) {
+            result.put("status", status.name());
         }
 
-        if (BeforeDate != null) result.put("beforeDate", Long.toString(BeforeDate));
-        if (AfterDate != null) result.put("afterDate", Long.toString(AfterDate));
+        if (beforeDate != null) result.put("beforeDate", Long.toString(beforeDate));
+        if (afterDate != null) result.put("afterDate", Long.toString(afterDate));
 
         return result;
     }

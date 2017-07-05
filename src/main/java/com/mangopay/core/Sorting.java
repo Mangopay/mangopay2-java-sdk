@@ -41,17 +41,12 @@ public class Sorting {
      * Gets sort parameters.
      *
      * @return
-     * @deprecated Use {@link #getSortParameter()} instead.
      */
-    @Deprecated
-    public Map<String, String> GetSortParameter() {
+    public Map<String, String> getSortParameter() {
+
         return new HashMap<String, String>() {{
             put(sortUrlParameterName, getFields());
         }};
-    }
-
-    public Map<String, String> getSortParameter() {
-        return GetSortParameter();
     }
 
     public String getFields() {

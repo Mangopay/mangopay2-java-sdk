@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.ObjectTool;
 import com.mangopay.core.enumerations.SecureMode;
@@ -12,56 +13,46 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
 
     /**
      * Card identifier.
-     *
-     * @deprecated Use {@link #getCardId()} and {@link #setCardId(String)} instead.
      */
-    @Deprecated
-    public String CardId;
+    @SerializedName("CardId")
+    private String cardId;
 
     /**
      * Secure mode.
-     *
-     * @deprecated Use {@link #getSecureMode()} and {@link #setSecureMode(SecureMode)} instead.
      */
-    @Deprecated
-    public SecureMode SecureMode;
+    @SerializedName("SecureMode")
+    private SecureMode secureMode;
 
     /**
      * Secure mode return URL.
-     *
-     * @deprecated Use {@link #getSecureModeReturnURL()} and {@link #setSecureModeReturnURL(String)} instead.
      */
-    @Deprecated
-    public String SecureModeReturnURL;
+    @SerializedName("SecureModeReturnURL")
+    private String secureModeReturnUrl;
 
     /**
      * Secure mode redirect URL.
-     *
-     * @deprecated Use {@link #getSecureModeRedirectURL()} and {@link #setSecureModeRedirectURL(String)} instead.
      */
-    @Deprecated
-    public String SecureModeRedirectURL;
+    @SerializedName("SecureModeRedirectURL")
+    private String secureModeRedirectUrl;
 
     /**
      * Secure mode needed.
-     *
-     * @deprecated Use {@link #getSecureModeNeeded()} and {@link #setSecureModeNeeded(String)} instead.
      */
-    @Deprecated
-    public String SecureModeNeeded;
+    @SerializedName("SecureModeNeeded")
+    private String secureModeNeeded;
 
     public PayInExecutionDetailsDirect() {
     }
 
-    public PayInExecutionDetailsDirect(String cardId, String secureModeReturnURL) {
-        this.CardId = cardId;
-        this.SecureModeReturnURL = secureModeReturnURL;
+    public PayInExecutionDetailsDirect(String cardId, String secureModeReturnUrl) {
+        this.cardId = cardId;
+        this.secureModeReturnUrl = secureModeReturnUrl;
     }
 
-    public PayInExecutionDetailsDirect(String cardId, SecureMode secureMode, String secureModeReturnURL) {
-        this.CardId = cardId;
-        this.SecureMode = secureMode;
-        this.SecureModeReturnURL = secureModeReturnURL;
+    public PayInExecutionDetailsDirect(String cardId, SecureMode secureMode, String secureModeReturnUrl) {
+        this.cardId = cardId;
+        this.secureMode = secureMode;
+        this.secureModeReturnUrl = secureModeReturnUrl;
     }
 
     public static PayInExecutionDetailsDirect build(String cardId, String secureModeReturnURL) {
@@ -82,46 +73,33 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         }
     }
 
-    /**
-     * Is SecureMode Needed
-     *
-     * @return True if is needed
-     */
-    public boolean isSecureModeNeeded() {
-        if (ObjectTool.nonNull(SecureModeNeeded)) {
-            return Boolean.parseBoolean(SecureModeNeeded);
-        } else {
-            return false;
-        }
-    }
-
     public String getCardId() {
-        return CardId;
+        return cardId;
     }
 
     public void setCardId(String cardId) {
-        this.CardId = cardId;
+        this.cardId = cardId;
     }
 
     public SecureMode getSecureMode() {
-        return SecureMode;
+        return secureMode;
     }
 
     public void setSecureMode(SecureMode secureMode) {
-        this.SecureMode = secureMode;
+        this.secureMode = secureMode;
     }
 
-    public String getSecureModeReturnURL() {
-        return SecureModeReturnURL;
+    public String getSecureModeReturnUrl() {
+        return secureModeReturnUrl;
     }
 
     /**
      * Set Secure mode return URL
      *
-     * @param secureModeReturnURL
+     * @param secureModeReturnUrl
      */
-    public void setSecureModeReturnURL(String secureModeReturnURL) {
-        this.SecureModeReturnURL = secureModeReturnURL;
+    public void setSecureModeReturnUrl(String secureModeReturnUrl) {
+        this.secureModeReturnUrl = secureModeReturnUrl;
     }
 
     /**
@@ -129,20 +107,29 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
      *
      * @return String
      */
-    public String getSecureModeRedirectURL() {
-        return SecureModeRedirectURL;
+    public String getSecureModeRedirectUrl() {
+        return secureModeRedirectUrl;
     }
 
-    public void setSecureModeRedirectURL(String secureModeRedirectURL) {
-        this.SecureModeRedirectURL = secureModeRedirectURL;
+    public void setSecureModeRedirectUrl(String secureModeRedirectUrl) {
+        this.secureModeRedirectUrl = secureModeRedirectUrl;
     }
 
-    public String getSecureModeNeeded() {
-        return SecureModeNeeded;
+    /**
+     * Is SecureMode Needed
+     *
+     * @return True if is needed
+     */
+    public boolean isSecureModeNeeded() {
+        if (ObjectTool.nonNull(secureModeNeeded)) {
+            return Boolean.parseBoolean(secureModeNeeded);
+        } else {
+            return false;
+        }
     }
 
     public void setSecureModeNeeded(String secureModeNeeded) {
-        this.SecureModeNeeded = secureModeNeeded;
+        this.secureModeNeeded = secureModeNeeded;
     }
 
 }

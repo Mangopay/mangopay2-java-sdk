@@ -2,7 +2,7 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiClients;
+import com.mangopay.core.APIs.ClientApi;
 import com.mangopay.core.FilterKycDocuments;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * API for clients.
  */
-public class ClientApiImpl extends ApiBase implements ApiClients {
+public class ClientApiImpl extends ApiBase implements ClientApi {
 
     /**
      * Instantiates new ClientApiImpl object.

@@ -194,7 +194,7 @@ public abstract class ApiBase {
      * Creates the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
      * @param classOfT          Type on behalf of which the request is being called.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
      * @param entityId          Entity identifier.
@@ -224,7 +224,7 @@ public abstract class ApiBase {
      * Creates the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
      * @param classOfT          Type on behalf of which the request is being called.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
      * @param entityId          Entity identifier.
@@ -239,7 +239,7 @@ public abstract class ApiBase {
      * Creates the Dto instance.
      * @param <T>               Type on behalf of which the request is being called.
      * @param classOfT          Type on behalf of which the request is being called.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
      * @return                  The Dto instance returned from API.
@@ -432,9 +432,9 @@ public abstract class ApiBase {
             if (secondEntityId.length() > 0) {
                 urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
             } else if (entityId.length() > 0) {
-                urlMethod = String.format(this.getRequestUrl(methodKey), entityId, ((EntityBase)entity).Id);
+                urlMethod = String.format(this.getRequestUrl(methodKey), entityId, ((EntityBase)entity).getId());
             } else {
-                urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).Id);
+                urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase)entity).getId());
             }
 
             RestTool rest = new RestTool(this.root, true);

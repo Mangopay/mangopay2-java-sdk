@@ -1,7 +1,8 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,39 +10,33 @@ import java.util.Map;
  */
 public class FilterReportsList {
 
-    /**
-     * @deprecated Use {@link #getBeforeDate()} and {@link #setBeforeDate(Long)} instead.
-     */
-    @Deprecated
-    public Long BeforeDate;
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
 
-    /**
-     * @deprecated Use {@link #getAfterDate()} and {@link #setAfterDate(Long)} instead.
-     */
-    @Deprecated
-    public Long AfterDate;
+    @SerializedName("AfterDate")
+    private Long afterDate;
 
     public Long getBeforeDate() {
-        return BeforeDate;
+        return beforeDate;
     }
 
     public void setBeforeDate(Long beforeDate) {
-        this.BeforeDate = beforeDate;
+        this.beforeDate = beforeDate;
     }
 
     public Long getAfterDate() {
-        return AfterDate;
+        return afterDate;
     }
 
     public void setAfterDate(Long afterDate) {
-        this.AfterDate = afterDate;
+        this.afterDate = afterDate;
     }
 
     public Map<String, String> getValues() {
         Map<String, String> result = new HashMap<>();
 
-        if (BeforeDate != null) result.put("BeforeDate", BeforeDate.toString());
-        if (AfterDate != null) result.put("AfterDate", AfterDate.toString());
+        if (beforeDate != null) result.put("BeforeDate", beforeDate.toString());
+        if (afterDate != null) result.put("AfterDate", afterDate.toString());
 
         return result;
     }

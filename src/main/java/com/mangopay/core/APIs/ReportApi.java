@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiReports {
+public interface ReportApi {
     ReportRequest create(ReportRequest reportRequest) throws Exception;
 
     ReportRequest create(String idempotencyKey, ReportRequest reportRequest) throws Exception;
