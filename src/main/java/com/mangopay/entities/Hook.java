@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.EventType;
 import com.mangopay.core.enumerations.HookStatus;
@@ -12,65 +13,57 @@ public class Hook extends EntityBase {
 
     /**
      * This is the URL where you receive notification for various event types.
-     *
-     * @deprecated Use {@link #getUrl()} and {@link #setUrl(String)} instead.
      */
-    @Deprecated
-    public String Url;
+    @SerializedName("Url")
+    private String url;
 
     /**
      * Hook status.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(HookStatus)} instead.
      */
-    @Deprecated
-    public HookStatus Status;
+    @SerializedName("Status")
+    private HookStatus status;
 
     /**
      * Hook validity.
-     *
-     * @deprecated Use {@link #getValidity()} and {@link #setValidity(Validity)} instead.
      */
-    @Deprecated
-    public Validity Validity;
+    @SerializedName("Validity")
+    private Validity validity;
 
     /**
      * Event type (the <code>EventType.ALL</code> value is forbidden here).
-     *
-     * @deprecated Use {@link #getEventType()} and {@link #setEventType(EventType)} instead.
      */
-    @Deprecated
-    public EventType EventType;
+    @SerializedName("EventType")
+    private EventType eventType;
 
     public String getUrl() {
-        return Url;
+        return url;
     }
 
     public void setUrl(String url) {
-        this.Url = url;
+        this.url = url;
     }
 
     public HookStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(HookStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public Validity getValidity() {
-        return Validity;
+        return validity;
     }
 
     public void setValidity(Validity validity) {
-        this.Validity = validity;
+        this.validity = validity;
     }
 
     public EventType getEventType() {
-        return EventType;
+        return eventType;
     }
 
     public void setEventType(EventType eventType) {
-        this.EventType = eventType;
+        this.eventType = eventType;
     }
 }

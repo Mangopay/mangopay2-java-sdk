@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 /**
  * DisputeApiImpl test methods.
  */
-@Ignore("Comment this line out to allow ApiDisputes unit tests run")
+@Ignore("Comment this line out to allow DisputeApi unit tests run")
 public class DisputeApiImplTest extends BaseTest {
 
     private List<Dispute> clientDisputes = null;
@@ -157,7 +157,7 @@ public class DisputeApiImplTest extends BaseTest {
 
         DisputeDocument documentPost = new DisputeDocument();
         documentPost.setType(DisputeDocumentType.DELIVERY_PROOF);
-        result = api.getDisputeApi().createDisputeDocument(documentPost, dispute.Id);
+        result = api.getDisputeApi().createDisputeDocument(documentPost, dispute.getId());
 
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();

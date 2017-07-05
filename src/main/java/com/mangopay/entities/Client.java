@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Address;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.PlatformType;
@@ -13,225 +14,197 @@ public class Client extends EntityBase {
 
     /**
      * Client identifier.
-     *
-     * @deprecated Use {@link #getClientId()} and {@link #setClientId(String)} instead.
      */
-    @Deprecated
-    public String ClientId;
+    @SerializedName("ClientId")
+    private String clientId;
 
     /**
      * Name of this client.
-     *
-     * @deprecated Use {@link #getName()} and {@link #setName(String)} instead.
      */
-    @Deprecated
-    public String Name;
+    @SerializedName("Name")
+    private String name;
 
     /**
      * Your branding colour to use for theme pages.
-     *
-     * @deprecated Use {@link #getPrimaryThemeColour()} and {@link #setPrimaryThemeColour(String)} instead.
      */
-    @Deprecated
-    public String PrimaryThemeColour;
+    @SerializedName("PrimaryThemeColour")
+    private String primaryThemeColour;
 
     /**
      * Your branding colour to use for call to action buttons.
-     *
-     * @deprecated Use {@link #getPrimaryButtonColour()} and {@link #setPrimaryButtonColour(String)} instead.
      */
-    @Deprecated
-    public String PrimaryButtonColour;
+    @SerializedName("PrimaryButtonColour")
+    private String primaryButtonColour;
 
     /**
      * The URL of your MANGOPAY hosted logo.
-     *
-     * @deprecated Use {@link #getLogo()} and {@link #setLogo(String)} instead.
      */
-    @Deprecated
-    public String Logo;
+    @SerializedName("Logo")
+    private String logo;
 
     /**
      * A list of email addresses to use when contacting you for technical issues/communications.
-     *
-     * @deprecated Use {@link #getTechEmails()} and {@link #setTechEmails(ArrayList)} instead.
      */
-    @Deprecated
-    public ArrayList<String> TechEmails;
+    @SerializedName("TechEmails")
+    private ArrayList<String> techEmails;
 
     /**
      * A list of email addresses to use when contacting you for admin/commercial issues/communications.
-     *
-     * @deprecated Use {@link #getAdminEmails()} and {@link #setAdminEmails(ArrayList)} instead.
      */
-    @Deprecated
-    public ArrayList<String> AdminEmails;
+    @SerializedName("AdminEmails")
+    private ArrayList<String> adminEmails;
 
     /**
      * A list of email addresses to use when contacting you for fraud/compliance issues/communications.
-     *
-     * @deprecated Use {@link #getFraudEmails()} and {@link #setFraudEmails(ArrayList)} instead.
      */
-    @Deprecated
-    public ArrayList<String> FraudEmails;
+    @SerializedName("FraudEmails")
+    private ArrayList<String> fraudEmails;
 
     /**
      * A list of email addresses to use when contacting you for billing issues/communications.
-     *
-     * @deprecated Use {@link #getBillingEmails()} and {@link #setBillingEmails(ArrayList)} instead.
      */
-    @Deprecated
-    public ArrayList<String> BillingEmails;
+    @SerializedName("BillingEmails")
+    private ArrayList<String> billingEmails;
 
     /**
      * A description of what your platform does.
-     *
-     * @deprecated Use {@link #getPlatformDescription()} and {@link #setPlatformDescription(String)} instead.
      */
-    @Deprecated
-    public String PlatformDescription;
+    @SerializedName("PlatformDescription")
+    private String platformDescription;
 
     /**
      * The type of platform.
-     *
-     * @deprecated Use {@link #getPlatformType()} and {@link #setPlatformType(PlatformType)} instead.
      */
-    @Deprecated
-    public PlatformType PlatformType;
+    @SerializedName("PlatformType")
+    private PlatformType platformType;
 
     /**
      * The URL for your website.
-     *
-     * @deprecated Use {@link #getPlatformURL()} and {@link #setPlatformURL(String)} instead.
      */
-    @Deprecated
-    public String PlatformURL;
+    @SerializedName("PlatformURL")
+    private String platformUrl;
 
     /**
      * The address of the company’s headquarters.
-     *
-     * @deprecated Use {@link #getHeadquartersAddress()} and {@link #setHeadquartersAddress(Address)} instead.
      */
-    @Deprecated
-    public Address HeadquartersAddress;
+    @SerializedName("HeadquartersAddress")
+    private Address headquartersAddress;
 
     /**
      * The tax (or VAT) number for your company.
-     *
-     * @deprecated Use {@link #getTaxNumber()} and {@link #setTaxNumber(String)} instead.
      */
-    @Deprecated
-    public String TaxNumber;
+    @SerializedName("TaxNumber")
+    private String taxNumber;
 
     public String getClientId() {
-        return ClientId;
+        return clientId;
     }
 
     public void setClientId(String clientId) {
-        this.ClientId = clientId;
+        this.clientId = clientId;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        this.Name = name;
+        this.name = name;
     }
 
     public String getPrimaryThemeColour() {
-        return PrimaryThemeColour;
+        return primaryThemeColour;
     }
 
     public void setPrimaryThemeColour(String primaryThemeColour) {
-        this.PrimaryThemeColour = primaryThemeColour;
+        this.primaryThemeColour = primaryThemeColour;
     }
 
     public String getPrimaryButtonColour() {
-        return PrimaryButtonColour;
+        return primaryButtonColour;
     }
 
     public void setPrimaryButtonColour(String primaryButtonColour) {
-        this.PrimaryButtonColour = primaryButtonColour;
+        this.primaryButtonColour = primaryButtonColour;
     }
 
     public String getLogo() {
-        return Logo;
+        return logo;
     }
 
     public void setLogo(String logo) {
-        this.Logo = logo;
+        this.logo = logo;
     }
 
     public ArrayList<String> getTechEmails() {
-        return TechEmails;
+        return techEmails;
     }
 
     public void setTechEmails(ArrayList<String> techEmails) {
-        this.TechEmails = techEmails;
+        this.techEmails = techEmails;
     }
 
     public ArrayList<String> getAdminEmails() {
-        return AdminEmails;
+        return adminEmails;
     }
 
     public void setAdminEmails(ArrayList<String> adminEmails) {
-        this.AdminEmails = adminEmails;
+        this.adminEmails = adminEmails;
     }
 
     public ArrayList<String> getFraudEmails() {
-        return FraudEmails;
+        return fraudEmails;
     }
 
     public void setFraudEmails(ArrayList<String> fraudEmails) {
-        this.FraudEmails = fraudEmails;
+        this.fraudEmails = fraudEmails;
     }
 
     public ArrayList<String> getBillingEmails() {
-        return BillingEmails;
+        return billingEmails;
     }
 
     public void setBillingEmails(ArrayList<String> billingEmails) {
-        this.BillingEmails = billingEmails;
+        this.billingEmails = billingEmails;
     }
 
     public String getPlatformDescription() {
-        return PlatformDescription;
+        return platformDescription;
     }
 
     public void setPlatformDescription(String platformDescription) {
-        this.PlatformDescription = platformDescription;
+        this.platformDescription = platformDescription;
     }
 
     public PlatformType getPlatformType() {
-        return PlatformType;
+        return platformType;
     }
 
     public void setPlatformType(PlatformType platformType) {
-        this.PlatformType = platformType;
+        this.platformType = platformType;
     }
 
-    public String getPlatformURL() {
-        return PlatformURL;
+    public String getPlatformUrl() {
+        return platformUrl;
     }
 
-    public void setPlatformURL(String platformURL) {
-        this.PlatformURL = platformURL;
+    public void setPlatformUrl(String platformUrl) {
+        this.platformUrl = platformUrl;
     }
 
     public Address getHeadquartersAddress() {
-        return HeadquartersAddress;
+        return headquartersAddress;
     }
 
     public void setHeadquartersAddress(Address headquartersAddress) {
-        this.HeadquartersAddress = headquartersAddress;
+        this.headquartersAddress = headquartersAddress;
     }
 
     public String getTaxNumber() {
-        return TaxNumber;
+        return taxNumber;
     }
 
     public void setTaxNumber(String taxNumber) {
-        this.TaxNumber = taxNumber;
+        this.taxNumber = taxNumber;
     }
 }

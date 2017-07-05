@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.CountryIso;
 
 /**
@@ -9,98 +10,86 @@ public class Address extends Dto {
 
     /**
      * Address line 1.
-     *
-     * @deprecated Use {@link #getAddressLine1()} and {@link #setAddressLine1(String)} instead.
      */
-    @Deprecated
-    public String AddressLine1;
+    @SerializedName("AddressLine1")
+    private String addressLine1;
 
     /**
      * Address line 2.
-     *
-     * @deprecated Use {@link #getAddressLine2()} and {@link #setAddressLine2(String)} instead.
      */
-    @Deprecated
-    public String AddressLine2;
+    @SerializedName("AddressLine2")
+    private String addressLine2;
 
     /**
      * City.
-     *
-     * @deprecated Use {@link #getCity()} and {@link #setCity(String)} instead.
      */
-    @Deprecated
-    public String City;
+    @SerializedName("City")
+    private String city;
 
     /**
      * Region.
-     *
-     * @deprecated Use {@link #getRegion()} and {@link #setRegion(String)} instead.
      */
-    @Deprecated
-    public String Region;
+    @SerializedName("Region")
+    private String region;
 
     /**
      * Postal code.
-     *
-     * @deprecated Use {@link #getPostalCode()} and {@link #setPostalCode(String)} instead.
      */
-    @Deprecated
-    public String PostalCode;
+    @SerializedName("PostalCode")
+    private String postalCode;
 
     /**
      * Country.
-     *
-     * @deprecated Use {@link #getCountry()} and {@link #setCountry(CountryIso)} instead.
      */
-    @Deprecated
-    public CountryIso Country;
+    @SerializedName("Country")
+    public CountryIso country;
 
     public String getAddressLine1() {
-        return AddressLine1;
+        return addressLine1;
     }
 
     public void setAddressLine1(String addressLine1) {
-        this.AddressLine1 = addressLine1;
+        this.addressLine1 = addressLine1;
     }
 
     public String getAddressLine2() {
-        return AddressLine2;
+        return addressLine2;
     }
 
     public void setAddressLine2(String addressLine2) {
-        this.AddressLine2 = addressLine2;
+        this.addressLine2 = addressLine2;
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        this.City = city;
+        this.city = city;
     }
 
     public String getRegion() {
-        return Region;
+        return region;
     }
 
     public void setRegion(String region) {
-        this.Region = region;
+        this.region = region;
     }
 
     public String getPostalCode() {
-        return PostalCode;
+        return postalCode;
     }
 
     public void setPostalCode(String postalCode) {
-        this.PostalCode = postalCode;
+        this.postalCode = postalCode;
     }
 
     public CountryIso getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(CountryIso country) {
-        this.Country = country;
+        this.country = country;
     }
 
     /**
@@ -110,12 +99,12 @@ public class Address extends Dto {
      */
     public Boolean isValid() {
 
-        return AddressLine1 != null ||
-                AddressLine2 != null ||
-                City != null ||
-                Region != null ||
-                PostalCode != null ||
-                (Country != null && Country != CountryIso.NotSpecified);
+        return addressLine1 != null ||
+                addressLine2 != null ||
+                city != null ||
+                region != null ||
+                postalCode != null ||
+                (country != null && country != CountryIso.NotSpecified);
 
     }
 

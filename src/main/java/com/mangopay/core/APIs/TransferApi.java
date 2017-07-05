@@ -6,7 +6,7 @@ import com.mangopay.entities.Transfer;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiTransfers {
+public interface TransferApi {
     /**
      * Creates new transfer.
      * @param transfer  Instance of Transfer class to be created.
@@ -17,7 +17,7 @@ public interface ApiTransfers {
 
     /**
      * Creates new transfer.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param transfer          Instance of Transfer class to be created.
      * @return                  Transfer object returned from API.
      * @throws Exception
@@ -43,7 +43,7 @@ public interface ApiTransfers {
 
     /**
      * Creates refund for transfer object.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param transferId        Transfer identifier.
      * @param refund            Refund object to create.
      * @return Refund entity instance returned from API.

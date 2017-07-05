@@ -2,13 +2,13 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiCardPreAuthorizations;
+import com.mangopay.core.APIs.CardPreAuthorizationApi;
 import com.mangopay.entities.CardPreAuthorization;
 
 /**
  * API for card pre-authorizations.
  */
-public class CardPreAuthorizationApiImpl extends ApiBase implements ApiCardPreAuthorizations {
+public class CardPreAuthorizationApiImpl extends ApiBase implements CardPreAuthorizationApi {
 
     /**
      * Instantiates new CardPreAuthorizationApiImpl object.

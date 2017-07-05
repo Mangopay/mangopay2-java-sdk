@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
 
@@ -10,38 +11,34 @@ public class ClientBankWireDirect extends EntityBase {
 
     /**
      * Declared debited funds.
-     *
-     * @deprecated Use {@link #getDeclaredDebitedFunds()} and {@link #setDeclaredDebitedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money DeclaredDebitedFunds;
+    @SerializedName("DeclaredDebitedFunds")
+    private Money declaredDebitedFunds;
 
     /**
      * Credited wallet alias.
-     *
-     * @deprecated Use {@link #getCreditedWalletId()} and {@link #setCreditedWalletId(String)} instead.
      */
-    @Deprecated
-    public String CreditedWalletId;
+    @SerializedName("CreditedWalletId")
+    private String creditedWalletId;
 
     public ClientBankWireDirect(String creditedWalletAlias, Money declaredDebitedFunds) {
-        this.CreditedWalletId = creditedWalletAlias;
-        this.DeclaredDebitedFunds = declaredDebitedFunds;
+        this.creditedWalletId = creditedWalletAlias;
+        this.declaredDebitedFunds = declaredDebitedFunds;
     }
 
     public Money getDeclaredDebitedFunds() {
-        return DeclaredDebitedFunds;
+        return declaredDebitedFunds;
     }
 
     public void setDeclaredDebitedFunds(Money declaredDebitedFunds) {
-        this.DeclaredDebitedFunds = declaredDebitedFunds;
+        this.declaredDebitedFunds = declaredDebitedFunds;
     }
 
     public String getCreditedWalletId() {
-        return CreditedWalletId;
+        return creditedWalletId;
     }
 
     public void setCreditedWalletId(String creditedWalletId) {
-        this.CreditedWalletId = creditedWalletId;
+        this.creditedWalletId = creditedWalletId;
     }
 }

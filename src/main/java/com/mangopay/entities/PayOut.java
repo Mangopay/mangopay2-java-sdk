@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.PayOutPaymentType;
 import com.mangopay.core.interfaces.PayOutPaymentDetails;
 import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
@@ -15,50 +16,44 @@ public class PayOut extends Transaction {
 
     /**
      * Debited wallet identifier.
-     *
-     * @deprecated Use {@link #getDebitedWalletId()} and {@link #setDebitedWalletId(String)} instead.
      */
-    @Deprecated
-    public String DebitedWalletId;
+    @SerializedName("DebitedWalletId")
+    private String debitedWalletId;
 
     /**
      * Payment type.
-     *
-     * @deprecated Use {@link #getPaymentType()} and {@link #setPaymentType(PayOutPaymentType)} instead.
      */
-    @Deprecated
-    public PayOutPaymentType PaymentType;
+    @SerializedName("PaymentType")
+    private PayOutPaymentType paymentType;
 
     /**
      * One of PayOutPaymentDetails implementations, depending on PaymentType.
-     *
-     * @deprecated Use {@link #getMeanOfPaymentDetails()} and {@link #setMeanOfPaymentDetails(PayOutPaymentDetails)} instead.
      */
-    @Deprecated
-    public PayOutPaymentDetails MeanOfPaymentDetails;
+    @SerializedName("MeanOfPaymentDetails")
+    private PayOutPaymentDetails meanOfPaymentDetails;
 
     public String getDebitedWalletId() {
-        return DebitedWalletId;
+        return debitedWalletId;
     }
 
     public void setDebitedWalletId(String debitedWalletId) {
-        this.DebitedWalletId = debitedWalletId;
+        this.debitedWalletId = debitedWalletId;
     }
 
     public PayOutPaymentType getPaymentType() {
-        return PaymentType;
+        return paymentType;
     }
 
     public void setPaymentType(PayOutPaymentType paymentType) {
-        this.PaymentType = paymentType;
+        this.paymentType = paymentType;
     }
 
     public PayOutPaymentDetails getMeanOfPaymentDetails() {
-        return MeanOfPaymentDetails;
+        return meanOfPaymentDetails;
     }
 
     public void setMeanOfPaymentDetails(PayOutPaymentDetails meanOfPaymentDetails) {
-        this.MeanOfPaymentDetails = meanOfPaymentDetails;
+        this.meanOfPaymentDetails = meanOfPaymentDetails;
     }
 
     /**

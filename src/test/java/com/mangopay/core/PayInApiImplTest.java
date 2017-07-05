@@ -34,9 +34,9 @@ public class PayInApiImplTest extends BaseTest {
             PayIn payIn = null;
             payIn = this.getJohnsPayInCardWeb();
 
-            PayIn getPayIn = this.api.getPayInApi().get(payIn.Id);
+            PayIn getPayIn = this.api.getPayInApi().get(payIn.getId());
 
-            assertTrue(payIn.getId().equals(getPayIn.Id));
+            assertTrue(payIn.getId().equals(getPayIn.getId()));
             assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
             assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
             assertTrue(payIn.getExecutionType() == PayInExecutionType.WEB);
@@ -47,8 +47,8 @@ public class PayInApiImplTest extends BaseTest {
             assertTrue(getPayIn.getStatus() == TransactionStatus.CREATED);
             assertTrue(getPayIn.getExecutionDate() == null);
 
-            assertNotNull(((PayInExecutionDetailsWeb) getPayIn.getExecutionDetails()).getRedirectURL());
-            assertNotNull(((PayInExecutionDetailsWeb) getPayIn.getExecutionDetails()).getReturnURL());
+            assertNotNull(((PayInExecutionDetailsWeb) getPayIn.getExecutionDetails()).getRedirectUrl());
+            assertNotNull(((PayInExecutionDetailsWeb) getPayIn.getExecutionDetails()).getReturnUrl());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
@@ -58,10 +58,10 @@ public class PayInApiImplTest extends BaseTest {
     public void createCardDirect() {
         try {
             Wallet johnWallet = this.getJohnsWalletWithMoney();
-            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.Id);
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
 
             PayIn payIn = this.getNewPayInCardDirect();
-            Wallet wallet = this.api.getWalletApi().get(johnWallet.Id);
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
             UserNatural user = this.getJohn();
 
             assertTrue(payIn.getId().length() > 0);
@@ -145,7 +145,7 @@ public class PayInApiImplTest extends BaseTest {
 
             // execution type as DIRECT
             payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
-            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnURL("http://test.com");
+            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
 
             PayIn createPayIn = this.api.getPayInApi().create(payIn);
 
@@ -204,8 +204,8 @@ public class PayInApiImplTest extends BaseTest {
             assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount() instanceof BankAccount);
             assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getType() == BankAccountType.IBAN);
             assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails() instanceof BankAccountDetailsIBAN);
-            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIBAN());
-            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getBIC());
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIban());
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getBic());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
@@ -248,8 +248,8 @@ public class PayInApiImplTest extends BaseTest {
             assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount() instanceof BankAccount);
             assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getType() == BankAccountType.IBAN);
             assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails() instanceof BankAccountDetailsIBAN);
-            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIBAN());
-            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails()).getBIC());
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIban());
+            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails()).getBic());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
@@ -276,7 +276,7 @@ public class PayInApiImplTest extends BaseTest {
             payIn.setPaymentDetails(new PayInPaymentDetailsDirectDebit());
             ((PayInPaymentDetailsDirectDebit) payIn.getPaymentDetails()).setDirectDebitType(DirectDebitType.GIROPAY);
             payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
-            ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).setReturnURL("http://www.mysite.com/returnURL/");
+            ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).setReturnUrl("http://www.mysite.com/returnURL/");
             ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).setCulture(CultureCode.FR);
             ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).setTemplateURLOptions(new PayInTemplateURLOptions());
             ((PayInExecutionDetailsWeb) payIn.getExecutionDetails()).getTemplateURLOptions().PAYLINE = "https://www.maysite.com/payline_template/";
@@ -303,9 +303,9 @@ public class PayInApiImplTest extends BaseTest {
             assertTrue(createPayIn.getFees() instanceof Money);
             assertTrue(100 == createPayIn.getFees().getAmount());
             assertTrue(createPayIn.getFees().getCurrency() == CurrencyIso.EUR);
-            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getReturnURL());
-            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getRedirectURL());
-            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getTemplateURL());
+            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getReturnUrl());
+            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getRedirectUrl());
+            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getTemplateUrl());
 
         } catch (Exception ex) {
             fail(ex.getMessage());

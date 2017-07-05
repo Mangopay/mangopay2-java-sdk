@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 
 /**
@@ -7,87 +8,69 @@ import com.mangopay.core.EntityBase;
  */
 public class IdempotencyResponse extends EntityBase {
 
-    /**
-     * @deprecated Use {@link #getStatusCode()} and {@link #setStatusCode(String)} instead.
-     */
-    @Deprecated
-    public String StatusCode;
+    @SerializedName("StatusCode")
+    private String statusCode;
 
-    /**
-     * @deprecated Use {@link #getContentLength()} and {@link #setContentLength(String)} instead.
-     */
-    @Deprecated
-    public String ContentLength;
+    @SerializedName("ContentLength")
+    private String contentLength;
 
-    /**
-     * @deprecated Use {@link #getContentType()} and {@link #setContentType(String)} instead.
-     */
-    @Deprecated
-    public String ContentType;
+    @SerializedName("ContentType")
+    private String contentType;
 
-    /**
-     * @deprecated Use {@link #getDate()} and {@link #setDate(String)} instead.
-     */
-    @Deprecated
-    public String Date;
+    @SerializedName("Date")
+    private String date;
 
-    /**
-     * @deprecated Use {@link #getResource()}  and {@link #setResource(Object)} instead.
-     */
-    @Deprecated
-    public Object Resource;
+    @SerializedName("Resource")
+    private Object resource;
 
-    /**
-     * @deprecated Use {@link #getRequestURL()} and {@link #setRequestURL(String)}  instead.
-     */
-    @Deprecated
-    public String RequestURL;
+    @SerializedName("RequestURL")
+    private String requestUrl;
 
     public String getStatusCode() {
-        return StatusCode;
+        return statusCode;
     }
 
     public void setStatusCode(String statusCode) {
-        this.StatusCode = statusCode;
+        this.statusCode = statusCode;
     }
 
     public String getContentLength() {
-        return ContentLength;
+        return contentLength;
     }
 
     public void setContentLength(String contentLength) {
-        this.ContentLength = contentLength;
+        this.contentLength = contentLength;
     }
 
     public String getContentType() {
-        return ContentType;
+        return contentType;
     }
 
     public void setContentType(String contentType) {
-        this.ContentType = contentType;
+        this.contentType = contentType;
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        this.Date = date;
+        this.date = date;
     }
 
     public Object getResource() {
-        return Resource;
+        return resource;
     }
 
     public void setResource(Object resource) {
-        this.Resource = resource;
+        this.resource = resource;
     }
 
-    public String getRequestURL() {
-        return RequestURL;
+    public String getRequestUrl() {
+        return requestUrl;
     }
 
-    public void setRequestURL(String requestURL) {
-        this.RequestURL = requestURL;
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
     }
 }

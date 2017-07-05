@@ -17,35 +17,23 @@ public class Configuration {
 
     /**
      * Client identifier.
-     *
-     * @deprecated Use {@link #getClientId()} and {@link #setClientId(String)} instead.
      */
-    @Deprecated
-    public String ClientId = "";
+    private String clientId = "";
 
     /**
      * Client password.
-     *
-     * @deprecated Use {@link #getClientPassword()} and {@link #setClientPassword(String)} instead.
      */
-    @Deprecated
-    public String ClientPassword = "";
+    private String clientPassword = "";
 
     /**
      * Base URL to MangoPay API.
-     *
-     * @deprecated Use {@link #getBaseUrl()} and {@link #setBaseUrl(String)} instead.
      */
-    @Deprecated
-    public String BaseUrl = "https://api.sandbox.mangopay.com";
+    private String baseUrl = "https://api.sandbox.mangopay.com";
 
     /**
      * [INTERNAL USAGE ONLY] Switch debug mode: log all request and response data.
-     *
-     * @deprecated Use {@link #isDebugMode()} and {@link #setDebugMode(boolean)} instead.
      */
-    @Deprecated
-    public boolean DebugMode = false;
+    private boolean debugMode = false;
 
     /**
      * Connection Timeout.
@@ -69,35 +57,35 @@ public class Configuration {
 
 
     public String getClientId() {
-        return ClientId;
+        return clientId;
     }
 
     public void setClientId(String clientId) {
-        this.ClientId = clientId;
+        this.clientId = clientId;
     }
 
     public String getClientPassword() {
-        return ClientPassword;
+        return clientPassword;
     }
 
     public void setClientPassword(String clientPassword) {
-        this.ClientPassword = clientPassword;
+        this.clientPassword = clientPassword;
     }
 
     public String getBaseUrl() {
-        return BaseUrl;
+        return baseUrl;
     }
 
     public void setBaseUrl(String baseUrl) {
-        this.BaseUrl = baseUrl;
+        this.baseUrl = baseUrl;
     }
 
     public boolean isDebugMode() {
-        return DebugMode;
+        return debugMode;
     }
 
     public void setDebugMode(boolean debugMode) {
-        this.DebugMode = debugMode;
+        this.debugMode = debugMode;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.FilterReports;
 import com.mangopay.core.Sorting;
@@ -19,183 +20,147 @@ import static com.mangopay.core.enumerations.ReportType.TRANSACTIONS;
  */
 public class ReportRequest extends EntityBase {
 
-    /**
-     * @deprecated Use {@link #getReportDate()} and {@link #setReportDate(long)} instead.
-     */
-    @Deprecated
-    public long ReportDate;
+    @SerializedName("ReportDate")
+    private long reportDate;
 
-    /**
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(ReportStatus)} instead.
-     */
-    @Deprecated
-    public ReportStatus Status;
+    @SerializedName("Status")
+    private ReportStatus status;
 
-    /**
-     * @deprecated Use {@link #getDownloadFormat()} and {@link #setDownloadFormat(DownloadReportFormat)} instead.
-     */
-    @Deprecated
-    public DownloadReportFormat DownloadFormat;
+    @SerializedName("DownloadFormat")
+    private DownloadReportFormat downloadFormat;
 
-    /**
-     * @deprecated Use {@link #getDownloadURL()} and {@link #setDownloadURL(String)} instead.
-     */
-    @Deprecated
-    public String DownloadURL;
+    @SerializedName("DownloadURL")
+    private String downloadUrl;
 
-    /**
-     * @deprecated Use {@link #getCallbackURL()} and {@link #setCallbackURL(String)} instead.
-     */
-    @Deprecated
-    public String CallbackURL;
+    @SerializedName("CallbackURL")
+    private String callbackUrl;
 
-    /**
-     * @deprecated Use {@link #getReportType()} and {@link #setReportType(ReportType)} instead.
-     */
-    @Deprecated
-    public ReportType ReportType;
+    @SerializedName("ReportType")
+    private ReportType reportType;
 
-    /**
-     * @deprecated Use {@link #getSort()} and {@link #setSort(String)} instead.
-     */
-    @Deprecated
-    public String Sort;
+    @SerializedName("Sort")
+    private String sort;
 
-    /**
-     * @deprecated Use {@link #isPreview()} and {@link #setPreview(boolean)} instead.
-     */
-    @Deprecated
-    public boolean Preview;
+    @SerializedName("Preview")
+    private boolean preview;
 
-    /**
-     * @deprecated Use {@link #getFilters()} and {@link #setFilters(FilterReports)} instead.
-     */
-    @Deprecated
-    public FilterReports Filters;
+    @SerializedName("Filters")
+    private FilterReports filters;
 
-    /**
-     * @deprecated Use {@link #getColumns()} and {@link #setColumns(List)} instead.
-     */
-    @Deprecated
-    public List<String> Columns;
+    @SerializedName("Columns")
+    private List<String> columns;
 
-    /**
-     * @deprecated Use {@link #getResultCode()} and {@link #setResultCode(String)} instead.
-     */
-    @Deprecated
-    public String ResultCode;
+    @SerializedName("ResultCode")
+    private String resultCode;
 
-    /**
-     * @deprecated Use {@link #getResultMessage()} and {@link #setResultMessage(String)} instead.
-     */
-    @Deprecated
-    public String ResultMessage;
+    @SerializedName("ResultMessage")
+    private String resultMessage;
 
     public ReportRequest() {
-        this.DownloadFormat = DownloadReportFormat.CSV;
-        this.Filters = new FilterReports();
-        this.ReportType = TRANSACTIONS;
+        this.downloadFormat = DownloadReportFormat.CSV;
+        this.filters = new FilterReports();
+        this.reportType = TRANSACTIONS;
 
         Sorting s = new Sorting();
         s.addField("CreationDate", SortDirection.asc);
 
-        this.Sort = s.getFields();
+        this.sort = s.getFields();
     }
 
     public long getReportDate() {
-        return ReportDate;
+        return reportDate;
     }
 
     public void setReportDate(long reportDate) {
-        this.ReportDate = reportDate;
+        this.reportDate = reportDate;
     }
 
     public ReportStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(ReportStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public DownloadReportFormat getDownloadFormat() {
-        return DownloadFormat;
+        return downloadFormat;
     }
 
     public void setDownloadFormat(DownloadReportFormat downloadFormat) {
-        this.DownloadFormat = downloadFormat;
+        this.downloadFormat = downloadFormat;
     }
 
-    public String getDownloadURL() {
-        return DownloadURL;
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
 
-    public void setDownloadURL(String downloadURL) {
-        this.DownloadURL = downloadURL;
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
     }
 
-    public String getCallbackURL() {
-        return CallbackURL;
+    public String getCallbackUrl() {
+        return callbackUrl;
     }
 
-    public void setCallbackURL(String callbackURL) {
-        this.CallbackURL = callbackURL;
+    public void setCallbackUrl(String callbackUrl) {
+        this.callbackUrl = callbackUrl;
     }
 
     public ReportType getReportType() {
-        return ReportType;
+        return reportType;
     }
 
     public void setReportType(ReportType reportType) {
-        this.ReportType = reportType;
+        this.reportType = reportType;
     }
 
     public String getSort() {
-        return Sort;
+        return sort;
     }
 
     public void setSort(String sort) {
-        this.Sort = sort;
+        this.sort = sort;
     }
 
     public boolean isPreview() {
-        return Preview;
+        return preview;
     }
 
     public void setPreview(boolean preview) {
-        this.Preview = preview;
+        this.preview = preview;
     }
 
     public FilterReports getFilters() {
-        return Filters;
+        return filters;
     }
 
     public void setFilters(FilterReports filters) {
-        this.Filters = filters;
+        this.filters = filters;
     }
 
     public List<String> getColumns() {
-        return Columns;
+        return columns;
     }
 
     public void setColumns(List<String> columns) {
-        this.Columns = columns;
+        this.columns = columns;
     }
 
     public String getResultCode() {
-        return ResultCode;
+        return resultCode;
     }
 
     public void setResultCode(String resultCode) {
-        this.ResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public String getResultMessage() {
-        return ResultMessage;
+        return resultMessage;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.ResultMessage = resultMessage;
+        this.resultMessage = resultMessage;
     }
 
     /**

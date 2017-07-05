@@ -2,7 +2,7 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiEvents;
+import com.mangopay.core.APIs.EventApi;
 import com.mangopay.core.FilterEvents;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * API for events.
  */
-public class EventApiImpl extends ApiBase implements ApiEvents {
+public class EventApiImpl extends ApiBase implements EventApi {
 
     /**
      * Instantiates new EventApiImpl object.

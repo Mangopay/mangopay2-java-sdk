@@ -28,8 +28,8 @@ class UrlTool {
 
     private String getHost() throws Exception {
 
-        if (root.getConfig().getBaseUrl() == null || root.Config.getBaseUrl().length() == 0)
-            throw new Exception("MangoPayApi.Config.BaseUrl setting is not defined.");
+        if (root.getConfig().getBaseUrl() == null || root.getConfig().getBaseUrl().length() == 0)
+            throw new Exception("MangoPayApi.config.BaseUrl setting is not defined.");
 
         URL baseUrl = new URL(root.getConfig().getBaseUrl());
 

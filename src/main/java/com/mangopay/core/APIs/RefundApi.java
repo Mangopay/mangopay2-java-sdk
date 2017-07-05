@@ -5,7 +5,7 @@ import com.mangopay.entities.Refund;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiRefunds {
+public interface RefundApi {
     /**
      * Gets refund entity.
      *

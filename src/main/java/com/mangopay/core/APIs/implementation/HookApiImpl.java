@@ -3,14 +3,14 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiHooks;
+import com.mangopay.core.APIs.HookApi;
 import com.mangopay.entities.Hook;
 import java.util.List;
 
 /**
  * API for hooks.
  */
-public class HookApiImpl extends ApiBase implements ApiHooks {
+public class HookApiImpl extends ApiBase implements HookApi {
     
     /**
      * Instantiates new HookApiImpl object.

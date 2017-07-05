@@ -2,13 +2,13 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiRefunds;
+import com.mangopay.core.APIs.RefundApi;
 import com.mangopay.entities.Refund;
 
 /**
  * API for refunds.
  */
-public class RefundApiImpl extends ApiBase implements ApiRefunds {
+public class RefundApiImpl extends ApiBase implements RefundApi {
 
     /**
      * Instantiates new RefundApiImpl object.

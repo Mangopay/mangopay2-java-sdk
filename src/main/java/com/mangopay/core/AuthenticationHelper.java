@@ -37,10 +37,10 @@ public class AuthenticationHelper {
      */
     public String getHttpHeaderBasicKey() throws Exception {
         if (root.getConfig().getClientId() == null || root.getConfig().getClientId().length() == 0)
-            throw new Exception ("MangoPay.Config.ClientId is not set.");
+            throw new Exception ("MangoPay.config.ClientId is not set.");
         
         if (root.getConfig().getClientPassword() == null || root.getConfig().getClientPassword().length() == 0)
-            throw new Exception ("MangoPay.Config.ClientPassword is not set.");
+            throw new Exception ("MangoPay.config.ClientPassword is not set.");
         
         String signature = root.getConfig().getClientId() + ':' + root.getConfig().getClientPassword();
         

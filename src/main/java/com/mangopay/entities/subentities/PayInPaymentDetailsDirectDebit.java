@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.enumerations.DirectDebitType;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
@@ -11,49 +12,43 @@ public class PayInPaymentDetailsDirectDebit extends Dto implements PayInPaymentD
 
     /**
      * Direct debit type.
-     *
-     * @deprecated Use {@link #getDirectDebitType()} and {@link #setDirectDebitType(com.mangopay.core.enumerations.DirectDebitType)} instead.
      */
-    @Deprecated
-    public DirectDebitType DirectDebitType;
+    @SerializedName("DirectDebitType")
+    private DirectDebitType directDebitType;
 
     /**
      * Mandate identifier.
-     *
-     * @deprecated Use {@link #getMandateId()} and {@link #setMandateId(String)} instead.
      */
-    @Deprecated
-    public String MandateId;
+    @SerializedName("MandateId")
+    private String mandateId;
 
     /**
      * An optional value to be specified on the user's bank statement
-     *
-     * @deprecated Use {@link #getStatementDescriptor()} and {@link #setStatementDescriptor(String)} instead.
      */
-    @Deprecated
-    public String StatementDescriptor;
+    @SerializedName("StatementDescriptor")
+    private String statementDescriptor;
 
     public DirectDebitType getDirectDebitType() {
-        return DirectDebitType;
+        return directDebitType;
     }
 
     public void setDirectDebitType(DirectDebitType directDebitType) {
-        this.DirectDebitType = directDebitType;
+        this.directDebitType = directDebitType;
     }
 
     public String getMandateId() {
-        return MandateId;
+        return mandateId;
     }
 
     public void setMandateId(String mandateId) {
-        this.MandateId = mandateId;
+        this.mandateId = mandateId;
     }
 
     public String getStatementDescriptor() {
-        return StatementDescriptor;
+        return statementDescriptor;
     }
 
     public void setStatementDescriptor(String statementDescriptor) {
-        this.StatementDescriptor = statementDescriptor;
+        this.statementDescriptor = statementDescriptor;
     }
 }

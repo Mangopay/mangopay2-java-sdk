@@ -5,7 +5,7 @@ import com.mangopay.entities.CardRegistration;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiCardRegistrations {
+public interface CardRegistrationApi {
     /**
      * Creates new card registration.
      * @param cardRegistration Card registration object to create.
@@ -16,7 +16,7 @@ public interface ApiCardRegistrations {
 
     /**
      * Creates new card registration.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param cardRegistration Card registration object to create.
      * @return Card registration instance returned from API.
      * @throws Exception
