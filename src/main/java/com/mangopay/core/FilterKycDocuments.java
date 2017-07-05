@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.core.enumerations.KycStatus;
 
@@ -11,69 +12,57 @@ import java.util.Map;
  */
 public class FilterKycDocuments {
 
-    /**
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(KycStatus)} instead.
-     */
-    @Deprecated
-    public KycStatus Status;
+    @SerializedName("Status")
+    private KycStatus status;
 
-    /**
-     * @deprecated Use {@link #getType()} and {@link #setType(KycDocumentType)} instead.
-     */
-    @Deprecated
-    public KycDocumentType Type;
+    @SerializedName("Type")
+    private KycDocumentType type;
 
-    /**
-     * @deprecated Use {@link #getBeforeDate()} and {@link #setBeforeDate(Long)} instead.
-     */
-    @Deprecated
-    public Long BeforeDate;
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
 
-    /**
-     * @deprecated Use {@link #getAfterDate()} and {@link #setAfterDate(Long)} instead.
-     */
-    @Deprecated
-    public Long AfterDate;
+    @SerializedName("AfterDate")
+    public Long afterDate;
 
     public KycStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(KycStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public KycDocumentType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(KycDocumentType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public Long getBeforeDate() {
-        return BeforeDate;
+        return beforeDate;
     }
 
     public void setBeforeDate(Long beforeDate) {
-        this.BeforeDate = beforeDate;
+        this.beforeDate = beforeDate;
     }
 
     public Long getAfterDate() {
-        return AfterDate;
+        return afterDate;
     }
 
     public void setAfterDate(Long afterDate) {
-        this.AfterDate = afterDate;
+        this.afterDate = afterDate;
     }
 
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap();
 
-        if (Status != null && Status != KycStatus.NotSpecified) result.put("status", Status.toString());
-        if (Type != null && Type != KycDocumentType.NotSpecified) result.put("type", Type.toString());
-        if (BeforeDate != null) result.put("beforedate", BeforeDate.toString());
-        if (AfterDate != null) result.put("afterdate", AfterDate.toString());
+        if (status != null && status != KycStatus.NotSpecified) result.put("status", status.toString());
+        if (type != null && type != KycDocumentType.NotSpecified) result.put("type", type.toString());
+        if (beforeDate != null) result.put("beforedate", beforeDate.toString());
+        if (afterDate != null) result.put("afterdate", afterDate.toString());
 
         return result;
     }

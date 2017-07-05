@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.enumerations.DepositAccountType;
 import com.mangopay.core.interfaces.BankAccountDetails;
@@ -13,56 +14,50 @@ public class BankAccountDetailsUS extends Dto implements BankAccountDetails {
 
     /**
      * Account number.
-     *
-     * @deprecated Use {@link #getAccountNumber()} and {@link #setAccountNumber(String)} instead.
      */
-    @Deprecated
-    public String AccountNumber;
+    @SerializedName("AccountNumber")
+    private String accountNumber;
 
     /**
      * ABA.
-     *
-     * @deprecated Use {@link #getABA()} and {@link #setABA(String)} instead.
      */
-    @Deprecated
-    public String ABA;
+    @SerializedName("ABA")
+    private String aba;
 
     /**
      * Deposit account type.
-     *
-     * @deprecated Use {@link #getDepositAccountType()} and {@link #setDepositAccountType(DepositAccountType)} instead.
      */
-    @Deprecated
-    public DepositAccountType DepositAccountType;
+    @SerializedName("DepositAccountType")
+    private DepositAccountType depositAccountType;
 
     /**
      * Instantiates new BankAccountDetailsUS object.
      */
     public BankAccountDetailsUS() {
-        this.DepositAccountType = CHECKING;
+        this.depositAccountType = CHECKING;
     }
 
     public String getAccountNumber() {
-        return AccountNumber;
+        return accountNumber;
     }
 
     public void setAccountNumber(String accountNumber) {
-        this.AccountNumber = accountNumber;
+        this.accountNumber = accountNumber;
     }
 
-    public String getABA() {
-        return ABA;
+    public String getAba() {
+        return aba;
     }
 
-    public void setABA(String ABA) {
-        this.ABA = ABA;
+    public void setAba(String aba) {
+        this.aba = aba;
     }
 
     public com.mangopay.core.enumerations.DepositAccountType getDepositAccountType() {
-        return DepositAccountType;
+        return depositAccountType;
     }
 
     public void setDepositAccountType(com.mangopay.core.enumerations.DepositAccountType depositAccountType) {
-        this.DepositAccountType = depositAccountType;
+        this.depositAccountType = depositAccountType;
     }
 }

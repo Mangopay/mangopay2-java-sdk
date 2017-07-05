@@ -22,8 +22,8 @@ public class CardRegistrationApiImplTest extends BaseTest {
 
         assertNotNull(cardRegistration_visa.getAccessKey());
         assertNotNull(cardRegistration_visa.getPreregistrationData());
-        assertNotNull(cardRegistration_visa.getCardRegistrationURL());
-        assertEquals(user.Id, cardRegistration_visa.getUserId());
+        assertNotNull(cardRegistration_visa.getCardRegistrationUrl());
+        assertEquals(user.getId(), cardRegistration_visa.getUserId());
         assertTrue(cardRegistration_visa.getCurrency() == CurrencyIso.EUR);
         assertEquals("CREATED", cardRegistration_visa.getStatus());
         assertEquals(CardType.CB_VISA_MASTERCARD, cardRegistration_visa.getCardType());
@@ -36,8 +36,8 @@ public class CardRegistrationApiImplTest extends BaseTest {
 
         assertNotNull(cardRegistration_maestro.getAccessKey());
         assertNotNull(cardRegistration_maestro.getPreregistrationData());
-        assertNotNull(cardRegistration_maestro.getCardRegistrationURL());
-        assertEquals(user.Id, cardRegistration_maestro.getUserId());
+        assertNotNull(cardRegistration_maestro.getCardRegistrationUrl());
+        assertEquals(user.getId(), cardRegistration_maestro.getUserId());
         assertTrue(cardRegistration_maestro.getCurrency() == CurrencyIso.EUR);
         assertEquals("CREATED", cardRegistration_maestro.getStatus());
         assertEquals(CardType.MAESTRO, cardRegistration_maestro.getCardType());

@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiClients {
+public interface ClientApi {
     List<KycDocument> getKycDocuments(Pagination pagination, FilterKycDocuments filter, Sorting sort) throws Exception;
 
     Client get() throws Exception;

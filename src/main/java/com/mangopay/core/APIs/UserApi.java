@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiUsers {
+public interface UserApi {
 
     /**
      * Gets user.
@@ -36,7 +36,7 @@ public interface ApiUsers {
     /**
      * Creates new user.
      *
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param user           User object to be created.
      * @return User instance returned from API, which is either of UserNatural or UserLegal type.
      * @throws Exception
@@ -100,7 +100,7 @@ public interface ApiUsers {
     /**
      * Creates bank account for user.
      *
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param userId         User identifier to create bank account for.
      * @param bankAccount    Bank account object.
      * @return Created bank account object returned from API.
@@ -205,7 +205,7 @@ public interface ApiUsers {
     /**
      * Creates KycPage from byte array.
      *
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param userId         User identifier.
      * @param kycDocumentId  Kyc document identifier.
      * @param binaryData     The byte array the KycPage will be created from.
@@ -226,7 +226,7 @@ public interface ApiUsers {
     /**
      * Creates KycPage from file.
      *
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param userId         User identifier.
      * @param kycDocumentId  Kyc document identifier.
      * @param filePath       Path to the file the KycPage will be created from.
@@ -247,7 +247,7 @@ public interface ApiUsers {
     /**
      * Creates KycDocument.
      *
-     * @param idempotencyKey Idempotency key for this request.
+     * @param idempotencyKey idempotency key for this request.
      * @param userId         User identifier.
      * @param type           Type of KycDocument.
      * @return KycDocument object returned from API.

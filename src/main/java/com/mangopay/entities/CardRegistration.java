@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.enumerations.CurrencyIso;
@@ -13,170 +14,150 @@ public class CardRegistration extends EntityBase {
 
     /**
      * User Id.
-     *
-     * @deprecated Use {@link #getUserId()} and {@link #setUserId(String)} instead.
      */
-    @Deprecated
-    public String UserId;
+    @SerializedName("UserId")
+    private String userId;
 
     /**
      * Access key.
-     *
-     * @deprecated Use {@link #getAccessKey()} and {@link #setAccessKey(String)} instead.
      */
-    @Deprecated
-    public String AccessKey;
+    @SerializedName("AccessKey")
+    private String accessKey;
 
     /**
      * Pre-registration data.
-     *
-     * @deprecated Use {@link #getPreregistrationData()} and {@link #setPreregistrationData(String)} instead.
      */
-    @Deprecated
-    public String PreregistrationData;
+    @SerializedName("PreregistrationData")
+    private String preregistrationData;
 
     /**
      * Card registration URL.
-     *
-     * @deprecated Use {@link #getCardRegistrationURL()} and {@link #setCardRegistrationURL(String)} instead.
      */
-    @Deprecated
-    public String CardRegistrationURL;
+    @SerializedName("CardRegistrationURL")
+    private String cardRegistrationUrl;
 
     /**
      * Card identifier.
-     *
-     * @deprecated Use {@link #getCardId()} and {@link #setCardId(String)} instead.
      */
-    @Deprecated
-    public String CardId;
+    @SerializedName("CardId")
+    private String cardId;
 
     /**
      * Card registration data.
-     *
-     * @deprecated Use {@link #getRegistrationData()} and {@link #setRegistrationData(String)} instead.
      */
-    @Deprecated
-    public String RegistrationData;
+    @SerializedName("RegistrationData")
+    private String registrationData;
 
     /**
      * Result code.
-     *
-     * @deprecated Use {@link #getResultCode()} and {@link #setResultCode(String)} instead.
      */
-    @Deprecated
-    public String ResultCode;
+    @SerializedName("ResultCode")
+    private String resultCode;
 
     /**
      * Currency.
-     *
-     * @deprecated Use {@link #getCurrency()} and {@link #setCurrency(CurrencyIso)} instead.
      */
-    @Deprecated
-    public CurrencyIso Currency;
+    @SerializedName("Currency")
+    private CurrencyIso currency;
 
     /**
      * Status.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(String)} instead.
      */
-    @Deprecated
-    public String Status;
+    @SerializedName("Status")
+    private String status;
 
     /**
      * Card type.
-     *
-     * @deprecated Use {@link #getCardType()} and {@link #setCardType(CardType)} instead.
      */
-    @Deprecated
-    public CardType CardType;
+    @SerializedName("CardType")
+    private CardType cardType;
 
     public CardRegistration() {
-        this.CardType = CardType.CB_VISA_MASTERCARD;
+        this.cardType = CardType.CB_VISA_MASTERCARD;
     }
 
     public CardRegistration(CardType cardType) {
-        this.CardType = cardType;
+        this.cardType = cardType;
     }
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.UserId = userId;
+        this.userId = userId;
     }
 
     public String getAccessKey() {
-        return AccessKey;
+        return accessKey;
     }
 
     public void setAccessKey(String accessKey) {
-        this.AccessKey = accessKey;
+        this.accessKey = accessKey;
     }
 
     public String getPreregistrationData() {
-        return PreregistrationData;
+        return preregistrationData;
     }
 
     public void setPreregistrationData(String preregistrationData) {
-        this.PreregistrationData = preregistrationData;
+        this.preregistrationData = preregistrationData;
     }
 
-    public String getCardRegistrationURL() {
-        return CardRegistrationURL;
+    public String getCardRegistrationUrl() {
+        return cardRegistrationUrl;
     }
 
-    public void setCardRegistrationURL(String cardRegistrationURL) {
-        this.CardRegistrationURL = cardRegistrationURL;
+    public void setCardRegistrationUrl(String cardRegistrationUrl) {
+        this.cardRegistrationUrl = cardRegistrationUrl;
     }
 
     public String getCardId() {
-        return CardId;
+        return cardId;
     }
 
     public void setCardId(String cardId) {
-        this.CardId = cardId;
+        this.cardId = cardId;
     }
 
     public String getRegistrationData() {
-        return RegistrationData;
+        return registrationData;
     }
 
     public void setRegistrationData(String registrationData) {
-        this.RegistrationData = registrationData;
+        this.registrationData = registrationData;
     }
 
     public String getResultCode() {
-        return ResultCode;
+        return resultCode;
     }
 
     public void setResultCode(String resultCode) {
-        this.ResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public CurrencyIso getCurrency() {
-        return Currency;
+        return currency;
     }
 
     public void setCurrency(CurrencyIso currency) {
-        this.Currency = currency;
+        this.currency = currency;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public CardType getCardType() {
-        return CardType;
+        return cardType;
     }
 
     public void setCardType(CardType cardType) {
-        this.CardType = cardType;
+        this.cardType = cardType;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.DisputeReason;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
@@ -18,178 +19,156 @@ public class Dispute extends EntityBase {
 
     /**
      * Identifier of the transaction that was disputed.
-     *
-     * @deprecated Use {@link #getInitialTransactionId()} and {@link #setInitialTransactionId(String)} instead.
      */
-    @Deprecated
-    public String InitialTransactionId;
+    @SerializedName("InitialTransactionId")
+    private String initialTransactionId;
 
     /**
      * Most transaction type of the original trasaction.
-     *
-     * @deprecated Use {@link #getInitialTransactionType()} and {@link #setInitialTransactionType(InitialTransactionType)} instead.
      */
-    @Deprecated
-    public InitialTransactionType InitialTransactionType;
+    @SerializedName("InitialTransactionType")
+    private InitialTransactionType initialTransactionType;
 
     /**
      * Type of dispute.
-     *
-     * @deprecated Use {@link #getDisputeType()} and {@link #setDisputeType(DisputeType)} instead.
      */
-    @Deprecated
-    public DisputeType DisputeType;
+    @SerializedName("DisputeType")
+    private DisputeType disputeType;
 
     /**
      * The date by which you must submit docs if they wish to contest the dispute.
-     *
-     * @deprecated Use {@link #getContestDeadlineDate()} and {@link #setContestDeadlineDate(Long)} instead.
      */
-    @Deprecated
-    public Long ContestDeadlineDate;
+    @SerializedName("ContestDeadlineDate")
+    private Long contestDeadlineDate;
 
     /**
      * Dispute's reason.
-     *
-     * @deprecated Use {@link #getDisputeReason()} and {@link #setDisputeReason(DisputeReason)} instead.
      */
-    @Deprecated
-    public DisputeReason DisputeReason;
+    @SerializedName("DisputeReason")
+    private DisputeReason disputeReason;
 
     /**
      * Disputed funds.
-     *
-     * @deprecated Use {@link #getDisputedFunds()} and {@link #setDisputedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money DisputedFunds;
+    @SerializedName("DisputedFunds")
+    private Money disputedFunds;
 
     /**
      * Contested funds.
-     *
-     * @deprecated Use {@link #getContestedFunds()} and {@link #setContestedFunds(Money)} instead.
      */
-    @Deprecated
-    public Money ContestedFunds;
+    @SerializedName("ContestedFunds")
+    private Money contestedFunds;
 
     /**
      * Contested funds.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(DisputeStatus)} instead.
      */
-    @Deprecated
-    public DisputeStatus Status;
+    @SerializedName("Status")
+    private DisputeStatus status;
 
     /**
      * Free text used when reopening the dispute.
-     *
-     * @deprecated Use {@link #getStatusMessage()} and {@link #setStatusMessage(String)} instead.
      */
-    @Deprecated
-    public String StatusMessage;
+    @SerializedName("StatusMessage")
+    private String statusMessage;
 
     /**
      * Result code.
-     *
-     * @deprecated Use {@link #getResultCode()} and {@link #setResultCode(String)} instead.
      */
-    @Deprecated
-    public String ResultCode;
+    @SerializedName("ResultCode")
+    private String resultCode;
 
     /**
      * Free text that might be completed when the dispute is closed.
-     *
-     * @deprecated Use {@link #getResultMessage()} and {@link #setResultMessage(String)} instead.
      */
-    @Deprecated
-    public String ResultMessage;
+    @SerializedName("ResultMessage")
+    private String resultMessage;
 
     public String getInitialTransactionId() {
-        return InitialTransactionId;
+        return initialTransactionId;
     }
 
     public void setInitialTransactionId(String initialTransactionId) {
-        this.InitialTransactionId = initialTransactionId;
+        this.initialTransactionId = initialTransactionId;
     }
 
     public com.mangopay.core.enumerations.InitialTransactionType getInitialTransactionType() {
-        return InitialTransactionType;
+        return initialTransactionType;
     }
 
     public void setInitialTransactionType(InitialTransactionType initialTransactionType) {
-        this.InitialTransactionType = initialTransactionType;
+        this.initialTransactionType = initialTransactionType;
     }
 
     public DisputeType getDisputeType() {
-        return DisputeType;
+        return disputeType;
     }
 
     public void setDisputeType(DisputeType disputeType) {
-        this.DisputeType = disputeType;
+        this.disputeType = disputeType;
     }
 
     public Long getContestDeadlineDate() {
-        return ContestDeadlineDate;
+        return contestDeadlineDate;
     }
 
     public void setContestDeadlineDate(Long contestDeadlineDate) {
-        this.ContestDeadlineDate = contestDeadlineDate;
+        this.contestDeadlineDate = contestDeadlineDate;
     }
 
     public DisputeReason getDisputeReason() {
-        return DisputeReason;
+        return disputeReason;
     }
 
     public void setDisputeReason(DisputeReason disputeReason) {
-        this.DisputeReason = disputeReason;
+        this.disputeReason = disputeReason;
     }
 
     public Money getDisputedFunds() {
-        return DisputedFunds;
+        return disputedFunds;
     }
 
     public void setDisputedFunds(Money disputedFunds) {
-        this.DisputedFunds = disputedFunds;
+        this.disputedFunds = disputedFunds;
     }
 
     public Money getContestedFunds() {
-        return ContestedFunds;
+        return contestedFunds;
     }
 
     public void setContestedFunds(Money contestedFunds) {
-        this.ContestedFunds = contestedFunds;
+        this.contestedFunds = contestedFunds;
     }
 
     public DisputeStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(DisputeStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public String getStatusMessage() {
-        return StatusMessage;
+        return statusMessage;
     }
 
     public void setStatusMessage(String statusMessage) {
-        this.StatusMessage = statusMessage;
+        this.statusMessage = statusMessage;
     }
 
     public String getResultCode() {
-        return ResultCode;
+        return resultCode;
     }
 
     public void setResultCode(String resultCode) {
-        this.ResultCode = resultCode;
+        this.resultCode = resultCode;
     }
 
     public String getResultMessage() {
-        return ResultMessage;
+        return resultMessage;
     }
 
     public void setResultMessage(String resultMessage) {
-        this.ResultMessage = resultMessage;
+        this.resultMessage = resultMessage;
     }
 
     /**

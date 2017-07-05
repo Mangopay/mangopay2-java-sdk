@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.interfaces.BankAccountDetails;
 
@@ -10,33 +11,29 @@ public class BankAccountDetailsGB extends Dto implements BankAccountDetails {
 
     /**
      * Account number.
-     *
-     * @deprecated Use {@link #getAccountNumber()} and {@link #setAccountNumber(String)} instead.
      */
-    @Deprecated
-    public String AccountNumber;
+    @SerializedName("AccountNumber")
+    private String accountNumber;
 
     /**
      * Sort code.
-     *
-     * @deprecated Use {@link #getSortCode()} and {@link #setSortCode(String)} instead.
      */
-    @Deprecated
-    public String SortCode;
+    @SerializedName("SortCode")
+    private String sortCode;
 
     public String getAccountNumber() {
-        return AccountNumber;
+        return accountNumber;
     }
 
     public void setAccountNumber(String accountNumber) {
-        this.AccountNumber = accountNumber;
+        this.accountNumber = accountNumber;
     }
 
     public String getSortCode() {
-        return SortCode;
+        return sortCode;
     }
 
     public void setSortCode(String sortCode) {
-        this.SortCode = sortCode;
+        this.sortCode = sortCode;
     }
 }

@@ -5,7 +5,7 @@ import com.mangopay.entities.Card;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiCards {
+public interface CardApi {
     /**
      * Gets card.
      * @param cardId Card identifier.

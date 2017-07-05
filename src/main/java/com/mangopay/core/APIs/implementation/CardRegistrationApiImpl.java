@@ -2,13 +2,13 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.ApiCardRegistrations;
+import com.mangopay.core.APIs.CardRegistrationApi;
 import com.mangopay.entities.CardRegistration;
 
 /**
  * API for card registrations.
  */
-public class CardRegistrationApiImpl extends ApiBase implements ApiCardRegistrations {
+public class CardRegistrationApiImpl extends ApiBase implements CardRegistrationApi {
     
     /**
      * Instantiates new ApiCardRegistration object.

@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.RefundReasonType;
 
 /**
@@ -9,33 +10,29 @@ public class RefundReason extends Dto {
 
     /**
      * Message.
-     *
-     * @deprecated Use {@link #getRefundReasonMessage()} and {@link #setRefundReasonMessage(String)} instead.
      */
-    @Deprecated
-    public String RefundReasonMessage;
+    @SerializedName("RefundReasonMessage")
+    private String refundReasonMessage;
 
     /**
      * Type of refund reason.
-     *
-     * @deprecated Use {@link #getRefundReasonType()} and {@link #setRefundReasonType(RefundReasonType)} instead.
      */
-    @Deprecated
-    public RefundReasonType RefundReasonType;
+    @SerializedName("RefundReasonType")
+    private RefundReasonType refundReasonType;
 
     public String getRefundReasonMessage() {
-        return RefundReasonMessage;
+        return refundReasonMessage;
     }
 
     public void setRefundReasonMessage(String refundReasonMessage) {
-        this.RefundReasonMessage = refundReasonMessage;
+        this.refundReasonMessage = refundReasonMessage;
     }
 
-    public com.mangopay.core.enumerations.RefundReasonType getRefundReasonType() {
-        return RefundReasonType;
+    public RefundReasonType getRefundReasonType() {
+        return refundReasonType;
     }
 
-    public void setRefundReasonType(com.mangopay.core.enumerations.RefundReasonType refundReasonType) {
-        this.RefundReasonType = refundReasonType;
+    public void setRefundReasonType(RefundReasonType refundReasonType) {
+        this.refundReasonType = refundReasonType;
     }
 }

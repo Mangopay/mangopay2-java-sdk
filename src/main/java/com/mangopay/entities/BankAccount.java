@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Address;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.BankAccountType;
@@ -18,98 +19,86 @@ public class BankAccount extends EntityBase {
 
     /**
      * User identifier.
-     *
-     * @deprecated Use {@link #getUserId()} and {@link #setUserId(String)} instead.
      */
-    @Deprecated
-    public String UserId;
+    @SerializedName("UserId")
+    private String userId;
 
     /**
      * Type of bank account.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(BankAccountType)} instead.
      */
-    @Deprecated
-    public BankAccountType Type;
+    @SerializedName("Type")
+    private BankAccountType type;
 
     /**
      * Owner name.
-     *
-     * @deprecated Use {@link #getOwnerName()} and {@link #setOwnerName(String)} instead.
      */
-    @Deprecated
-    public String OwnerName;
+    @SerializedName("OwnerName")
+    private String ownerName;
 
     /**
      * Owner address.
-     *
-     * @deprecated Use {@link #getOwnerAddress()} and {@link #setOwnerAddress(Address)} instead.
      */
-    @Deprecated
-    public Address OwnerAddress;
+    @SerializedName("OwnerAddress")
+    private Address ownerAddress;
 
     /**
      * Denotes whether bank account is active or not.
-     *
-     * @deprecated Use {@link #isActive()} and {@link #setActive(Boolean)} instead.
      */
-    @Deprecated
-    public Boolean Active;
+    @SerializedName("Active")
+    private Boolean active;
 
     /**
      * One of BankAccountDetails implementations, depending on Type.
-     *
-     * @deprecated Use {@link #getDetails()} and {@link #setDetails(BankAccountDetails)} instead.
      */
-    @Deprecated
-    public BankAccountDetails Details;
+    @SerializedName("Details")
+    private BankAccountDetails details;
 
     public String getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(String userId) {
-        this.UserId = userId;
+        this.userId = userId;
     }
 
     public BankAccountType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(BankAccountType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public String getOwnerName() {
-        return OwnerName;
+        return ownerName;
     }
 
     public void setOwnerName(String ownerName) {
-        this.OwnerName = ownerName;
+        this.ownerName = ownerName;
     }
 
     public Address getOwnerAddress() {
-        return OwnerAddress;
+        return ownerAddress;
     }
 
     public void setOwnerAddress(Address ownerAddress) {
-        this.OwnerAddress = ownerAddress;
+        this.ownerAddress = ownerAddress;
     }
 
     public Boolean isActive() {
-        return Active;
+        return active;
     }
 
     public void setActive(Boolean active) {
-        this.Active = active;
+        this.active = active;
     }
 
     public BankAccountDetails getDetails() {
-        return Details;
+        return details;
     }
 
     public void setDetails(BankAccountDetails details) {
-        this.Details = details;
+        this.details = details;
     }
 
     /**

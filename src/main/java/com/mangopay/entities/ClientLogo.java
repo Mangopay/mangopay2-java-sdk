@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 
 /**
@@ -9,17 +10,15 @@ public class ClientLogo extends EntityBase {
 
     /**
      * File content.
-     *
-     * @deprecated Use {@link #getFile()} and {@link #setFile(String)} instead.
      */
-    @Deprecated
-    public String File;
+    @SerializedName("File")
+    private String file;
 
     public String getFile() {
-        return File;
+        return file;
     }
 
     public void setFile(String file) {
-        this.File = file;
+        this.file = file;
     }
 }

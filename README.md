@@ -8,6 +8,9 @@ Compatibility Note
 -------------------------------------------------
 Since v1.0.6 of this SDK, you must be using at least v2.01 of the API ([more information about the changes required](https://docs.mangopay.com/api-v2-01-overview/))
 
+Be aware that since v2.0.0 of this SDK, v1.x is not be supported anymore. Every new features will only be added to v2.x versions only.
+v2.x version is a refactored version, which now fits with Java coding conventions. It contains some major breaking changes that needs some adaptations on your side.
+
 
 Installation
 -------------------------------------------------

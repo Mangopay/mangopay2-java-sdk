@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiHooks {
+public interface HookApi {
     /**
      * Creates new hook.
      * @param hook      Hook instance to be created.
@@ -20,7 +20,7 @@ public interface ApiHooks {
 
     /**
      * Creates new hook.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param hook              Hook instance to be created.
      * @return                  Hook instance returned from API.
      * @throws Exception

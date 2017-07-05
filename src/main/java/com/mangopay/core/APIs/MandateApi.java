@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by thepa on 18-Jan-17.
  */
-public interface ApiMandates {
+public interface MandateApi {
     /**
      * Creates new mandate.
      * @param mandate   Mandate instance to be created.
@@ -21,7 +21,7 @@ public interface ApiMandates {
 
     /**
      * Creates new mandate.
-     * @param idempotencyKey    Idempotency key for this request.
+     * @param idempotencyKey    idempotency key for this request.
      * @param mandate           Mandate instance to be created.
      * @return                  Mandate instance returned from API.
      * @throws Exception

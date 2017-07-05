@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.enumerations.TransactionNature;
 import com.mangopay.core.enumerations.TransactionStatus;
 import com.mangopay.core.enumerations.TransactionType;
@@ -12,84 +13,71 @@ import java.util.Map;
  */
 public class FilterTransactions extends Dto {
 
-    /**
-     * Transaction status.
-     *
-     * @deprecated Use {@link #getStatus()} and {@link #setStatus(TransactionStatus)} instead.
-     */
-    @Deprecated
-    public TransactionStatus Status;
+    @SerializedName("Status")
+    private TransactionStatus status;
 
     /**
      * Transaction type.
-     *
-     * @deprecated Use {@link #getType()} and {@link #setType(TransactionType)} instead.
      */
-    @Deprecated
-    public TransactionType Type;
+    @SerializedName("Type")
+    private TransactionType type;
 
     /**
      * Transaction nature.
-     *
-     * @deprecated Use {@link #getNature()} and {@link #setNature(TransactionNature)} instead.
      */
-    @Deprecated
-    public TransactionNature Nature;
+    @SerializedName("Nature")
+    private TransactionNature nature;
 
     /**
      * Start date in Unix format: return only transactions that have CreationDate BEFORE this date.
-     *
-     * @deprecated Use {@link #getBeforeDate()} and {@link #setBeforeDate(Long)} instead.
      */
-    @Deprecated
-    public Long BeforeDate;
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
 
     /**
      * End date in Unix format: return only transactions that have CreationDate AFTER this date.
-     *
-     * @deprecated Use {@link #getAfterDate()} and {@link #setAfterDate(Long)} instead.
      */
-    @Deprecated
-    public Long AfterDate;
+    @SerializedName("AfterDate")
+    private Long afterDate;
 
     public TransactionStatus getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(TransactionStatus status) {
-        this.Status = status;
+        this.status = status;
     }
 
     public TransactionType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(TransactionType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public TransactionNature getNature() {
-        return Nature;
+        return nature;
     }
 
     public void setNature(TransactionNature nature) {
-        this.Nature = nature;
+        this.nature = nature;
     }
 
     public Long getBeforeDate() {
-        return BeforeDate;
+        return beforeDate;
     }
 
     public void setBeforeDate(Long beforeDate) {
-        this.BeforeDate = beforeDate;
+        this.beforeDate = beforeDate;
     }
 
     public Long getAfterDate() {
-        return AfterDate;
+        return afterDate;
     }
 
     public void setAfterDate(Long afterDate) {
-        this.AfterDate = afterDate;
+        this.afterDate = afterDate;
     }
 
     /**
@@ -101,11 +89,11 @@ public class FilterTransactions extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
 
-        if (Status != null && Status != TransactionStatus.NotSpecified) result.put("Status", Status.toString());
-        if (Type != null && Type != TransactionType.NotSpecified) result.put("Type", Type.toString());
-        if (Nature != null && Nature != TransactionNature.NotSpecified) result.put("Nature", Nature.toString());
-        if (BeforeDate != null) result.put("BeforeDate", Long.toString(BeforeDate));
-        if (AfterDate != null) result.put("AfterDate", Long.toString(AfterDate));
+        if (status != null && status != TransactionStatus.NotSpecified) result.put("Status", status.toString());
+        if (type != null && type != TransactionType.NotSpecified) result.put("Type", type.toString());
+        if (nature != null && nature != TransactionNature.NotSpecified) result.put("Nature", nature.toString());
+        if (beforeDate != null) result.put("BeforeDate", Long.toString(beforeDate));
+        if (afterDate != null) result.put("AfterDate", Long.toString(afterDate));
 
         return result;
     }

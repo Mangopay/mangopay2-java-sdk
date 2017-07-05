@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.interfaces.BankAccountDetails;
 
@@ -10,65 +11,57 @@ public class BankAccountDetailsCA extends Dto implements BankAccountDetails {
 
     /**
      * Bank name.
-     *
-     * @deprecated Use {@link #getBankName()} and {@link #setBankName(String)} instead.
      */
-    @Deprecated
-    public String BankName;
+    @SerializedName("BankName")
+    private String bankName;
 
     /**
      * Institution number.
-     *
-     * @deprecated Use {@link #getInstitutionNumber()} and {@link #setInstitutionNumber(String)} instead.
      */
-    @Deprecated
-    public String InstitutionNumber;
+    @SerializedName("InstitutionNumber")
+    private String institutionNumber;
 
     /**
      * Branch code.
-     *
-     * @deprecated Use {@link #getBranchCode()} and {@link #setBranchCode(String)} instead.
      */
-    @Deprecated
-    public String BranchCode;
+    @SerializedName("BranchCode")
+    private String branchCode;
 
     /**
      * Account number.
-     *
-     * @deprecated Use {@link #getAccountNumber()} and {@link #setAccountNumber(String)} instead.
      */
-    @Deprecated
-    public String AccountNumber;
+    @SerializedName("AccountNumber")
+    private String accountNumber;
 
     public String getBankName() {
-        return BankName;
+        return bankName;
     }
 
     public void setBankName(String bankName) {
-        this.BankName = bankName;
+        this.bankName = bankName;
     }
 
     public String getInstitutionNumber() {
-        return InstitutionNumber;
+        return institutionNumber;
     }
 
     public void setInstitutionNumber(String institutionNumber) {
-        this.InstitutionNumber = institutionNumber;
+        this.institutionNumber = institutionNumber;
     }
 
     public String getBranchCode() {
-        return BranchCode;
+        return branchCode;
     }
 
     public void setBranchCode(String branchCode) {
-        this.BranchCode = branchCode;
+        this.branchCode = branchCode;
     }
 
     public String getAccountNumber() {
-        return AccountNumber;
+        return accountNumber;
     }
 
     public void setAccountNumber(String accountNumber) {
-        this.AccountNumber = accountNumber;
+        this.accountNumber = accountNumber;
     }
 }
