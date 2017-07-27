@@ -435,6 +435,7 @@ public class RestTool {
     }
 
     private void readResponseHeaders(HttpURLConnection conn) {
+        List<RateLimit> updatedRateLimits = null;
         for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
             for (String v : k.getValue()) {
 
@@ -442,6 +443,36 @@ public class RestTool {
 
                 if (k.getKey() == null) continue;
 
+                if (k.getKey().equals("X-RateLimit-Remaining")) {
+                    if (updatedRateLimits == null) {
+                        updatedRateLimits = initRateLimits();
+                    }
+                    List<String> callsRemaining = k.getValue();
+                    updatedRateLimits.get(0).setCallsRemaining(Integer.valueOf(callsRemaining.get(3)));
+                    updatedRateLimits.get(1).setCallsRemaining(Integer.valueOf(callsRemaining.get(2)));
+                    updatedRateLimits.get(2).setCallsRemaining(Integer.valueOf(callsRemaining.get(1)));
+                    updatedRateLimits.get(3).setCallsRemaining(Integer.valueOf(callsRemaining.get(0)));
+                }
+                if (k.getKey().equals("X-RateLimit")) {
+                    if (updatedRateLimits == null) {
+                        updatedRateLimits = initRateLimits();
+                    }
+                    List<String> callsMade = k.getValue();
+                    updatedRateLimits.get(0).setCallsMade(Integer.valueOf(callsMade.get(3)));
+                    updatedRateLimits.get(1).setCallsMade(Integer.valueOf(callsMade.get(2)));
+                    updatedRateLimits.get(2).setCallsMade(Integer.valueOf(callsMade.get(1)));
+                    updatedRateLimits.get(3).setCallsMade(Integer.valueOf(callsMade.get(0)));
+                }
+                if (k.getKey().equals("X-RateLimit-Reset")) {
+                    if (updatedRateLimits == null) {
+                        updatedRateLimits = initRateLimits();
+                    }
+                    List<String> resetTimes = k.getValue();
+                    updatedRateLimits.get(0).setResetTimeMillis(Long.valueOf(resetTimes.get(3)));
+                    updatedRateLimits.get(1).setResetTimeMillis(Long.valueOf(resetTimes.get(2)));
+                    updatedRateLimits.get(2).setResetTimeMillis(Long.valueOf(resetTimes.get(1)));
+                    updatedRateLimits.get(3).setResetTimeMillis(Long.valueOf(resetTimes.get(0)));
+                }
                 if (k.getKey().equals("X-Number-Of-Pages")) {
                     this.pagination.setTotalPages(Integer.parseInt(v));
                 }
@@ -471,6 +502,18 @@ public class RestTool {
                 }
             }
         }
+        if(updatedRateLimits != null) {
+            root.setRateLimits(updatedRateLimits);
+        }
+    }
+
+    private List<RateLimit> initRateLimits() {
+        List<RateLimit> rateLimits = new ArrayList<>(4);
+        rateLimits.addAll(Arrays.asList(new RateLimit(15),
+                new RateLimit(30),
+                new RateLimit(60),
+                new RateLimit(24 * 60)));
+        return rateLimits;
     }
 
     private <T extends Dto> HashMap<String, Object> buildRequestData(Class<T> classOfT, T entity) {
