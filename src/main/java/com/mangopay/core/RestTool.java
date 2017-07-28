@@ -502,18 +502,17 @@ public class RestTool {
                 }
             }
         }
-        if(updatedRateLimits != null) {
+        if (updatedRateLimits != null) {
             root.setRateLimits(updatedRateLimits);
         }
     }
 
     private List<RateLimit> initRateLimits() {
-        List<RateLimit> rateLimits = new ArrayList<>(4);
-        rateLimits.addAll(Arrays.asList(new RateLimit(15),
+        return Arrays.asList(
+                new RateLimit(15),
                 new RateLimit(30),
                 new RateLimit(60),
-                new RateLimit(24 * 60)));
-        return rateLimits;
+                new RateLimit(24 * 60));
     }
 
     private <T extends Dto> HashMap<String, Object> buildRequestData(Class<T> classOfT, T entity) {

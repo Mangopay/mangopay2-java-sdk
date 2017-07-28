@@ -8,8 +8,7 @@ nbactions.xml
 .nb-gradle/
 
 ### Gradle ###
-build/
 .gradle
 /target/
-
 *.gpg
+.idea/
