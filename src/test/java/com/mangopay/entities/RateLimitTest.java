@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 /**
  * Tests concerning rate limit data storage and update.
@@ -16,19 +16,12 @@ public class RateLimitTest extends BaseTest {
 
     @Test
     public void rateLimitsUpdateTest() throws Exception {
-        getJohn();
+        assertNull(this.api.getRateLimits());
 
-        List<RateLimit> initialRateLimits = this.api.getRateLimits();
+        getJohnsAccount();
 
-        getJohn(true);
-
-        List<RateLimit> updatedRateLimits = this.api.getRateLimits();
-
-        assertEquals(initialRateLimits.size(), updatedRateLimits.size());
-
-        for(int i = 0; i < initialRateLimits.size(); i++) {
-            assertEquals(initialRateLimits.get(i).getCallsMade() + 1, updatedRateLimits.get(i).getCallsMade());
-            assertEquals(initialRateLimits.get(i).getCallsRemaining() - 1, updatedRateLimits.get(i).getCallsRemaining());
-        }
+        List<RateLimit> rateLimits = this.api.getRateLimits();
+        assertNotNull(rateLimits);
+        assertTrue(rateLimits.size() == 4);
     }
 }
