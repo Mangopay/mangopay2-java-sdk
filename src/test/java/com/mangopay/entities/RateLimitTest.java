@@ -16,11 +16,11 @@ public class RateLimitTest extends BaseTest {
 
     @Test
     public void rateLimitsUpdateTest() throws Exception {
-        User john = getJohn();
+        getJohn();
 
         List<RateLimit> initialRateLimits = this.api.getRateLimits();
 
-        john = getJohn(true);
+        getJohn(true);
 
         List<RateLimit> updatedRateLimits = this.api.getRateLimits();
 
