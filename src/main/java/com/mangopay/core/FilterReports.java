@@ -54,6 +54,18 @@ public class FilterReports extends Dto {
     @SerializedName("MaxDebitedFundsCurrency")
     private CurrencyIso maxDebitedFundsCurrency;
 
+    @SerializedName("MinFeesAmount")
+    private Integer minFeesAmount;
+
+    @SerializedName("MinFeesCurrency")
+    private CurrencyIso minFeesCurrency;
+
+    @SerializedName("MaxFeesAmount")
+    private Integer maxFeesAmount;
+
+    @SerializedName("MaxFeesCurrency")
+    private CurrencyIso maxFeesCurrency;
+
     public List<TransactionStatus> getStatus() {
         return status;
     }
@@ -148,5 +160,37 @@ public class FilterReports extends Dto {
 
     public void setMaxDebitedFundsCurrency(CurrencyIso maxDebitedFundsCurrency) {
         this.maxDebitedFundsCurrency = maxDebitedFundsCurrency;
+    }
+
+    public Integer getMinFeesAmount() {
+        return minFeesAmount;
+    }
+
+    public void setMinFeesAmount(Integer minFeesAmount) {
+        this.minFeesAmount = minFeesAmount;
+    }
+
+    public CurrencyIso getMinFeesCurrency() {
+        return minFeesCurrency;
+    }
+
+    public void setMinFeesCurrency(CurrencyIso minFeesCurrency) {
+        this.minFeesCurrency = minFeesCurrency;
+    }
+
+    public Integer getMaxFeesAmount() {
+        return maxFeesAmount;
+    }
+
+    public void setMaxFeesAmount(Integer maxFeesAmount) {
+        this.maxFeesAmount = maxFeesAmount;
+    }
+
+    public CurrencyIso getMaxFeesCurrency() {
+        return maxFeesCurrency;
+    }
+
+    public void setMaxFeesCurrency(CurrencyIso maxFeesCurrency) {
+        this.maxFeesCurrency = maxFeesCurrency;
     }
 }

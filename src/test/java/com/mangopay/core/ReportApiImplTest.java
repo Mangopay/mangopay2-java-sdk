@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.ReportType;
 import com.mangopay.core.enumerations.SortDirection;
 import com.mangopay.entities.ReportRequest;
@@ -30,11 +31,20 @@ public class ReportApiImplTest extends BaseTest {
         ReportRequest reportPost = new ReportRequest();
         reportPost.setReportType(ReportType.TRANSACTIONS);
 
+        int minFees = 10;
+        CurrencyIso minCurrency = CurrencyIso.USD;
+        int maxFees = 20;
+        CurrencyIso maxCurrency = CurrencyIso.EUR;
+
         String johnsId = this.getJohn().getId();
         String walletId = this.getJohnsWallet().getId();
         reportPost.setFilters(new FilterReports());
         reportPost.getFilters().setAuthorId(johnsId);
         reportPost.getFilters().setWalletId(walletId);
+        reportPost.getFilters().setMinFeesAmount(minFees);
+        reportPost.getFilters().setMinFeesCurrency(minCurrency);
+        reportPost.getFilters().setMaxFeesAmount(maxFees);
+        reportPost.getFilters().setMaxFeesCurrency(maxCurrency);
 
         ReportRequest report = this.api.getReportApi().create(reportPost);
         assertNotNull(report);
@@ -44,6 +54,14 @@ public class ReportApiImplTest extends BaseTest {
         assertNotNull(report.getFilters().getWalletId());
         assertEquals(walletId, report.getFilters().getWalletId());
         assertTrue(report.getId().length() > 0);
+        assertNotNull(report.getFilters().getMinFeesAmount());
+        assertTrue(report.getFilters().getMinFeesAmount() == minFees);
+        assertNotNull(report.getFilters().getMinFeesCurrency());
+        assertEquals(report.getFilters().getMinFeesCurrency(), minCurrency);
+        assertNotNull(report.getFilters().getMaxFeesAmount());
+        assertTrue(report.getFilters().getMaxFeesAmount() == maxFees);
+        assertNotNull(report.getFilters().getMaxFeesCurrency());
+        assertEquals(report.getFilters().getMaxFeesCurrency(), maxCurrency);
     }
 
     @Test
