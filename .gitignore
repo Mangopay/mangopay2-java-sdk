@@ -10,5 +10,5 @@ nbactions.xml
 ### Gradle ###
 .gradle
 /target/
+*.iml
 *.gpg
-.idea/

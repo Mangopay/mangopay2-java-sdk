@@ -21,6 +21,7 @@ public class RateLimitTest extends BaseTest {
         getJohnsCardPreAuthorization();
 
         List<RateLimit> rateLimits = this.api.getRateLimits();
+
         assertNotNull(rateLimits);
         assertTrue(rateLimits.size() == 4);
     }
