@@ -323,7 +323,7 @@ public class PayInApiImplTest extends BaseTest {
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(bankAccountId);
         mandatePost.setCulture(CultureCode.EN);
-        mandatePost.setReturnURL(returnUrl);
+        mandatePost.setReturnUrl(returnUrl);
         Mandate mandate = this.api.getMandateApi().create(mandatePost);
 
         //	! IMPORTANT NOTE !
@@ -349,7 +349,7 @@ public class PayInApiImplTest extends BaseTest {
         PayIn createPayIn = this.api.getPayInApi().create(payIn);
 
         assertNotNull(createPayIn);
-        assertNotEquals("In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.", TransactionStatus.FAILED, createPayIn.Status);
+        assertNotEquals("In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.", TransactionStatus.FAILED, createPayIn.getStatus());
 
         assertFalse(createPayIn.getId().isEmpty());
         assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());

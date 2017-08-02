@@ -46,6 +46,9 @@ public class PayIn extends Transaction {
     @SerializedName("ExecutionDetails")
     private PayInExecutionDetails executionDetails;
 
+    @SerializedName("ChargeDate")
+    private Long chargeDate;
+
     public String getCreditedWalletId() {
         return creditedWalletId;
     }
@@ -84,6 +87,14 @@ public class PayIn extends Transaction {
 
     public void setExecutionDetails(PayInExecutionDetails executionDetails) {
         this.executionDetails = executionDetails;
+    }
+
+    public Long getChargeDate() {
+        return chargeDate;
+    }
+
+    public void setChargeDate(Long chargeDate) {
+        this.chargeDate = chargeDate;
     }
 
     /**
@@ -150,6 +161,7 @@ public class PayIn extends Transaction {
 
         result.add("PaymentType");
         result.add("ExecutionType");
+        result.add("ChargeDate");
 
         return result;
     }
