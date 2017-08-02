@@ -18,7 +18,7 @@ public class RateLimitTest extends BaseTest {
     public void rateLimitsUpdateTest() throws Exception {
         assertNull(this.api.getRateLimits());
 
-        getJohnsAccount();
+        getJohnsCardPreAuthorization();
 
         List<RateLimit> rateLimits = this.api.getRateLimits();
         assertNotNull(rateLimits);
