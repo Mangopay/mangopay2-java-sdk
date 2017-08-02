@@ -47,6 +47,16 @@ public class ReportApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createWalletReport() throws Exception {
+        ReportRequest reportRequest = new ReportRequest();
+
+        ReportRequest report = this.api.getReportApi().createWalletReport(reportRequest);
+
+        assertNotNull(report);
+        assertEquals(report.getReportType(), ReportType.WALLETS);
+    }
+
+    @Test
     public void getReport() throws Exception {
         ReportRequest report = this.getJohnsReport();
         ReportRequest getReport = this.api.getReportApi().get(report.getId());
