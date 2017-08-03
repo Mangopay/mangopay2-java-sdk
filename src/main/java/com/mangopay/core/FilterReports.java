@@ -18,6 +18,20 @@ public class FilterReports extends Dto {
         resultCode = new ArrayList<>();
     }
 
+    /*
+     * Common
+     */
+
+    @SerializedName("BeforeDate")
+    private Long beforeDate;
+
+    @SerializedName("AfterDate")
+    private Long afterDate;
+
+    /*
+     * Transactions Report
+     */
+
     @SerializedName("Status")
     private List<TransactionStatus> status;
 
@@ -26,12 +40,6 @@ public class FilterReports extends Dto {
 
     @SerializedName("Nature")
     private List<TransactionNature> nature;
-
-    @SerializedName("BeforeDate")
-    private Long beforeDate;
-
-    @SerializedName("AfterDate")
-    private Long afterDate;
 
     @SerializedName("ResultCode")
     private List<String> resultCode;
@@ -53,6 +61,46 @@ public class FilterReports extends Dto {
 
     @SerializedName("MaxDebitedFundsCurrency")
     private CurrencyIso maxDebitedFundsCurrency;
+
+    /*
+    * Wallets Report
+    */
+
+    /**
+     * The ID of the wallet owner requesting the report.
+     */
+    @SerializedName("OwnerId")
+    private String ownerId;
+
+    /**
+     * The currency used in the report.
+     */
+    @SerializedName("Currency")
+    private CurrencyIso currency;
+
+    /**
+     * The minimum balance amount of the wallets taken into consideration.
+     */
+    @SerializedName("MinBalanceAmount")
+    private int minBalanceAmount;
+
+    /**
+     * The currency of the {@link #minBalanceAmount} filter.
+     */
+    @SerializedName("MinBalanceCurrency")
+    private CurrencyIso minBalanceCurrency;
+
+    /**
+     * The maximum balance amount of the wallets taken into consideration.
+     */
+    @SerializedName("MaxBalanceAmount")
+    private int maxBalanceAmount;
+
+    /**
+     * The currency of the {@link #maxBalanceAmount} filter.
+     */
+    @SerializedName("MaxBalanceCurrency")
+    private CurrencyIso maxBalanceCurrency;
 
     public List<TransactionStatus> getStatus() {
         return status;
@@ -148,5 +196,53 @@ public class FilterReports extends Dto {
 
     public void setMaxDebitedFundsCurrency(CurrencyIso maxDebitedFundsCurrency) {
         this.maxDebitedFundsCurrency = maxDebitedFundsCurrency;
+    }
+
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public CurrencyIso getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(CurrencyIso currency) {
+        this.currency = currency;
+    }
+
+    public int getMinBalanceAmount() {
+        return minBalanceAmount;
+    }
+
+    public void setMinBalanceAmount(int minBalanceAmount) {
+        this.minBalanceAmount = minBalanceAmount;
+    }
+
+    public CurrencyIso getMinBalanceCurrency() {
+        return minBalanceCurrency;
+    }
+
+    public void setMinBalanceCurrency(CurrencyIso minBalanceCurrency) {
+        this.minBalanceCurrency = minBalanceCurrency;
+    }
+
+    public int getMaxBalanceAmount() {
+        return maxBalanceAmount;
+    }
+
+    public void setMaxBalanceAmount(int maxBalanceAmount) {
+        this.maxBalanceAmount = maxBalanceAmount;
+    }
+
+    public CurrencyIso getMaxBalanceCurrency() {
+        return maxBalanceCurrency;
+    }
+
+    public void setMaxBalanceCurrency(CurrencyIso maxBalanceCurrency) {
+        this.maxBalanceCurrency = maxBalanceCurrency;
     }
 }
