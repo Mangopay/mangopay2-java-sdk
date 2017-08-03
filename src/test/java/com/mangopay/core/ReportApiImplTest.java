@@ -1,6 +1,5 @@
 package com.mangopay.core;
 
-import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.ReportType;
 import com.mangopay.core.enumerations.SortDirection;
 import com.mangopay.entities.ReportRequest;
@@ -16,18 +15,10 @@ import static org.junit.Assert.*;
  */
 public class ReportApiImplTest extends BaseTest {
 
-    private static final int SMALL_AMOUNT = 100;
-    private static final int LARGE_AMOUNT = 9999;
-    private static final CurrencyIso CURRENCY = CurrencyIso.EUR;
-
     @Test
-    public void createTransactionsReport() throws Exception {
-        createReport(ReportType.TRANSACTIONS);
-    }
-
-    private void createReport(ReportType type) throws Exception {
+    public void createReport() throws Exception {
         ReportRequest reportPost = new ReportRequest();
-        reportPost.setReportType(type);
+        reportPost.setReportType(ReportType.TRANSACTIONS);
 
         ReportRequest report = this.api.getReportApi().create(reportPost);
         assertNotNull(report);
@@ -35,61 +26,24 @@ public class ReportApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createWalletsReport() throws Exception {
-        createReport(ReportType.WALLETS);
-    }
-
-    @Test
-    public void createFilteredTransactionsReport() throws Exception {
-        ReportRequest report = createFilteredTransactionsReport(ReportType.TRANSACTIONS);
-        checkReport(report);
-    }
-
-    private ReportRequest createFilteredTransactionsReport(ReportType type) throws Exception {
+    public void createFilteredReport() throws Exception {
         ReportRequest reportPost = new ReportRequest();
-        reportPost.setReportType(type);
+        reportPost.setReportType(ReportType.TRANSACTIONS);
 
         String johnsId = this.getJohn().getId();
         String walletId = this.getJohnsWallet().getId();
         reportPost.setFilters(new FilterReports());
-        if (type.equals(ReportType.WALLETS)) {
-            reportPost.getFilters().setOwnerId(johnsId);
-            reportPost.getFilters().setMinBalanceAmount(SMALL_AMOUNT);
-            reportPost.getFilters().setMinBalanceCurrency(CURRENCY);
-            reportPost.getFilters().setMaxBalanceAmount(LARGE_AMOUNT);
-            reportPost.getFilters().setMaxBalanceCurrency(CURRENCY);
-        } else {
-            reportPost.getFilters().setAuthorId(johnsId);
-            reportPost.getFilters().setWalletId(walletId);
-        }
+        reportPost.getFilters().setAuthorId(johnsId);
+        reportPost.getFilters().setWalletId(walletId);
 
-        return this.api.getReportApi().create(reportPost);
-    }
-
-    private void checkReport(ReportRequest report) throws Exception {
+        ReportRequest report = this.api.getReportApi().create(reportPost);
         assertNotNull(report);
-        assertTrue(report.getId().length() > 0);
         assertNotNull(report.getFilters());
-
-        if (report.getReportType().equals(ReportType.WALLETS)) {
-            assertNotNull(report.getFilters().getOwnerId());
-            assertEquals(this.getJohn().getId(), report.getFilters().getOwnerId());
-            assertEquals(report.getFilters().getMinBalanceAmount(), SMALL_AMOUNT);
-            assertEquals(report.getFilters().getMinBalanceCurrency(), CURRENCY);
-            assertEquals(report.getFilters().getMaxBalanceAmount(), LARGE_AMOUNT);
-            assertEquals(report.getFilters().getMaxBalanceCurrency(), CURRENCY);
-        } else {
-            assertNotNull(report.getFilters().getAuthorId());
-            assertEquals(this.getJohn().getId(), report.getFilters().getAuthorId());
-            assertNotNull(report.getFilters().getWalletId());
-            assertEquals(this.getJohnsWallet().getId(), report.getFilters().getWalletId());
-        }
-    }
-
-    @Test
-    public void createFilteredWalletsReport() throws Exception {
-        ReportRequest report = createFilteredTransactionsReport(ReportType.WALLETS);
-        checkReport(report);
+        assertNotNull(report.getFilters().getAuthorId());
+        assertEquals(johnsId, report.getFilters().getAuthorId());
+        assertNotNull(report.getFilters().getWalletId());
+        assertEquals(walletId, report.getFilters().getWalletId());
+        assertTrue(report.getId().length() > 0);
     }
 
     @Test
