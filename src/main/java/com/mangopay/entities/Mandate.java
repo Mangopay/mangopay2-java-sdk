@@ -3,7 +3,6 @@ package com.mangopay.entities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.*;
-import com.sun.xml.internal.ws.developer.Serialization;
 
 import java.util.ArrayList;
 
