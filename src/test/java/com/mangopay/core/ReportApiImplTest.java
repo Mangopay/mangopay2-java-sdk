@@ -92,14 +92,6 @@ public class ReportApiImplTest extends BaseTest {
             assertEquals(this.getJohn().getId(), report.getFilters().getAuthorId());
             assertNotNull(report.getFilters().getWalletId());
             assertEquals(this.getJohnsWallet().getId(), report.getFilters().getWalletId());
-            assertNotNull(report.getFilters().getMinFeesAmount());
-            assertTrue(report.getFilters().getMinFeesAmount() == minFees);
-            assertNotNull(report.getFilters().getMinFeesCurrency());
-            assertEquals(report.getFilters().getMinFeesCurrency(), minCurrency);
-            assertNotNull(report.getFilters().getMaxFeesAmount());
-            assertTrue(report.getFilters().getMaxFeesAmount() == maxFees);
-            assertNotNull(report.getFilters().getMaxFeesCurrency());
-            assertEquals(report.getFilters().getMaxFeesCurrency(), maxCurrency);
         }
     }
 
