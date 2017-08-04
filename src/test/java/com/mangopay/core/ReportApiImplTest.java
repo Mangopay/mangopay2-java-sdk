@@ -24,7 +24,12 @@ public class ReportApiImplTest extends BaseTest {
     public void createTransactionsReport() throws Exception {
         createReport(ReportType.TRANSACTIONS);
     }
-
+  
+    @Test
+    public void createWalletsReport() throws Exception {
+        createReport(ReportType.WALLETS);
+    }
+  
     private void createReport(ReportType type) throws Exception {
         ReportRequest reportPost = new ReportRequest();
         reportPost.setReportType(type);
@@ -32,11 +37,6 @@ public class ReportApiImplTest extends BaseTest {
         ReportRequest report = this.api.getReportApi().create(reportPost);
         assertNotNull(report);
         assertTrue(report.getId().length() > 0);
-    }
-
-    @Test
-    public void createWalletsReport() throws Exception {
-        createReport(ReportType.WALLETS);
     }
 
     @Test
@@ -49,9 +49,15 @@ public class ReportApiImplTest extends BaseTest {
         ReportRequest reportPost = new ReportRequest();
         reportPost.setReportType(type);
 
+        int minFees = 10;
+        CurrencyIso minCurrency = CurrencyIso.USD;
+        int maxFees = 20;
+        CurrencyIso maxCurrency = CurrencyIso.EUR;
+
         String johnsId = this.getJohn().getId();
         String walletId = this.getJohnsWallet().getId();
         reportPost.setFilters(new FilterReports());
+      
         if (type.equals(ReportType.WALLETS)) {
             reportPost.getFilters().setOwnerId(johnsId);
             reportPost.getFilters().setMinBalanceAmount(SMALL_AMOUNT);
@@ -61,8 +67,11 @@ public class ReportApiImplTest extends BaseTest {
         } else {
             reportPost.getFilters().setAuthorId(johnsId);
             reportPost.getFilters().setWalletId(walletId);
+            reportPost.getFilters().setMinFeesAmount(minFees);
+            reportPost.getFilters().setMinFeesCurrency(minCurrency);
+            reportPost.getFilters().setMaxFeesAmount(maxFees);
+            reportPost.getFilters().setMaxFeesCurrency(maxCurrency);
         }
-
         return this.api.getReportApi().create(reportPost);
     }
 
@@ -83,6 +92,14 @@ public class ReportApiImplTest extends BaseTest {
             assertEquals(this.getJohn().getId(), report.getFilters().getAuthorId());
             assertNotNull(report.getFilters().getWalletId());
             assertEquals(this.getJohnsWallet().getId(), report.getFilters().getWalletId());
+            assertNotNull(report.getFilters().getMinFeesAmount());
+            assertTrue(report.getFilters().getMinFeesAmount() == minFees);
+            assertNotNull(report.getFilters().getMinFeesCurrency());
+            assertEquals(report.getFilters().getMinFeesCurrency(), minCurrency);
+            assertNotNull(report.getFilters().getMaxFeesAmount());
+            assertTrue(report.getFilters().getMaxFeesAmount() == maxFees);
+            assertNotNull(report.getFilters().getMaxFeesCurrency());
+            assertEquals(report.getFilters().getMaxFeesCurrency(), maxCurrency);
         }
     }
 
