@@ -4,6 +4,9 @@ import com.mangopay.core.APIs.*;
 import com.mangopay.core.APIs.implementation.*;
 import com.mangopay.core.AuthorizationTokenManager;
 import com.mangopay.core.Configuration;
+import com.mangopay.entities.RateLimit;
+
+import java.util.List;
 
 /**
  * MangoPay API main entry point.
@@ -42,6 +45,15 @@ public class MangoPayApi {
         setReportApi(new ReportApiImpl(this));
         setBankingAliasApi(new BankingAliasApiImpl(this));
     }
+
+    ////////////////////////////////////////
+    // Rate limits
+    ////////////////////////////////////////
+
+    /**
+     * Holds data as specified by X-RateLimit response headers.
+     */
+    private List<RateLimit> rateLimits;
 
     ////////////////////////////////////////
     // Config/authorization related fields
@@ -155,6 +167,24 @@ public class MangoPayApi {
      * Provides Banking Alias methods.
      */
     private BankingAliasApi bankingAliases;
+
+    /**
+     * Gets the rate limit data.
+     *
+     * @return
+     */
+    public List<RateLimit> getRateLimits() {
+        return rateLimits;
+    }
+
+    /**
+     * Sets the rate limit data.
+     *
+     * @param rateLimits The rate limit data
+     */
+    public void setRateLimits(List<RateLimit> rateLimits) {
+        this.rateLimits = rateLimits;
+    }
 
     public AuthorizationTokenManager getOAuthTokenManager() {
         return oAuthTokenManager;
