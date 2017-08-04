@@ -35,7 +35,12 @@ public class ReportApiImpl extends ApiBase implements ReportApi {
         //return this.createObject(ReportRequestTransport.class, idempotencyKey, "MethodKey.ReportRequest", reportRequestTransport, reportRequestTransport.ReportType.ToString()).GetBusinessObject();
         return this.createObject(ReportRequest.class, idempotencyKey, "reports_request", reportRequest, reportRequest.getReportType().toString());
     }
-    
+
+    @Override
+    public ReportRequest createWalletReport(ReportRequest reportRequest) throws Exception {
+        return this.createObject(ReportRequest.class, null, "reports_wallets_create", reportRequest);
+    }
+
     @Override
     public ReportRequest get(String reportId) throws Exception {
         return this.getObject(ReportRequest.class, "reports_get", reportId);

@@ -136,7 +136,7 @@ public abstract class ApiBase {
         put("disputes_document_get_for_dispute", new String[] { "/disputes/%s/documents", RequestType.GET.toString() });
         put("disputes_document_get_for_client", new String[] { "/dispute-documents", RequestType.GET.toString() });
         put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
-	put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
+	    put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
 
         put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
 
@@ -150,11 +150,12 @@ public abstract class ApiBase {
         put("reports_request", new String[]{ "/reports/%s", RequestType.POST.toString() });
         put("reports_get_all", new String[]{ "/reports", RequestType.GET.toString() });
         put("reports_get", new String[]{ "/reports/%s", RequestType.GET.toString() });
-        
+
+        put("reports_wallets_create", new String[] { "/reports/wallets", RequestType.POST.toString() });
 
         put("banking_alias_create_iban", new String[] { "/wallets/%s/bankingaliases/iban", RequestType.POST.toString() });
-        put("banking_alias_deactivate", new String[] { "/bankingaliases/%s", RequestType.PUT.toString()});
-        put("banking_alias_get", new String[]{ "/bankingaliases/%s", RequestType.GET.toString() });
+        put("banking_alias_deactivate", new String[] { "/bankingaliases/%s", RequestType.PUT.toString() });
+        put("banking_alias_get", new String[] { "/bankingaliases/%s", RequestType.GET.toString() });
         put("banking_aliases_get_for_wallet", new String[] { "/wallets/%s/bankingaliases", RequestType.GET.toString() });
     }};
 

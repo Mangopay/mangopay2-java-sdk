@@ -16,10 +16,23 @@ import static org.junit.Assert.*;
  */
 public class ReportApiImplTest extends BaseTest {
 
+    private static final int SMALL_AMOUNT = 100;
+    private static final int LARGE_AMOUNT = 9999;
+    private static final CurrencyIso CURRENCY = CurrencyIso.EUR;
+
     @Test
-    public void createReport() throws Exception {
+    public void createTransactionsReport() throws Exception {
+        createReport(ReportType.TRANSACTIONS);
+    }
+  
+    @Test
+    public void createWalletsReport() throws Exception {
+        createReport(ReportType.WALLETS);
+    }
+  
+    private void createReport(ReportType type) throws Exception {
         ReportRequest reportPost = new ReportRequest();
-        reportPost.setReportType(ReportType.TRANSACTIONS);
+        reportPost.setReportType(type);
 
         ReportRequest report = this.api.getReportApi().create(reportPost);
         assertNotNull(report);
@@ -27,9 +40,14 @@ public class ReportApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createFilteredReport() throws Exception {
+    public void createFilteredTransactionsReport() throws Exception {
+        ReportRequest report = createFilteredTransactionsReport(ReportType.TRANSACTIONS);
+        checkReport(report);
+    }
+
+    private ReportRequest createFilteredTransactionsReport(ReportType type) throws Exception {
         ReportRequest reportPost = new ReportRequest();
-        reportPost.setReportType(ReportType.TRANSACTIONS);
+        reportPost.setReportType(type);
 
         int minFees = 10;
         CurrencyIso minCurrency = CurrencyIso.USD;
@@ -39,29 +57,58 @@ public class ReportApiImplTest extends BaseTest {
         String johnsId = this.getJohn().getId();
         String walletId = this.getJohnsWallet().getId();
         reportPost.setFilters(new FilterReports());
-        reportPost.getFilters().setAuthorId(johnsId);
-        reportPost.getFilters().setWalletId(walletId);
-        reportPost.getFilters().setMinFeesAmount(minFees);
-        reportPost.getFilters().setMinFeesCurrency(minCurrency);
-        reportPost.getFilters().setMaxFeesAmount(maxFees);
-        reportPost.getFilters().setMaxFeesCurrency(maxCurrency);
+      
+        if (type.equals(ReportType.WALLETS)) {
+            reportPost.getFilters().setOwnerId(johnsId);
+            reportPost.getFilters().setMinBalanceAmount(SMALL_AMOUNT);
+            reportPost.getFilters().setMinBalanceCurrency(CURRENCY);
+            reportPost.getFilters().setMaxBalanceAmount(LARGE_AMOUNT);
+            reportPost.getFilters().setMaxBalanceCurrency(CURRENCY);
+        } else {
+            reportPost.getFilters().setAuthorId(johnsId);
+            reportPost.getFilters().setWalletId(walletId);
+            reportPost.getFilters().setMinFeesAmount(minFees);
+            reportPost.getFilters().setMinFeesCurrency(minCurrency);
+            reportPost.getFilters().setMaxFeesAmount(maxFees);
+            reportPost.getFilters().setMaxFeesCurrency(maxCurrency);
+        }
+        return this.api.getReportApi().create(reportPost);
+    }
 
-        ReportRequest report = this.api.getReportApi().create(reportPost);
+    private void checkReport(ReportRequest report) throws Exception {
         assertNotNull(report);
-        assertNotNull(report.getFilters());
-        assertNotNull(report.getFilters().getAuthorId());
-        assertEquals(johnsId, report.getFilters().getAuthorId());
-        assertNotNull(report.getFilters().getWalletId());
-        assertEquals(walletId, report.getFilters().getWalletId());
         assertTrue(report.getId().length() > 0);
-        assertNotNull(report.getFilters().getMinFeesAmount());
-        assertTrue(report.getFilters().getMinFeesAmount() == minFees);
-        assertNotNull(report.getFilters().getMinFeesCurrency());
-        assertEquals(report.getFilters().getMinFeesCurrency(), minCurrency);
-        assertNotNull(report.getFilters().getMaxFeesAmount());
-        assertTrue(report.getFilters().getMaxFeesAmount() == maxFees);
-        assertNotNull(report.getFilters().getMaxFeesCurrency());
-        assertEquals(report.getFilters().getMaxFeesCurrency(), maxCurrency);
+        assertNotNull(report.getFilters());
+
+        if (report.getReportType().equals(ReportType.WALLETS)) {
+            assertNotNull(report.getFilters().getOwnerId());
+            assertEquals(this.getJohn().getId(), report.getFilters().getOwnerId());
+            assertEquals(report.getFilters().getMinBalanceAmount(), SMALL_AMOUNT);
+            assertEquals(report.getFilters().getMinBalanceCurrency(), CURRENCY);
+            assertEquals(report.getFilters().getMaxBalanceAmount(), LARGE_AMOUNT);
+            assertEquals(report.getFilters().getMaxBalanceCurrency(), CURRENCY);
+        } else {
+            assertNotNull(report.getFilters().getAuthorId());
+            assertEquals(this.getJohn().getId(), report.getFilters().getAuthorId());
+            assertNotNull(report.getFilters().getWalletId());
+            assertEquals(this.getJohnsWallet().getId(), report.getFilters().getWalletId());
+        }
+    }
+
+    @Test
+    public void createFilteredWalletsReport() throws Exception {
+        ReportRequest report = createFilteredTransactionsReport(ReportType.WALLETS);
+        checkReport(report);
+    }
+
+    @Test
+    public void createWalletReport() throws Exception {
+        ReportRequest reportRequest = new ReportRequest();
+
+        ReportRequest report = this.api.getReportApi().createWalletReport(reportRequest);
+
+        assertNotNull(report);
+        assertEquals(report.getReportType(), ReportType.WALLETS);
     }
 
     @Test
