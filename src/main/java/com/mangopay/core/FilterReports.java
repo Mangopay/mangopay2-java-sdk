@@ -257,7 +257,7 @@ public class FilterReports extends Dto {
 
     public void setMaxBalanceCurrency(CurrencyIso maxBalanceCurrency) {
         this.maxBalanceCurrency = maxBalanceCurrency;
-
+    }
       
     public Integer getMinFeesAmount() {
         return minFeesAmount;
