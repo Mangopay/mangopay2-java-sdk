@@ -15,6 +15,8 @@ public interface ReportApi {
 
     ReportRequest create(String idempotencyKey, ReportRequest reportRequest) throws Exception;
 
+    ReportRequest createWalletReport(ReportRequest reportRequest) throws Exception;
+
     ReportRequest get(String reportId) throws Exception;
 
     List<ReportRequest> getAll(Pagination pagination, FilterReportsList filters, Sorting sort) throws Exception;

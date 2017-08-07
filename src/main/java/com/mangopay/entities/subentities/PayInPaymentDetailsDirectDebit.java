@@ -28,6 +28,12 @@ public class PayInPaymentDetailsDirectDebit extends Dto implements PayInPaymentD
     @SerializedName("StatementDescriptor")
     private String statementDescriptor;
 
+    /**
+     * The date when the user will be charged.
+     */
+    @SerializedName("ChargeDate")
+    private String chargeDate;
+
     public DirectDebitType getDirectDebitType() {
         return directDebitType;
     }
@@ -50,5 +56,13 @@ public class PayInPaymentDetailsDirectDebit extends Dto implements PayInPaymentD
 
     public void setStatementDescriptor(String statementDescriptor) {
         this.statementDescriptor = statementDescriptor;
+    }
+
+    public String getChargeDate() {
+        return chargeDate;
+    }
+
+    public void setChargeDate(String chargeDate) {
+        this.chargeDate = chargeDate;
     }
 }
