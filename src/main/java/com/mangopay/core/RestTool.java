@@ -753,7 +753,6 @@ public class RestTool {
                                 Iterator<JsonElement> i = ja.iterator();
                                 Class<?> classOfList = Class.forName(fieldTypeName);
                                 Method addMethod = classOfList.getDeclaredMethod("add", Object.class);
-                                Method toArrayMethod = classOfList.getDeclaredMethod("add", Object.class);
                                 Object o = classOfList.newInstance();
                                 while (i.hasNext()) {
                                     JsonElement e = i.next();
@@ -830,6 +829,9 @@ public class RestTool {
         if (fieldName.toUpperCase().equals(fieldName)) {
             return fieldName.toLowerCase();
         }
+        if (fieldName.equals("KYCLevel")) {
+            return "kycLevel";
+        }
         String camelCase = (fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1, fieldName.length())).replace("URL", "Url");
         while (camelCase.contains("_")) {
             int index = camelCase.indexOf("_");
@@ -842,6 +844,9 @@ public class RestTool {
     private String fromCamelCase(String fieldName) {
         if (fieldName.equals("iban") || fieldName.equals("bic") || fieldName.equals("aba")) {
             return fieldName.toUpperCase();
+        }
+        if(fieldName.equals("kycLevel")) {
+            return "KYCLevel";
         }
         if (fieldName.equals("accessToken")) {
             return "access_token";
