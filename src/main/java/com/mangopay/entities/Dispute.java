@@ -82,6 +82,12 @@ public class Dispute extends EntityBase {
      */
     @SerializedName("ResultMessage")
     private String resultMessage;
+    
+    /**
+     * The ID of the corresponding repudiation transaction
+     */
+    @SerializedName("RepudiationId")
+    private String repudiationId;
 
     public String getInitialTransactionId() {
         return initialTransactionId;
@@ -169,6 +175,14 @@ public class Dispute extends EntityBase {
 
     public void setResultMessage(String resultMessage) {
         this.resultMessage = resultMessage;
+    }
+    
+    public String getRepudiationId() {
+        return repudiationId;
+    }
+
+    public void setRepudiationId(String repudiationId) {
+        this.repudiationId = repudiationId;
     }
 
     /**
