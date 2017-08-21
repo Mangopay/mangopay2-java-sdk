@@ -42,7 +42,7 @@ public class Address extends Dto {
      * Country.
      */
     @SerializedName("Country")
-    public CountryIso country;
+    private CountryIso country;
 
     public String getAddressLine1() {
         return addressLine1;
