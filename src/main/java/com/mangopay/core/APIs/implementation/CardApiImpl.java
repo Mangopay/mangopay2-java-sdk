@@ -6,8 +6,6 @@ import com.mangopay.core.enumerations.Validity;
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.*;
 
-import java.util.List;
-
 /**
  * API for cards.
  */
@@ -22,11 +20,6 @@ public class CardApiImpl extends ApiBase implements CardApi {
     @Override
     public Card get(String cardId) throws Exception {
         return this.getObject(Card.class, "card_get", cardId);
-    }
-
-    @Override
-    public List<Card> getByFingerprint(String fingerprint) throws Exception {
-        return this.getList(Card[].class, Card.class, "cards_get_by_fingerprint", null, fingerprint);
     }
     
     @Override
