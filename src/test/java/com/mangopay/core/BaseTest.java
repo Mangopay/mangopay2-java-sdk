@@ -797,7 +797,9 @@ public abstract class BaseTest {
             assertEquals(((PayIn) entity1).getCreditedUserId(), ((PayIn) entity2).getCreditedUserId());
 
             assertEqualInputProps(((PayIn) entity1).getDebitedFunds(), ((PayIn) entity2).getDebitedFunds());
-            assertEqualInputProps(((PayIn) entity1).getCreditedFunds(), ((PayIn) entity2).getCreditedFunds());
+            if (((PayIn) entity1).getCreditedFunds() != null && ((PayIn) entity2).getCreditedFunds() != null) {
+                assertEqualInputProps(((PayIn) entity1).getCreditedFunds(), ((PayIn) entity2).getCreditedFunds());
+            }
             assertEqualInputProps(((PayIn) entity1).getFees(), ((PayIn) entity2).getFees());
 
         } else if (entity1 instanceof Card) {
@@ -816,6 +818,24 @@ public abstract class BaseTest {
             assertEquals(((PayInExecutionDetailsWeb) entity1).getRedirectUrl(), ((PayInExecutionDetailsWeb) entity2).getRedirectUrl());
             assertEquals(((PayInExecutionDetailsWeb) entity1).getReturnUrl(), ((PayInExecutionDetailsWeb) entity2).getReturnUrl());
 
+        } else if (entity1 instanceof PayInPaymentDetailsPayPal) {
+            PayInPaymentDetailsPayPal payPalDetails1 = (PayInPaymentDetailsPayPal) entity1;
+            PayInPaymentDetailsPayPal payPalDetails2 = (PayInPaymentDetailsPayPal) entity2;
+            assertEqualInputProps(payPalDetails1.getShippingAddress(), payPalDetails2.getShippingAddress());
+        } else if (entity1 instanceof ShippingAddress) {
+            ShippingAddress address1 = (ShippingAddress) entity1;
+            ShippingAddress address2 = (ShippingAddress) entity2;
+            assertEquals(address1.getRecipientName(), address2.getRecipientName());
+            assertEqualInputProps(address1.getAddress(), address2.getAddress());
+        } else if (entity1 instanceof Address) {
+            Address address1 = (Address) entity1;
+            Address address2 = (Address) entity2;
+            assertEquals(address1.getAddressLine1(), address2.getAddressLine1());
+            assertEquals(address1.getAddressLine2(), address2.getAddressLine2());
+            assertEquals(address1.getCity(), address2.getCity());
+            assertEquals(address1.getRegion(), address2.getRegion());
+            assertEquals(address1.getPostalCode(), address2.getPostalCode());
+            assertEquals(address1.getCountry(), address2.getCountry());
         } else if (entity1 instanceof PayOut) {
             assertEquals(((PayOut) entity1).getTag(), ((PayOut) entity2).getTag());
             assertEquals(((PayOut) entity1).getAuthorId(), ((PayOut) entity2).getAuthorId());
