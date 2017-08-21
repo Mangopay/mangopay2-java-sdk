@@ -79,6 +79,12 @@ public class Card extends EntityBase {
     @SerializedName("Validity")
     private Validity validity;
 
+    /**
+     * Card's fingerprint, which is unique per 16-digit card number.
+     */
+    @SerializedName("Fingerprint")
+    private String fingerprint;
+
     public String getUserId() {
         return userId;
     }
@@ -167,6 +173,10 @@ public class Card extends EntityBase {
         this.validity = validity;
     }
 
+    public String getFingerprint() {
+        return fingerprint;
+    }
+
     /**
      * Gets the collection of read-only fields names.
      *
@@ -187,6 +197,7 @@ public class Card extends EntityBase {
         result.add("BankCode");
         result.add("Active");
         result.add("Currency");
+        result.add("Fingerprint");
 
         return result;
     }
