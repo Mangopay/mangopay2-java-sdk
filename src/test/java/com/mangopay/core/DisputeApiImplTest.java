@@ -264,6 +264,29 @@ public class DisputeApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createDisputeDocumentConsult() throws Exception {
+        Dispute dispute = null;
+
+        for (Dispute d : clientDisputes) {
+            if (d.getStatus() == DisputeStatus.PENDING_CLIENT_ACTION || d.getStatus() == DisputeStatus.REOPENED_PENDING_CLIENT_ACTION) {
+                dispute = d;
+                break;
+            }
+        }
+
+        assertNotNull("Cannot test creating dispute's document consult because there's no dispute with expected status in the disputes list.", dispute);
+
+        DisputeDocument document = null;
+        DisputeDocument documentPost = new DisputeDocument();
+        documentPost.setType(DisputeDocumentType.OTHER);
+        document = api.getDisputeApi().createDisputeDocument(documentPost, dispute.getId());
+
+        List<DocumentPageConsult> consults = api.getDisputeApi().createDisputeDocumentConsult(document.getId());
+
+        assertNotNull(consults);
+    }
+
+    @Test
     public void getDocumentsForDispute() throws Exception {
         Dispute dispute = null;
 

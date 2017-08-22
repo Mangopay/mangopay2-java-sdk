@@ -845,7 +845,7 @@ public class RestTool {
         if (fieldName.equals("iban") || fieldName.equals("bic") || fieldName.equals("aba")) {
             return fieldName.toUpperCase();
         }
-        if(fieldName.equals("kycLevel")) {
+        if (fieldName.equals("kycLevel")) {
             return "KYCLevel";
         }
         if (fieldName.equals("accessToken")) {
@@ -923,7 +923,8 @@ public class RestTool {
                     logger.info("RequestData: {}", this.requestData);
                     logger.info("RequestBody: {}", requestBody);
                 }
-            } else {
+            } else if (restUrl.contains("consult")
+                    && (restUrl.contains("KYC/documents") || restUrl.contains("dispute-documents"))) {
                 writeRequestBody(connection, "");
             }
 

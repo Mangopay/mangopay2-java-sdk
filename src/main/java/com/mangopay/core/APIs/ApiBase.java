@@ -120,7 +120,7 @@ public abstract class ApiBase {
         put("kyc_documents_all", new String[] { "/KYC/documents", RequestType.GET.toString() });
 
         put("kyc_document_get", new String[] { "/KYC/documents/%s", RequestType.GET.toString() });
-        put("kyc_document_create_consult", new String[] { "/KYC/Documents/%s/consult", RequestType.GET.toString() });
+        put("kyc_document_create_consult", new String[] { "/KYC/documents/%s/consult", RequestType.POST.toString() });
 
         put("disputes_get", new String[] { "/disputes/%s", RequestType.GET.toString() });
         put("disputes_save_tag", new String[] { "/disputes/%s", RequestType.PUT.toString() });
