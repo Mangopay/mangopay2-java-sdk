@@ -27,4 +27,9 @@ public class KycDocumentApiImpl extends ApiBase implements KycDocumentApi {
     public KycDocument getKycDocument(String kycDocumentId) throws Exception {
         return this.getObject(KycDocument.class, "kyc_document_get", kycDocumentId);
     }
+
+    @Override
+    public List<DocumentPageConsult> createKycDocumentConsult(String kycDocumentId) throws Exception {
+        return this.getList(DocumentPageConsult[].class, DocumentPageConsult.class, "kyc_document_create_consult", null, kycDocumentId);
+    }
 }
