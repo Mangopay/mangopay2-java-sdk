@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.DocumentPageConsult;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.KycDocument;
@@ -26,4 +27,12 @@ public interface KycDocumentApi {
      * @throws Exception
      */
     KycDocument getKycDocument(String kycDocumentId) throws Exception;
+
+    /**
+     * Creates temporary URLs where each page of a KYC document can be viewed.
+     *
+     * @param kycDocumentId Identification of the document whose pages to view
+     * @throws Exception
+     */
+    List<DocumentPageConsult> createKycDocumentConsult(String kycDocumentId) throws Exception;
 }

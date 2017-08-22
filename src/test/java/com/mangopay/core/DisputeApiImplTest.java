@@ -492,5 +492,4 @@ public class DisputeApiImplTest extends BaseTest {
         assertNotNull(result);
         assertTrue(result.getStatus() == DisputeStatus.SUBMITTED);
     }
-
 }
