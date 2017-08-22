@@ -20,39 +20,80 @@ import static com.mangopay.core.enumerations.ReportType.TRANSACTIONS;
  */
 public class ReportRequest extends EntityBase {
 
+    /**
+     * Date of when the report was requested.
+     */
     @SerializedName("ReportDate")
     private long reportDate;
 
+    /**
+     * Status of the report.
+     */
     @SerializedName("Status")
     private ReportStatus status;
 
+    /**
+     * Download file format.
+     */
     @SerializedName("DownloadFormat")
     private DownloadReportFormat downloadFormat;
 
+    /**
+     * Download URL.
+     */
     @SerializedName("DownloadURL")
     private String downloadUrl;
 
+    /**
+     * Callback URL.
+     */
     @SerializedName("CallbackURL")
     private String callbackUrl;
 
+    /**
+     * Type of the report.
+     */
     @SerializedName("ReportType")
     private ReportType reportType;
 
+    /**
+     * Sorting.
+     */
     @SerializedName("Sort")
     private String sort;
 
+    /**
+     * If true, the report will be limited to the first few lines.
+     */
     @SerializedName("Preview")
     private boolean preview;
 
+    /**
+     * Filters for the report list results.
+     */
     @SerializedName("Filters")
     private FilterReports filters;
 
+    /**
+     * Columns to be included in the report.
+     * Allowed values: "Alias", "BankAccountId", "BankWireRef", "CardId",
+     * "CardType", "Country", "Culture", "Currency", "DeclaredDebitedFundsAmount",
+     * "DeclaredDebitedFundsCurrency", "DeclaredFeesAmount",
+     * "DeclaredFeesCurrency", "ExecutionType", "ExpirationDate", "PaymentType",
+     * "PreauthorizationId", "WireReference".
+     */
     @SerializedName("Columns")
     private List<String> columns;
 
+    /**
+     * Request's result code.
+     */
     @SerializedName("ResultCode")
     private String resultCode;
 
+    /**
+     * Request's result message.
+     */
     @SerializedName("ResultMessage")
     private String resultMessage;
 
