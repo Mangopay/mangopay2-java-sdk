@@ -59,6 +59,7 @@ public abstract class ApiBase {
 
         put("card_get", new String[] { "/cards/%s", RequestType.GET.toString() });
         put("card_save", new String[] { "/cards/%s", RequestType.PUT.toString() });
+        put("cards_get_by_fingerprint", new String[] { "/cards/fingerprints/%s", RequestType.GET.toString() });
 
                 // pay ins URLs
         put("payins_paypal-web_create", new String[] { "/payins/paypal/web/", RequestType.POST.toString() });
@@ -120,6 +121,7 @@ public abstract class ApiBase {
         put("kyc_documents_all", new String[] { "/KYC/documents", RequestType.GET.toString() });
 
         put("kyc_document_get", new String[] { "/KYC/documents/%s", RequestType.GET.toString() });
+        put("kyc_document_create_consult", new String[] { "/KYC/documents/%s/consult", RequestType.POST.toString() });
 
         put("disputes_get", new String[] { "/disputes/%s", RequestType.GET.toString() });
         put("disputes_save_tag", new String[] { "/disputes/%s", RequestType.PUT.toString() });
@@ -135,6 +137,7 @@ public abstract class ApiBase {
         put("disputes_document_get", new String[] { "/dispute-documents/%s", RequestType.GET.toString() });
         put("disputes_document_get_for_dispute", new String[] { "/disputes/%s/documents", RequestType.GET.toString() });
         put("disputes_document_get_for_client", new String[] { "/dispute-documents", RequestType.GET.toString() });
+        put("disputes_document_create_consult", new String[] { "/dispute-documents/%s/consult", RequestType.POST.toString() });
         put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
 	    put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
 

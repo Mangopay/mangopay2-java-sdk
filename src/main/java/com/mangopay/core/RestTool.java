@@ -845,7 +845,7 @@ public class RestTool {
         if (fieldName.equals("iban") || fieldName.equals("bic") || fieldName.equals("aba")) {
             return fieldName.toUpperCase();
         }
-        if(fieldName.equals("kycLevel")) {
+        if (fieldName.equals("kycLevel")) {
             return "KYCLevel";
         }
         if (fieldName.equals("accessToken")) {
@@ -917,17 +917,16 @@ public class RestTool {
                 }
                 requestBody = params.replaceFirst("&", "");
 
-                try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-                    wr.writeBytes(requestBody);
-                    wr.flush();
-                }
+                writeRequestBody(connection, requestBody);
 
                 if (this.debugMode) {
                     logger.info("RequestData: {}", this.requestData);
                     logger.info("RequestBody: {}", requestBody);
                 }
+            } else if (restUrl.contains("consult")
+                    && (restUrl.contains("KYC/documents") || restUrl.contains("dispute-documents"))) {
+                writeRequestBody(connection, "");
             }
-
 
             //Get Response	
             this.responseCode = connection.getResponseCode();
@@ -983,7 +982,13 @@ public class RestTool {
         }
 
         return response;
+    }
 
+    private void writeRequestBody(HttpURLConnection connection, String body) throws IOException {
+        try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+            wr.writeBytes(body);
+            wr.flush();
+        }
     }
 
     /**

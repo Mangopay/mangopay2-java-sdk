@@ -183,4 +183,9 @@ public class DisputeApiImpl extends ApiBase implements DisputeApi {
 
         createDisputePage(idempotencyKey, disputeId, documentId, fileArray);
     }
+
+    @Override
+    public List<DocumentPageConsult> createDisputeDocumentConsult(String documentId) throws Exception {
+        return this.getList(DocumentPageConsult[].class, DocumentPageConsult.class, "disputes_document_create_consult", null, documentId);
+    }
 }
