@@ -85,4 +85,8 @@ public class DisputeDocument extends EntityBase {
     public void setRefusedReasonMessage(String refusedReasonMessage) {
         this.refusedReasonMessage = refusedReasonMessage;
     }
+
+    public Long getProcessedDate() {
+        return processedDate;
+    }
 }
