@@ -1,9 +1,12 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.core.enumerations.RequestType;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
-import java.util.*;
+import com.mangopay.core.enumerations.RequestType;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Base class for all API classes.
@@ -160,6 +163,10 @@ public abstract class ApiBase {
         put("banking_alias_deactivate", new String[] { "/bankingaliases/%s", RequestType.PUT.toString() });
         put("banking_alias_get", new String[] { "/bankingaliases/%s", RequestType.GET.toString() });
         put("banking_aliases_get_for_wallet", new String[] { "/wallets/%s/bankingaliases", RequestType.GET.toString() });
+
+        put("ubo_declaration_create", new String[] { "/users/legal/%s/ubodeclarations", RequestType.POST.toString() });
+        put("ubo_declaration_update", new String[] { "/ubodeclarations/%s", RequestType.PUT.toString() });
+        put("ubo_declaration_get", new String[] { "/ubodeclarations/%s", RequestType.GET.toString() });
     }};
 
     /**
