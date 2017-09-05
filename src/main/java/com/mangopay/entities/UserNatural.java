@@ -3,6 +3,7 @@ package com.mangopay.entities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Address;
 import com.mangopay.core.enumerations.CountryIso;
+import com.mangopay.core.enumerations.NaturalUserCapacity;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -91,13 +92,19 @@ public final class UserNatural extends User {
      * Proof of identity.
      */
     @SerializedName("ProofOfIdentity")
-    protected String proofOfIdentity;
+    private String proofOfIdentity;
 
     /**
      * Proof of address.
      */
     @SerializedName("ProofOfAddress")
-    protected String proofOfAddress;
+    private String proofOfAddress;
+
+    /**
+     * Capacity of the user within MangoPay.
+     */
+    @SerializedName("Capacity")
+    private NaturalUserCapacity capacity;
 
     /**
      * Instantiates new UserNatural object.
@@ -192,6 +199,14 @@ public final class UserNatural extends User {
 
     public void setProofOfAddress(String proofOfAddress) {
         this.proofOfAddress = proofOfAddress;
+    }
+
+    public NaturalUserCapacity getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(NaturalUserCapacity capacity) {
+        this.capacity = capacity;
     }
 
     /**

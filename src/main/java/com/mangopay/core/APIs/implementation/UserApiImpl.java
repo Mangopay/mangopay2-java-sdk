@@ -224,4 +224,9 @@ public class UserApiImpl extends ApiBase implements UserApi {
         }
         return this.getObject(EMoney.class, "users_emoney_currency", userId, currencyIso.name());
     }
+
+    @Override
+    public UboDeclaration createUboDeclaration(String userId, UboDeclaration declaration) throws Exception {
+        return this.createObject(UboDeclaration.class, null, "ubo_declaration_create", declaration, userId);
+    }
 }
