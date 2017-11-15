@@ -601,4 +601,31 @@ public class UserApiImplTest extends BaseTest {
         assertTrue(createdUboDeclaration.getUserId().equals(legalUser.getId()));
         assertTrue(createdUboDeclaration.getDeclaredUbos().get(0).getUserId().equals(john.getId()));
     }
+
+    @Test
+    public void getUserPreAuthorizations() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        CardPreAuthorization cardPreAuthorization = new CardPreAuthorization();
+        cardPreAuthorization.setAuthorId(johnsCardPreAuthorization.getAuthorId());
+        cardPreAuthorization.setCardId(johnsCardPreAuthorization.getCardId());
+        cardPreAuthorization.setDebitedFunds(new Money());
+        cardPreAuthorization.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        cardPreAuthorization.getDebitedFunds().setAmount(10000);
+
+        cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
+        cardPreAuthorization = api.getCardPreAuthorizationApi().create(cardPreAuthorization);
+
+        assertNotNull(johnsCardPreAuthorization);
+        assertNotNull(api.getCardPreAuthorizationApi().get(cardPreAuthorization.getId()));
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId());
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertTrue(preAuthorizations.size() == 2);
+        assertNotNull(preAuthorizations.get(0));
+        assertNotNull(preAuthorizations.get(1));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+        assertTrue(preAuthorizations.get(1).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+    }
 }

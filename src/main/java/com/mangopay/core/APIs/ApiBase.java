@@ -97,6 +97,8 @@ public abstract class ApiBase {
 
         put("users_savebankaccount", new String[] { "/users/%s/bankaccounts/%s", RequestType.PUT.toString() });
 
+        put("users_get_preauthorizations", new String[] { "/users/%s/preauthorizations", RequestType.GET.toString()});
+
         put("users_all", new String[] { "/users", RequestType.GET.toString() });
         put("users_allwallets", new String[] { "/users/%s/wallets", RequestType.GET.toString() });
         put("users_allbankaccount", new String[] { "/users/%s/bankaccounts", RequestType.GET.toString() });
