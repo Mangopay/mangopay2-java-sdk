@@ -112,7 +112,9 @@ public interface DisputeApi {
      * @param repudiationId Repudiation identifier.
      * @return Repudiation instance returned from API.
      * @throws Exception
+     * @deprecated use {@link RepudiationApi#getRepudiation(String)} instead
      */
+    @Deprecated
     Repudiation getRepudiation(String repudiationId) throws Exception;
 
     /**
