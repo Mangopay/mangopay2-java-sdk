@@ -1,7 +1,11 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.Refund;
 import com.mangopay.entities.Transfer;
+
+import java.util.List;
 
 /**
  * Created by thepa on 18-Jan-17.
@@ -58,4 +62,22 @@ public interface TransferApi {
      * @throws Exception
      */
     Refund getRefund(String transferId) throws Exception;
+
+    /**
+     * Get first page of transfer's refunds
+     * @param transferId Transfer identifier
+     * @return Collection of transfer refunds
+     * @throws Exception
+     */
+    List<Refund> getRefunds(String transferId) throws Exception;
+
+    /**
+     * Get a page of transfer's refunds
+     * @param transferId Transfer identifier
+     * @param pagination Pagination object
+     * @param sorting Sorting object
+     * @return Collection of refunds
+     * @throws Exception
+     */
+    List<Refund> getRefunds(String transferId, Pagination pagination, Sorting sorting) throws Exception;
 }
