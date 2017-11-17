@@ -10,8 +10,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * PayOutApiImpl test methods
@@ -34,9 +33,16 @@ public class PayOutApiImplTest extends BaseTest {
 
     @Test
     public void getPayOutRefunds() throws Exception {
-        PayOut johnsPayOutBankWire = this.getJohnsPayOutBankWire();
-        List<Refund> refunds = api.getPayOutApi().getRefunds(johnsPayOutBankWire.getId());
-        assertNotNull(johnsPayOutBankWire);
+        String payOutId = "38233499";//hardcoded and in sync with mangopay test database
+        String expectedRefundId = "38239297";//hardcoded and in sync with mangopay test database
+        PayOut payOut = this.api.getPayOutApi().get(payOutId);
+        assertNotNull("PayOut object is null", payOut);
+
+        List<Refund> refunds = this.api.getPayOutApi().getRefunds(payOutId);
+        assertNotNull("Payout refunds api returns null", refunds);
+        assertFalse("Payout refunds api returns empty list", refunds.isEmpty());
+        assertTrue("Api returns more than 1 refund", refunds.size() == 1);
+        assertTrue("Expected refund not found!", refunds.get(0).getId().equals(expectedRefundId));
     }
 
 }
