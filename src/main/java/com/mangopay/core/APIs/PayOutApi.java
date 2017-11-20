@@ -1,5 +1,7 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.PayOut;
 import com.mangopay.entities.Refund;
 
@@ -41,4 +43,14 @@ public interface PayOutApi {
      * @throws Exception
      */
     List<Refund> getRefunds(String payOutId) throws Exception;
+
+    /**
+     * Get a page of payout refunds
+     * @param payOutId PayOut identifier
+     * @param pagination Pagination object
+     * @param sorting Sorting object
+     * @return Collection of payout refunds
+     * @throws Exception
+     */
+    List<Refund> getRefunds(String payOutId, Pagination pagination, Sorting sorting) throws Exception;
 }

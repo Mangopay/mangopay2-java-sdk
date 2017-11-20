@@ -3,6 +3,8 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.PayOutApi;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.PayOut;
 import com.mangopay.entities.Refund;
 
@@ -15,9 +17,12 @@ public class PayOutApiImpl extends ApiBase implements PayOutApi {
 
     /**
      * Instantiates new PayOutApiImpl object.
+     *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public PayOutApiImpl(MangoPayApi root) { super(root); }
+    public PayOutApiImpl(MangoPayApi root) {
+        super(root);
+    }
 
     @Override
     public PayOut create(PayOut payOut) throws Exception {
@@ -36,8 +41,13 @@ public class PayOutApiImpl extends ApiBase implements PayOutApi {
     }
 
     @Override
-    public List<Refund> getRefunds(String payOutId) throws Exception{
-        return this.getList(Refund[].class,Refund.class,"payouts_get_refunds",null,payOutId);
+    public List<Refund> getRefunds(String payOutId) throws Exception {
+        return this.getRefunds(payOutId, null, null);
+    }
+
+    @Override
+    public List<Refund> getRefunds(String payOutId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Refund[].class, Refund.class, "payouts_get_refunds", pagination, payOutId, sorting);
     }
 
     private String getPaymentKey(PayOut payOut) throws Exception {
