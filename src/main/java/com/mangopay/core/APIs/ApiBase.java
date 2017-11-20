@@ -152,6 +152,7 @@ public abstract class ApiBase {
         put("mandates_get_all", new String[] { "/mandates", RequestType.GET.toString() });
         put("mandates_get_for_user", new String[] { "/users/%s/mandates", RequestType.GET.toString() });
         put("mandates_get_for_bank_account", new String[] { "/users/%s/bankaccounts/%s/mandates", RequestType.GET.toString() });
+        put("mandate_get_transactions", new String[] { "/mandates/%s/transactions", RequestType.GET.toString() });
 
         put("reports_request", new String[]{ "/reports/%s", RequestType.POST.toString() });
         put("reports_get_all", new String[]{ "/reports", RequestType.GET.toString() });
