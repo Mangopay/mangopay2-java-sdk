@@ -65,9 +65,12 @@ public class TransferApiImplTest extends BaseTest {
         Transfer transfer = this.getNewTransfer();
         Refund firstRefund = this.getNewRefundForTransfer(transfer);
         Refund secondRefund = this.getNewRefundForTransfer(transfer);
-        List<Refund> refunds = this.getApi().getTransferApi().getRefunds(transfer.getId());
+        Pagination pagination = new Pagination(1, 2);
+        List<Refund> refunds = this.getApi().getTransferApi().getRefunds(transfer.getId(), pagination, null);
 
         assertNotNull("Refunds came back null", refunds);
         assertTrue("Refunds size is not correct", refunds.size() == 2);
+
+
     }
 }
