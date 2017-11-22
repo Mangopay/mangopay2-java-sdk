@@ -317,4 +317,12 @@ public interface UserApi {
      * @throws Exception
      */
     UboDeclaration createUboDeclaration(String userId, UboDeclaration declaration) throws Exception;
+
+    /**
+     * Get pre authorizations for user
+     * @param userId User identifier
+     * @return A list of user pre authorizations
+     * @throws Exception
+     */
+    List<CardPreAuthorization> getPreAuthorizations(String userId) throws Exception;
 }

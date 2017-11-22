@@ -601,4 +601,17 @@ public class UserApiImplTest extends BaseTest {
         assertTrue(createdUboDeclaration.getUserId().equals(legalUser.getId()));
         assertTrue(createdUboDeclaration.getDeclaredUbos().get(0).getUserId().equals(john.getId()));
     }
+
+    @Test
+    public void getUserPreAuthorizations() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId());
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertNotNull(preAuthorizations.get(0));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+    }
 }
