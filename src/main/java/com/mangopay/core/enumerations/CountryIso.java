@@ -262,6 +262,10 @@ public enum CountryIso {
     */  
     DZ,
     /**
+     * Ceuta, Melilla
+     */
+    EA,
+    /**
     * Ecuador
     */  
     EC,
@@ -414,8 +418,12 @@ public enum CountryIso {
     */  
     HU,
     /**
+     * Canary Islands
+     */
+    IC,
+    /**
     * Indonesia
-    */  
+    */
     ID,
     /**
     * Ireland
