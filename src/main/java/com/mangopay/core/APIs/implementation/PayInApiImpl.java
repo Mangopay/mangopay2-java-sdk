@@ -3,7 +3,12 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.PayInApi;
-import com.mangopay.entities.*;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
+import com.mangopay.entities.PayIn;
+import com.mangopay.entities.Refund;
+
+import java.util.List;
 
 /**
  * API for payIns.
@@ -12,9 +17,12 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
 
     /**
      * Instantiates new PayInApiImpl object.
+     *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public PayInApiImpl(MangoPayApi root) { super(root); }
+    public PayInApiImpl(MangoPayApi root) {
+        super(root);
+    }
 
     @Override
     public PayIn create(PayIn payIn) throws Exception {
@@ -48,10 +56,20 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         return this.getObject(Refund.class, "payins_getrefunds", payInId);
     }
 
+    @Override
+    public List<Refund> getRefunds(String payInId) throws Exception {
+        return this.getRefunds(payInId, null, null);
+    }
+
+    @Override
+    public List<Refund> getRefunds(String payInId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Refund[].class, Refund.class, "payin_get_refunds", pagination, payInId, sorting);
+    }
+
     private String getPaymentKey(PayIn payIn) throws Exception {
 
         if (payIn.getPaymentDetails() == null)
-            throw new Exception ("Payment is not defined or it is not object type");
+            throw new Exception("Payment is not defined or it is not object type");
 
         String className = payIn.getPaymentDetails().getClass().getSimpleName().replace("PayInPaymentDetails", "");
         return className.toLowerCase();
@@ -60,7 +78,7 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     private String getExecutionKey(PayIn payIn) throws Exception {
 
         if (payIn.getExecutionDetails() == null)
-            throw new Exception ("Execution is not defined or it is not object type");
+            throw new Exception("Execution is not defined or it is not object type");
 
         String className = payIn.getExecutionDetails().getClass().getSimpleName().replace("PayInExecutionDetails", "");
         return className.toLowerCase();

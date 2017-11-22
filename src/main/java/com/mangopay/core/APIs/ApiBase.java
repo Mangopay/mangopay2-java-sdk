@@ -76,6 +76,7 @@ public abstract class ApiBase {
         put("payins_getrefunds", new String[] { "/payins/%s/refunds", RequestType.GET.toString() });
         put("payins_createrefunds", new String[] { "/payins/%s/refunds", RequestType.POST.toString() });
         put("payins_directdebit-direct_create", new String[] { "/payins/directdebit/direct", RequestType.POST.toString() });
+        put( "payin_get_refunds", new String[] { "/payins/%s/refunds", RequestType.GET.toString() });
 
         put("payouts_bankwire_create", new String[] { "/payouts/bankwire/", RequestType.POST.toString() });
         put("payouts_get", new String[] { "/payouts/%s", RequestType.GET.toString() });
