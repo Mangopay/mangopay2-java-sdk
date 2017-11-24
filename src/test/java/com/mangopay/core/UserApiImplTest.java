@@ -614,4 +614,17 @@ public class UserApiImplTest extends BaseTest {
         assertTrue("List of bank account transactions size  does not match pagination", bankAccountTransactions.size() == 1);
         assertEquals("Returned transaction is not the expected one", bankAccountTransactions.get(0).getId(), johnsPayOutBankWire.getId());
     }
+
+    @Test
+    public void getUserPreAuthorizations() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId());
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertNotNull(preAuthorizations.get(0));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+    }
 }

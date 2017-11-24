@@ -63,6 +63,7 @@ public abstract class ApiBase {
         put("card_get", new String[] { "/cards/%s", RequestType.GET.toString() });
         put("card_save", new String[] { "/cards/%s", RequestType.PUT.toString() });
         put("cards_get_by_fingerprint", new String[] { "/cards/fingerprints/%s", RequestType.GET.toString() });
+        put("card_get_preauthorization", new String[] { "/cards/%s/preauthorizations", RequestType.GET.toString() });
 
                 // pay ins URLs
         put("payins_paypal-web_create", new String[] { "/payins/paypal/web/", RequestType.POST.toString() });
@@ -75,6 +76,7 @@ public abstract class ApiBase {
         put("payins_getrefunds", new String[] { "/payins/%s/refunds", RequestType.GET.toString() });
         put("payins_createrefunds", new String[] { "/payins/%s/refunds", RequestType.POST.toString() });
         put("payins_directdebit-direct_create", new String[] { "/payins/directdebit/direct", RequestType.POST.toString() });
+        put( "payin_get_refunds", new String[] { "/payins/%s/refunds", RequestType.GET.toString() });
 
         put("payouts_bankwire_create", new String[] { "/payouts/bankwire/", RequestType.POST.toString() });
         put("payouts_get", new String[] { "/payouts/%s", RequestType.GET.toString() });
@@ -96,6 +98,8 @@ public abstract class ApiBase {
         put("users_createbankaccounts_other", new String[] { "/users/%s/bankaccounts/other", RequestType.POST.toString() });
 
         put("users_savebankaccount", new String[] { "/users/%s/bankaccounts/%s", RequestType.PUT.toString() });
+
+        put("users_get_preauthorizations", new String[] { "/users/%s/preauthorizations", RequestType.GET.toString()});
 
         put( "get_transactions_for_banckaccount", new String[] { "/bankaccounts/%s/transactions" , RequestType.GET.toString() });
 
