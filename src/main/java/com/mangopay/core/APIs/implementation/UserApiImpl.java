@@ -1,17 +1,20 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.UserApi;
+import com.mangopay.core.FilterTransactions;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
-import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
 import com.mangopay.entities.*;
-
-import java.nio.file.*;
-import java.util.List;
-
 import org.apache.commons.codec.binary.Base64;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 
 /**
@@ -116,6 +119,16 @@ public class UserApiImpl extends ApiBase implements UserApi {
     @Override
     public BankAccount getBankAccount(String userId, String bankAccountId) throws Exception {
         return this.getObject(BankAccount.class, "users_getbankaccount", userId, bankAccountId);
+    }
+
+    @Override
+    public List<Transaction> getBankAccountTransactions(String bankAccountId) throws Exception {
+        return this.getBankAccountTransactions(bankAccountId, null, null);
+    }
+
+    @Override
+    public List<Transaction> getBankAccountTransactions(String bankAccountId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class, "get_transactions_for_banckaccount", pagination, bankAccountId, sorting);
     }
 
     @Override
