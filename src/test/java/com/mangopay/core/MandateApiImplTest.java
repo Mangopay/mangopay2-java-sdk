@@ -125,19 +125,10 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandateTransfers() throws Exception {
-        UserNatural user = this.getJohn(true);
-
-        Mandate mandatePost = new Mandate();
-        mandatePost.setBankAccountId(this.getJohnsAccount(true).getId());
-        mandatePost.setReturnUrl("http://test.test");
-        mandatePost.setCulture(CultureCode.EN);
-        
-        Mandate mandateCreated = this.api.getMandateApi().create(mandatePost);
-
-        List<Mandate> mandates = this.api.getMandateApi().getForUser(user.getId(), new FilterMandates(), new Pagination(1, 1), null);
-
-        assertNotNull(mandates);
-        assertTrue(mandates.size() > 0);
+        String mandateId = "15397886";// synced with mangopay sandbox
+        List<Transfer> transfers = this.api.getMandateApi().getTransfers("15397886", new Pagination(1, 1), null);
+        assertNotNull(transfers);
+        assertTrue(transfers.size() > 0);
     }
 
 }
