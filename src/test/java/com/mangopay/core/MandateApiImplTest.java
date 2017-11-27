@@ -128,7 +128,7 @@ public class MandateApiImplTest extends BaseTest {
         String mandateId = "15397886";// synced with mangopay sandbox
         List<Transfer> transfers = this.api.getMandateApi().getTransfers("15397886", new Pagination(1, 1), null);
         assertNotNull(transfers);
-        assertTrue(transfers.size() > 0);
+        assertTrue(transfers.size() == 1);
     }
 
 }
