@@ -67,7 +67,8 @@ public interface CardApi {
      * @throws Exception
      */
     List<Transaction> getTransactions(String cardId, Pagination pagination, Sorting sorting) throws Exception;
-  
+    
+    /**
      * Get a list of card's preAuthorizations
      * @param cardId Card identifier
      * @return List of card preAuthorizations
