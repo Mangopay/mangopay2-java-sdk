@@ -601,4 +601,30 @@ public class UserApiImplTest extends BaseTest {
         assertTrue(createdUboDeclaration.getUserId().equals(legalUser.getId()));
         assertTrue(createdUboDeclaration.getDeclaredUbos().get(0).getUserId().equals(john.getId()));
     }
+
+    @Test
+    public void getBankAccountTransactions() throws Exception {
+        BankAccount johnsAccount = getJohnsAccount();
+        PayOut johnsPayOutBankWire = getJohnsPayOutBankWire();
+        Pagination pagination = new Pagination(1, 1);
+        List<Transaction> bankAccountTransactions = this.api.getUserApi().getBankAccountTransactions(johnsAccount.getId(), pagination, null);
+
+        assertNotNull("List of bank account transactions is null", bankAccountTransactions);
+        assertFalse("List of bank account transactions is empty", bankAccountTransactions.isEmpty());
+        assertTrue("List of bank account transactions size  does not match pagination", bankAccountTransactions.size() == 1);
+        assertEquals("Returned transaction is not the expected one", bankAccountTransactions.get(0).getId(), johnsPayOutBankWire.getId());
+    }
+
+    @Test
+    public void getUserPreAuthorizations() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId());
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertNotNull(preAuthorizations.get(0));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+    }
 }

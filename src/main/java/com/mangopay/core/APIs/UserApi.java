@@ -3,7 +3,6 @@ package com.mangopay.core.APIs;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
-import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.entities.*;
@@ -148,6 +147,26 @@ public interface UserApi {
      * @throws Exception
      */
     BankAccount getBankAccount(String userId, String bankAccountId) throws Exception;
+
+    /**
+     * Get first page of transactions for a bank account
+     *
+     * @param bankAccountId Bank account identifier
+     * @return Collection of transactions
+     * @throws Exception
+     */
+    List<Transaction> getBankAccountTransactions(String bankAccountId) throws Exception;
+
+    /**
+     * Get page of transactions fr a bank account
+     *
+     * @param bankAccountId Bank account identifier
+     * @param pagination    Pagination object
+     * @param sorting       Sorting object
+     * @return Collection of transactions
+     * @throws Exception
+     */
+    List<Transaction> getBankAccountTransactions(String bankAccountId, Pagination pagination, Sorting sorting) throws Exception;
 
     /**
      * Gets all wallets of user.
@@ -300,9 +319,9 @@ public interface UserApi {
      * Shows the e-money cash-in/cash-out amounts for a particular user.
      * The Currency parameter can be used to have the amounts specified in a certain currency.
      *
-     * @param userId Id of the user whose e-money data to get.
+     * @param userId      Id of the user whose e-money data to get.
      * @param currencyIso Currency in which to format money amounts. If <code>null</code>, will be considered
-     *                   as <code>EUR</code>.
+     *                    as <code>EUR</code>.
      * @return EMoney data for the specified user.
      * @throws Exception
      */
@@ -311,10 +330,18 @@ public interface UserApi {
     /**
      * Creates a new UBO declaration entity.
      *
-     * @param userId ID of the requesting user
+     * @param userId      ID of the requesting user
      * @param declaration The UBO declaration data
      * @return Newly-created UBO declaration object
      * @throws Exception
      */
     UboDeclaration createUboDeclaration(String userId, UboDeclaration declaration) throws Exception;
+
+    /**
+     * Get pre authorizations for user
+     * @param userId User identifier
+     * @return A list of user pre authorizations
+     * @throws Exception
+     */
+    List<CardPreAuthorization> getPreAuthorizations(String userId) throws Exception;
 }

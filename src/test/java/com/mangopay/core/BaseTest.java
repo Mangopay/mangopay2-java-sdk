@@ -714,7 +714,7 @@ public abstract class BaseTest {
     }
 
     protected UboDeclaration getCreatedUboDeclaration(boolean recreate) throws Exception {
-        if(BaseTest.UBO_DECLARATION == null || recreate) {
+        if (BaseTest.UBO_DECLARATION == null || recreate) {
             User legalUser = getMatrix();
             User john = getNewDeclarativeJohn();
             DeclaredUbo declaredUbo = new DeclaredUbo();

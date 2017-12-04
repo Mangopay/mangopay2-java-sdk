@@ -2,6 +2,7 @@ package com.mangopay.core;
 
 import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.entities.Mandate;
+import com.mangopay.entities.Transfer;
 import com.mangopay.entities.UserNatural;
 import org.junit.Test;
 
@@ -120,6 +121,14 @@ public class MandateApiImplTest extends BaseTest {
         assertNotNull(mandates.get(0));
         assertTrue(mandates.get(0).getId().length() > 0);
         assertEquals(mandateCreated.getId(), mandates.get(0).getId());
+    }
+
+    @Test
+    public void getMandateTransfers() throws Exception {
+        String mandateId = "15397886";// synced with mangopay sandbox
+        List<Transfer> transfers = this.api.getMandateApi().getTransfers("15397886", new Pagination(1, 1), null);
+        assertNotNull(transfers);
+        assertTrue(transfers.size() == 1);
     }
 
 }

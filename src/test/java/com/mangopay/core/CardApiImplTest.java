@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.mangopay.core.APIs.CardApi;
 import com.mangopay.core.enumerations.TransactionType;
 import com.mangopay.entities.Card;
+import com.mangopay.entities.CardPreAuthorization;
 import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Transaction;
 import com.mangopay.entities.Transfer;
@@ -37,5 +38,18 @@ public class CardApiImplTest extends BaseTest {
 
         assertNotNull("Card transactions came back null", transactions);
         assertFalse("Api returned an empty list of card transactions", transactions.isEmpty());
+    }
+
+    @Test
+    public void getCardPreAuthorizations() throws Exception {
+        CardApi cardApi = api.getCardApi();
+        CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
+        List<CardPreAuthorization> getCardPreAuthorizations = cardApi.getCardPreAuthorizations(cardPreAuthorization.getCardId());
+
+        assertNotNull(cardPreAuthorization);
+        assertNotNull(getCardPreAuthorizations);
+        assertTrue(!getCardPreAuthorizations.isEmpty());
+        assertNotNull(getCardPreAuthorizations.get(0));
+        assertEquals(getCardPreAuthorizations.get(0).getCardId(), cardPreAuthorization.getCardId());
     }
 }

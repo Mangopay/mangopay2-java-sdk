@@ -8,6 +8,7 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.Validity;
 import com.mangopay.entities.Card;
 import com.mangopay.entities.Transaction;
+import com.mangopay.entities.CardPreAuthorization;
 
 import java.util.List;
 
@@ -55,4 +56,10 @@ public class CardApiImpl extends ApiBase implements CardApi {
     public List<Transaction> getTransactions(String cardId, Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(Transaction[].class, Transaction.class, "cards_get_transactions", pagination, cardId, sorting);
     }
+  
+    @Override
+    public List<CardPreAuthorization> getCardPreAuthorizations(String cardId) throws Exception {
+        return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "card_get_preauthorization",null,cardId);
+    }
+
 }
