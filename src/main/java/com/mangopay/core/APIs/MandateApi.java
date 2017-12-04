@@ -4,6 +4,7 @@ import com.mangopay.core.FilterMandates;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.Mandate;
+import com.mangopay.entities.Transfer;
 
 import java.util.List;
 
@@ -76,4 +77,23 @@ public interface MandateApi {
      * @throws Exception
      */
     Mandate cancel(String mandateId) throws Exception;
+
+
+    /**
+     * Get first page of mandate's transfers
+     * @param mandateId Mandate indentifier
+     * @return Collection of transfers
+     * @throws Exception
+     */
+    List<Transfer> getTransfers(String mandateId) throws Exception;
+
+    /**
+     * Get page of mandate's transfers
+     * @param mandateId Mandate identifier
+     * @param pagination Pagination object
+     * @param sorting Sorting object
+     * @return Collection of transfers
+     * @throws Exception
+     */
+    List<Transfer> getTransfers(String mandateId,Pagination pagination,Sorting sorting) throws Exception;
 }
