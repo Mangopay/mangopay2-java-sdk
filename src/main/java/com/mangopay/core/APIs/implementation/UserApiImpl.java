@@ -122,6 +122,16 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
+    public List<Transaction> getBankAccountTransactions(String bankAccountId) throws Exception {
+        return this.getBankAccountTransactions(bankAccountId, null, null);
+    }
+
+    @Override
+    public List<Transaction> getBankAccountTransactions(String bankAccountId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class, "get_transactions_for_banckaccount", pagination, bankAccountId, sorting);
+    }
+
+    @Override
     public List<Wallet> getWallets(String userId, Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(Wallet[].class, Wallet.class, "users_allwallets", pagination, userId, sorting);
     }
