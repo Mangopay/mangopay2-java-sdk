@@ -1,7 +1,9 @@
 package com.mangopay.core.APIs;
 
 import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.Card;
+import com.mangopay.entities.Transaction;
 import com.mangopay.entities.CardPreAuthorization;
 
 import java.util.List;
@@ -48,6 +50,24 @@ public interface CardApi {
      */
     Card disable(Card card) throws Exception;
 
+    /**
+     * Get first page of card's transactions
+     * @param cardId Card identifier
+     * @return Collection of transactions
+     * @throws Exception
+     */
+    List<Transaction> getTransactions(String cardId) throws Exception;
+
+    /**
+     * Get page of card's transactions
+     * @param cardId
+     * @param pagination
+     * @param sorting
+     * @return
+     * @throws Exception
+     */
+    List<Transaction> getTransactions(String cardId, Pagination pagination, Sorting sorting) throws Exception;
+    
     /**
      * Get a list of card's preAuthorizations
      * @param cardId Card identifier

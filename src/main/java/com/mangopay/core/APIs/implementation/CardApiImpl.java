@@ -3,8 +3,11 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.CardApi;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.Validity;
 import com.mangopay.entities.Card;
+import com.mangopay.entities.Transaction;
 import com.mangopay.entities.CardPreAuthorization;
 
 import java.util.List;
@@ -16,9 +19,12 @@ public class CardApiImpl extends ApiBase implements CardApi {
 
     /**
      * Instantiates new CardApiImpl object.
+     *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
-    public CardApiImpl(MangoPayApi root) { super(root); }
+    public CardApiImpl(MangoPayApi root) {
+        super(root);
+    }
 
     @Override
     public Card get(String cardId) throws Exception {
@@ -41,6 +47,16 @@ public class CardApiImpl extends ApiBase implements CardApi {
         return update(card);
     }
 
+    @Override
+    public List<Transaction> getTransactions(String cardId) throws Exception {
+        return this.getTransactions(cardId, null, null);
+    }
+
+    @Override
+    public List<Transaction> getTransactions(String cardId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class, "cards_get_transactions", pagination, cardId, sorting);
+    }
+  
     @Override
     public List<CardPreAuthorization> getCardPreAuthorizations(String cardId) throws Exception {
         return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "card_get_preauthorization",null,cardId);
