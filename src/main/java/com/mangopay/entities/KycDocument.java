@@ -40,6 +40,12 @@ public class KycDocument extends EntityBase {
     @SerializedName("UserId")
     private String userId;
 
+    /**
+     * Date when this document was processed (UNIX timestamp).
+     */
+    @SerializedName("ProcessedDate")
+    private Long processedDate;
+
     public KycDocumentType getType() {
         return type;
     }
@@ -78,5 +84,9 @@ public class KycDocument extends EntityBase {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Long getProcessedDate() {
+        return processedDate;
     }
 }

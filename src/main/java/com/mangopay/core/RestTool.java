@@ -536,6 +536,22 @@ public class RestTool {
 
             fieldName = fromCamelCase(f.getName());
 
+            if(fieldName.equals("DeclaredUBOs") && classOfT.equals(UboDeclaration.class)) {
+                try {
+                    List<DeclaredUbo> declaredUbos = (List<DeclaredUbo>) f.get(entity);
+                    List<String> declaredUboIds = new ArrayList<>();
+                    for(DeclaredUbo ubo : declaredUbos) {
+                        declaredUboIds.add(ubo.getUserId());
+                    }
+                    result.put(fieldName, declaredUboIds.toArray());
+                } catch (IllegalAccessException e) {
+                    if (debugMode) {
+                        logger.warn("Failed to build DeclaredUBOs request data", e);
+                    }
+                }
+                continue;
+            }
+
             boolean isReadOnly = false;
             for (String s : readOnlyProperties) {
                 if (s.equals(fieldName)) {
@@ -772,6 +788,8 @@ public class RestTool {
                                         Class cls = genericTypeClass;
                                         Object val = Enum.valueOf(cls, e.getAsJsonPrimitive().getAsString());
                                         addMethod.invoke(o, val);
+                                    } else if (Dto.class.isAssignableFrom(genericTypeClass)){
+                                        addMethod.invoke(o, castResponseToEntity(genericTypeClass, e.getAsJsonObject()));
                                     }
                                 }
                                 f.set(result, o);
@@ -832,6 +850,9 @@ public class RestTool {
         if (fieldName.equals("KYCLevel")) {
             return "kycLevel";
         }
+        if (fieldName.equals("DeclaredUBOs")) {
+            return "declaredUbos";
+        }
         String camelCase = (fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1, fieldName.length())).replace("URL", "Url");
         while (camelCase.contains("_")) {
             int index = camelCase.indexOf("_");
@@ -852,7 +873,6 @@ public class RestTool {
             return "access_token";
         }
         if (fieldName.equals("tokenType")) {
-
             return "token_type";
         }
         if (fieldName.equals("expiresIn")) {
@@ -860,6 +880,9 @@ public class RestTool {
         }
         if (fieldName.equals("url")) {
             return "Url";
+        }
+        if (fieldName.equals("declaredUbos")) {
+            return "DeclaredUBOs";
         }
         return (fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)).replace("Url", "URL");
     }

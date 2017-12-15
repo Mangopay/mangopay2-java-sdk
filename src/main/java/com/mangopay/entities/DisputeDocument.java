@@ -40,6 +40,12 @@ public class DisputeDocument extends EntityBase {
     @SerializedName("RefusedReasonMessage")
     private String refusedReasonMessage;
 
+    /**
+     * Date when this document was processed (UNIX timestamp).
+     */
+    @SerializedName("ProcessedDate")
+    private Long processedDate;
+
     public DisputeDocumentType getType() {
         return type;
     }
@@ -78,5 +84,9 @@ public class DisputeDocument extends EntityBase {
 
     public void setRefusedReasonMessage(String refusedReasonMessage) {
         this.refusedReasonMessage = refusedReasonMessage;
+    }
+
+    public Long getProcessedDate() {
+        return processedDate;
     }
 }

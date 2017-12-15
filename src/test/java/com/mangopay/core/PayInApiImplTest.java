@@ -5,6 +5,8 @@ import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -391,5 +393,28 @@ public class PayInApiImplTest extends BaseTest {
         assertEqualInputProps(payIn, createdPayIn);
         assertNotNull(createdPayIn.getPaymentDetails());
         assertEqualInputProps(payIn.getPaymentDetails(), createdPayIn.getPaymentDetails());
+    }
+
+    @Test
+    public void getPayInRefunds() throws Exception {
+        PayIn payIn = getNewPayInCardDirect();
+        Refund firstRefund = getNewRefundForPayIn(payIn);
+        Thread.sleep(5000);//wait to create second refund
+        Refund secondRefund = getNewRefundForPayIn(payIn);
+        Pagination pagination = new Pagination(1, 1);
+        Sorting sorting = new Sorting();
+        sorting.addField("CreationDate", SortDirection.asc);
+        List<Refund> firstPage = this.api.getPayInApi().getRefunds(payIn.getId(), pagination, sorting);
+        pagination.setPage(2);
+        List<Refund> secondPage = this.api.getPayInApi().getRefunds(payIn.getId(), pagination, sorting);
+
+
+        assertNotNull("Refunds first page is null", firstPage);
+        assertNotNull("Refunds second page is null", secondPage);
+        assertTrue("Refund first page size is not 1", firstPage.size() == 1);
+        assertTrue("Refund second page size is not 1", secondPage.size() == 1);
+        assertTrue("First page does not contain first refund",firstPage.get(0).getId().equals(firstRefund.getId()));
+        assertTrue("Second page does not contain second refund",secondPage.get(0).getId().equals(secondRefund.getId()));
+
     }
 }

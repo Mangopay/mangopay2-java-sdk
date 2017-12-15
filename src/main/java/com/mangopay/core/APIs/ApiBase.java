@@ -1,9 +1,12 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.core.enumerations.RequestType;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
-import java.util.*;
+import com.mangopay.core.enumerations.RequestType;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Base class for all API classes.
@@ -60,6 +63,8 @@ public abstract class ApiBase {
         put("card_get", new String[] { "/cards/%s", RequestType.GET.toString() });
         put("card_save", new String[] { "/cards/%s", RequestType.PUT.toString() });
         put("cards_get_by_fingerprint", new String[] { "/cards/fingerprints/%s", RequestType.GET.toString() });
+        put("cards_get_transactions", new String[] { "/cards/%s/transactions", RequestType.GET.toString() });
+        put("card_get_preauthorization", new String[] { "/cards/%s/preauthorizations", RequestType.GET.toString() });
 
                 // pay ins URLs
         put("payins_paypal-web_create", new String[] { "/payins/paypal/web/", RequestType.POST.toString() });
@@ -72,9 +77,11 @@ public abstract class ApiBase {
         put("payins_getrefunds", new String[] { "/payins/%s/refunds", RequestType.GET.toString() });
         put("payins_createrefunds", new String[] { "/payins/%s/refunds", RequestType.POST.toString() });
         put("payins_directdebit-direct_create", new String[] { "/payins/directdebit/direct", RequestType.POST.toString() });
+        put( "payin_get_refunds", new String[] { "/payins/%s/refunds", RequestType.GET.toString() });
 
         put("payouts_bankwire_create", new String[] { "/payouts/bankwire/", RequestType.POST.toString() });
         put("payouts_get", new String[] { "/payouts/%s", RequestType.GET.toString() });
+        put( "payouts_get_refunds", new String[] { "/payouts/%s/refunds", RequestType.GET.toString() });
 
         put("refunds_get", new String[] { "/refunds/%s", RequestType.GET.toString() });
 
@@ -93,6 +100,10 @@ public abstract class ApiBase {
         put("users_createbankaccounts_other", new String[] { "/users/%s/bankaccounts/other", RequestType.POST.toString() });
 
         put("users_savebankaccount", new String[] { "/users/%s/bankaccounts/%s", RequestType.PUT.toString() });
+
+        put("users_get_preauthorizations", new String[] { "/users/%s/preauthorizations", RequestType.GET.toString()});
+
+        put( "get_transactions_for_banckaccount", new String[] { "/bankaccounts/%s/transactions" , RequestType.GET.toString() });
 
         put("users_all", new String[] { "/users", RequestType.GET.toString() });
         put("users_allwallets", new String[] { "/users/%s/wallets", RequestType.GET.toString() });
@@ -141,6 +152,8 @@ public abstract class ApiBase {
         put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
 	    put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
 
+	    put( "repudiation_get_refunds", new String[] { "/repudiations/%s/refunds", RequestType.GET.toString() });
+
         put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
 
         put("mandate_create", new String[] { "/mandates/directdebit/web", RequestType.POST.toString() });
@@ -149,6 +162,7 @@ public abstract class ApiBase {
         put("mandates_get_all", new String[] { "/mandates", RequestType.GET.toString() });
         put("mandates_get_for_user", new String[] { "/users/%s/mandates", RequestType.GET.toString() });
         put("mandates_get_for_bank_account", new String[] { "/users/%s/bankaccounts/%s/mandates", RequestType.GET.toString() });
+        put("mandate_get_transactions", new String[] { "/mandates/%s/transactions", RequestType.GET.toString() });
 
         put("reports_request", new String[]{ "/reports/%s", RequestType.POST.toString() });
         put("reports_get_all", new String[]{ "/reports", RequestType.GET.toString() });
@@ -160,6 +174,10 @@ public abstract class ApiBase {
         put("banking_alias_deactivate", new String[] { "/bankingaliases/%s", RequestType.PUT.toString() });
         put("banking_alias_get", new String[] { "/bankingaliases/%s", RequestType.GET.toString() });
         put("banking_aliases_get_for_wallet", new String[] { "/wallets/%s/bankingaliases", RequestType.GET.toString() });
+
+        put("ubo_declaration_create", new String[] { "/users/legal/%s/ubodeclarations", RequestType.POST.toString() });
+        put("ubo_declaration_update", new String[] { "/ubodeclarations/%s", RequestType.PUT.toString() });
+        put("ubo_declaration_get", new String[] { "/ubodeclarations/%s", RequestType.GET.toString() });
     }};
 
     /**

@@ -37,6 +37,7 @@ public abstract class BaseTest {
     private static Hook JOHNS_HOOK;
     private static ReportRequest JOHNS_REPORT;
     private static BankingAlias JOHNS_BANKING_ALIAS;
+    private static UboDeclaration UBO_DECLARATION;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -138,7 +139,11 @@ public abstract class BaseTest {
         return BaseTest.JOHN;
     }
 
-    protected UserNatural getNewJohn() throws Exception {
+    protected UserNatural getNewDeclarativeJohn() throws Exception {
+        return getNewJohn(true);
+    }
+
+    protected UserNatural getNewJohn(boolean declarative) throws Exception {
 
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
@@ -153,8 +158,10 @@ public abstract class BaseTest {
         user.setCountryOfResidence(CountryIso.FR);
         user.setOccupation("programmer");
         user.setIncomeRange(3);
+        if (declarative) {
+            user.setCapacity(NaturalUserCapacity.DECLARATIVE);
+        }
         return (UserNatural) this.api.getUserApi().create(user);
-
     }
 
     protected UserLegal getMatrix() throws Exception {
@@ -704,6 +711,22 @@ public abstract class BaseTest {
         bankingAlias.setCountry(CountryIso.FR);
         BaseTest.JOHNS_BANKING_ALIAS = api.getBankingAliases().create(getJohnsWallet().getId(), bankingAlias);
         return BaseTest.JOHNS_BANKING_ALIAS;
+    }
+
+    protected UboDeclaration getCreatedUboDeclaration(boolean recreate) throws Exception {
+        if (BaseTest.UBO_DECLARATION == null || recreate) {
+            User legalUser = getMatrix();
+            User john = getNewDeclarativeJohn();
+            DeclaredUbo declaredUbo = new DeclaredUbo();
+            declaredUbo.setUserId(john.getId());
+            ArrayList<DeclaredUbo> declaredUbos = new ArrayList<>();
+            declaredUbos.add(declaredUbo);
+            UboDeclaration declaration = new UboDeclaration();
+            declaration.setDeclaredUbos(declaredUbos);
+
+            BaseTest.UBO_DECLARATION = this.api.getUserApi().createUboDeclaration(legalUser.getId(), declaration);
+        }
+        return BaseTest.UBO_DECLARATION;
     }
 
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {
