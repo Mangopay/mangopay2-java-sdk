@@ -401,7 +401,7 @@ public class DisputeApiImplTest extends BaseTest {
 
         String repudiationId = api.getDisputeApi().getTransactions(dispute.getId(), new Pagination(1, 1), null, null).get(0).getId();
 
-        result = api.getDisputeApi().getRepudiation(repudiationId);
+        result = api.getRepudiationApi().getRepudiation(repudiationId);
 
         assertNotNull(result);
     }
@@ -423,7 +423,7 @@ public class DisputeApiImplTest extends BaseTest {
 
         Repudiation repudiation = null;
 
-        repudiation = api.getDisputeApi().getRepudiation(repudiationId);
+        repudiation = api.getRepudiationApi().getRepudiation(repudiationId);
 
         Money debitedFunds = new Money();
         Money fees = new Money();

@@ -152,6 +152,8 @@ public abstract class ApiBase {
         put("disputes_repudiation_get", new String[] { "/repudiations/%s", RequestType.GET.toString() });
 	    put("disputes_repudiation_create_settlement", new String[] { "/repudiations/%s/settlementtransfer", RequestType.POST.toString() });
 
+	    put( "repudiation_get_refunds", new String[] { "/repudiations/%s/refunds", RequestType.GET.toString() });
+
         put("idempotency_response_get", new String[] { "/responses/%s", RequestType.GET.toString() });
 
         put("mandate_create", new String[] { "/mandates/directdebit/web", RequestType.POST.toString() });
