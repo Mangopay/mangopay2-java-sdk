@@ -64,19 +64,44 @@ public class PayInApiImplTest extends BaseTest {
             Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
             UserNatural user = this.getJohn();
 
-            assertTrue(payIn.getId().length() > 0);
-            assertEquals(wallet.getId(), payIn.getCreditedWalletId());
-            assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
-            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
-            assertTrue(payIn.getExecutionType() == PayInExecutionType.DIRECT);
-            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
-            assertTrue(payIn.getDebitedFunds() instanceof Money);
-            assertTrue(payIn.getCreditedFunds() instanceof Money);
-            assertTrue(payIn.getFees() instanceof Money);
-            assertEquals(user.getId(), payIn.getAuthorId());
-            assertTrue(wallet.getBalance().getAmount() == beforeWallet.getBalance().getAmount() + payIn.getCreditedFunds().getAmount());
-            assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
-            assertTrue(payIn.getType() == TransactionType.PAYIN);
+            check(user, payIn, wallet, beforeWallet);
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    private void check(User user, PayIn payIn, Wallet wallet, Wallet beforeWallet) {
+        assertTrue(payIn.getId().length() > 0);
+        assertEquals(wallet.getId(), payIn.getCreditedWalletId());
+        assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
+        assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
+        assertTrue(payIn.getExecutionType() == PayInExecutionType.DIRECT);
+        assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
+        assertTrue(payIn.getDebitedFunds() instanceof Money);
+        assertTrue(payIn.getCreditedFunds() instanceof Money);
+        assertTrue(payIn.getFees() instanceof Money);
+        assertEquals(user.getId(), payIn.getAuthorId());
+        assertTrue(wallet.getBalance().getAmount() == beforeWallet.getBalance().getAmount() + payIn.getCreditedFunds().getAmount());
+        assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
+        assertTrue(payIn.getType() == TransactionType.PAYIN);
+    }
+
+    @Test
+    public void createCardDirectWithBilling() {
+        try {
+            Wallet johnWallet = this.getJohnsWalletWithMoney();
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
+
+            PayIn payIn = this.getNewPayInCardDirectWithBilling();
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
+            UserNatural user = this.getJohn();
+
+            check(user, payIn, wallet, beforeWallet);
+
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull(executionDetails.getSecurityInfo());
+            assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.ADDRESS_MATCH_ONLY);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }

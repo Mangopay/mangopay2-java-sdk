@@ -788,7 +788,7 @@ public class RestTool {
         if (fieldName.toUpperCase().equals(fieldName)) {
             return fieldName.toLowerCase();
         }
-        String camelCase = (fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1, fieldName.length())).replace("URL", "Url");
+        String camelCase = (fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1, fieldName.length())).replace("URL", "Url").replace("AVS", "Avs");
         while (camelCase.contains("_")) {
             int index = camelCase.indexOf("_");
             String letterAfter = ("" + camelCase.charAt(index + 1)).toUpperCase();
@@ -814,7 +814,7 @@ public class RestTool {
         if (fieldName.equals("url")) {
             return "Url";
         }
-        return (fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)).replace("Url", "URL");
+        return (fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)).replace("Url", "URL").replace("Avs", "AVS");
     }
 
     private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination) throws Exception {

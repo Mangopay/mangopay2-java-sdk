@@ -323,7 +323,7 @@ public abstract class BaseTest {
             payIn.setCreditedUserId(user.getId());
             payIn.setDebitedFunds(new Money());
             payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
-            payIn.getDebitedFunds().setAmount(1000);
+            payIn.getDebitedFunds().setAmount(500);
             payIn.setFees(new Money());
             payIn.getFees().setCurrency(CurrencyIso.EUR);
             payIn.getFees().setAmount(5);
@@ -363,6 +363,12 @@ public abstract class BaseTest {
      * @return PayIn
      */
     protected PayIn getNewPayInCardDirect(String userId) throws Exception {
+        PayIn payIn = getPayInCardDirect(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    private PayIn getPayInCardDirect(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
 
@@ -385,7 +391,7 @@ public abstract class BaseTest {
         payIn.setCreditedWalletId(wallet.getId());
         payIn.setAuthorId(userId);
         payIn.setDebitedFunds(new Money());
-        payIn.getDebitedFunds().setAmount(10000);
+        payIn.getDebitedFunds().setAmount(100);
         payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
         payIn.setFees(new Money());
         payIn.getFees().setAmount(0);
@@ -399,6 +405,22 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
+
+        return payIn;
+    }
+
+    protected PayIn getNewPayInCardDirectWithBilling() throws Exception {
+        PayIn payIn = getPayInCardDirect(null);
+
+        PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+        Billing billing = new Billing();
+        Address address = new Address();
+        address.setCity("Halo");
+        address.setAddressLine1("Street street");
+        address.setCountry(CountryIso.FR);
+        address.setPostalCode("65400");
+        billing.setAddress(address);
+        executionDetails.setBilling(billing);
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -564,6 +586,12 @@ public abstract class BaseTest {
      * Creates card registration object.
      */
     protected CardPreAuthorization getJohnsCardPreAuthorization() throws Exception {
+        CardPreAuthorization cardPreAuthorization = getPreAuthorization();
+
+        return this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
+    }
+
+    protected CardPreAuthorization getPreAuthorization() throws Exception {
         UserNatural user = this.getJohn();
         CardRegistration cardRegistration = new CardRegistration();
         cardRegistration.setUserId(user.getId());
@@ -578,11 +606,10 @@ public abstract class BaseTest {
         cardPreAuthorization.setAuthorId(user.getId());
         cardPreAuthorization.setDebitedFunds(new Money());
         cardPreAuthorization.getDebitedFunds().setCurrency(CurrencyIso.EUR);
-        cardPreAuthorization.getDebitedFunds().setAmount(10000);
+        cardPreAuthorization.getDebitedFunds().setAmount(500);
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
-
-        return this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
+        return cardPreAuthorization;
     }
 
     protected KycDocument getJohnsKycDocument() throws Exception {
