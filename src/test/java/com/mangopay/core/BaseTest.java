@@ -398,7 +398,7 @@ public abstract class BaseTest {
         payIn.setCreditedWalletId(wallet.getId());
         payIn.setAuthorId(userId);
         payIn.setDebitedFunds(new Money());
-        payIn.getDebitedFunds().setAmount(100);
+        payIn.getDebitedFunds().setAmount(500);
         payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
         payIn.setFees(new Money());
         payIn.getFees().setAmount(0);
