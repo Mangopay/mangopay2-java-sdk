@@ -1,17 +1,20 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.UserApi;
+import com.mangopay.core.FilterTransactions;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
-import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
 import com.mangopay.entities.*;
-
-import java.nio.file.*;
-import java.util.List;
-
 import org.apache.commons.codec.binary.Base64;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 
 /**
@@ -119,6 +122,16 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
+    public List<Transaction> getBankAccountTransactions(String bankAccountId) throws Exception {
+        return this.getBankAccountTransactions(bankAccountId, null, null);
+    }
+
+    @Override
+    public List<Transaction> getBankAccountTransactions(String bankAccountId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class, "get_transactions_for_banckaccount", pagination, bankAccountId, sorting);
+    }
+
+    @Override
     public List<Wallet> getWallets(String userId, Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(Wallet[].class, Wallet.class, "users_allwallets", pagination, userId, sorting);
     }
@@ -223,5 +236,15 @@ public class UserApiImpl extends ApiBase implements UserApi {
             return this.getEMoney(userId);
         }
         return this.getObject(EMoney.class, "users_emoney_currency", userId, currencyIso.name());
+    }
+
+    @Override
+    public UboDeclaration createUboDeclaration(String userId, UboDeclaration declaration) throws Exception {
+        return this.createObject(UboDeclaration.class, null, "ubo_declaration_create", declaration, userId);
+    }
+
+    @Override
+    public List<CardPreAuthorization> getPreAuthorizations(String userId) throws Exception {
+        return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "users_get_preauthorizations", null, userId);
     }
 }

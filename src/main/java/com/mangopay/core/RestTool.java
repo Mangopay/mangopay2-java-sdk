@@ -435,6 +435,7 @@ public class RestTool {
     }
 
     private void readResponseHeaders(HttpURLConnection conn) {
+        List<RateLimit> updatedRateLimits = null;
         for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
             for (String v : k.getValue()) {
 
@@ -442,6 +443,36 @@ public class RestTool {
 
                 if (k.getKey() == null) continue;
 
+                if (k.getKey().equals("X-RateLimit-Remaining")) {
+                    if (updatedRateLimits == null) {
+                        updatedRateLimits = initRateLimits();
+                    }
+                    List<String> callsRemaining = k.getValue();
+                    updatedRateLimits.get(0).setCallsRemaining(Integer.valueOf(callsRemaining.get(3)));
+                    updatedRateLimits.get(1).setCallsRemaining(Integer.valueOf(callsRemaining.get(2)));
+                    updatedRateLimits.get(2).setCallsRemaining(Integer.valueOf(callsRemaining.get(1)));
+                    updatedRateLimits.get(3).setCallsRemaining(Integer.valueOf(callsRemaining.get(0)));
+                }
+                if (k.getKey().equals("X-RateLimit")) {
+                    if (updatedRateLimits == null) {
+                        updatedRateLimits = initRateLimits();
+                    }
+                    List<String> callsMade = k.getValue();
+                    updatedRateLimits.get(0).setCallsMade(Integer.valueOf(callsMade.get(3)));
+                    updatedRateLimits.get(1).setCallsMade(Integer.valueOf(callsMade.get(2)));
+                    updatedRateLimits.get(2).setCallsMade(Integer.valueOf(callsMade.get(1)));
+                    updatedRateLimits.get(3).setCallsMade(Integer.valueOf(callsMade.get(0)));
+                }
+                if (k.getKey().equals("X-RateLimit-Reset")) {
+                    if (updatedRateLimits == null) {
+                        updatedRateLimits = initRateLimits();
+                    }
+                    List<String> resetTimes = k.getValue();
+                    updatedRateLimits.get(0).setResetTimeMillis(Long.valueOf(resetTimes.get(3)));
+                    updatedRateLimits.get(1).setResetTimeMillis(Long.valueOf(resetTimes.get(2)));
+                    updatedRateLimits.get(2).setResetTimeMillis(Long.valueOf(resetTimes.get(1)));
+                    updatedRateLimits.get(3).setResetTimeMillis(Long.valueOf(resetTimes.get(0)));
+                }
                 if (k.getKey().equals("X-Number-Of-Pages")) {
                     this.pagination.setTotalPages(Integer.parseInt(v));
                 }
@@ -471,6 +502,17 @@ public class RestTool {
                 }
             }
         }
+        if (updatedRateLimits != null) {
+            root.setRateLimits(updatedRateLimits);
+        }
+    }
+
+    private List<RateLimit> initRateLimits() {
+        return Arrays.asList(
+                new RateLimit(15),
+                new RateLimit(30),
+                new RateLimit(60),
+                new RateLimit(24 * 60));
     }
 
     private <T extends Dto> HashMap<String, Object> buildRequestData(Class<T> classOfT, T entity) {
@@ -493,6 +535,22 @@ public class RestTool {
             }
 
             fieldName = fromCamelCase(f.getName());
+
+            if(fieldName.equals("DeclaredUBOs") && classOfT.equals(UboDeclaration.class)) {
+                try {
+                    List<DeclaredUbo> declaredUbos = (List<DeclaredUbo>) f.get(entity);
+                    List<String> declaredUboIds = new ArrayList<>();
+                    for(DeclaredUbo ubo : declaredUbos) {
+                        declaredUboIds.add(ubo.getUserId());
+                    }
+                    result.put(fieldName, declaredUboIds.toArray());
+                } catch (IllegalAccessException e) {
+                    if (debugMode) {
+                        logger.warn("Failed to build DeclaredUBOs request data", e);
+                    }
+                }
+                continue;
+            }
 
             boolean isReadOnly = false;
             for (String s : readOnlyProperties) {
@@ -711,7 +769,6 @@ public class RestTool {
                                 Iterator<JsonElement> i = ja.iterator();
                                 Class<?> classOfList = Class.forName(fieldTypeName);
                                 Method addMethod = classOfList.getDeclaredMethod("add", Object.class);
-                                Method toArrayMethod = classOfList.getDeclaredMethod("add", Object.class);
                                 Object o = classOfList.newInstance();
                                 while (i.hasNext()) {
                                     JsonElement e = i.next();
@@ -731,6 +788,8 @@ public class RestTool {
                                         Class cls = genericTypeClass;
                                         Object val = Enum.valueOf(cls, e.getAsJsonPrimitive().getAsString());
                                         addMethod.invoke(o, val);
+                                    } else if (Dto.class.isAssignableFrom(genericTypeClass)){
+                                        addMethod.invoke(o, castResponseToEntity(genericTypeClass, e.getAsJsonObject()));
                                     }
                                 }
                                 f.set(result, o);
@@ -788,6 +847,12 @@ public class RestTool {
         if (fieldName.toUpperCase().equals(fieldName)) {
             return fieldName.toLowerCase();
         }
+        if (fieldName.equals("KYCLevel")) {
+            return "kycLevel";
+        }
+        if (fieldName.equals("DeclaredUBOs")) {
+            return "declaredUbos";
+        }
         String camelCase = (fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1, fieldName.length())).replace("URL", "Url").replace("AVS", "Avs");
         while (camelCase.contains("_")) {
             int index = camelCase.indexOf("_");
@@ -801,11 +866,13 @@ public class RestTool {
         if (fieldName.equals("iban") || fieldName.equals("bic") || fieldName.equals("aba")) {
             return fieldName.toUpperCase();
         }
+        if (fieldName.equals("kycLevel")) {
+            return "KYCLevel";
+        }
         if (fieldName.equals("accessToken")) {
             return "access_token";
         }
         if (fieldName.equals("tokenType")) {
-
             return "token_type";
         }
         if (fieldName.equals("expiresIn")) {
@@ -813,6 +880,9 @@ public class RestTool {
         }
         if (fieldName.equals("url")) {
             return "Url";
+        }
+        if (fieldName.equals("declaredUbos")) {
+            return "DeclaredUBOs";
         }
         return (fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)).replace("Url", "URL").replace("Avs", "AVS");
     }
@@ -870,17 +940,16 @@ public class RestTool {
                 }
                 requestBody = params.replaceFirst("&", "");
 
-                try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-                    wr.writeBytes(requestBody);
-                    wr.flush();
-                }
+                writeRequestBody(connection, requestBody);
 
                 if (this.debugMode) {
                     logger.info("RequestData: {}", this.requestData);
                     logger.info("RequestBody: {}", requestBody);
                 }
+            } else if (restUrl.contains("consult")
+                    && (restUrl.contains("KYC/documents") || restUrl.contains("dispute-documents"))) {
+                writeRequestBody(connection, "");
             }
-
 
             //Get Response	
             this.responseCode = connection.getResponseCode();
@@ -936,7 +1005,13 @@ public class RestTool {
         }
 
         return response;
+    }
 
+    private void writeRequestBody(HttpURLConnection connection, String body) throws IOException {
+        try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+            wr.writeBytes(body);
+            wr.flush();
+        }
     }
 
     /**

@@ -4,6 +4,9 @@ import com.mangopay.core.APIs.*;
 import com.mangopay.core.APIs.implementation.*;
 import com.mangopay.core.AuthorizationTokenManager;
 import com.mangopay.core.Configuration;
+import com.mangopay.entities.RateLimit;
+
+import java.util.List;
 
 /**
  * MangoPay API main entry point.
@@ -41,7 +44,18 @@ public class MangoPayApi {
         setMandateApi(new MandateApiImpl(this));
         setReportApi(new ReportApiImpl(this));
         setBankingAliasApi(new BankingAliasApiImpl(this));
+        setUboDeclarationApi(new UboDeclarationApiImpl(this));
+        setRepudiationApi(new RepudiationApiImpl(this));
     }
+
+    ////////////////////////////////////////
+    // Rate limits
+    ////////////////////////////////////////
+
+    /**
+     * Holds data as specified by X-RateLimit response headers.
+     */
+    private List<RateLimit> rateLimits;
 
     ////////////////////////////////////////
     // Config/authorization related fields
@@ -155,6 +169,34 @@ public class MangoPayApi {
      * Provides Banking Alias methods.
      */
     private BankingAliasApi bankingAliases;
+
+    /**
+     * Provides UBO Declaration methods.
+     */
+    private UboDeclarationApi uboDeclarations;
+
+    /**
+     * Provides Repudiation methods
+     */
+    private RepudiationApi repudiationApi;
+
+    /**
+     * Gets the rate limit data.
+     *
+     * @return
+     */
+    public List<RateLimit> getRateLimits() {
+        return rateLimits;
+    }
+
+    /**
+     * Sets the rate limit data.
+     *
+     * @param rateLimits The rate limit data
+     */
+    public void setRateLimits(List<RateLimit> rateLimits) {
+        this.rateLimits = rateLimits;
+    }
 
     public AuthorizationTokenManager getOAuthTokenManager() {
         return oAuthTokenManager;
@@ -320,7 +362,24 @@ public class MangoPayApi {
         return bankingAliases;
     }
 
-    public void setBankingAliasApi(BankingAliasApi bankingAliases) {
+    private void setBankingAliasApi(BankingAliasApi bankingAliases) {
         this.bankingAliases = bankingAliases;
+    }
+
+    public UboDeclarationApi getUboDeclarationApi() {
+        return uboDeclarations;
+    }
+
+    private void setUboDeclarationApi(UboDeclarationApi uboDeclarations) {
+        this.uboDeclarations = uboDeclarations;
+    }
+
+    public RepudiationApi getRepudiationApi() {
+        return repudiationApi;
+    }
+
+    public MangoPayApi setRepudiationApi(RepudiationApi repudiationApi) {
+        this.repudiationApi = repudiationApi;
+        return this;
     }
 }

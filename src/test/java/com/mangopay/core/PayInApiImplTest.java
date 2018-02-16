@@ -5,6 +5,8 @@ import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -15,8 +17,7 @@ public class PayInApiImplTest extends BaseTest {
     @Test
     public void createCardWeb() {
         try {
-            PayIn payIn = null;
-            payIn = this.getJohnsPayInCardWeb();
+            PayIn payIn = this.getJohnsPayInCardWeb();
 
             assertTrue(payIn.getId().length() > 0);
             assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
@@ -31,8 +32,7 @@ public class PayInApiImplTest extends BaseTest {
     @Test
     public void getCardWeb() {
         try {
-            PayIn payIn = null;
-            payIn = this.getJohnsPayInCardWeb();
+            PayIn payIn = this.getJohnsPayInCardWeb();
 
             PayIn getPayIn = this.api.getPayInApi().get(payIn.getId());
 
@@ -77,9 +77,9 @@ public class PayInApiImplTest extends BaseTest {
         assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
         assertTrue(payIn.getExecutionType() == PayInExecutionType.DIRECT);
         assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
-        assertTrue(payIn.getDebitedFunds() instanceof Money);
-        assertTrue(payIn.getCreditedFunds() instanceof Money);
-        assertTrue(payIn.getFees() instanceof Money);
+        assertTrue(payIn.getDebitedFunds() != null);
+        assertTrue(payIn.getCreditedFunds() != null);
+        assertTrue(payIn.getFees() != null);
         assertEquals(user.getId(), payIn.getAuthorId());
         assertTrue(wallet.getBalance().getAmount() == beforeWallet.getBalance().getAmount() + payIn.getCreditedFunds().getAmount());
         assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
@@ -180,9 +180,9 @@ public class PayInApiImplTest extends BaseTest {
             assertTrue(createPayIn.getPaymentDetails() instanceof PayInPaymentDetailsPreAuthorized);
             assertTrue(createPayIn.getExecutionType() == PayInExecutionType.DIRECT);
             assertTrue(createPayIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
-            assertTrue(createPayIn.getDebitedFunds() instanceof Money);
-            assertTrue(createPayIn.getCreditedFunds() instanceof Money);
-            assertTrue(createPayIn.getFees() instanceof Money);
+            assertTrue(createPayIn.getDebitedFunds() != null);
+            assertTrue(createPayIn.getCreditedFunds() != null);
+            assertTrue(createPayIn.getFees() != null);
             assertEquals(user.getId(), createPayIn.getAuthorId());
             assertTrue(createPayIn.getStatus() == TransactionStatus.SUCCEEDED);
             assertTrue(createPayIn.getType() == TransactionType.PAYIN);
@@ -218,15 +218,15 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
             assertTrue(createPayIn.getPaymentType() == PayInPaymentType.BANK_WIRE);
             assertTrue(createPayIn.getPaymentDetails() instanceof PayInPaymentDetailsBankWire);
-            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredDebitedFunds() instanceof Money);
-            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredFees() instanceof Money);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredDebitedFunds() != null);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredFees() != null);
             assertTrue(createPayIn.getExecutionType() == PayInExecutionType.DIRECT);
             assertTrue(createPayIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
             assertEquals(user.getId(), createPayIn.getAuthorId());
             assertTrue(createPayIn.getStatus() == TransactionStatus.CREATED);
             assertTrue(createPayIn.getType() == TransactionType.PAYIN);
             assertNotNull(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getWireReference());
-            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount() instanceof BankAccount);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount() != null);
             assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getType() == BankAccountType.IBAN);
             assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails() instanceof BankAccountDetailsIBAN);
             assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIban());
@@ -263,14 +263,14 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(getPayIn.getId(), createdPayIn.getId());
             assertTrue(getPayIn.getPaymentType() == PayInPaymentType.BANK_WIRE);
             assertTrue(getPayIn.getPaymentDetails() instanceof PayInPaymentDetailsBankWire);
-            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getDeclaredDebitedFunds() instanceof Money);
-            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getDeclaredFees() instanceof Money);
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getDeclaredDebitedFunds() != null);
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getDeclaredFees() != null);
             assertTrue(getPayIn.getExecutionType() == PayInExecutionType.DIRECT);
             assertTrue(getPayIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
             assertEquals(user.getId(), getPayIn.getAuthorId());
             assertTrue(getPayIn.getType() == TransactionType.PAYIN);
             assertNotNull(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getWireReference());
-            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount() instanceof BankAccount);
+            assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount() != null);
             assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getType() == BankAccountType.IBAN);
             assertTrue(((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails() instanceof BankAccountDetailsIBAN);
             assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) getPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIban());
@@ -319,13 +319,13 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(user.getId(), createPayIn.getAuthorId());
             assertTrue(createPayIn.getStatus() == TransactionStatus.CREATED);
             assertTrue(createPayIn.getType() == TransactionType.PAYIN);
-            assertTrue(createPayIn.getDebitedFunds() instanceof Money);
+            assertTrue(createPayIn.getDebitedFunds() != null);
             assertTrue(10000 == createPayIn.getDebitedFunds().getAmount());
             assertTrue(createPayIn.getDebitedFunds().getCurrency() == CurrencyIso.EUR);
-            assertTrue(createPayIn.getCreditedFunds() instanceof Money);
+            assertTrue(createPayIn.getCreditedFunds() != null);
             assertTrue(9900 == createPayIn.getCreditedFunds().getAmount());
             assertTrue(createPayIn.getCreditedFunds().getCurrency() == CurrencyIso.EUR);
-            assertTrue(createPayIn.getFees() instanceof Money);
+            assertTrue(createPayIn.getFees() != null);
             assertTrue(100 == createPayIn.getFees().getAmount());
             assertTrue(createPayIn.getFees().getCurrency() == CurrencyIso.EUR);
             assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getReturnUrl());
@@ -348,7 +348,7 @@ public class PayInApiImplTest extends BaseTest {
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(bankAccountId);
         mandatePost.setCulture(CultureCode.EN);
-        mandatePost.setReturnURL(returnUrl);
+        mandatePost.setReturnUrl(returnUrl);
         Mandate mandate = this.api.getMandateApi().create(mandatePost);
 
         //	! IMPORTANT NOTE !
@@ -374,7 +374,7 @@ public class PayInApiImplTest extends BaseTest {
         PayIn createPayIn = this.api.getPayInApi().create(payIn);
 
         assertNotNull(createPayIn);
-        assertNotEquals("In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.", TransactionStatus.FAILED, createPayIn.Status);
+        assertNotEquals("In order to make this test pass, after creating mandate and before creating the payin you have to navigate to URL the mandate.RedirectURL property points to and click CONFIRM button.", TransactionStatus.FAILED, createPayIn.getStatus());
 
         assertFalse(createPayIn.getId().isEmpty());
         assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
@@ -387,4 +387,59 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(((PayInPaymentDetailsDirectDebit) createPayIn.getPaymentDetails()).getMandateId(), mandate.getId());
     }
     */
+
+    @Test
+    public void createPayPalWeb() throws Exception {
+        UserNatural john = getJohn();
+        Wallet wallet = getJohnsWallet();
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(john.getId());
+        payIn.setCreditedUserId(john.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(5);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+        payIn.setCreditedWalletId(wallet.getId());
+        PayInPaymentDetailsPayPal paymentDetails = new PayInPaymentDetailsPayPal();
+        paymentDetails.setShippingAddress(new ShippingAddress());
+        paymentDetails.getShippingAddress().setRecipientName(john.getFirstName() + " " + john.getLastName());
+        paymentDetails.getShippingAddress().setAddress(getNewAddress());
+        payIn.setPaymentDetails(paymentDetails);
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("https://test.com");
+        payIn.setExecutionDetails(executionDetails);
+
+        PayIn createdPayIn = api.getPayInApi().create(payIn);
+
+        assertNotNull(createdPayIn);
+        assertEqualInputProps(payIn, createdPayIn);
+        assertNotNull(createdPayIn.getPaymentDetails());
+        assertEqualInputProps(payIn.getPaymentDetails(), createdPayIn.getPaymentDetails());
+    }
+
+    @Test
+    public void getPayInRefunds() throws Exception {
+        PayIn payIn = getNewPayInCardDirect();
+        Refund firstRefund = getNewRefundForPayIn(payIn);
+        Thread.sleep(5000);//wait to create second refund
+        Refund secondRefund = getNewRefundForPayIn(payIn);
+        Pagination pagination = new Pagination(1, 1);
+        Sorting sorting = new Sorting();
+        sorting.addField("CreationDate", SortDirection.asc);
+        List<Refund> firstPage = this.api.getPayInApi().getRefunds(payIn.getId(), pagination, sorting);
+        pagination.setPage(2);
+        List<Refund> secondPage = this.api.getPayInApi().getRefunds(payIn.getId(), pagination, sorting);
+
+
+        assertNotNull("Refunds first page is null", firstPage);
+        assertNotNull("Refunds second page is null", secondPage);
+        assertTrue("Refund first page size is not 1", firstPage.size() == 1);
+        assertTrue("Refund second page size is not 1", secondPage.size() == 1);
+        assertTrue("First page does not contain first refund", firstPage.get(0).getId().equals(firstRefund.getId()));
+        assertTrue("Second page does not contain second refund", secondPage.get(0).getId().equals(secondRefund.getId()));
+
+    }
 }

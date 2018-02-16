@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.*;
 
+import java.util.ArrayList;
+
 /**
  * Mandate entity.
  */
@@ -84,6 +86,9 @@ public class Mandate extends EntityBase {
      */
     @SerializedName("ExecutionType")
     private MandateExecutionType executionType;
+
+    @SerializedName("BankReference")
+    private String bankReference;
 
     public String getBankAccountId() {
         return bankAccountId;
@@ -179,5 +184,22 @@ public class Mandate extends EntityBase {
 
     public void setExecutionType(MandateExecutionType executionType) {
         this.executionType = executionType;
+    }
+
+    public String getBankReference() {
+        return bankReference;
+    }
+
+    public void setBankReference(String bankReference) {
+        this.bankReference = bankReference;
+    }
+
+    @Override
+    public ArrayList<String> getReadOnlyProperties() {
+        ArrayList<String> result = super.getReadOnlyProperties();
+
+        result.add("BankReference");
+
+        return result;
     }
 }

@@ -46,4 +46,12 @@ public class KycDocumentApiImplTest extends BaseTest {
         assertTrue(result.getStatus() == kycDocument.getStatus());
         assertTrue(result.getType() == kycDocument.getType());
     }
+
+    @Test
+    public void createKycDocumentConsult() throws Exception {
+        KycDocument document = getJohnsKycDocument();
+        List<DocumentPageConsult> pageConsults = api.getKycDocumentApi().createKycDocumentConsult(document.getId());
+
+        assertNotNull(pageConsults);
+    }
 }

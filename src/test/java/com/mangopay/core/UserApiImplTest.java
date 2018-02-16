@@ -10,6 +10,7 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -403,12 +404,12 @@ public class UserApiImplTest extends BaseTest {
     public void updateKycDocument() throws Exception {
         UserNatural john = this.getJohn();
         KycDocument kycDocument = this.getJohnsKycDocument();
-        
+
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
 
         this.api.getUserApi().createKycPage(john.getId(), kycDocument.getId(), filePath);
-        
+
         kycDocument.setStatus(KycStatus.VALIDATION_ASKED);
 
         KycDocument result = this.api.getUserApi().updateKycDocument(john.getId(), kycDocument);
@@ -581,5 +582,49 @@ public class UserApiImplTest extends BaseTest {
         assertNotNull(eMoney);
         assertEquals(john.getId(), eMoney.getUserId());
         assertEquals(currencyExpected, eMoney.getCreditedEMoney().getCurrency());
+    }
+
+    @Test
+    public void createUboDeclaration() throws Exception {
+        User legalUser = getMatrix();
+        User john = getNewDeclarativeJohn();
+        DeclaredUbo declaredUbo = new DeclaredUbo();
+        declaredUbo.setUserId(john.getId());
+        ArrayList<DeclaredUbo> declaredUbos = new ArrayList<>();
+        declaredUbos.add(declaredUbo);
+        UboDeclaration declaration = new UboDeclaration();
+        declaration.setDeclaredUbos(declaredUbos);
+
+        UboDeclaration createdUboDeclaration = this.api.getUserApi().createUboDeclaration(legalUser.getId(), declaration);
+        assertNotNull(createdUboDeclaration);
+        assertTrue(createdUboDeclaration.getStatus() == UboDeclarationStatus.CREATED);
+        assertTrue(createdUboDeclaration.getUserId().equals(legalUser.getId()));
+        assertTrue(createdUboDeclaration.getDeclaredUbos().get(0).getUserId().equals(john.getId()));
+    }
+
+    @Test
+    public void getBankAccountTransactions() throws Exception {
+        BankAccount johnsAccount = getJohnsAccount();
+        PayOut johnsPayOutBankWire = getJohnsPayOutBankWire();
+        Pagination pagination = new Pagination(1, 1);
+        List<Transaction> bankAccountTransactions = this.api.getUserApi().getBankAccountTransactions(johnsAccount.getId(), pagination, null);
+
+        assertNotNull("List of bank account transactions is null", bankAccountTransactions);
+        assertFalse("List of bank account transactions is empty", bankAccountTransactions.isEmpty());
+        assertTrue("List of bank account transactions size  does not match pagination", bankAccountTransactions.size() == 1);
+        assertEquals("Returned transaction is not the expected one", bankAccountTransactions.get(0).getId(), johnsPayOutBankWire.getId());
+    }
+
+    @Test
+    public void getUserPreAuthorizations() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId());
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertNotNull(preAuthorizations.get(0));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
     }
 }

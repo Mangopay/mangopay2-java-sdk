@@ -8,8 +8,9 @@ import com.mangopay.entities.UserNatural;
 import com.mangopay.entities.Wallet;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * TransferApiImpl test methods
@@ -59,4 +60,17 @@ public class TransferApiImplTest extends BaseTest {
         assertTrue(refund.getNature() == TransactionNature.REFUND);
     }
 
+    @Test
+    public void getTransferRefunds() throws Exception {
+        Transfer transfer = this.getNewTransfer();
+        Refund firstRefund = this.getNewRefundForTransfer(transfer);
+        Refund secondRefund = this.getNewRefundForTransfer(transfer);
+        Pagination pagination = new Pagination(1, 2);
+        List<Refund> refunds = this.getApi().getTransferApi().getRefunds(transfer.getId(), pagination, null);
+
+        assertNotNull("Refunds came back null", refunds);
+        assertTrue("Refunds size is not correct", refunds.size() == 2);
+
+
+    }
 }

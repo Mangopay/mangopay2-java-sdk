@@ -90,7 +90,7 @@ public class UserLegal extends User {
      * Shareholder declaration.
      */
     @SerializedName("ShareholderDeclaration")
-    public String shareholderDeclaration;
+    private String shareholderDeclaration;
 
     /**
      * Instantiates new UserLegal object.

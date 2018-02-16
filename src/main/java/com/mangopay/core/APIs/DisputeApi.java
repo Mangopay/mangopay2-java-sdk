@@ -112,7 +112,9 @@ public interface DisputeApi {
      * @param repudiationId Repudiation identifier.
      * @return Repudiation instance returned from API.
      * @throws Exception
+     * @deprecated use {@link RepudiationApi#getRepudiation(String)} instead
      */
+    @Deprecated
     Repudiation getRepudiation(String repudiationId) throws Exception;
 
     /**
@@ -235,7 +237,7 @@ public interface DisputeApi {
      * @throws IOException
      * @throws Exception
      */
-    void createDisputePage(String disputeId, String documentId, String filePath) throws IOException, Exception;
+    void createDisputePage(String disputeId, String documentId, String filePath) throws Exception;
 
     /**
      * Creates document's page for dispute.
@@ -247,5 +249,14 @@ public interface DisputeApi {
      * @throws IOException
      * @throws Exception
      */
-    void createDisputePage(String idempotencyKey, String disputeId, String documentId, String filePath) throws IOException, Exception;
+    void createDisputePage(String idempotencyKey, String disputeId, String documentId, String filePath) throws Exception;
+
+    /**
+     * Creates temporary URLs where each page of a dispute document can be viewed.
+     *
+     * @param documentId Identification of the document whose pages to view
+     * @throws Exception
+     * @return List of consults for viewing the dispute document's pages
+     */
+    List<DocumentPageConsult> createDisputeDocumentConsult(String documentId) throws Exception;
 }
