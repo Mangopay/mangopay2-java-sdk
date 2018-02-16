@@ -158,7 +158,7 @@ public class PayInApiImplTest extends BaseTest {
             payIn.setCreditedWalletId(wallet.getId());
             payIn.setAuthorId(user.getId());
             payIn.setDebitedFunds(new Money());
-            payIn.getDebitedFunds().setAmount(10000);
+            payIn.getDebitedFunds().setAmount(100);
             payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
             payIn.setFees(new Money());
             payIn.getFees().setAmount(0);
