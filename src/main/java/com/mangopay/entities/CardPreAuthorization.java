@@ -1,8 +1,10 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
+import com.mangopay.core.Billing;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.Money;
+import com.mangopay.core.SecurityInfo;
 import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
 import com.mangopay.core.enumerations.PreAuthorizationStatus;
@@ -113,6 +115,12 @@ public class CardPreAuthorization extends EntityBase {
      */
     @SerializedName("PayInId")
     private String payInId;
+
+    @SerializedName("Billing")
+    private Billing billing;
+
+    @SerializedName("SecurityInfo")
+    private SecurityInfo securityInfo;
 
     public String getAuthorId() {
         return authorId;
@@ -234,6 +242,22 @@ public class CardPreAuthorization extends EntityBase {
         this.payInId = payInId;
     }
 
+    public Billing getBilling() {
+        return billing;
+    }
+
+    public void setBilling(Billing billing) {
+        this.billing = billing;
+    }
+
+    public SecurityInfo getSecurityInfo() {
+        return securityInfo;
+    }
+
+    public void setSecurityInfo(SecurityInfo securityInfo) {
+        this.securityInfo = securityInfo;
+    }
+
     /**
      * Gets map which property is an object and what type of object.
      * To be overridden in child class if has any sub objects.
@@ -246,6 +270,7 @@ public class CardPreAuthorization extends EntityBase {
         HashMap<String, Type> result = new HashMap<>();
 
         result.put("DebitedFunds", Money.class);
+        result.put("SecurityInfo", SecurityInfo.class);
 
         return result;
     }

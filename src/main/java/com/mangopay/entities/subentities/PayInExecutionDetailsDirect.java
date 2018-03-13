@@ -1,10 +1,13 @@
 package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Dto;
-import com.mangopay.core.ObjectTool;
+import com.mangopay.core.*;
 import com.mangopay.core.enumerations.SecureMode;
 import com.mangopay.core.interfaces.PayInExecutionDetails;
+
+import java.lang.reflect.Type;
+import java.security.Security;
+import java.util.Map;
 
 /**
  * Class representing the Direct type for execution option in PayIn entity.
@@ -40,6 +43,12 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
      */
     @SerializedName("SecureModeNeeded")
     private String secureModeNeeded;
+
+    @SerializedName("Billing")
+    private Billing billing;
+
+    @SerializedName("SecurityInfo")
+    private SecurityInfo securityInfo;
 
     public PayInExecutionDetailsDirect() {
     }
@@ -132,4 +141,30 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         this.secureModeNeeded = secureModeNeeded;
     }
 
+    public Billing getBilling() {
+        return billing;
+    }
+
+    public void setBilling(Billing billing) {
+        this.billing = billing;
+    }
+
+    public SecurityInfo getSecurityInfo() {
+        return securityInfo;
+    }
+
+    public void setSecurityInfo(SecurityInfo securityInfo) {
+        this.securityInfo = securityInfo;
+    }
+
+    @Override
+    public Map<String, Type> getSubObjects() {
+
+
+        Map<String, Type> result = super.getSubObjects();
+
+        result.put("SecurityInfo", SecurityInfo.class);
+
+        return result;
+    }
 }

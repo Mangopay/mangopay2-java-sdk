@@ -69,19 +69,20 @@ public enum DisputeReasonType {
     * TRANSACTION_NOT_RECOGNIZED dispute reason type
     */
     TRANSACTION_NOT_RECOGNIZED,
+
+    /**
+    * PRODUCT_NOT_PROVIDED dispute reason type
+    */
+    PRODUCT_NOT_PROVIDED,
+
+    /**
+    * CANCELED_REOCCURING_TRANSACTION dispute reason type
+    */
+    CANCELED_REOCCURING_TRANSACTION,
 	
-	/**
-	* PRODUCT_NOT_PROVIDED dispute reason type
-	*/
-	PRODUCT_NOT_PROVIDED,
-	
-	/**
-	* CANCELED_REOCCURING_TRANSACTION dispute reason type
-	*/
-	CANCELED_REOCCURING_TRANSACTION,
-	
-	/**
-	* REFUND_NOT_PROCESSED dispute reason type
-	*/
-	REFUND_NOT_PROCESSED
+    /**
+    * REFUND_NOT_PROCESSED dispute reason type
+    */
+    REFUND_NOT_PROCESSED
+
 }
