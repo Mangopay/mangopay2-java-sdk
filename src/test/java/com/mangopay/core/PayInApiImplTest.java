@@ -64,19 +64,44 @@ public class PayInApiImplTest extends BaseTest {
             Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
             UserNatural user = this.getJohn();
 
-            assertTrue(payIn.getId().length() > 0);
-            assertEquals(wallet.getId(), payIn.getCreditedWalletId());
-            assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
-            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
-            assertTrue(payIn.getExecutionType() == PayInExecutionType.DIRECT);
-            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
-            assertTrue(payIn.getDebitedFunds() != null);
-            assertTrue(payIn.getCreditedFunds() != null);
-            assertTrue(payIn.getFees() != null);
-            assertEquals(user.getId(), payIn.getAuthorId());
-            assertTrue(wallet.getBalance().getAmount() == beforeWallet.getBalance().getAmount() + payIn.getCreditedFunds().getAmount());
-            assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
-            assertTrue(payIn.getType() == TransactionType.PAYIN);
+            check(user, payIn, wallet, beforeWallet);
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    private void check(User user, PayIn payIn, Wallet wallet, Wallet beforeWallet) {
+        assertTrue(payIn.getId().length() > 0);
+        assertEquals(wallet.getId(), payIn.getCreditedWalletId());
+        assertTrue(payIn.getPaymentType() == PayInPaymentType.CARD);
+        assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsCard);
+        assertTrue(payIn.getExecutionType() == PayInExecutionType.DIRECT);
+        assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
+        assertTrue(payIn.getDebitedFunds() != null);
+        assertTrue(payIn.getCreditedFunds() != null);
+        assertTrue(payIn.getFees() != null);
+        assertEquals(user.getId(), payIn.getAuthorId());
+        assertTrue(wallet.getBalance().getAmount() == beforeWallet.getBalance().getAmount() + payIn.getCreditedFunds().getAmount());
+        assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
+        assertTrue(payIn.getType() == TransactionType.PAYIN);
+    }
+
+    @Test
+    public void createCardDirectWithBilling() {
+        try {
+            Wallet johnWallet = this.getJohnsWalletWithMoney();
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
+
+            PayIn payIn = this.getNewPayInCardDirectWithBilling();
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
+            UserNatural user = this.getJohn();
+
+            check(user, payIn, wallet, beforeWallet);
+
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull(executionDetails.getSecurityInfo());
+            assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.ADDRESS_MATCH_ONLY);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
@@ -133,7 +158,7 @@ public class PayInApiImplTest extends BaseTest {
             payIn.setCreditedWalletId(wallet.getId());
             payIn.setAuthorId(user.getId());
             payIn.setDebitedFunds(new Money());
-            payIn.getDebitedFunds().setAmount(10000);
+            payIn.getDebitedFunds().setAmount(100);
             payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
             payIn.setFees(new Money());
             payIn.getFees().setAmount(0);
@@ -413,8 +438,8 @@ public class PayInApiImplTest extends BaseTest {
         assertNotNull("Refunds second page is null", secondPage);
         assertTrue("Refund first page size is not 1", firstPage.size() == 1);
         assertTrue("Refund second page size is not 1", secondPage.size() == 1);
-        assertTrue("First page does not contain first refund",firstPage.get(0).getId().equals(firstRefund.getId()));
-        assertTrue("Second page does not contain second refund",secondPage.get(0).getId().equals(secondRefund.getId()));
+        assertTrue("First page does not contain first refund", firstPage.get(0).getId().equals(firstRefund.getId()));
+        assertTrue("Second page does not contain second refund", secondPage.get(0).getId().equals(secondRefund.getId()));
 
     }
 }
