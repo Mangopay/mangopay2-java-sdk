@@ -15,16 +15,16 @@ import static org.junit.Assert.*;
 
 
 /* IMPORTANT NOTE!
-* 
-* Due to the fact the disputes CANNOT be created on user's side,
-* a special approach in testing is needed. 
-* In order to get the tests below pass, a bunch of disputes has
-* to be prepared on the API's side - if it's not, the tests won't pass.
-* 
-* Comment out the @Ignore attribute of DisputeApiImplTest class to include
-* disputes unit tests into the testing queue.
-* 
-*/
+ *
+ * Due to the fact the disputes CANNOT be created on user's side,
+ * a special approach in testing is needed.
+ * In order to get the tests below pass, a bunch of disputes has
+ * to be prepared on the API's side - if it's not, the tests won't pass.
+ *
+ * Comment out the @Ignore attribute of DisputeApiImplTest class to include
+ * disputes unit tests into the testing queue.
+ *
+ */
 
 
 /**
@@ -366,7 +366,7 @@ public class DisputeApiImplTest extends BaseTest {
         assertNotNull("Cannot test submitting dispute's documents because there's no dispute with expected status in the disputes list.", dispute);
 
         assertNotNull("Cannot test submitting dispute's documents because there's no dispute document that can be updated.", disputeDocument);
-    
+
         URL url = getClass().getResource("/com/mangopay/core/TestKycPageFile.png");
         String filePath = new File(url.toURI()).getAbsolutePath();
         api.getDisputeApi().createDisputePage(dispute.getId(), disputeDocument.getId(), filePath);
