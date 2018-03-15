@@ -7,6 +7,9 @@ nbdist/
 nbactions.xml
 .nb-gradle/
 
+### Intelij ###
+.idea
+
 ### Gradle ###
 .gradle
 /target/

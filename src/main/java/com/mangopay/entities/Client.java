@@ -3,7 +3,7 @@ package com.mangopay.entities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Address;
 import com.mangopay.core.EntityBase;
-import com.mangopay.core.enumerations.PlatformType;
+import com.mangopay.core.PlatformCategorization;
 
 import java.util.ArrayList;
 
@@ -73,11 +73,10 @@ public class Client extends EntityBase {
     private String platformDescription;
 
     /**
-     * The type of platform.
+     * The categorization of the platform
      */
-    @SerializedName("PlatformType")
-    private PlatformType platformType;
-
+    @SerializedName("PlatformCategorization")
+    private PlatformCategorization platformCategorization;
     /**
      * The URL for your website.
      */
@@ -176,12 +175,12 @@ public class Client extends EntityBase {
         this.platformDescription = platformDescription;
     }
 
-    public PlatformType getPlatformType() {
-        return platformType;
+    public PlatformCategorization getPlatformCategorization() {
+        return platformCategorization;
     }
 
-    public void setPlatformType(PlatformType platformType) {
-        this.platformType = platformType;
+    public void setPlatformCategorization(PlatformCategorization platformCategorization) {
+        this.platformCategorization = platformCategorization;
     }
 
     public String getPlatformUrl() {
