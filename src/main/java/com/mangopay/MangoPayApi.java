@@ -46,6 +46,7 @@ public class MangoPayApi {
         setBankingAliasApi(new BankingAliasApiImpl(this));
         setUboDeclarationApi(new UboDeclarationApiImpl(this));
         setRepudiationApi(new RepudiationApiImpl(this));
+        setSettlementApi(new SettlementApiImpl(this));
     }
 
     ////////////////////////////////////////
@@ -179,6 +180,11 @@ public class MangoPayApi {
      * Provides Repudiation methods
      */
     private RepudiationApi repudiationApi;
+
+    /**
+     * Provides Settlement methods
+     */
+    private SettlementApi settlementApi;
 
     /**
      * Gets the rate limit data.
@@ -381,5 +387,13 @@ public class MangoPayApi {
     public MangoPayApi setRepudiationApi(RepudiationApi repudiationApi) {
         this.repudiationApi = repudiationApi;
         return this;
+    }
+
+    public SettlementApi getSettlementApi() {
+        return settlementApi;
+    }
+
+    public void setSettlementApi(SettlementApi settlementApi) {
+        this.settlementApi = settlementApi;
     }
 }
