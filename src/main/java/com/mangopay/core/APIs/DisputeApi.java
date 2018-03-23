@@ -139,6 +139,24 @@ public interface DisputeApi {
     Transfer createSettlementTransfer(String idempotencyKey, SettlementTransfer settlementTransfer, String repudiationId) throws Exception;
 
     /**
+     * Get disputes that need settling
+     *
+     * @return a list of {@link Dispute}s
+     * @throws Exception
+     */
+    List<Dispute> getDisputesWithPendingSettlement() throws Exception;
+
+    /**
+     * Get disputes that need settling
+     *
+     * @param pagination Pagination object
+     * @param sorting    Sorting object
+     * @return a list of {@link Dispute}s
+     * @throws Exception
+     */
+    List<Dispute> getDisputesWithPendingSettlement(Pagination pagination, Sorting sorting) throws Exception;
+
+    /**
      * Updates dispute's tag.
      *
      * @param tag       New tag text.
@@ -255,8 +273,8 @@ public interface DisputeApi {
      * Creates temporary URLs where each page of a dispute document can be viewed.
      *
      * @param documentId Identification of the document whose pages to view
-     * @throws Exception
      * @return List of consults for viewing the dispute document's pages
+     * @throws Exception
      */
     List<DocumentPageConsult> createDisputeDocumentConsult(String documentId) throws Exception;
 }
