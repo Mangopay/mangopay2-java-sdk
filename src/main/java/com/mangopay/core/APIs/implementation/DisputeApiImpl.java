@@ -1,24 +1,17 @@
 package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.DisputeApi;
-import com.mangopay.entities.Dispute;
-import com.mangopay.entities.DisputeDocument;
-import com.mangopay.entities.DisputePage;
-import com.mangopay.entities.Repudiation;
-import com.mangopay.entities.SettlementTransfer;
-import com.mangopay.entities.Transaction;
-import com.mangopay.entities.Transfer;
+import com.mangopay.core.*;
+import com.mangopay.entities.*;
+import org.apache.commons.codec.binary.Base64;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-
-import org.apache.commons.codec.binary.Base64;
 
 /**
  * API for disputes.
@@ -108,6 +101,16 @@ public class DisputeApiImpl extends ApiBase implements DisputeApi {
         settlement.setDebitedFunds(settlementTransfer.getDebitedFunds());
         settlement.setFees(settlementTransfer.getFees());
         return this.createObject(Transfer.class, idempotencyKey, "disputes_repudiation_create_settlement", settlement, repudiationId);
+    }
+
+    @Override
+    public List<Dispute> getDisputesWithPendingSettlement() throws Exception {
+        return this.getDisputesWithPendingSettlement(null, null);
+    }
+
+    @Override
+    public List<Dispute> getDisputesWithPendingSettlement(Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Dispute[].class, Dispute.class, "disputes_pending_settlement", pagination, sorting);
     }
 
     @Override
