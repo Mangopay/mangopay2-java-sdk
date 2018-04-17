@@ -1,7 +1,7 @@
-dist: precise
+dist: trusty
 language: java
 jdk:
-- oraclejdk7
+- oraclejdk8
 before_install:
 - chmod +x .utility/initiate-publish.sh
 - > 
