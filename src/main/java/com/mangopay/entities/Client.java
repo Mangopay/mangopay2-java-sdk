@@ -90,6 +90,12 @@ public class Client extends EntityBase {
     private Address headquartersAddress;
 
     /**
+     * The phone number of the client's headquarters
+     */
+    @SerializedName("HeadquartersPhoneNumber")
+    private String headquartersPhoneNumber;
+
+    /**
      * The tax (or VAT) number for your company.
      */
     @SerializedName("TaxNumber")
@@ -205,5 +211,14 @@ public class Client extends EntityBase {
 
     public void setTaxNumber(String taxNumber) {
         this.taxNumber = taxNumber;
+    }
+
+    public String getHeadquartersPhoneNumber() {
+        return headquartersPhoneNumber;
+    }
+
+    public Client setHeadquartersPhoneNumber(String headquartersPhoneNumber) {
+        this.headquartersPhoneNumber = headquartersPhoneNumber;
+        return this;
     }
 }
