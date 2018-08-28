@@ -442,4 +442,19 @@ public class PayInApiImplTest extends BaseTest {
         assertTrue("Second page does not contain second refund", secondPage.get(0).getId().equals(secondRefund.getId()));
 
     }
+
+    @Test
+    public void testPayPalAccountEmail() throws Exception {
+        String payInId = "54088959";
+        String payPalBuyerEmail = "paypal-buyer-user@mangopay.com";
+        PayIn payIn = this.api.getPayInApi().get(payInId);
+
+        assertNotNull("PayIn is null", payIn);
+        assertEquals("Payment is not of PayPal type", PayInPaymentType.PAYPAL, payIn.getPaymentType());
+
+        PayInPaymentDetailsPayPal paymentDetails = (PayInPaymentDetailsPayPal) payIn.getPaymentDetails();
+        assertNotNull("Payment details are null", paymentDetails);
+        assertNotNull("Payment account email is not null", paymentDetails.getPaypalBuyerAccountEmail());
+        assertEquals("Expected PayPal buyer account doesn't match", payPalBuyerEmail, paymentDetails.getPaypalBuyerAccountEmail());
+    }
 }
