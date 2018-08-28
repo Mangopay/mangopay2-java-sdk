@@ -19,6 +19,9 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     @SerializedName("ShippingAddress")
     private ShippingAddress shippingAddress;
 
+    @SerializedName("PaypalBuyerAccountEmail")
+    private String paypalBuyerAccountEmail;
+
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
     }
@@ -34,5 +37,14 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
         subObjects.put("ShippingAddress", ShippingAddress.class);
 
         return subObjects;
+    }
+
+    public String getPaypalBuyerAccountEmail() {
+        return paypalBuyerAccountEmail;
+    }
+
+    public PayInPaymentDetailsPayPal setPaypalBuyerAccountEmail(String paypalBuyerAccountEmail) {
+        this.paypalBuyerAccountEmail = paypalBuyerAccountEmail;
+        return this;
     }
 }
