@@ -1,6 +1,6 @@
 language: java
 jdk:
-- openjdk7
+- oraclejdk7
 before_install:
 - chmod +x .utility/initiate-publish.sh
 - > 
