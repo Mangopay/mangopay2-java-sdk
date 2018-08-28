@@ -60,7 +60,7 @@ You can get yourself a [free sandbox account](https://www.mangopay.com/signup/cr
 
 Configuration
 -------------------------------------------------
-Using the credential info from the signup process above, you should then set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your passphrase.
+Using the credential info from the signup process above, you should then set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your APIKey.
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production
 environment, set it to `https://api.mangopay.com`.
