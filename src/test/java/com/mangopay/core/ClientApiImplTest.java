@@ -63,15 +63,19 @@ public class ClientApiImplTest extends BaseTest {
         Random rand = new Random();
         String color1 = Integer.toString(rand.nextInt(100000) + 100000);
         String color2 = Integer.toString(rand.nextInt(100000) + 100000);
+        String headquarterPhoneNumber = Integer.toString(rand.nextInt(99999999));
 
         client.setPrimaryButtonColour("#" + color1);
         client.setPrimaryThemeColour("#" + color2);
+        client.setHeadquartersPhoneNumber(headquarterPhoneNumber);
 
         Client clientNew = this.api.getClientApi().save(client);
 
         assertNotNull(clientNew);
         assertEquals(client.getPrimaryButtonColour(), clientNew.getPrimaryButtonColour());
         assertEquals(client.getPrimaryThemeColour(), clientNew.getPrimaryThemeColour());
+        assertNotNull("Headquarter phone number is null!", client.getHeadquartersPhoneNumber());
+        assertEquals("Client's headquarter phone number did not update", headquarterPhoneNumber, clientNew.getHeadquartersPhoneNumber());
     }
 
     @Test
