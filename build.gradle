@@ -80,4 +80,3 @@ task updatePropertiesFile {
 
 
 processResources.dependsOn updatePropertiesFile
-
