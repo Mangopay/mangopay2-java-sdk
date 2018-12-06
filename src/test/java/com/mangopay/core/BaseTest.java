@@ -412,6 +412,7 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
+        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCulture(CultureCode.FR);
 
         return payIn;
     }
