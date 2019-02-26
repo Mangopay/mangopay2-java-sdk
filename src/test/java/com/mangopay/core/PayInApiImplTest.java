@@ -457,4 +457,22 @@ public class PayInApiImplTest extends BaseTest {
         assertNotNull("Payment account email is not null", paymentDetails.getPaypalBuyerAccountEmail());
         assertEquals("Expected PayPal buyer account doesn't match", payPalBuyerEmail, paymentDetails.getPaypalBuyerAccountEmail());
     }
+
+    @Test
+    public void testDirectPayInCultureCode() {
+        try {
+            PayIn payIn = this.getNewPayInCardDirect();
+
+            assertNotNull(payIn);
+            assertNotNull(payIn.getExecutionDetails());
+            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsDirect);
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull("Culture code is null", executionDetails.getCulture());
+            assertEquals(((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).getCulture(), executionDetails.getCulture());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
 }

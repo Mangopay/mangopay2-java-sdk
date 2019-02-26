@@ -412,6 +412,7 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
+        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCulture(CultureCode.FR);
 
         return payIn;
     }
@@ -645,7 +646,7 @@ public abstract class BaseTest {
         String data = "data=" + cardRegistration.getPreregistrationData() +
                 "&accessKeyRef=" + cardRegistration.getAccessKey() +
                 "&cardNumber=4970100000000154" +
-                "&cardExpirationDate=1218" +
+                "&cardExpirationDate=0722" +
                 "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());

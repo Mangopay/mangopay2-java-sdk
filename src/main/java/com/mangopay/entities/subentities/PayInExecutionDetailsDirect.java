@@ -1,12 +1,15 @@
 package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.*;
+import com.mangopay.core.Billing;
+import com.mangopay.core.Dto;
+import com.mangopay.core.ObjectTool;
+import com.mangopay.core.SecurityInfo;
+import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.enumerations.SecureMode;
 import com.mangopay.core.interfaces.PayInExecutionDetails;
 
 import java.lang.reflect.Type;
-import java.security.Security;
 import java.util.Map;
 
 /**
@@ -49,6 +52,12 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
 
     @SerializedName("SecurityInfo")
     private SecurityInfo securityInfo;
+
+    /**
+     * The language to use for the payment page - needs to be the ISO code of the language
+     */
+    @SerializedName("Culture")
+    private CultureCode culture;
 
     public PayInExecutionDetailsDirect() {
     }
@@ -166,5 +175,14 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         result.put("SecurityInfo", SecurityInfo.class);
 
         return result;
+    }
+
+    public CultureCode getCulture() {
+        return culture;
+    }
+
+    public PayInExecutionDetailsDirect setCulture(CultureCode culture) {
+        this.culture = culture;
+        return this;
     }
 }
