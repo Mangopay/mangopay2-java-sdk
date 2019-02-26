@@ -2,6 +2,7 @@ package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
+import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 
 /**
@@ -15,11 +16,26 @@ public class PayInPaymentDetailsPreAuthorized extends Dto implements PayInPaymen
     @SerializedName("PreauthorizationId")
     private String preauthorizationId;
 
+    /**
+     * The language to use for the payment page - needs to be the ISO code of the language
+     */
+    @SerializedName("Culture")
+    private CultureCode culture;
+
     public String getPreauthorizationId() {
         return preauthorizationId;
     }
 
     public void setPreauthorizationId(String preauthorizationId) {
         this.preauthorizationId = preauthorizationId;
+    }
+
+    public CultureCode getCulture() {
+        return culture;
+    }
+
+    public PayInPaymentDetailsPreAuthorized setCulture(CultureCode culture) {
+        this.culture = culture;
+        return this;
     }
 }
