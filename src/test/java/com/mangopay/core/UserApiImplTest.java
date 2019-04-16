@@ -32,7 +32,8 @@ public class UserApiImplTest extends BaseTest {
     public void createLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
         assertTrue(matrix.getId().length() > 0);
-        assertTrue(matrix.getPersonType().equals(PersonType.LEGAL));
+        assertEquals(matrix.getPersonType(), PersonType.LEGAL);
+        assertEquals("LU12345678", matrix.getCompanyNumber());
     }
 
     @Test
@@ -70,6 +71,7 @@ public class UserApiImplTest extends BaseTest {
         user.setLegalRepresentativeNationality(CountryIso.FR);
         user.setLegalRepresentativeCountryOfResidence(CountryIso.FR);
         user.setEmail("email@email.org");
+        user.setCompanyNumber("LU12345678");
 
         User ret = null;
 
