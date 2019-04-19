@@ -23,5 +23,10 @@ public enum UboDeclarationStatus {
     /**
      * When the UBO declaration was refused
      */
-    REFUSED
+    REFUSED,
+
+    /**
+     * When the UBO declaration was incomplete
+     */
+    INCOMPLETE
 }
