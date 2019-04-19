@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public abstract class User extends EntityBase {
 
     /**
-     * Type of user.
+     * type of user.
      */
     @SerializedName("PersonType")
     PersonType personType;

@@ -837,7 +837,7 @@ public abstract class BaseTest {
                 assertEquals(((BankAccountDetailsCA) ((BankAccount) entity1).getDetails()).getBranchCode(), ((BankAccountDetailsCA) ((BankAccount) entity2).getDetails()).getBranchCode());
             } else if (((BankAccount) entity1).getType() == BankAccountType.OTHER) {
                 assertEquals(((BankAccountDetailsOTHER) ((BankAccount) entity1).getDetails()).getAccountNumber(), ((BankAccountDetailsOTHER) ((BankAccount) entity2).getDetails()).getAccountNumber());
-                //assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).getDetails()).Type, ((BankAccountDetailsOTHER)((BankAccount)entity2).getDetails()).Type);
+                //assertEquals(((BankAccountDetailsOTHER)((BankAccount)entity1).getDetails()).type, ((BankAccountDetailsOTHER)((BankAccount)entity2).getDetails()).type);
                 assertEquals(((BankAccountDetailsOTHER) ((BankAccount) entity1).getDetails()).getCountry(), ((BankAccountDetailsOTHER) ((BankAccount) entity2).getDetails()).getCountry());
                 assertEquals(((BankAccountDetailsOTHER) ((BankAccount) entity1).getDetails()).getBic(), ((BankAccountDetailsOTHER) ((BankAccount) entity2).getDetails()).getBic());
             }

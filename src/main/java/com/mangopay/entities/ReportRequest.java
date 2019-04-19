@@ -51,7 +51,7 @@ public class ReportRequest extends EntityBase {
     private String callbackUrl;
 
     /**
-     * Type of the report.
+     * type of the report.
      */
     @SerializedName("ReportType")
     private ReportType reportType;
@@ -77,7 +77,7 @@ public class ReportRequest extends EntityBase {
     /**
      * Columns to be included in the report.
      * Allowed values: "Alias", "BankAccountId", "BankWireRef", "CardId",
-     * "CardType", "Country", "Culture", "Currency", "DeclaredDebitedFundsAmount",
+     * "CardType", "country", "Culture", "Currency", "DeclaredDebitedFundsAmount",
      * "DeclaredDebitedFundsCurrency", "DeclaredFeesAmount",
      * "DeclaredFeesCurrency", "ExecutionType", "ExpirationDate", "PaymentType",
      * "PreauthorizationId", "WireReference".

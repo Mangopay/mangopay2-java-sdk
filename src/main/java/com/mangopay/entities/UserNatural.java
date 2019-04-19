@@ -53,7 +53,7 @@ public final class UserNatural extends User {
     private CountryIso nationality;
 
     /**
-     * Country of residence.
+     * country of residence.
      */
     @SerializedName("CountryOfResidence")
     private CountryIso countryOfResidence;

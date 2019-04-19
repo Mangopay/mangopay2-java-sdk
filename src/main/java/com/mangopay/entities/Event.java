@@ -18,7 +18,7 @@ public class Event extends EntityBase {
     private String resourceId;
 
     /**
-     * Type of event.
+     * type of event.
      */
     @SerializedName("EventType")
     private EventType eventType;

@@ -30,7 +30,7 @@ public class ResponseException extends Exception {
     /**
      * API error type.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private String type;
 
     /**

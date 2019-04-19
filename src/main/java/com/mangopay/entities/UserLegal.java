@@ -21,7 +21,7 @@ public class UserLegal extends User {
     private String name;
     
     /**
-     * Type of legal user.
+     * type of legal user.
      */
     @SerializedName("LegalPersonType")
     private LegalPersonType legalPersonType;

@@ -217,8 +217,8 @@ public abstract class ApiBase {
 
     /**
      * Creates the Dto instance.
-     * @param <T>               Type on behalf of which the request is being called.
-     * @param classOfT          Type on behalf of which the request is being called.
+     * @param <T>               type on behalf of which the request is being called.
+     * @param classOfT          type on behalf of which the request is being called.
      * @param idempotencyKey    idempotency key for this request.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
@@ -247,8 +247,8 @@ public abstract class ApiBase {
 
     /**
      * Creates the Dto instance.
-     * @param <T>               Type on behalf of which the request is being called.
-     * @param classOfT          Type on behalf of which the request is being called.
+     * @param <T>               type on behalf of which the request is being called.
+     * @param classOfT          type on behalf of which the request is being called.
      * @param idempotencyKey    idempotency key for this request.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
@@ -262,8 +262,8 @@ public abstract class ApiBase {
 
     /**
      * Creates the Dto instance.
-     * @param <T>               Type on behalf of which the request is being called.
-     * @param classOfT          Type on behalf of which the request is being called.
+     * @param <T>               type on behalf of which the request is being called.
+     * @param classOfT          type on behalf of which the request is being called.
      * @param idempotencyKey    idempotency key for this request.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
@@ -276,8 +276,8 @@ public abstract class ApiBase {
 
     /**
      * Gets the Dto instance from API.
-     * @param <T>               Type on behalf of which the request is being called.
-     * @param classOfT          Type on behalf of which the request is being called.
+     * @param <T>               type on behalf of which the request is being called.
+     * @param classOfT          type on behalf of which the request is being called.
      * @param methodKey         Relevant method key.
      * @param entityId          Entity identifier.
      * @param secondEntityId    Entity identifier for the second entity.
@@ -296,8 +296,8 @@ public abstract class ApiBase {
 
     /**
      * Gets the Dto instance from API.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
+     * @param <T>           type on behalf of which the request is being called.
+     * @param classOfT      type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param entityId      Entity identifier.
      * @return              The Dto instance returned from API.
@@ -309,8 +309,8 @@ public abstract class ApiBase {
 
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>                   Type on behalf of which the request is being called.
-     * @param classOfT              Type on behalf of which the request is being called.
+     * @param <T>                   type on behalf of which the request is being called.
+     * @param classOfT              type on behalf of which the request is being called.
      * @param methodKey             Relevant method key.
      * @param pagination            Pagination object.
      * @param entityId              Entity identifier.
@@ -356,8 +356,8 @@ public abstract class ApiBase {
 
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
+     * @param <T>           type on behalf of which the request is being called.
+     * @param classOfT      type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param pagination    Pagination object.
      * @param entityId      Entity identifier.
@@ -371,8 +371,8 @@ public abstract class ApiBase {
 
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
+     * @param <T>           type on behalf of which the request is being called.
+     * @param classOfT      type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param pagination    Pagination object.
      * @param entityId      Entity identifier.
@@ -385,8 +385,8 @@ public abstract class ApiBase {
 
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
+     * @param <T>           type on behalf of which the request is being called.
+     * @param classOfT      type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param pagination    Pagination object.
      * @return              The array of Dto instances returned from API.
@@ -398,8 +398,8 @@ public abstract class ApiBase {
 
     /**
      * Gets the array of Dto instances from API.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
+     * @param <T>           type on behalf of which the request is being called.
+     * @param classOfT      type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param pagination    Pagination object.
      * @param sorting       Sorting object.
@@ -412,8 +412,8 @@ public abstract class ApiBase {
 
     /**
      * Saves the Dto instance.
-     * @param <T>           Type on behalf of which the request is being called.
-     * @param classOfT      Type on behalf of which the request is being called.
+     * @param <T>           type on behalf of which the request is being called.
+     * @param classOfT      type on behalf of which the request is being called.
      * @param methodKey     Relevant method key.
      * @param entity        Dto instance that is going to be sent.
      * @return              The Dto instance returned from API.
@@ -425,8 +425,8 @@ public abstract class ApiBase {
 
         /**
      * Saves the Dto instance.
-     * @param <T>               Type on behalf of which the request is being called.
-     * @param classOfT          Type on behalf of which the request is being called.
+     * @param <T>               type on behalf of which the request is being called.
+     * @param classOfT          type on behalf of which the request is being called.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
      * @param entityId          Entity identifier.
@@ -439,8 +439,8 @@ public abstract class ApiBase {
 
     /**
      * Saves the Dto instance.
-     * @param <T>               Type on behalf of which the request is being called.
-     * @param classOfT          Type on behalf of which the request is being called.
+     * @param <T>               type on behalf of which the request is being called.
+     * @param classOfT          type on behalf of which the request is being called.
      * @param methodKey         Relevant method key.
      * @param entity            Dto instance that is going to be sent.
      * @param entityId          Entity identifier.

@@ -19,7 +19,7 @@ public class FilterTransactions extends Dto {
     /**
      * Transaction type.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private TransactionType type;
 
     /**
@@ -90,7 +90,7 @@ public class FilterTransactions extends Dto {
         HashMap<String, String> result = new HashMap<>();
 
         if (status != null && status != TransactionStatus.NotSpecified) result.put("Status", status.toString());
-        if (type != null && type != TransactionType.NotSpecified) result.put("Type", type.toString());
+        if (type != null && type != TransactionType.NotSpecified) result.put("type", type.toString());
         if (nature != null && nature != TransactionNature.NotSpecified) result.put("Nature", nature.toString());
         if (beforeDate != null) result.put("BeforeDate", Long.toString(beforeDate));
         if (afterDate != null) result.put("AfterDate", Long.toString(afterDate));

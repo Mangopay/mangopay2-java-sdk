@@ -11,9 +11,9 @@ import com.mangopay.core.enumerations.DisputeDocumentType;
 public class DisputeDocument extends EntityBase {
 
     /**
-     * Type of dispute document.
+     * type of dispute document.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private DisputeDocumentType type;
 
     /**

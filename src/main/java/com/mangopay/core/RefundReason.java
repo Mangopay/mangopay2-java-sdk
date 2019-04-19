@@ -15,7 +15,7 @@ public class RefundReason extends Dto {
     private String refundReasonMessage;
 
     /**
-     * Type of refund reason.
+     * type of refund reason.
      */
     @SerializedName("RefundReasonType")
     private RefundReasonType refundReasonType;

@@ -24,9 +24,9 @@ public class BankAccount extends EntityBase {
     private String userId;
 
     /**
-     * Type of bank account.
+     * type of bank account.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private BankAccountType type;
 
     /**
@@ -44,13 +44,13 @@ public class BankAccount extends EntityBase {
     /**
      * Denotes whether bank account is active or not.
      */
-    @SerializedName("Active")
+    @SerializedName("active")
     private Boolean active;
 
     /**
-     * One of BankAccountDetails implementations, depending on Type.
+     * One of BankAccountDetails implementations, depending on type.
      */
-    @SerializedName("Details")
+    @SerializedName("details")
     private BankAccountDetails details;
 
     public String getUserId() {
@@ -125,25 +125,25 @@ public class BankAccount extends EntityBase {
     public Map<String, Map<String, Map<String, Class<?>>>> getDependentObjects() {
 
         return new HashMap<String, Map<String, Map<String, Class<?>>>>() {{
-            put("Type", new HashMap<String, Map<String, Class<?>>>() {{
+            put("type", new HashMap<String, Map<String, Class<?>>>() {{
                         put("IBAN", new HashMap<String, Class<?>>() {{
-                                    put("Details", BankAccountDetailsIBAN.class);
+                                    put("details", BankAccountDetailsIBAN.class);
                                 }}
                         );
                         put("GB", new HashMap<String, Class<?>>() {{
-                                    put("Details", BankAccountDetailsGB.class);
+                                    put("details", BankAccountDetailsGB.class);
                                 }}
                         );
                         put("US", new HashMap<String, Class<?>>() {{
-                                    put("Details", BankAccountDetailsUS.class);
+                                    put("details", BankAccountDetailsUS.class);
                                 }}
                         );
                         put("CA", new HashMap<String, Class<?>>() {{
-                                    put("Details", BankAccountDetailsCA.class);
+                                    put("details", BankAccountDetailsCA.class);
                                 }}
                         );
                         put("OTHER", new HashMap<String, Class<?>>() {{
-                                    put("Details", BankAccountDetailsOTHER.class);
+                                    put("details", BankAccountDetailsOTHER.class);
                                 }}
                         );
                         // ...and more in future...
@@ -163,8 +163,8 @@ public class BankAccount extends EntityBase {
         ArrayList<String> result = super.getReadOnlyProperties();
 
         result.add("UserId");
-        result.add("Type");
-        result.add("Active");
+        result.add("type");
+        result.add("active");
 
         return result;
     }

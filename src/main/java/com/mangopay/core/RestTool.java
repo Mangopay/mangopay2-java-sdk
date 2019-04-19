@@ -98,8 +98,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process collections of objects,
      * use <code>requestList</code> method instead.
      *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
+     * @param <T>         type on behalf of which the request is being called.
+     * @param classOfT    type on behalf of which the request is being called.
      * @param urlMethod   Relevant method key.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @param requestData Collection of key-value pairs of request
@@ -121,8 +121,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process collections of objects,
      * use <code>requestList</code> method instead.
      *
-     * @param <T>            Type on behalf of which the request is being called.
-     * @param classOfT       Type on behalf of which the request is being called.
+     * @param <T>            type on behalf of which the request is being called.
+     * @param classOfT       type on behalf of which the request is being called.
      * @param idempotencyKey idempotency key for this request.
      * @param urlMethod      Relevant method key.
      * @param requestType    HTTP request term, one of the GET, PUT or POST.
@@ -155,8 +155,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process collections of objects,
      * use <code>requestList</code> method instead.
      *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
+     * @param <T>         type on behalf of which the request is being called.
+     * @param classOfT    type on behalf of which the request is being called.
      * @param urlMethod   Relevant method key.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @return The Dto instance returned from API.
@@ -173,8 +173,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process collections of objects,
      * use <code>requestList</code> method instead.
      *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
+     * @param <T>         type on behalf of which the request is being called.
+     * @param classOfT    type on behalf of which the request is being called.
      * @param urlMethod   Relevant method key.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @param requestData Collection of key-value pairs of request
@@ -193,8 +193,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process collections of objects,
      * use <code>requestList</code> method instead.
      *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
+     * @param <T>         type on behalf of which the request is being called.
+     * @param classOfT    type on behalf of which the request is being called.
      * @param urlMethod   Relevant method key.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @param requestData Collection of key-value pairs of request
@@ -214,8 +214,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process single objects,
      * use <code>request</code> method instead.
      *
-     * @param <T>                 Type on behalf of which the request is being called.
-     * @param classOfT            Type on behalf of which the request is being called.
+     * @param <T>                 type on behalf of which the request is being called.
+     * @param classOfT            type on behalf of which the request is being called.
      * @param classOfTItem        The class of single item in array.
      * @param urlMethod           Relevant method key.
      * @param requestType         HTTP request term. For lists should be always GET.
@@ -247,8 +247,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process single objects,
      * use <code>request</code> method instead.
      *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
+     * @param <T>          type on behalf of which the request is being called.
+     * @param classOfT     type on behalf of which the request is being called.
      * @param classOfTItem The class of single item in array.
      * @param urlMethod    Relevant method key.
      * @param requestType  HTTP request term. For lists should be always GET.
@@ -266,8 +266,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process single objects,
      * use <code>request</code> method instead.
      *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
+     * @param <T>          type on behalf of which the request is being called.
+     * @param classOfT     type on behalf of which the request is being called.
      * @param classOfTItem The class of single item in array.
      * @param urlMethod    Relevant method key.
      * @param requestType  HTTP request term. For lists should be always GET.
@@ -287,8 +287,8 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process single objects,
      * use <code>request</code> method instead.
      *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
+     * @param <T>          type on behalf of which the request is being called.
+     * @param classOfT     type on behalf of which the request is being called.
      * @param classOfTItem The class of single item in array.
      * @param urlMethod    Relevant method key.
      * @param requestType  HTTP request term. For lists should be always GET.
@@ -319,7 +319,7 @@ public class RestTool {
 
             /*  FOR WEB DEBUG PURPOSES
             SocketAddress addr = new InetSocketAddress("localhost", 8888);
-            Proxy proxy = new Proxy(Proxy.Type.HTTP, addr);
+            Proxy proxy = new Proxy(Proxy.type.HTTP, addr);
             connection = (HttpURLConnection)url.openConnection(proxy);
             */
 
@@ -613,11 +613,11 @@ public class RestTool {
             return true;
         }
 
-        if (classOfT.getName().equals(BankAccount.class.getName()) && fieldName.equals("Details")) {
+        if (classOfT.getName().equals(BankAccount.class.getName()) && fieldName.equals("details")) {
             return true;
         }
 
-        if (classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
+        if (classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("details")) {
             return true;
         }
 
@@ -1029,7 +1029,7 @@ public class RestTool {
         Map<String, String> httpHeaders = new HashMap<>();
 
         // content type
-        httpHeaders.put("Content-Type", "application/json");
+        httpHeaders.put("Content-type", "application/json");
 
         // AuthenticationHelper http header
         if (this.authRequired) {

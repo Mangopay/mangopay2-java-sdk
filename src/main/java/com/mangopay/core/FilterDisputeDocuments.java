@@ -21,7 +21,7 @@ public class FilterDisputeDocuments extends Dto {
     /**
      * Dispute document type.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private DisputeDocumentType type;
 
     /**
@@ -78,7 +78,7 @@ public class FilterDisputeDocuments extends Dto {
         HashMap<String, String> result = new HashMap<>();
 
         if (status != null) result.put("Status", status.toString());
-        if (type != null) result.put("Type", type.toString());
+        if (type != null) result.put("type", type.toString());
         if (beforeDate != null) result.put("BeforeDate", Long.toString(beforeDate));
         if (afterDate != null) result.put("AfterDate", Long.toString(afterDate));
 

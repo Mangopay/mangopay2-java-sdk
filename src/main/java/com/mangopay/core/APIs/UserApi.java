@@ -257,7 +257,7 @@ public interface UserApi {
      * Creates KycDocument.
      *
      * @param userId User identifier.
-     * @param type   Type of KycDocument.
+     * @param type   type of KycDocument.
      * @return KycDocument object returned from API.
      * @throws Exception
      */
@@ -268,7 +268,7 @@ public interface UserApi {
      *
      * @param idempotencyKey idempotency key for this request.
      * @param userId         User identifier.
-     * @param type           Type of KycDocument.
+     * @param type           type of KycDocument.
      * @return KycDocument object returned from API.
      * @throws Exception
      */

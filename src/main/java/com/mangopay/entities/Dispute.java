@@ -30,7 +30,7 @@ public class Dispute extends EntityBase {
     private InitialTransactionType initialTransactionType;
 
     /**
-     * Type of dispute.
+     * type of dispute.
      */
     @SerializedName("DisputeType")
     private DisputeType disputeType;

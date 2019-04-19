@@ -11,9 +11,9 @@ import com.mangopay.core.enumerations.KycStatus;
 public class KycDocument extends EntityBase {
 
     /**
-     * Type of KYC document.
+     * type of KYC document.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private KycDocumentType type;
 
     /**

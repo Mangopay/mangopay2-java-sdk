@@ -35,7 +35,7 @@ public class FilterReports extends Dto {
     @SerializedName("Status")
     private List<TransactionStatus> status;
 
-    @SerializedName("Type")
+    @SerializedName("type")
     private List<TransactionType> type;
 
     @SerializedName("Nature")

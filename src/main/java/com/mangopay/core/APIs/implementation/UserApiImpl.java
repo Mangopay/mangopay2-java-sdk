@@ -216,7 +216,7 @@ public class UserApiImpl extends ApiBase implements UserApi {
     private String getBankAccountType(BankAccount bankAccount) throws Exception {
 
         if (bankAccount.getDetails() == null)
-            throw new Exception("Details is not defined.");
+            throw new Exception("details is not defined.");
 
         String className = bankAccount.getDetails().getClass().getSimpleName().replace("BankAccountDetails", "");
         return className.toLowerCase();

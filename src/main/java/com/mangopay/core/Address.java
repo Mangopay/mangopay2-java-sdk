@@ -39,9 +39,9 @@ public class Address extends Dto {
     private String postalCode;
 
     /**
-     * Country.
+     * country.
      */
-    @SerializedName("Country")
+    @SerializedName("country")
     private CountryIso country;
 
     public String getAddressLine1() {

@@ -11,14 +11,14 @@ import com.mangopay.core.enumerations.CountryIso;
 public class BankAccountDetailsOTHER extends Dto implements BankAccountDetails {
     
     /**
-     * Type.
+     * type.
      */
-    //public String Type;
+    //public String type;
     
     /**
-     * The Country associated to the BankAccount.
+     * The country associated to the BankAccount.
      */
-    @SerializedName("Country")
+    @SerializedName("country")
     private CountryIso country;
     
     /**

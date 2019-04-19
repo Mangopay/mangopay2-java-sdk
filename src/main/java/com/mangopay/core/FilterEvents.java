@@ -12,9 +12,9 @@ import java.util.Map;
 public class FilterEvents extends Dto {
 
     /**
-     * Type of events.
+     * type of events.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private EventType type;
 
     /**

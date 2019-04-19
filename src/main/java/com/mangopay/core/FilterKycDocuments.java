@@ -15,7 +15,7 @@ public class FilterKycDocuments {
     @SerializedName("Status")
     private KycStatus status;
 
-    @SerializedName("Type")
+    @SerializedName("type")
     private KycDocumentType type;
 
     @SerializedName("BeforeDate")

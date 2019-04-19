@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.BankingAliasType;
 import com.mangopay.core.enumerations.CountryIso;
@@ -17,92 +18,99 @@ public class BankingAlias extends EntityBase {
     /**
      * The user ID who was credited.
      */
-    public String CreditedUserId;
+    @SerializedName("CreditedUserId")
+    private String creditedUserId;
 
     /**
      * The ID of the wallet.
      */
-    public String WalletId;
+    @SerializedName("WalletId")
+    private String walletId;
 
     /**
      * The name of the owner of the bank account.
      */
-    public String OwnerName;
+    @SerializedName("OwnerName")
+    private String ownerName;
 
     /**
      * The type of banking alias.
      */
-    public BankingAliasType Type;
+    @SerializedName("Type")
+    private BankingAliasType type;
 
     /**
      * The country format for the banking alias.
      */
-    public CountryIso Country;
+    @SerializedName("Country")
+    private CountryIso country;
 
     /**
      * Whether the banking alias is active or not.
      */
-    public boolean Active;
+    @SerializedName("Active")
+    private boolean active;
 
     /**
-     * Type-specific details of the banking alias.
+     * type-specific details of the banking alias.
      */
-    public BankingAliasDetails Details;
+    @SerializedName("Details")
+    private BankingAliasDetails details;
 
     public String getCreditedUserId() {
-        return CreditedUserId;
+        return creditedUserId;
     }
 
     public void setCreditedUserId(String creditedUserId) {
-        this.CreditedUserId = creditedUserId;
+        this.creditedUserId = creditedUserId;
     }
 
     public String getWalletId() {
-        return WalletId;
+        return walletId;
     }
 
     public void setWalletId(String walletId) {
-        this.WalletId = walletId;
+        this.walletId = walletId;
     }
 
     public String getOwnerName() {
-        return OwnerName;
+        return ownerName;
     }
 
     public void setOwnerName(String ownerName) {
-        this.OwnerName = ownerName;
+        this.ownerName = ownerName;
     }
 
     public BankingAliasType getType() {
-        return Type;
+        return type;
     }
 
     public void setType(BankingAliasType type) {
-        this.Type = type;
+        this.type = type;
     }
 
     public CountryIso getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(CountryIso country) {
-        this.Country = country;
+        this.country = country;
     }
 
     public boolean isActive() {
-        return Active;
+        return active;
     }
 
     public void setActive(boolean active) {
-        this.Active = active;
+        this.active = active;
     }
 
     public BankingAliasDetails getDetails() {
-        return Details;
+        return details;
     }
 
     public void setDetails(BankingAliasDetails details) {
-        this.Details = details;
+        this.details = details;
     }
 
     /**
@@ -113,9 +121,9 @@ public class BankingAlias extends EntityBase {
     @Override
     public Map<String, Map<String, Map<String, Class<?>>>> getDependentObjects() {
         return new HashMap<String, Map<String, Map<String, Class<?>>>>() {{
-            put("Type", new HashMap<String, Map<String, Class<?>>>() {{
+            put("type", new HashMap<String, Map<String, Class<?>>>() {{
                         put("IBAN", new HashMap<String, Class<?>>() {{
-                                    put("Details", BankingAliasDetailsIBAN.class);
+                                    put("details", BankingAliasDetailsIBAN.class);
                                 }}
                         );
                         // ...and more in future...

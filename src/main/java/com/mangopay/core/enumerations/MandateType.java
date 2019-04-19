@@ -1,7 +1,7 @@
 package com.mangopay.core.enumerations;
 
 /**
- * Type of mandate.
+ * type of mandate.
  */
 public enum MandateType {
     

@@ -23,7 +23,7 @@ public class PayIn extends Transaction {
     private String creditedWalletId;
 
     /**
-     * Type of payment.
+     * type of payment.
      */
     @SerializedName("PaymentType")
     private PayInPaymentType paymentType;
@@ -35,7 +35,7 @@ public class PayIn extends Transaction {
     private PayInPaymentDetails paymentDetails;
 
     /**
-     * Type of execution.
+     * type of execution.
      */
     @SerializedName("ExecutionType")
     private PayInExecutionType executionType;

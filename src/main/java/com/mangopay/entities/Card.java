@@ -20,9 +20,9 @@ public class Card extends EntityBase {
     private String userId;
 
     /**
-     * Country.
+     * country.
      */
-    @SerializedName("Country")
+    @SerializedName("country")
     private String country;
 
     /**
@@ -62,9 +62,9 @@ public class Card extends EntityBase {
     private String bankCode;
 
     /**
-     * Active.
+     * active.
      */
-    @SerializedName("Active")
+    @SerializedName("active")
     private Boolean active;
 
     /**
@@ -188,14 +188,14 @@ public class Card extends EntityBase {
         ArrayList<String> result = super.getReadOnlyProperties();
 
         result.add("UserId");
-        result.add("Country");
+        result.add("country");
         result.add("ExpirationDate");
         result.add("Alias");
         result.add("CardProvider");
         result.add("CardType");
         result.add("Product");
         result.add("BankCode");
-        result.add("Active");
+        result.add("active");
         result.add("Currency");
         result.add("Fingerprint");
 

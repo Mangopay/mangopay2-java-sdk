@@ -76,7 +76,7 @@ public class Mandate extends EntityBase {
     private String resultMessage;
 
     /**
-     * Type of mandate.
+     * type of mandate.
      */
     @SerializedName("MandateType")
     private MandateType mandateType;

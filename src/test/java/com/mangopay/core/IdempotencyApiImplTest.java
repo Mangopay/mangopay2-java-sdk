@@ -52,7 +52,7 @@ public class IdempotencyApiImplTest extends BaseTest {
 
             payOut = this.api.getPayOutApi().create(key, payOutPost);
         } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
+            fail(ex.getMessage());
         }
 
         assertNotNull(payOut);
@@ -74,8 +74,8 @@ public class IdempotencyApiImplTest extends BaseTest {
             // expecting a ResponseException to be thrown
             Assert.fail();
         } catch (ResponseException rex) {
-            assertTrue(rex.getResponseHttpCode() == 400);
-            assertTrue(rex.getType().equals("correlationid_not_found"));
+            assertEquals(400, rex.getResponseHttpCode());
+            assertEquals("correlationid_not_found", rex.getType());
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }

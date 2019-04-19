@@ -74,7 +74,7 @@ public class Transaction extends EntityBase {
     /**
      * Transaction type.
      */
-    @SerializedName("Type")
+    @SerializedName("type")
     private TransactionType type;
 
     /**
