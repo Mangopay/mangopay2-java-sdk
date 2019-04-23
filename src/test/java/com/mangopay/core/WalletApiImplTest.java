@@ -50,6 +50,7 @@ public class WalletApiImplTest extends BaseTest {
 
     @Test
     public void getWalletTransactions() throws Exception {
+        Thread.sleep(1);
         UserNatural john = this.getJohn();
         Wallet wallet = this.getJohnsWallet();
         PayIn payIn = this.getJohnsPayInCardWeb();
