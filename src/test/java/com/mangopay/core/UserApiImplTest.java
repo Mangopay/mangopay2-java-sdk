@@ -10,7 +10,6 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -582,24 +581,6 @@ public class UserApiImplTest extends BaseTest {
         assertNotNull(eMoney);
         assertEquals(john.getId(), eMoney.getUserId());
         assertEquals(currencyExpected, eMoney.getCreditedEMoney().getCurrency());
-    }
-
-    @Test
-    public void createUboDeclaration() throws Exception {
-        User legalUser = getMatrix();
-        User john = getNewDeclarativeJohn();
-        DeclaredUbo declaredUbo = new DeclaredUbo();
-        declaredUbo.setUserId(john.getId());
-        ArrayList<DeclaredUbo> declaredUbos = new ArrayList<>();
-        declaredUbos.add(declaredUbo);
-        UboDeclaration declaration = new UboDeclaration();
-        declaration.setDeclaredUbos(declaredUbos);
-
-        UboDeclaration createdUboDeclaration = this.api.getUserApi().createUboDeclaration(legalUser.getId(), declaration);
-        assertNotNull(createdUboDeclaration);
-        assertTrue(createdUboDeclaration.getStatus() == UboDeclarationStatus.CREATED);
-        assertTrue(createdUboDeclaration.getUserId().equals(legalUser.getId()));
-        assertTrue(createdUboDeclaration.getDeclaredUbos().get(0).getUserId().equals(john.getId()));
     }
 
     @Test
