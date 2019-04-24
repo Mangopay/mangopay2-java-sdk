@@ -1,5 +1,7 @@
 package com.mangopay;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mangopay.core.APIs.*;
 import com.mangopay.core.APIs.implementation.*;
 import com.mangopay.core.AuthorizationTokenManager;
@@ -47,6 +49,7 @@ public class MangoPayApi {
         setUboDeclarationApi(new UboDeclarationApiImpl(this));
         setRepudiationApi(new RepudiationApiImpl(this));
         setSettlementApi(new SettlementApiImpl(this));
+        setGson(new GsonBuilder().create());
     }
 
     ////////////////////////////////////////
@@ -185,6 +188,8 @@ public class MangoPayApi {
      * Provides Settlement methods
      */
     private SettlementApi settlementApi;
+
+    private Gson gson;
 
     /**
      * Gets the rate limit data.
@@ -395,5 +400,13 @@ public class MangoPayApi {
 
     public void setSettlementApi(SettlementApi settlementApi) {
         this.settlementApi = settlementApi;
+    }
+
+    public Gson getGson() {
+        return gson;
+    }
+
+    public void setGson(Gson gson) {
+        this.gson = gson;
     }
 }
