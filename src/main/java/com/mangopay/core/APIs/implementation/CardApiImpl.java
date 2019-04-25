@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.CardApi;
@@ -7,8 +8,8 @@ import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.Validity;
 import com.mangopay.entities.Card;
-import com.mangopay.entities.Transaction;
 import com.mangopay.entities.CardPreAuthorization;
+import com.mangopay.entities.Transaction;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class CardApiImpl extends ApiBase implements CardApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
-    public CardApiImpl(MangoPayApi root) {
+    public CardApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
     }
 

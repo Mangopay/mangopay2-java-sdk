@@ -1,14 +1,18 @@
 package com.mangopay.core;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
-import com.mangopay.core.enumerations.PersonType;
 import com.mangopay.entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -362,10 +366,7 @@ public class RestTool {
 
                 String requestBody = "";
                 if (entity != null) {
-                    HashMap<String, Object> requestData = buildRequestData(classOfT, entity);
-
-                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                    requestBody = gson.toJson(requestData);
+                    requestBody = root.getGson().toJson(entity);
                 }
                 if (this.requestData != null) {
                     String params = "";
@@ -625,222 +626,8 @@ public class RestTool {
 
     }
 
-    public <T> T castResponseToEntity(Class<T> classOfT, JsonObject response) throws Exception {
-        return castResponseToEntity(classOfT, response, false);
-    }
-
-    private <T> T castResponseToEntity(Class<T> classOfT, JsonObject response, boolean asDependentObject) throws Exception {
-
-        try {
-
-            if (debugMode) {
-                logger.info("Entity type: {}", classOfT.getName());
-            }
-
-            if (classOfT.getName().equals(IdempotencyResponse.class.getName())) {
-
-                // handle the special case here
-                IdempotencyResponse resp = new IdempotencyResponse();
-
-                for (Entry<String, JsonElement> entry : response.entrySet()) {
-
-                    if (entry.getKey().equals("StatusCode")) {
-                        resp.setStatusCode(entry.getValue().getAsString());
-                    } else if (entry.getKey().equals("ContentLength")) {
-                        resp.setContentLength(entry.getValue().getAsString());
-                    } else if (entry.getKey().equals("ContentType")) {
-                        resp.setContentType(entry.getValue().getAsString());
-                    } else if (entry.getKey().equals("Date")) {
-                        resp.setDate(entry.getValue().getAsString());
-                    } else if (entry.getKey().equals("Resource")) {
-                        resp.setResource(entry.getValue().toString());
-                    } else if (entry.getKey().equals("RequestURL")) {
-                        resp.setRequestUrl(entry.getValue().toString());
-                    }
-
-                }
-
-                return (T) resp;
-            }
-
-            T result = null;
-
-            if (classOfT.getName().equals(User.class.getName())) {
-                for (Entry<String, JsonElement> entry : response.entrySet()) {
-
-                    if (entry.getKey().equals("PersonType")) {
-                        String userType = entry.getValue().getAsString();
-
-                        if (userType.equals(PersonType.NATURAL.toString())) {
-                            result = (T) new UserNatural();
-                            break;
-                        } else if (userType.equals(PersonType.LEGAL.toString())) {
-                            result = (T) new UserLegal();
-                            break;
-                        } else {
-                            throw new Exception(String.format("Unknown type of user: %s", entry.getValue().getAsString()));
-                        }
-                    }
-
-                }
-            } else {
-                result = classOfT.newInstance();
-            }
-
-            Map<String, Type> subObjects = ((Dto) result).getSubObjects();
-            Map<String, Map<String, Map<String, Class<?>>>> dependentObjects = ((Dto) result).getDependentObjects();
-
-            List<Field> fields = getAllFields(result.getClass());
-
-            for (Field f : fields) {
-                f.setAccessible(true);
-                String name = fromCamelCase(f.getName());
-
-                boolean isList = false;
-                for (Class<?> i : f.getType().getInterfaces()) {
-                    if (i.getName().equals("java.util.List")) {
-                        isList = true;
-                        break;
-                    }
-                }
-
-                // does this field have dependent objects?
-                if (!asDependentObject && dependentObjects.containsKey(name)) {
-                    Map<String, Map<String, Class<?>>> allowedTypes = dependentObjects.get(name);
-
-                    for (Entry<String, JsonElement> entry : response.entrySet()) {
-                        if (entry.getKey().equals(name)) {
-                            String paymentTypeDef = entry.getValue().getAsString();
-
-                            if (allowedTypes.containsKey(paymentTypeDef)) {
-                                Map<String, Class<?>> targetObjectsDef = allowedTypes.get(paymentTypeDef);
-
-                                for (Entry<String, Class<?>> e : targetObjectsDef.entrySet()) {
-
-                                    Field targetField = classOfT.getDeclaredField(toCamelCase(e.getKey()));
-                                    targetField.setAccessible(true);
-
-                                    if (isList) {
-                                        targetField.set(result, Arrays.asList(castResponseToEntity(e.getValue(), response, true)));
-                                    } else {
-                                        targetField.set(result, castResponseToEntity(e.getValue(), response, true));
-                                    }
-                                }
-                            }
-
-                            break;
-                        }
-                    }
-                }
-
-                for (Entry<String, JsonElement> entry : response.entrySet()) {
-
-                    if (entry.getKey().equals(name)) {
-
-                        // is sub object?
-                        if (subObjects.containsKey(name)) {
-                            if (entry.getValue() instanceof JsonNull) {
-                                f.set(result, null);
-                            } else {
-                                f.set(result, castResponseToEntity(f.getType(), entry.getValue().getAsJsonObject()));
-                            }
-                            break;
-                        }
-
-                        String fieldTypeName = f.getType().getName();
-                        boolean fieldIsArray = false;
-                        for (Class<?> i : f.getType().getInterfaces()) {
-                            if (i.getName().equals("java.util.List")) {
-                                fieldIsArray = true;
-                                break;
-                            }
-                        }
-
-                        if (debugMode) {
-                            logger.info("Recognized field: {}", String.format("[%s] %s%s", name, fieldTypeName, fieldIsArray ? "[]" : ""));
-                        }
-
-                        if (fieldIsArray) {
-                            ParameterizedType genericType = (ParameterizedType) f.getGenericType();
-                            Class<?> genericTypeClass = (Class<?>) genericType.getActualTypeArguments()[0];
-
-                            if (entry.getValue().isJsonArray()) {
-                                JsonArray ja = entry.getValue().getAsJsonArray();
-                                Iterator<JsonElement> i = ja.iterator();
-                                Class<?> classOfList = Class.forName(fieldTypeName);
-                                Method addMethod = classOfList.getDeclaredMethod("add", Object.class);
-                                Object o = classOfList.newInstance();
-                                while (i.hasNext()) {
-                                    JsonElement e = i.next();
-
-                                    if (genericTypeClass.getName().equals(String.class.getName())) {
-                                        addMethod.invoke(o, e.getAsJsonPrimitive().getAsString());
-                                    } else if (genericTypeClass.getName().equals(int.class.getName())
-                                            || genericTypeClass.getName().equals(Integer.class.getName())) {
-                                        addMethod.invoke(o, e.getAsJsonPrimitive().getAsInt());
-                                    } else if (genericTypeClass.getName().equals(long.class.getName())
-                                            || genericTypeClass.getName().equals(Long.class.getName())) {
-                                        addMethod.invoke(o, e.getAsJsonPrimitive().getAsLong());
-                                    } else if (genericTypeClass.getName().equals(double.class.getName())
-                                            || genericTypeClass.getName().equals(Double.class.getName())) {
-                                        addMethod.invoke(o, e.getAsJsonPrimitive().getAsDouble());
-                                    } else if (genericTypeClass.isEnum()) {// Enumeration, try getting enum by name
-                                        Class cls = genericTypeClass;
-                                        Object val = Enum.valueOf(cls, e.getAsJsonPrimitive().getAsString());
-                                        addMethod.invoke(o, val);
-                                    } else if (Dto.class.isAssignableFrom(genericTypeClass)){
-                                        addMethod.invoke(o, castResponseToEntity(genericTypeClass, e.getAsJsonObject()));
-                                    }
-                                }
-                                f.set(result, o);
-                            }
-                        } else {
-                            if (!entry.getValue().isJsonNull()) {
-                                if (fieldTypeName.equals(int.class.getName())) {
-                                    f.setInt(result, entry.getValue().getAsInt());
-                                } else if (fieldTypeName.equals(Integer.class.getName())) {
-                                    f.set(result, entry.getValue().getAsInt());
-                                } else if (fieldTypeName.equals(long.class.getName())) {
-                                    f.setLong(result, entry.getValue().getAsLong());
-                                } else if (fieldTypeName.equals(Long.class.getName())) {
-                                    f.set(result, entry.getValue().getAsLong());
-                                } else if (fieldTypeName.equals(double.class.getName())) {
-                                    f.setDouble(result, entry.getValue().getAsDouble());
-                                } else if (fieldTypeName.equals(Double.class.getName())) {
-                                    f.set(result, entry.getValue().getAsDouble());
-                                } else if (fieldTypeName.equals(String.class.getName())) {
-                                    f.set(result, entry.getValue().getAsString());
-                                } else if (fieldTypeName.equals(boolean.class.getName())) {
-                                    f.setBoolean(result, entry.getValue().getAsBoolean());
-                                } else if (fieldTypeName.equals(Boolean.class.getName())) {
-                                    f.set(result, entry.getValue().getAsBoolean());
-                                } else if (f.getType().isEnum()) {// Enumeration, try getting enum by name
-                                    Class cls = f.getType();
-                                    Object val = Enum.valueOf(cls, entry.getValue().getAsString());
-                                    f.set(result, val);
-                                }
-                            }
-
-                            break;
-                        }
-                    }
-
-                }
-
-            }
-
-            if (classOfT.getName().equals(Address.class.getName())) {
-                if (!((Address) result).isValid()) result = null;
-            }
-
-            return result;
-
-        } catch (Exception e) {
-            if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(e.getStackTrace()));
-
-            throw e;
-        }
-
+    public <T> T castResponseToEntity(Class<T> classOfT, JsonObject response) {
+        return root.getGson().fromJson(response, classOfT);
     }
 
     private String toCamelCase(String fieldName) {

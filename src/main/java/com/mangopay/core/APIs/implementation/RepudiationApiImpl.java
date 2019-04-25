@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.RepudiationApi;
@@ -20,7 +21,7 @@ public class RepudiationApiImpl extends ApiBase implements RepudiationApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public RepudiationApiImpl(MangoPayApi root) {
+    public RepudiationApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
     }
 

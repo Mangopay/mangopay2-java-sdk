@@ -1,10 +1,13 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
-import com.mangopay.core.*;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.HookApi;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.entities.Hook;
+
 import java.util.List;
 
 /**
@@ -16,7 +19,9 @@ public class HookApiImpl extends ApiBase implements HookApi {
      * Instantiates new HookApiImpl object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public HookApiImpl(MangoPayApi root) { super(root); }
+    public HookApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
+        super(root);
+    }
     
     @Override
     public Hook create(Hook hook) throws Exception {

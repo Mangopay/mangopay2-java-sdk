@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
@@ -21,7 +22,7 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public IdempotencyApiImpl(MangoPayApi root) {
+    public IdempotencyApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
     }
 
