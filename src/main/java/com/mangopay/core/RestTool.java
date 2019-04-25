@@ -1,6 +1,9 @@
 package com.mangopay.core;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
 import com.mangopay.entities.*;
 import org.slf4j.Logger;
@@ -363,10 +366,7 @@ public class RestTool {
 
                 String requestBody = "";
                 if (entity != null) {
-                    HashMap<String, Object> requestData = buildRequestData(classOfT, entity);
-
-                    Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-                    requestBody = gson.toJson(requestData);
+                    requestBody = root.getGson().toJson(entity);
                 }
                 if (this.requestData != null) {
                     String params = "";

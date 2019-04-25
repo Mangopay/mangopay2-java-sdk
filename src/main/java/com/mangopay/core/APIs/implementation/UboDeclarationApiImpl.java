@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.UboDeclarationApi;
@@ -15,8 +16,11 @@ public class UboDeclarationApiImpl extends ApiBase implements UboDeclarationApi 
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public UboDeclarationApiImpl(MangoPayApi root) {
+    private GsonBuilder gsonBuilder;
+
+    public UboDeclarationApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

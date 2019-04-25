@@ -1,11 +1,13 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.TransferApi;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
-import com.mangopay.entities.*;
+import com.mangopay.entities.Refund;
+import com.mangopay.entities.Transfer;
 
 import java.util.List;
 
@@ -18,7 +20,12 @@ public class TransferApiImpl extends ApiBase implements TransferApi {
      * Instantiates new TransferApiImpl object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public TransferApiImpl(MangoPayApi root) { super(root); }
+    private GsonBuilder gsonBuilder;
+
+    public TransferApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
+        super(root);
+        this.gsonBuilder = gsonBuilder;
+    }
 
     @Override
     public Transfer create(Transfer transfer) throws Exception {

@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.DisputeApi;
@@ -23,8 +24,11 @@ public class DisputeApiImpl extends ApiBase implements DisputeApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public DisputeApiImpl(MangoPayApi root) {
+    private GsonBuilder gsonBuilder;
+
+    public DisputeApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

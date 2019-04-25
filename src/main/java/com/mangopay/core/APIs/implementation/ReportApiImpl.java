@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.ReportApi;
@@ -21,8 +22,11 @@ public class ReportApiImpl extends ApiBase implements ReportApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public ReportApiImpl(MangoPayApi root) {
+    private GsonBuilder gsonBuilder;
+
+    public ReportApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+        this.gsonBuilder = gsonBuilder;
     }
 
     @Override
