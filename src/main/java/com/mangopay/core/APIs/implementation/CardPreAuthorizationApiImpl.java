@@ -16,11 +16,8 @@ public class CardPreAuthorizationApiImpl extends ApiBase implements CardPreAutho
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private GsonBuilder gsonBuilder;
-
     public CardPreAuthorizationApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

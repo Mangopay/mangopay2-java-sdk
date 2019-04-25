@@ -21,11 +21,8 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private GsonBuilder gsonBuilder;
-
     public PayInApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

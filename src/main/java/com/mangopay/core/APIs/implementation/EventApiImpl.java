@@ -21,11 +21,8 @@ public class EventApiImpl extends ApiBase implements EventApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private GsonBuilder gsonBuilder;
-
     public EventApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

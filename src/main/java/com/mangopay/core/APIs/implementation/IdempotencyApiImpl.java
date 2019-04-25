@@ -22,11 +22,8 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private GsonBuilder gsonBuilder;
-
     public IdempotencyApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

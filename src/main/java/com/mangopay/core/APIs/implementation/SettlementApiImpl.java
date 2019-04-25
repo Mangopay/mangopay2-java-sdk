@@ -11,11 +11,8 @@ import com.mangopay.entities.SettlementTransfer;
  */
 public class SettlementApiImpl extends ApiBase implements SettlementApi {
 
-    private GsonBuilder gsonBuilder;
-
     public SettlementApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

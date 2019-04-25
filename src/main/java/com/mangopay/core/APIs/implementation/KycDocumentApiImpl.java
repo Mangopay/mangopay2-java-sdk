@@ -20,11 +20,8 @@ public class KycDocumentApiImpl extends ApiBase implements KycDocumentApi {
      * Instantiates new KycDocumentApiImpl object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
-    private GsonBuilder gsonBuilder;
-
     public KycDocumentApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
     
     @Override

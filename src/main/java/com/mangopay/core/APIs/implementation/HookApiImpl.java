@@ -19,11 +19,8 @@ public class HookApiImpl extends ApiBase implements HookApi {
      * Instantiates new HookApiImpl object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private GsonBuilder gsonBuilder;
-
     public HookApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
     
     @Override

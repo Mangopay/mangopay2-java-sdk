@@ -16,11 +16,8 @@ public class UboDeclarationApiImpl extends ApiBase implements UboDeclarationApi 
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private GsonBuilder gsonBuilder;
-
     public UboDeclarationApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

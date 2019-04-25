@@ -16,11 +16,8 @@ public class CardRegistrationApiImpl extends ApiBase implements CardRegistration
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
-    private GsonBuilder gsonBuilder;
-
     public CardRegistrationApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

@@ -21,11 +21,8 @@ public class WalletApiImpl extends ApiBase implements WalletApi {
      * Instantiates new WalletApiImpl object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
-    private GsonBuilder gsonBuilder;
-
     public WalletApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

@@ -23,11 +23,8 @@ public class CardApiImpl extends ApiBase implements CardApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
-    private GsonBuilder gsonBuilder;
-
     public CardApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override

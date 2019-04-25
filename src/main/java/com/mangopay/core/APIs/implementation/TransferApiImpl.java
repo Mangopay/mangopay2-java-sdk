@@ -20,11 +20,8 @@ public class TransferApiImpl extends ApiBase implements TransferApi {
      * Instantiates new TransferApiImpl object.
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    private GsonBuilder gsonBuilder;
-
     public TransferApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        this.gsonBuilder = gsonBuilder;
     }
 
     @Override
