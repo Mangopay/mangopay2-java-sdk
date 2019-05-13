@@ -8,7 +8,6 @@ import com.mangopay.core.enumerations.TransactionStatus;
 import com.mangopay.core.enumerations.TransactionType;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,13 +50,13 @@ public class Transaction extends EntityBase {
      * Transaction status.
      */
     @SerializedName("Status")
-    private TransactionStatus status;
+    private transient TransactionStatus status;
 
     /**
      * Result code.
      */
     @SerializedName("ResultCode")
-    private String resultCode;
+    private transient String resultCode;
 
     /**
      * The PreAuthorization result Message explaining the result code.
@@ -69,7 +68,7 @@ public class Transaction extends EntityBase {
      * ExecutionDate (UNIX timestamp).
      */
     @SerializedName("ExecutionDate")
-    private Long executionDate;
+    private transient Long executionDate;
 
     /**
      * Transaction type.
@@ -223,23 +222,4 @@ public class Transaction extends EntityBase {
 
         return result;
     }
-
-    /**
-     * Gets the collection of read-only fields names.
-     *
-     * @return List of field names.
-     */
-    @Override
-    public ArrayList<String> getReadOnlyProperties() {
-
-        ArrayList<String> result = super.getReadOnlyProperties();
-
-        result.add("Status");
-        result.add("ResultCode");
-        result.add("ExecutionDate");
-
-        return result;
-    }
-
-
 }

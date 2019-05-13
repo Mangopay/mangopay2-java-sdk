@@ -7,8 +7,12 @@ import com.mangopay.core.APIs.UserApi;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
+import com.mangopay.core.deserializer.BankAccountDeserializer;
+import com.mangopay.core.deserializer.UserDeserializer;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
+import com.mangopay.core.serializer.BankAccountSerializer;
+import com.mangopay.core.serializer.UserSerializer;
 import com.mangopay.entities.*;
 import org.apache.commons.codec.binary.Base64;
 
@@ -30,6 +34,10 @@ public class UserApiImpl extends ApiBase implements UserApi {
      */
     public UserApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+        gsonBuilder.registerTypeAdapter(User.class, new UserSerializer());
+        gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
+        gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountSerializer());
+        gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountDeserializer());
     }
 
     @Override

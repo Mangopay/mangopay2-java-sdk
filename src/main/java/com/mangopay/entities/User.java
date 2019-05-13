@@ -41,11 +41,11 @@ public abstract class User extends EntityBase {
     protected User() {
     }
 
-    public com.mangopay.core.enumerations.PersonType getPersonType() {
+    public PersonType getPersonType() {
         return personType;
     }
 
-    public void setPersonType(com.mangopay.core.enumerations.PersonType personType) {
+    public void setPersonType(PersonType personType) {
         this.personType = personType;
     }
 

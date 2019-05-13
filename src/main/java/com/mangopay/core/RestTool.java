@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -514,83 +512,6 @@ public class RestTool {
                 new RateLimit(30),
                 new RateLimit(60),
                 new RateLimit(24 * 60));
-    }
-
-    private <T extends Dto> HashMap<String, Object> buildRequestData(Class<T> classOfT, T entity) {
-        HashMap<String, Object> result = new HashMap<>();
-
-        ArrayList<String> readOnlyProperties = entity.getReadOnlyProperties();
-
-        List<Field> fields = getAllFields(entity.getClass());
-
-        String fieldName;
-        for (Field f : fields) {
-            f.setAccessible(true);
-
-            boolean isList = false;
-            for (Class<?> i : f.getType().getInterfaces()) {
-                if (i.getName().equals("java.util.List")) {
-                    isList = true;
-                    break;
-                }
-            }
-
-            fieldName = fromCamelCase(f.getName());
-
-            if(fieldName.equals("DeclaredUBOs") && classOfT.equals(UboDeclaration.class)) {
-                try {
-                    List<DeclaredUbo> declaredUbos = (List<DeclaredUbo>) f.get(entity);
-                    List<String> declaredUboIds = new ArrayList<>();
-                    for(DeclaredUbo ubo : declaredUbos) {
-                        declaredUboIds.add(ubo.getUserId());
-                    }
-                    result.put(fieldName, declaredUboIds.toArray());
-                } catch (IllegalAccessException e) {
-                    if (debugMode) {
-                        logger.warn("Failed to build DeclaredUBOs request data", e);
-                    }
-                }
-                continue;
-            }
-
-            boolean isReadOnly = false;
-            for (String s : readOnlyProperties) {
-                if (s.equals(fieldName)) {
-                    isReadOnly = true;
-                    break;
-                }
-            }
-            if (isReadOnly) continue;
-
-
-            if (canReadSubRequestData(classOfT, fieldName)) {
-                HashMap<String, Object> subRequestData = new HashMap<>();
-
-                try {
-                    Method m = RestTool.class.getDeclaredMethod("buildRequestData", Class.class, Dto.class);
-                    subRequestData = (HashMap<String, Object>) m.invoke(this, f.getType(), f.get(entity));
-                } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                    if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
-                }
-
-                for (Entry<String, Object> e : subRequestData.entrySet()) {
-                    result.put(e.getKey(), e.getValue());
-                }
-            } else {
-                try {
-                    if (!isList) {
-                        result.put(fieldName, f.get(entity));
-                    } else {
-                        result.put(fieldName, ((List) f.get(entity)).toArray());
-                    }
-                } catch (IllegalArgumentException | IllegalAccessException ex) {
-                    continue;
-                }
-            }
-
-        }
-
-        return result;
     }
 
     private List<Field> getAllFields(Class<?> c) {
