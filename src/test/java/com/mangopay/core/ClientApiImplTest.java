@@ -69,6 +69,9 @@ public class ClientApiImplTest extends BaseTest {
         client.setPrimaryThemeColour("#" + color2);
         client.setHeadquartersPhoneNumber(headquarterPhoneNumber);
 
+        client.setHeadquartersAddress(null);
+        client.setTechEmails(null);
+
         Client clientNew = this.api.getClientApi().save(client);
 
         assertNotNull(clientNew);
