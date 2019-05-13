@@ -8,8 +8,10 @@ import com.mangopay.core.FilterKycDocuments;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
+import com.mangopay.core.deserializer.PayInDeserializer;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.FundsType;
+import com.mangopay.core.serializer.PayInSerializer;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.PayInPaymentDetailsBankWire;
 
@@ -30,6 +32,9 @@ public class ClientApiImpl extends ApiBase implements ClientApi {
      */
     public ClientApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+
+        gsonBuilder.registerTypeAdapter(PayIn.class, new PayInSerializer());
+        gsonBuilder.registerTypeAdapter(PayIn.class, new PayInDeserializer());
     }
 
     @Override

@@ -20,6 +20,14 @@ public class Money extends Dto {
     @SerializedName("Amount")
     private int amount;
 
+    public Money(CurrencyIso currency, int amount) {
+        this.currency = currency;
+        this.amount = amount;
+    }
+
+    public Money() {
+    }
+
     public CurrencyIso getCurrency() {
         return currency;
     }

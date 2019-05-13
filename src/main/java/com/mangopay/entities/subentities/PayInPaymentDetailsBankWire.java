@@ -39,6 +39,16 @@ public class PayInPaymentDetailsBankWire extends Dto implements PayInPaymentDeta
     @SerializedName("WireReference")
     private String wireReference;
 
+    public PayInPaymentDetailsBankWire(Money declaredDebitedFunds, Money declaredFees, BankAccount bankAccount, String wireReference) {
+        this.declaredDebitedFunds = declaredDebitedFunds;
+        this.declaredFees = declaredFees;
+        this.bankAccount = bankAccount;
+        this.wireReference = wireReference;
+    }
+
+    public PayInPaymentDetailsBankWire() {
+    }
+
     public Money getDeclaredDebitedFunds() {
         return declaredDebitedFunds;
     }

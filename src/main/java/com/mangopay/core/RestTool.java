@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -514,85 +516,8 @@ public class RestTool {
                 new RateLimit(24 * 60));
     }
 
-    private List<Field> getAllFields(Class<?> c) {
-        List<Field> fields = new ArrayList<>();
-        fields.addAll(Arrays.asList(c.getDeclaredFields()));
-        while (c.getSuperclass() != null) {
-            fields.addAll(Arrays.asList(c.getSuperclass().getDeclaredFields()));
-            c = c.getSuperclass();
-        }
-        return fields;
-    }
-
-    private <T> Boolean canReadSubRequestData(Class<T> classOfT, String fieldName) {
-
-        if (classOfT.getName().equals(PayIn.class.getName()) &&
-                (fieldName.equals("PaymentDetails") || fieldName.equals("ExecutionDetails"))) {
-            return true;
-        }
-
-        if (classOfT.getName().equals(PayOut.class.getName()) && fieldName.equals("MeanOfPaymentDetails")) {
-            return true;
-        }
-
-        if (classOfT.getName().equals(BankAccount.class.getName()) && fieldName.equals("Details")) {
-            return true;
-        }
-
-        if (classOfT.getName().equals(BankingAlias.class.getName()) && fieldName.equals("Details")) {
-            return true;
-        }
-
-        return false;
-
-    }
-
     public <T> T castResponseToEntity(Class<T> classOfT, JsonObject response) {
         return root.getGson().fromJson(response, classOfT);
-    }
-
-    private String toCamelCase(String fieldName) {
-        if (fieldName.toUpperCase().equals(fieldName)) {
-            return fieldName.toLowerCase();
-        }
-        if (fieldName.equals("KYCLevel")) {
-            return "kycLevel";
-        }
-        if (fieldName.equals("DeclaredUBOs")) {
-            return "declaredUbos";
-        }
-        String camelCase = (fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1, fieldName.length())).replace("URL", "Url").replace("AVS", "Avs");
-        while (camelCase.contains("_")) {
-            int index = camelCase.indexOf("_");
-            String letterAfter = ("" + camelCase.charAt(index + 1)).toUpperCase();
-            camelCase = camelCase.substring(0, index) + letterAfter + camelCase.substring(index + 2);
-        }
-        return camelCase;
-    }
-
-    private String fromCamelCase(String fieldName) {
-        if (fieldName.equals("iban") || fieldName.equals("bic") || fieldName.equals("aba")) {
-            return fieldName.toUpperCase();
-        }
-        if (fieldName.equals("kycLevel")) {
-            return "KYCLevel";
-        }
-        if (fieldName.equals("accessToken")) {
-            return "access_token";
-        }
-        if (fieldName.equals("tokenType")) {
-            return "token_type";
-        }
-        if (fieldName.equals("expiresIn")) {
-            return "expires_in";
-        }
-        if (fieldName.equals("url")) {
-            return "Url";
-        }
-        if (fieldName.equals("declaredUbos")) {
-            return "DeclaredUBOs";
-        }
-        return (fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1)).replace("Url", "URL").replace("Avs", "AVS");
     }
 
     private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination) throws Exception {
