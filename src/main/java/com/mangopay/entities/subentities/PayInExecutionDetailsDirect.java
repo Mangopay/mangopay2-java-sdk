@@ -73,6 +73,18 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         this.secureModeReturnUrl = secureModeReturnUrl;
     }
 
+    public PayInExecutionDetailsDirect(String cardId, SecureMode secureMode, String secureModeReturnUrl,
+                                       String secureModeRedirectUrl, String secureModeNeeded, Billing billing, SecurityInfo securityInfo, CultureCode culture) {
+        this.cardId = cardId;
+        this.secureMode = secureMode;
+        this.secureModeReturnUrl = secureModeReturnUrl;
+        this.secureModeRedirectUrl = secureModeRedirectUrl;
+        this.secureModeNeeded = secureModeNeeded;
+        this.billing = billing;
+        this.securityInfo = securityInfo;
+        this.culture = culture;
+    }
+
     public static PayInExecutionDetailsDirect build(String cardId, String secureModeReturnURL) {
         return new PayInExecutionDetailsDirect(cardId, secureModeReturnURL);
     }
@@ -148,6 +160,10 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
 
     public void setSecureModeNeeded(String secureModeNeeded) {
         this.secureModeNeeded = secureModeNeeded;
+    }
+
+    public String getSecureModeNeeded() {
+        return secureModeNeeded;
     }
 
     public Billing getBilling() {

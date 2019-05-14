@@ -58,6 +58,17 @@ public class PayInExecutionDetailsWeb extends Dto implements PayInExecutionDetai
     @Deprecated
     public PayInTemplateURLOptions TemplateURLOptions;
 
+    public PayInExecutionDetailsWeb(String templateUrl, CultureCode culture, SecureMode secureMode, String redirectUrl, String returnUrl) {
+        this.templateUrl = templateUrl;
+        this.culture = culture;
+        this.secureMode = secureMode;
+        this.redirectUrl = redirectUrl;
+        this.returnUrl = returnUrl;
+    }
+
+    public PayInExecutionDetailsWeb() {
+    }
+
     public String getTemplateUrl() {
         return templateUrl;
     }

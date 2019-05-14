@@ -2,11 +2,11 @@ package com.mangopay.core.serializer;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import com.mangopay.entities.PayIn;
+import com.mangopay.entities.Transaction;
 
 class SerializedTransaction {
 
-    static JsonObject getTransactionObject(PayIn source, JsonSerializationContext context) {
+    static JsonObject getTransactionObject(Transaction source, JsonSerializationContext context) {
         JsonObject object = new JsonObject();
         object.add("AuthorId", context.serialize(source.getAuthorId()));
         object.add("CreationDate", context.serialize(source.getCreationDate()));

@@ -6,6 +6,8 @@ import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.TransferApi;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
+import com.mangopay.core.deserializer.TransferDeserializer;
+import com.mangopay.core.serializer.TransferSerializer;
 import com.mangopay.entities.Refund;
 import com.mangopay.entities.Transfer;
 
@@ -22,6 +24,8 @@ public class TransferApiImpl extends ApiBase implements TransferApi {
      */
     public TransferApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+        gsonBuilder.registerTypeAdapter(Transfer.class, new TransferSerializer());
+        gsonBuilder.registerTypeAdapter(Transfer.class, new TransferDeserializer());
     }
 
     @Override

@@ -46,6 +46,19 @@ public class Wallet extends EntityBase {
     @SerializedName("FundsType")
     private FundsType fundsType;
 
+    public Wallet(ArrayList<String> owners, String description, Money balance, CurrencyIso currency, FundsType fundsType) {
+        this.owners = owners;
+        this.description = description;
+        this.balance = balance;
+        this.currency = currency;
+        this.fundsType = fundsType;
+    }
+
+    public Wallet() {
+
+    }
+
+
     public ArrayList<String> getOwners() {
         return owners;
     }
