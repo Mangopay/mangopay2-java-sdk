@@ -18,7 +18,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
         object.add("CreditedWalletId", context.serialize(src.getCreditedWalletId()));
         object.add("PaymentType", context.serialize(src.getPaymentType()));
         object.add("ExecutionType", context.serialize(src.getExecutionType()));
-        object.add("ExecutionDetails", context.serialize(src.getExecutionDetails()));
+//        object.add("ExecutionDetails", context.serialize(src.getExecutionDetails()));
         switch (src.getPaymentDetails().getClass().getSimpleName()) {
             case "PayInPaymentDetailsBankWire":
                 object.add("DeclaredDebitedFunds", context.serialize(((PayInPaymentDetailsBankWire) src.getPaymentDetails()).getDeclaredDebitedFunds()));
@@ -27,9 +27,9 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("WireReference", context.serialize(((PayInPaymentDetailsBankWire) src.getPaymentDetails()).getWireReference()));
                 break;
             case "PayInPaymentDetailsCard":
-                object.addProperty("CardType", (((PayInPaymentDetailsCard) src.getPaymentDetails()).getCardType()).toString());
-                object.addProperty("CardId", ((PayInPaymentDetailsCard) src.getPaymentDetails()).getCardId());
-                object.addProperty("StatementDescriptor", ((PayInPaymentDetailsCard) src.getPaymentDetails()).getStatementDescriptor());
+                object.add("CardType", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getCardType()));
+                object.add("CardId", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getCardId()));
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getStatementDescriptor()));
                 break;
             default:
                 return null;
@@ -41,7 +41,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("DebitedBankAccount", context.serialize(((PayInExecutionDetailsBankingAlias) src.getExecutionDetails()).getDebitedBankAccount()));
                 break;
             case "PayInExecutionDetailsDirect":
-                object.addProperty("CardId", ((PayInExecutionDetailsDirect) src.getExecutionDetails()).getCardId());
+                object.add("CardId", context.serialize(((PayInExecutionDetailsDirect) src.getExecutionDetails()).getCardId()));
                 object.add("SecureMode", context.serialize(((PayInExecutionDetailsDirect) src.getExecutionDetails()).getSecureMode()));
                 object.add("SecureModeReturnURL", context.serialize(((PayInExecutionDetailsDirect) src.getExecutionDetails()).getSecureModeReturnUrl()));
                 object.add("SecureModeRedirectURL", context.serialize(((PayInExecutionDetailsDirect) src.getExecutionDetails()).getSecureModeRedirectUrl()));
@@ -51,11 +51,11 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("Culture", context.serialize(((PayInExecutionDetailsDirect) src.getExecutionDetails()).getCulture()));
                 break;
             case "PayInExecutionDetailsWeb":
-                object.add("TemplateURL", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getTemplateUrl()));
-                object.add("Culture", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getCulture().toString()));
-                object.add("SecureMode", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getSecureMode().toString()));
-                object.add("RedirectURL", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getRedirectUrl()));
-                object.add("ReturnURL", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getReturnUrl()));
+                object.add("TemplateURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getTemplateUrl()));
+                object.add("Culture", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getCulture()));
+                object.add("SecureMode", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getSecureMode()));
+                object.add("RedirectURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getRedirectUrl()));
+                object.add("ReturnURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getReturnUrl()));
                 break;
             default:
                 return null;

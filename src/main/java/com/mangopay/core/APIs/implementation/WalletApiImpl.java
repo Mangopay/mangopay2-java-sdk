@@ -7,8 +7,6 @@ import com.mangopay.core.APIs.WalletApi;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
-import com.mangopay.core.deserializer.WalletDeserializer;
-import com.mangopay.core.serializer.WalletSerializer;
 import com.mangopay.entities.Transaction;
 import com.mangopay.entities.Wallet;
 
@@ -18,16 +16,14 @@ import java.util.List;
  * API for wallets.
  */
 public class WalletApiImpl extends ApiBase implements WalletApi {
-    
+
     /**
      * Instantiates new WalletApiImpl object.
+     *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance
      */
     public WalletApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
-
         super(root);
-        gsonBuilder.registerTypeAdapter(Wallet.class, new WalletSerializer());
-        gsonBuilder.registerTypeAdapter(Wallet.class, new WalletDeserializer());
     }
 
     @Override
@@ -69,5 +65,5 @@ public class WalletApiImpl extends ApiBase implements WalletApi {
     public List<Transaction> getTransactions(String walletId) throws Exception {
         return getTransactions(walletId, null, new FilterTransactions());
     }
-    
+
 }
