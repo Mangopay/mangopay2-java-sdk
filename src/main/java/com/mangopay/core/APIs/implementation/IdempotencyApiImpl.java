@@ -6,6 +6,8 @@ import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.IdempotencyApi;
 import com.mangopay.core.RestTool;
+import com.mangopay.core.deserializer.PayOutDeserializer;
+import com.mangopay.core.serializer.PayOutSerializer;
 import com.mangopay.entities.*;
 
 import java.util.HashMap;
@@ -24,6 +26,9 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
      */
     public IdempotencyApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+
+        gsonBuilder.registerTypeAdapter(PayOut.class, new PayOutSerializer());
+        gsonBuilder.registerTypeAdapter(PayOut.class, new PayOutDeserializer());
     }
 
     @Override
