@@ -1,11 +1,9 @@
 package com.mangopay.core.APIs.implementation;
 
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.IdempotencyApi;
-import com.mangopay.core.RestTool;
 import com.mangopay.core.deserializer.PayOutDeserializer;
 import com.mangopay.core.serializer.PayOutSerializer;
 import com.mangopay.entities.*;
@@ -62,9 +60,7 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
         if (targetType == null)
             return;
 
-        // create instance
-        RestTool rt = new RestTool(root, true);
-        response.setResource(rt.castResponseToEntity(targetType, new JsonParser().parse((String)response.getResource()).getAsJsonObject()));
+        response.setResource(root.getGson().fromJson(root.getGson().toJson(response.getResource()), targetType));
     }
 
     private Map<String, Class<?>> getMapForResource() {
