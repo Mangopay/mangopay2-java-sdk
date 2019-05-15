@@ -46,19 +46,6 @@ public class Wallet extends EntityBase {
     @SerializedName("FundsType")
     private FundsType fundsType;
 
-    public Wallet(ArrayList<String> owners, String description, Money balance, CurrencyIso currency, FundsType fundsType) {
-        this.owners = owners;
-        this.description = description;
-        this.balance = balance;
-        this.currency = currency;
-        this.fundsType = fundsType;
-    }
-
-    public Wallet() {
-
-    }
-
-
     public ArrayList<String> getOwners() {
         return owners;
     }
@@ -91,11 +78,11 @@ public class Wallet extends EntityBase {
         this.currency = currency;
     }
 
-    public com.mangopay.core.enumerations.FundsType getFundsType() {
+    public FundsType getFundsType() {
         return fundsType;
     }
 
-    public void setFundsType(com.mangopay.core.enumerations.FundsType fundsType) {
+    public void setFundsType(FundsType fundsType) {
         this.fundsType = fundsType;
     }
 

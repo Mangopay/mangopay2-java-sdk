@@ -13,12 +13,11 @@ public class PayOutDeserializer implements JsonDeserializer<PayOut> {
         PayOut payOut = new Gson().fromJson(object.toString(), PayOut.class);
         switch (payOut.getPaymentType()) {
             case BANK_WIRE:
-                String bankAccountId = object.get("BankAccountId").getAsString();
-                String bankWireRef = object.get("BankWireRef").getAsString();
-
-                PayOutPaymentDetailsBankWire meanOfPaymentDetails = new PayOutPaymentDetailsBankWire(
-                        bankAccountId,
-                        bankWireRef);
+                PayOutPaymentDetailsBankWire meanOfPaymentDetails = new PayOutPaymentDetailsBankWire();
+                if (object.has("BankAccountId") && !object.get("BankAccountId").isJsonNull())
+                    meanOfPaymentDetails.setBankAccountId(object.get("BankAccountId").getAsString());
+                if (object.has("BankWireRef") && !object.get("BankWireRef").isJsonNull())
+                    meanOfPaymentDetails.setBankWireRef(object.get("BankWireRef").getAsString());
                 payOut.setMeanOfPaymentDetails(meanOfPaymentDetails);
                 return payOut;
             default:
