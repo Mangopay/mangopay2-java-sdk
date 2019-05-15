@@ -293,7 +293,6 @@ public abstract class BaseTest {
             ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
             ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
 
-
             // create Pay-In
             this.api.getPayInApi().create(payIn);
         }

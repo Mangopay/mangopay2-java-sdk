@@ -36,11 +36,14 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 payIn.setPaymentDetails(payInDetails);
                 break;
             case CARD:
-                PayInPaymentDetailsCard payInPaymentDetailsCard = new PayInPaymentDetailsCard(
-                        CardType.valueOf(object.get("CardType").getAsString()),
-                        object.get("CardId").getAsString(),
-                        object.get("StatementDescriptor").getAsString()
-                );
+                PayInPaymentDetailsCard payInPaymentDetailsCard = new PayInPaymentDetailsCard();
+                if (object.has("CardType")) {
+                    payInPaymentDetailsCard.setCardType(CardType.valueOf(object.get("CardType").getAsString()));
+                }
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull()) {
+                    payInPaymentDetailsCard.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                }
+                payInPaymentDetailsCard.setCardId(object.get("CardId").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsCard);
                 break;
             default:
@@ -58,18 +61,23 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 payIn.setExecutionDetails(payInExecutionDetailsWeb);
                 break;
             case DIRECT:
+                PayInExecutionDetailsDirect payInExecutionDetailsDirect = new PayInExecutionDetailsDirect();
                 JsonObject billing = object.get("Billing").getAsJsonObject();
                 JsonObject securityInfo = object.get("SecurityInfo").getAsJsonObject();
 
-                PayInExecutionDetailsDirect payInExecutionDetailsDirect = new PayInExecutionDetailsDirect(
-                        object.get("CardId").getAsString(),
-                        SecureMode.valueOf(object.get("SecureMode").getAsString()),
-                        object.get("SecureModeReturnURL").getAsString(),
-                        object.get("SecureModeRedirectURL").getAsString(),
-                        object.get("SecureModeNeeded").getAsString(),
-                        (Billing) context.deserialize(billing, Billing.class),
-                        (SecurityInfo) context.deserialize(securityInfo, SecurityInfo.class),
-                        CultureCode.valueOf(object.get("Culture").getAsString()));
+                if (object.has("SecureModeReturnURL") && !object.get("SecureModeReturnURL").isJsonNull()) {
+                    payInExecutionDetailsDirect.setSecureModeReturnUrl(object.get("SecureModeReturnURL").getAsString());
+                }
+                if (object.has("SecureModeRedirectURL") && !object.get("SecureModeRedirectURL").isJsonNull()) {
+                    payInExecutionDetailsDirect.setSecureModeRedirectUrl(object.get("SecureModeRedirectURL").getAsString());
+                }
+                payInExecutionDetailsDirect.setCardId(object.get("CardId").getAsString());
+                payInExecutionDetailsDirect.setSecureMode(SecureMode.valueOf(object.get("SecureMode").getAsString()));
+
+                payInExecutionDetailsDirect.setSecureModeNeeded(object.get("SecureModeNeeded").getAsString());
+                payInExecutionDetailsDirect.setBilling((Billing) context.deserialize(billing, Billing.class));
+                payInExecutionDetailsDirect.setSecurityInfo((SecurityInfo) context.deserialize(securityInfo, SecurityInfo.class));
+                payInExecutionDetailsDirect.setCulture(CultureCode.valueOf(object.get("Culture").getAsString()));
                 payIn.setExecutionDetails(payInExecutionDetailsDirect);
                 break;
             case EXTERNAL_INSTRUCTION:
