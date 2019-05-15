@@ -6,6 +6,8 @@ import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.PayInApi;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
+import com.mangopay.core.deserializer.PayInDeserializer;
+import com.mangopay.core.serializer.PayInSerializer;
 import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Refund;
 
@@ -23,6 +25,8 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
      */
     public PayInApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+        gsonBuilder.registerTypeAdapter(PayIn.class, new PayInSerializer());
+        gsonBuilder.registerTypeAdapter(PayIn.class, new PayInDeserializer());
     }
 
     @Override

@@ -105,6 +105,10 @@ public class PayInExecutionDetailsWeb extends Dto implements PayInExecutionDetai
         this.returnUrl = returnUrl;
     }
 
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
+
     public PayInTemplateURLOptions getTemplateURLOptions() {
         return TemplateURLOptions;
     }
