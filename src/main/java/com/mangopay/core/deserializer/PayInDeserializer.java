@@ -43,7 +43,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull()) {
                     payInPaymentDetailsCard.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 }
-                payInPaymentDetailsCard.setCardId(object.get("CardId").getAsString());
+                if (object.has("CardId") && !object.get("CardId").isJsonNull())
+                    payInPaymentDetailsCard.setCardId(object.get("CardId").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsCard);
                 break;
             default:

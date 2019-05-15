@@ -50,11 +50,11 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("Culture", context.serialize(((PayInExecutionDetailsDirect) src.getExecutionDetails()).getCulture()));
                 break;
             case "PayInExecutionDetailsWeb":
-                object.add("TemplateURL", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getTemplateUrl()));
-                object.add("Culture", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getCulture().toString()));
-                object.add("SecureMode", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getSecureMode().toString()));
-                object.add("RedirectURL", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getRedirectUrl()));
-                object.add("ReturnURL", context.serialize(((PayInExecutionDetailsWeb) src.getPaymentDetails()).getReturnUrl()));
+                object.add("TemplateURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getTemplateUrl()));
+                object.add("Culture", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getCulture()));
+                object.add("SecureMode", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getSecureMode()));
+                object.add("RedirectURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getRedirectUrl()));
+                object.add("ReturnURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getReturnUrl()));
                 break;
             default:
                 return null;
