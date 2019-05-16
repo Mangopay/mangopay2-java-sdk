@@ -13,13 +13,12 @@ public class PayOutSerializer implements JsonSerializer<PayOut> {
     @Override
     public JsonElement serialize(PayOut src, Type typeOfSrc, JsonSerializationContext context) {
         JsonObject object = SerializedTransaction.getTransactionObject(src, context);
+        object.add("DebitedWalletId", context.serialize(src.getDebitedWalletId()));
+        object.add("PaymentType", context.serialize(src.getPaymentType()));
         switch (src.getMeanOfPaymentDetails().getClass().getSimpleName()) {
             case "PayOutPaymentDetailsBankWire":
                 object.add("BankAccountId", context.serialize(((PayOutPaymentDetailsBankWire) src.getMeanOfPaymentDetails()).getBankAccountId()));
                 object.add("BankWireRef", context.serialize(((PayOutPaymentDetailsBankWire) src.getMeanOfPaymentDetails()).getBankWireRef()));
-
-                object.add("DebitedWalletId", context.serialize(src.getDebitedWalletId()));
-                object.add("PaymentType", context.serialize(src.getPaymentType()));
                 return object;
             default:
                 return null;
