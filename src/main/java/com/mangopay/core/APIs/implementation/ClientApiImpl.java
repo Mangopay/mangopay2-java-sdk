@@ -30,9 +30,6 @@ public class ClientApiImpl extends ApiBase implements ClientApi {
      */
     public ClientApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-
-//        gsonBuilder.registerTypeAdapter(PayIn.class, new PayInSerializer());
-//        gsonBuilder.registerTypeAdapter(PayIn.class, new PayInDeserializer());
     }
 
     @Override
