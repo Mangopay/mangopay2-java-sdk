@@ -10,10 +10,10 @@ public class TransferDeserializer implements JsonDeserializer<Transfer> {
     public Transfer deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         Transfer transfer = new Gson().fromJson(jsonObject.toString(), Transfer.class);
-        if (jsonObject.has("CreditedWalletId") && !jsonObject.get("CreditedWalletId").isJsonNull())
-            transfer.setCreditedWalletId(jsonObject.get("CreditedWalletId").getAsString());
         if (jsonObject.has("DebitedWalletId") && !jsonObject.get("DebitedWalletId").isJsonNull())
             transfer.setDebitedWalletId(jsonObject.get("DebitedWalletId").getAsString());
+        if (jsonObject.has("CreditedWalletId") && !jsonObject.get("CreditedWalletId").isJsonNull())
+            transfer.setCreditedWalletId(jsonObject.get("CreditedWalletId").getAsString());
         return transfer;
     }
 }

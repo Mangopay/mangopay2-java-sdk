@@ -95,10 +95,6 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 break;
             case DIRECT:
                 PayInExecutionDetailsDirect payInExecutionDetailsDirect = new PayInExecutionDetailsDirect();
-                if (object.has("Billing") && !object.get("Billing").isJsonNull())
-                    payInExecutionDetailsDirect.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
-                if (object.has("SecurityInfo") && !object.get("SecurityInfo").isJsonNull())
-                    payInExecutionDetailsDirect.setSecurityInfo((SecurityInfo) context.deserialize(object.get("SecurityInfo"), SecurityInfo.class));
                 if (object.has("CardId") && !object.get("CardId").isJsonNull())
                     payInExecutionDetailsDirect.setCardId(object.get("CardId").getAsString());
                 if (object.has("SecureMode") && !object.get("SecureMode").isJsonNull())
@@ -109,6 +105,10 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInExecutionDetailsDirect.setSecureModeRedirectUrl(object.get("SecureModeRedirectURL").getAsString());
                 if (object.has("SecureModeNeeded") && !object.get("SecureModeNeeded").isJsonNull())
                     payInExecutionDetailsDirect.setSecureModeNeeded(object.get("SecureModeNeeded").getAsString());
+                if (object.has("Billing") && !object.get("Billing").isJsonNull())
+                    payInExecutionDetailsDirect.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
+                if (object.has("SecurityInfo") && !object.get("SecurityInfo").isJsonNull())
+                    payInExecutionDetailsDirect.setSecurityInfo((SecurityInfo) context.deserialize(object.get("SecurityInfo"), SecurityInfo.class));
                 if (object.has("Culture") && !object.get("Culture").isJsonNull())
                     payInExecutionDetailsDirect.setCulture(CultureCode.valueOf(object.get("Culture").getAsString()));
                 payIn.setExecutionDetails(payInExecutionDetailsDirect);

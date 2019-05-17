@@ -24,30 +24,30 @@ public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
                 break;
             case US:
                 BankAccountDetailsUS bankAccountDetailsUS = new BankAccountDetailsUS();
-                bankAccountDetailsUS.setAba(jsonObject.get("ABA").getAsString());
                 bankAccountDetailsUS.setAccountNumber(jsonObject.get("AccountNumber").getAsString());
+                bankAccountDetailsUS.setAba(jsonObject.get("ABA").getAsString());
                 bankAccountDetailsUS.setDepositAccountType(DepositAccountType.valueOf(jsonObject.get("DepositAccountType").getAsString()));
                 bankAccount.setDetails(bankAccountDetailsUS);
                 break;
             case CA:
                 BankAccountDetailsCA bankAccountDetailsCA = new BankAccountDetailsCA();
-                bankAccountDetailsCA.setAccountNumber(jsonObject.get("AccountNumber").getAsString());
                 bankAccountDetailsCA.setBankName(jsonObject.get("BankName").getAsString());
-                bankAccountDetailsCA.setBranchCode(jsonObject.get("BranchCode").getAsString());
                 bankAccountDetailsCA.setInstitutionNumber(jsonObject.get("InstitutionNumber").getAsString());
+                bankAccountDetailsCA.setBranchCode(jsonObject.get("BranchCode").getAsString());
+                bankAccountDetailsCA.setAccountNumber(jsonObject.get("AccountNumber").getAsString());
                 bankAccount.setDetails(bankAccountDetailsCA);
                 break;
             case IBAN:
                 BankAccountDetailsIBAN bankAccountDetailsIBAN = new BankAccountDetailsIBAN();
-                bankAccountDetailsIBAN.setBic(jsonObject.get("BIC").getAsString());
                 bankAccountDetailsIBAN.setIban(jsonObject.get("IBAN").getAsString());
+                bankAccountDetailsIBAN.setBic(jsonObject.get("BIC").getAsString());
                 bankAccount.setDetails(bankAccountDetailsIBAN);
                 break;
             case OTHER:
                 BankAccountDetailsOTHER bankAccountDetailsOTHER = new BankAccountDetailsOTHER();
-                bankAccountDetailsOTHER.setAccountNumber(jsonObject.get("AccountNumber").getAsString());
-                bankAccountDetailsOTHER.setBic(jsonObject.get("BIC").getAsString());
                 bankAccountDetailsOTHER.setCountry(CountryIso.valueOf(jsonObject.get("Country").getAsString()));
+                bankAccountDetailsOTHER.setBic(jsonObject.get("BIC").getAsString());
+                bankAccountDetailsOTHER.setAccountNumber(jsonObject.get("AccountNumber").getAsString());
                 bankAccount.setDetails(bankAccountDetailsOTHER);
                 break;
             default:
