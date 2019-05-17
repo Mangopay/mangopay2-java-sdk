@@ -1,10 +1,13 @@
 package com.mangopay.core;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.lang.reflect.Type;
 import java.util.Map;
 
 public class Billing extends Dto {
 
+    @SerializedName("Address")
     private Address address;
 
     public Address getAddress() {
