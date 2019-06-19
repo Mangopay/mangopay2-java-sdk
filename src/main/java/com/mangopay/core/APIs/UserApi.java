@@ -328,16 +328,6 @@ public interface UserApi {
     EMoney getEMoney(String userId, CurrencyIso currencyIso) throws Exception;
 
     /**
-     * Creates a new UBO declaration entity.
-     *
-     * @param userId      ID of the requesting user
-     * @param declaration The UBO declaration data
-     * @return Newly-created UBO declaration object
-     * @throws Exception
-     */
-    UboDeclaration createUboDeclaration(String userId, UboDeclaration declaration) throws Exception;
-
-    /**
      * Get pre authorizations for user
      * @param userId User identifier
      * @return A list of user pre authorizations

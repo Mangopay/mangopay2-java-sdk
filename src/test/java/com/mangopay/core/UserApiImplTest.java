@@ -587,24 +587,6 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createUboDeclaration() throws Exception {
-        User legalUser = getMatrix();
-        User john = getNewDeclarativeJohn();
-        DeclaredUbo declaredUbo = new DeclaredUbo();
-        declaredUbo.setUserId(john.getId());
-        ArrayList<DeclaredUbo> declaredUbos = new ArrayList<>();
-        declaredUbos.add(declaredUbo);
-        UboDeclaration declaration = new UboDeclaration();
-        declaration.setDeclaredUbos(declaredUbos);
-
-        UboDeclaration createdUboDeclaration = this.api.getUserApi().createUboDeclaration(legalUser.getId(), declaration);
-        assertNotNull(createdUboDeclaration);
-        assertTrue(createdUboDeclaration.getStatus() == UboDeclarationStatus.CREATED);
-        assertTrue(createdUboDeclaration.getUserId().equals(legalUser.getId()));
-        assertTrue(createdUboDeclaration.getDeclaredUbos().get(0).getUserId().equals(john.getId()));
-    }
-
-    @Test
     public void getBankAccountTransactions() throws Exception {
         BankAccount johnsAccount = getJohnsAccount();
         PayOut johnsPayOutBankWire = getJohnsPayOutBankWire();

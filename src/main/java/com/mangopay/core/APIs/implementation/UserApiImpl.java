@@ -239,11 +239,6 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
-    public UboDeclaration createUboDeclaration(String userId, UboDeclaration declaration) throws Exception {
-        return this.createObject(UboDeclaration.class, null, "ubo_declaration_create", declaration, userId);
-    }
-
-    @Override
     public List<CardPreAuthorization> getPreAuthorizations(String userId) throws Exception {
         return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "users_get_preauthorizations", null, userId);
     }

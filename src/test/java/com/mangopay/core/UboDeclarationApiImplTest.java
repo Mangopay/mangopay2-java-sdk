@@ -1,11 +1,16 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.UboDeclarationStatus;
+import com.mangopay.entities.Ubo;
 import com.mangopay.entities.UboDeclaration;
+import com.mangopay.entities.UserLegal;
 import org.junit.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import java.util.Calendar;
+import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * UboDeclarationApiImpl test methods.
@@ -13,20 +18,104 @@ import static org.junit.Assert.assertTrue;
 public class UboDeclarationApiImplTest extends BaseTest {
 
     @Test
-    public void getUboDeclaration() throws Exception {
-        UboDeclaration declaration = getCreatedUboDeclaration(false);
-        UboDeclaration retrievedDeclaration = this.api.getUboDeclarationApi().get(declaration.getId());
+    public void createUboDeclaration() throws Exception {
+        UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
 
-        assertNotNull(retrievedDeclaration);
+        assertNotNull(uboDeclaration);
+        assertEquals(UboDeclarationStatus.CREATED,uboDeclaration.getStatus());
+        assertNotNull(uboDeclaration.getId());
     }
 
     @Test
-    public void updateUboDeclaration() throws Exception {
-        UboDeclaration declaration = getCreatedUboDeclaration(false);
-        declaration.setStatus(UboDeclarationStatus.VALIDATION_ASKED);
-        UboDeclaration updatedDeclaration = this.api.getUboDeclarationApi().update(declaration);
+    public void getUboDeclarationList() throws Exception {
+        UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
+        UserLegal matrix=this.getMatrix();
+        List<UboDeclaration> declarations=this.api.getUboDeclarationApi().getAll(matrix.getId(),null,null);
 
-        assertNotNull(updatedDeclaration);
-        assertTrue(updatedDeclaration.getStatus() == UboDeclarationStatus.VALIDATION_ASKED);
+        assertNotNull(declarations);
+        assertTrue(!declarations.isEmpty());
+        assertEquals(1,declarations.size());
+        assertEquals(uboDeclaration.getId(),declarations.get(0).getId());
+    }
+
+    @Test
+    public void getUboDeclaration() throws Exception {
+        UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
+        UserLegal matrix=this.getMatrix();
+
+        UboDeclaration declarationFromApi=this.api.getUboDeclarationApi().get(matrix.getId(),uboDeclaration.getId());
+
+        assertNotNull(declarationFromApi);
+        assertEquals(uboDeclaration.getId(),declarationFromApi.getId());
+    }
+
+    @Test
+    public void createUbo() throws Exception {
+        Ubo ubo=this.createNewUboForMatrix();
+        Ubo newUbo=this.getMatrixUbo();
+
+        assertNotNull(newUbo);
+        assertNotNull(newUbo.getId());
+        assertEquals(ubo.getFirstName(),newUbo.getFirstName());
+        assertEquals(ubo.getLastName(), newUbo.getLastName());
+        assertEquals(ubo.getAddress(),newUbo.getAddress());
+        assertEquals(ubo.getNationality(), newUbo.getNationality());
+        assertEquals(ubo.getBirthday(),newUbo.getBirthday());
+        assertEquals(ubo.getBirthplace(), newUbo.getBirthplace());
+    }
+
+    @Test
+    public void updateUbo() throws Exception {
+        UserLegal matrix=this.getMatrix();
+        UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(1991,12,21,0,0,0);
+
+        Ubo toBeUpdated=this.getMatrixUbo();
+        toBeUpdated.setFirstName("UpdatedFirstName");
+        toBeUpdated.setLastName("UpdatedLastName");
+        toBeUpdated.getAddress().setAddressLine1("UpdatedLine1");
+        toBeUpdated.setNationality(CountryIso.GB);
+        toBeUpdated.setBirthday(calendar.getTimeInMillis()/1000);
+        toBeUpdated.getBirthplace().setCountry(CountryIso.GB);
+
+        Ubo ubo=this.api.getUboDeclarationApi().updateUbo(matrix.getId(),uboDeclaration.getId(),toBeUpdated);
+
+        assertEquals(toBeUpdated.getFirstName(),ubo.getFirstName());
+        assertEquals(toBeUpdated.getLastName(),ubo.getLastName());
+        assertEquals(toBeUpdated.getAddress(),ubo.getAddress());
+        assertEquals(toBeUpdated.getNationality(),ubo.getNationality());
+        assertEquals(toBeUpdated.getBirthday(),ubo.getBirthday());
+        assertEquals(toBeUpdated.getBirthplace(),ubo.getBirthplace());
+    }
+
+    @Test
+    public void getUbo() throws Exception {
+        UserLegal matrix=this.getMatrix();
+        UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
+        Ubo existingUbo=this.getMatrixUbo();
+
+        UboDeclaration declaration=this.api.getUboDeclarationApi().get(matrix.getId(),uboDeclaration.getId());
+
+        Ubo fetchedUbo=this.api.getUboDeclarationApi().getUbo(matrix.getId(),uboDeclaration.getId(),existingUbo.getId());
+
+        assertNotNull(fetchedUbo);
+        assertEquals(existingUbo.getFirstName(),fetchedUbo.getFirstName());
+        assertEquals(existingUbo.getLastName(),fetchedUbo.getLastName());
+        assertEquals(existingUbo.getAddress(),fetchedUbo.getAddress());
+        assertEquals(existingUbo.getNationality(),fetchedUbo.getNationality());
+        assertEquals(existingUbo.getBirthday(), fetchedUbo.getBirthday());
+        assertEquals(existingUbo.getBirthplace(),fetchedUbo.getBirthplace());
+    }
+
+    @Test
+    public void submitForValidation() throws Exception {
+        UboDeclaration declaration=this.getMatrixUboDeclaration();
+        UserLegal matrix=this.getMatrix();
+
+        UboDeclaration newUboDeclaration=this.api.getUboDeclarationApi().submitForValidation(matrix.getId(),declaration.getId());
+
+        assertEquals(declaration.getId(),newUboDeclaration.getId());
+
     }
 }
