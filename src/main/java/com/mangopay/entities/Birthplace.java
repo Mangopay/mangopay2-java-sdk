@@ -18,6 +18,9 @@ public class Birthplace extends Dto {
     @SerializedName("Country")
     private CountryIso country;
 
+    public Birthplace() {
+    }
+
     public Birthplace(String city, CountryIso country) {
         this.city=city;
         this.country=country;

@@ -45,7 +45,7 @@ public class UboDeclaration extends EntityBase {
      * of the natural users declared as UBOs.
      */
     @SerializedName("Ubos")
-    private ArrayList<Ubo> ubos;
+    private ArrayList<Ubo> ubos = new ArrayList<>();
 
     public int getProcessedDate() {
         return processedDate;
