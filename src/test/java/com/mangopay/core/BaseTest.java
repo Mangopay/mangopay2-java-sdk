@@ -178,6 +178,7 @@ public abstract class BaseTest {
             user.setLegalRepresentativeBirthday(john.getBirthday());
             user.setLegalRepresentativeNationality(john.getNationality());
             user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
+            user.setCompanyNumber("LU12345678");
 
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
