@@ -365,6 +365,7 @@ public class RestTool {
                     HashMap<String, Object> requestData = buildRequestData(classOfT, entity);
 
                     Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+                    requestData = requestData.trim();
                     requestBody = gson.toJson(requestData);
                 }
                 if (this.requestData != null) {
