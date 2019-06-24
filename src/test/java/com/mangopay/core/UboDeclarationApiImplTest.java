@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class UboDeclarationApiImplTest extends BaseTest {
 
-    @Test
+    /*@Test
     public void createUboDeclaration() throws Exception {
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
 
@@ -117,5 +117,5 @@ public class UboDeclarationApiImplTest extends BaseTest {
 
         assertEquals(declaration.getId(),newUboDeclaration.getId());
 
-    }
+    }*/
 }
