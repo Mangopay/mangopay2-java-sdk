@@ -10,7 +10,6 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -550,8 +549,14 @@ public class UserApiImplTest extends BaseTest {
     @Test
     public void getUserEMoney() throws Exception {
         User john = getJohn();
+        String year = "2019";
+        String month = "04";
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), year);
 
-        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId());
+        assertNotNull(eMoney);
+        assertEquals(eMoney.getUserId(), john.getId());
+
+        eMoney = this.api.getUserApi().getEMoney(john.getId(), year, month);
 
         assertNotNull(eMoney);
         assertEquals(eMoney.getUserId(), john.getId());
@@ -578,8 +583,15 @@ public class UserApiImplTest extends BaseTest {
 
     private void getUserEMoney(CurrencyIso currencySentInRequest, CurrencyIso currencyExpected) throws Exception {
         User john = getJohn();
+        String year = "2019";
+        String month = "04";
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), year, currencySentInRequest);
 
-        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), currencySentInRequest);
+        assertNotNull(eMoney);
+        assertEquals(john.getId(), eMoney.getUserId());
+        assertEquals(currencyExpected, eMoney.getCreditedEMoney().getCurrency());
+
+        eMoney = this.api.getUserApi().getEMoney(john.getId(), year, month, currencySentInRequest);
 
         assertNotNull(eMoney);
         assertEquals(john.getId(), eMoney.getUserId());

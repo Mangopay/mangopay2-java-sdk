@@ -117,8 +117,11 @@ public abstract class ApiBase {
         put("users_getbankaccount", new String[]{"/users/%s/bankaccounts/%s", RequestType.GET.toString()});
         put("users_savenaturals", new String[]{"/users/natural/%s", RequestType.PUT.toString()});
         put("users_savelegals", new String[]{"/users/legal/%s", RequestType.PUT.toString()});
-        put("users_emoney", new String[]{"/users/%s/emoney", RequestType.GET.toString()});
-        put("users_emoney_currency", new String[]{"/users/%s/emoney?Currency=%s", RequestType.GET.toString()});
+
+        put("users_emoney_year", new String[]{"/users/%s/emoney/%s", RequestType.GET.toString()});
+        put("users_emoney_month", new String[]{"/users/%s/emoney/%s/%s", RequestType.GET.toString()});
+        put("users_emoney_year_currency", new String[]{"/users/%s/emoney/%s?Currency=%s", RequestType.GET.toString()});
+        put("users_emoney_month_currency", new String[]{"/users/%s/emoney/%s/%s?Currency=%s", RequestType.GET.toString()});
 
         put("wallets_create", new String[]{"/wallets", RequestType.POST.toString()});
         put("wallets_alltransactions", new String[]{"/wallets/%s/transactions", RequestType.GET.toString()});
@@ -285,66 +288,21 @@ public abstract class ApiBase {
     }
 
     /**
-     * Gets the Dto instance from API.
      *
-     * @param <T>            Type on behalf of which the request is being called.
-     * @param classOfT       Type on behalf of which the request is being called.
-     * @param methodKey      Relevant method key.
-     * @param entityId       Entity identifier.
-     * @param secondEntityId Entity identifier for the second entity.
-     * @return The Dto instance returned from API.
-     * @throws Exception
-     */
-    protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, String entityId, String secondEntityId) throws Exception {
-
-        String urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
-
-        RestTool rest = new RestTool(this.root, true);
-        T response = rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
-
-        return response;
-    }
-
-    /**
-     * Gets the Dto instance from API.
-     *
-     * @param <T>            Type on behalf of which the request is being called.
-     * @param classOfT       Type on behalf of which the request is being called.
-     * @param methodKey      Relevant method key.
-     * @param entityId       Entity identifier.
-     * @param secondEntityId Entity identifier for the second entity.
-     * @param thirdEntityId  Entity identifier for the third entity.
-     * @return The Dto instance returned from API.
-     * @throws Exception
-     */
-    protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, String entityId, String secondEntityId, String thirdEntityId) throws Exception {
-
-        String urlMethod;
-        if (thirdEntityId != null && !thirdEntityId.isEmpty()) {
-            urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId, "");
-        } else {
-            urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
-        }
-
-        RestTool rest = new RestTool(this.root, true);
-        T response = rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
-
-        return response;
-    }
-
-
-    /**
-     * Gets the Dto instance from API.
-     *
-     * @param <T>       Type on behalf of which the request is being called.
-     * @param classOfT  Type on behalf of which the request is being called.
+     * @param classOfT Type on behalf of which the request is being called.
      * @param methodKey Relevant method key.
-     * @param entityId  Entity identifier.
+     * @param args Arguments that will be set on the method
+     * @param <T>  Type on behalf of which the request is being called.
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, String entityId) throws Exception {
-        return getObject(classOfT, methodKey, entityId, "");
+    protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, Object... args) throws Exception {
+        String urlMethod = String.format(this.getRequestUrl(methodKey), args);
+
+        RestTool rest = new RestTool(this.root, true);
+        T response = rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
+
+        return response;
     }
 
     /**

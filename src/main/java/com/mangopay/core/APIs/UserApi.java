@@ -310,25 +310,54 @@ public interface UserApi {
      * Result will be in <code>EUR</code> due to lack of a specified currency.
      *
      * @param userId Id of the user whose e-money data to get.
+     * @param year   The year for which we want to get the e-money data.
      * @return EMoney data for the specified user.
      * @throws Exception
      */
-    EMoney getEMoney(String userId) throws Exception;
+    EMoney getEMoney(String userId, String year) throws Exception;
+
+    /**
+     * Shows the e-money cash-in/cash-out amounts for a particular user.
+     * Result will be in <code>EUR</code> due to lack of a specified currency.
+     *
+     * @param userId Id of the user whose e-money data to get.
+     * @param year   The year for which we want to get the e-money data.
+     * @param month  The month for which we want to get the e-money data.
+     * @return EMoney data for the specified user.
+     * @throws Exception
+     */
+    EMoney getEMoney(String userId, String year, String month) throws Exception;
 
     /**
      * Shows the e-money cash-in/cash-out amounts for a particular user.
      * The Currency parameter can be used to have the amounts specified in a certain currency.
      *
      * @param userId      Id of the user whose e-money data to get.
+     * @param year        The year for which we want to get the e-money data.
      * @param currencyIso Currency in which to format money amounts. If <code>null</code>, will be considered
      *                    as <code>EUR</code>.
      * @return EMoney data for the specified user.
      * @throws Exception
      */
-    EMoney getEMoney(String userId, CurrencyIso currencyIso) throws Exception;
+    EMoney getEMoney(String userId, String year, CurrencyIso currencyIso) throws Exception;
+
+    /**
+     * Shows the e-money cash-in/cash-out amounts for a particular user.
+     * The Currency parameter can be used to have the amounts specified in a certain currency.
+     *
+     * @param userId      Id of the user whose e-money data to get.
+     * @param year        The year for which we want to get the e-money data.
+     * @param month       The month for which we want to get the e-money data.
+     * @param currencyIso Currency in which to format money amounts. If <code>null</code>, will be considered
+     *                    as <code>EUR</code>.
+     * @return EMoney data for the specified user.
+     * @throws Exception
+     */
+    EMoney getEMoney(String userId, String year, String month, CurrencyIso currencyIso) throws Exception;
 
     /**
      * Get pre authorizations for user
+     *
      * @param userId User identifier
      * @return A list of user pre authorizations
      * @throws Exception
