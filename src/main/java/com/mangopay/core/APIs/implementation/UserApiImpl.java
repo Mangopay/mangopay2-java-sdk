@@ -223,19 +223,34 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
-    public EMoney getEMoney(String userId) throws Exception {
-        if (userId == null) {
-            throw new Exception("Cannot get EMoney without specifying the userId");
+    public EMoney getEMoney(String userId, String year) throws Exception {
+        if (userId == null || year == null) {
+            throw new Exception("Cannot get EMoney without specifying the userId or the year");
         }
-        return this.getObject(EMoney.class, "users_emoney", userId);
+        return this.getObject(EMoney.class, "users_emoney_year", userId, year);
     }
 
     @Override
-    public EMoney getEMoney(String userId, CurrencyIso currencyIso) throws Exception {
-        if (currencyIso == null) {
-            return this.getEMoney(userId);
+    public EMoney getEMoney(String userId, String year, String month) throws Exception {
+        if (userId == null || year == null || month == null) {
+            throw new Exception("Cannot get EMoney without specifying the userId or the year or the month");
         }
-        return this.getObject(EMoney.class, "users_emoney_currency", userId, currencyIso.name());
+        return this.getObject(EMoney.class, "users_emoney_month", userId, year, month);
+    }
+
+    @Override
+    public EMoney getEMoney(String userId, String year, CurrencyIso currencyIso) throws Exception {
+        if (currencyIso == null) {
+            return this.getEMoney(userId, year);
+        }
+        return this.getObject(EMoney.class, "users_emoney_year_currency", userId, year, currencyIso.name());
+    }
+
+    public EMoney getEMoney(String userId, String year, String month, CurrencyIso currencyIso) throws Exception {
+        if (currencyIso == null) {
+            return this.getEMoney(userId, year, month);
+        }
+        return this.getObject(EMoney.class, "users_emoney_month_currency", userId, year, month, currencyIso.name());
     }
 
     @Override
