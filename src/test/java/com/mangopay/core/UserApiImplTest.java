@@ -10,7 +10,6 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -32,7 +31,8 @@ public class UserApiImplTest extends BaseTest {
     public void createLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
         assertTrue(matrix.getId().length() > 0);
-        assertTrue(matrix.getPersonType().equals(PersonType.LEGAL));
+        assertEquals(matrix.getPersonType(), PersonType.LEGAL);
+        assertEquals("LU12345678", matrix.getCompanyNumber());
     }
 
     @Test
@@ -70,6 +70,7 @@ public class UserApiImplTest extends BaseTest {
         user.setLegalRepresentativeNationality(CountryIso.FR);
         user.setLegalRepresentativeCountryOfResidence(CountryIso.FR);
         user.setEmail("email@email.org");
+        user.setCompanyNumber("LU12345678");
 
         User ret = null;
 
@@ -548,8 +549,14 @@ public class UserApiImplTest extends BaseTest {
     @Test
     public void getUserEMoney() throws Exception {
         User john = getJohn();
+        String year = "2019";
+        String month = "04";
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), year);
 
-        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId());
+        assertNotNull(eMoney);
+        assertEquals(eMoney.getUserId(), john.getId());
+
+        eMoney = this.api.getUserApi().getEMoney(john.getId(), year, month);
 
         assertNotNull(eMoney);
         assertEquals(eMoney.getUserId(), john.getId());
@@ -576,30 +583,19 @@ public class UserApiImplTest extends BaseTest {
 
     private void getUserEMoney(CurrencyIso currencySentInRequest, CurrencyIso currencyExpected) throws Exception {
         User john = getJohn();
-
-        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), currencySentInRequest);
+        String year = "2019";
+        String month = "04";
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), year, currencySentInRequest);
 
         assertNotNull(eMoney);
         assertEquals(john.getId(), eMoney.getUserId());
         assertEquals(currencyExpected, eMoney.getCreditedEMoney().getCurrency());
-    }
 
-    @Test
-    public void createUboDeclaration() throws Exception {
-        User legalUser = getMatrix();
-        User john = getNewDeclarativeJohn();
-        DeclaredUbo declaredUbo = new DeclaredUbo();
-        declaredUbo.setUserId(john.getId());
-        ArrayList<DeclaredUbo> declaredUbos = new ArrayList<>();
-        declaredUbos.add(declaredUbo);
-        UboDeclaration declaration = new UboDeclaration();
-        declaration.setDeclaredUbos(declaredUbos);
+        eMoney = this.api.getUserApi().getEMoney(john.getId(), year, month, currencySentInRequest);
 
-        UboDeclaration createdUboDeclaration = this.api.getUserApi().createUboDeclaration(legalUser.getId(), declaration);
-        assertNotNull(createdUboDeclaration);
-        assertTrue(createdUboDeclaration.getStatus() == UboDeclarationStatus.CREATED);
-        assertTrue(createdUboDeclaration.getUserId().equals(legalUser.getId()));
-        assertTrue(createdUboDeclaration.getDeclaredUbos().get(0).getUserId().equals(john.getId()));
+        assertNotNull(eMoney);
+        assertEquals(john.getId(), eMoney.getUserId());
+        assertEquals(currencyExpected, eMoney.getCreditedEMoney().getCurrency());
     }
 
     @Test

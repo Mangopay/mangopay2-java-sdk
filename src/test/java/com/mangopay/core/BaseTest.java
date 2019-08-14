@@ -24,6 +24,8 @@ public abstract class BaseTest {
 
     private static UserNatural JOHN;
     private static UserLegal MATRIX;
+    private static UboDeclaration MATRIX_UBO_DECLARATION;
+    private static Ubo MATRIX_UBO;
     private static BankAccount JOHNS_ACCOUNT;
     private static Wallet JOHNS_WALLET;
     private static Wallet JOHNS_WALLET_WITH_MONEY;
@@ -178,6 +180,7 @@ public abstract class BaseTest {
             user.setLegalRepresentativeBirthday(john.getBirthday());
             user.setLegalRepresentativeNationality(john.getNationality());
             user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
+            user.setCompanyNumber("LU12345678");
 
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -741,20 +744,36 @@ public abstract class BaseTest {
         return BaseTest.JOHNS_BANKING_ALIAS;
     }
 
-    protected UboDeclaration getCreatedUboDeclaration(boolean recreate) throws Exception {
-        if (BaseTest.UBO_DECLARATION == null || recreate) {
-            User legalUser = getMatrix();
-            User john = getNewDeclarativeJohn();
-            DeclaredUbo declaredUbo = new DeclaredUbo();
-            declaredUbo.setUserId(john.getId());
-            ArrayList<DeclaredUbo> declaredUbos = new ArrayList<>();
-            declaredUbos.add(declaredUbo);
-            UboDeclaration declaration = new UboDeclaration();
-            declaration.setDeclaredUbos(declaredUbos);
-
-            BaseTest.UBO_DECLARATION = this.api.getUserApi().createUboDeclaration(legalUser.getId(), declaration);
+    protected UboDeclaration getMatrixUboDeclaration() throws Exception {
+        if (MATRIX_UBO_DECLARATION == null) {
+            MATRIX_UBO_DECLARATION = api.getUboDeclarationApi().create(this.getMatrix().getId());
         }
-        return BaseTest.UBO_DECLARATION;
+        return MATRIX_UBO_DECLARATION;
+    }
+
+    protected Ubo createNewUboForMatrix() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(1975, 12, 21, 0, 0, 0);
+
+        Ubo ubo = new Ubo();
+        ubo.setFirstName("First");
+        ubo.setLastName("Last");
+        ubo.setAddress(this.getNewAddress());
+        ubo.setNationality(CountryIso.FR);
+        ubo.setBirthday(calendar.getTimeInMillis() / 1000);
+        ubo.setBirthplace(new Birthplace("City", CountryIso.FR));
+        return ubo;
+    }
+
+    protected Ubo getMatrixUbo() throws Exception {
+        if (MATRIX_UBO == null) {
+            UserLegal matrix = this.getMatrix();
+            UboDeclaration uboDeclaration = this.getMatrixUboDeclaration();
+
+            Ubo ubo = this.createNewUboForMatrix();
+            MATRIX_UBO = api.getUboDeclarationApi().createUbo(matrix.getId(), uboDeclaration.getId(), ubo);
+        }
+        return MATRIX_UBO;
     }
 
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {
