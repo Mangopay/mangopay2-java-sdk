@@ -89,7 +89,7 @@ publishing {
                 def pomAscFile = signing.sign(pomFile).signatureFiles[0]
                 artifact(pomAscFile) {
                     classifier = null
-                    extension = 'pom.asc'
+                    extension = 'pom'
                 }
             }
 
@@ -108,7 +108,7 @@ publishing {
                         } else {
                             classifier = null
                         }
-                        extension = 'jar.asc'
+                        extension = 'jar'
                     }
                 }
             }
