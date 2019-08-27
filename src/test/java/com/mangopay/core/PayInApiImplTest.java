@@ -101,7 +101,7 @@ public class PayInApiImplTest extends BaseTest {
             PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
             assertNotNull(executionDetails.getSecurityInfo());
             assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
-            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.ADDRESS_MATCH_ONLY);
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
