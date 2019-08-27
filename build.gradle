@@ -1,6 +1,16 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.0"
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'maven-publish'
-apply plugin: 'signing'
+apply plugin: 'io.codearte.nexus-staging'
 
 repositories {
     mavenCentral()
@@ -101,6 +111,14 @@ publishing {
 tasks.withType(Javadoc) {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
+}
+
+nexusStaging {
+    packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
+    stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup"
+    username = System.getenv('SONATYPE_USERNAME')
+    password = System.getenv('SONATYPE_PASSWORD')
+    delayBetweenRetriesInMillis = 10000
 }
 
 def customizePom(pom) {
