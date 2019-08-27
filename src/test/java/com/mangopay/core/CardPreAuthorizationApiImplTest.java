@@ -42,7 +42,7 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
 
         assertNotNull(cardPreAuthorization.getSecurityInfo());
         assertNotNull(cardPreAuthorization.getSecurityInfo().getAvsResult());
-        assertTrue(cardPreAuthorization.getSecurityInfo().getAvsResult() == AVSResult.ADDRESS_MATCH_ONLY);
+        assertTrue(cardPreAuthorization.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
     }
 
     @Test
