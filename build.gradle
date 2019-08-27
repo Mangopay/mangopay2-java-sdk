@@ -1,6 +1,5 @@
 apply plugin: 'java'
 apply plugin: 'maven-publish'
-apply plugin: 'signing'
 
 repositories {
     mavenCentral()
@@ -38,14 +37,45 @@ artifacts {
     archives sourceJar
 }
 
-signing {
-    sign configurations.archives
+if (project.hasProperty('signing.keyId')) {
+    apply plugin: 'signing'
+    signing {
+        sign configurations.archives
+    }
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            customizePom(pom)
+            pom {
+                description = 'Java SDK for Mangopay'
+                name = 'mangopay2-java-sdk'
+                url = 'https://github.com/Mangopay/mangopay2-java-sdk'
+                organization {
+                    name = 'Codegile'
+                    url = 'https://www.codegile.com'
+                }
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                        distribution = 'repo'
+                    }
+                }
+                scm {
+                    url = 'git@github.com:mangopay/mangopay2-java-sdk.git'
+                    connection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+                    developerConnection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+                }
+
+                developers {
+                    developer {
+                        id = 'cata.craciun'
+                        name = 'Catalin Craciun'
+                        email = 'catalin.craciun@codegile.com'
+                    }
+                }
+            }
             groupId group
             artifactId 'mangopay2-java-sdk'
             version version
@@ -67,16 +97,19 @@ publishing {
                 classifier = 'sources'
             }
 
-            // create the signed artifacts
-            project.tasks.signArchives.signatureFiles.each {
-                artifact(it) {
-                    def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
-                    if (matcher.find()) {
-                        classifier = matcher.group(1)
-                    } else {
-                        classifier = null
+
+            if (project.hasProperty('signing.keyId')) {
+                // create the signed artifacts
+                project.tasks.signArchives.signatureFiles.each {
+                    artifact(it) {
+                        def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+                        if (matcher.find()) {
+                            classifier = matcher.group(1)
+                        } else {
+                            classifier = null
+                        }
+                        extension = 'jar.asc'
                     }
-                    extension = 'jar.asc'
                 }
             }
         }
@@ -95,50 +128,6 @@ publishing {
 tasks.withType(Javadoc) {
     options.addStringOption('encoding', 'UTF-8')
     options.addStringOption('charSet', 'UTF-8')
-}
-
-def customizePom(pom) {
-    pom.withXml {
-        def root = asNode()
-
-        // eliminate test-scoped dependencies (no need in maven central POMs)
-        root.dependencies.removeAll { dep ->
-            dep.scope == "test"
-        }
-
-        // add all items necessary for maven central publication
-        root.children().last() + {
-            resolveStrategy = Closure.DELEGATE_FIRST
-
-            description 'Java SDK for Mangopay'
-            name 'mangopay2-java-sdk'
-            url 'https://github.com/Mangopay/mangopay2-java-sdk'
-            organization {
-                name 'Codegile'
-                url 'https://www.codegile.com'
-            }
-            licenses {
-                license {
-                    name 'MIT License'
-                    url 'http://www.opensource.org/licenses/mit-license.php'
-                    distribution 'repo'
-                }
-            }
-            scm {
-                url 'git@github.com:mangopay/mangopay2-java-sdk.git'
-                connection 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-                developerConnection 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-            }
-
-            developers {
-                developer {
-                    id 'cata.craciun'
-                    name 'Catalin Craciun'
-                    email 'catalin.craciun@codegile.com'
-                }
-            }
-        }
-    }
 }
 
 model {
