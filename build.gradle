@@ -102,7 +102,7 @@ publishing {
                 // create the signed artifacts
                 project.tasks.signArchives.signatureFiles.each {
                     artifact(it) {
-                        def matcher = it.file =~ /-(sources|javadoc)\.jar\.asc$/
+                        def matcher = it.file =~ /-(sources|javadoc)\.jar$/
                         if (matcher.find()) {
                             classifier = matcher.group(1)
                         } else {
