@@ -115,7 +115,7 @@ def customizePom(pom) {
             url 'https://github.com/Mangopay/mangopay2-java-sdk'
             organization {
                 name 'Codegile'
-                url 'http://www.codegile.com'
+                url 'https://www.codegile.com'
             }
             licenses {
                 license {
