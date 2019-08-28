@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'maven-publish'
     id "de.marcphilipp.nexus-publish" version "0.3.1"
     id 'io.codearte.nexus-staging' version '0.21.0'
 }
@@ -49,47 +48,45 @@ if (project.hasProperty('signing.keyId')) {
     }
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            pom {
-                description = 'Java SDK for Mangopay'
-                name = 'mangopay2-java-sdk'
-                url = 'https://github.com/Mangopay/mangopay2-java-sdk'
-                organization {
-                    name = 'Codegile'
-                    url = 'https://www.codegile.com'
-                }
-                licenses {
-                    license {
-                        name = 'MIT License'
-                        url = 'http://www.opensource.org/licenses/mit-license.php'
-                        distribution = 'repo'
-                    }
-                }
-                scm {
-                    url = 'git@github.com:mangopay/mangopay2-java-sdk.git'
-                    connection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-                    developerConnection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-                }
-
-                developers {
-                    developer {
-                        id = 'cata.craciun'
-                        name = 'Catalin Craciun'
-                        email = 'catalin.craciun@codegile.com'
-                    }
+publishing.publications {
+    mavenJava(MavenPublication) {
+        pom {
+            description = 'Java SDK for Mangopay'
+            name = 'mangopay2-java-sdk'
+            url = 'https://github.com/Mangopay/mangopay2-java-sdk'
+            organization {
+                name = 'Codegile'
+                url = 'https://www.codegile.com'
+            }
+            licenses {
+                license {
+                    name = 'MIT License'
+                    url = 'http://www.opensource.org/licenses/mit-license.php'
+                    distribution = 'repo'
                 }
             }
-            groupId 'com.mangopay'
-            artifactId 'mangopay2-java-sdk'
-            version '2.8.0'
-
-            from components.java
-
-            artifact(sourceJar) {
-                classifier = 'sources'
+            scm {
+                url = 'git@github.com:mangopay/mangopay2-java-sdk.git'
+                connection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+                developerConnection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
             }
+
+            developers {
+                developer {
+                    id = 'cata.craciun'
+                    name = 'Catalin Craciun'
+                    email = 'catalin.craciun@codegile.com'
+                }
+            }
+        }
+        groupId 'com.mangopay'
+        artifactId 'mangopay2-java-sdk'
+        version '2.8.0'
+
+        from components.java
+
+        artifact(sourceJar) {
+            classifier = 'sources'
         }
     }
 }
