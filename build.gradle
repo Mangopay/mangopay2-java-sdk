@@ -39,7 +39,7 @@ sourceCompatibility = '1.7'
 if (project.hasProperty('signing.keyId')) {
     apply plugin: 'signing'
     signing {
-        sign publishing.publications
+        sign publishing.publications.mavenJava
     }
 }
 
@@ -112,18 +112,6 @@ nexusStaging {
     username = sonatypeUsername
     password = sonatypePassword
     delayBetweenRetriesInMillis = 10000
-}
-
-model {
-    tasks.generatePomFileForMavenJavaPublication {
-        destination = file("$buildDir/generated-pom.xml")
-    }
-    tasks.publishMavenJavaPublicationToMavenLocal {
-        dependsOn project.tasks.signArchives
-    }
-    tasks.publishMavenJavaPublicationToMavenRepository {
-        dependsOn project.tasks.signArchives
-    }
 }
 
 task updatePropertiesFile {
