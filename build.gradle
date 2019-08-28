@@ -99,8 +99,8 @@ tasks.withType(Javadoc) {
 nexusPublishing {
     repositories {
         nexus {
-            nexusUrl = uri('https://oss.sonatype.org/service/local/staging/deploy/maven2')
-            snapshotRepositoryUrl = uri('https://oss.sonatype.org/content/repositories/snapshots')
+            nexusUrl = uri('https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+            snapshotRepositoryUrl = uri('https://oss.sonatype.org/content/repositories/snapshots/')
             username = System.getenv('SONATYPE_PASSWORD')
             password = System.getenv('SONATYPE_PASSWORD')
         }
