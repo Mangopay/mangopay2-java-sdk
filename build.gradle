@@ -1,16 +1,8 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.0"
-    }
+plugins {
+    id 'java'
+    id "de.marcphilipp.nexus-publish" version "0.3.1"
+    id 'io.codearte.nexus-staging' version '0.21.0'
 }
-
-apply plugin: 'java'
-apply plugin: 'maven-publish'
-apply plugin: 'io.codearte.nexus-staging'
 
 repositories {
     mavenCentral()
@@ -47,62 +39,55 @@ artifacts {
 
 group = 'com.mangopay'
 version = '2.8.0'
-sourceCompatibility = '1.8'
+sourceCompatibility = '1.7'
 
 if (project.hasProperty('signing.keyId')) {
     apply plugin: 'signing'
     signing {
-        sign configurations.archives
+        sign publishing.publications
     }
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            customizePom(pom)
+            pom {
+                description = 'Java SDK for Mangopay'
+                name = 'mangopay2-java-sdk'
+                url = 'https://github.com/Mangopay/mangopay2-java-sdk'
+                organization {
+                    name = 'Codegile'
+                    url = 'https://www.codegile.com'
+                }
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                        distribution = 'repo'
+                    }
+                }
+                scm {
+                    url = 'git@github.com:mangopay/mangopay2-java-sdk.git'
+                    connection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+                    developerConnection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+                }
+
+                developers {
+                    developer {
+                        id = 'cata.craciun'
+                        name = 'Catalin Craciun'
+                        email = 'catalin.craciun@codegile.com'
+                    }
+                }
+            }
             groupId 'com.mangopay'
             artifactId 'mangopay2-java-sdk'
             version '2.8.0'
 
             from components.java
 
-            // create the sign pom artifact
-            pom.withXml {
-                def pomFile = file("${project.buildDir}/generated-pom.xml")
-                writeTo(pomFile)
-                def pomAscFile = signing.sign(pomFile).signatureFiles[0]
-                artifact(pomAscFile) {
-                    classifier = null
-                    extension = 'pom.asc'
-                }
-            }
-
             artifact(sourceJar) {
                 classifier = 'sources'
-            }
-
-            if (project.hasProperty('signing.keyId')) {
-                // create the signed artifacts
-                project.tasks.signArchives.signatureFiles.each {
-                    artifact(it) {
-                        def matcher = it.file =~ /-(sources)\.jar\.asc$/
-                        if (matcher.find()) {
-                            classifier = matcher.group(1)
-                        } else {
-                            classifier = null
-                        }
-                        extension = 'jar.asc'
-                    }
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-            credentials {
-                username = System.getenv('SONATYPE_USERNAME')
-                password = System.getenv('SONATYPE_PASSWORD')
             }
         }
     }
@@ -113,56 +98,21 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 
-nexusStaging {
-    packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
-    stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup"
-    username = System.getenv('SONATYPE_USERNAME')
-    password = System.getenv('SONATYPE_PASSWORD')
-    delayBetweenRetriesInMillis = 10000
-}
-
-def customizePom(pom) {
-    pom.withXml {
-        def root = asNode()
-
-        // eliminate test-scoped dependencies (no need in maven central POMs)
-        root.dependencies.removeAll { dep ->
-            dep.scope == "test"
-        }
-
-        // add all items necessary for maven central publication
-        root.children().last() + {
-            resolveStrategy = Closure.DELEGATE_FIRST
-
-            description 'Java SDK for Mangopay'
-            name 'mangopay2-java-sdk'
-            url 'https://github.com/Mangopay/mangopay2-java-sdk'
-            organization {
-                name 'Codegile'
-                url 'https://www.codegile.com'
-            }
-            licenses {
-                license {
-                    name 'MIT License'
-                    url 'http://www.opensource.org/licenses/mit-license.php'
-                    distribution 'repo'
-                }
-            }
-            scm {
-                url 'git@github.com:mangopay/mangopay2-java-sdk.git'
-                connection 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-                developerConnection 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-            }
-
-            developers {
-                developer {
-                    id 'cata.craciun'
-                    name 'Catalin Craciun'
-                    email 'catalin.craciun@codegile.com'
-                }
-            }
+nexusPublishing {
+    repositories {
+        sonatype {
+            username = System.getenv('SONATYPE_PASSWORD')
+            password = System.getenv('SONATYPE_PASSWORD')
         }
     }
+}
+
+nexusStaging {
+    packageGroup = rootProject.nexusStaging.packageGroup
+    stagingProfileId = rootProject.nexusStaging.stagingProfileId
+    username = rootProject.nexusStaging.username
+    password = rootProject.nexusStaging.password
+    delayBetweenRetriesInMillis = 10000
 }
 
 model {
