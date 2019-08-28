@@ -48,47 +48,52 @@ if (project.hasProperty('signing.keyId')) {
     }
 }
 
-apply plugin: 'maven-publish'
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                description = 'Java SDK for Mangopay'
+                name = 'mangopay2-java-sdk'
+                url = 'https://github.com/Mangopay/mangopay2-java-sdk'
+                organization {
+                    name = 'Codegile'
+                    url = 'https://www.codegile.com'
+                }
+                licenses {
+                    license {
+                        name = 'MIT License'
+                        url = 'http://www.opensource.org/licenses/mit-license.php'
+                        distribution = 'repo'
+                    }
+                }
+                scm {
+                    url = 'git@github.com:mangopay/mangopay2-java-sdk.git'
+                    connection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+                    developerConnection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
+                }
 
-publishing.publications {
-    mavenJava(MavenPublication) {
-        pom {
-            description = 'Java SDK for Mangopay'
-            name = 'mangopay2-java-sdk'
-            url = 'https://github.com/Mangopay/mangopay2-java-sdk'
-            organization {
-                name = 'Codegile'
-                url = 'https://www.codegile.com'
-            }
-            licenses {
-                license {
-                    name = 'MIT License'
-                    url = 'http://www.opensource.org/licenses/mit-license.php'
-                    distribution = 'repo'
+                developers {
+                    developer {
+                        id = 'cata.craciun'
+                        name = 'Catalin Craciun'
+                        email = 'catalin.craciun@codegile.com'
+                    }
                 }
             }
-            scm {
-                url = 'git@github.com:mangopay/mangopay2-java-sdk.git'
-                connection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-                developerConnection = 'scm:git:git@github.com:mangopay/mangopay2-java-sdk.git'
-            }
 
-            developers {
-                developer {
-                    id = 'cata.craciun'
-                    name = 'Catalin Craciun'
-                    email = 'catalin.craciun@codegile.com'
-                }
-            }
+            groupId 'com.mangopay'
+            artifactId 'mangopay2-java-sdk'
+            version '2.8.0'
+
+            from(components.java)
         }
-        groupId 'com.mangopay'
-        artifactId 'mangopay2-java-sdk'
-        version '2.8.0'
-
-        from components.java
-
-        artifact(sourceJar) {
-            classifier = 'sources'
+    }
+    repositories {
+        maven {
+            credentials{
+                username = System.getenv('SONATYPE_PASSWORD')
+                password = System.getenv('SONATYPE_PASSWORD')
+            }
         }
     }
 }
@@ -100,19 +105,14 @@ tasks.withType(Javadoc) {
 
 nexusPublishing {
     repositories {
-        nexus {
-            nexusUrl = uri('https://oss.sonatype.org/service/local/staging/deploy/maven2/')
-            snapshotRepositoryUrl = uri('https://oss.sonatype.org/content/repositories/snapshots/')
-            username = System.getenv('SONATYPE_PASSWORD')
-            password = System.getenv('SONATYPE_PASSWORD')
-        }
+        sonatype()
     }
 }
 
 nexusStaging {
     packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
-    stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup"
-    username = System.getenv('SONATYPE_USERNAME')
+    stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup
+    username = System.getenv('SONATYPE_PASSWORD')
     password = System.getenv('SONATYPE_PASSWORD')
     delayBetweenRetriesInMillis = 10000
 }
