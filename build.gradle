@@ -101,8 +101,8 @@ publishing {
         maven {
             url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
             credentials {
-                username System.getenv('SONATYPE_USERNAME')
-                password System.getenv('SONATYPE_PASSWORD')
+                username = project.nexusUsername
+                password = project.nexusPassword
             }
         }
     }
@@ -116,8 +116,8 @@ tasks.withType(Javadoc) {
 nexusStaging {
     packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
     stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup"
-    username = System.getenv('SONATYPE_USERNAME')
-    password = System.getenv('SONATYPE_PASSWORD')
+    username = project.nexusUsername
+    password = project.nexusPassword
     delayBetweenRetriesInMillis = 10000
 }
 
