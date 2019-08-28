@@ -28,13 +28,8 @@ test {
 }
 
 task sourceJar(type: Jar) {
-    classifier "sources"
+    archiveClassifier = "sources"
     from sourceSets.main.allJava
-}
-
-
-artifacts {
-    archives jar
 }
 
 group = 'com.mangopay'
@@ -112,9 +107,23 @@ tasks.withType(Javadoc) {
 nexusStaging {
     packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
     stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup
-    username = System.getenv('SONATYPE_PASSWORD')
-    password = System.getenv('SONATYPE_PASSWORD')
+    def sonatypeUsername = System.getenv('SONATYPE_PASSWORD')
+    def sonatypePassword = System.getenv('SONATYPE_PASSWORD')
+    username = sonatypeUsername
+    password = sonatypePassword
     delayBetweenRetriesInMillis = 10000
+}
+
+model {
+    tasks.generatePomFileForMavenJavaPublication {
+        destination = file("$buildDir/generated-pom.xml")
+    }
+    tasks.publishMavenJavaPublicationToMavenLocal {
+        dependsOn project.tasks.signArchives
+    }
+    tasks.publishMavenJavaPublicationToMavenRepository {
+        dependsOn project.tasks.signArchives
+    }
 }
 
 task updatePropertiesFile {
