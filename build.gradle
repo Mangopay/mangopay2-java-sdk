@@ -116,19 +116,6 @@ nexusStaging {
     delayBetweenRetriesInMillis = 10000
 }
 
-model {
-    tasks.generatePomFileForMavenJavaPublication {
-        destination = file("$buildDir/generated-pom.xml")
-    }
-    tasks.publishMavenJavaPublicationToMavenLocal {
-        dependsOn project.tasks.signArchives
-    }
-    tasks.publishMavenJavaPublicationToMavenRepository {
-        dependsOn project.tasks.signArchives
-    }
-}
-
-
 task updatePropertiesFile {
     doLast {
         logger.quiet('Update Mangopay Properties File')
