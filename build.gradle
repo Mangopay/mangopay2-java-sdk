@@ -45,6 +45,15 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             pom {
+                groupId 'com.mangopay'
+                artifactId 'mangopay2-java-sdk'
+                version '2.8.0'
+
+                from(components.java)
+
+                artifact sourceJar
+                artifact javadocJar
+
                 description = 'Java SDK for Mangopay'
                 name = 'mangopay2-java-sdk'
                 url = 'https://github.com/Mangopay/mangopay2-java-sdk'
@@ -73,16 +82,6 @@ publishing {
                     }
                 }
             }
-
-            groupId 'com.mangopay'
-            artifactId 'mangopay2-java-sdk'
-            version '2.8.0'
-
-            from(components.java)
-
-            artifact sourcesJar
-            artifact javadocJar
-
         }
     }
     repositories {
