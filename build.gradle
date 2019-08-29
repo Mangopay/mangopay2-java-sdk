@@ -105,7 +105,8 @@ nexusPublishing {
             nexusUrl = uri('https://oss.sonatype.org/service/local/staging/deploy/maven2/')
             snapshotRepositoryUrl = uri('https://oss.sonatype.org/content/repositories/snapshots/')
             if(project.hasProperty("nexusUsername")){
-                logger.quiet("${project.nexusUsername}")
+                username = project.nexusUsername
+                password = project.nexusPassword
             }
         }
     }
@@ -114,6 +115,10 @@ nexusPublishing {
 nexusStaging {
     packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
     stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup
+    if(project.hasProperty("nexusUsername")){
+        username = project.nexusUsername
+        password = project.nexusPassword
+    }
     delayBetweenRetriesInMillis = 10000
 }
 
