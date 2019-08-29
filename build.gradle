@@ -2,7 +2,6 @@ plugins {
     id 'java'
     id 'maven-publish'
     id 'io.codearte.nexus-staging' version '0.21.0'
-    id "de.marcphilipp.nexus-publish" version "0.3.0"
 }
 
 repositories {
@@ -85,6 +84,17 @@ publishing {
             }
         }
     }
+    repositories {
+        maven {
+            url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+            if (project.hasProperty("nexusUsername")) {
+                credentials {
+                    username = project.nexusUsername
+                    password = project.nexusPassword
+                }
+            }
+        }
+    }
 }
 
 if (project.hasProperty('signing.keyId')) {
@@ -99,23 +109,10 @@ tasks.withType(Javadoc) {
     options.addStringOption('charSet', 'UTF-8')
 }
 
-nexusPublishing {
-    repositories {
-        nexus {
-            nexusUrl = uri('https://oss.sonatype.org/service/local/staging/deploy/maven2/')
-            snapshotRepositoryUrl = uri('https://oss.sonatype.org/content/repositories/snapshots/')
-            if(project.hasProperty("nexusUsername")){
-                username = project.nexusUsername
-                password = project.nexusPassword
-            }
-        }
-    }
-}
-
 nexusStaging {
     packageGroup = "com.mangopay" // optional if packageGroup == project.getGroup()
     stagingProfileId = "2be9f53d7db009" // when not defined will be got from server using "packageGroup
-    if(project.hasProperty("nexusUsername")){
+    if (project.hasProperty("nexusUsername")) {
         username = project.nexusUsername
         password = project.nexusPassword
     }
