@@ -41,7 +41,7 @@ public class ClientApiImpl extends ApiBase implements ClientApi {
 
     @Override
     public Client get() throws Exception {
-        return this.getObject(Client.class, "client_get", null);
+        return this.getObject(Client.class, "client_get");
     }
 
     @Override

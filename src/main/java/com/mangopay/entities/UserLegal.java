@@ -93,6 +93,12 @@ public class UserLegal extends User {
     private String shareholderDeclaration;
 
     /**
+     * Company number.
+     */
+    @SerializedName("CompanyNumber")
+    private String companyNumber;
+
+    /**
      * Instantiates new UserLegal object.
      */
     public UserLegal() {
@@ -201,6 +207,13 @@ public class UserLegal extends User {
 
     public void setShareholderDeclaration(String shareholderDeclaration) {
         this.shareholderDeclaration = shareholderDeclaration;
+    }
+    public String getCompanyNumber() {
+        return companyNumber;
+    }
+
+    public void setCompanyNumber(String companyNumber) {
+        this.companyNumber = companyNumber;
     }
 
     /**

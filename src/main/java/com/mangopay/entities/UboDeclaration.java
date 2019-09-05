@@ -1,12 +1,12 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.DeclaredUbo;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.UboDeclarationStatus;
-import com.mangopay.core.enumerations.UboDeclarationRefusedReasonType;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * UBO declaration entity.
@@ -14,11 +14,10 @@ import java.util.ArrayList;
 public class UboDeclaration extends EntityBase {
 
     /**
-     * Owner's user ID.
-     * Non-null, cannot be updated after creating declaration.
+     * Date of process.
      */
-    @SerializedName("UserId")
-    private String userId;
+    @SerializedName("ProcessedDate")
+    private int processedDate;
 
     /**
      * Declaration status.
@@ -27,29 +26,33 @@ public class UboDeclaration extends EntityBase {
     private UboDeclarationStatus status;
 
     /**
-     * List of reasons why the declaration was refused.
+     * Reason why the declaration was refused.
      */
-    @SerializedName("RefusedReasonTypes")
-    private ArrayList<UboDeclarationRefusedReasonType> refusedReasonTypes;
+    @SerializedName("Reason")
+    private String reason;
 
     /**
      * Explanation of why the declaration was refused.
      */
-    @SerializedName("RefusedReasonMessage")
-    private String refusedReasonMessage;
+    @SerializedName("Message")
+    private String message;
 
     /**
      * Listed representations of natural users declared as UBOs.
+     * When transmitting a UBO declaration (POST / PUT), must be an array of
+     * IDs (string) of the users to be declared as UBOs.
+     * In a received UBO declaration (GET), will be an array of representations
+     * of the natural users declared as UBOs.
      */
-    @SerializedName("DeclaredUBOs")
-    private ArrayList<DeclaredUbo> declaredUbos;
+    @SerializedName("Ubos")
+    private ArrayList<Ubo> ubos = new ArrayList<>();
 
-    public String getUserId() {
-        return userId;
+    public int getProcessedDate() {
+        return processedDate;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setProcessedDate(int processedDate) {
+        this.processedDate = processedDate;
     }
 
     public UboDeclarationStatus getStatus() {
@@ -60,37 +63,50 @@ public class UboDeclaration extends EntityBase {
         this.status = status;
     }
 
-    public ArrayList<UboDeclarationRefusedReasonType> getRefusedReasonTypes() {
-        return refusedReasonTypes;
+    public String getReason() {
+        return reason;
     }
 
-    public void setRefusedReasonTypes(ArrayList<UboDeclarationRefusedReasonType> refusedReasonTypes) {
-        this.refusedReasonTypes = refusedReasonTypes;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
-    public String getRefusedReasonMessage() {
-        return refusedReasonMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setRefusedReasonMessage(String refusedReasonMessage) {
-        this.refusedReasonMessage = refusedReasonMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public ArrayList<DeclaredUbo> getDeclaredUbos() {
-        return declaredUbos;
+    public ArrayList<Ubo> getUbos() {
+        return ubos;
     }
 
-    public void setDeclaredUbos(ArrayList<DeclaredUbo> declaredUbos) {
-        this.declaredUbos = declaredUbos;
+    public void setUbos(ArrayList<Ubo> ubos) {
+        this.ubos = ubos;
     }
 
     @Override
     public ArrayList<String> getReadOnlyProperties() {
         ArrayList<String> props = super.getReadOnlyProperties();
 
-        props.add("RefusedReasonTypes");
-        props.add("RefusedReasonMessage");
+        props.add("ProcessedDate");
+        props.add("Reason");
+        props.add("Message");
 
         return props;
     }
+
+    @Override
+    public Map<String, Type> getSubObjects() {
+
+        Map<String, Type> result = super.getSubObjects();
+
+        result.put("Ubos", Ubo.class);
+
+        return result;
+    }
+
+
 }

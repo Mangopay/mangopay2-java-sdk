@@ -31,7 +31,8 @@ public class UserApiImplTest extends BaseTest {
     public void createLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
         assertTrue(matrix.getId().length() > 0);
-        assertTrue(matrix.getPersonType().equals(PersonType.LEGAL));
+        assertEquals(matrix.getPersonType(), PersonType.LEGAL);
+        assertEquals("LU12345678", matrix.getCompanyNumber());
     }
 
     @Test
@@ -69,6 +70,7 @@ public class UserApiImplTest extends BaseTest {
         user.setLegalRepresentativeNationality(CountryIso.FR);
         user.setLegalRepresentativeCountryOfResidence(CountryIso.FR);
         user.setEmail("email@email.org");
+        user.setCompanyNumber("LU12345678");
 
         User ret = null;
 
@@ -538,8 +540,14 @@ public class UserApiImplTest extends BaseTest {
     @Test
     public void getUserEMoney() throws Exception {
         User john = getJohn();
+        String year = "2019";
+        String month = "04";
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), year);
 
-        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId());
+        assertNotNull(eMoney);
+        assertEquals(eMoney.getUserId(), john.getId());
+
+        eMoney = this.api.getUserApi().getEMoney(john.getId(), year, month);
 
         assertNotNull(eMoney);
         assertEquals(eMoney.getUserId(), john.getId());
@@ -566,8 +574,15 @@ public class UserApiImplTest extends BaseTest {
 
     private void getUserEMoney(CurrencyIso currencySentInRequest, CurrencyIso currencyExpected) throws Exception {
         User john = getJohn();
+        String year = "2019";
+        String month = "04";
+        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), year, currencySentInRequest);
 
-        EMoney eMoney = this.api.getUserApi().getEMoney(john.getId(), currencySentInRequest);
+        assertNotNull(eMoney);
+        assertEquals(john.getId(), eMoney.getUserId());
+        assertEquals(currencyExpected, eMoney.getCreditedEMoney().getCurrency());
+
+        eMoney = this.api.getUserApi().getEMoney(john.getId(), year, month, currencySentInRequest);
 
         assertNotNull(eMoney);
         assertEquals(john.getId(), eMoney.getUserId());

@@ -7,12 +7,12 @@ if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ] && [ "$TRAVIS_PULL_R
 
   echo -e "Starting publish to Sonatype...\n"
 
-  ./gradlew uploadArchives -PnexusUsername="${SONATYPE_USERNAME}" -PnexusPassword="${SONATYPE_PASSWORD}" -Psigning.keyId=93605ADB -Psigning.password="${SIGNING_PASSWORD}" -Psigning.secretKeyRingFile=.utility/signingkey.gpg
+  ./gradlew publish -PnexusUsername="${SONATYPE_USERNAME}" -PnexusPassword="${SONATYPE_PASSWORD}" -Psigning.keyId=93605ADB -Psigning.password="${SIGNING_PASSWORD}" -Psigning.secretKeyRingFile=.utility/signingkey.gpg
   RETVAL=$?
 
   if [ $RETVAL -eq 0 ]; then
     echo 'Completed publish!'
-    ./gradlew closeAndPromoteRepository
+    ./gradlew closeAndReleaseRepository
   else
     echo 'Publish failed.'
   fi
