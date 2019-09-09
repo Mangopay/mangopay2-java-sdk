@@ -2,8 +2,8 @@ package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
-import com.mangopay.core.interfaces.BankAccountDetails;
 import com.mangopay.core.enumerations.CountryIso;
+import com.mangopay.core.interfaces.BankAccountDetails;
 
 /**
  * Class represents OTHER type of bank account.

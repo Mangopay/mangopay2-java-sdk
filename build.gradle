@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7'
-    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.code.gson:gson:2.8.5'
     compile 'commons-codec:commons-codec:1.8'
 
     testCompile 'junit:junit:4.12'
@@ -38,7 +38,7 @@ task javadocJar(type: Jar) {
 }
 
 group = 'com.mangopay'
-version = '2.8.0'
+version = '2.8.1'
 sourceCompatibility = '1.7'
 
 publishing {
@@ -47,7 +47,7 @@ publishing {
             pom {
                 groupId 'com.mangopay'
                 artifactId 'mangopay2-java-sdk'
-                version '2.8.0'
+                version '2.8.1'
 
                 from(components.java)
 

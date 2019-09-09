@@ -200,87 +200,78 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createBankAccountGB() {
-        try {
-            UserNatural john = this.getJohn();
-            BankAccount account = new BankAccount();
-            account.setOwnerName(john.getFirstName() + " " + john.getLastName());
-            account.setOwnerAddress(john.getAddress());
-            account.setDetails(new BankAccountDetailsGB());
-            ((BankAccountDetailsGB) account.getDetails()).setAccountNumber("63956474");
-            ((BankAccountDetailsGB) account.getDetails()).setSortCode("200000");
+    public void createBankAccountGB() throws Exception {
+        UserNatural john = this.getJohn();
+        BankAccount account = new BankAccount();
+        account.setType(BankAccountType.GB);
+        account.setOwnerName(john.getFirstName() + " " + john.getLastName());
+        account.setOwnerAddress(john.getAddress());
+        account.setDetails(new BankAccountDetailsGB());
+        ((BankAccountDetailsGB) account.getDetails()).setAccountNumber("63956474");
+        ((BankAccountDetailsGB) account.getDetails()).setSortCode("200000");
+        account.setType(BankAccountType.GB);
+        BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
 
-            BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
-
-            assertTrue(createAccount.getId().length() > 0);
-            assertTrue(createAccount.getUserId().equals(john.getId()));
-            assertTrue(createAccount.getType() == BankAccountType.GB);
-            assertTrue(((BankAccountDetailsGB) createAccount.getDetails()).getAccountNumber().equals("63956474"));
-            assertTrue(((BankAccountDetailsGB) createAccount.getDetails()).getSortCode().equals("200000"));
-        } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
-        }
+        assertTrue(createAccount.getId().length() > 0);
+        assertEquals(createAccount.getUserId(), john.getId());
+        assertSame(createAccount.getType(), BankAccountType.GB);
+        assertEquals("63956474", ((BankAccountDetailsGB) createAccount.getDetails()).getAccountNumber());
+        assertEquals("200000", ((BankAccountDetailsGB) createAccount.getDetails()).getSortCode());
     }
 
     @Test
-    public void createBankAccountUS() {
-        try {
-            UserNatural john = this.getJohn();
-            BankAccount account = new BankAccount();
-            account.setOwnerName(john.getFirstName() + " " + john.getLastName());
-            account.setOwnerAddress(john.getAddress());
-            account.setDetails(new BankAccountDetailsUS());
-            ((BankAccountDetailsUS) account.getDetails()).setAccountNumber("234234234234");
-            ((BankAccountDetailsUS) account.getDetails()).setAba("234334789");
+    public void createBankAccountUS() throws Exception {
+        UserNatural john = this.getJohn();
+        BankAccount account = new BankAccount();
+        account.setType(BankAccountType.US);
+        account.setOwnerName(john.getFirstName() + " " + john.getLastName());
+        account.setOwnerAddress(john.getAddress());
+        account.setDetails(new BankAccountDetailsUS());
+        ((BankAccountDetailsUS) account.getDetails()).setAccountNumber("234234234234");
+        ((BankAccountDetailsUS) account.getDetails()).setAba("234334789");
 
-            BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
+        BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
 
-            assertTrue(createAccount.getId().length() > 0);
-            assertTrue(createAccount.getUserId().equals(john.getId()));
-            assertTrue(createAccount.getType() == BankAccountType.US);
-            assertTrue(((BankAccountDetailsUS) createAccount.getDetails()).getAccountNumber().equals("234234234234"));
-            assertTrue(((BankAccountDetailsUS) createAccount.getDetails()).getAba().equals("234334789"));
-            assertTrue(((BankAccountDetailsUS) createAccount.getDetails()).getDepositAccountType().equals(DepositAccountType.CHECKING));
+        assertTrue(createAccount.getId().length() > 0);
+        assertEquals(createAccount.getUserId(), john.getId());
+        assertSame(createAccount.getType(), BankAccountType.US);
+        assertEquals("234234234234", ((BankAccountDetailsUS) createAccount.getDetails()).getAccountNumber());
+        assertEquals("234334789", ((BankAccountDetailsUS) createAccount.getDetails()).getAba());
+        assertEquals(((BankAccountDetailsUS) createAccount.getDetails()).getDepositAccountType(), DepositAccountType.CHECKING);
 
-            ((BankAccountDetailsUS) account.getDetails()).setDepositAccountType(DepositAccountType.SAVINGS);
-            BankAccount createAccountSavings = this.api.getUserApi().createBankAccount(john.getId(), account);
+        ((BankAccountDetailsUS) account.getDetails()).setDepositAccountType(DepositAccountType.SAVINGS);
+        BankAccount createAccountSavings = this.api.getUserApi().createBankAccount(john.getId(), account);
 
-            assertTrue(createAccountSavings.getId().length() > 0);
-            assertTrue(createAccountSavings.getUserId().equals(john.getId()));
-            assertTrue(createAccountSavings.getType() == BankAccountType.US);
-            assertTrue(((BankAccountDetailsUS) createAccountSavings.getDetails()).getAccountNumber().equals("234234234234"));
-            assertTrue(((BankAccountDetailsUS) createAccountSavings.getDetails()).getAba().equals("234334789"));
-            assertTrue(((BankAccountDetailsUS) createAccountSavings.getDetails()).getDepositAccountType().equals(DepositAccountType.SAVINGS));
-        } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
-        }
+        assertTrue(createAccountSavings.getId().length() > 0);
+        assertEquals(createAccountSavings.getUserId(), john.getId());
+        assertSame(createAccountSavings.getType(), BankAccountType.US);
+        assertEquals("234234234234", ((BankAccountDetailsUS) createAccountSavings.getDetails()).getAccountNumber());
+        assertEquals("234334789", ((BankAccountDetailsUS) createAccountSavings.getDetails()).getAba());
+        assertEquals(((BankAccountDetailsUS) createAccountSavings.getDetails()).getDepositAccountType(), DepositAccountType.SAVINGS);
     }
 
     @Test
-    public void createBankAccountCA() {
-        try {
-            UserNatural john = this.getJohn();
-            BankAccount account = new BankAccount();
-            account.setOwnerName(john.getFirstName() + " " + john.getLastName());
-            account.setOwnerAddress(john.getAddress());
-            account.setDetails(new BankAccountDetailsCA());
-            ((BankAccountDetailsCA) account.getDetails()).setBankName("TestBankName");
-            ((BankAccountDetailsCA) account.getDetails()).setBranchCode("12345");
-            ((BankAccountDetailsCA) account.getDetails()).setAccountNumber("234234234234");
-            ((BankAccountDetailsCA) account.getDetails()).setInstitutionNumber("123");
+    public void createBankAccountCA() throws Exception {
+        UserNatural john = this.getJohn();
+        BankAccount account = new BankAccount();
+        account.setType(BankAccountType.CA);
+        account.setOwnerName(john.getFirstName() + " " + john.getLastName());
+        account.setOwnerAddress(john.getAddress());
+        account.setDetails(new BankAccountDetailsCA());
+        ((BankAccountDetailsCA) account.getDetails()).setBankName("TestBankName");
+        ((BankAccountDetailsCA) account.getDetails()).setBranchCode("12345");
+        ((BankAccountDetailsCA) account.getDetails()).setAccountNumber("234234234234");
+        ((BankAccountDetailsCA) account.getDetails()).setInstitutionNumber("123");
 
-            BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
+        BankAccount createAccount = this.api.getUserApi().createBankAccount(john.getId(), account);
 
-            assertTrue(createAccount.getId().length() > 0);
-            assertTrue(createAccount.getUserId().equals(john.getId()));
-            assertTrue(createAccount.getType() == BankAccountType.CA);
-            assertTrue(((BankAccountDetailsCA) createAccount.getDetails()).getAccountNumber().equals("234234234234"));
-            assertTrue(((BankAccountDetailsCA) createAccount.getDetails()).getBankName().equals("TestBankName"));
-            assertTrue(((BankAccountDetailsCA) createAccount.getDetails()).getBranchCode().equals("12345"));
-            assertTrue(((BankAccountDetailsCA) createAccount.getDetails()).getInstitutionNumber().equals("123"));
-        } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
-        }
+        assertTrue(createAccount.getId().length() > 0);
+        assertEquals(createAccount.getUserId(), john.getId());
+        assertSame(createAccount.getType(), BankAccountType.CA);
+        assertEquals("234234234234", ((BankAccountDetailsCA) createAccount.getDetails()).getAccountNumber());
+        assertEquals("TestBankName", ((BankAccountDetailsCA) createAccount.getDetails()).getBankName());
+        assertEquals("12345", ((BankAccountDetailsCA) createAccount.getDetails()).getBranchCode());
+        assertEquals("123", ((BankAccountDetailsCA) createAccount.getDetails()).getInstitutionNumber());
     }
 
     @Test
@@ -320,25 +311,25 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateBankAccount() throws Exception {
-        try {
-            UserNatural john = this.getJohn();
-            BankAccount account = this.getJohnsAccount();
+        UserNatural john = this.getJohn();
+        BankAccount account = this.getJohnsAccount();
 
-            assertTrue(account.getId().length() > 0);
-            assertTrue(account.getUserId().equals(john.getId()));
+        assertTrue(account.getId().length() > 0);
+        assertTrue(account.getUserId().equals(john.getId()));
 
-            // disactivate bank account
-            BankAccount disactivateBankAccount = new BankAccount();
-            disactivateBankAccount.setActive(false);
+        // disactivate bank account
+        BankAccount disactivateBankAccount = new BankAccount();
+        disactivateBankAccount.setActive(false);
+        disactivateBankAccount.setType(BankAccountType.IBAN);
+        BankAccountDetailsIBAN bankAccountDetails = new BankAccountDetailsIBAN();
+        bankAccountDetails.setIban("FR7618829754160173622224154");
+        bankAccountDetails.setBic("CMBRFR2BCME");
+        disactivateBankAccount.setDetails(bankAccountDetails);
+        BankAccount result = this.api.getUserApi().updateBankAccount(john.getId(), disactivateBankAccount, account.getId());
 
-            BankAccount result = this.api.getUserApi().updateBankAccount(john.getId(), disactivateBankAccount, account.getId());
-
-            assertNotNull(result);
-            assertTrue(account.getId().equals(result.getId()));
-            assertFalse(result.isActive());
-        } catch (Exception ex) {
-            Assert.fail(ex.getMessage());
-        }
+        assertNotNull(result);
+        assertEquals(account.getId(), result.getId());
+        assertFalse(result.isActive());
     }
 
     @Test

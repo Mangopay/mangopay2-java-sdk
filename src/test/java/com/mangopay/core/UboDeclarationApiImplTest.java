@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
  */
 public class UboDeclarationApiImplTest extends BaseTest {
 
-    /*@Test
+    @Test
     public void createUboDeclaration() throws Exception {
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
 
@@ -52,16 +52,18 @@ public class UboDeclarationApiImplTest extends BaseTest {
     @Test
     public void createUbo() throws Exception {
         Ubo ubo=this.createNewUboForMatrix();
-        Ubo newUbo=this.getMatrixUbo();
+        UserLegal matrix = this.getMatrix();
+        UboDeclaration uboDeclaration = this.getMatrixUboDeclaration();
+        Ubo newUbo = api.getUboDeclarationApi().createUbo(matrix.getId(), uboDeclaration.getId(), ubo);
 
         assertNotNull(newUbo);
         assertNotNull(newUbo.getId());
         assertEquals(ubo.getFirstName(),newUbo.getFirstName());
         assertEquals(ubo.getLastName(), newUbo.getLastName());
-        assertEquals(ubo.getAddress(),newUbo.getAddress());
+        assertEquals(ubo.getAddress().getAddressLine1(), newUbo.getAddress().getAddressLine1());
         assertEquals(ubo.getNationality(), newUbo.getNationality());
         assertEquals(ubo.getBirthday(),newUbo.getBirthday());
-        assertEquals(ubo.getBirthplace(), newUbo.getBirthplace());
+        assertEquals(ubo.getBirthplace().getCity(), newUbo.getBirthplace().getCity());
     }
 
     @Test
@@ -71,7 +73,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
         Calendar calendar=Calendar.getInstance();
         calendar.set(1991,12,21,0,0,0);
 
-        Ubo toBeUpdated=this.getMatrixUbo();
+        Ubo toBeUpdated = this.getMatrixUbo();
         toBeUpdated.setFirstName("UpdatedFirstName");
         toBeUpdated.setLastName("UpdatedLastName");
         toBeUpdated.getAddress().setAddressLine1("UpdatedLine1");
@@ -83,10 +85,10 @@ public class UboDeclarationApiImplTest extends BaseTest {
 
         assertEquals(toBeUpdated.getFirstName(),ubo.getFirstName());
         assertEquals(toBeUpdated.getLastName(),ubo.getLastName());
-        assertEquals(toBeUpdated.getAddress(),ubo.getAddress());
+        assertEquals(toBeUpdated.getAddress().getAddressLine1(), ubo.getAddress().getAddressLine1());
         assertEquals(toBeUpdated.getNationality(),ubo.getNationality());
         assertEquals(toBeUpdated.getBirthday(),ubo.getBirthday());
-        assertEquals(toBeUpdated.getBirthplace(),ubo.getBirthplace());
+        assertEquals(toBeUpdated.getBirthplace().getCity(), ubo.getBirthplace().getCity());
     }
 
     @Test
@@ -102,20 +104,22 @@ public class UboDeclarationApiImplTest extends BaseTest {
         assertNotNull(fetchedUbo);
         assertEquals(existingUbo.getFirstName(),fetchedUbo.getFirstName());
         assertEquals(existingUbo.getLastName(),fetchedUbo.getLastName());
-        assertEquals(existingUbo.getAddress(),fetchedUbo.getAddress());
+        assertEquals(existingUbo.getAddress().getAddressLine1(), fetchedUbo.getAddress().getAddressLine1());
         assertEquals(existingUbo.getNationality(),fetchedUbo.getNationality());
         assertEquals(existingUbo.getBirthday(), fetchedUbo.getBirthday());
-        assertEquals(existingUbo.getBirthplace(),fetchedUbo.getBirthplace());
+        assertEquals(existingUbo.getBirthplace().getCity(), fetchedUbo.getBirthplace().getCity());
     }
-
+    
     @Test
-    public void submitForValidation() throws Exception {
-        UboDeclaration declaration=this.getMatrixUboDeclaration();
+    public void submitUboDeclaration() throws Exception{
         UserLegal matrix=this.getMatrix();
-
-        UboDeclaration newUboDeclaration=this.api.getUboDeclarationApi().submitForValidation(matrix.getId(),declaration.getId());
-
-        assertEquals(declaration.getId(),newUboDeclaration.getId());
-
-    }*/
+        UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
+        UboDeclaration declaration=this.api.getUboDeclarationApi().get(matrix.getId(),uboDeclaration.getId());
+        
+        UboDeclaration submittedUboDeclaration = this.api.getUboDeclarationApi().submitForValidation(matrix.getId(),uboDeclaration.getId());
+        
+        assertNotNull(submittedUboDeclaration);
+        assertEquals(UboDeclarationStatus.VALIDATION_ASKED,submittedUboDeclaration.getStatus());
+        assertNotNull(submittedUboDeclaration.getId());
+    }
 }

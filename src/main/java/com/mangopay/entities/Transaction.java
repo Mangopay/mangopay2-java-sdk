@@ -240,6 +240,4 @@ public class Transaction extends EntityBase {
 
         return result;
     }
-
-
 }

@@ -1,5 +1,7 @@
 package com.mangopay;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mangopay.core.APIs.*;
 import com.mangopay.core.APIs.implementation.*;
 import com.mangopay.core.AuthorizationTokenManager;
@@ -23,16 +25,17 @@ public class MangoPayApi {
         // default config setup
         setConfig(new Configuration());
         setOAuthTokenManager(new AuthorizationTokenManager(this));
+        GsonBuilder gsonBuilder = new GsonBuilder();
 
         // API managers
         setAuthenticationManager(new OAuthApiImpl(this));
         setClientApi(new ClientApiImpl(this));
-        setUserApi(new UserApiImpl(this));
+        setUserApi(new UserApiImpl(this, gsonBuilder));
         setWalletApi(new WalletApiImpl(this));
-        setPayInApi(new PayInApiImpl(this));
+        setPayInApi(new PayInApiImpl(this, gsonBuilder));
         setPayOutApi(new PayOutApiImpl(this));
         setRefundApi(new RefundApiImpl(this));
-        setTransferApi(new TransferApiImpl(this));
+        setTransferApi(new TransferApiImpl(this, gsonBuilder));
         setCardRegistrationApi(new CardRegistrationApiImpl(this));
         setCardApi(new CardApiImpl(this));
         setEventApi(new EventApiImpl(this));
@@ -40,13 +43,14 @@ public class MangoPayApi {
         setHookApi(new HookApiImpl(this));
         setKycDocumentApi(new KycDocumentApiImpl(this));
         setDisputeApi(new DisputeApiImpl(this));
-        setIdempotencyApi(new IdempotencyApiImpl(this));
+        setIdempotencyApi(new IdempotencyApiImpl(this, gsonBuilder));
         setMandateApi(new MandateApiImpl(this));
         setReportApi(new ReportApiImpl(this));
         setBankingAliasApi(new BankingAliasApiImpl(this));
         setUboDeclarationApi(new UboDeclarationApiImpl(this));
         setRepudiationApi(new RepudiationApiImpl(this));
         setSettlementApi(new SettlementApiImpl(this));
+        setGson(gsonBuilder.create());
     }
 
     ////////////////////////////////////////
@@ -185,6 +189,8 @@ public class MangoPayApi {
      * Provides Settlement methods
      */
     private SettlementApi settlementApi;
+
+    private Gson gson;
 
     /**
      * Gets the rate limit data.
@@ -395,5 +401,13 @@ public class MangoPayApi {
 
     public void setSettlementApi(SettlementApi settlementApi) {
         this.settlementApi = settlementApi;
+    }
+
+    public Gson getGson() {
+        return gson;
+    }
+
+    public void setGson(Gson gson) {
+        this.gson = gson;
     }
 }

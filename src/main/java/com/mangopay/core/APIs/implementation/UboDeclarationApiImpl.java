@@ -8,7 +8,6 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.UboDeclarationStatus;
 import com.mangopay.entities.Ubo;
 import com.mangopay.entities.UboDeclaration;
-import com.mangopay.entities.User;
 
 import java.util.List;
 
@@ -48,12 +47,12 @@ public class UboDeclarationApiImpl extends ApiBase implements UboDeclarationApi 
 
     @Override
     public Ubo updateUbo(String userId, String uboDeclarationId, Ubo ubo) throws Exception {
-        return this.updateObject(Ubo.class,"ubo_update",ubo,userId,uboDeclarationId);
+        return this.updateObject(Ubo.class, "ubo_update", ubo, userId, uboDeclarationId, ubo.getId());
     }
 
     @Override
     public Ubo getUbo(String userId, String uboDeclarationId, String uboId) throws Exception {
-        return this.getObject(Ubo.class,"ubo_get",uboDeclarationId,uboId);
+        return this.getObject(Ubo.class, "ubo_get", userId, uboDeclarationId, uboId);
     }
 
     @Override
