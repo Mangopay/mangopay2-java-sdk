@@ -116,7 +116,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
         UboDeclaration declaration=this.api.getUboDeclarationApi().get(matrix.getId(),uboDeclaration.getId());
         
-        UboDeclaration submittedUboDeclaration = uboDeclaration.submitForValidation(matrix.getId(),uboDeclaration.getId());
+        UboDeclaration submittedUboDeclaration = this.api.getUboDeclarationApi().submitForValidation(matrix.getId(),uboDeclaration.getId());
         
         assertNotNull(submittedUboDeclaration);
         assertEquals(UboDeclarationStatus.CREATED,submittedUboDeclaration.getStatus());
