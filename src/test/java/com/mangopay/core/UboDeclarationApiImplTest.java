@@ -109,4 +109,17 @@ public class UboDeclarationApiImplTest extends BaseTest {
         assertEquals(existingUbo.getBirthday(), fetchedUbo.getBirthday());
         assertEquals(existingUbo.getBirthplace().getCity(), fetchedUbo.getBirthplace().getCity());
     }
+    
+    @Test
+    public void submitUboDeclaration() throws Exception{
+        UserLegal matrix=this.getMatrix();
+        UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
+        UboDeclaration declaration=this.api.getUboDeclarationApi().get(matrix.getId(),uboDeclaration.getId());
+        
+        UboDeclaration submittedUboDeclaration = this.api.getUboDeclarationApi().submitForValidation(matrix.getId(),uboDeclaration.getId());
+        
+        assertNotNull(submittedUboDeclaration);
+        assertEquals(UboDeclarationStatus.VALIDATION_ASKED,submittedUboDeclaration.getStatus());
+        assertNotNull(submittedUboDeclaration.getId());
+    }
 }
