@@ -7,8 +7,8 @@ import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.Validity;
 import com.mangopay.entities.Card;
-import com.mangopay.entities.Transaction;
 import com.mangopay.entities.CardPreAuthorization;
+import com.mangopay.entities.Transaction;
 
 import java.util.List;
 

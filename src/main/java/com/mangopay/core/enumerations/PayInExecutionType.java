@@ -22,5 +22,10 @@ public enum PayInExecutionType {
     /**
      * PREAUTHORIZED execution type.
      */
-    PREAUTHORIZED
+    PREAUTHORIZED,
+
+    /**
+     * EXTERNAL INSTRUCTION execution type.
+     */
+    EXTERNAL_INSTRUCTION
 }

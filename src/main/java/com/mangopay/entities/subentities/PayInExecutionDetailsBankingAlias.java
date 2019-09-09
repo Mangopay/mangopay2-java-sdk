@@ -1,5 +1,6 @@
 package com.mangopay.entities.subentities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.interfaces.PayInExecutionDetails;
 import com.mangopay.entities.DebitedBankAccount;
@@ -16,17 +17,26 @@ public class PayInExecutionDetailsBankingAlias extends Dto implements PayInExecu
     /**
      * ID of the banking alias.
      */
-    public String BankingAliasId;
+    @SerializedName("BankingAliasId")
+    private String BankingAliasId;
 
     /**
      * Wire reference.
      */
-    public String WireReference;
+    @SerializedName("WireReference")
+    private String WireReference;
 
     /**
      * Debited bank account details.
      */
-    public DebitedBankAccount DebitedBankAccount;
+    @SerializedName("DebitedBankAccount")
+    private DebitedBankAccount DebitedBankAccount;
+
+    public PayInExecutionDetailsBankingAlias(String bankingAliasId, String wireReference, com.mangopay.entities.DebitedBankAccount debitedBankAccount) {
+        BankingAliasId = bankingAliasId;
+        WireReference = wireReference;
+        DebitedBankAccount = debitedBankAccount;
+    }
 
     public String getBankingAliasId() {
         return BankingAliasId;

@@ -78,11 +78,11 @@ public class Wallet extends EntityBase {
         this.currency = currency;
     }
 
-    public com.mangopay.core.enumerations.FundsType getFundsType() {
+    public FundsType getFundsType() {
         return fundsType;
     }
 
-    public void setFundsType(com.mangopay.core.enumerations.FundsType fundsType) {
+    public void setFundsType(FundsType fundsType) {
         this.fundsType = fundsType;
     }
 
