@@ -119,7 +119,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
         UboDeclaration submittedUboDeclaration = this.api.getUboDeclarationApi().submitForValidation(matrix.getId(),uboDeclaration.getId());
         
         assertNotNull(submittedUboDeclaration);
-        assertEquals(UboDeclarationStatus.CREATED,submittedUboDeclaration.getStatus());
+        assertEquals(UboDeclarationStatus.VALIDATION_ASKED,submittedUboDeclaration.getStatus());
         assertNotNull(submittedUboDeclaration.getId());
     }
 }
