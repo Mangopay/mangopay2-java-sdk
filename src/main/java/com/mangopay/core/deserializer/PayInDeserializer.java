@@ -63,6 +63,16 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsPayPal.setPaypalBuyerAccountEmail(object.get("PaypalBuyerAccountEmail").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;
+            case APPLEPAY:
+                PayInPaymentDetailsApplePay payInPaymentDetailsApplePay = new PayInPaymentDetailsApplePay();
+                if (object.has("PaymentData") && !object.get("PaymentData").isJsonNull()) {
+                    payInPaymentDetailsApplePay.setPaymentData((PaymentData) context.deserialize(object.get("PaymentData"), PaymentData.class));
+                }
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull()) {
+                    payInPaymentDetailsApplePay.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                }
+                payIn.setPaymentDetails(payInPaymentDetailsApplePay);
+                break;
             case DIRECT_DEBIT:
                 PayInPaymentDetailsDirectDebit payInPaymentDetailsDirectDebit = new PayInPaymentDetailsDirectDebit();
                 if (object.has("DirectDebitType") && !object.get("DirectDebitType").isJsonNull())

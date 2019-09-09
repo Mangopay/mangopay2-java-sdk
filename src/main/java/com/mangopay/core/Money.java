@@ -32,15 +32,17 @@ public class Money extends Dto {
         return currency;
     }
 
-    public void setCurrency(CurrencyIso currency) {
-        this.currency = currency;
-    }
-
     public int getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public Money setCurrency(CurrencyIso currency) {
+        this.currency = currency;
+        return this;
+    }
+
+    public Money setAmount(int amount) {
         this.amount = amount;
+        return this;
     }
 }
