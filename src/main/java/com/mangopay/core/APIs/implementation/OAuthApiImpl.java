@@ -1,6 +1,5 @@
 package com.mangopay.core.APIs.implementation;
 
-import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.OAuthApi;
@@ -25,7 +24,7 @@ public class OAuthApiImpl extends ApiBase implements OAuthApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public OAuthApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
+    public OAuthApiImpl(MangoPayApi root) {
         super(root);
     }
 

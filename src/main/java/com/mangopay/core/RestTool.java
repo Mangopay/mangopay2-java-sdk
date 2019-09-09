@@ -5,14 +5,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mangopay.MangoPayApi;
-import com.mangopay.entities.*;
+import com.mangopay.core.enumerations.RequestType;
+import com.mangopay.entities.RateLimit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -362,7 +360,7 @@ public class RestTool {
             if (this.debugMode)
                 logger.info("RequestType: {}", this.requestType);
 
-            if (this.requestData != null || entity != null) {
+            if (this.requestData != null || entity != null || this.requestType.equals(RequestType.POST.toString())) {
 
                 String requestBody = "";
                 if (entity != null) {

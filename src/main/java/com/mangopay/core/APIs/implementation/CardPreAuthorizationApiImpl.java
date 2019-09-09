@@ -1,6 +1,5 @@
 package com.mangopay.core.APIs.implementation;
 
-import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.CardPreAuthorizationApi;
@@ -16,7 +15,7 @@ public class CardPreAuthorizationApiImpl extends ApiBase implements CardPreAutho
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public CardPreAuthorizationApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
+    public CardPreAuthorizationApiImpl(MangoPayApi root) {
         super(root);
     }
 

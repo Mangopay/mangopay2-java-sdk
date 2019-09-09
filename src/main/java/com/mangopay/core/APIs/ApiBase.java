@@ -492,11 +492,10 @@ public abstract class ApiBase {
         if (entity instanceof EntityBase) {
 
             String urlMethod;
-
-            if (secondEntityId.length() > 0) {
+            if (thirdEntityId.length() > 0) {
+                urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId, thirdEntityId);
+            } else if (secondEntityId.length() > 0) {
                 urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
-            } else if (thirdEntityId.length() > 0) {
-                urlMethod = String.format(this.getRequestUrl(methodKey), entity, secondEntityId, thirdEntityId);
             } else {
                 urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase) entity).getId());
             }

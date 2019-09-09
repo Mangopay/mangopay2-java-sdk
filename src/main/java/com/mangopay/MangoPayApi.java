@@ -28,28 +28,28 @@ public class MangoPayApi {
         GsonBuilder gsonBuilder = new GsonBuilder();
 
         // API managers
-        setAuthenticationManager(new OAuthApiImpl(this, gsonBuilder));
-        setClientApi(new ClientApiImpl(this, gsonBuilder));
+        setAuthenticationManager(new OAuthApiImpl(this));
+        setClientApi(new ClientApiImpl(this));
         setUserApi(new UserApiImpl(this, gsonBuilder));
-        setWalletApi(new WalletApiImpl(this, gsonBuilder));
+        setWalletApi(new WalletApiImpl(this));
         setPayInApi(new PayInApiImpl(this, gsonBuilder));
-        setPayOutApi(new PayOutApiImpl(this, gsonBuilder));
-        setRefundApi(new RefundApiImpl(this, gsonBuilder));
+        setPayOutApi(new PayOutApiImpl(this));
+        setRefundApi(new RefundApiImpl(this));
         setTransferApi(new TransferApiImpl(this, gsonBuilder));
-        setCardRegistrationApi(new CardRegistrationApiImpl(this, gsonBuilder));
-        setCardApi(new CardApiImpl(this, gsonBuilder));
-        setEventApi(new EventApiImpl(this, gsonBuilder));
-        setCardPreAuthorizationApi(new CardPreAuthorizationApiImpl(this, gsonBuilder));
-        setHookApi(new HookApiImpl(this, gsonBuilder));
-        setKycDocumentApi(new KycDocumentApiImpl(this, gsonBuilder));
-        setDisputeApi(new DisputeApiImpl(this, gsonBuilder));
+        setCardRegistrationApi(new CardRegistrationApiImpl(this));
+        setCardApi(new CardApiImpl(this));
+        setEventApi(new EventApiImpl(this));
+        setCardPreAuthorizationApi(new CardPreAuthorizationApiImpl(this));
+        setHookApi(new HookApiImpl(this));
+        setKycDocumentApi(new KycDocumentApiImpl(this));
+        setDisputeApi(new DisputeApiImpl(this));
         setIdempotencyApi(new IdempotencyApiImpl(this, gsonBuilder));
-        setMandateApi(new MandateApiImpl(this, gsonBuilder));
-        setReportApi(new ReportApiImpl(this, gsonBuilder));
-        setBankingAliasApi(new BankingAliasApiImpl(this, gsonBuilder));
-        setUboDeclarationApi(new UboDeclarationApiImpl(this, gsonBuilder));
-        setRepudiationApi(new RepudiationApiImpl(this, gsonBuilder));
-        setSettlementApi(new SettlementApiImpl(this, gsonBuilder));
+        setMandateApi(new MandateApiImpl(this));
+        setReportApi(new ReportApiImpl(this));
+        setBankingAliasApi(new BankingAliasApiImpl(this));
+        setUboDeclarationApi(new UboDeclarationApiImpl(this));
+        setRepudiationApi(new RepudiationApiImpl(this));
+        setSettlementApi(new SettlementApiImpl(this));
         setGson(gsonBuilder.create());
     }
 

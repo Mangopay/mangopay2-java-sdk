@@ -1,6 +1,5 @@
 package com.mangopay.core.APIs.implementation;
 
-import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.UboDeclarationApi;
@@ -9,7 +8,6 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.UboDeclarationStatus;
 import com.mangopay.entities.Ubo;
 import com.mangopay.entities.UboDeclaration;
-import com.mangopay.entities.User;
 
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class UboDeclarationApiImpl extends ApiBase implements UboDeclarationApi 
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public UboDeclarationApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
+    public UboDeclarationApiImpl(MangoPayApi root) {
         super(root);
     }
 
@@ -49,12 +47,12 @@ public class UboDeclarationApiImpl extends ApiBase implements UboDeclarationApi 
 
     @Override
     public Ubo updateUbo(String userId, String uboDeclarationId, Ubo ubo) throws Exception {
-        return this.updateObject(Ubo.class,"ubo_update",ubo,userId,uboDeclarationId);
+        return this.updateObject(Ubo.class, "ubo_update", ubo, userId, uboDeclarationId, ubo.getId());
     }
 
     @Override
     public Ubo getUbo(String userId, String uboDeclarationId, String uboId) throws Exception {
-        return this.getObject(Ubo.class,"ubo_get",uboDeclarationId,uboId);
+        return this.getObject(Ubo.class, "ubo_get", userId, uboDeclarationId, uboId);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.mangopay.core.APIs.implementation;
 
-import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.SettlementApi;
@@ -11,7 +10,7 @@ import com.mangopay.entities.SettlementTransfer;
  */
 public class SettlementApiImpl extends ApiBase implements SettlementApi {
 
-    public SettlementApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
+    public SettlementApiImpl(MangoPayApi root) {
         super(root);
     }
 
