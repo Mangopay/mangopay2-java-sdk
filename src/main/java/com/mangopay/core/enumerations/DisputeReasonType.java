@@ -83,6 +83,11 @@ public enum DisputeReasonType {
     /**
     * REFUND_NOT_PROCESSED dispute reason type
     */
-    REFUND_NOT_PROCESSED
+    REFUND_NOT_PROCESSED,
+    
+    /**
+    * COUNTERFEIT_PRODUCT dispute reason type
+    */   
+    COUNTERFEIT_PRODUCT
 
 }
