@@ -37,5 +37,10 @@ public enum PayInPaymentType {
     /**
      * PAYPAL payment type.
      */
-    PAYPAL
+    PAYPAL,
+
+    /**
+     * APPLEPAY payment type
+     */
+    APPLEPAY
 }
