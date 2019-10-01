@@ -1,6 +1,7 @@
 ## [Unreleased]
 ### Added
 - ApplePay `Payin` methods are now available. More info about activation to come in the following weeks...
+- New `Dispute` reason type `COUNTERFEIT_PRODUCT` has been added.
 
 ## [2.8.1] - 2019-09-09
 ### Added
