@@ -46,6 +46,13 @@ public class Ubo extends EntityBase {
     @SerializedName("Birthplace")
     private Birthplace birthplace;
 
+    /**
+     * IsActive
+     */
+
+    @SerializedName("IsActive")
+    private boolean isActive;
+
     public String getFirstName() { return firstName; }
 
     public void setFirstName(String firstName) { this.firstName = firstName; }
@@ -69,6 +76,10 @@ public class Ubo extends EntityBase {
     public Birthplace getBirthplace() { return birthplace; }
 
     public void setBirthplace(Birthplace birthplace) { this.birthplace = birthplace; }
+
+    public boolean getActive() { return isActive; }
+
+    public void setActive(boolean active) { isActive = active; }
 
     /**
      * Gets map which property is an object and what type of object.
