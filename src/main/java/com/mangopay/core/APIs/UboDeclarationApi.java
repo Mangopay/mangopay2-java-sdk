@@ -69,4 +69,6 @@ public interface UboDeclarationApi {
      * @throws Exception
      */
     UboDeclaration submitForValidation(String userId, String uboDeclarationId) throws Exception;
+
+    UboDeclaration get(String uboDeclarationId) throws  Exception;
 }
