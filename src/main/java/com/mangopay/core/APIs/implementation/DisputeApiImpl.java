@@ -100,6 +100,7 @@ public class DisputeApiImpl extends ApiBase implements DisputeApi {
         settlement.setAuthorId(settlementTransfer.getAuthorId());
         settlement.setDebitedFunds(settlementTransfer.getDebitedFunds());
         settlement.setFees(settlementTransfer.getFees());
+        settlement.setTag(settlementTransfer.getTag());
         return this.createObject(Transfer.class, idempotencyKey, "disputes_repudiation_create_settlement", settlement, repudiationId);
     }
 
