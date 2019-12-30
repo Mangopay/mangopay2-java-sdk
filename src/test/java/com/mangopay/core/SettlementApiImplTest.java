@@ -13,8 +13,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class SettlementApiImplTest extends BaseTest {
     private String settlementId = null;
@@ -57,6 +56,7 @@ public class SettlementApiImplTest extends BaseTest {
             post.setAuthorId(repudiation.getAuthorId());
             post.setDebitedFunds(debitedFunds);
             post.setFees(fees);
+            post.setTag("abc");
 
             Transfer result = null;
             result = api.getDisputeApi().createSettlementTransfer(post, repudiationId);
@@ -71,5 +71,7 @@ public class SettlementApiImplTest extends BaseTest {
     public void getSettlement() throws Exception {
         SettlementTransfer settlementTransfers = this.api.getSettlementApi().get(settlementId);
         assertNotNull("Settlement api return null settlement transfer", settlementTransfers);
+        assertNotNull(settlementTransfers.getTag());
+        assertEquals("abc",settlementTransfers.getTag());
     }
 }
