@@ -1,4 +1,9 @@
 ## [Unreleased]
+### Added 
+- AccountNumber property added for Payins EXTERNAL_INSTRUCTION (BankingAliases)
+- GooglePay `Payin` methods are now available. More info about activation to come in the following weeks...
+
+## [2.9.0]
 ### Added
 - ApplePay `Payin` methods are now available. More info about activation to come in the following weeks...
 - New `Dispute` reason type `COUNTERFEIT_PRODUCT` has been added.
