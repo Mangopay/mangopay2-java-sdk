@@ -42,5 +42,10 @@ public enum PayInPaymentType {
     /**
      * APPLEPAY payment type
      */
-    APPLEPAY
+    APPLEPAY,
+
+    /**
+     * APPLEPAY payment type
+     */
+    GOOGLEPAY
 }

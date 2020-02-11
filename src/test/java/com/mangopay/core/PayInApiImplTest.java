@@ -517,4 +517,42 @@ public class PayInApiImplTest extends BaseTest {
             fail(e.getMessage());
         }
     }
+
+    @Test
+    public void testDirectGooglepayPayin() {
+        try {
+            Wallet wallet = getJohnsWallet();
+            PaymentData paymentData = new PaymentData()
+                    .setTransactionId("placeholder")
+                    .setNetwork("placeholder")
+                    .setTokenData("placeholder");
+            PayIn googlePayIn = new PayIn();
+            googlePayIn.setCreditedWalletId(wallet.getId());
+            googlePayIn.setAuthorId(this.getMatrix().getId());
+            googlePayIn.setCreditedUserId(this.getMatrix().getId());
+            googlePayIn.setDebitedFunds(new Money()
+                    .setAmount(199)
+                    .setCurrency(CurrencyIso.EUR)
+            );
+            googlePayIn.setFees(new Money()
+                    .setAmount(1)
+                    .setCurrency(CurrencyIso.EUR)
+            );
+            googlePayIn.setPaymentType(PayInPaymentType.APPLEPAY);
+            googlePayIn.setExecutionType(PayInExecutionType.DIRECT);
+            googlePayIn.setPaymentDetails(new PayInPaymentDetailsGooglePay()
+                    .setPaymentData(paymentData)
+                    .setStatementDescriptor("Java"));
+            googlePayIn.setTag("Create an GooglePay card direct Payin");
+
+            PayIn createdPayIn = this.api.getPayInApi().create(googlePayIn);
+
+            assertNotNull(createdPayIn);
+            assertEquals(googlePayIn.getAuthorId(), createdPayIn.getAuthorId());
+            assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLEPAY);
+            assertEquals(createdPayIn.getStatus(), TransactionStatus.SUCCEEDED);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
 }
