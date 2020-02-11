@@ -237,6 +237,34 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createBankWireExternalInstructionWithAccountNumber() {
+        try {
+            User user = this.getJohn();
+            PayIn payIn = this.getJohnsPayInBankWireExternalInstruction(true);
+            PayIn createPayIn = this.api.getPayInApi().create(payIn);
+
+            assertTrue(!"".equals(createPayIn.getId()));
+            assertTrue(createPayIn.getPaymentType() == PayInPaymentType.BANK_WIRE);
+            assertTrue(createPayIn.getPaymentDetails() instanceof PayInPaymentDetailsBankWire);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredDebitedFunds() != null);
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getDeclaredFees() != null);
+            assertTrue(createPayIn.getExecutionType() == PayInExecutionType.EXTERNAL_INSTRUCTION);
+            assertTrue(createPayIn.getExecutionDetails() instanceof PayInExecutionDetailsBankingAlias);
+            assertEquals(user.getId(), createPayIn.getAuthorId());
+            assertTrue(createPayIn.getStatus() == TransactionStatus.CREATED);
+            assertTrue(createPayIn.getType() == TransactionType.PAYIN);
+            assertNotNull(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getWireReference());
+            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount() != null);
+//            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getType() == BankAccountType.IBAN);
+//            assertTrue(((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails() instanceof BankAccountDetailsIBAN);
+//            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getIban());
+//            assertNotNull(((BankAccountDetailsIBAN) ((PayInPaymentDetailsBankWire) createPayIn.getPaymentDetails()).getBankAccount().getDetails()).getBic());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void getBankWireDirect() {
         try {
             Wallet wallet = this.getJohnsWallet();

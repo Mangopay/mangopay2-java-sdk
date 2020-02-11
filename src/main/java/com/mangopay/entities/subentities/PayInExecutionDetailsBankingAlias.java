@@ -38,6 +38,9 @@ public class PayInExecutionDetailsBankingAlias extends Dto implements PayInExecu
         DebitedBankAccount = debitedBankAccount;
     }
 
+    public PayInExecutionDetailsBankingAlias() {
+    }
+
     public String getBankingAliasId() {
         return BankingAliasId;
     }

@@ -32,6 +32,7 @@ public abstract class BaseTest {
     private static PayIn JOHNS_PAYIN_CARD_WEB;
     private static PayInPaymentDetailsCard PAYIN_PAYMENT_DETAILS_CARD;
     private static PayInExecutionDetailsWeb PAYIN_EXECUTION_DETAILS_WEB;
+    private static PayInExecutionDetailsBankingAlias PAYIN_EXECUTION_DETAILS_BANKING_ALIAS;
     private static PayOut JOHNS_PAYOUT_BANKWIRE;
     private static CardRegistration JOHNS_CARD_REGISTRATION;
     private static KycDocument JOHNS_KYC_DOCUMENT;
@@ -134,7 +135,6 @@ public abstract class BaseTest {
             BaseTest.JOHNS_KYC_DOCUMENT = null;
             BaseTest.JOHNS_PAYIN_CARD_WEB = null;
             BaseTest.JOHNS_PAYOUT_BANKWIRE = null;
-            BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
             BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
             BaseTest.JOHNS_BANKING_ALIAS = null;
         }
@@ -324,6 +324,31 @@ public abstract class BaseTest {
         return BaseTest.PAYIN_EXECUTION_DETAILS_WEB;
     }
 
+    private PayInExecutionDetailsBankingAlias getPayInExecutionDetailsBankingAlias(Boolean hasAccountNumber) throws Exception{
+        if (BaseTest.PAYIN_EXECUTION_DETAILS_BANKING_ALIAS == null){
+            BaseTest.PAYIN_EXECUTION_DETAILS_BANKING_ALIAS = new PayInExecutionDetailsBankingAlias();
+            BaseTest.PAYIN_EXECUTION_DETAILS_BANKING_ALIAS.setBankingAliasId(getJohnsBankingAlias().getId());
+            BaseTest.PAYIN_EXECUTION_DETAILS_BANKING_ALIAS.setWireReference("iuygh0987s");
+
+            DebitedBankAccount debitedBankAccount = new DebitedBankAccount();
+            debitedBankAccount.setOwnerName("Joe Blogs");
+            debitedBankAccount.setBic("CRLYFRPP_TEST");
+
+            if (hasAccountNumber){
+                debitedBankAccount.setAccountNumber("1234");
+                debitedBankAccount.setType(BankAccountType.OTHER);
+            }
+            else {
+                debitedBankAccount.setIban("FR3020041010124530725S03383_TEST");
+                debitedBankAccount.setType(BankAccountType.IBAN);
+            }
+
+            BaseTest.PAYIN_EXECUTION_DETAILS_BANKING_ALIAS.setDebitedBankAccount(debitedBankAccount);
+        }
+
+        return BaseTest.PAYIN_EXECUTION_DETAILS_BANKING_ALIAS;
+    }
+
     protected PayIn getJohnsPayInCardWeb() throws Exception {
         if (BaseTest.JOHNS_PAYIN_CARD_WEB == null) {
             Wallet wallet = this.getJohnsWallet();
@@ -353,16 +378,28 @@ public abstract class BaseTest {
         return getJohnsPayInCardWeb();
     }
 
-//    protected PayIn getJohnsPayInBankWireDirect() throws Exception {
-//        Wallet wallet = this.getJohnsWallet();
-//        
-//        PayIn payIn = new PayIn();
-//        payIn.CreditedWalletId = wallet.Id;
-//        payIn.AuthorId = wallet.Owners.get(0);
-//        
-//        // payment type as CARD
-//        payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
-//    }
+    protected PayIn getJohnsPayInBankWireExternalInstruction(Boolean hasAccountNumber) throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+
+        PayIn payIn = new PayIn();
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setCreditedUserId(getJohn().getId());
+        payIn.setAuthorId(wallet.getOwners().get(0));
+
+        // payment type as BANK_WIRE
+//        payIn.setPaymentType(PayInPaymentType.BANK_WIRE);
+        PayInPaymentDetailsBankWire payInPaymentDetailsBankWire = new PayInPaymentDetailsBankWire();
+        payInPaymentDetailsBankWire.setBankAccount(getNewBankAccount());
+        payInPaymentDetailsBankWire.setDeclaredDebitedFunds(new Money(CurrencyIso.EUR, 12));
+        payInPaymentDetailsBankWire.setDeclaredFees(new Money(CurrencyIso.EUR, 12));
+        payInPaymentDetailsBankWire.setWireReference("iuygh0987s");
+        payIn.setPaymentDetails(payInPaymentDetailsBankWire);
+
+//        payIn.setExecutionType(PayInExecutionType.EXTERNAL_INSTRUCTION);
+        payIn.setExecutionDetails(getPayInExecutionDetailsBankingAlias(hasAccountNumber));
+
+        return payIn;
+    }
 
     protected PayIn getNewPayInCardDirect() throws Exception {
         return getNewPayInCardDirect(null);
