@@ -322,6 +322,7 @@ public abstract class BaseTest {
 
         return BaseTest.PAYIN_EXECUTION_DETAILS_WEB;
     }
+
     protected PayIn getJohnsPayInCardWeb() throws Exception {
         if (BaseTest.JOHNS_PAYIN_CARD_WEB == null) {
             Wallet wallet = this.getJohnsWallet();
@@ -351,6 +352,16 @@ public abstract class BaseTest {
         return getJohnsPayInCardWeb();
     }
 
+//    protected PayIn getJohnsPayInBankWireDirect() throws Exception {
+//        Wallet wallet = this.getJohnsWallet();
+//
+//        PayIn payIn = new PayIn();
+//        payIn.CreditedWalletId = wallet.Id;
+//        payIn.AuthorId = wallet.Owners.get(0);
+//
+//        // payment type as CARD
+//        payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
+//    }
 
     protected PayIn getNewPayInCardDirect() throws Exception {
         return getNewPayInCardDirect(null);
