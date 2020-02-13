@@ -25,7 +25,7 @@ public class MangoPayApi {
         // default config setup
         setConfig(new Configuration());
         setOAuthTokenManager(new AuthorizationTokenManager(this));
-        GsonBuilder gsonBuilder = new GsonBuilder();
+        GsonBuilder gsonBuilder = new GsonBuilder().disableHtmlEscaping();
 
         // API managers
         setAuthenticationManager(new OAuthApiImpl(this));
