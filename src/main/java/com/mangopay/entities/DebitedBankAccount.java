@@ -45,12 +45,13 @@ public class DebitedBankAccount extends Dto {
     @SerializedName("Country")
     private String country;
 
-    public DebitedBankAccount(String ownerName, String accountNumber, String iban, String bic, BankAccountType type) {
+    public DebitedBankAccount(String ownerName, String accountNumber, String iban, String bic, BankAccountType type, String country) {
         this.ownerName = ownerName;
         this.accountNumber = accountNumber;
         this.iban = iban;
         this.bic = bic;
         this.type = type;
+        this.country = country;
     }
 
     public DebitedBankAccount() {
@@ -96,4 +97,11 @@ public class DebitedBankAccount extends Dto {
         this.type = type;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
 }
