@@ -39,6 +39,12 @@ public class DebitedBankAccount extends Dto {
     @SerializedName("Type")
     private BankAccountType type;
 
+    /**
+     * Country.
+     */
+    @SerializedName("Country")
+    private String country;
+
     public DebitedBankAccount(String ownerName, String accountNumber, String iban, String bic, BankAccountType type) {
         this.ownerName = ownerName;
         this.accountNumber = accountNumber;

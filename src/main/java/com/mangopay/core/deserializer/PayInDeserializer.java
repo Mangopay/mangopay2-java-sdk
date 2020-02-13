@@ -24,17 +24,16 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
         PayIn payIn = new Gson().fromJson(object.toString(), PayIn.class);
         switch (payIn.getPaymentType()) {
             case BANK_WIRE:
-                JsonObject declaredDebitedFunds = object.get("DeclaredDebitedFunds").getAsJsonObject();
-                JsonObject declaredFees = object.get("DeclaredFees").getAsJsonObject();
-                JsonObject bankAccount = object.get("BankAccount").getAsJsonObject();
-                String wireReference = object.get("WireReference").getAsString();
+                PayInPaymentDetailsBankWire payInDetails = new PayInPaymentDetailsBankWire();
+                if (object.has("DeclaredDebitedFunds") && !object.get("DeclaredDebitedFunds").isJsonNull())
+                    payInDetails.setDeclaredDebitedFunds((Money) context.deserialize(object.get("DeclaredDebitedFunds"), Money.class));
+                if (object.has("DeclaredFees") && !object.get("DeclaredFees").isJsonNull())
+                    payInDetails.setDeclaredFees((Money) context.deserialize(object.get("DeclaredFees"), Money.class));
+                if (object.has("BankAccount") && !object.get("BankAccount").isJsonNull())
+                    payInDetails.setBankAccount((BankAccount) context.deserialize(object.get("BankAccount"), BankAccount.class));
+                if (object.has("WireReference") && !object.get("WireReference").isJsonNull())
+                    payInDetails.setWireReference(object.get("WireReference").getAsString());
 
-                PayInPaymentDetailsBankWire payInDetails = new PayInPaymentDetailsBankWire(
-                        (Money) context.deserialize(declaredDebitedFunds, Money.class),
-                        (Money) context.deserialize(declaredFees, Money.class),
-                        (BankAccount) context.deserialize(bankAccount, BankAccount.class),
-                        wireReference
-                );
                 payIn.setPaymentDetails(payInDetails);
                 break;
             case CARD:
