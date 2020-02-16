@@ -28,5 +28,10 @@ public enum MandateStatus {
     /**
      * The mandate has failed for a variety of reasons and is no longer available for payments.
      */
-    FAILED
+    FAILED,
+    
+        /**
+     * The mandate has expired and cannot be used anymore for Payins. A new mandate has to be created.
+     */
+    EXPIRED
 }
