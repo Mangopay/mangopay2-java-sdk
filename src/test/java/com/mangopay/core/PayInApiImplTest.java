@@ -281,6 +281,48 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getBankWireExternalInstructionIBAN() {
+        try {
+            PayIn payIn = this.api.getPayInApi().get("74980101");
+
+            assertTrue(payIn.getPaymentType() == PayInPaymentType.BANK_WIRE);
+            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsBankWire);
+            assertTrue(payIn.getExecutionType() == PayInExecutionType.EXTERNAL_INSTRUCTION);
+            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsBankingAlias);
+            assertTrue(((PayInExecutionDetailsBankingAlias) payIn.getExecutionDetails()).getDebitedBankAccount().getType() == BankAccountType.IBAN);
+
+            assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
+            assertTrue(payIn.getExecutionDate() != null);
+
+            assertNotNull(((PayInExecutionDetailsBankingAlias) payIn.getExecutionDetails()).getDebitedBankAccount().getIban());
+            assertNull(((PayInExecutionDetailsBankingAlias) payIn.getExecutionDetails()).getDebitedBankAccount().getAccountNumber());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void getBankWireExternalInstructionAccountNumber() {
+        try {
+            PayIn payIn = this.api.getPayInApi().get("74981216");
+
+            assertTrue(payIn.getPaymentType() == PayInPaymentType.BANK_WIRE);
+            assertTrue(payIn.getPaymentDetails() instanceof PayInPaymentDetailsBankWire);
+            assertTrue(payIn.getExecutionType() == PayInExecutionType.EXTERNAL_INSTRUCTION);
+            assertTrue(payIn.getExecutionDetails() instanceof PayInExecutionDetailsBankingAlias);
+            assertTrue(((PayInExecutionDetailsBankingAlias) payIn.getExecutionDetails()).getDebitedBankAccount().getType() == BankAccountType.OTHER);
+
+            assertTrue(payIn.getStatus() == TransactionStatus.SUCCEEDED);
+            assertTrue(payIn.getExecutionDate() != null);
+
+            assertNull(((PayInExecutionDetailsBankingAlias) payIn.getExecutionDetails()).getDebitedBankAccount().getIban());
+            assertNotNull(((PayInExecutionDetailsBankingAlias) payIn.getExecutionDetails()).getDebitedBankAccount().getAccountNumber());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void createDirectDebitWeb() {
         try {
             Wallet wallet = this.getJohnsWallet();

@@ -135,7 +135,6 @@ public abstract class BaseTest {
             BaseTest.JOHNS_PAYIN_CARD_WEB = null;
             BaseTest.JOHNS_PAYOUT_BANKWIRE = null;
             BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
-            BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
             BaseTest.JOHNS_BANKING_ALIAS = null;
         }
         return BaseTest.JOHN;
@@ -355,11 +354,11 @@ public abstract class BaseTest {
 
 //    protected PayIn getJohnsPayInBankWireDirect() throws Exception {
 //        Wallet wallet = this.getJohnsWallet();
-//        
+//
 //        PayIn payIn = new PayIn();
 //        payIn.CreditedWalletId = wallet.Id;
 //        payIn.AuthorId = wallet.Owners.get(0);
-//        
+//
 //        // payment type as CARD
 //        payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
 //    }
