@@ -52,6 +52,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
             case "PayInPaymentDetailsGooglePay":
                 object.add("PaymentData", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getPaymentData()));
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBilling()));
                 break;
             default:
                 return null;

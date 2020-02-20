@@ -586,6 +586,7 @@ public class PayInApiImplTest extends BaseTest {
             googlePayIn.setExecutionType(PayInExecutionType.DIRECT);
             googlePayIn.setPaymentDetails(new PayInPaymentDetailsGooglePay()
                     .setPaymentData(paymentData)
+                    .setBilling(new Billing())
                     .setStatementDescriptor("Java"));
             googlePayIn.setTag("Create an GooglePay card direct Payin");
 
