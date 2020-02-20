@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -560,6 +561,7 @@ public class PayInApiImplTest extends BaseTest {
         }
     }
 
+    @Ignore("Can't be tested at this moment")
     @Test
     public void testDirectGooglepayPayin() {
         try {
@@ -580,7 +582,7 @@ public class PayInApiImplTest extends BaseTest {
                     .setAmount(1)
                     .setCurrency(CurrencyIso.EUR)
             );
-            googlePayIn.setPaymentType(PayInPaymentType.APPLEPAY);
+            googlePayIn.setPaymentType(PayInPaymentType.GOOGLEPAY);
             googlePayIn.setExecutionType(PayInExecutionType.DIRECT);
             googlePayIn.setPaymentDetails(new PayInPaymentDetailsGooglePay()
                     .setPaymentData(paymentData)
