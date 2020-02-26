@@ -82,6 +82,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsDirectDebit.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 if (object.has("ChargeDate") && !object.get("ChargeDate").isJsonNull())
                     payInPaymentDetailsDirectDebit.setChargeDate(object.get("ChargeDate").getAsString());
+                if (object.has("Culture") && !object.get("Culture").isJsonNull())
+                    payInPaymentDetailsDirectDebit.setCulture(CultureCode.valueOf(object.get("Culture").getAsString()));
                 payIn.setPaymentDetails(payInPaymentDetailsDirectDebit);
                 break;
             default:
