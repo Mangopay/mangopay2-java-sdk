@@ -2,6 +2,7 @@
 ### Added 
 - AccountNumber property added for Payins EXTERNAL_INSTRUCTION (BankingAliases)
 - GooglePay `Payin` methods are now available. More info about activation to come in the following weeks...
+- `EXPIRED` Mandate Status and linked `MANDATE_EXPIRED` Event Type has been added, as this feature will be shortly supported for DirectDebit Payins. More info on our [docs](https://docs.mangopay.com/endpoints/v2.01/mandates#e230_the-mandate-object)
 
 ## [2.9.0]
 ### Added
