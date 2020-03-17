@@ -25,7 +25,7 @@ public class MangoPayApi {
         // default config setup
         setConfig(new Configuration());
         setOAuthTokenManager(new AuthorizationTokenManager(this));
-        GsonBuilder gsonBuilder = new GsonBuilder();
+        GsonBuilder gsonBuilder = new GsonBuilder().disableHtmlEscaping();
 
         // API managers
         setAuthenticationManager(new OAuthApiImpl(this));
@@ -46,7 +46,7 @@ public class MangoPayApi {
         setIdempotencyApi(new IdempotencyApiImpl(this, gsonBuilder));
         setMandateApi(new MandateApiImpl(this));
         setReportApi(new ReportApiImpl(this));
-        setBankingAliasApi(new BankingAliasApiImpl(this));
+        setBankingAliasApi(new BankingAliasApiImpl(this, gsonBuilder));
         setUboDeclarationApi(new UboDeclarationApiImpl(this));
         setRepudiationApi(new RepudiationApiImpl(this));
         setSettlementApi(new SettlementApiImpl(this));

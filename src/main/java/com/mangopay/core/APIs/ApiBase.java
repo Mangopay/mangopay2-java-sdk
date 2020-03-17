@@ -77,6 +77,8 @@ public abstract class ApiBase {
         put("payins_getrefunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
         put("payins_createrefunds", new String[]{"/payins/%s/refunds", RequestType.POST.toString()});
         put("payins_directdebit-direct_create", new String[]{"/payins/directdebit/direct", RequestType.POST.toString()});
+        put("payins_applepay-direct_create", new String[]{"/payins/applepay/direct", RequestType.POST.toString()});
+        put("payins_googlepay-direct_create", new String[]{"/payins/googlepay/direct", RequestType.POST.toString()});
         put("payin_get_refunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
@@ -185,6 +187,7 @@ public abstract class ApiBase {
         put("ubo_declaration_all", new String[]{"/users/%s/kyc/ubodeclarations", RequestType.GET.toString()});
         put("ubo_declaration_submit", new String[]{"/users/%s/kyc/ubodeclarations/%s", RequestType.PUT.toString()});
         put("ubo_declaration_get", new String[]{"/users/%s/kyc/ubodeclarations/%s", RequestType.GET.toString()});
+        put("ubo_declaration_get_by_id", new String[]{"/kyc/ubodeclarations/%s", RequestType.GET.toString()});
         put("ubo_create", new String[]{"/users/%s/kyc/ubodeclarations/%s/ubos", RequestType.POST.toString()});
         put("ubo_update", new String[]{"/users/%s/kyc/ubodeclarations/%s/ubos/%s", RequestType.PUT.toString()});
         put("ubo_get", new String[]{"/users/%s/kyc/ubodeclarations/%s/ubos/%s", RequestType.GET.toString()});

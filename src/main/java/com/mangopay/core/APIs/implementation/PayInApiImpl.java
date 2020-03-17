@@ -82,11 +82,13 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
 
     private String getExecutionKey(PayIn payIn) throws Exception {
 
-        if (payIn.getExecutionDetails() == null)
-            throw new Exception("Execution is not defined or it is not object type");
-
-        String className = payIn.getExecutionDetails().getClass().getSimpleName().replace("PayInExecutionDetails", "");
-        return className.toLowerCase();
+        if (payIn.getExecutionDetails() != null) {
+            String className = payIn.getExecutionDetails().getClass().getSimpleName().replace("PayInExecutionDetails", "");
+            return className.toLowerCase();
+        }
+        if (payIn.getExecutionType() != null) {
+            return payIn.getExecutionType().toString().toLowerCase();
+        }
+        throw new Exception("Execution is not defined or it is not object type");
     }
-
 }

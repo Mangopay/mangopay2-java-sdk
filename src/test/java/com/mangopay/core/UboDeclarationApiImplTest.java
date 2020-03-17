@@ -80,6 +80,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
         toBeUpdated.setNationality(CountryIso.GB);
         toBeUpdated.setBirthday(calendar.getTimeInMillis()/1000);
         toBeUpdated.getBirthplace().setCountry(CountryIso.GB);
+        toBeUpdated.setActive(true);
 
         Ubo ubo=this.api.getUboDeclarationApi().updateUbo(matrix.getId(),uboDeclaration.getId(),toBeUpdated);
 
@@ -89,6 +90,8 @@ public class UboDeclarationApiImplTest extends BaseTest {
         assertEquals(toBeUpdated.getNationality(),ubo.getNationality());
         assertEquals(toBeUpdated.getBirthday(),ubo.getBirthday());
         assertEquals(toBeUpdated.getBirthplace().getCity(), ubo.getBirthplace().getCity());
+        assertEquals(toBeUpdated.getActive(), ubo.getActive());
+        assertTrue(ubo.getActive());
     }
 
     @Test
@@ -121,5 +124,15 @@ public class UboDeclarationApiImplTest extends BaseTest {
         assertNotNull(submittedUboDeclaration);
         assertEquals(UboDeclarationStatus.VALIDATION_ASKED,submittedUboDeclaration.getStatus());
         assertNotNull(submittedUboDeclaration.getId());
+    }
+
+    @Test
+    public void getUboDeclarationById() throws Exception{
+        UboDeclaration createdUboDeclaration=this.getMatrixUboDeclaration();
+
+        UboDeclaration uboDeclaration=this.api.getUboDeclarationApi().get(createdUboDeclaration.getId());
+
+        assertNotNull(uboDeclaration);
+        assertEquals(createdUboDeclaration.getId(),uboDeclaration.getId());
     }
 }

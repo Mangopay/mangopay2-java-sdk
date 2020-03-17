@@ -63,4 +63,9 @@ public class UboDeclarationApiImpl extends ApiBase implements UboDeclarationApi 
        return this.updateObject(UboDeclaration.class,"ubo_declaration_submit",uboDeclaration,userId);
     }
 
+    @Override
+    public UboDeclaration get(String uboDeclarationId) throws Exception {
+        return this.getObject(UboDeclaration.class,"ubo_declaration_get_by_id",uboDeclarationId);
+    }
+
 }

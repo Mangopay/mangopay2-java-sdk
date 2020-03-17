@@ -1,6 +1,17 @@
 ## [Unreleased]
+
+## [2.10.0]
+### Added 
+- `AccountNumber` property added for Payins `EXTERNAL_INSTRUCTION` (BankingAliases)
+- GooglePay `Payin` methods are now available. More info about activation to come in the following weeks...
+- `EXPIRED` Mandate Status and linked `MANDATE_EXPIRED` Event Type has been added, as this feature will be shortly supported for DirectDebit Payins. More info on our [docs](https://docs.mangopay.com/endpoints/v2.01/mandates#e230_the-mandate-object)
+### Changed
+- `PAYLINE`parameter for PayInTemplateURLOptions will be deprecated in the following weeks for Payin Web (especiallay for Payin Cards). `PAYLINEV2` parameter has been added to be used instead.
+
+## [2.9.0]
 ### Added
 - ApplePay `Payin` methods are now available. More info about activation to come in the following weeks...
+- New `Dispute` reason type `COUNTERFEIT_PRODUCT` has been added.
 
 ## [2.8.1] - 2019-09-09
 ### Added
