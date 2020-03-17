@@ -40,6 +40,7 @@ public abstract class BaseTest {
     private static ReportRequest JOHNS_REPORT;
     private static BankingAlias JOHNS_BANKING_ALIAS;
     private static UboDeclaration UBO_DECLARATION;
+    private static PayInTemplateURLOptions PAYIN_TEMPLATE_URL_OPTIONS;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -318,6 +319,13 @@ public abstract class BaseTest {
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setSecureMode(SecureMode.DEFAULT);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setCulture(CultureCode.FR);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setReturnUrl("https://test.com");
+            
+            if(BaseTest.PAYIN_TEMPLATE_URL_OPTIONS == null) {
+                BaseTest.PAYIN_TEMPLATE_URL_OPTIONS = new PayInTemplateURLOptions();
+                templateURLOptions.PAYLINE = "https://www.maysite.com/payline_template/";
+                templateURLOptions.PAYLINEV2 = "https://www.maysite.com/payline_template/";
+                BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setTemplateURLOptions(templateURLOptions);
+            }
         }
 
         return BaseTest.PAYIN_EXECUTION_DETAILS_WEB;
