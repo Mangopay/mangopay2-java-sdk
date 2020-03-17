@@ -322,8 +322,8 @@ public abstract class BaseTest {
             
             if(BaseTest.PAYIN_TEMPLATE_URL_OPTIONS == null) {
                 BaseTest.PAYIN_TEMPLATE_URL_OPTIONS = new PayInTemplateURLOptions();
-                templateURLOptions.PAYLINE = "https://www.maysite.com/payline_template/";
-                templateURLOptions.PAYLINEV2 = "https://www.maysite.com/payline_template/";
+                BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINE = "https://www.maysite.com/payline_template/";
+                BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINEV2 = "https://www.maysite.com/payline_template/";
                 BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setTemplateURLOptions(templateURLOptions);
             }
         }
