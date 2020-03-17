@@ -38,7 +38,7 @@ task javadocJar(type: Jar) {
 }
 
 group = 'com.mangopay'
-version = '2.9.0'
+version = '2.10.0'
 sourceCompatibility = '1.7'
 
 publishing {
