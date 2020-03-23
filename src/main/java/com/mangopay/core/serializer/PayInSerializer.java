@@ -80,6 +80,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                     object.add("SecureMode", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getSecureMode()));
                     object.add("RedirectURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getRedirectUrl()));
                     object.add("ReturnURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getReturnUrl()));
+                    object.add("TemplateURLOptions", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getTemplateURLOptions()));
                     break;
                 default:
                     return null;
