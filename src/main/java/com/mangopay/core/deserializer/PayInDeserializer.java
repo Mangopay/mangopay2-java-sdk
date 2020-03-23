@@ -112,6 +112,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInExecutionDetailsWeb.setRedirectUrl(object.get("RedirectURL").getAsString());
                 if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
                     payInExecutionDetailsWeb.setReturnUrl(object.get("ReturnURL").getAsString());
+                if (object.has("TemplateURLOptions") && !object.get("TemplateURLOptions").isJsonNull())
+                    payInExecutionDetailsWeb.setTemplateURLOptions((PayInTemplateURLOptions) context.deserialize(object.get("TemplateURLOptions"), PayInTemplateURLOptions.class));
                 payIn.setExecutionDetails(payInExecutionDetailsWeb);
                 break;
             case DIRECT:
