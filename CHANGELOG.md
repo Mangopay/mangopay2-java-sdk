@@ -1,6 +1,10 @@
 ## [Unreleased]
 
-## [2.10.0]
+## [2.10.1] - 2020-03-23
+### Fixed
+- Serialization issue has been fixed. `ExecutionDetails` property was wrongly sent on JSON request, `TemplateURLOptions` was not taken in account for Payin Web.
+
+## [2.10.0] - 2020-03-19
 ### Added 
 - `AccountNumber` property added for Payins `EXTERNAL_INSTRUCTION` (BankingAliases)
 - GooglePay `Payin` methods are now available. More info about activation to come in the following weeks...
