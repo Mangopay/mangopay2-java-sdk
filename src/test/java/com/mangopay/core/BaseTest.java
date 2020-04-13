@@ -40,6 +40,7 @@ public abstract class BaseTest {
     private static ReportRequest JOHNS_REPORT;
     private static BankingAlias JOHNS_BANKING_ALIAS;
     private static UboDeclaration UBO_DECLARATION;
+    private static PayInTemplateURLOptions PAYIN_TEMPLATE_URL_OPTIONS;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -134,7 +135,6 @@ public abstract class BaseTest {
             BaseTest.JOHNS_KYC_DOCUMENT = null;
             BaseTest.JOHNS_PAYIN_CARD_WEB = null;
             BaseTest.JOHNS_PAYOUT_BANKWIRE = null;
-            BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
             BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
             BaseTest.JOHNS_BANKING_ALIAS = null;
         }
@@ -345,6 +345,13 @@ public abstract class BaseTest {
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setSecureMode(SecureMode.DEFAULT);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setCulture(CultureCode.FR);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setReturnUrl("https://test.com");
+            
+            if(BaseTest.PAYIN_TEMPLATE_URL_OPTIONS == null) {
+                BaseTest.PAYIN_TEMPLATE_URL_OPTIONS = new PayInTemplateURLOptions();
+                BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINE = "https://www.maysite.com/payline_template/";
+                BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINEV2 = "https://www.maysite.com/payline_template/";
+                BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setTemplateURLOptions(PAYIN_TEMPLATE_URL_OPTIONS);
+            }
         }
 
         return BaseTest.PAYIN_EXECUTION_DETAILS_WEB;
@@ -381,11 +388,11 @@ public abstract class BaseTest {
 
 //    protected PayIn getJohnsPayInBankWireDirect() throws Exception {
 //        Wallet wallet = this.getJohnsWallet();
-//        
+//
 //        PayIn payIn = new PayIn();
 //        payIn.CreditedWalletId = wallet.Id;
 //        payIn.AuthorId = wallet.Owners.get(0);
-//        
+//
 //        // payment type as CARD
 //        payIn.PaymentDetails = new PayInPaymentDetailsBankWire();
 //    }

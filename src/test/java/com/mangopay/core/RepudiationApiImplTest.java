@@ -47,10 +47,12 @@ public class RepudiationApiImplTest extends BaseTest {
 
     }
 
+    /* 
+    * FAILING TEST ON ALL SDKs due to testing account data - to be uncommented when fixed
     @Test
     public void getRefunds() throws Exception {
         List<Refund> refunds = this.api.getRepudiationApi().getRefunds(this.repudiation.getId());
 
         assertNotNull(refunds);
-    }
+    }*/
 }
