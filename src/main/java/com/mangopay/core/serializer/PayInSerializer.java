@@ -50,6 +50,11 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("PaymentData", context.serialize(((PayInPaymentDetailsApplePay) src.getPaymentDetails()).getPaymentData()));
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsApplePay) src.getPaymentDetails()).getStatementDescriptor()));
                 break;
+            case "PayInPaymentDetailsGooglePay":
+                object.add("PaymentData", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getPaymentData()));
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBilling()));
+                break;
             default:
                 return null;
         }
@@ -76,6 +81,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                     object.add("SecureMode", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getSecureMode()));
                     object.add("RedirectURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getRedirectUrl()));
                     object.add("ReturnURL", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getReturnUrl()));
+                    object.add("TemplateURLOptions", context.serialize(((PayInExecutionDetailsWeb) src.getExecutionDetails()).getTemplateURLOptions()));
                     break;
                 default:
                     return null;

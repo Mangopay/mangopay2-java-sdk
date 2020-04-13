@@ -12,7 +12,7 @@ if [ "$TRAVIS_REPO_SLUG" == "Mangopay/mangopay2-java-sdk" ] && [ "$TRAVIS_PULL_R
 
   if [ $RETVAL -eq 0 ]; then
     echo 'Completed publish!'
-    ./gradlew closeAndReleaseRepository
+    ./gradlew closeAndReleaseRepository -PnexusUsername="${SONATYPE_USERNAME}" -PnexusPassword="${SONATYPE_PASSWORD}"
   else
     echo 'Publish failed.'
   fi

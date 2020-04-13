@@ -38,7 +38,7 @@ task javadocJar(type: Jar) {
 }
 
 group = 'com.mangopay'
-version = '2.9.0'
+version = '2.10.1'
 sourceCompatibility = '1.7'
 
 publishing {
@@ -47,7 +47,7 @@ publishing {
             pom {
                 groupId 'com.mangopay'
                 artifactId 'mangopay2-java-sdk'
-                version '2.8.1'
+                version '2.10.1'
 
                 from(components.java)
 

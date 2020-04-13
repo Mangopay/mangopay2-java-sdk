@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -555,6 +556,46 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(applePayPayin.getAuthorId(), createdPayin.getAuthorId());
             assertEquals(createdPayin.getPaymentType(), PayInPaymentType.APPLEPAY);
             assertEquals(createdPayin.getStatus(), TransactionStatus.SUCCEEDED);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Ignore("Can't be tested at this moment")
+    @Test
+    public void testDirectGooglepayPayin() {
+        try {
+            Wallet wallet = getJohnsWallet();
+            PaymentData paymentData = new PaymentData()
+                    .setTransactionId("placeholder")
+                    .setNetwork("placeholder")
+                    .setTokenData("placeholder");
+            PayIn googlePayIn = new PayIn();
+            googlePayIn.setCreditedWalletId(wallet.getId());
+            googlePayIn.setAuthorId(this.getMatrix().getId());
+            googlePayIn.setCreditedUserId(this.getMatrix().getId());
+            googlePayIn.setDebitedFunds(new Money()
+                    .setAmount(199)
+                    .setCurrency(CurrencyIso.EUR)
+            );
+            googlePayIn.setFees(new Money()
+                    .setAmount(1)
+                    .setCurrency(CurrencyIso.EUR)
+            );
+            googlePayIn.setPaymentType(PayInPaymentType.GOOGLEPAY);
+            googlePayIn.setExecutionType(PayInExecutionType.DIRECT);
+            googlePayIn.setPaymentDetails(new PayInPaymentDetailsGooglePay()
+                    .setPaymentData(paymentData)
+                    .setBilling(new Billing())
+                    .setStatementDescriptor("Java"));
+            googlePayIn.setTag("Create an GooglePay card direct Payin");
+
+            PayIn createdPayIn = this.api.getPayInApi().create(googlePayIn);
+
+            assertNotNull(createdPayIn);
+            assertEquals(googlePayIn.getAuthorId(), createdPayIn.getAuthorId());
+            assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLEPAY);
+            assertEquals(createdPayIn.getStatus(), TransactionStatus.SUCCEEDED);
         } catch (Exception e) {
             fail(e.getMessage());
         }

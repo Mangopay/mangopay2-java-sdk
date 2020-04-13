@@ -12,4 +12,8 @@ public class PayInTemplateURLOptions extends Dto {
      */
     public String PAYLINE;
     
+        /**
+     * PAYLINEV2 options.
+     */
+    public String PAYLINEV2;
 }
