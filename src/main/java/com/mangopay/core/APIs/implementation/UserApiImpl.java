@@ -34,7 +34,8 @@ public class UserApiImpl extends ApiBase implements UserApi {
      */
     public UserApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
-        gsonBuilder.registerTypeAdapter(User.class, new UserSerializer());
+        gsonBuilder.registerTypeAdapter(UserLegal.class, new UserSerializer());
+        gsonBuilder.registerTypeAdapter(UserNatural.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
         gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountSerializer());
         gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountDeserializer());

@@ -841,28 +841,14 @@ public abstract class BaseTest {
             assertEquals(((UserLegal) entity1).getTag(), ((UserLegal) entity2).getTag());
             assertEquals(((UserLegal) entity1).getPersonType(), ((UserLegal) entity2).getPersonType());
             assertEquals(((UserLegal) entity1).getName(), ((UserLegal) entity2).getName());
-            if (((UserLegal) entity1).getHeadquartersAddress() != null) {
-                assertEquals(((UserLegal) entity1).getHeadquartersAddress().getAddressLine1(), ((UserLegal) entity2).getHeadquartersAddress().getAddressLine1());
-                assertEquals(((UserLegal) entity1).getHeadquartersAddress().getAddressLine2(), ((UserLegal) entity2).getHeadquartersAddress().getAddressLine2());
-                assertEquals(((UserLegal) entity1).getHeadquartersAddress().getCity(), ((UserLegal) entity2).getHeadquartersAddress().getCity());
-                assertEquals(((UserLegal) entity1).getHeadquartersAddress().getCountry(), ((UserLegal) entity2).getHeadquartersAddress().getCountry());
-                assertEquals(((UserLegal) entity1).getHeadquartersAddress().getPostalCode(), ((UserLegal) entity2).getHeadquartersAddress().getPostalCode());
-                assertEquals(((UserLegal) entity1).getHeadquartersAddress().getRegion(), ((UserLegal) entity2).getHeadquartersAddress().getRegion());
-            }
-            else{
-                assertNull(((UserLegal) entity2).getHeadquartersAddress());
-            }
-            if (((UserLegal) entity1).getLegalRepresentativeAddress() != null) {
-                assertEquals(((UserLegal) entity1).getLegalRepresentativeAddress().getAddressLine1(), ((UserLegal) entity2).getHeadquartersAddress().getAddressLine1());
-                assertEquals(((UserLegal) entity1).getLegalRepresentativeAddress().getAddressLine2(), ((UserLegal) entity2).getHeadquartersAddress().getAddressLine2());
-                assertEquals(((UserLegal) entity1).getLegalRepresentativeAddress().getCity(), ((UserLegal) entity2).getHeadquartersAddress().getCity());
-                assertEquals(((UserLegal) entity1).getLegalRepresentativeAddress().getCountry(), ((UserLegal) entity2).getHeadquartersAddress().getCountry());
-                assertEquals(((UserLegal) entity1).getLegalRepresentativeAddress().getPostalCode(), ((UserLegal) entity2).getHeadquartersAddress().getPostalCode());
-                assertEquals(((UserLegal) entity1).getLegalRepresentativeAddress().getRegion(), ((UserLegal) entity2).getHeadquartersAddress().getRegion());
-            }
-            else{
-                assertNull(((UserLegal) entity2).getLegalRepresentativeAddress());
-            }
+            assertNotNull(((UserLegal) entity1).getHeadquartersAddress());
+            assertNotNull(((UserLegal) entity2).getHeadquartersAddress());
+            assertEquals(((UserLegal) entity1).getHeadquartersAddress().getAddressLine1(), ((UserLegal) entity2).getHeadquartersAddress().getAddressLine1());
+            assertEquals(((UserLegal) entity1).getHeadquartersAddress().getAddressLine2(), ((UserLegal) entity2).getHeadquartersAddress().getAddressLine2());
+            assertEquals(((UserLegal) entity1).getHeadquartersAddress().getCity(), ((UserLegal) entity2).getHeadquartersAddress().getCity());
+            assertEquals(((UserLegal) entity1).getHeadquartersAddress().getCountry(), ((UserLegal) entity2).getHeadquartersAddress().getCountry());
+            assertEquals(((UserLegal) entity1).getHeadquartersAddress().getPostalCode(), ((UserLegal) entity2).getHeadquartersAddress().getPostalCode());
+            assertEquals(((UserLegal) entity1).getHeadquartersAddress().getRegion(), ((UserLegal) entity2).getHeadquartersAddress().getRegion());
 
             assertEquals(((UserLegal) entity1).getLegalRepresentativeFirstName(), ((UserLegal) entity2).getLegalRepresentativeFirstName());
             assertEquals(((UserLegal) entity1).getLegalRepresentativeLastName(), ((UserLegal) entity2).getLegalRepresentativeLastName());

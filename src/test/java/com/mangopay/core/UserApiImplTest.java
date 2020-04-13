@@ -188,7 +188,6 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void updateLegalWithoutAddresses() throws Exception {
         UserLegal matrix = this.getMatrixWithoutOptionalFields();
         matrix.setLegalRepresentativeLastName(matrix.getLegalRepresentativeLastName() + " - CHANGED");
@@ -198,8 +197,6 @@ public class UserApiImplTest extends BaseTest {
 
         assertEqualInputProps(userSaved, matrix);
         assertEqualInputProps(userFetched, matrix);
-
-        // The same problem with NaturalUser; the Address field is optional but the Update is not working when null
     }
 
     @Test
