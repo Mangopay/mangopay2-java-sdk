@@ -2,6 +2,7 @@ package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
+import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.enumerations.DirectDebitType;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 
@@ -34,6 +35,12 @@ public class PayInPaymentDetailsDirectDebit extends Dto implements PayInPaymentD
     @SerializedName("ChargeDate")
     private String chargeDate;
 
+    /**
+     * The language to use for the payment page - needs to be the ISO code of the language
+     */
+    @SerializedName("Culture")
+    private CultureCode culture;
+
     public DirectDebitType getDirectDebitType() {
         return directDebitType;
     }
@@ -65,4 +72,11 @@ public class PayInPaymentDetailsDirectDebit extends Dto implements PayInPaymentD
     public void setChargeDate(String chargeDate) {
         this.chargeDate = chargeDate;
     }
-}
+
+    public CultureCode getCulture() {
+        return culture;
+    }
+
+    public void setCulture(CultureCode culture) {
+        this.culture = culture;
+    }}
