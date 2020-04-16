@@ -372,7 +372,6 @@ public class UserApiImplTest extends BaseTest {
         Pagination pagination = new Pagination(1, 12);
 
         List<BankAccount> list = this.api.getUserApi().getActiveBankAccounts(john.getId(), true, pagination, null);
-
         int index = -1;
         for (int i = 0; i < list.size(); i++) {
             if (account.getId().equals(list.get(i).getId())) {
