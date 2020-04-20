@@ -192,6 +192,32 @@ public abstract class BaseTest {
         return BaseTest.MATRIX;
     }
 
+    /**
+        Current optional fields are:
+            HeadquartersAddress, LegalRepresentativeAddress, LegalRepresentativeEmail, CompanyNumber
+    */
+    protected UserLegal getMatrixWithoutOptionalFields() throws Exception {
+        if (BaseTest.MATRIX == null) {
+            UserNatural john = this.getJohn();
+            UserLegal user = new UserLegal();
+            user.setName("MartixSampleOrg");
+            user.setLegalPersonType(LegalPersonType.BUSINESS);
+            user.setLegalRepresentativeFirstName(john.getFirstName());
+            user.setLegalRepresentativeLastName(john.getLastName());
+            user.setLegalRepresentativeBirthday(john.getBirthday());
+            user.setLegalRepresentativeNationality(john.getNationality());
+            user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
+
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+            user.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
+            user.setEmail(john.getEmail());
+
+            BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
+        }
+        return BaseTest.MATRIX;
+    }
+
     protected BankAccount getJohnsAccount() throws Exception {
         return getJohnsAccount(false);
     }

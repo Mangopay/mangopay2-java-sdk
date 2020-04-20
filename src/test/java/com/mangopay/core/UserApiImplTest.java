@@ -4,6 +4,7 @@ import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -177,6 +178,18 @@ public class UserApiImplTest extends BaseTest {
     @Test
     public void updateLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
+        matrix.setLegalRepresentativeLastName(matrix.getLegalRepresentativeLastName() + " - CHANGED");
+
+        User userSaved = this.api.getUserApi().update(matrix);
+        User userFetched = this.api.getUserApi().get(matrix.getId());
+
+        assertEqualInputProps(userSaved, matrix);
+        assertEqualInputProps(userFetched, matrix);
+    }
+
+    @Test
+    public void updateLegalWithoutAddresses() throws Exception {
+        UserLegal matrix = this.getMatrixWithoutOptionalFields();
         matrix.setLegalRepresentativeLastName(matrix.getLegalRepresentativeLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(matrix);
