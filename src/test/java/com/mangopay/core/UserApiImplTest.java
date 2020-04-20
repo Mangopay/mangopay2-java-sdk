@@ -379,6 +379,17 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getActiveBankAccounts() {
+        try {
+            UserNatural john = this.getJohn();
+            BankAccount account = this.getJohnsAccount();
+            List<BankAccount> list = this.api.getUserApi().getActiveBankAccounts(john.getId(), true, null, null);
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    @Test
     public void getBankAccountsAndSortByCreationDate() throws Exception {
         UserNatural john = this.getJohn();
         this.getJohnsAccount();

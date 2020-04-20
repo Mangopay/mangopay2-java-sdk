@@ -19,7 +19,9 @@ import org.apache.commons.codec.binary.Base64;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -124,6 +126,18 @@ public class UserApiImpl extends ApiBase implements UserApi {
     @Override
     public List<BankAccount> getBankAccounts(String userId) throws Exception {
         return getBankAccounts(userId, null, null);
+    }
+
+    @Override
+    public List<BankAccount> getActiveBankAccounts(String userId, boolean active, Pagination pagination, Sorting sorting) throws Exception {
+        Map<String, String> filters = new HashMap<>();
+        filters.put("Active", String.valueOf(active));
+        return this.getList(BankAccount[].class, BankAccount.class, "users_allbankaccount", pagination, userId, filters, sorting);
+    }
+
+    @Override
+    public List<BankAccount> getActiveBankAccounts(String userId, boolean active) throws Exception {
+        return getActiveBankAccounts(userId, active, null, null);
     }
 
     @Override
