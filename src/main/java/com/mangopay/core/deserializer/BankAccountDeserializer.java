@@ -8,6 +8,8 @@ import com.mangopay.entities.BankAccount;
 import com.mangopay.entities.subentities.*;
 
 import java.lang.reflect.Type;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
     @Override
@@ -38,10 +40,7 @@ public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
                 bankAccount.setDetails(bankAccountDetailsCA);
                 break;
             case IBAN:
-                BankAccountDetailsIBAN bankAccountDetailsIBAN = new BankAccountDetailsIBAN();
-                bankAccountDetailsIBAN.setIban(jsonObject.get("IBAN").getAsString());
-                bankAccountDetailsIBAN.setBic(jsonObject.get("BIC").getAsString());
-                bankAccount.setDetails(bankAccountDetailsIBAN);
+                bankAccount.setDetails(getBankAccountDetailsIBANFromJson(jsonObject));
                 break;
             case OTHER:
                 BankAccountDetailsOTHER bankAccountDetailsOTHER = new BankAccountDetailsOTHER();
@@ -54,5 +53,20 @@ public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
                 return null;
         }
         return bankAccount;
+    }
+
+    private BankAccountDetailsIBAN getBankAccountDetailsIBANFromJson(JsonObject jObject) {
+        BankAccountDetailsIBAN bankAccountDetailsIBAN = new BankAccountDetailsIBAN();
+        try {
+            String iban = jObject.get("IBAN").getAsString();
+            String bic = jObject.get("BIC").getAsString();
+
+            bankAccountDetailsIBAN.setBic(bic);
+            bankAccountDetailsIBAN.setIban(iban);
+        } catch (NullPointerException e) {
+            Logger.getLogger(BankAccountDeserializer.class.getName()).log(Level.SEVERE, "Iban or BIC missing", e);
+        }
+
+        return bankAccountDetailsIBAN;
     }
 }

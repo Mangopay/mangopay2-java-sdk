@@ -43,7 +43,11 @@ public class BankAccountSerializer implements JsonSerializer<BankAccount> {
                 break;
             case IBAN:
                 BankAccountDetailsIBAN bankAccountDetailsIBAN = (BankAccountDetailsIBAN) src.getDetails();
-                object.addProperty("BIC", bankAccountDetailsIBAN.getBic());
+                /// issue 192 github
+                if (bankAccountDetailsIBAN.getBic() != null) {
+                    object.addProperty("BIC", bankAccountDetailsIBAN.getBic());
+                }
+
                 object.addProperty("IBAN", bankAccountDetailsIBAN.getIban());
                 break;
             case OTHER:

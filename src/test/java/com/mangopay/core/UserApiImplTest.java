@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.google.gson.JsonParser;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
@@ -210,6 +211,26 @@ public class UserApiImplTest extends BaseTest {
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
+    }
+
+    @Test
+    public void testIssue192() throws Exception {
+        BankAccount bankAccount = new RestTool(api, false).castResponseToEntity(BankAccount.class, JsonParser.parseString("{\n" +
+                "  \"Id\": \"54321012\",\n" +
+                "  \"CreationDate\": 1579534200,\n" +
+                "  \"UserId\": \"99887766\",\n" +
+                "  \"Type\": \"IBAN\",\n" +
+                "  \"OwnerName\": \"Passenger 3 User\",\n" +
+                "  \"OwnerAddress\": {\n" +
+                "    \"AddressLine1\": \"Teststreet\",\n" +
+                "    \"City\": \"Testcity\",\n" +
+                "    \"PostalCode\": \"12345\",\n" +
+                "    \"Country\": \"DE\"\n" +
+                "  },\n" +
+                "  \"IBAN\": \"FR7611808009101234567890147\"\n" +
+                "}").getAsJsonObject());
+
+        Assert.assertNotNull(bankAccount);
     }
 
     @Test
