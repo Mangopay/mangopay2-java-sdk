@@ -1,7 +1,10 @@
 package com.mangopay.core;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.mangopay.core.enumerations.*;
+import com.mangopay.core.serializer.BankAccountSerializer;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
 import org.junit.Assert;
@@ -215,22 +218,48 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void testIssue192() throws Exception {
-        BankAccount bankAccount = new RestTool(api, false).castResponseToEntity(BankAccount.class, JsonParser.parseString("{\n" +
+        BankAccount bankAccountWithoutBic = new RestTool(api, false).castResponseToEntity(BankAccount.class, JsonParser.parseString("{\n" +
                 "  \"Id\": \"54321012\",\n" +
                 "  \"CreationDate\": 1579534200,\n" +
                 "  \"UserId\": \"99887766\",\n" +
                 "  \"Type\": \"IBAN\",\n" +
                 "  \"OwnerName\": \"Passenger 3 User\",\n" +
                 "  \"OwnerAddress\": {\n" +
-                "    \"AddressLine1\": \"Teststreet\",\n" +
+                "    \"AddressLine1\": \"Teststreet1\",\n" +
+                "    \"AddressLine2\": \"Teststreet2\",\n" +
                 "    \"City\": \"Testcity\",\n" +
                 "    \"PostalCode\": \"12345\",\n" +
+                "    \"Region\": \"Region\",\n" +
                 "    \"Country\": \"DE\"\n" +
                 "  },\n" +
                 "  \"IBAN\": \"FR7611808009101234567890147\"\n" +
                 "}").getAsJsonObject());
 
-        Assert.assertNotNull(bankAccount);
+        BankAccount bankAccountWithBic = new RestTool(api, false).castResponseToEntity(BankAccount.class, JsonParser.parseString("{\n" +
+                "  \"Id\": \"54321012\",\n" +
+                "  \"CreationDate\": 1579534200,\n" +
+                "  \"UserId\": \"99887766\",\n" +
+                "  \"Type\": \"IBAN\",\n" +
+                "  \"OwnerName\": \"Passenger 3 User\",\n" +
+                "  \"OwnerAddress\": {\n" +
+                "    \"AddressLine1\": \"Teststreet1\",\n" +
+                "    \"AddressLine2\": \"Teststreet2\",\n" +
+                "    \"City\": \"Testcity\",\n" +
+                "    \"PostalCode\": \"12345\",\n" +
+                "    \"Region\": \"Region\",\n" +
+                "    \"Country\": \"DE\"\n" +
+                "  },\n" +
+                "  \"IBAN\": \"FR7611808009101234567890147\",\n" +
+                "  \"BIC\": \"BITR\"\n" +
+                "}").getAsJsonObject());
+        
+        String bankAccountWthoutBicJson = api.getGson().toJson(bankAccountWithoutBic);
+        String bankAccountWithBicJson = api.getGson().toJson(bankAccountWithBic);
+
+        Assert.assertNotNull(bankAccountWithoutBic);
+        Assert.assertNotNull(bankAccountWithBic);
+        Assert.assertFalse(bankAccountWthoutBicJson.contains("BIC"));
+        Assert.assertTrue(bankAccountWithBicJson.contains("BIC"));
     }
 
     @Test
