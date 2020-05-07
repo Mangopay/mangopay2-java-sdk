@@ -58,11 +58,9 @@ public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
     private BankAccountDetailsIBAN getBankAccountDetailsIBANFromJson(JsonObject jObject) {
         BankAccountDetailsIBAN bankAccountDetailsIBAN = new BankAccountDetailsIBAN();
         bankAccountDetailsIBAN.setIban(jObject.get("IBAN").getAsString());
-        try {
-            bankAccountDetailsIBAN.setBic(jObject.get("BIC").getAsString());
 
-        } catch (NullPointerException e) {
-            Logger.getLogger(BankAccountDeserializer.class.getName()).log(Level.SEVERE, "BIC missing", e);
+        if (jObject.get("BIC") != null) {
+            bankAccountDetailsIBAN.setBic(jObject.get("BIC").getAsString());
         }
 
         return bankAccountDetailsIBAN;

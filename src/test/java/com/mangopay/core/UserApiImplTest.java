@@ -217,24 +217,7 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    public void testIssue192() throws Exception {
-        BankAccount bankAccountWithoutBic = new RestTool(api, false).castResponseToEntity(BankAccount.class, JsonParser.parseString("{\n" +
-                "  \"Id\": \"54321012\",\n" +
-                "  \"CreationDate\": 1579534200,\n" +
-                "  \"UserId\": \"99887766\",\n" +
-                "  \"Type\": \"IBAN\",\n" +
-                "  \"OwnerName\": \"Passenger 3 User\",\n" +
-                "  \"OwnerAddress\": {\n" +
-                "    \"AddressLine1\": \"Teststreet1\",\n" +
-                "    \"AddressLine2\": \"Teststreet2\",\n" +
-                "    \"City\": \"Testcity\",\n" +
-                "    \"PostalCode\": \"12345\",\n" +
-                "    \"Region\": \"Region\",\n" +
-                "    \"Country\": \"DE\"\n" +
-                "  },\n" +
-                "  \"IBAN\": \"FR7611808009101234567890147\"\n" +
-                "}").getAsJsonObject());
-
+    public void testDeserializeBankAccount() throws Exception {
         BankAccount bankAccountWithBic = new RestTool(api, false).castResponseToEntity(BankAccount.class, JsonParser.parseString("{\n" +
                 "  \"Id\": \"54321012\",\n" +
                 "  \"CreationDate\": 1579534200,\n" +
@@ -252,14 +235,36 @@ public class UserApiImplTest extends BaseTest {
                 "  \"IBAN\": \"FR7611808009101234567890147\",\n" +
                 "  \"BIC\": \"BITR\"\n" +
                 "}").getAsJsonObject());
-        
-        String bankAccountWthoutBicJson = api.getGson().toJson(bankAccountWithoutBic);
+
         String bankAccountWithBicJson = api.getGson().toJson(bankAccountWithBic);
 
-        Assert.assertNotNull(bankAccountWithoutBic);
         Assert.assertNotNull(bankAccountWithBic);
-        Assert.assertFalse(bankAccountWthoutBicJson.contains("BIC"));
         Assert.assertTrue(bankAccountWithBicJson.contains("BIC"));
+    }
+
+    @Test
+    public void testDeserializeBankAccountWithoutBic () throws Exception {
+        BankAccount bankAccountWithoutBic = new RestTool(api, false).castResponseToEntity(BankAccount.class, JsonParser.parseString("{\n" +
+                "  \"Id\": \"54321012\",\n" +
+                "  \"CreationDate\": 1579534200,\n" +
+                "  \"UserId\": \"99887766\",\n" +
+                "  \"Type\": \"IBAN\",\n" +
+                "  \"OwnerName\": \"Passenger 3 User\",\n" +
+                "  \"OwnerAddress\": {\n" +
+                "    \"AddressLine1\": \"Teststreet1\",\n" +
+                "    \"AddressLine2\": \"Teststreet2\",\n" +
+                "    \"City\": \"Testcity\",\n" +
+                "    \"PostalCode\": \"12345\",\n" +
+                "    \"Region\": \"Region\",\n" +
+                "    \"Country\": \"DE\"\n" +
+                "  },\n" +
+                "  \"IBAN\": \"FR7611808009101234567890147\"\n" +
+                "}").getAsJsonObject());
+
+        String bankAccountWthoutBicJson = api.getGson().toJson(bankAccountWithoutBic);
+
+        Assert.assertNotNull(bankAccountWithoutBic);
+        Assert.assertFalse(bankAccountWthoutBicJson.contains("BIC"));
     }
 
     @Test
