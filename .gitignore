@@ -15,3 +15,8 @@ nbactions.xml
 /target/
 *.iml
 *.gpg
+
+### Eclipse ###
+.classpath
+.project
+.settings
