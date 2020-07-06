@@ -682,7 +682,7 @@ public abstract class BaseTest {
 
         String data = "data=" + cardRegistration.getPreregistrationData() +
                 "&accessKeyRef=" + cardRegistration.getAccessKey() +
-                "&cardNumber=4970100000000154" +
+                "&cardNumber=4972485830400064" +
                 "&cardExpirationDate=0722" +
                 "&cardCvx=123";
 
