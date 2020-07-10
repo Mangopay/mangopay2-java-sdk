@@ -1,4 +1,4 @@
-## [2.11.0] - 2020-07-10
+## [2.11.0] - 2020-07-10 *unreleased
 - USER_KYC_REGULAR has been added as a new Event. Thanks to it, you are now able to know when all the needed KYCs for a user have been validated and its KYCLevel is updated.
 - Release adds typing for EventType values KYC_OUTDATED USER_KYC_REGULAR and USER_KYC_LIGHT
 - Bug Fix -> Serializing certain address fields, filtering bank accounts
