@@ -133,6 +133,28 @@ public interface UserApi {
      * Gets first page of all bank accounts of user.
      *
      * @param userId User identifier to get bank accounts of.
+     * @param active Identifier if the returned list should contain only active accounts.
+     * @return Collection of bank accounts of user.
+     * @throws Exception
+     */
+    List<BankAccount> getActiveBankAccounts(String userId, boolean active) throws Exception;
+
+    /**
+     * Gets all bank accounts of user.
+     *
+     * @param userId     User identifier to get bank accounts of.
+     * @param active Identifier if the returned list should contain only active accounts.
+     * @param pagination Pagination object.
+     * @param sorting    Sorting object.
+     * @return Collection of bank accounts of user.
+     * @throws Exception
+     */
+    List<BankAccount> getActiveBankAccounts(String userId, boolean active, Pagination pagination, Sorting sorting) throws Exception;
+
+    /**
+     * Gets first page of all bank accounts of user.
+     *
+     * @param userId User identifier to get bank accounts of.
      * @return Collection of bank accounts of user.
      * @throws Exception
      */

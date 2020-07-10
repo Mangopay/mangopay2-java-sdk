@@ -442,7 +442,7 @@ public class RestTool {
 
                 if (k.getKey() == null) continue;
 
-                if (k.getKey().equals("X-RateLimit-Remaining")) {
+                if (k.getKey().equals("X-RateLimit-Remaining") || k.getKey().equals("X-RateLimit-Remaining".toLowerCase())) {
                     if (updatedRateLimits == null) {
                         updatedRateLimits = initRateLimits();
                     }
@@ -452,7 +452,7 @@ public class RestTool {
                     updatedRateLimits.get(2).setCallsRemaining(Integer.valueOf(callsRemaining.get(1)));
                     updatedRateLimits.get(3).setCallsRemaining(Integer.valueOf(callsRemaining.get(0)));
                 }
-                if (k.getKey().equals("X-RateLimit")) {
+                if (k.getKey().equals("X-RateLimit") || k.getKey().equals("X-RateLimit".toLowerCase())) {
                     if (updatedRateLimits == null) {
                         updatedRateLimits = initRateLimits();
                     }
@@ -462,7 +462,7 @@ public class RestTool {
                     updatedRateLimits.get(2).setCallsMade(Integer.valueOf(callsMade.get(1)));
                     updatedRateLimits.get(3).setCallsMade(Integer.valueOf(callsMade.get(0)));
                 }
-                if (k.getKey().equals("X-RateLimit-Reset")) {
+                if (k.getKey().equals("X-RateLimit-Reset") || k.getKey().equals("X-RateLimit-Reset".toLowerCase())) {
                     if (updatedRateLimits == null) {
                         updatedRateLimits = initRateLimits();
                     }
@@ -472,13 +472,13 @@ public class RestTool {
                     updatedRateLimits.get(2).setResetTimeMillis(Long.valueOf(resetTimes.get(1)));
                     updatedRateLimits.get(3).setResetTimeMillis(Long.valueOf(resetTimes.get(0)));
                 }
-                if (k.getKey().equals("X-Number-Of-Pages")) {
+                if (k.getKey().equals("X-Number-Of-Pages") || k.getKey().equals("X-Number-Of-Pages".toLowerCase())) {
                     this.pagination.setTotalPages(Integer.parseInt(v));
                 }
-                if (k.getKey().equals("X-Number-Of-Items")) {
+                if (k.getKey().equals("X-Number-Of-Items") || k.getKey().equals("X-Number-Of-Items".toLowerCase())) {
                     this.pagination.setTotalItems(Integer.parseInt(v));
                 }
-                if (k.getKey().equals("Link")) {
+                if (k.getKey().equals("Link") || k.getKey().equals("Link".toLowerCase())) {
                     String linkValue = v;
                     String[] links = linkValue.split(",");
 

@@ -1,8 +1,6 @@
 package com.mangopay.core.serializer;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
+import com.google.gson.*;
 import com.mangopay.core.enumerations.PersonType;
 import com.mangopay.entities.User;
 import com.mangopay.entities.UserLegal;
@@ -14,11 +12,18 @@ public class UserSerializer implements JsonSerializer<User> {
     @Override
     public JsonElement serialize(User src, Type typeOfSrc, JsonSerializationContext context) {
         PersonType personType = src.getPersonType();
+        JsonObject object = new Gson().toJsonTree(src, typeOfSrc).getAsJsonObject();
         if (personType.equals(PersonType.LEGAL)) {
-            return context.serialize(src, UserLegal.class);
+            if (((UserLegal)src).getHeadquartersAddress() != null && ((UserLegal)src).getHeadquartersAddress().allFieldsNull())
+                object.add("HeadquartersAddress", null);
+            if (((UserLegal)src).getLegalRepresentativeAddress() != null &&((UserLegal)src).getLegalRepresentativeAddress().allFieldsNull())
+                object.add("LegalRepresentativeAddress", null);
+            return object;
         } else {
             if (personType.equals(PersonType.NATURAL)) {
-                return context.serialize(src, UserNatural.class);
+                if (((UserNatural)src).getAddress() != null && ((UserNatural)src).getAddress().allFieldsNull())
+                    object.add("Address", null);
+                return object;
             } else {
                 throw new IllegalArgumentException("Invalid user JSON:" + context.toString());
             }
