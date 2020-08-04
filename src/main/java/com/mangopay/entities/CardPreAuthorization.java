@@ -35,6 +35,12 @@ public class CardPreAuthorization extends EntityBase {
     private Money debitedFunds;
 
     /**
+     *
+     * */
+    @SerializedName("RemainingFunds")
+    private Money remainingFunds;
+
+    /**
      * Status of the PreAuthorization.
      */
     @SerializedName("Status")
@@ -258,6 +264,14 @@ public class CardPreAuthorization extends EntityBase {
         this.securityInfo = securityInfo;
     }
 
+    public Money getRemainingFunds() {
+        return remainingFunds;
+    }
+
+    public void setRemainingFunds(Money remainingFunds) {
+        this.remainingFunds = remainingFunds;
+    }
+
     /**
      * Gets map which property is an object and what type of object.
      * To be overridden in child class if has any sub objects.
@@ -270,6 +284,7 @@ public class CardPreAuthorization extends EntityBase {
         HashMap<String, Type> result = new HashMap<>();
 
         result.put("DebitedFunds", Money.class);
+        result.put("RemainingFunds", Money.class);
         result.put("SecurityInfo", SecurityInfo.class);
 
         return result;
