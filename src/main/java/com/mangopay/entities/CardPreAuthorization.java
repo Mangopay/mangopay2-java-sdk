@@ -128,6 +128,9 @@ public class CardPreAuthorization extends EntityBase {
     @SerializedName("SecurityInfo")
     private SecurityInfo securityInfo;
 
+    @SerializedName("MultiCapture")
+    private Boolean multiCapture;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -263,6 +266,10 @@ public class CardPreAuthorization extends EntityBase {
     public void setSecurityInfo(SecurityInfo securityInfo) {
         this.securityInfo = securityInfo;
     }
+
+    public Boolean getMultiCapture() { return multiCapture; }
+
+    public void setMultiCapture(Boolean multiCapture) { this.multiCapture = multiCapture; }
 
     public Money getRemainingFunds() {
         return remainingFunds;
