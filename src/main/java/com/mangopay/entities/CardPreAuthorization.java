@@ -9,6 +9,7 @@ import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
 import com.mangopay.core.enumerations.PreAuthorizationStatus;
 import com.mangopay.core.enumerations.SecureMode;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -121,6 +122,9 @@ public class CardPreAuthorization extends EntityBase {
 
     @SerializedName("SecurityInfo")
     private SecurityInfo securityInfo;
+
+    @SerializedName("MultiCapture")
+    private Boolean multiCapture;
 
     public String getAuthorId() {
         return authorId;
@@ -257,6 +261,10 @@ public class CardPreAuthorization extends EntityBase {
     public void setSecurityInfo(SecurityInfo securityInfo) {
         this.securityInfo = securityInfo;
     }
+
+    public Boolean getMultiCapture() { return multiCapture; }
+
+    public void setMultiCapture(Boolean multiCapture) { this.multiCapture = multiCapture; }
 
     /**
      * Gets map which property is an object and what type of object.
