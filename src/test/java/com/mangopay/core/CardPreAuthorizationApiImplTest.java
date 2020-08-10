@@ -52,6 +52,7 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         CardPreAuthorization getCardPreAuthorization = this.api.getCardPreAuthorizationApi().get(cardPreAuthorization.getId());
 
         assertEquals(cardPreAuthorization.getId(), getCardPreAuthorization.getId());
+       //assertNotNull(cardPreAuthorization.getRemainingFunds());
         assertTrue(getCardPreAuthorization.getStatus() == PreAuthorizationStatus.SUCCEEDED);
         assertEquals("000000", getCardPreAuthorization.getResultCode());
     }

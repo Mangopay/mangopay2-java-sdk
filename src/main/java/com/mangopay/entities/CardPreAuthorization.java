@@ -9,7 +9,6 @@ import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
 import com.mangopay.core.enumerations.PreAuthorizationStatus;
 import com.mangopay.core.enumerations.SecureMode;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -34,6 +33,12 @@ public class CardPreAuthorization extends EntityBase {
      */
     @SerializedName("DebitedFunds")
     private Money debitedFunds;
+
+    /**
+     *
+     * */
+    @SerializedName("RemainingFunds")
+    private Money remainingFunds;
 
     /**
      * Status of the PreAuthorization.
@@ -266,6 +271,14 @@ public class CardPreAuthorization extends EntityBase {
 
     public void setMultiCapture(Boolean multiCapture) { this.multiCapture = multiCapture; }
 
+    public Money getRemainingFunds() {
+        return remainingFunds;
+    }
+
+    public void setRemainingFunds(Money remainingFunds) {
+        this.remainingFunds = remainingFunds;
+    }
+
     /**
      * Gets map which property is an object and what type of object.
      * To be overridden in child class if has any sub objects.
@@ -278,6 +291,7 @@ public class CardPreAuthorization extends EntityBase {
         HashMap<String, Type> result = new HashMap<>();
 
         result.put("DebitedFunds", Money.class);
+        result.put("RemainingFunds", Money.class);
         result.put("SecurityInfo", SecurityInfo.class);
 
         return result;

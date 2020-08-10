@@ -652,6 +652,9 @@ public abstract class BaseTest {
         cardPreAuthorization.setDebitedFunds(new Money());
         cardPreAuthorization.getDebitedFunds().setCurrency(CurrencyIso.EUR);
         cardPreAuthorization.getDebitedFunds().setAmount(500);
+        cardPreAuthorization.setRemainingFunds(new Money());
+        cardPreAuthorization.getRemainingFunds().setCurrency(CurrencyIso.EUR);
+        cardPreAuthorization.getRemainingFunds().setAmount(500);
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
         return cardPreAuthorization;
