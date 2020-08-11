@@ -1,3 +1,6 @@
+## [2.11.2] - 2020-08-11
+- Fixed PayInDeserializer not setting the WireReference from the JSON response. 
+
 ## [2.11.1] - 2020-08-10
 - New MultiCapture and RemainingFunds Parameters in Preauthorization object
 - BankingAlias Object returned now fixed, returns complete info
