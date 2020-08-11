@@ -143,7 +143,7 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("BankingAliasId") && !object.get("BankingAliasId").isJsonNull())
                     payInExecutionDetailsBankingAlias.setBankingAliasId(object.get("BankingAliasId").getAsString());
                 if (object.has("WireReference") && !object.get("WireReference").isJsonNull())
-                    payInExecutionDetailsBankingAlias.setBankingAliasId(object.get("WireReference").getAsString());
+                    payInExecutionDetailsBankingAlias.setWireReference(object.get("WireReference").getAsString());
                 if (object.has("DebitedBankAccount") && !object.get("DebitedBankAccount").isJsonNull())
                     payInExecutionDetailsBankingAlias.setDebitedBankAccount(
                             (DebitedBankAccount) context.deserialize(object.get("DebitedBankAccount"), DebitedBankAccount.class)
