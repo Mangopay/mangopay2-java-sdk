@@ -48,7 +48,7 @@ publishing {
             pom {
                 groupId 'com.mangopay'
                 artifactId 'mangopay2-java-sdk'
-                version '2.11.0'
+                version '2.11.1'
 
                 from(components.java)
 
