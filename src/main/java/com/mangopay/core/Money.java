@@ -18,9 +18,9 @@ public class Money extends Dto {
      * The currency amount of money, in cents
      */
     @SerializedName("Amount")
-    private int amount;
+    private long amount;
 
-    public Money(CurrencyIso currency, int amount) {
+    public Money(CurrencyIso currency, long amount) {
         this.currency = currency;
         this.amount = amount;
     }
@@ -32,7 +32,7 @@ public class Money extends Dto {
         return currency;
     }
 
-    public int getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
@@ -41,7 +41,7 @@ public class Money extends Dto {
         return this;
     }
 
-    public Money setAmount(int amount) {
+    public Money setAmount(long amount) {
         this.amount = amount;
         return this;
     }
