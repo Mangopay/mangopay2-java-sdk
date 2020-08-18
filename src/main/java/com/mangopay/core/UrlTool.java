@@ -120,7 +120,13 @@ class UrlTool {
         String result = "";
 
         try {
-            result = (new URL(root.getConfig().getBaseUrl())).getProtocol() + "://" + this.getHost() + restUrl;
+            int port = new URL(root.getConfig().getBaseUrl()).getPort();
+            String protocol = new URL(root.getConfig().getBaseUrl()).getProtocol() + "://" + this.getHost();
+            if (port > 0) {
+                result = protocol + ":" + port + restUrl;
+            } else {
+                result = protocol + restUrl;
+            }
         } catch (Exception ex) {
         }
 
