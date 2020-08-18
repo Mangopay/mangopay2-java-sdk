@@ -1,10 +1,7 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Billing;
-import com.mangopay.core.EntityBase;
-import com.mangopay.core.Money;
-import com.mangopay.core.SecurityInfo;
+import com.mangopay.core.*;
 import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
 import com.mangopay.core.enumerations.PreAuthorizationStatus;
@@ -211,8 +208,17 @@ public class CardPreAuthorization extends EntityBase {
         this.statementDescriptor = statementDescriptor;
     }
 
-    public String getSecureModeNeeded() {
-        return secureModeNeeded;
+    /**
+     * Is SecureMode Needed
+     *
+     * @return True if is needed
+     */
+    public boolean isSecureModeNeeded() {
+        if (ObjectTool.nonNull(secureModeNeeded)) {
+            return Boolean.parseBoolean(secureModeNeeded);
+        } else {
+            return false;
+        }
     }
 
     public void setSecureModeNeeded(String secureModeNeeded) {
