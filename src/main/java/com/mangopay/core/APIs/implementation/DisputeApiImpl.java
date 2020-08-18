@@ -158,7 +158,7 @@ public class DisputeApiImpl extends ApiBase implements DisputeApi {
 
     @Override
     public void createDisputePage(String disputeId, String documentId, byte[] binaryData) throws Exception {
-        this.createDisputePage(null, disputeId, documentId);
+        this.createDisputePage(null, disputeId, documentId, binaryData);
     }
 
     @Override
@@ -174,13 +174,11 @@ public class DisputeApiImpl extends ApiBase implements DisputeApi {
 
     @Override
     public void createDisputePage(String disputeId, String documentId, String filePath) throws IOException, Exception {
-
         createDisputePage(null, disputeId, documentId, filePath);
     }
 
     @Override
     public void createDisputePage(String idempotencyKey, String disputeId, String documentId, String filePath) throws IOException, Exception {
-
         byte[] fileArray;
         Path path = Paths.get(filePath);
         fileArray = Files.readAllBytes(path);
