@@ -20,7 +20,7 @@ dependencies {
 test {
     enabled = true
     exclude 'com/mangopay/core/BankingAliasApiImplTest.class'
-    systemProperty "https.protocols", "TLSv1.2,TLSv1.1,TLSv1"
+    systemProperty "https.protocols", "TLSv1.2"
     testLogging {
         events "failed"
         exceptionFormat "full"
