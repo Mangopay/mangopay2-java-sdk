@@ -27,5 +27,10 @@ public enum KycStatus {
     /**
      * REFUSED KYC status.
      */
-    REFUSED
+    REFUSED,
+
+    /**
+     * OUT_OF_DATE kyc status
+     */
+    OUT_OF_DATE
 }
