@@ -17,7 +17,7 @@ public class UboDeclaration extends EntityBase {
      * Date of process.
      */
     @SerializedName("ProcessedDate")
-    private int processedDate;
+    private long processedDate;
 
     /**
      * Declaration status.
@@ -47,12 +47,8 @@ public class UboDeclaration extends EntityBase {
     @SerializedName("Ubos")
     private ArrayList<Ubo> ubos = new ArrayList<>();
 
-    public int getProcessedDate() {
+    public Long getProcessedDate() {
         return processedDate;
-    }
-
-    public void setProcessedDate(int processedDate) {
-        this.processedDate = processedDate;
     }
 
     public UboDeclarationStatus getStatus() {
