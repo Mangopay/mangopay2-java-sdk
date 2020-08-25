@@ -1,3 +1,12 @@
+## [2.11.3] - 2020-08-24
+- As part of KYC improvements, we are adding OUT_OF_DATE as a enum for KYC documents
+- Due to changes to the API we are no longer accepting connections with a TLS certificate of 1.1 or lower, this concerns in particular .NET frameworks 4.5 and earlier. This update applies a fix which forced the application to use TLS 1.2. (edited)
+- Fixed port settings in setBaseUrl() for use of Mock API - #206
+- ProcessedDate is now a long #170
+- Modified function to reflect payinExecutionDetailsDirect #157
+- Added binaryData as a parameter to resolve DisputeApi defect #195
+- Enabled TLS v1.2 for Java 7
+
 ## [2.11.2] - 2020-08-11
 - Fixed PayInDeserializer not setting the WireReference from the JSON response. 
 
