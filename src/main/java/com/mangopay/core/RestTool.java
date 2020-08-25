@@ -41,7 +41,7 @@ public class RestTool {
     private Map<String, String> requestHttpHeaders;
 
     // HTTP communication object
-    private HttpsURLConnection connection;
+    private HttpURLConnection connection;
 
     // request type for current request
     private String requestType;
@@ -314,8 +314,10 @@ public class RestTool {
             connection = (HttpURLConnection)url.openConnection(proxy);
             */
 
-            connection = (HttpsURLConnection) url.openConnection();
-            connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
+            connection = (HttpURLConnection) url.openConnection();
+            if (connection instanceof HttpsURLConnection) {
+                configureSslContext((HttpsURLConnection) connection);
+            }
             // Get connection timeout from config
             connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
             // Get read timeout from config
@@ -421,6 +423,10 @@ public class RestTool {
         }
 
         return response;
+    }
+
+    private void configureSslContext(HttpsURLConnection connection) throws KeyManagementException, NoSuchAlgorithmException {
+        connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
     }
 
     private SSLContext getSSLContext() throws NoSuchAlgorithmException, KeyManagementException {
@@ -531,8 +537,11 @@ public class RestTool {
             if (this.debugMode)
                 logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
 
-            connection = (HttpsURLConnection) url.openConnection();
-            connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
+            connection = (HttpURLConnection) url.openConnection();
+
+            if (connection instanceof HttpsURLConnection) {
+                configureSslContext((HttpsURLConnection) connection);
+            }
 
             // set request method
             connection.setRequestMethod(this.requestType);
