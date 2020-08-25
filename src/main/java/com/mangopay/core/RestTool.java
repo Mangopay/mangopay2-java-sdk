@@ -10,10 +10,15 @@ import com.mangopay.entities.RateLimit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -27,16 +32,16 @@ public class RestTool {
     private MangoPayApi root;
 
     // enable/disable debugging
-    private Boolean debugMode;
+    private boolean debugMode;
 
     // variable to flag that in request authentication data are required
-    private Boolean authRequired;
+    private boolean authRequired;
 
     // array with HTTP header to send with request
     private Map<String, String> requestHttpHeaders;
 
     // HTTP communication object
-    private HttpURLConnection connection;
+    private HttpsURLConnection connection;
 
     // request type for current request
     private String requestType;
@@ -58,9 +63,8 @@ public class RestTool {
      *
      * @param root         Root/parent instance that holds the OAuthToken and Configuration instance.
      * @param authRequired Defines whether request authentication is required.
-     * @throws Exception
      */
-    public RestTool(MangoPayApi root, Boolean authRequired) throws Exception {
+    public RestTool(MangoPayApi root, Boolean authRequired) {
         this.root = root;
         this.authRequired = authRequired;
         this.debugMode = this.root.getConfig().isDebugMode();
@@ -88,9 +92,7 @@ public class RestTool {
      * @param value Header value.
      */
     public void addRequestHttpHeader(final String key, final String value) {
-        addRequestHttpHeader(new HashMap<String, String>() {{
-            put(key, value);
-        }});
+        addRequestHttpHeader(Collections.singletonMap(key, value));
     }
 
     /**
@@ -141,13 +143,7 @@ public class RestTool {
         this.requestType = requestType;
         this.requestData = requestData;
 
-        T responseResult = this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
-
-        if (pagination != null) {
-            pagination = this.pagination;
-        }
-
-        return responseResult;
+        return this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
     }
 
     /**
@@ -233,13 +229,7 @@ public class RestTool {
         this.requestType = requestType;
         this.requestData = requestData;
 
-        List<T> responseResult = this.doRequestList(classOfT, classOfTItem, urlMethod, pagination, additionalUrlParams);
-
-        if (pagination != null) {
-            pagination = this.pagination;
-        }
-
-        return responseResult;
+        return this.doRequestList(classOfT, classOfTItem, urlMethod, pagination, additionalUrlParams);
     }
 
     /**
@@ -314,7 +304,6 @@ public class RestTool {
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
-
             if (this.debugMode) {
                 logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
             }
@@ -325,7 +314,8 @@ public class RestTool {
             connection = (HttpURLConnection)url.openConnection(proxy);
             */
 
-            connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
             // Get connection timeout from config
             connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
             // Get read timeout from config
@@ -433,6 +423,12 @@ public class RestTool {
         return response;
     }
 
+    private SSLContext getSSLContext() throws NoSuchAlgorithmException, KeyManagementException {
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+        sslContext.init(null, null, new SecureRandom());
+        return sslContext;
+    }
+
     private void readResponseHeaders(HttpURLConnection conn) {
         List<RateLimit> updatedRateLimits = null;
         for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
@@ -535,7 +531,8 @@ public class RestTool {
             if (this.debugMode)
                 logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
 
-            connection = (HttpURLConnection) url.openConnection();
+            connection = (HttpsURLConnection) url.openConnection();
+            connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
 
             // set request method
             connection.setRequestMethod(this.requestType);
