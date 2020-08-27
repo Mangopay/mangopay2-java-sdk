@@ -28,7 +28,7 @@ dependencies {
 }
 ```
 
-```
+```xml
 <dependency>
   <groupId>com.mangopay</groupId>
   <artifactId>mangopay2-java-sdk</artifactId>
@@ -64,7 +64,7 @@ Using the credential info from the signup process above, you should then set `ap
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production
 environment, set it to `https://api.mangopay.com`.
-```
+```java
     import com.mangopay.MangoPayApi;
 
     // ...
@@ -82,7 +82,7 @@ environment, set it to `https://api.mangopay.com`.
 
 Sample usage
 -------------------------------------------------
-```
+```java
     import com.mangopay.MangoPayApi;
     import com.mangopay.entities.User;
     import com.mangopay.entities.BankAccount;
