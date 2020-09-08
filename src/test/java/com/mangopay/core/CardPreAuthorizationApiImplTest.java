@@ -24,6 +24,7 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         assertTrue(cardPreAuthorization.getPaymentStatus() == PaymentStatus.WAITING);
         assertTrue(cardPreAuthorization.getExecutionType() == PreAuthorizationExecutionType.DIRECT);
         assertNull(cardPreAuthorization.getPayInId());
+        assertNotNull(cardPreAuthorization.getRemainingFunds());
     }
 
     @Test
@@ -52,7 +53,7 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         CardPreAuthorization getCardPreAuthorization = this.api.getCardPreAuthorizationApi().get(cardPreAuthorization.getId());
 
         assertEquals(cardPreAuthorization.getId(), getCardPreAuthorization.getId());
-       //assertNotNull(cardPreAuthorization.getRemainingFunds());
+        assertNotNull(getCardPreAuthorization.getRemainingFunds());
         assertTrue(getCardPreAuthorization.getStatus() == PreAuthorizationStatus.SUCCEEDED);
         assertEquals("000000", getCardPreAuthorization.getResultCode());
     }
@@ -66,6 +67,7 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
 
         assertTrue(resultCardPreAuthorization.getStatus() == PreAuthorizationStatus.SUCCEEDED);
         assertTrue(resultCardPreAuthorization.getPaymentStatus() == PaymentStatus.CANCELED);
+        assertNotNull(resultCardPreAuthorization.getRemainingFunds());
     }
 
 }
