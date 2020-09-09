@@ -22,6 +22,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
     public PayIn deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject object = json.getAsJsonObject();
         PayIn payIn = new Gson().fromJson(object.toString(), PayIn.class);
+        if (payIn.getPaymentType() == null)
+            return null;
         switch (payIn.getPaymentType()) {
             case BANK_WIRE:
                 PayInPaymentDetailsBankWire payInDetails = new PayInPaymentDetailsBankWire();
@@ -151,6 +153,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
 
                 payIn.setExecutionDetails(payInExecutionDetailsBankingAlias);
                 break;
+            default:
+                return null;
         }
         return payIn;
     }
