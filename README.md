@@ -100,11 +100,13 @@ Sample usage
     john.Tag += " - CHANGED";
     api.Users.update(john);
 
-    // get all users (with pagination)
+    // get all users (with pagination and sorting)
     Pagination pagination = new Pagination(1, 8); // get 1st page, 8 items per page
-    List<User> users = api.Users.getAll(pagination);
+    Sorting sort = new Sorting();
+    sort.addField("SortingField", SortDirection.asc); // Sorting is an enum, its values: none, asc, desc
+    List<User> users = api.Users.getAll(pagination, sort);
 
     // get his bank accounts
     pagination = new Pagination(2, 10); // get 2nd page, 10 items per page
-    List<BankAccount> accounts = api.Users.getBankAccounts(john.Id, pagination);
+    List<BankAccount> accounts = api.Users.getBankAccounts(john.Id, pagination, sort);
 ```
