@@ -38,6 +38,12 @@ public class UboDeclaration extends EntityBase {
     private String message;
 
     /**
+    * The User Id
+     */
+    @SerializedName("UserId")
+    private String userId;
+
+    /**
      * Listed representations of natural users declared as UBOs.
      * When transmitting a UBO declaration (POST / PUT), must be an array of
      * IDs (string) of the users to be declared as UBOs.
@@ -83,6 +89,10 @@ public class UboDeclaration extends EntityBase {
         this.ubos = ubos;
     }
 
+    public String getUserId() { return userId; }
+
+    public void setUserId(String userId) { this.userId = userId; }
+
     @Override
     public ArrayList<String> getReadOnlyProperties() {
         ArrayList<String> props = super.getReadOnlyProperties();
@@ -103,6 +113,4 @@ public class UboDeclaration extends EntityBase {
 
         return result;
     }
-
-
 }
