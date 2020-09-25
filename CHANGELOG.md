@@ -1,3 +1,9 @@
+## [2.11.4] - 2020-09-25
+- Missing UserID added in UboDeclaration process
+- New endpoint to support changes to Card Validation process (please listen out for product announcements)
+- Testing added for added for RemainingFunds feature
+- Improved gson support and minor fixes
+
 ## [2.11.3] - 2020-08-24
 - As part of KYC improvements, we are adding OUT_OF_DATE as a enum for KYC documents
 - Due to changes to the API we are no longer accepting connections with a TLS certificate of 1.1 or lower, this concerns in particular .NET frameworks 4.5 and earlier. This update applies a fix which forced the application to use TLS 1.2. (edited)
