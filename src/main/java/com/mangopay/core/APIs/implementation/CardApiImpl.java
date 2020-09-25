@@ -62,4 +62,10 @@ public class CardApiImpl extends ApiBase implements CardApi {
         return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "card_get_preauthorization",null,cardId);
     }
 
+    @Override
+    public Card validate(String cardId) throws Exception {
+        return this.getObject(Card.class, "card_validate", cardId);
+    }
+
+
 }
