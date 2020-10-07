@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.entities.BankingAlias;
 import com.mangopay.entities.Wallet;
 import org.junit.Test;
@@ -7,8 +8,7 @@ import org.junit.Test;
 import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * Tests concerning the banking alias API.
@@ -20,6 +20,7 @@ public class BankingAliasApiImplTest extends BaseTest {
         BankingAlias bankingAlias = getJohnsBankingAlias();
 
         assertTrue(bankingAlias.getId().length() > 0);
+        assertNotNull(bankingAlias.getDetails());
     }
 
     @Test
@@ -28,6 +29,8 @@ public class BankingAliasApiImplTest extends BaseTest {
         BankingAlias getBankingAlias = this.api.getBankingAliases().get(bankingAlias.getId());
 
         assertEquals(bankingAlias.getId(), getBankingAlias.getId());
+        assertNotNull(bankingAlias.getDetails());
+        assertNotNull(getBankingAlias.getDetails());
     }
 
     @Test

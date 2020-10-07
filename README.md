@@ -24,15 +24,15 @@ repositories {
 }
 
 dependencies {
-    compile 'com.mangopay:mangopay2-java-sdk:1.2.0'
+    compile 'com.mangopay:mangopay2-java-sdk:2.11.4'
 }
 ```
 
-```
+```xml
 <dependency>
   <groupId>com.mangopay</groupId>
   <artifactId>mangopay2-java-sdk</artifactId>
-  <version>1.2.0</version>
+  <version>2.11.4</version>
 </dependency>
 ```
 
@@ -64,7 +64,7 @@ Using the credential info from the signup process above, you should then set `ap
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production
 environment, set it to `https://api.mangopay.com`.
-```
+```java
     import com.mangopay.MangoPayApi;
 
     // ...
@@ -82,7 +82,7 @@ environment, set it to `https://api.mangopay.com`.
 
 Sample usage
 -------------------------------------------------
-```
+```java
     import com.mangopay.MangoPayApi;
     import com.mangopay.entities.User;
     import com.mangopay.entities.BankAccount;
@@ -100,11 +100,13 @@ Sample usage
     john.Tag += " - CHANGED";
     api.Users.update(john);
 
-    // get all users (with pagination)
+    // get all users (with pagination and sorting)
     Pagination pagination = new Pagination(1, 8); // get 1st page, 8 items per page
-    List<User> users = api.Users.getAll(pagination);
+    Sorting sort = new Sorting();
+    sort.addField("SortingField", SortDirection.asc); // Sorting is an enum, its values: none, asc, desc
+    List<User> users = api.Users.getAll(pagination, sort);
 
     // get his bank accounts
     pagination = new Pagination(2, 10); // get 2nd page, 10 items per page
-    List<BankAccount> accounts = api.Users.getBankAccounts(john.Id, pagination);
+    List<BankAccount> accounts = api.Users.getBankAccounts(john.Id, pagination, sort);
 ```

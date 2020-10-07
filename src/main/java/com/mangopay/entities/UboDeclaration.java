@@ -17,7 +17,7 @@ public class UboDeclaration extends EntityBase {
      * Date of process.
      */
     @SerializedName("ProcessedDate")
-    private int processedDate;
+    private long processedDate;
 
     /**
      * Declaration status.
@@ -38,6 +38,12 @@ public class UboDeclaration extends EntityBase {
     private String message;
 
     /**
+    * The User Id
+     */
+    @SerializedName("UserId")
+    private String userId;
+
+    /**
      * Listed representations of natural users declared as UBOs.
      * When transmitting a UBO declaration (POST / PUT), must be an array of
      * IDs (string) of the users to be declared as UBOs.
@@ -47,12 +53,8 @@ public class UboDeclaration extends EntityBase {
     @SerializedName("Ubos")
     private ArrayList<Ubo> ubos = new ArrayList<>();
 
-    public int getProcessedDate() {
+    public Long getProcessedDate() {
         return processedDate;
-    }
-
-    public void setProcessedDate(int processedDate) {
-        this.processedDate = processedDate;
     }
 
     public UboDeclarationStatus getStatus() {
@@ -87,6 +89,10 @@ public class UboDeclaration extends EntityBase {
         this.ubos = ubos;
     }
 
+    public String getUserId() { return userId; }
+
+    public void setUserId(String userId) { this.userId = userId; }
+
     @Override
     public ArrayList<String> getReadOnlyProperties() {
         ArrayList<String> props = super.getReadOnlyProperties();
@@ -107,6 +113,4 @@ public class UboDeclaration extends EntityBase {
 
         return result;
     }
-
-
 }

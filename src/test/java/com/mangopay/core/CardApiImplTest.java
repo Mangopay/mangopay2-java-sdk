@@ -52,4 +52,15 @@ public class CardApiImplTest extends BaseTest {
         assertNotNull(getCardPreAuthorizations.get(0));
         assertEquals(getCardPreAuthorizations.get(0).getCardId(), cardPreAuthorization.getCardId());
     }
+
+    @Test
+    public void validateCard() throws Exception{
+        CardApi cardApi = api.getCardApi();
+        PayIn payIn = getNewPayInCardDirect();
+        Card card = cardApi.get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
+
+        Card validatedCard = cardApi.validate(card.getId());
+
+        assertNotNull(validatedCard);
+    }
 }

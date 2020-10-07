@@ -10,10 +10,15 @@ import com.mangopay.entities.RateLimit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
@@ -27,10 +32,10 @@ public class RestTool {
     private MangoPayApi root;
 
     // enable/disable debugging
-    private Boolean debugMode;
+    private boolean debugMode;
 
     // variable to flag that in request authentication data are required
-    private Boolean authRequired;
+    private boolean authRequired;
 
     // array with HTTP header to send with request
     private Map<String, String> requestHttpHeaders;
@@ -58,9 +63,8 @@ public class RestTool {
      *
      * @param root         Root/parent instance that holds the OAuthToken and Configuration instance.
      * @param authRequired Defines whether request authentication is required.
-     * @throws Exception
      */
-    public RestTool(MangoPayApi root, Boolean authRequired) throws Exception {
+    public RestTool(MangoPayApi root, Boolean authRequired) {
         this.root = root;
         this.authRequired = authRequired;
         this.debugMode = this.root.getConfig().isDebugMode();
@@ -88,9 +92,7 @@ public class RestTool {
      * @param value Header value.
      */
     public void addRequestHttpHeader(final String key, final String value) {
-        addRequestHttpHeader(new HashMap<String, String>() {{
-            put(key, value);
-        }});
+        addRequestHttpHeader(Collections.singletonMap(key, value));
     }
 
     /**
@@ -141,13 +143,7 @@ public class RestTool {
         this.requestType = requestType;
         this.requestData = requestData;
 
-        T responseResult = this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
-
-        if (pagination != null) {
-            pagination = this.pagination;
-        }
-
-        return responseResult;
+        return this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
     }
 
     /**
@@ -233,13 +229,7 @@ public class RestTool {
         this.requestType = requestType;
         this.requestData = requestData;
 
-        List<T> responseResult = this.doRequestList(classOfT, classOfTItem, urlMethod, pagination, additionalUrlParams);
-
-        if (pagination != null) {
-            pagination = this.pagination;
-        }
-
-        return responseResult;
+        return this.doRequestList(classOfT, classOfTItem, urlMethod, pagination, additionalUrlParams);
     }
 
     /**
@@ -314,7 +304,6 @@ public class RestTool {
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
-
             if (this.debugMode) {
                 logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
             }
@@ -326,6 +315,9 @@ public class RestTool {
             */
 
             connection = (HttpURLConnection) url.openConnection();
+            if (connection instanceof HttpsURLConnection) {
+                configureSslContext((HttpsURLConnection) connection);
+            }
             // Get connection timeout from config
             connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
             // Get read timeout from config
@@ -433,6 +425,16 @@ public class RestTool {
         return response;
     }
 
+    private void configureSslContext(HttpsURLConnection connection) throws KeyManagementException, NoSuchAlgorithmException {
+        connection.setSSLSocketFactory(getSSLContext().getSocketFactory());
+    }
+
+    private SSLContext getSSLContext() throws NoSuchAlgorithmException, KeyManagementException {
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+        sslContext.init(null, null, new SecureRandom());
+        return sslContext;
+    }
+
     private void readResponseHeaders(HttpURLConnection conn) {
         List<RateLimit> updatedRateLimits = null;
         for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
@@ -442,7 +444,7 @@ public class RestTool {
 
                 if (k.getKey() == null) continue;
 
-                if (k.getKey().equals("X-RateLimit-Remaining")) {
+                if (k.getKey().equals("X-RateLimit-Remaining") || k.getKey().equals("X-RateLimit-Remaining".toLowerCase())) {
                     if (updatedRateLimits == null) {
                         updatedRateLimits = initRateLimits();
                     }
@@ -452,7 +454,7 @@ public class RestTool {
                     updatedRateLimits.get(2).setCallsRemaining(Integer.valueOf(callsRemaining.get(1)));
                     updatedRateLimits.get(3).setCallsRemaining(Integer.valueOf(callsRemaining.get(0)));
                 }
-                if (k.getKey().equals("X-RateLimit")) {
+                if (k.getKey().equals("X-RateLimit") || k.getKey().equals("X-RateLimit".toLowerCase())) {
                     if (updatedRateLimits == null) {
                         updatedRateLimits = initRateLimits();
                     }
@@ -462,7 +464,7 @@ public class RestTool {
                     updatedRateLimits.get(2).setCallsMade(Integer.valueOf(callsMade.get(1)));
                     updatedRateLimits.get(3).setCallsMade(Integer.valueOf(callsMade.get(0)));
                 }
-                if (k.getKey().equals("X-RateLimit-Reset")) {
+                if (k.getKey().equals("X-RateLimit-Reset") || k.getKey().equals("X-RateLimit-Reset".toLowerCase())) {
                     if (updatedRateLimits == null) {
                         updatedRateLimits = initRateLimits();
                     }
@@ -472,13 +474,13 @@ public class RestTool {
                     updatedRateLimits.get(2).setResetTimeMillis(Long.valueOf(resetTimes.get(1)));
                     updatedRateLimits.get(3).setResetTimeMillis(Long.valueOf(resetTimes.get(0)));
                 }
-                if (k.getKey().equals("X-Number-Of-Pages")) {
+                if (k.getKey().equals("X-Number-Of-Pages") || k.getKey().equals("X-Number-Of-Pages".toLowerCase())) {
                     this.pagination.setTotalPages(Integer.parseInt(v));
                 }
-                if (k.getKey().equals("X-Number-Of-Items")) {
+                if (k.getKey().equals("X-Number-Of-Items") || k.getKey().equals("X-Number-Of-Items".toLowerCase())) {
                     this.pagination.setTotalItems(Integer.parseInt(v));
                 }
-                if (k.getKey().equals("Link")) {
+                if (k.getKey().equals("Link") || k.getKey().equals("Link".toLowerCase())) {
                     String linkValue = v;
                     String[] links = linkValue.split(",");
 
@@ -536,6 +538,10 @@ public class RestTool {
                 logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
 
             connection = (HttpURLConnection) url.openConnection();
+
+            if (connection instanceof HttpsURLConnection) {
+                configureSslContext((HttpsURLConnection) connection);
+            }
 
             // set request method
             connection.setRequestMethod(this.requestType);

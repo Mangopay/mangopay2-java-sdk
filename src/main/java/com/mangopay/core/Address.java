@@ -107,4 +107,13 @@ public class Address extends Dto {
                 (country != null && country != CountryIso.NotSpecified);
 
     }
+
+    public Boolean allFieldsNull(){
+        return addressLine1 == null &&
+                addressLine2 == null &&
+                city == null &&
+                region == null &&
+                postalCode == null &&
+                country == null;
+    }
 }

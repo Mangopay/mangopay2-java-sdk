@@ -22,6 +22,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
     public PayIn deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject object = json.getAsJsonObject();
         PayIn payIn = new Gson().fromJson(object.toString(), PayIn.class);
+        if (payIn.getPaymentType() == null)
+            return null;
         switch (payIn.getPaymentType()) {
             case BANK_WIRE:
                 PayInPaymentDetailsBankWire payInDetails = new PayInPaymentDetailsBankWire();
@@ -139,14 +141,20 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 payIn.setExecutionDetails(payInExecutionDetailsDirect);
                 break;
             case EXTERNAL_INSTRUCTION:
-                JsonObject debitedBankAccount = object.get("DebitedBankAccount").getAsJsonObject();
-                PayInExecutionDetailsBankingAlias payInExecutionDetailsBankingAlias = new PayInExecutionDetailsBankingAlias(
-                        object.get("BankingAliasId").getAsString(),
-                        object.get("WireReference").getAsString(),
-                        (DebitedBankAccount) context.deserialize(debitedBankAccount, DebitedBankAccount.class)
-                );
+                PayInExecutionDetailsBankingAlias payInExecutionDetailsBankingAlias = new PayInExecutionDetailsBankingAlias();
+                if (object.has("BankingAliasId") && !object.get("BankingAliasId").isJsonNull())
+                    payInExecutionDetailsBankingAlias.setBankingAliasId(object.get("BankingAliasId").getAsString());
+                if (object.has("WireReference") && !object.get("WireReference").isJsonNull())
+                    payInExecutionDetailsBankingAlias.setWireReference(object.get("WireReference").getAsString());
+                if (object.has("DebitedBankAccount") && !object.get("DebitedBankAccount").isJsonNull())
+                    payInExecutionDetailsBankingAlias.setDebitedBankAccount(
+                            (DebitedBankAccount) context.deserialize(object.get("DebitedBankAccount"), DebitedBankAccount.class)
+                    );
+
                 payIn.setExecutionDetails(payInExecutionDetailsBankingAlias);
                 break;
+            default:
+                return null;
         }
         return payIn;
     }

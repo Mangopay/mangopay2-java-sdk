@@ -7,6 +7,7 @@ nbdist/
 nbactions.xml
 .nb-gradle/
 
+
 ### Intelij ###
 .idea
 
@@ -15,3 +16,9 @@ nbactions.xml
 /target/
 *.iml
 *.gpg
+
+### Eclipse ###
+.classpath
+.project
+.settings
+out

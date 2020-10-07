@@ -1,4 +1,31 @@
-## [Unreleased]
+## [2.11.4] - 2020-09-25
+- Missing UserID added in UboDeclaration process
+- New endpoint to support changes to Card Validation process (please listen out for product announcements)
+- Testing added for added for RemainingFunds feature
+- Improved gson support and minor fixes
+
+## [2.11.3] - 2020-08-24
+- As part of KYC improvements, we are adding OUT_OF_DATE as a enum for KYC documents
+- Due to changes to the API we are no longer accepting connections with a TLS certificate of 1.1 or lower, this concerns in particular .NET frameworks 4.5 and earlier. This update applies a fix which forced the application to use TLS 1.2. (edited)
+- Fixed port settings in setBaseUrl() for use of Mock API - #206
+- ProcessedDate is now a long #170
+- Modified function to reflect payinExecutionDetailsDirect #157
+- Added binaryData as a parameter to resolve DisputeApi defect #195
+- Enabled TLS v1.2 for Java 7
+
+## [2.11.2] - 2020-08-11
+- Fixed PayInDeserializer not setting the WireReference from the JSON response. 
+
+## [2.11.1] - 2020-08-10
+- New MultiCapture and RemainingFunds Parameters in Preauthorization object
+- BankingAlias Object returned now fixed, returns complete info
+- Fixed JsonNull In PayInDeserializer, thank you https://github.com/ptroc
+- "User-agent" format in the headers changed, aligned to other assets
+
+## [2.11.0] - 2020-07-10
+- USER_KYC_REGULAR has been added as a new Event. Thanks to it, you are now able to know when all the needed KYCs for a user have been validated and its KYCLevel is updated.
+- Release adds typing for EventType values KYC_OUTDATED USER_KYC_REGULAR and USER_KYC_LIGHT
+- Bug Fix -> Serializing certain address fields, filtering bank accounts
 
 ## [2.10.1] - 2020-03-23
 ### Fixed

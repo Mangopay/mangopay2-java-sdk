@@ -18,6 +18,7 @@ dependencies {
 }
 
 test {
+    enabled = true
     exclude 'com/mangopay/core/BankingAliasApiImplTest.class'
     systemProperty "https.protocols", "TLSv1.2,TLSv1.1,TLSv1"
     testLogging {
@@ -38,7 +39,7 @@ task javadocJar(type: Jar) {
 }
 
 group = 'com.mangopay'
-version = '2.10.1'
+version = '2.11.4'
 sourceCompatibility = '1.7'
 
 publishing {
@@ -47,7 +48,7 @@ publishing {
             pom {
                 groupId 'com.mangopay'
                 artifactId 'mangopay2-java-sdk'
-                version '2.10.1'
+                version '2.11.4'
 
                 from(components.java)
 

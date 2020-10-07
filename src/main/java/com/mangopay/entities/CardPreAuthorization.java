@@ -1,10 +1,7 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Billing;
-import com.mangopay.core.EntityBase;
-import com.mangopay.core.Money;
-import com.mangopay.core.SecurityInfo;
+import com.mangopay.core.*;
 import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
 import com.mangopay.core.enumerations.PreAuthorizationStatus;
@@ -33,6 +30,12 @@ public class CardPreAuthorization extends EntityBase {
      */
     @SerializedName("DebitedFunds")
     private Money debitedFunds;
+
+    /**
+     *
+     * */
+    @SerializedName("RemainingFunds")
+    private Money remainingFunds;
 
     /**
      * Status of the PreAuthorization.
@@ -122,6 +125,9 @@ public class CardPreAuthorization extends EntityBase {
     @SerializedName("SecurityInfo")
     private SecurityInfo securityInfo;
 
+    @SerializedName("MultiCapture")
+    private Boolean multiCapture;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -202,8 +208,17 @@ public class CardPreAuthorization extends EntityBase {
         this.statementDescriptor = statementDescriptor;
     }
 
-    public String getSecureModeNeeded() {
-        return secureModeNeeded;
+    /**
+     * Is SecureMode Needed
+     *
+     * @return True if is needed
+     */
+    public boolean isSecureModeNeeded() {
+        if (ObjectTool.nonNull(secureModeNeeded)) {
+            return Boolean.parseBoolean(secureModeNeeded);
+        } else {
+            return false;
+        }
     }
 
     public void setSecureModeNeeded(String secureModeNeeded) {
@@ -258,6 +273,18 @@ public class CardPreAuthorization extends EntityBase {
         this.securityInfo = securityInfo;
     }
 
+    public Boolean getMultiCapture() { return multiCapture; }
+
+    public void setMultiCapture(Boolean multiCapture) { this.multiCapture = multiCapture; }
+
+    public Money getRemainingFunds() {
+        return remainingFunds;
+    }
+
+    public void setRemainingFunds(Money remainingFunds) {
+        this.remainingFunds = remainingFunds;
+    }
+
     /**
      * Gets map which property is an object and what type of object.
      * To be overridden in child class if has any sub objects.
@@ -270,6 +297,7 @@ public class CardPreAuthorization extends EntityBase {
         HashMap<String, Type> result = new HashMap<>();
 
         result.put("DebitedFunds", Money.class);
+        result.put("RemainingFunds", Money.class);
         result.put("SecurityInfo", SecurityInfo.class);
 
         return result;

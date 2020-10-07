@@ -75,4 +75,12 @@ public interface CardApi {
      * @throws Exception
      */
     List<CardPreAuthorization> getCardPreAuthorizations(String cardId) throws Exception;
+
+    /**
+     * Validate a card
+     * @param cardId
+     * @return
+     * @throws Exception
+     */
+    Card validate(String cardId) throws Exception;
 }
