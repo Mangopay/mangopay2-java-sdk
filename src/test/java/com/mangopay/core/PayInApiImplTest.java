@@ -175,6 +175,8 @@ public class PayInApiImplTest extends BaseTest {
 
             PayIn createPayIn = this.api.getPayInApi().create(payIn);
 
+            List<Transaction> preAuthTransactions = this.api.getCardPreAuthorizationApi().getTransactions(cardPreAuthorization.getId(), new Pagination(1, 1));
+
             assertTrue(!"".equals(createPayIn.getId()));
             assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
             assertTrue(createPayIn.getPaymentType() == PayInPaymentType.PREAUTHORIZED);
@@ -187,6 +189,7 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(user.getId(), createPayIn.getAuthorId());
             assertTrue(createPayIn.getStatus() == TransactionStatus.SUCCEEDED);
             assertTrue(createPayIn.getType() == TransactionType.PAYIN);
+            assertTrue(preAuthTransactions.get(0).getStatus() == TransactionStatus.SUCCEEDED);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }

@@ -3,7 +3,11 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.CardPreAuthorizationApi;
+import com.mangopay.core.Pagination;
 import com.mangopay.entities.CardPreAuthorization;
+import com.mangopay.entities.Transaction;
+
+import java.util.List;
 
 /**
  * API for card pre-authorizations.
@@ -37,5 +41,10 @@ public class CardPreAuthorizationApiImpl extends ApiBase implements CardPreAutho
     @Override
     public CardPreAuthorization update(CardPreAuthorization cardPreAuthorization) throws Exception {
         return this.updateObject(CardPreAuthorization.class, "preauthorization_save", cardPreAuthorization);
+    }
+
+    @Override
+    public List<Transaction> getTransactions(String cardPreAuthorizationId, Pagination pagination) throws Exception {
+        return this.getList(Transaction[].class, Transaction.class,"preauthorization_transactions_get", pagination, cardPreAuthorizationId);
     }
 }
