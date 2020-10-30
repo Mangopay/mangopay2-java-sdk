@@ -813,6 +813,29 @@ public abstract class BaseTest {
         return MATRIX_UBO;
     }
 
+    protected BankAccount getClientBankAccount() throws Exception {
+        BankAccount bankAccountIBAN = new BankAccount();
+        BankAccountDetailsIBAN detailsIBAN = new BankAccountDetailsIBAN();
+        detailsIBAN.setIban("FR7630004000031234567890143");
+        detailsIBAN.setBic("CRLYFRPP");
+
+        Address address = new Address();
+        address.setCity("Paris");
+        address.setRegion("Ile de France");
+        address.setAddressLine1("1 Mangopay Street");
+        address.setAddressLine2("The Loop");
+        address.setCountry(CountryIso.FR);
+        address.setPostalCode("75001");
+
+        bankAccountIBAN.setOwnerName("Joe Blogs");
+        bankAccountIBAN.setOwnerAddress(address);
+        bankAccountIBAN.setTag("custom meta");
+        bankAccountIBAN.setDetails(detailsIBAN);
+        bankAccountIBAN.setType(BankAccountType.IBAN);
+
+        return this.api.getClientApi().createBankAccountIBAN(bankAccountIBAN);
+    }
+
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {
 
         if (entity1 instanceof UserNatural) {
