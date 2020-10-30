@@ -61,6 +61,7 @@ public abstract class ApiBase {
         put("preauthorization_create", new String[]{"/preauthorizations/card/direct", RequestType.POST.toString()});
         put("preauthorization_get", new String[]{"/preauthorizations/%s", RequestType.GET.toString()});
         put("preauthorization_save", new String[]{"/preauthorizations/%s", RequestType.PUT.toString()});
+        put("preauthorization_transactions_get", new String[]{"/preauthorizations/%s/transactions", RequestType.GET.toString()});
 
         put("card_get", new String[]{"/cards/%s", RequestType.GET.toString()});
         put("card_save", new String[]{"/cards/%s", RequestType.PUT.toString()});
