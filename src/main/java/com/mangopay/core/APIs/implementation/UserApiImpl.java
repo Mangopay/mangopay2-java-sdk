@@ -281,4 +281,9 @@ public class UserApiImpl extends ApiBase implements UserApi {
     public List<CardPreAuthorization> getPreAuthorizations(String userId) throws Exception {
         return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "users_get_preauthorizations", null, userId);
     }
+
+    @Override
+    public UserBlockStatus getBlockStatus(String userId) throws Exception {
+        return this.getObject(UserBlockStatus.class, "users_block_status", userId);
+    }
 }

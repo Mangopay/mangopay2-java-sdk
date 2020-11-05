@@ -638,4 +638,12 @@ public class UserApiImplTest extends BaseTest {
         assertNotNull(preAuthorizations.get(0));
         assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
     }
+
+    @Test
+    public void getBlockStatus() throws Exception{
+        UserNatural user = this.getJohn();
+        UserBlockStatus blockStatus = this.api.getUserApi().getBlockStatus(user.getId());
+
+        assertNotNull(blockStatus);
+    }
 }
