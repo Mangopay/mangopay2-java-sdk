@@ -132,6 +132,9 @@ public class CardPreAuthorization extends EntityBase {
     @SerializedName("BrowserInfo")
     private BrowserInfo browserInfo;
 
+    @SerializedName("IpAddress")
+    private String ipAddress;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -218,6 +221,15 @@ public class CardPreAuthorization extends EntityBase {
 
     public CardPreAuthorization setBrowserInfo(BrowserInfo browserInfo) {
         this.browserInfo = browserInfo;
+        return this;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public CardPreAuthorization setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
         return this;
     }
 

@@ -130,6 +130,27 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createCardDirectIpAddress() {
+        try {
+            Wallet johnWallet = this.getJohnsWalletWithMoney();
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
+
+            PayIn payIn = this.getNewPayInCardDirectWithIpAddress();
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
+            UserNatural user = this.getJohn();
+
+            check(user, payIn, wallet, beforeWallet);
+
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull(executionDetails.getSecurityInfo());
+            assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void getCardDirect() {
         try {
             PayIn payIn = this.getNewPayInCardDirect();

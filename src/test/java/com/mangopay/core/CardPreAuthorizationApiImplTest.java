@@ -70,6 +70,18 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createCardPreAuthorizationWithIpAddress() throws Exception {
+        CardPreAuthorization cardPreAuthorization = getPreAuthorization();
+        cardPreAuthorization.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+
+        cardPreAuthorization = this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
+
+        assertNotNull(cardPreAuthorization.getSecurityInfo());
+        assertNotNull(cardPreAuthorization.getSecurityInfo().getAvsResult());
+        assertTrue(cardPreAuthorization.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+    }
+
+    @Test
     public void getCardPreAuthorization() throws Exception {
         CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();
 
