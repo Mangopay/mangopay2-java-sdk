@@ -470,6 +470,25 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInCardDirectWithBrowserInfo() throws Exception{
+        PayIn payIn = getPayInCardDirect(null);
+
+        BrowserInfo browserInfo = new BrowserInfo();
+        browserInfo.setAcceptHeader("application/json,text/javascript,*/*;q=0.01<");
+        browserInfo.setColorDepth("32");
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setLanguage("fr");
+        browserInfo.setScreenHeight("1080");
+        browserInfo.setScreenWidth("1920");
+        browserInfo.setTimeZoneOffset("+3600");
+        browserInfo.setUserAgent("postman");
+
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(browserInfo);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayOut getJohnsPayOutBankWire() throws Exception {
         if (BaseTest.JOHNS_PAYOUT_BANKWIRE == null) {
             Wallet wallet = this.getJohnsWallet();
