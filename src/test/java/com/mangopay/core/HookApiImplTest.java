@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.EventType;
 import com.mangopay.entities.*;
 
 import java.util.List;
@@ -64,6 +65,45 @@ public class HookApiImplTest extends BaseTest {
             assertEquals(hook.getId(), list.get(0).getId());
             assertEquals(pagination.getPage(), 1);
             assertEquals(pagination.getItemsPerPage(), 1);
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createUserInflowHooks() {
+        try {
+            Hook hook = new Hook();
+            hook.setEventType(EventType.USER_INFLOWS_BLOCKED);
+            hook.setUrl("http://test.com");
+            Hook inflowBlockedHook = this.api.getHookApi().create(hook);
+
+            hook.setEventType(EventType.USER_INFLOWS_UNBLOCKED);
+            hook.setUrl("http://test.com");
+            Hook inflowUnblockedHook = this.api.getHookApi().create(hook);
+
+            assertNotNull(inflowBlockedHook);
+            assertNotNull(inflowUnblockedHook);
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createUserOutflowHooks() {
+        try {
+            Hook hook = new Hook();
+
+            hook.setEventType(EventType.USER_OUTFLOWS_BLOCKED);
+            hook.setUrl("http://test.com");
+            Hook outflowBlockedHook = this.api.getHookApi().create(hook);
+
+            hook.setEventType(EventType.USER_OUTFLOWS_UNBLOCKED);
+            hook.setUrl("http://test.com");
+            Hook outflowUnblockedHook = this.api.getHookApi().create(hook);
+
+            assertNotNull(outflowBlockedHook);
+            assertNotNull(outflowUnblockedHook);
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
