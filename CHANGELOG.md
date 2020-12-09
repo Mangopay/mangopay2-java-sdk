@@ -1,3 +1,7 @@
+## [2.11.6] - 2020-12-09
+- Added 'Regulatory' endpoint to allow checks of User Block Status
+- Added support for Regulatory -> Blocked Status Hooks
+
 ## [2.11.5] - 2020-09-25
 - added test to cover issue
 - added new method for PreAuthorization Transactions
