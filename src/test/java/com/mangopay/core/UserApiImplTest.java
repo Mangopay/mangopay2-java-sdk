@@ -640,6 +640,8 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore
+    // this endpoind isn't on the api just yet
     public void getBlockStatus() throws Exception{
         UserNatural user = this.getJohn();
         UserBlockStatus blockStatus = this.api.getUserApi().getBlockStatus(user.getId());
