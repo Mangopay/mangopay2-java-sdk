@@ -6,6 +6,7 @@ import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
 import com.mangopay.core.enumerations.PreAuthorizationStatus;
 import com.mangopay.core.enumerations.SecureMode;
+import com.mangopay.entities.subentities.Shipping;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -128,6 +129,9 @@ public class CardPreAuthorization extends EntityBase {
     @SerializedName("MultiCapture")
     private Boolean multiCapture;
 
+    @SerializedName("Shipping")
+    private Shipping shipping;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -207,6 +211,10 @@ public class CardPreAuthorization extends EntityBase {
     public void setStatementDescriptor(String statementDescriptor) {
         this.statementDescriptor = statementDescriptor;
     }
+
+    public Shipping getShipping() { return shipping; }
+
+    public void setShipping(Shipping shipping) { this.shipping = shipping; }
 
     /**
      * Is SecureMode Needed

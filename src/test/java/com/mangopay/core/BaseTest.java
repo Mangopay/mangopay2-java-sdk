@@ -106,6 +106,15 @@ public abstract class BaseTest {
         return result;
     }
 
+    protected Shipping getNewShipping() {
+        Shipping shipping = new Shipping();
+        Address address = getNewAddress();
+
+        shipping.setAddress(address);
+
+        return shipping;
+    }
+
     protected UserNatural getJohn() throws Exception {
         return getJohn(false);
     }
@@ -657,6 +666,10 @@ public abstract class BaseTest {
         cardPreAuthorization.getRemainingFunds().setAmount(500);
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
+
+        Shipping shipping = getNewShipping();
+        cardPreAuthorization.setShipping(shipping);
+
         return cardPreAuthorization;
     }
 
