@@ -1,3 +1,12 @@
+## [2.11.6] - 2020-12-09
+- Added 'Regulatory' endpoint to allow checks of User Block Status
+- Added support for Regulatory -> Blocked Status Hooks
+
+## [2.11.5] - 2020-09-25
+- added test to cover issue
+- added new method for PreAuthorization Transactions
+- added methods for creating client bank accounts and client payouts
+
 ## [2.11.4] - 2020-09-25
 - Missing UserID added in UboDeclaration process
 - New endpoint to support changes to Card Validation process (please listen out for product announcements)

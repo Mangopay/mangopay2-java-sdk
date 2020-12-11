@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -217,6 +218,8 @@ public class PayInApiImplTest extends BaseTest {
 
             PayIn createPayIn = this.api.getPayInApi().create(payIn);
 
+            List<Transaction> preAuthTransactions = this.api.getCardPreAuthorizationApi().getTransactions(cardPreAuthorization.getId(), new Pagination(1, 1));
+
             assertTrue(!"".equals(createPayIn.getId()));
             assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
             assertTrue(createPayIn.getPaymentType() == PayInPaymentType.PREAUTHORIZED);
@@ -229,6 +232,7 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(user.getId(), createPayIn.getAuthorId());
             assertTrue(createPayIn.getStatus() == TransactionStatus.SUCCEEDED);
             assertTrue(createPayIn.getType() == TransactionType.PAYIN);
+            assertTrue(preAuthTransactions.get(0).getStatus() == TransactionStatus.SUCCEEDED);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
@@ -641,5 +645,45 @@ public class PayInApiImplTest extends BaseTest {
         } catch (Exception e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void testIssue220() {
+        try {
+            Wallet wallet = getJohnsWallet();
+            UserNatural user = getJohn();
+
+            PayIn payIn = new PayIn();
+            payIn.setPaymentType(PayInPaymentType.CARD);
+
+            payIn.setCreditedWalletId(wallet.getId());
+            payIn.setAuthorId(user.getId());
+
+            PayInPaymentDetailsCard pay = new PayInPaymentDetailsCard();
+            pay.setCardType(CardType.CB_VISA_MASTERCARD);
+            payIn.setPaymentDetails(pay);
+
+            payIn.setDebitedFunds(new Money(CurrencyIso.EUR,
+                    20)); //cents
+            payIn.setFees(new Money(CurrencyIso.EUR, 2));
+
+            payIn.setExecutionType(PayInExecutionType.WEB);
+            PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+            payInExecutionDetailsWeb.setReturnUrl("http://www.mysite.com/returnURL/");
+            payInExecutionDetailsWeb.setCulture(CultureCode.EN);
+
+            payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+            PayIn created = api.getPayInApi().create(payIn);
+            String returnUrlCreated = ((PayInExecutionDetailsWeb)created.getExecutionDetails()).getReturnUrl();
+
+            assertNotNull(created);
+            assertNotNull(created.getExecutionDetails());
+            assertNotNull(returnUrlCreated);
+            assertTrue(returnUrlCreated.contains("http://www.mysite.com/returnURL/"));
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
     }
 }

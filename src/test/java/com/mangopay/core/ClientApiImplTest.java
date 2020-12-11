@@ -2,6 +2,7 @@ package com.mangopay.core;
 
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -202,6 +203,48 @@ public class ClientApiImplTest extends BaseTest {
             assertEquals(PayInExecutionType.DIRECT, result.getExecutionType());
             assertEquals(TransactionStatus.CREATED, result.getStatus());
             assertEquals(TransactionType.PAYIN, result.getType());
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createBankAccountIBAN() {
+        try {
+            BankAccount createdBankAccount = this.getClientBankAccount();
+
+            assertNotNull(createdBankAccount);
+            assertNotNull(createdBankAccount.getId());
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createPayOut() {
+        try {
+            List<Wallet> feesWallets = this.api.getClientApi().getWallets(FundsType.FEES, new Pagination(1, 1));
+            BankAccount createdBankAccount = this.getClientBankAccount();
+            PayOut clientPayOut = new PayOut();
+
+            Money debitedFunds = new Money();
+            debitedFunds.setCurrency(CurrencyIso.EUR);
+            debitedFunds.setAmount(12);
+
+            PayOutPaymentDetailsBankWire paymentDetailsBankWire = new PayOutPaymentDetailsBankWire();
+            paymentDetailsBankWire.setBankAccountId(createdBankAccount.getId());
+            paymentDetailsBankWire.setBankWireRef("invoice 7282");
+
+            clientPayOut.setDebitedFunds(debitedFunds);
+            clientPayOut.setPaymentType(PayOutPaymentType.BANK_WIRE);
+            clientPayOut.setMeanOfPaymentDetails(paymentDetailsBankWire);
+            clientPayOut.setDebitedWalletId(feesWallets.get(0).getId());
+            clientPayOut.setTag("bla");
+
+            PayOut createdPayOut = this.api.getClientApi().createPayOut(clientPayOut);
+
+            assertNotNull(createdPayOut);
+            assertNotNull(createdPayOut.getId());
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }

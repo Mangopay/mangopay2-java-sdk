@@ -41,6 +41,8 @@ public abstract class ApiBase {
         put("client_get_transactions", new String[]{"/clients/transactions", RequestType.GET.toString()});
         put("client_get_kyc_documents", new String[]{"/KYC/documents", RequestType.GET.toString()});
         put("client_create_bankwire_direct", new String[]{"/clients/payins/bankwire/direct", RequestType.POST.toString()});
+        put("client_create_bankaccount_iban", new String[]{"/clients/bankaccounts/iban", RequestType.POST.toString()});
+        put("client_create_payout", new String[]{"/clients/payouts", RequestType.POST.toString()});
 
         put("authentication_base", new String[]{"/clients/", RequestType.POST.toString()});
         put("authentication_oauth", new String[]{"/oauth/token ", RequestType.POST.toString()});
@@ -59,6 +61,7 @@ public abstract class ApiBase {
         put("preauthorization_create", new String[]{"/preauthorizations/card/direct", RequestType.POST.toString()});
         put("preauthorization_get", new String[]{"/preauthorizations/%s", RequestType.GET.toString()});
         put("preauthorization_save", new String[]{"/preauthorizations/%s", RequestType.PUT.toString()});
+        put("preauthorization_transactions_get", new String[]{"/preauthorizations/%s/transactions", RequestType.GET.toString()});
 
         put("card_get", new String[]{"/cards/%s", RequestType.GET.toString()});
         put("card_save", new String[]{"/cards/%s", RequestType.PUT.toString()});
@@ -120,6 +123,7 @@ public abstract class ApiBase {
         put("users_getbankaccount", new String[]{"/users/%s/bankaccounts/%s", RequestType.GET.toString()});
         put("users_savenaturals", new String[]{"/users/natural/%s", RequestType.PUT.toString()});
         put("users_savelegals", new String[]{"/users/legal/%s", RequestType.PUT.toString()});
+        put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
 
         put("users_emoney_year", new String[]{"/users/%s/emoney/%s", RequestType.GET.toString()});
         put("users_emoney_month", new String[]{"/users/%s/emoney/%s/%s", RequestType.GET.toString()});
