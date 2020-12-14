@@ -649,4 +649,14 @@ public class UserApiImplTest extends BaseTest {
 
         assertNotNull(blockStatus);
     }
+
+    @Test
+    @Ignore
+    // this endpoind isn't on the api just yet
+    public void getRegulatory() throws Exception{
+        UserNatural user = this.getJohn();
+        UserBlockStatus blockStatus = this.api.getUserApi().getRegulatory(user.getId());
+
+        assertNotNull(blockStatus);
+    }
 }
