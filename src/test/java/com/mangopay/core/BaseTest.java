@@ -667,8 +667,8 @@ public abstract class BaseTest {
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
 
-        Shipping shipping = getNewShipping();
-        cardPreAuthorization.setShipping(shipping);
+        //Shipping shipping = getNewShipping();
+        //cardPreAuthorization.setShipping(shipping);
 
         return cardPreAuthorization;
     }
