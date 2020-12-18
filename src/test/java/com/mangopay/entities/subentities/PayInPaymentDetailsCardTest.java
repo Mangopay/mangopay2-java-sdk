@@ -5,7 +5,9 @@
  */
 package com.mangopay.entities.subentities;
 
+import com.mangopay.core.Address;
 import com.mangopay.core.enumerations.CardType;
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -60,7 +62,20 @@ public class PayInPaymentDetailsCardTest {
         String statementDescriptor = "statementDescriptor";
         CardType cardType = CardType.CB_VISA_MASTERCARD;
         String cardId = "12345678";
-        PayInPaymentDetailsCard paymentDetailsCard = PayInPaymentDetailsCard.build(cardType, cardId, statementDescriptor);
+        Shipping shipping = new Shipping();
+        Address result = new Address();
+
+        result.setAddressLine1("Address line 1");
+        result.setAddressLine2("Address line 2");
+        result.setCity("City");
+        result.setCountry(CountryIso.PL);
+        result.setPostalCode("11222");
+        result.setRegion("Region");
+
+        shipping.setAddress(result);
+
+
+        PayInPaymentDetailsCard paymentDetailsCard = PayInPaymentDetailsCard.build(cardType, cardId, statementDescriptor, shipping);
         assertNotNull(paymentDetailsCard);
         assertEquals(cardId, paymentDetailsCard.getCardId());
         assertEquals(cardType, paymentDetailsCard.getCardType());

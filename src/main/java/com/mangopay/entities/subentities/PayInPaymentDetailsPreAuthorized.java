@@ -22,8 +22,20 @@ public class PayInPaymentDetailsPreAuthorized extends Dto implements PayInPaymen
     @SerializedName("Culture")
     private CultureCode culture;
 
+    @SerializedName("Shipping")
+    private Shipping shipping;
+
     public String getPreauthorizationId() {
         return preauthorizationId;
+    }
+
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public PayInPaymentDetailsPreAuthorized setShipping(Shipping shipping) {
+        this.shipping = shipping;
+        return this;
     }
 
     public void setPreauthorizationId(String preauthorizationId) {

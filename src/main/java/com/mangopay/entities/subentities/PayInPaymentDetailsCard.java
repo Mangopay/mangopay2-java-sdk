@@ -29,6 +29,9 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
     @SerializedName("StatementDescriptor")
     private String statementDescriptor;
 
+    @SerializedName("Shipping")
+    private Shipping shipping;
+
     @SerializedName("BrowserInfo")
     private BrowserInfo browserInfo;
 
@@ -67,6 +70,14 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
         this.statementDescriptor = statementDescriptor;
     }
 
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public void setShipping(Shipping shipping) {
+        this.shipping = shipping;
+    }
+
     public static PayInPaymentDetailsCard build(CardType cardType, String cardId) {
         return new PayInPaymentDetailsCard(cardType, cardId);
     }
@@ -89,14 +100,15 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
         return this;
     }
 
-    public PayInPaymentDetailsCard(CardType cardType, String cardId, String statementDescriptor) {
+    public PayInPaymentDetailsCard(CardType cardType, String cardId, String statementDescriptor, Shipping shipping) {
         this.cardType = cardType;
         this.cardId = cardId;
         this.statementDescriptor = statementDescriptor;
+        this.shipping = shipping;
     }
     
-    public static PayInPaymentDetailsCard build(CardType cardType, String cardId, String statementDescriptor) {
-        return new PayInPaymentDetailsCard(cardType, cardId, statementDescriptor);
+    public static PayInPaymentDetailsCard build(CardType cardType, String cardId, String statementDescriptor, Shipping shipping) {
+        return new PayInPaymentDetailsCard(cardType, cardId, statementDescriptor, shipping);
     }
     
     public static PayInPaymentDetailsCard convert(PayInPaymentDetails paymentDetails) throws Exception {
