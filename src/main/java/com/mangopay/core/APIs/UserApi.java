@@ -387,11 +387,20 @@ public interface UserApi {
     List<CardPreAuthorization> getPreAuthorizations(String userId) throws Exception;
 
     /**
-     * Gets user.
+     * Gets user block status.
      *
      * @param userId User identifier.
      * @return User block status
      * @throws Exception
      */
     UserBlockStatus getBlockStatus(String userId) throws Exception;
+
+    /**
+     * Gets user regulatory.
+     *
+     * @param userId User identifier.
+     * @return User block status
+     * @throws Exception
+     */
+    UserBlockStatus getRegulatory(String userId) throws Exception;
 }

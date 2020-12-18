@@ -286,4 +286,9 @@ public class UserApiImpl extends ApiBase implements UserApi {
     public UserBlockStatus getBlockStatus(String userId) throws Exception {
         return this.getObject(UserBlockStatus.class, "users_block_status", userId);
     }
+
+    @Override
+    public UserBlockStatus getRegulatory(String userId) throws Exception {
+        return this.getObject(UserBlockStatus.class, "users_regulatory", userId);
+    }
 }
