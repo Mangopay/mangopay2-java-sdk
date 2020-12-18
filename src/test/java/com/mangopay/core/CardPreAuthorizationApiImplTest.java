@@ -6,6 +6,7 @@ package com.mangopay.core;
 
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.CardPreAuthorization;
+import com.mangopay.entities.subentities.BrowserInfo;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -38,6 +39,40 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         address.setPostalCode("65400");
         billing.setAddress(address);
         cardPreAuthorization.setBilling(billing);
+
+        cardPreAuthorization = this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
+
+        assertNotNull(cardPreAuthorization.getSecurityInfo());
+        assertNotNull(cardPreAuthorization.getSecurityInfo().getAvsResult());
+        assertTrue(cardPreAuthorization.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+    }
+
+    @Test
+    public void createCardPreAuthorizationWithBrowserInfo() throws Exception {
+        CardPreAuthorization cardPreAuthorization = getPreAuthorization();
+        BrowserInfo browserInfo = new BrowserInfo();
+        browserInfo.setAcceptHeader("application/json,text/javascript,*/*;q=0.01<");
+        browserInfo.setColorDepth("32");
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setLanguage("fr");
+        browserInfo.setScreenHeight("1080");
+        browserInfo.setScreenWidth("1920");
+        browserInfo.setTimeZoneOffset("+3600");
+        browserInfo.setUserAgent("postman");
+        cardPreAuthorization.setBrowserInfo(browserInfo);
+
+        cardPreAuthorization = this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
+
+        assertNotNull(cardPreAuthorization.getSecurityInfo());
+        assertNotNull(cardPreAuthorization.getSecurityInfo().getAvsResult());
+        assertTrue(cardPreAuthorization.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+    }
+
+    @Test
+    public void createCardPreAuthorizationWithIpAddress() throws Exception {
+        CardPreAuthorization cardPreAuthorization = getPreAuthorization();
+        cardPreAuthorization.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
         cardPreAuthorization = this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
 

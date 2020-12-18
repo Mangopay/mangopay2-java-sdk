@@ -29,6 +29,12 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
     @SerializedName("StatementDescriptor")
     private String statementDescriptor;
 
+    @SerializedName("BrowserInfo")
+    private BrowserInfo browserInfo;
+
+    @SerializedName("IpAddress")
+    private String ipAddress;
+
     public PayInPaymentDetailsCard() {
     }
 
@@ -63,6 +69,24 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
 
     public static PayInPaymentDetailsCard build(CardType cardType, String cardId) {
         return new PayInPaymentDetailsCard(cardType, cardId);
+    }
+
+    public BrowserInfo getBrowserInfo() {
+        return browserInfo;
+    }
+
+    public PayInPaymentDetailsCard setBrowserInfo(BrowserInfo browserInfo) {
+        this.browserInfo = browserInfo;
+        return this;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public PayInPaymentDetailsCard setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+        return this;
     }
 
     public PayInPaymentDetailsCard(CardType cardType, String cardId, String statementDescriptor) {
