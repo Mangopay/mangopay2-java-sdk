@@ -45,6 +45,7 @@ public class IdempotencyApiImplTest extends BaseTest {
             PayOutPaymentDetailsBankWire paymentDetails = new PayOutPaymentDetailsBankWire();
             paymentDetails.setBankAccountId(account.getId());
             paymentDetails.setBankWireRef("Johns bank wire ref");
+            paymentDetails.setPayoutModeRequested("STANDARD");
             payOutPost.setMeanOfPaymentDetails(paymentDetails);
 
             payOutPost.setTag("DefaultTag");

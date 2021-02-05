@@ -9,7 +9,6 @@ import com.mangopay.core.interfaces.PayOutPaymentDetails;
  * Class representing the BankWire type for mean of payment in PayOut entity.
  */
 public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDetails {
-
     /**
      * Bank account identifier.
      */
@@ -22,6 +21,12 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     @SerializedName("BankWireRef")
     private String bankWireRef;
 
+    /**
+     * The requested payout mode. Possible values: INSTANT_PAYMENT or STANDARD
+     */
+    @SerializedName("PayoutModeRequested")
+    private String payoutModeRequested;
+
     public PayOutPaymentDetailsBankWire() {
     }
 
@@ -29,13 +34,27 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
         this.bankAccountId = bankAccountId;
     }
 
+    public PayOutPaymentDetailsBankWire(String bankAccountId, String bankWireRef) {
+        this.bankAccountId = bankAccountId;
+        this.bankWireRef = bankWireRef;
+    }
+
+    public PayOutPaymentDetailsBankWire(String bankAccountId, String bankWireRef, String payoutModeRequested) {
+        this.bankAccountId = bankAccountId;
+        this.bankWireRef = bankWireRef;
+        this.payoutModeRequested = payoutModeRequested;
+    }
+
     public static PayOutPaymentDetailsBankWire build(String bankAccountId) {
         return new PayOutPaymentDetailsBankWire(bankAccountId);
     }
 
-    public PayOutPaymentDetailsBankWire(String bankAccountId, String bankWireRef) {
-        this.bankAccountId = bankAccountId;
-        this.bankWireRef = bankWireRef;
+    public static PayOutPaymentDetailsBankWire build(String bankAccountId, String bankWireRef) {
+        return new PayOutPaymentDetailsBankWire(bankAccountId, bankWireRef);
+    }
+
+    public static PayOutPaymentDetailsBankWire build(String bankAccountId, String bankWireRef, String payoutModeRequested) {
+        return new PayOutPaymentDetailsBankWire(bankAccountId, bankWireRef, payoutModeRequested);
     }
 
     public String getBankAccountId() {
@@ -54,8 +73,12 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
         this.bankWireRef = bankWireRef;
     }
 
-    public static PayOutPaymentDetailsBankWire build(String bankAccountId, String bankWireRef) {
-        return new PayOutPaymentDetailsBankWire(bankAccountId, bankWireRef);
+    public String getPayoutModeRequested() {
+        return payoutModeRequested;
+    }
+
+    public void setPayoutModeRequested(String payoutModeRequested) {
+        this.payoutModeRequested = payoutModeRequested;
     }
 
     public static PayOutPaymentDetailsBankWire convert(PayOutPaymentDetails payOutPaymentDetails) throws Exception {
