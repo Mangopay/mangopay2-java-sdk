@@ -290,6 +290,10 @@ public class UserApiImpl extends ApiBase implements UserApi {
 
     @Override
     public List<CardPreAuthorization> getPreAuthorizations(String userId, Pagination pagination, FilterPreAuthorizations filter, Sorting sorting) throws Exception {
+        if (filter == null) {
+            filter = new FilterPreAuthorizations();
+        }
+
         return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "users_get_preauthorizations", pagination, userId, filter.getValues(), sorting);
     }
 
