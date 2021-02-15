@@ -38,6 +38,8 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         address.setCountry(CountryIso.FR);
         address.setPostalCode("65400");
         billing.setAddress(address);
+        billing.setFirstName("John");
+        billing.setLastName("Doe");
         cardPreAuthorization.setBilling(billing);
 
         cardPreAuthorization = this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);

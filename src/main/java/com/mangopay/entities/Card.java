@@ -5,7 +5,7 @@ import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.Validity;
-import com.mangopay.entities.subentities.Shipping;
+import com.mangopay.core.Shipping;
 
 import java.util.ArrayList;
 

@@ -6,7 +6,7 @@ import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
 import com.mangopay.core.enumerations.PreAuthorizationStatus;
 import com.mangopay.core.enumerations.SecureMode;
-import com.mangopay.entities.subentities.Shipping;
+import com.mangopay.core.Shipping;
 import com.mangopay.entities.subentities.BrowserInfo;
 
 import java.lang.reflect.Type;
