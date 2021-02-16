@@ -3,6 +3,7 @@ package com.mangopay.entities.subentities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.ObjectTool;
+import com.mangopay.core.Shipping;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 import com.mangopay.core.enumerations.CardType;
 
