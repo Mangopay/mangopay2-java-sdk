@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.FilterPreAuthorizations;
 import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
@@ -385,6 +386,27 @@ public interface UserApi {
      * @throws Exception
      */
     List<CardPreAuthorization> getPreAuthorizations(String userId) throws Exception;
+
+    /**
+     * Get pre authorizations for user with pagination and sorting
+     * @param userId User identifier
+     * @param pagination Pagination
+     * @param sorting Sorting object
+     * @return A list of user pre authorizations given conditions
+     * @throws Exception
+     */
+    List<CardPreAuthorization> getPreAuthorizations(String userId, Pagination pagination, Sorting sorting) throws Exception;
+
+    /**
+     * Get pre authorizations for user with pagination and sorting
+     * @param userId User identifier
+     * @param pagination Pagination
+     * @param filter PreAuthorization filters
+     * @param sorting Sorting object
+     * @return A list of user pre authorizations given conditions
+     * @throws Exception
+     */
+    List<CardPreAuthorization> getPreAuthorizations(String userId, Pagination pagination, FilterPreAuthorizations filter, Sorting sorting) throws Exception;
 
     /**
      * Gets user block status.

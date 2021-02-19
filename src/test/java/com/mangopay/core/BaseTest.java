@@ -110,6 +110,8 @@ public abstract class BaseTest {
         Shipping shipping = new Shipping();
         Address address = getNewAddress();
 
+        shipping.setFirstName("John");
+        shipping.setLastName("Doe");
         shipping.setAddress(address);
 
         return shipping;
@@ -474,6 +476,8 @@ public abstract class BaseTest {
         address.setCountry(CountryIso.FR);
         address.setPostalCode("65400");
         billing.setAddress(address);
+        billing.setFirstName("John");
+        billing.setLastName("Doe");
         executionDetails.setBilling(billing);
 
         return this.api.getPayInApi().create(payIn);
