@@ -3,6 +3,7 @@ package com.mangopay.entities.subentities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.ObjectTool;
+import com.mangopay.core.enumerations.PayoutMode;
 import com.mangopay.core.interfaces.PayOutPaymentDetails;
 
 /**
@@ -22,10 +23,10 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     private String bankWireRef;
 
     /**
-     * The requested payout mode. Possible values: INSTANT_PAYMENT or STANDARD
+     * The requested payout mode.
      */
     @SerializedName("PayoutModeRequested")
-    private String payoutModeRequested;
+    private PayoutMode payoutModeRequested;
 
     public PayOutPaymentDetailsBankWire() {
     }
@@ -39,7 +40,7 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
         this.bankWireRef = bankWireRef;
     }
 
-    public PayOutPaymentDetailsBankWire(String bankAccountId, String bankWireRef, String payoutModeRequested) {
+    public PayOutPaymentDetailsBankWire(String bankAccountId, String bankWireRef, PayoutMode payoutModeRequested) {
         this.bankAccountId = bankAccountId;
         this.bankWireRef = bankWireRef;
         this.payoutModeRequested = payoutModeRequested;
@@ -53,7 +54,7 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
         return new PayOutPaymentDetailsBankWire(bankAccountId, bankWireRef);
     }
 
-    public static PayOutPaymentDetailsBankWire build(String bankAccountId, String bankWireRef, String payoutModeRequested) {
+    public static PayOutPaymentDetailsBankWire build(String bankAccountId, String bankWireRef, PayoutMode payoutModeRequested) {
         return new PayOutPaymentDetailsBankWire(bankAccountId, bankWireRef, payoutModeRequested);
     }
 
@@ -73,11 +74,11 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
         this.bankWireRef = bankWireRef;
     }
 
-    public String getPayoutModeRequested() {
+    public PayoutMode getPayoutModeRequested() {
         return payoutModeRequested;
     }
 
-    public void setPayoutModeRequested(String payoutModeRequested) {
+    public void setPayoutModeRequested(PayoutMode payoutModeRequested) {
         this.payoutModeRequested = payoutModeRequested;
     }
 
