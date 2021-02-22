@@ -1,6 +1,7 @@
 package com.mangopay.core;
 
 import com.mangopay.core.enumerations.CurrencyIso;
+import com.mangopay.core.enumerations.PayoutMode;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
 
@@ -45,6 +46,7 @@ public class IdempotencyApiImplTest extends BaseTest {
             PayOutPaymentDetailsBankWire paymentDetails = new PayOutPaymentDetailsBankWire();
             paymentDetails.setBankAccountId(account.getId());
             paymentDetails.setBankWireRef("Johns bank wire ref");
+            paymentDetails.setPayoutModeRequested(PayoutMode.STANDARD);
             payOutPost.setMeanOfPaymentDetails(paymentDetails);
 
             payOutPost.setTag("DefaultTag");
