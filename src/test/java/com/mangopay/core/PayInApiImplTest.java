@@ -563,6 +563,7 @@ public class PayInApiImplTest extends BaseTest {
         }
     }
 
+    @Ignore("Can't be tested at this moment")
     @Test
     public void testDirectApplepayPayin() {
         try {
