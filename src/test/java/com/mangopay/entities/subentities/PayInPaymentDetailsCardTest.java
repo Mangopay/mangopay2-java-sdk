@@ -6,6 +6,7 @@
 package com.mangopay.entities.subentities;
 
 import com.mangopay.core.Address;
+import com.mangopay.core.Shipping;
 import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
@@ -71,7 +72,8 @@ public class PayInPaymentDetailsCardTest {
         result.setCountry(CountryIso.PL);
         result.setPostalCode("11222");
         result.setRegion("Region");
-
+        shipping.setFirstName("John");
+        shipping.setLastName("Doe");
         shipping.setAddress(result);
 
 

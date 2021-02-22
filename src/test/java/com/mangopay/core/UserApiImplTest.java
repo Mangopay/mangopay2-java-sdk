@@ -641,6 +641,73 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getUserPreAuthorizationsWithPagination() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+
+        Pagination pagination = new Pagination(1, 20);
+
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId(), pagination, null);
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertNotNull(preAuthorizations.get(0));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+    }
+
+    @Test
+    public void getUserPreAuthorizationsWithNullPaginationObject() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+
+        Pagination pagination = null;
+
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId(), null, null);
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertNotNull(preAuthorizations.get(0));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+    }
+
+    @Test
+    public void getUserPreAuthorizationsWithPaginationAndFilterReturnsValue() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+
+        Pagination pagination = new Pagination(1, 20);
+        FilterPreAuthorizations fpa = new FilterPreAuthorizations();
+        fpa.setPreAuthorizationStatus(PreAuthorizationStatus.SUCCEEDED);
+        fpa.setResultCode("000000");
+
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId(), pagination, fpa, null);
+
+        assertNotNull(preAuthorizations);
+        assertFalse(preAuthorizations.isEmpty());
+        assertNotNull(preAuthorizations.get(0));
+        assertTrue(preAuthorizations.get(0).getAuthorId().equals(johnsCardPreAuthorization.getAuthorId()));
+    }
+
+    @Test
+    public void getUserPreAuthorizationsWithPaginationAndFilterDoesNotReturnValue() throws Exception {
+        CardPreAuthorization johnsCardPreAuthorization = getJohnsCardPreAuthorization();
+
+        assertNotNull(johnsCardPreAuthorization);
+
+        Pagination pagination = new Pagination(1, 20);
+        FilterPreAuthorizations fpa = new FilterPreAuthorizations();
+        fpa.setResultCode("000001");
+
+        List<CardPreAuthorization> preAuthorizations = this.api.getUserApi().getPreAuthorizations(johnsCardPreAuthorization.getAuthorId(), pagination, fpa, null);
+
+        assertNotNull(preAuthorizations);
+        assertTrue(preAuthorizations.isEmpty());
+    }
+
+    @Test
     @Ignore
     // this endpoind isn't on the api just yet
     public void getBlockStatus() throws Exception{
