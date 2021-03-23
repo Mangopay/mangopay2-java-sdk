@@ -110,6 +110,28 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createCardDirectWithRequested3DSVersion() {
+        try {
+            Wallet johnWallet = this.getJohnsWalletWithMoney();
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
+
+            PayIn payIn = this.getNewPayInCardDirectWithRequested3DSVersion();
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
+            UserNatural user = this.getJohn();
+
+            check(user, payIn, wallet, beforeWallet);
+
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull(executionDetails.getSecurityInfo());
+            assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+            assertNotNull(executionDetails.getRequested3DSVersion());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void createCardDirectWithBrowserInfo() {
         try {
             Wallet johnWallet = this.getJohnsWalletWithMoney();

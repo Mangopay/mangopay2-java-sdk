@@ -118,6 +118,10 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInExecutionDetailsWeb.setReturnUrl(object.get("ReturnURL").getAsString());
                 if (object.has("TemplateURLOptions") && !object.get("TemplateURLOptions").isJsonNull())
                     payInExecutionDetailsWeb.setTemplateURLOptions((PayInTemplateURLOptions) context.deserialize(object.get("TemplateURLOptions"), PayInTemplateURLOptions.class));
+                if (object.has("Requested3DSVersion") && !object.get("Requested3DSVersion").isJsonNull())
+                    payInExecutionDetailsWeb.setRequested3DSVersion(object.get("Requested3DSVersion").getAsString());
+                if (object.has("Applied3DSVersion") && !object.get("Applied3DSVersion").isJsonNull())
+                    payInExecutionDetailsWeb.setApplied3DSVersion(object.get("Applied3DSVersion").getAsString());
                 payIn.setExecutionDetails(payInExecutionDetailsWeb);
                 break;
             case DIRECT:
@@ -138,6 +142,10 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInExecutionDetailsDirect.setSecurityInfo((SecurityInfo) context.deserialize(object.get("SecurityInfo"), SecurityInfo.class));
                 if (object.has("Culture") && !object.get("Culture").isJsonNull())
                     payInExecutionDetailsDirect.setCulture(CultureCode.valueOf(object.get("Culture").getAsString()));
+                if (object.has("Requested3DSVersion") && !object.get("Requested3DSVersion").isJsonNull())
+                    payInExecutionDetailsDirect.setRequested3DSVersion(object.get("Requested3DSVersion").getAsString());
+                if (object.has("Applied3DSVersion") && !object.get("Applied3DSVersion").isJsonNull())
+                    payInExecutionDetailsDirect.setApplied3DSVersion(object.get("Applied3DSVersion").getAsString());
                 payIn.setExecutionDetails(payInExecutionDetailsDirect);
                 break;
             case EXTERNAL_INSTRUCTION:
