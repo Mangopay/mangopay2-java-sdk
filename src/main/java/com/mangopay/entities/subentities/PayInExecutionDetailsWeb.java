@@ -45,12 +45,6 @@ public class PayInExecutionDetailsWeb extends Dto implements PayInExecutionDetai
     @SerializedName("ReturnURL")
     private String returnUrl;
 
-    @SerializedName("Requested3DSVersion")
-    private String requested3DSVersion;
-
-    @SerializedName("Applied3DSVersion")
-    private String applied3DSVersion;
-
     /**
      * The URL where you host the iFramed template.
      * For CB, Visa, MasterCard you need to specify PAYLINE: before your URL
@@ -120,14 +114,6 @@ public class PayInExecutionDetailsWeb extends Dto implements PayInExecutionDetai
     }
 
     public void setTemplateURLOptions(PayInTemplateURLOptions templateURLOptions) { this.TemplateURLOptions = templateURLOptions; }
-
-    public String getRequested3DSVersion() { return requested3DSVersion; }
-
-    public void setRequested3DSVersion(String requested3DSVersion) { this.requested3DSVersion = requested3DSVersion; }
-
-    public String getApplied3DSVersion() {  return applied3DSVersion; }
-
-    public void setApplied3DSVersion(String applied3DSVersion) { this.applied3DSVersion = applied3DSVersion; }
 
     /**
      * Gets the collection of read-only fields names
