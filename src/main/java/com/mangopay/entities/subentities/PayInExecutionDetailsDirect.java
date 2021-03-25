@@ -53,6 +53,12 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
     @SerializedName("SecurityInfo")
     private SecurityInfo securityInfo;
 
+    @SerializedName("Requested3DSVersion")
+    private String requested3DSVersion;
+
+    @SerializedName("Applied3DSVersion")
+    private String applied3DSVersion;
+
     /**
      * The language to use for the payment page - needs to be the ISO code of the language
      */
@@ -181,6 +187,14 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
     public void setSecurityInfo(SecurityInfo securityInfo) {
         this.securityInfo = securityInfo;
     }
+
+    public String getRequested3DSVersion() { return requested3DSVersion; }
+
+    public void setRequested3DSVersion(String requested3DSVersion) { this.requested3DSVersion = requested3DSVersion; }
+
+    public String getApplied3DSVersion() {  return applied3DSVersion; }
+
+    public void setApplied3DSVersion(String applied3DSVersion) { this.applied3DSVersion = applied3DSVersion; }
 
     @Override
     public Map<String, Type> getSubObjects() {

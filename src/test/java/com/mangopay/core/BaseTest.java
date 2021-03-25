@@ -465,6 +465,15 @@ public abstract class BaseTest {
         return payIn;
     }
 
+    protected PayIn getNewPayInCardDirectWithRequested3DSVersion() throws Exception {
+        PayIn payIn = getPayInCardDirect(null);
+
+        PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+        executionDetails.setRequested3DSVersion("V1");
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayIn getNewPayInCardDirectWithBilling() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
