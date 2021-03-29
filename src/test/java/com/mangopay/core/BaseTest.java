@@ -242,8 +242,8 @@ public abstract class BaseTest {
             account.setOwnerAddress(john.getAddress());
             account.setUserId(john.getId());
             BankAccountDetailsIBAN bankAccountDetails = new BankAccountDetailsIBAN();
-            bankAccountDetails.setIban("FR7618829754160173622224154");
-            bankAccountDetails.setBic("CMBRFR2BCME");
+            bankAccountDetails.setIban("FR7630004000031234567890143");
+            bankAccountDetails.setBic("CRLYFRPP");
             account.setDetails(bankAccountDetails);
             BaseTest.JOHNS_ACCOUNT = this.api.getUserApi().createBankAccount(john.getId(), account);
         }
