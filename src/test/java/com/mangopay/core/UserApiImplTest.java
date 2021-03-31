@@ -336,7 +336,7 @@ public class UserApiImplTest extends BaseTest {
         disactivateBankAccount.setType(BankAccountType.IBAN);
         BankAccountDetailsIBAN bankAccountDetails = new BankAccountDetailsIBAN();
         bankAccountDetails.setIban("FR7630004000031234567890143");
-        bankAccountDetails.setBic("CRLYFRPP");
+        bankAccountDetails.setBic("BNPAFRPP");
         disactivateBankAccount.setDetails(bankAccountDetails);
         BankAccount result = this.api.getUserApi().updateBankAccount(john.getId(), disactivateBankAccount, account.getId());
 
