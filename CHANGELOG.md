@@ -1,3 +1,28 @@
+## [2.14.0] - 2021-05-11
+## Fixed 
+
+### IBAN for testing purposes
+
+⚠️ **IBAN provided for testing purpose should never be used outside of a testing environement!**
+
+More information about how to test payments, click [here](https://docs.mangopay.com/guide/testing-payments).
+
+### Others 
+
+- LegalRepresentativeBirthday primitive Long fixed. Thanks @LeComptoirDesPharmacies
+
+## Added 
+
+Some of you use a lot the [PreAuthorization](https://docs.mangopay.com/endpoints/v2.01/preauthorizations#e183_the-preauthorization-object) feature of our API. To make your life easier, we have added three new events :
+
+- PREAUTHORIZATION_CREATED
+- PREAUTHORIZATION_SUCCEEDED
+- PREAUTHORIZATION_FAILED
+
+The goal is to help you monitor a PreAuthorization with a [webhook](https://docs.mangopay.com/endpoints/v2.01/hooks#e246_the-hook-object).
+
+*Example: If a PreAuthorization is desynchronized, when the status is updated, you will be able to know it.*
+
 ## [2.13.0] - 2021-03-25
 ## Added
 
