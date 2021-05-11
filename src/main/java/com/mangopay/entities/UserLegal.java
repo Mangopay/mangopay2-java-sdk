@@ -60,7 +60,7 @@ public class UserLegal extends User {
      * Legal representative birthday.
      */
     @SerializedName("LegalRepresentativeBirthday")
-    private long legalRepresentativeBirthday;
+    private Long legalRepresentativeBirthday;
     
     /**
      * Legal representative nationality.
@@ -161,11 +161,11 @@ public class UserLegal extends User {
         this.legalRepresentativeEmail = legalRepresentativeEmail;
     }
 
-    public long getLegalRepresentativeBirthday() {
+    public Long getLegalRepresentativeBirthday() {
         return legalRepresentativeBirthday;
     }
 
-    public void setLegalRepresentativeBirthday(long legalRepresentativeBirthday) {
+    public void setLegalRepresentativeBirthday(Long legalRepresentativeBirthday) {
         this.legalRepresentativeBirthday = legalRepresentativeBirthday;
     }
 
