@@ -242,8 +242,8 @@ public abstract class BaseTest {
             account.setOwnerAddress(john.getAddress());
             account.setUserId(john.getId());
             BankAccountDetailsIBAN bankAccountDetails = new BankAccountDetailsIBAN();
-            bankAccountDetails.setIban("FR7618829754160173622224154");
-            bankAccountDetails.setBic("CMBRFR2BCME");
+            bankAccountDetails.setIban("FR7630004000031234567890143");
+            bankAccountDetails.setBic("BNPAFRPP");
             account.setDetails(bankAccountDetails);
             BaseTest.JOHNS_ACCOUNT = this.api.getUserApi().createBankAccount(john.getId(), account);
         }
@@ -870,7 +870,7 @@ public abstract class BaseTest {
         BankAccount bankAccountIBAN = new BankAccount();
         BankAccountDetailsIBAN detailsIBAN = new BankAccountDetailsIBAN();
         detailsIBAN.setIban("FR7630004000031234567890143");
-        detailsIBAN.setBic("CRLYFRPP");
+        detailsIBAN.setBic("BNPAFRPP");
 
         Address address = new Address();
         address.setCity("Paris");
