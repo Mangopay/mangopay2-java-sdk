@@ -539,6 +539,7 @@ public abstract class BaseTest {
             payOut.setDebitedWalletId(wallet.getId());
             payOut.setMeanOfPaymentDetails(new PayOutPaymentDetailsBankWire());
             ((PayOutPaymentDetailsBankWire) payOut.getMeanOfPaymentDetails()).setBankAccountId(account.getId());
+            ((PayOutPaymentDetailsBankWire) payOut.getMeanOfPaymentDetails()).setPayoutModeRequested(PayoutMode.STANDARD);
 
             BaseTest.JOHNS_PAYOUT_BANKWIRE = this.api.getPayOutApi().create(payOut);
         }

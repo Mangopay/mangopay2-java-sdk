@@ -28,6 +28,8 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     @SerializedName("PayoutModeRequested")
     private PayoutMode payoutModeRequested;
 
+    private String payoutModeApplied;
+
     public PayOutPaymentDetailsBankWire() {
     }
 
@@ -80,6 +82,12 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
 
     public void setPayoutModeRequested(PayoutMode payoutModeRequested) {
         this.payoutModeRequested = payoutModeRequested;
+    }
+
+    public String getPayoutModeApplied() { return payoutModeApplied; }
+
+    public void setPayoutModeApplied(String payoutModeApplied) {
+        this.payoutModeApplied = payoutModeApplied;
     }
 
     public static PayOutPaymentDetailsBankWire convert(PayOutPaymentDetails payOutPaymentDetails) throws Exception {

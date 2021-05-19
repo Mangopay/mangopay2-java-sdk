@@ -19,8 +19,10 @@ public class PayOutDeserializer implements JsonDeserializer<PayOut> {
                     meanOfPaymentDetails.setBankAccountId(object.get("BankAccountId").getAsString());
                 if (object.has("BankWireRef") && !object.get("BankWireRef").isJsonNull())
                     meanOfPaymentDetails.setBankWireRef(object.get("BankWireRef").getAsString());
-                if (object.has("PayoutModeRequested") && !object.get("PayoutModeRequested").isJsonNull())
-                    meanOfPaymentDetails.setPayoutModeRequested(PayoutMode.valueOf(object.get("PayoutModeRequested").getAsString()));
+                if (object.has("ModeRequested") && !object.get("ModeRequested").isJsonNull())
+                    meanOfPaymentDetails.setPayoutModeRequested(PayoutMode.valueOf(object.get("ModeRequested").getAsString()));
+                if (object.has("ModeApplied") && !object.get("ModeApplied").isJsonNull())
+                    meanOfPaymentDetails.setPayoutModeApplied(object.get("ModeApplied").getAsString());
                 payOut.setMeanOfPaymentDetails(meanOfPaymentDetails);
                 return payOut;
             default:
