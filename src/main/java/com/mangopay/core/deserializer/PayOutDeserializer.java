@@ -23,6 +23,10 @@ public class PayOutDeserializer implements JsonDeserializer<PayOut> {
                     meanOfPaymentDetails.setPayoutModeRequested(PayoutMode.valueOf(object.get("ModeRequested").getAsString()));
                 if (object.has("ModeApplied") && !object.get("ModeApplied").isJsonNull())
                     meanOfPaymentDetails.setPayoutModeApplied(object.get("ModeApplied").getAsString());
+                if (object.has("FallbackReason")&& !object.get("FallbackReason").isJsonNull())
+                    meanOfPaymentDetails.setFallbackReason(object.get("FallbackReason").getAsString());
+                if (object.has("Status") && !object.get("Status").isJsonNull())
+                    meanOfPaymentDetails.setStatus(object.get("Status").getAsString());
                 payOut.setMeanOfPaymentDetails(meanOfPaymentDetails);
                 return payOut;
             default:
