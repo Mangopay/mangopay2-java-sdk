@@ -76,6 +76,7 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
             put("payins_directdebit-web_create", PayIn.class);
             put("payins_directdebit-direct_create", PayIn.class);
             put("payouts_bankwire_create", PayOut.class);
+            put("payouts_bankwire_get", PayOut.class);
             put("transfers_createrefunds", Refund.class);
             put("transfers_create", Transfer.class);
             put("users_createnaturals", UserNatural.class);
