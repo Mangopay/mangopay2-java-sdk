@@ -1,3 +1,25 @@
+## [2.15.0] - 2021-05-27
+## Added
+
+### Instant payment
+
+Mangopay introduces the instant payment mode. It allows payouts (transfer from wallet to user bank account) to be processed within 25 seconds, rather than the 48 hours for a standard payout.
+
+You can now use this new type of payout with the Java SDK.
+
+Example :
+
+```java
+PayOut getPayOut = this.api.getPayOutApi().getBankwire(payOut.getId());
+// where payOut.getId() is the id of an existing payout
+```
+
+Please note that this feature must be authorized and activated by MANGOPAY. More information [here](https://docs.mangopay.com/guide/instant-payment-payout).
+
+### List transactions for a mandate
+
+The [endpoint](https://docs.mangopay.com/endpoints/v2.01/transactions#e993_list-transactions-for-a-mandate) to list all transactions linked to mandate has been added to the SDK.
+
 ## [2.14.0] - 2021-05-11
 ## Fixed 
 
