@@ -96,4 +96,15 @@ public interface MandateApi {
      * @throws Exception
      */
     List<Transfer> getTransfers(String mandateId,Pagination pagination,Sorting sorting) throws Exception;
+
+    /**
+     * Get page of mandate's transfers
+     * @param mandateId Mandate identifier
+     * @param pagination Pagination object
+     * @param sorting Sorting object
+     * @param filters Status and/or ResultCode filters
+     * @return Collection of transfers
+     * @throws Exception
+     */
+    List<Transfer> getTransfers(String mandateId, Pagination pagination, Sorting sorting, FilterMandates filters) throws Exception;
 }

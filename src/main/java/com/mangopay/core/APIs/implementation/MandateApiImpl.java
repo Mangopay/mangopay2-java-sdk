@@ -10,6 +10,7 @@ import com.mangopay.entities.Mandate;
 import com.mangopay.entities.Transfer;
 
 import java.util.List;
+import java.util.logging.Filter;
 
 /**
  * API for mandates.
@@ -80,5 +81,11 @@ public class MandateApiImpl extends ApiBase implements MandateApi {
     @Override
     public List<Transfer> getTransfers(String mandateId, Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(Transfer[].class, Transfer.class, "mandate_get_transactions", pagination, mandateId, sorting);
+    }
+
+    @Override
+    public List<Transfer> getTransfers(String mandateId, Pagination pagination, Sorting sorting, FilterMandates filters) throws Exception {
+        if (filters == null) filters = new FilterMandates();
+        return this.getList(Transfer[].class, Transfer.class, "mandate_get_transactions", pagination, mandateId, filters.getValues(), sorting);
     }
 }
