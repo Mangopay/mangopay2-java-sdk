@@ -37,6 +37,14 @@ public interface PayOutApi {
     PayOut get(String payOutId) throws Exception;
 
     /**
+     * Gets PayOut Bankwire entity by its identifier.
+     * @param payOutId  PayOut identifier.
+     * @return          PayOut instance returned by API.
+     * @throws Exception
+     */
+    PayOut getBankwire(String payOutId) throws Exception;
+
+    /**
      * Get refunds for a payout
      * @param payOutId PayOut identifier
      * @return A list of refunds

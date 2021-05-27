@@ -41,6 +41,11 @@ public class PayOutApiImpl extends ApiBase implements PayOutApi {
     }
 
     @Override
+    public PayOut getBankwire(String payOutId) throws Exception {
+        return this.getObject(PayOut.class, "payouts_bankwire_get", payOutId);
+    }
+
+    @Override
     public List<Refund> getRefunds(String payOutId) throws Exception {
         return this.getRefunds(payOutId, null, null);
     }
