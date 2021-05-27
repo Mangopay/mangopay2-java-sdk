@@ -28,6 +28,14 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     @SerializedName("PayoutModeRequested")
     private PayoutMode payoutModeRequested;
 
+    private String payoutModeApplied;
+
+    @SerializedName("Status")
+    private String status;
+
+    @SerializedName("FallbackReason")
+    private String fallbackReason;
+
     public PayOutPaymentDetailsBankWire() {
     }
 
@@ -80,6 +88,24 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
 
     public void setPayoutModeRequested(PayoutMode payoutModeRequested) {
         this.payoutModeRequested = payoutModeRequested;
+    }
+
+    public String getPayoutModeApplied() { return payoutModeApplied; }
+
+    public void setPayoutModeApplied(String payoutModeApplied) {
+        this.payoutModeApplied = payoutModeApplied;
+    }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getFallbackReason() { return fallbackReason; }
+
+    public void setFallbackReason(String fallbackReason) {
+        this.fallbackReason = fallbackReason;
     }
 
     public static PayOutPaymentDetailsBankWire convert(PayOutPaymentDetails payOutPaymentDetails) throws Exception {

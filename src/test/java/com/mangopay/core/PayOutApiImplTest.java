@@ -27,6 +27,22 @@ public class PayOutApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createAndGetBankWire() throws Exception {
+        PayIn payIn = this.getJohnsPayInCardWeb();
+        PayOut payOut = this.getJohnsPayOutBankWire();
+
+        PayOut getPayOut = this.api.getPayOutApi().getBankwire(payOut.getId());
+
+        assertTrue(payOut.getId().length() > 0);
+        assertTrue(payOut.getPaymentType() == PayOutPaymentType.BANK_WIRE);
+        assertTrue(payOut.getMeanOfPaymentDetails() instanceof PayOutPaymentDetailsBankWire);
+
+        assertTrue(getPayOut.getId().length() > 0);
+        assertTrue(getPayOut.getPaymentType() == PayOutPaymentType.BANK_WIRE);
+        assertTrue(getPayOut.getMeanOfPaymentDetails() instanceof PayOutPaymentDetailsBankWire);
+    }
+
+    @Test
     public void getPayOutRefunds() throws Exception {
         String payOutId = "38233499";//hardcoded and in sync with mangopay test database
         String expectedRefundId = "38239297";//hardcoded and in sync with mangopay test database
