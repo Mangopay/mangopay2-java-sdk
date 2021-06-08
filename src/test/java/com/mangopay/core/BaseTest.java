@@ -4,6 +4,7 @@ import com.mangopay.MangoPayApi;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
+import javafx.util.Pair;
 import org.junit.*;
 
 import java.io.*;
@@ -104,6 +105,17 @@ public abstract class BaseTest {
         result.setRegion("Region");
 
         return result;
+    }
+
+    protected Billing getNewBilling() {
+        Billing billing = new Billing();
+        Address address = getNewAddress();
+
+        billing.setFirstName("John");
+        billing.setLastName("Doe");
+        billing.setAddress(address);
+
+        return billing;
     }
 
     protected Shipping getNewShipping() {
@@ -280,6 +292,67 @@ public abstract class BaseTest {
      */
     protected Wallet getJohnsWalletWithMoney() throws Exception {
         return getJohnsWalletWithMoney(10000);
+    }
+
+    /**
+     * Creates wallet for John, if not created yet, or returns an existing one.
+     *
+     * @param amount Initial wallet's money amount.
+     * @return Wallet entity instance.
+     */
+    protected Pair<String, Wallet> getJohnsWalletWithMoney3DSecure(int amount) throws Exception {
+
+        String cardId = "";
+        if (BaseTest.JOHNS_WALLET_WITH_MONEY == null) {
+            UserNatural john = this.getJohn();
+
+            // create wallet with money
+            Wallet wallet = new Wallet();
+            wallet.setOwners(new ArrayList<String>());
+            wallet.getOwners().add(john.getId());
+            wallet.setCurrency(CurrencyIso.EUR);
+            wallet.setDescription("WALLET IN EUR WITH MONEY");
+
+            BaseTest.JOHNS_WALLET_WITH_MONEY = this.api.getWalletApi().create(wallet);
+
+            CardRegistration cardRegistration = new CardRegistration();
+            cardRegistration.setUserId(BaseTest.JOHNS_WALLET_WITH_MONEY.getOwners().get(0));
+            cardRegistration.setCurrency(CurrencyIso.EUR);
+            cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
+
+            cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData3DSecure(cardRegistration));
+            cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
+
+            Card card = this.api.getCardApi().get(cardRegistration.getCardId());
+
+            // create pay-in CARD DIRECT
+            PayIn payIn = new PayIn();
+            payIn.setCreditedWalletId(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
+            payIn.setAuthorId(cardRegistration.getUserId());
+            payIn.setDebitedFunds(new Money());
+            payIn.getDebitedFunds().setAmount(amount);
+            payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+            payIn.setFees(new Money());
+            payIn.getFees().setAmount(0);
+            payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+            // payment type as CARD
+            payIn.setPaymentDetails(new PayInPaymentDetailsCard());
+            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
+
+            // execution type as DIRECT
+            payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
+            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
+
+            // create Pay-In
+            this.api.getPayInApi().create(payIn);
+            cardId = card.getId();
+        }
+
+        Wallet wally = this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
+
+        return new Pair<>(cardId, wally);
     }
 
     /**
@@ -730,6 +803,57 @@ public abstract class BaseTest {
     }
 
     /**
+     * Gets registration data from Payline service 3DSecure.
+     *
+     * @param cardRegistration
+     * @return Registration data.
+     */
+    protected String getPaylineCorrectRegistartionData3DSecure(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
+
+        String data = "data=" + cardRegistration.getPreregistrationData() +
+                "&accessKeyRef=" + cardRegistration.getAccessKey() +
+                "&cardNumber=4970105191923460" +
+                "&cardExpirationDate=1224" +
+                "&cardCvx=123";
+
+        URL url = new URL(cardRegistration.getCardRegistrationUrl());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("POST");
+        connection.setUseCaches(false);
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+
+        try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+            wr.writeBytes(data);
+            wr.flush();
+        }
+
+        int responseCode = connection.getResponseCode();
+        InputStream is;
+        if (responseCode != 200) {
+            is = connection.getErrorStream();
+        } else {
+            is = connection.getInputStream();
+        }
+
+        StringBuffer resp;
+        try (BufferedReader rd = new BufferedReader(new InputStreamReader(is))) {
+            String line;
+            resp = new StringBuffer();
+            while ((line = rd.readLine()) != null) {
+                resp.append(line);
+            }
+        }
+        String responseString = resp.toString();
+
+        if (responseCode == 200)
+            return responseString;
+        else
+            throw new Exception(responseString);
+    }
+
+    /**
      * Gets registration data from Payline service.
      *
      * @param cardRegistration
@@ -739,8 +863,8 @@ public abstract class BaseTest {
 
         String data = "data=" + cardRegistration.getPreregistrationData() +
                 "&accessKeyRef=" + cardRegistration.getAccessKey() +
-                "&cardNumber=4972485830400064" +
-                "&cardExpirationDate=0722" +
+                "&cardNumber=4972485830400056" +
+                "&cardExpirationDate=1224" +
                 "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());

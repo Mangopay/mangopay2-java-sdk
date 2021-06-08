@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
+import javafx.util.Pair;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -665,6 +666,32 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(googlePayIn.getAuthorId(), createdPayIn.getAuthorId());
             assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLEPAY);
             assertEquals(createdPayIn.getStatus(), TransactionStatus.SUCCEEDED);
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateRecurringPayment()
+    {
+        try {
+            Pair<String, Wallet> data = this.getJohnsWalletWithMoney3DSecure(1000);
+            UserNatural john = this.getJohn();
+
+            RecurringPayment recurringPayment = new RecurringPayment();
+            recurringPayment.setAuthorId(john.getId());
+            recurringPayment.setCardId(data.getKey());
+            recurringPayment.setCreditedUserId(john.getId());
+            recurringPayment.setCreditedWalletId(data.getValue().getId());
+            recurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+            recurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            recurringPayment.setShipping(this.getNewShipping());
+            recurringPayment.setBilling(this.getNewBilling());
+
+            RecurringPayment result = api.getPayInApi().createRecurringPayment(null, recurringPayment);
+
+            assertNotNull(result);
+
         } catch (Exception e) {
             fail(e.getMessage());
         }

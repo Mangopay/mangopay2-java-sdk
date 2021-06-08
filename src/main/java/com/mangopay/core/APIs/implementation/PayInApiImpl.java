@@ -9,6 +9,7 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.deserializer.PayInDeserializer;
 import com.mangopay.core.serializer.PayInSerializer;
 import com.mangopay.entities.PayIn;
+import com.mangopay.entities.RecurringPayment;
 import com.mangopay.entities.Refund;
 
 import java.util.List;
@@ -39,6 +40,11 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         String paymentKey = this.getPaymentKey(payIn);
         String executionKey = this.getExecutionKey(payIn);
         return this.createObject(PayIn.class, idempotencyKey, String.format("payins_%s-%s_create", paymentKey, executionKey), payIn);
+    }
+
+    @Override
+    public RecurringPayment createRecurringPayment(String idempotencyKey, RecurringPayment recurringPayment) throws Exception {
+        return this.createObject(RecurringPayment.class, idempotencyKey, "payins_recurring_registration", recurringPayment);
     }
 
     @Override
