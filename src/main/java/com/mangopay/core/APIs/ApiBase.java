@@ -249,7 +249,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
+    protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity, String entityId, String secondEntityId) throws Exception {
 
         String urlMethod;
 
@@ -279,7 +279,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId) throws Exception {
+    protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity, String entityId) throws Exception {
         return createObject(classOfT, idempotencyKey, methodKey, entity, entityId, "");
     }
 
@@ -294,7 +294,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity) throws Exception {
+    protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity) throws Exception {
         return createObject(classOfT, idempotencyKey, methodKey, entity, "");
     }
 

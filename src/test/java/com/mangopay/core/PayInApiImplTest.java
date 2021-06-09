@@ -4,7 +4,6 @@ import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
 import javafx.util.Pair;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -678,17 +677,17 @@ public class PayInApiImplTest extends BaseTest {
             Pair<String, Wallet> data = this.getJohnsWalletWithMoney3DSecure(1000);
             UserNatural john = this.getJohn();
 
-            RecurringPayment recurringPayment = new RecurringPayment();
-            recurringPayment.setAuthorId(john.getId());
-            recurringPayment.setCardId(data.getKey());
-            recurringPayment.setCreditedUserId(john.getId());
-            recurringPayment.setCreditedWalletId(data.getValue().getId());
-            recurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
-            recurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
-            recurringPayment.setShipping(this.getNewShipping());
-            recurringPayment.setBilling(this.getNewBilling());
+            CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+            createRecurringPayment.setAuthorId(john.getId());
+            createRecurringPayment.setCardId(data.getKey());
+            createRecurringPayment.setCreditedUserId(john.getId());
+            createRecurringPayment.setCreditedWalletId(data.getValue().getId());
+            createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setShipping(this.getNewShipping());
+            createRecurringPayment.setBilling(this.getNewBilling());
 
-            RecurringPayment result = api.getPayInApi().createRecurringPayment(null, recurringPayment);
+            RecurringPayment result = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
 
             assertNotNull(result);
 

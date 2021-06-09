@@ -3,6 +3,7 @@ package com.mangopay.core.APIs;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.PayIn;
+import com.mangopay.entities.CreateRecurringPayment;
 import com.mangopay.entities.RecurringPayment;
 import com.mangopay.entities.Refund;
 
@@ -40,11 +41,11 @@ public interface PayInApi {
     /**
      *
      * @param idempotencyKey
-     * @param recurringPayment
+     * @param createRecurringPayment
      * @return
      * @throws Exception
      */
-    RecurringPayment createRecurringPayment(String idempotencyKey, RecurringPayment recurringPayment) throws Exception;
+    RecurringPayment createRecurringPayment(String idempotencyKey, CreateRecurringPayment createRecurringPayment) throws Exception;
 
     /**
      * Creates refund for PayIn object.

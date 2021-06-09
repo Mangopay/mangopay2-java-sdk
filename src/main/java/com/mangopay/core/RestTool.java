@@ -114,7 +114,7 @@ public class RestTool {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, T entity) throws Exception {
+    public <T extends Dto, U extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, U entity) throws Exception {
         return this.request(classOfT, null, urlMethod, requestType, requestData, pagination, entity);
     }
 
@@ -138,7 +138,7 @@ public class RestTool {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, T entity) throws Exception {
+    public <T extends Dto, U extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, U entity) throws Exception {
 
         this.requestType = requestType;
         this.requestData = requestData;
@@ -294,7 +294,7 @@ public class RestTool {
         return requestList(classOfT, classOfTItem, urlMethod, requestType, requestData, pagination, null);
     }
 
-    private <T extends Dto> T doRequest(Class<T> classOfT, String idempotencyKey, String urlMethod, Pagination pagination, T entity) throws Exception {
+    private <T extends Dto, U extends Dto> T doRequest(Class<T> classOfT, String idempotencyKey, String urlMethod, Pagination pagination, U entity) throws Exception {
 
         T response = null;
 
