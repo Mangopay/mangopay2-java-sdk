@@ -10,7 +10,7 @@ repositories {
 
 dependencies {
     compile 'org.slf4j:slf4j-api:1.7.7'
-    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.google.code.gson:gson:2.8.7'
     compile 'commons-codec:commons-codec:1.8'
 
     testCompile 'junit:junit:4.12'
