@@ -4,16 +4,13 @@ import com.mangopay.MangoPayApi;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
-import javafx.util.Pair;
 import org.junit.*;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -300,7 +297,7 @@ public abstract class BaseTest {
      * @param amount Initial wallet's money amount.
      * @return Wallet entity instance.
      */
-    protected Pair<String, Wallet> getJohnsWalletWithMoney3DSecure(int amount) throws Exception {
+    protected Map<String, String> getJohnsWalletWithMoney3DSecure(int amount) throws Exception {
 
         String cardId = "";
         if (BaseTest.JOHNS_WALLET_WITH_MONEY == null) {
@@ -352,18 +349,22 @@ public abstract class BaseTest {
 
         Wallet wally = this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
 
-        return new Pair<>(cardId, wally);
+        Map<String, String> map = new HashMap<>();
+        map.put("cardId", cardId);
+        map.put("walletId", wally.getId());
+
+        return map;
     }
 
     protected RecurringPayment createJohnsRecurringPayment() throws Exception {
-        Pair<String, Wallet> data = this.getJohnsWalletWithMoney3DSecure(1000);
+        Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
         UserNatural john = this.getJohn();
 
         CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
         createRecurringPayment.setAuthorId(john.getId());
-        createRecurringPayment.setCardId(data.getKey());
+        createRecurringPayment.setCardId(data.get("cardId"));
         createRecurringPayment.setCreditedUserId(john.getId());
-        createRecurringPayment.setCreditedWalletId(data.getValue().getId());
+        createRecurringPayment.setCreditedWalletId(data.get("walletId"));
         createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
         createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
         createRecurringPayment.setShipping(this.getNewShipping());
