@@ -75,8 +75,9 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
         return shipping;
     }
 
-    public void setShipping(Shipping shipping) {
+    public PayInPaymentDetailsCard setShipping(Shipping shipping) {
         this.shipping = shipping;
+        return this;
     }
 
     public static PayInPaymentDetailsCard build(CardType cardType, String cardId) {

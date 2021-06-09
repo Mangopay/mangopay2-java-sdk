@@ -113,16 +113,18 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         return cardId;
     }
 
-    public void setCardId(String cardId) {
+    public PayInExecutionDetailsDirect setCardId(String cardId) {
         this.cardId = cardId;
+        return this;
     }
 
     public SecureMode getSecureMode() {
         return secureMode;
     }
 
-    public void setSecureMode(SecureMode secureMode) {
+    public PayInExecutionDetailsDirect setSecureMode(SecureMode secureMode) {
         this.secureMode = secureMode;
+        return this;
     }
 
     public String getSecureModeReturnUrl() {
@@ -134,8 +136,9 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
      *
      * @param secureModeReturnUrl
      */
-    public void setSecureModeReturnUrl(String secureModeReturnUrl) {
+    public PayInExecutionDetailsDirect setSecureModeReturnUrl(String secureModeReturnUrl) {
         this.secureModeReturnUrl = secureModeReturnUrl;
+        return this;
     }
 
     /**
@@ -147,8 +150,9 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         return secureModeRedirectUrl;
     }
 
-    public void setSecureModeRedirectUrl(String secureModeRedirectUrl) {
+    public PayInExecutionDetailsDirect setSecureModeRedirectUrl(String secureModeRedirectUrl) {
         this.secureModeRedirectUrl = secureModeRedirectUrl;
+        return this;
     }
 
     /**
@@ -164,8 +168,9 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         }
     }
 
-    public void setSecureModeNeeded(String secureModeNeeded) {
+    public PayInExecutionDetailsDirect setSecureModeNeeded(String secureModeNeeded) {
         this.secureModeNeeded = secureModeNeeded;
+        return this;
     }
 
     public String getSecureModeNeeded() {
@@ -176,25 +181,30 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         return billing;
     }
 
-    public void setBilling(Billing billing) {
+    public PayInExecutionDetailsDirect setBilling(Billing billing) {
         this.billing = billing;
+        return this;
     }
 
     public SecurityInfo getSecurityInfo() {
         return securityInfo;
     }
 
-    public void setSecurityInfo(SecurityInfo securityInfo) {
+    public PayInExecutionDetailsDirect setSecurityInfo(SecurityInfo securityInfo) {
         this.securityInfo = securityInfo;
+        return this;
     }
 
     public String getRequested3DSVersion() { return requested3DSVersion; }
 
-    public void setRequested3DSVersion(String requested3DSVersion) { this.requested3DSVersion = requested3DSVersion; }
+    public PayInExecutionDetailsDirect setRequested3DSVersion(String requested3DSVersion) { this.requested3DSVersion = requested3DSVersion; return this; }
 
     public String getApplied3DSVersion() {  return applied3DSVersion; }
 
-    public void setApplied3DSVersion(String applied3DSVersion) { this.applied3DSVersion = applied3DSVersion; }
+    public PayInExecutionDetailsDirect setApplied3DSVersion(String applied3DSVersion) {
+        this.applied3DSVersion = applied3DSVersion;
+        return this;
+    }
 
     @Override
     public Map<String, Type> getSubObjects() {
@@ -203,6 +213,7 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
         Map<String, Type> result = super.getSubObjects();
 
         result.put("SecurityInfo", SecurityInfo.class);
+        result.put("Billing", Billing.class);
 
         return result;
     }

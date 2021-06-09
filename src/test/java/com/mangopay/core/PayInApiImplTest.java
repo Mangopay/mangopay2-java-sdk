@@ -671,25 +671,31 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void testCreateRecurringPayment()
-    {
+    public void testCreateRecurringPayment() {
         try {
-            Pair<String, Wallet> data = this.getJohnsWalletWithMoney3DSecure(1000);
-            UserNatural john = this.getJohn();
-
-            CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
-            createRecurringPayment.setAuthorId(john.getId());
-            createRecurringPayment.setCardId(data.getKey());
-            createRecurringPayment.setCreditedUserId(john.getId());
-            createRecurringPayment.setCreditedWalletId(data.getValue().getId());
-            createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
-            createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
-            createRecurringPayment.setShipping(this.getNewShipping());
-            createRecurringPayment.setBilling(this.getNewBilling());
-
-            RecurringPayment result = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
-
+            RecurringPayment result = this.createJohnsRecurringPayment();
             assertNotNull(result);
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateRecurringPaymentCIT() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+
+            RecurringPayInCIT cit = new RecurringPayInCIT();
+            cit.setRecurringPayInRegistrationId(result.getId());
+            cit.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+            cit.setSecureModeReturnURL("http://www.my-site.com/returnurl");
+            cit.setStatementDescriptor("lorem");
+            cit.setTag("custom meta");
+            cit.setBrowserInfo(this.getNewBrowserInfo());
+            PayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
+
+            assertNotNull(createdCit);
 
         } catch (Exception e) {
             fail(e.getMessage());

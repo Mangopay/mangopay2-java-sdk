@@ -355,6 +355,23 @@ public abstract class BaseTest {
         return new Pair<>(cardId, wally);
     }
 
+    protected RecurringPayment createJohnsRecurringPayment() throws Exception {
+        Pair<String, Wallet> data = this.getJohnsWalletWithMoney3DSecure(1000);
+        UserNatural john = this.getJohn();
+
+        CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+        createRecurringPayment.setAuthorId(john.getId());
+        createRecurringPayment.setCardId(data.getKey());
+        createRecurringPayment.setCreditedUserId(john.getId());
+        createRecurringPayment.setCreditedWalletId(data.getValue().getId());
+        createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setShipping(this.getNewShipping());
+        createRecurringPayment.setBilling(this.getNewBilling());
+
+        return  api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
+    }
+
     /**
      * Creates wallet for John, if not created yet, or returns an existing one.
      *
@@ -565,21 +582,25 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected BrowserInfo getNewBrowserInfo() {
+        BrowserInfo browserInfo = new BrowserInfo();
+        browserInfo.setAcceptHeader("text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8");
+        browserInfo.setColorDepth(4);
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setLanguage("FR-FR");
+        browserInfo.setScreenHeight(1800);
+        browserInfo.setScreenWidth(400);
+        browserInfo.setTimeZoneOffset("+60");
+        browserInfo.setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148");
+
+        return browserInfo;
+    }
+
     protected PayIn getNewPayInCardDirectWithBrowserInfo() throws Exception{
         PayIn payIn = getPayInCardDirect(null);
 
-        BrowserInfo browserInfo = new BrowserInfo();
-        browserInfo.setAcceptHeader("application/json,text/javascript,*/*;q=0.01<");
-        browserInfo.setColorDepth("32");
-        browserInfo.setJavaEnabled(true);
-        browserInfo.setJavaEnabled(true);
-        browserInfo.setLanguage("fr");
-        browserInfo.setScreenHeight("1080");
-        browserInfo.setScreenWidth("1920");
-        browserInfo.setTimeZoneOffset("+3600");
-        browserInfo.setUserAgent("postman");
-
-        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(browserInfo);
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
 
         return this.api.getPayInApi().create(payIn);
     }
