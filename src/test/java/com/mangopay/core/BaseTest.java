@@ -27,6 +27,8 @@ public abstract class BaseTest {
     private static BankAccount JOHNS_ACCOUNT;
     private static Wallet JOHNS_WALLET;
     private static Wallet JOHNS_WALLET_WITH_MONEY;
+    private static Card JOHNS_3DSECURE_CARD;
+    private static Wallet JOHNS_WALLET_WITH_MONEY_3D_SECURE;
     private static PayIn JOHNS_PAYIN_CARD_WEB;
     private static PayInPaymentDetailsCard PAYIN_PAYMENT_DETAILS_CARD;
     private static PayInExecutionDetailsWeb PAYIN_EXECUTION_DETAILS_WEB;
@@ -299,8 +301,7 @@ public abstract class BaseTest {
      */
     protected Map<String, String> getJohnsWalletWithMoney3DSecure(int amount) throws Exception {
 
-        String cardId = "";
-        if (BaseTest.JOHNS_WALLET_WITH_MONEY == null) {
+        if (BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE == null) {
             UserNatural john = this.getJohn();
 
             // create wallet with money
@@ -310,10 +311,10 @@ public abstract class BaseTest {
             wallet.setCurrency(CurrencyIso.EUR);
             wallet.setDescription("WALLET IN EUR WITH MONEY");
 
-            BaseTest.JOHNS_WALLET_WITH_MONEY = this.api.getWalletApi().create(wallet);
+            BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE = this.api.getWalletApi().create(wallet);
 
             CardRegistration cardRegistration = new CardRegistration();
-            cardRegistration.setUserId(BaseTest.JOHNS_WALLET_WITH_MONEY.getOwners().get(0));
+            cardRegistration.setUserId(BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE.getOwners().get(0));
             cardRegistration.setCurrency(CurrencyIso.EUR);
             cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
 
@@ -321,10 +322,11 @@ public abstract class BaseTest {
             cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
 
             Card card = this.api.getCardApi().get(cardRegistration.getCardId());
+            BaseTest.JOHNS_3DSECURE_CARD = card;
 
             // create pay-in CARD DIRECT
             PayIn payIn = new PayIn();
-            payIn.setCreditedWalletId(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
+            payIn.setCreditedWalletId(BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE.getId());
             payIn.setAuthorId(cardRegistration.getUserId());
             payIn.setDebitedFunds(new Money());
             payIn.getDebitedFunds().setAmount(amount);
@@ -344,13 +346,12 @@ public abstract class BaseTest {
 
             // create Pay-In
             this.api.getPayInApi().create(payIn);
-            cardId = card.getId();
         }
 
-        Wallet wally = this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
+        Wallet wally = this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE.getId());
 
         Map<String, String> map = new HashMap<>();
-        map.put("cardId", cardId);
+        map.put("cardId", BaseTest.JOHNS_3DSECURE_CARD.getId());
         map.put("walletId", wally.getId());
 
         return map;
@@ -370,7 +371,7 @@ public abstract class BaseTest {
         createRecurringPayment.setShipping(this.getNewShipping());
         createRecurringPayment.setBilling(this.getNewBilling());
 
-        return  api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
+        return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
     }
 
     /**
