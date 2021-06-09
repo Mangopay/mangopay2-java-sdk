@@ -3,7 +3,6 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
-import javafx.util.Pair;
 import org.junit.Ignore;
 import org.junit.Test;
 
