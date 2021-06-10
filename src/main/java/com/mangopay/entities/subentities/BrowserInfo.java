@@ -17,13 +17,13 @@ public class BrowserInfo extends Dto {
     private String language;
 
     @SerializedName("ColorDepth")
-    private String colorDepth;
+    private Integer colorDepth;
 
     @SerializedName("ScreenHeight")
-    private String screenHeight;
+    private Integer screenHeight;
 
     @SerializedName("ScreenWidth")
-    private String screenWidth;
+    private Integer screenWidth;
 
     @SerializedName("TimeZoneOffset")
     private String timeZoneOffset;
@@ -67,29 +67,29 @@ public class BrowserInfo extends Dto {
         return this;
     }
 
-    public String getColorDepth() {
+    public int getColorDepth() {
         return colorDepth;
     }
 
-    public BrowserInfo setColorDepth(String colorDepth) {
+    public BrowserInfo setColorDepth(Integer colorDepth) {
         this.colorDepth = colorDepth;
         return this;
     }
 
-    public String getScreenHeight() {
+    public int getScreenHeight() {
         return screenHeight;
     }
 
-    public BrowserInfo setScreenHeight(String screenHeight) {
+    public BrowserInfo setScreenHeight(Integer screenHeight) {
         this.screenHeight = screenHeight;
         return this;
     }
 
-    public String getScreenWidth() {
+    public int getScreenWidth() {
         return screenWidth;
     }
 
-    public BrowserInfo setScreenWidth(String screenWidth) {
+    public BrowserInfo setScreenWidth(Integer screenWidth) {
         this.screenWidth = screenWidth;
         return this;
     }

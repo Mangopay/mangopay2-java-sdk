@@ -7,9 +7,9 @@ import com.mangopay.core.APIs.PayInApi;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.deserializer.PayInDeserializer;
+import com.mangopay.core.deserializer.RecurringPayInDeserializer;
 import com.mangopay.core.serializer.PayInSerializer;
-import com.mangopay.entities.PayIn;
-import com.mangopay.entities.Refund;
+import com.mangopay.entities.*;
 
 import java.util.List;
 
@@ -25,8 +25,10 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
      */
     public PayInApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+
         gsonBuilder.registerTypeAdapter(PayIn.class, new PayInSerializer());
         gsonBuilder.registerTypeAdapter(PayIn.class, new PayInDeserializer());
+        gsonBuilder.registerTypeAdapter(RecurringPayIn.class, new RecurringPayInDeserializer());
     }
 
     @Override
@@ -39,6 +41,21 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         String paymentKey = this.getPaymentKey(payIn);
         String executionKey = this.getExecutionKey(payIn);
         return this.createObject(PayIn.class, idempotencyKey, String.format("payins_%s-%s_create", paymentKey, executionKey), payIn);
+    }
+
+    @Override
+    public RecurringPayment createRecurringPayment(String idempotencyKey, CreateRecurringPayment createRecurringPayment) throws Exception {
+        return this.createObject(RecurringPayment.class, idempotencyKey, "payins_recurring_registration", createRecurringPayment);
+    }
+
+    @Override
+    public RecurringPayIn createRecurringPayInCIT(String idempotencyKey, RecurringPayInCIT cit) throws Exception {
+        return this.createObject(RecurringPayIn.class, idempotencyKey, "payins_recurring_card_direct", cit);
+    }
+
+    @Override
+    public RecurringPayIn createRecurringPayInMIT(String idempotencyKey, RecurringPayInMIT mit) throws Exception {
+        return this.createObject(RecurringPayIn.class, idempotencyKey, "payins_recurring_card_direct", mit);
     }
 
     @Override

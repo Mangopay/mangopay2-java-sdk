@@ -84,6 +84,8 @@ public abstract class ApiBase {
         put("payins_applepay-direct_create", new String[]{"/payins/applepay/direct", RequestType.POST.toString()});
         put("payins_googlepay-direct_create", new String[]{"/payins/googlepay/direct", RequestType.POST.toString()});
         put("payin_get_refunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
+        put("payins_recurring_registration", new String[]{"/recurringpayinregistrations", RequestType.POST.toString()});
+        put("payins_recurring_card_direct", new String[]{"/payins/recurring/card/direct", RequestType.POST.toString()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
@@ -248,7 +250,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
+    protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity, String entityId, String secondEntityId) throws Exception {
 
         String urlMethod;
 
@@ -278,7 +280,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity, String entityId) throws Exception {
+    protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity, String entityId) throws Exception {
         return createObject(classOfT, idempotencyKey, methodKey, entity, entityId, "");
     }
 
@@ -293,7 +295,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, T entity) throws Exception {
+    protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity) throws Exception {
         return createObject(classOfT, idempotencyKey, methodKey, entity, "");
     }
 
