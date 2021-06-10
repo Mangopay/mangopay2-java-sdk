@@ -24,6 +24,7 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         assertTrue(cardPreAuthorization.getStatus() == PreAuthorizationStatus.SUCCEEDED);
         assertTrue(cardPreAuthorization.getPaymentStatus() == PaymentStatus.WAITING);
         assertTrue(cardPreAuthorization.getExecutionType() == PreAuthorizationExecutionType.DIRECT);
+        assertTrue((cardPreAuthorization.getCulture()) == CultureCode.FR);
         assertNull(cardPreAuthorization.getPayInId());
         assertNotNull(cardPreAuthorization.getRemainingFunds());
     }

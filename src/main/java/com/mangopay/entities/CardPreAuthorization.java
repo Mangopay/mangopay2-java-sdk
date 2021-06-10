@@ -2,12 +2,10 @@ package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.*;
-import com.mangopay.core.enumerations.PaymentStatus;
-import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
-import com.mangopay.core.enumerations.PreAuthorizationStatus;
-import com.mangopay.core.enumerations.SecureMode;
+import com.mangopay.core.enumerations.*;
 import com.mangopay.core.Shipping;
 import com.mangopay.entities.subentities.BrowserInfo;
+import com.mangopay.entities.subentities.PayInPaymentDetailsPreAuthorized;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -144,6 +142,12 @@ public class CardPreAuthorization extends EntityBase {
 
     @SerializedName("Applied3DSVersion")
     private String applied3DSVersion;
+
+    /**
+     * The language to use for the payment page - needs to be the ISO code of the language
+     */
+    @SerializedName("Culture")
+    private CultureCode culture;
 
     public String getAuthorId() {
         return authorId;
@@ -331,6 +335,14 @@ public class CardPreAuthorization extends EntityBase {
     public String getApplied3DSVersion() {  return applied3DSVersion; }
 
     public void setApplied3DSVersion(String applied3DSVersion) { this.applied3DSVersion = applied3DSVersion; }
+
+    public CultureCode getCulture() {
+        return culture;
+    }
+
+    public void setCulture(CultureCode culture) {
+        this.culture = culture;
+    }
 
     /**
      * Gets map which property is an object and what type of object.
