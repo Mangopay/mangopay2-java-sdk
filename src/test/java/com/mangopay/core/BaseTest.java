@@ -707,6 +707,7 @@ public abstract class BaseTest {
         cardPreAuthorization.getRemainingFunds().setAmount(500);
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
+        cardPreAuthorization.setCulture(CultureCode.FR);
 
         //Shipping shipping = getNewShipping();
         //cardPreAuthorization.setShipping(shipping);
