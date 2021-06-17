@@ -1,9 +1,6 @@
 package com.mangopay.core;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.enumerations.RequestType;
 import com.mangopay.entities.RateLimit;
@@ -409,7 +406,7 @@ public class RestTool {
 
                 this.readResponseHeaders(connection);
 
-                response = castResponseToEntity(classOfT, new JsonParser().parse(responseString).getAsJsonObject());
+                response = castResponseToEntity(classOfT, JsonParser.parseString(responseString).getAsJsonObject());
 
                 if (this.debugMode) logger.info("Response object: {}", response.toString());
             }
@@ -620,7 +617,7 @@ public class RestTool {
 
                 this.readResponseHeaders(connection);
 
-                JsonArray ja = new JsonParser().parse(responseString).getAsJsonArray();
+                JsonArray ja = JsonParser.parseString(responseString).getAsJsonArray();
 
                 for (int x = 0; x < ja.size(); x++) {
                     JsonObject jo = ja.get(x).getAsJsonObject();
@@ -710,39 +707,43 @@ public class RestTool {
             }
 
             if (message != null) {
-                JsonObject error = new JsonParser().parse(message).getAsJsonObject();
-                for (Entry<String, JsonElement> entry : error.entrySet()) {
+                try {
+                    JsonObject error = JsonParser.parseString(message).getAsJsonObject();
+                    for (Entry<String, JsonElement> entry : error.entrySet()) {
+                        switch (entry.getKey().toLowerCase()) {
+                            case "message":
+                                responseException.setApiMessage(entry.getValue().getAsString());
+                                break;
+                            case "type":
+                                responseException.setType(entry.getValue().getAsString());
+                                break;
+                            case "id":
+                                responseException.setId(entry.getValue().getAsString());
+                                break;
+                            case "date":
+                                responseException.setDate((int) entry.getValue().getAsDouble());
+                                break;
+                            case "errors":
+                                if (entry.getValue() == null) break;
 
-                    switch (entry.getKey().toLowerCase()) {
-                        case "message":
-                            responseException.setApiMessage(entry.getValue().getAsString());
-                            break;
-                        case "type":
-                            responseException.setType(entry.getValue().getAsString());
-                            break;
-                        case "id":
-                            responseException.setId(entry.getValue().getAsString());
-                            break;
-                        case "date":
-                            responseException.setDate((int) entry.getValue().getAsDouble());
-                            break;
-                        case "errors":
-                            if (entry.getValue() == null) break;
+                                if (entry.getValue().isJsonNull()) break;
 
-                            if (entry.getValue().isJsonNull()) break;
+                                for (Entry<String, JsonElement> errorEntry : entry.getValue().getAsJsonObject().entrySet()) {
+                                    if (!responseException.getErrors().containsKey(errorEntry.getKey()))
+                                        responseException.getErrors().put(errorEntry.getKey(), errorEntry.getValue().getAsString());
+                                    else {
+                                        String description = responseException.getErrors().get(errorEntry.getKey());
+                                        description = " | " + errorEntry.getValue().getAsString();
 
-                            for (Entry<String, JsonElement> errorEntry : entry.getValue().getAsJsonObject().entrySet()) {
-                                if (!responseException.getErrors().containsKey(errorEntry.getKey()))
-                                    responseException.getErrors().put(errorEntry.getKey(), errorEntry.getValue().getAsString());
-                                else {
-                                    String description = responseException.getErrors().get(errorEntry.getKey());
-                                    description = " | " + errorEntry.getValue().getAsString();
-
-                                    responseException.getErrors().put(errorEntry.getKey(), description);
+                                        responseException.getErrors().put(errorEntry.getKey(), description);
+                                    }
                                 }
-                            }
-                            break;
+                                break;
+                        }
                     }
+                } catch (IllegalStateException | JsonSyntaxException ex) {
+                    responseException.setType("Resource not found");
+                    responseException.setApiMessage("API Endpoint not found");
                 }
             }
 
