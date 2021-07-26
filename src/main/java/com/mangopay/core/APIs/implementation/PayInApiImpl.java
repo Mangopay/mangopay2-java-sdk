@@ -49,8 +49,13 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     }
 
     @Override
-    public RecurringPaymentGet getRecurringPayment(String payInId) throws Exception {
-        return this.getObject(RecurringPaymentGet.class, "payins_recurring_registration_get", payInId);
+    public RecurringPaymentExtended getRecurringPayment(String payInId) throws Exception {
+        return this.getObject(RecurringPaymentExtended.class, "payins_recurring_registration_get", payInId);
+    }
+
+    @Override
+    public RecurringPaymentExtended updateRecurringPayment(String payInId, RecurringPaymentUpdate payIn) throws Exception {
+        return this.updateObject(RecurringPaymentExtended.class, "payins_recurring_registration_put", payIn, payInId);
     }
 
     @Override

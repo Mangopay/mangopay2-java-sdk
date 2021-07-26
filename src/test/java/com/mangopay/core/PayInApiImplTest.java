@@ -686,10 +686,33 @@ public class PayInApiImplTest extends BaseTest {
             RecurringPayment result = this.createJohnsRecurringPayment();
             assertNotNull(result);
 
-            RecurringPaymentGet get = this.api.getPayInApi().getRecurringPayment(result.getId());
+            RecurringPaymentExtended get = this.api.getPayInApi().getRecurringPayment(result.getId());
             assertNotNull(get);
             assertNotNull(get.getCurrentState());
             assertTrue(get.getId().equals(result.getId()));
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdateRecurringPayment() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+            assertNotNull(result);
+
+            RecurringPaymentExtended get = this.api.getPayInApi().getRecurringPayment(result.getId());
+            assertNotNull(get);
+            assertNotNull(get.getCurrentState());
+            assertTrue(get.getId().equals(result.getId()));
+            RecurringPaymentUpdate update = new RecurringPaymentUpdate();
+            update.setBilling(this.getNewBilling());
+            update.getBilling().setFirstName("TEST");
+            update.setShipping(this.getNewShipping());
+
+            RecurringPaymentExtended updated = this.api.getPayInApi().updateRecurringPayment(get.getId(), update);
+            assertNotNull(updated);
 
         } catch (Exception e) {
             fail(e.getMessage());

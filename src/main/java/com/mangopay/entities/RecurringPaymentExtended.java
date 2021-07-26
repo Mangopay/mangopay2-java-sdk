@@ -1,13 +1,11 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Money;
-import com.mangopay.entities.subentities.BrowserInfo;
 
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public class RecurringPaymentGet extends RecurringPayment{
+public class RecurringPaymentExtended extends RecurringPayment {
 
     @SerializedName("CurrentState")
     private CurrentState currentState;

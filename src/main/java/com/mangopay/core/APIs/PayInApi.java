@@ -50,7 +50,15 @@ public interface PayInApi {
      * @return
      * @throws Exception
      */
-    RecurringPaymentGet getRecurringPayment(String payInId) throws Exception;
+    RecurringPaymentExtended getRecurringPayment(String payInId) throws Exception;
+
+    /**
+     *
+     * @param payInId
+     * @return
+     * @throws Exception
+     */
+    RecurringPaymentExtended updateRecurringPayment(String payInId, RecurringPaymentUpdate payIn) throws Exception;
 
     /**
      *
