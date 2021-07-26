@@ -681,6 +681,22 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void testGetRecurringPayment() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+            assertNotNull(result);
+
+            RecurringPaymentGet get = this.api.getPayInApi().getRecurringPayment(result.getId());
+            assertNotNull(get);
+            assertNotNull(get.getCurrentState());
+            assertTrue(get.getId().equals(result.getId()));
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
     public void testCreateRecurringPaymentCIT() {
         try {
             RecurringPayment result = this.createJohnsRecurringPayment();

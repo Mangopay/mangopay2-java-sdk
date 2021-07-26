@@ -46,6 +46,14 @@ public interface PayInApi {
 
     /**
      *
+     * @param payInId
+     * @return
+     * @throws Exception
+     */
+    RecurringPaymentGet getRecurringPayment(String payInId) throws Exception;
+
+    /**
+     *
      * @param idempotencyKey
      * @param cit
      * @return
