@@ -2,6 +2,7 @@ package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
+import com.mangopay.core.Money;
 import com.mangopay.entities.subentities.BrowserInfo;
 
 import java.lang.reflect.Type;
@@ -26,6 +27,12 @@ public class RecurringPayInCIT extends Dto {
 
     @SerializedName("Tag")
     private String tag;
+
+    @SerializedName("DebitedFunds")
+    private Money debitedFunds;
+
+    @SerializedName("Fees")
+    private Money fees;
 
     public String getRecurringPayInRegistrationId() {
         return recurringPayInRegistrationId;
@@ -75,12 +82,21 @@ public class RecurringPayInCIT extends Dto {
         this.tag = tag;
     }
 
+    public Money getDebitedFunds() { return debitedFunds; }
+
+    public void setDebitedFunds(Money debitedFunds) { this.debitedFunds = debitedFunds; }
+
+    public Money getFees() { return fees; }
+
+    public void setFees(Money fees) { this.fees = fees; }
+
     @Override
     public Map<String, Type> getSubObjects() {
 
         Map<String, Type> result = super.getSubObjects();
 
         result.put("BrowserInfo", BrowserInfo.class);
+        result.put("Money", Money.class);
 
         return result;
     }
