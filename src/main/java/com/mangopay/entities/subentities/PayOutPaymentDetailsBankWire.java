@@ -34,7 +34,7 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     private String status;
 
     @SerializedName("FallbackReason")
-    private String fallbackReason;
+    private FallbackReason fallbackReason;
 
     public PayOutPaymentDetailsBankWire() {
     }
@@ -102,9 +102,9 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
         this.status = status;
     }
 
-    public String getFallbackReason() { return fallbackReason; }
+    public FallbackReason getFallbackReason() { return fallbackReason; }
 
-    public void setFallbackReason(String fallbackReason) {
+    public void setFallbackReason(FallbackReason fallbackReason) {
         this.fallbackReason = fallbackReason;
     }
 
@@ -117,6 +117,4 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
             throw new Exception("PayOutPaymentDetails instance isn't PayOutPaymentDetailsBankWire instance");
         }
     }
-
-
 }

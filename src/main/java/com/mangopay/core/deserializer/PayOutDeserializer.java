@@ -1,8 +1,10 @@
 package com.mangopay.core.deserializer;
 
 import com.google.gson.*;
+import com.mangopay.core.Money;
 import com.mangopay.core.enumerations.PayoutMode;
 import com.mangopay.entities.PayOut;
+import com.mangopay.entities.subentities.FallbackReason;
 import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
 
 import java.lang.reflect.Type;
@@ -24,7 +26,7 @@ public class PayOutDeserializer implements JsonDeserializer<PayOut> {
                 if (object.has("ModeApplied") && !object.get("ModeApplied").isJsonNull())
                     meanOfPaymentDetails.setPayoutModeApplied(object.get("ModeApplied").getAsString());
                 if (object.has("FallbackReason")&& !object.get("FallbackReason").isJsonNull())
-                    meanOfPaymentDetails.setFallbackReason(object.get("FallbackReason").getAsString());
+                    meanOfPaymentDetails.setFallbackReason((FallbackReason) context.deserialize(object.get("FallbackReason"), FallbackReason.class));
                 if (object.has("Status") && !object.get("Status").isJsonNull())
                     meanOfPaymentDetails.setStatus(object.get("Status").getAsString());
                 payOut.setMeanOfPaymentDetails(meanOfPaymentDetails);
