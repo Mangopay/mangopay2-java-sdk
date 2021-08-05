@@ -681,6 +681,45 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void testGetRecurringPayment() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+            assertNotNull(result);
+
+            RecurringPaymentExtended get = this.api.getPayInApi().getRecurringPayment(result.getId());
+            assertNotNull(get);
+            assertNotNull(get.getCurrentState());
+            assertTrue(get.getId().equals(result.getId()));
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdateRecurringPayment() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+            assertNotNull(result);
+
+            RecurringPaymentExtended get = this.api.getPayInApi().getRecurringPayment(result.getId());
+            assertNotNull(get);
+            assertNotNull(get.getCurrentState());
+            assertTrue(get.getId().equals(result.getId()));
+            RecurringPaymentUpdate update = new RecurringPaymentUpdate();
+            update.setBilling(this.getNewBilling());
+            update.getBilling().setFirstName("TEST");
+            update.setShipping(this.getNewShipping());
+
+            RecurringPaymentExtended updated = this.api.getPayInApi().updateRecurringPayment(get.getId(), update);
+            assertNotNull(updated);
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
     public void testCreateRecurringPaymentCIT() {
         try {
             RecurringPayment result = this.createJohnsRecurringPayment();
@@ -692,6 +731,8 @@ public class PayInApiImplTest extends BaseTest {
             cit.setStatementDescriptor("lorem");
             cit.setTag("custom meta");
             cit.setBrowserInfo(this.getNewBrowserInfo());
+            cit.setDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+            cit.setFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
             PayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
 
             assertNotNull(createdCit);

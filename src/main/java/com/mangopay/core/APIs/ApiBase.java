@@ -85,6 +85,8 @@ public abstract class ApiBase {
         put("payins_googlepay-direct_create", new String[]{"/payins/googlepay/direct", RequestType.POST.toString()});
         put("payin_get_refunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
         put("payins_recurring_registration", new String[]{"/recurringpayinregistrations", RequestType.POST.toString()});
+        put("payins_recurring_registration_get", new String[]{"/recurringpayinregistrations/%s", RequestType.GET.toString()});
+        put("payins_recurring_registration_put", new String[]{"/recurringpayinregistrations/%s", RequestType.PUT.toString()});
         put("payins_recurring_card_direct", new String[]{"/payins/recurring/card/direct", RequestType.POST.toString()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
@@ -435,7 +437,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity) throws Exception {
+    protected <T extends Dto, U extends Dto> T updateObject(Class<T> classOfT, String methodKey, U entity) throws Exception {
         return updateObject(classOfT, methodKey, entity, "", "");
     }
 
@@ -450,7 +452,7 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId) throws Exception {
+    protected <T extends Dto, U extends Dto> T updateObject(Class<T> classOfT, String methodKey, U entity, String entityId) throws Exception {
         return updateObject(classOfT, methodKey, entity, entityId, "");
     }
 
@@ -466,10 +468,8 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId, String secondEntityId) throws Exception {
-
+    protected <T extends Dto, U extends Dto> T updateObject(Class<T> classOfT, String methodKey, U entity, String entityId, String secondEntityId) throws Exception {
         if (entity instanceof EntityBase) {
-
             String urlMethod;
 
             if (secondEntityId.length() > 0) {
@@ -500,9 +500,8 @@ public abstract class ApiBase {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    protected <T extends Dto> T updateObject(Class<T> classOfT, String methodKey, T entity, String entityId, String secondEntityId, String thirdEntityId) throws Exception {
+    protected <T extends Dto, U extends Dto> T updateObject(Class<T> classOfT, String methodKey, U entity, String entityId, String secondEntityId, String thirdEntityId) throws Exception {
         if (entity instanceof EntityBase) {
-
             String urlMethod;
             if (thirdEntityId.length() > 0) {
                 urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId, thirdEntityId);
