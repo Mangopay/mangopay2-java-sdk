@@ -25,7 +25,7 @@ jobs:
       - name: Publish package
         run: ./gradlew publish
       - name: Release package
-        run: ./gradlew closeAndReleaseRepository -PnexusUsername="$MAVEN_USERNAME" -PnexusPassword="$MAVEN_PASSWORD"
+        run: ./gradlew closeAndReleaseRepository -PnexusUsername="${{ secrets.MAVEN_USERNAME }}" -PnexusPassword="${{ secrets.MAVEN_TOKEN }}"
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_TOKEN }}
