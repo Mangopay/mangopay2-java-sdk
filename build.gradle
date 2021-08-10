@@ -90,8 +90,8 @@ publishing {
             url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
             if (project.hasProperty("nexusUsername")) {
                 credentials {
-                    username = project.nexusUsername
-                    password = project.nexusPassword
+                    username = System.getenv("MAVEN_USERNAME")
+                    password = System.getenv("MAVEN_PASSWORD")
                 }
             }
         }
