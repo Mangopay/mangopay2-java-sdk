@@ -9,12 +9,12 @@ repositories {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.7'
-    compile 'com.google.code.gson:gson:2.8.7'
-    compile 'commons-codec:commons-codec:1.8'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'commons-codec:commons-codec:1.15'
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.slf4j:slf4j-simple:1.7.7'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.32'
 }
 
 test {
