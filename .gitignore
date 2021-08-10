@@ -24,4 +24,4 @@ nbactions.xml
 out
 
 ### Old travis ###
-.utility
+.utility/
