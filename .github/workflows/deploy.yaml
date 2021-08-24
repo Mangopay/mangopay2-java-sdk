@@ -17,17 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Java
-        uses: actions/setup-java@v2
-        with:
-          java-version: '8'
-          distribution: 'adopt'
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Install JDK
         run: sudo apt install openjdk-8-jdk
       - name: Set Java Home
         run: export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/bin/java
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Get BouncyCastle
         run: sudo wget "https://bouncycastle.org/download/bcprov-ext-jdk15on-158.jar" -O "$JAVA_HOME/jre/lib/ext/bcprov-ext-jdk15on-158.jar"
       - name: Security
