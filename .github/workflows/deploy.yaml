@@ -33,7 +33,7 @@ jobs:
       - name: Update OpenSSL
         run: sudo apt-get install openssl
       - name: Test if security is installed
-        run: ls -a ./opt/hostedtoolcache/Java_Adopt_jdk/8.0.292-1/x64/
+        run: sudo ls -a ./opt/hostedtoolcache/Java_Adopt_jdk/8.0.292-1/x64/
       - name: OpenSSL Version
         run: openssl version
       - name: Decrypt Security Key
