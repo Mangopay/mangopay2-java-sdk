@@ -37,6 +37,7 @@ jobs:
         run: chmod +x .utility/initiate-publish.sh
       - name: Check decrypt step
         run: ls -a .utility/
-      - name: Initiate Publish
-        run: .utility/initiate-publish.sh
-
+      - name: Publish
+        run: ./gradlew publish -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD -Psigning.keyId=9942FDF1 -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=.utility/secring.gpg
+      - name: Close and publish
+        run: ./gradlew closeAndReleaseRepository -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD
