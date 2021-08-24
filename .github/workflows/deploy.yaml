@@ -22,7 +22,7 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Decrypt Security Key
-        run: openssl aes-256-cbc -k $PASSWORD -in .utility/secring.gpg.enc -out .utility/secring.gpg -d
+        run: openssl aes-256-cbc -d -in .utility/secring.gpg.enc -out .utility/secring.gpg -k $PASSWORD
       - name: Give permissions to file
         run: chmod +x .utility/initiate-publish.sh
       - name: Check decrypt step
