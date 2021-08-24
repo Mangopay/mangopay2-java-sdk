@@ -28,7 +28,7 @@ jobs:
       - name: Check decrypt step
         uses: ls -a .utility/
       - name: Initiate Publish
-        uses:
+        uses: .utility/initiate-publish.sh
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_TOKEN }}
