@@ -29,6 +29,8 @@ jobs:
         run: echo "security.provider.1=org.bouncycastle.jce.provider.BouncyCastleProvider" | sudo tee -a $JAVA_HOME/jre/lib/security/java.security
       - name: Update OpenSSL
         run: sudo apt-get install openssl
+      - name: Test if security is installed
+        run: ls -a .$JAVA_HOME/
       - name: OpenSSL Version
         run: openssl version
       - name: Decrypt Security Key
