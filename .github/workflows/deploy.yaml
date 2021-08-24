@@ -21,6 +21,10 @@ jobs:
           distribution: 'adopt'
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Update OpenSSL
+        run: sudo apt-get install openssl
+      - name: OpenSSL Version
+        run: openssl version
       - name: Decrypt Security Key
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
