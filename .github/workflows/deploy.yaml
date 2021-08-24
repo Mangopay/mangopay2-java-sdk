@@ -24,6 +24,19 @@ jobs:
           distribution: 'adopt'
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Install Java
+        run: |
+          sudo apt install openjdk-8-jdk
+          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+          echo $JAVA_HOME
+          export PATH=$PATH:$JAVA_HOME/bin
+          echo $PATH
+          java -version
+      - name: Install Bouncy Castle
+        run: |
+          sudo wget "https://bouncycastle.org/download/bcprov-ext-jdk15on-158.jar" -O "${JAVA_HOME}/jre/lib/ext/bcprov-ext-jdk15on-158.jar"
+          echo "security.provider.1=org.bouncycastle.jce.provider.BouncyCastleProvider" | sudo tee -a /etc/java-8-openjdk/security/java.security
+          sudo perl -pi.bak -e 's/^(security\.provider\.)([0-9]+)/$1.($2+1)/ge' /etc/java-8-openjdk/security/java.security
       - name: Update OpenSSL
         run: sudo apt-get install openssl
       - name: OpenSSL Version
