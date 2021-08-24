@@ -5,10 +5,13 @@ name: mangopay2-java-sdk-cd
 
 on:
   push:
+    branches:
+      # push on master branch
+      - master
     # Sequence of patterns matched against refs/tags
-    tags:
+    #tags:
       # It pushes any tags that contain a v. ex: v1.16.1
-      - '*'
+      #- '*'
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -30,7 +33,7 @@ jobs:
       - name: Update OpenSSL
         run: sudo apt-get install openssl
       - name: Test if security is installed
-        run: ls -a .$JAVA_HOME/
+        run: ls -a ./opt/hostedtoolcache/Java_Adopt_jdk/8.0.292-1/x64/
       - name: OpenSSL Version
         run: openssl version
       - name: Decrypt Security Key
