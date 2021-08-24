@@ -48,6 +48,6 @@ jobs:
           sudo mv /tmp/hosts /etc/hosts
           cat /etc/hosts
       - name: Publish
-        run: ./gradlew publish -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD -Psigning.keyId=9942FDF1 -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=.utility/secring.gpg
+        run: ./gradlew publish -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD -Psigning.keyId=9942FDF1 -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=.utility/secring.gpg --stacktrace
       - name: Close and publish
         run: ./gradlew closeAndReleaseRepository -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD
