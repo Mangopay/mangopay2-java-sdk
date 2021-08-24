@@ -10,26 +10,29 @@ on:
       # It pushes any tags that contain a v. ex: v1.16.1
       - '*'
 jobs:
-  build:
-
+  publish:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v1
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
+      - uses: actions/checkout@v2
+      - name: Set up Java
+        uses: actions/setup-java@v2
         with:
-          java-version: 11
-      - name: Build with Gradle
-        run: gradle assemble
-      - name: Nexus Repo Publish
-        uses: sonatype-nexus-community/nexus-repo-github-action@master
-        with:
-          serverUrl: https://oss.sonatype.org/service/local/staging/deploy/maven2
-          username: ${{ secrets.MAVEN_USERNAME }}
-          password: ${{ secrets.MAVEN_TOKEN }}
-          format: maven2
-          repository: maven-releases
-          coordinates: groupId=com.mangopay artifactId=mangopay2-java-sdk version=2.17.0-SNAPSHOT
-          assets: extension=jar
-          filename: ./build/libs/mangopay2-java-sdk-2.17.0.jar
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Decrypt Security Key
+        uses: openssl aes-256-cbc -K $HEX_KEY -iv $HEX_IV -in .utility/signingkey.gpg.enc -out .utility/signingkey.gpg -d;
+      - name: Give permissions to file
+        uses: chmod +x .utility/initiate-publish.sh
+      - name: Check decrypt step
+        uses: ls -a .utility/
+      - name: Initiate Publish
+        uses:
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_TOKEN }}
+          HEX_KEY: ${{ secrets.HEX_KEY }}
+          HEX_IV: ${{ secrets.HEX_IV }}
+          SIGNING_PASSWORD: $ {{ secrets.SIGNING_PASSWORD }}
+

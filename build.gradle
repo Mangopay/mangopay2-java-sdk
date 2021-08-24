@@ -1,7 +1,9 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'signing'
     id 'io.codearte.nexus-staging' version '0.21.0'
+    id "org.spongepowered.gradle.plugin" version "1.1.1"
 }
 
 repositories {
@@ -90,8 +92,8 @@ publishing {
             name = "mangopay2-java-sdk"
             url = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
             credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
+                username = System.getenv("MAVEN_USERNAME") ?: ""
+                password = System.getenv("MAVEN_PASSWORD") ?: ""
             }
         }
     }
@@ -127,6 +129,15 @@ task updatePropertiesFile {
         propertyFile.withReader { props.load(it) }
         props.setProperty("version", (String) version)
         propertyFile.withWriter { props.store(it, null) }
+    }
+}
+
+signing {
+    if (project.hasProperty('signing.keyId') && project.hasProperty('signing.password') && project.hasProperty('signing.secretKeyRingFile')) {
+        sign configurations.archives
+
+        /* Uncomment this if you use shadow in your build process */
+        // sign configurations.shadow
     }
 }
 

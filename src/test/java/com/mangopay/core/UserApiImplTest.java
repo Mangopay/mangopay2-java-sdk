@@ -616,6 +616,7 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void getBankAccountTransactions() throws Exception {
         BankAccount johnsAccount = getJohnsAccount();
         PayOut johnsPayOutBankWire = getJohnsPayOutBankWire();

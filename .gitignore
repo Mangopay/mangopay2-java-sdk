@@ -22,6 +22,3 @@ nbactions.xml
 .project
 .settings
 out
-
-### Old travis ###
-.utility/
