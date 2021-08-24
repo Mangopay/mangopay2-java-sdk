@@ -17,15 +17,12 @@ jobs:
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'adopt'
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Get BouncyCastle
-        run: |
-          - printenv $JAVA_HOME
-          - ls -a $JAVA_HOME
-          - sudo wget "https://bouncycastle.org/download/bcprov-ext-jdk15on-158.jar" -O "$JAVA_HOME/jre/lib/ext/bcprov-ext-jdk15on-158.jar"
+        run: sudo wget "https://bouncycastle.org/download/bcprov-ext-jdk15on-158.jar" -O "$JAVA_HOME/jre/lib/ext/bcprov-ext-jdk15on-158.jar"
       - name: Security
         run: sudo perl -pi.bak -e 's/^(security\.provider\.)([0-9]+)/$1.($2+1)/ge' /etc/java-8-openjdk/security/java.security
       - name: Test last two steps
