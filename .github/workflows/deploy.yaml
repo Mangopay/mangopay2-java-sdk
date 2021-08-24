@@ -30,6 +30,6 @@ jobs:
           password: ${{ secrets.MAVEN_TOKEN }}
           format: maven2
           repository: maven-releases
-          coordinates: groupId=com.mangopay artifactId=mangopay2-java-sdk version=2.17.0
+          coordinates: groupId=com.mangopay artifactId=mangopay2-java-sdk version=2.17.0-SNAPSHOT
           assets: extension=jar
           filename: ./build/libs/mangopay2-java-sdk-2.17.0.jar
