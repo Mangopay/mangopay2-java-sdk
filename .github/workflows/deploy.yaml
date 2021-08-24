@@ -45,11 +45,11 @@ jobs:
         run: ls -a .utility/
       - name: Add host
         run: |
-          - cat /etc/hosts
-          - sudo hostname "$(hostname | cut -c1-63)"
-          - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts > /tmp/hosts
-          - sudo mv /tmp/hosts /etc/hosts
-          - cat /etc/hosts
+          cat /etc/hosts
+          sudo hostname "$(hostname | cut -c1-63)"
+          sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts > /tmp/hosts
+          sudo mv /tmp/hosts /etc/hosts
+          cat /etc/hosts
       - name: Publish
         run: ./gradlew publish -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD -Psigning.keyId=9942FDF1 -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=.utility/secring.gpg
       - name: Close and publish
