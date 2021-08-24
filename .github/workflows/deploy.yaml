@@ -21,6 +21,12 @@ jobs:
           distribution: 'adopt'
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Get BouncyCastel
+        run: sudo wget "https://bouncycastle.org/download/bcprov-ext-jdk15on-158.jar" -O "${JAVA_HOME}/jre/lib/ext/bcprov-ext-jdk15on-158.jar"
+      - name: Security
+        run: sudo perl -pi.bak -e 's/^(security\.provider\.)([0-9]+)/$1.($2+1)/ge' /etc/java-8-openjdk/security/java.security
+      - name: Test last two steps
+        run: echo "security.provider.1=org.bouncycastle.jce.provider.BouncyCastleProvider" | sudo tee -a /etc/java-8-openjdk/security/java.security
       - name: Update OpenSSL
         run: sudo apt-get install openssl
       - name: OpenSSL Version
@@ -37,6 +43,13 @@ jobs:
         run: chmod +x .utility/initiate-publish.sh
       - name: Check decrypt step
         run: ls -a .utility/
+      - name: Add host
+        run: |
+          - cat /etc/hosts
+          - sudo hostname "$(hostname | cut -c1-63)"
+          - sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts > /tmp/hosts
+          - sudo mv /tmp/hosts /etc/hosts
+          - cat /etc/hosts
       - name: Publish
         run: ./gradlew publish -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD -Psigning.keyId=9942FDF1 -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=.utility/secring.gpg
       - name: Close and publish
