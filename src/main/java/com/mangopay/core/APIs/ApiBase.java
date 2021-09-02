@@ -3,7 +3,7 @@ package com.mangopay.core.APIs;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.*;
 import com.mangopay.core.enumerations.RequestType;
-
+import com.mangopay.entities.UboDeclaration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -251,7 +251,7 @@ public abstract class ApiBase {
      * @param secondEntityId Second entity identifier.
      * @return The Dto instance returned from API.
      * @throws Exception
-     */
+     */    
     protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity, String entityId, String secondEntityId) throws Exception {
 
         String urlMethod;
@@ -263,6 +263,10 @@ public abstract class ApiBase {
         else
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
 
+        if (entity == null && classOfT.equals(UboDeclaration.class)) {
+          entity = (U) new UboDeclaration();
+        }
+        
         RestTool rest = new RestTool(this.root, true);
         T result = rest.request(classOfT, idempotencyKey, urlMethod, this.getRequestType(methodKey), null, null, entity);
 
