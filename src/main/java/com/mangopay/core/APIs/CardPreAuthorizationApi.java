@@ -1,6 +1,10 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.Pagination;
 import com.mangopay.entities.CardPreAuthorization;
+import com.mangopay.entities.Transaction;
+
+import java.util.List;
 
 /**
  * Created by thepa on 18-Jan-17.
@@ -43,4 +47,6 @@ public interface CardPreAuthorizationApi {
      * @throws Exception
      */
     CardPreAuthorization update(CardPreAuthorization cardPreAuthorization) throws Exception;
+
+    List<Transaction> getTransactions(String cardPreAuthorizationId, Pagination pagination) throws Exception;
 }

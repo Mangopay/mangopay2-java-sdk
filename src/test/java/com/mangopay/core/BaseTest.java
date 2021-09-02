@@ -10,9 +10,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -29,6 +27,8 @@ public abstract class BaseTest {
     private static BankAccount JOHNS_ACCOUNT;
     private static Wallet JOHNS_WALLET;
     private static Wallet JOHNS_WALLET_WITH_MONEY;
+    private static Card JOHNS_3DSECURE_CARD;
+    private static Wallet JOHNS_WALLET_WITH_MONEY_3D_SECURE;
     private static PayIn JOHNS_PAYIN_CARD_WEB;
     private static PayInPaymentDetailsCard PAYIN_PAYMENT_DETAILS_CARD;
     private static PayInExecutionDetailsWeb PAYIN_EXECUTION_DETAILS_WEB;
@@ -104,6 +104,28 @@ public abstract class BaseTest {
         result.setRegion("Region");
 
         return result;
+    }
+
+    protected Billing getNewBilling() {
+        Billing billing = new Billing();
+        Address address = getNewAddress();
+
+        billing.setFirstName("John");
+        billing.setLastName("Doe");
+        billing.setAddress(address);
+
+        return billing;
+    }
+
+    protected Shipping getNewShipping() {
+        Shipping shipping = new Shipping();
+        Address address = getNewAddress();
+
+        shipping.setFirstName("John");
+        shipping.setLastName("Doe");
+        shipping.setAddress(address);
+
+        return shipping;
     }
 
     protected UserNatural getJohn() throws Exception {
@@ -231,8 +253,8 @@ public abstract class BaseTest {
             account.setOwnerAddress(john.getAddress());
             account.setUserId(john.getId());
             BankAccountDetailsIBAN bankAccountDetails = new BankAccountDetailsIBAN();
-            bankAccountDetails.setIban("FR7618829754160173622224154");
-            bankAccountDetails.setBic("CMBRFR2BCME");
+            bankAccountDetails.setIban("FR7630004000031234567890143");
+            bankAccountDetails.setBic("BNPAFRPP");
             account.setDetails(bankAccountDetails);
             BaseTest.JOHNS_ACCOUNT = this.api.getUserApi().createBankAccount(john.getId(), account);
         }
@@ -269,6 +291,87 @@ public abstract class BaseTest {
      */
     protected Wallet getJohnsWalletWithMoney() throws Exception {
         return getJohnsWalletWithMoney(10000);
+    }
+
+    /**
+     * Creates wallet for John, if not created yet, or returns an existing one.
+     *
+     * @param amount Initial wallet's money amount.
+     * @return Wallet entity instance.
+     */
+    protected Map<String, String> getJohnsWalletWithMoney3DSecure(int amount) throws Exception {
+
+        if (BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE == null) {
+            UserNatural john = this.getJohn();
+
+            // create wallet with money
+            Wallet wallet = new Wallet();
+            wallet.setOwners(new ArrayList<String>());
+            wallet.getOwners().add(john.getId());
+            wallet.setCurrency(CurrencyIso.EUR);
+            wallet.setDescription("WALLET IN EUR WITH MONEY");
+
+            BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE = this.api.getWalletApi().create(wallet);
+
+            CardRegistration cardRegistration = new CardRegistration();
+            cardRegistration.setUserId(BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE.getOwners().get(0));
+            cardRegistration.setCurrency(CurrencyIso.EUR);
+            cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
+
+            cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData3DSecure(cardRegistration));
+            cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
+
+            Card card = this.api.getCardApi().get(cardRegistration.getCardId());
+            BaseTest.JOHNS_3DSECURE_CARD = card;
+
+            // create pay-in CARD DIRECT
+            PayIn payIn = new PayIn();
+            payIn.setCreditedWalletId(BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE.getId());
+            payIn.setAuthorId(cardRegistration.getUserId());
+            payIn.setDebitedFunds(new Money());
+            payIn.getDebitedFunds().setAmount(amount);
+            payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+            payIn.setFees(new Money());
+            payIn.getFees().setAmount(0);
+            payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+            // payment type as CARD
+            payIn.setPaymentDetails(new PayInPaymentDetailsCard());
+            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
+
+            // execution type as DIRECT
+            payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
+            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
+
+            // create Pay-In
+            this.api.getPayInApi().create(payIn);
+        }
+
+        Wallet wally = this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY_3D_SECURE.getId());
+
+        Map<String, String> map = new HashMap<>();
+        map.put("cardId", BaseTest.JOHNS_3DSECURE_CARD.getId());
+        map.put("walletId", wally.getId());
+
+        return map;
+    }
+
+    protected RecurringPayment createJohnsRecurringPayment() throws Exception {
+        Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
+        UserNatural john = this.getJohn();
+
+        CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+        createRecurringPayment.setAuthorId(john.getId());
+        createRecurringPayment.setCardId(data.get("cardId"));
+        createRecurringPayment.setCreditedUserId(john.getId());
+        createRecurringPayment.setCreditedWalletId(data.get("walletId"));
+        createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setShipping(this.getNewShipping());
+        createRecurringPayment.setBilling(this.getNewBilling());
+
+        return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
     }
 
     /**
@@ -454,6 +557,15 @@ public abstract class BaseTest {
         return payIn;
     }
 
+    protected PayIn getNewPayInCardDirectWithRequested3DSVersion() throws Exception {
+        PayIn payIn = getPayInCardDirect(null);
+
+        PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+        executionDetails.setRequested3DSVersion("V1");
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayIn getNewPayInCardDirectWithBilling() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
@@ -465,7 +577,40 @@ public abstract class BaseTest {
         address.setCountry(CountryIso.FR);
         address.setPostalCode("65400");
         billing.setAddress(address);
+        billing.setFirstName("John");
+        billing.setLastName("Doe");
         executionDetails.setBilling(billing);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected BrowserInfo getNewBrowserInfo() {
+        BrowserInfo browserInfo = new BrowserInfo();
+        browserInfo.setAcceptHeader("text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8");
+        browserInfo.setColorDepth(4);
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setJavaEnabled(true);
+        browserInfo.setLanguage("FR-FR");
+        browserInfo.setScreenHeight(1800);
+        browserInfo.setScreenWidth(400);
+        browserInfo.setTimeZoneOffset("+60");
+        browserInfo.setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148");
+
+        return browserInfo;
+    }
+
+    protected PayIn getNewPayInCardDirectWithBrowserInfo() throws Exception{
+        PayIn payIn = getPayInCardDirect(null);
+
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInCardDirectWithIpAddress() throws Exception{
+        PayIn payIn = getPayInCardDirect(null);
+
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -490,6 +635,7 @@ public abstract class BaseTest {
             payOut.setDebitedWalletId(wallet.getId());
             payOut.setMeanOfPaymentDetails(new PayOutPaymentDetailsBankWire());
             ((PayOutPaymentDetailsBankWire) payOut.getMeanOfPaymentDetails()).setBankAccountId(account.getId());
+            ((PayOutPaymentDetailsBankWire) payOut.getMeanOfPaymentDetails()).setPayoutModeRequested(PayoutMode.STANDARD);
 
             BaseTest.JOHNS_PAYOUT_BANKWIRE = this.api.getPayOutApi().create(payOut);
         }
@@ -657,6 +803,11 @@ public abstract class BaseTest {
         cardPreAuthorization.getRemainingFunds().setAmount(500);
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
+        cardPreAuthorization.setCulture(CultureCode.FR);
+
+        //Shipping shipping = getNewShipping();
+        //cardPreAuthorization.setShipping(shipping);
+
         return cardPreAuthorization;
     }
 
@@ -676,6 +827,57 @@ public abstract class BaseTest {
     }
 
     /**
+     * Gets registration data from Payline service 3DSecure.
+     *
+     * @param cardRegistration
+     * @return Registration data.
+     */
+    protected String getPaylineCorrectRegistartionData3DSecure(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
+
+        String data = "data=" + cardRegistration.getPreregistrationData() +
+                "&accessKeyRef=" + cardRegistration.getAccessKey() +
+                "&cardNumber=4970105191923460" +
+                "&cardExpirationDate=1224" +
+                "&cardCvx=123";
+
+        URL url = new URL(cardRegistration.getCardRegistrationUrl());
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("POST");
+        connection.setUseCaches(false);
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+
+        try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+            wr.writeBytes(data);
+            wr.flush();
+        }
+
+        int responseCode = connection.getResponseCode();
+        InputStream is;
+        if (responseCode != 200) {
+            is = connection.getErrorStream();
+        } else {
+            is = connection.getInputStream();
+        }
+
+        StringBuffer resp;
+        try (BufferedReader rd = new BufferedReader(new InputStreamReader(is))) {
+            String line;
+            resp = new StringBuffer();
+            while ((line = rd.readLine()) != null) {
+                resp.append(line);
+            }
+        }
+        String responseString = resp.toString();
+
+        if (responseCode == 200)
+            return responseString;
+        else
+            throw new Exception(responseString);
+    }
+
+    /**
      * Gets registration data from Payline service.
      *
      * @param cardRegistration
@@ -685,8 +887,8 @@ public abstract class BaseTest {
 
         String data = "data=" + cardRegistration.getPreregistrationData() +
                 "&accessKeyRef=" + cardRegistration.getAccessKey() +
-                "&cardNumber=4972485830400064" +
-                "&cardExpirationDate=0722" +
+                "&cardNumber=4972485830400056" +
+                "&cardExpirationDate=1224" +
                 "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());
@@ -811,6 +1013,29 @@ public abstract class BaseTest {
             MATRIX_UBO = api.getUboDeclarationApi().createUbo(matrix.getId(), uboDeclaration.getId(), ubo);
         }
         return MATRIX_UBO;
+    }
+
+    protected BankAccount getClientBankAccount() throws Exception {
+        BankAccount bankAccountIBAN = new BankAccount();
+        BankAccountDetailsIBAN detailsIBAN = new BankAccountDetailsIBAN();
+        detailsIBAN.setIban("FR7630004000031234567890143");
+        detailsIBAN.setBic("BNPAFRPP");
+
+        Address address = new Address();
+        address.setCity("Paris");
+        address.setRegion("Ile de France");
+        address.setAddressLine1("1 Mangopay Street");
+        address.setAddressLine2("The Loop");
+        address.setCountry(CountryIso.FR);
+        address.setPostalCode("75001");
+
+        bankAccountIBAN.setOwnerName("Joe Blogs");
+        bankAccountIBAN.setOwnerAddress(address);
+        bankAccountIBAN.setTag("custom meta");
+        bankAccountIBAN.setDetails(detailsIBAN);
+        bankAccountIBAN.setType(BankAccountType.IBAN);
+
+        return this.api.getClientApi().createBankAccountIBAN(bankAccountIBAN);
     }
 
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {
@@ -979,7 +1204,8 @@ public abstract class BaseTest {
             assertEquals(((Money) entity1).getAmount(), ((Money) entity2).getAmount());
         } else if (entity1 instanceof KycDocument) {
             assertEquals(((KycDocument) entity1).getType(), ((KycDocument) entity2).getType());
-            assertEquals(((KycDocument) entity1).getStatus(), ((KycDocument) entity2).getStatus());
+            //same as getKycDocument
+            //assertEquals(((KycDocument) entity1).getStatus(), ((KycDocument) entity2).getStatus());
             assertEquals(((KycDocument) entity1).getUserId(), ((KycDocument) entity2).getUserId());
         } else {
             throw new Exception("Unsupported type");

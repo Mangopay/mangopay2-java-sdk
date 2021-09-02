@@ -109,6 +109,70 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createCardDirectWithRequested3DSVersion() {
+        try {
+            Wallet johnWallet = this.getJohnsWalletWithMoney();
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
+
+            PayIn payIn = this.getNewPayInCardDirectWithRequested3DSVersion();
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
+            UserNatural user = this.getJohn();
+
+            check(user, payIn, wallet, beforeWallet);
+
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull(executionDetails.getSecurityInfo());
+            assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+            assertNotNull(executionDetails.getRequested3DSVersion());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createCardDirectWithBrowserInfo() {
+        try {
+            Wallet johnWallet = this.getJohnsWalletWithMoney();
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
+
+            PayIn payIn = this.getNewPayInCardDirectWithBrowserInfo();
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
+            UserNatural user = this.getJohn();
+
+            check(user, payIn, wallet, beforeWallet);
+
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull(executionDetails.getSecurityInfo());
+            assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createCardDirectIpAddress() {
+        try {
+            Wallet johnWallet = this.getJohnsWalletWithMoney();
+            Wallet beforeWallet = this.api.getWalletApi().get(johnWallet.getId());
+
+            PayIn payIn = this.getNewPayInCardDirectWithIpAddress();
+            Wallet wallet = this.api.getWalletApi().get(johnWallet.getId());
+            UserNatural user = this.getJohn();
+
+            check(user, payIn, wallet, beforeWallet);
+
+            PayInExecutionDetailsDirect executionDetails = (PayInExecutionDetailsDirect) payIn.getExecutionDetails();
+            assertNotNull(executionDetails.getSecurityInfo());
+            assertNotNull(executionDetails.getSecurityInfo().getAvsResult());
+            assertTrue(executionDetails.getSecurityInfo().getAvsResult() == AVSResult.NO_CHECK);
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void getCardDirect() {
         try {
             PayIn payIn = this.getNewPayInCardDirect();
@@ -175,6 +239,8 @@ public class PayInApiImplTest extends BaseTest {
 
             PayIn createPayIn = this.api.getPayInApi().create(payIn);
 
+            List<Transaction> preAuthTransactions = this.api.getCardPreAuthorizationApi().getTransactions(cardPreAuthorization.getId(), new Pagination(1, 1));
+
             assertTrue(!"".equals(createPayIn.getId()));
             assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
             assertTrue(createPayIn.getPaymentType() == PayInPaymentType.PREAUTHORIZED);
@@ -187,6 +253,7 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(user.getId(), createPayIn.getAuthorId());
             assertTrue(createPayIn.getStatus() == TransactionStatus.SUCCEEDED);
             assertTrue(createPayIn.getType() == TransactionType.PAYIN);
+            assertTrue(preAuthTransactions.get(0).getStatus() == TransactionStatus.SUCCEEDED);
         } catch (Exception ex) {
             fail(ex.getMessage());
         }
@@ -517,6 +584,7 @@ public class PayInApiImplTest extends BaseTest {
         }
     }
 
+    @Ignore("Can't be tested at this moment")
     @Test
     public void testDirectApplepayPayin() {
         try {
@@ -599,5 +667,118 @@ public class PayInApiImplTest extends BaseTest {
         } catch (Exception e) {
             fail(e.getMessage());
         }
+    }
+
+    @Test
+    public void testCreateRecurringPayment() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+            assertNotNull(result);
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetRecurringPayment() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+            assertNotNull(result);
+
+            RecurringPaymentExtended get = this.api.getPayInApi().getRecurringPayment(result.getId());
+            assertNotNull(get);
+            assertNotNull(get.getCurrentState());
+            assertTrue(get.getId().equals(result.getId()));
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testUpdateRecurringPayment() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+            assertNotNull(result);
+
+            RecurringPaymentExtended get = this.api.getPayInApi().getRecurringPayment(result.getId());
+            assertNotNull(get);
+            assertNotNull(get.getCurrentState());
+            assertTrue(get.getId().equals(result.getId()));
+            RecurringPaymentUpdate update = new RecurringPaymentUpdate();
+            update.setBilling(this.getNewBilling());
+            update.getBilling().setFirstName("TEST");
+            update.setShipping(this.getNewShipping());
+
+            RecurringPaymentExtended updated = this.api.getPayInApi().updateRecurringPayment(get.getId(), update);
+            assertNotNull(updated);
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateRecurringPaymentCIT() {
+        try {
+            RecurringPayment result = this.createJohnsRecurringPayment();
+
+            RecurringPayInCIT cit = new RecurringPayInCIT();
+            cit.setRecurringPayInRegistrationId(result.getId());
+            cit.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+            cit.setSecureModeReturnURL("http://www.my-site.com/returnurl");
+            cit.setStatementDescriptor("lorem");
+            cit.setTag("custom meta");
+            cit.setBrowserInfo(this.getNewBrowserInfo());
+            cit.setDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+            cit.setFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            PayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
+
+            assertNotNull(createdCit);
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testIssue220() {
+        try {
+            Wallet wallet = getJohnsWallet();
+            UserNatural user = getJohn();
+
+            PayIn payIn = new PayIn();
+            payIn.setPaymentType(PayInPaymentType.CARD);
+
+            payIn.setCreditedWalletId(wallet.getId());
+            payIn.setAuthorId(user.getId());
+
+            PayInPaymentDetailsCard pay = new PayInPaymentDetailsCard();
+            pay.setCardType(CardType.CB_VISA_MASTERCARD);
+            payIn.setPaymentDetails(pay);
+
+            payIn.setDebitedFunds(new Money(CurrencyIso.EUR,
+                    20)); //cents
+            payIn.setFees(new Money(CurrencyIso.EUR, 2));
+
+            payIn.setExecutionType(PayInExecutionType.WEB);
+            PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+            payInExecutionDetailsWeb.setReturnUrl("http://www.mysite.com/returnURL/");
+            payInExecutionDetailsWeb.setCulture(CultureCode.EN);
+
+            payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+            PayIn created = api.getPayInApi().create(payIn);
+            String returnUrlCreated = ((PayInExecutionDetailsWeb)created.getExecutionDetails()).getReturnUrl();
+
+            assertNotNull(created);
+            assertNotNull(created.getExecutionDetails());
+            assertNotNull(returnUrlCreated);
+            assertTrue(returnUrlCreated.contains("http://www.mysite.com/returnURL/"));
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+
     }
 }

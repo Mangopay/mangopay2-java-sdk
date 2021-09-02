@@ -17,5 +17,10 @@ public enum SecureMode {
     /**
      * Secured Mode is activated for any transaction's amount.
      */
-    FORCE
+    FORCE,
+
+    /**
+     * Secured Mode has no choice.
+     */
+    NO_CHOICE
 }
