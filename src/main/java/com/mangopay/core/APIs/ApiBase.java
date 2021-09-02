@@ -251,7 +251,7 @@ public abstract class ApiBase {
      * @param secondEntityId Second entity identifier.
      * @return The Dto instance returned from API.
      * @throws Exception
-     */    
+     */
     protected <T extends Dto, U extends Dto> T createObject(Class<T> classOfT, String idempotencyKey, String methodKey, U entity, String entityId, String secondEntityId) throws Exception {
 
         String urlMethod;
