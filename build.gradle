@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'signing'
     id 'io.codearte.nexus-staging' version '0.21.0'
 }
 
@@ -9,12 +10,12 @@ repositories {
 }
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.7'
-    compile 'com.google.code.gson:gson:2.8.5'
-    compile 'commons-codec:commons-codec:1.8'
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'commons-codec:commons-codec:1.15'
 
-    testCompile 'junit:junit:4.12'
-    testCompile 'org.slf4j:slf4j-simple:1.7.7'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.32'
 }
 
 test {
@@ -39,7 +40,7 @@ task javadocJar(type: Jar) {
 }
 
 group = 'com.mangopay'
-version = '2.11.4'
+version = '2.17.0'
 sourceCompatibility = '1.7'
 
 publishing {
@@ -48,7 +49,7 @@ publishing {
             pom {
                 groupId 'com.mangopay'
                 artifactId 'mangopay2-java-sdk'
-                version '2.11.4'
+                version '2.17.0'
 
                 from(components.java)
 
@@ -87,12 +88,11 @@ publishing {
     }
     repositories {
         maven {
-            url 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
-            if (project.hasProperty("nexusUsername")) {
-                credentials {
-                    username = project.nexusUsername
-                    password = project.nexusPassword
-                }
+            name = "mangopay2-java-sdk"
+            url = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+            credentials {
+                username = System.getenv("MAVEN_USERNAME") ?: ""
+                password = System.getenv("MAVEN_PASSWORD") ?: ""
             }
         }
     }
@@ -128,6 +128,15 @@ task updatePropertiesFile {
         propertyFile.withReader { props.load(it) }
         props.setProperty("version", (String) version)
         propertyFile.withWriter { props.store(it, null) }
+    }
+}
+
+signing {
+    if (project.hasProperty('signing.keyId') && project.hasProperty('signing.password') && project.hasProperty('signing.secretKeyRingFile')) {
+        sign configurations.archives
+
+        /* Uncomment this if you use shadow in your build process */
+        // sign configurations.shadow
     }
 }
 

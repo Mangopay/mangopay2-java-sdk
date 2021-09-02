@@ -5,6 +5,7 @@ import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.Validity;
+import com.mangopay.core.Shipping;
 
 import java.util.ArrayList;
 
@@ -84,6 +85,9 @@ public class Card extends EntityBase {
      */
     @SerializedName("Fingerprint")
     private String fingerprint;
+
+    @SerializedName("Shipping")
+    private Shipping shipping;
 
     public String getUserId() {
         return userId;
@@ -176,6 +180,10 @@ public class Card extends EntityBase {
     public String getFingerprint() {
         return fingerprint;
     }
+
+    public Shipping getShipping() { return shipping; }
+
+    public void setShipping(Shipping shipping) { this.shipping = shipping; }
 
     /**
      * Gets the collection of read-only fields names.

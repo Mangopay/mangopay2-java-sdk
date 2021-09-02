@@ -2,10 +2,10 @@ package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.*;
-import com.mangopay.core.enumerations.PaymentStatus;
-import com.mangopay.core.enumerations.PreAuthorizationExecutionType;
-import com.mangopay.core.enumerations.PreAuthorizationStatus;
-import com.mangopay.core.enumerations.SecureMode;
+import com.mangopay.core.enumerations.*;
+import com.mangopay.core.Shipping;
+import com.mangopay.entities.subentities.BrowserInfo;
+import com.mangopay.entities.subentities.PayInPaymentDetailsPreAuthorized;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -128,6 +128,27 @@ public class CardPreAuthorization extends EntityBase {
     @SerializedName("MultiCapture")
     private Boolean multiCapture;
 
+    @SerializedName("Shipping")
+    private Shipping shipping;
+
+    @SerializedName("BrowserInfo")
+    private BrowserInfo browserInfo;
+
+    @SerializedName("IpAddress")
+    private String ipAddress;
+
+    @SerializedName("Requested3DSVersion")
+    private String requested3DSVersion;
+
+    @SerializedName("Applied3DSVersion")
+    private String applied3DSVersion;
+
+    /**
+     * The language to use for the payment page - needs to be the ISO code of the language
+     */
+    @SerializedName("Culture")
+    private CultureCode culture;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -208,6 +229,28 @@ public class CardPreAuthorization extends EntityBase {
         this.statementDescriptor = statementDescriptor;
     }
 
+    public Shipping getShipping() { return shipping; }
+
+    public void setShipping(Shipping shipping) { this.shipping = shipping; }
+
+    public BrowserInfo getBrowserInfo() {
+        return browserInfo;
+    }
+
+    public CardPreAuthorization setBrowserInfo(BrowserInfo browserInfo) {
+        this.browserInfo = browserInfo;
+        return this;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public CardPreAuthorization setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+        return this;
+    }
+
     /**
      * Is SecureMode Needed
      *
@@ -283,6 +326,22 @@ public class CardPreAuthorization extends EntityBase {
 
     public void setRemainingFunds(Money remainingFunds) {
         this.remainingFunds = remainingFunds;
+    }
+
+    public String getRequested3DSVersion() { return requested3DSVersion; }
+
+    public void setRequested3DSVersion(String requested3DSVersion) { this.requested3DSVersion = requested3DSVersion; }
+
+    public String getApplied3DSVersion() {  return applied3DSVersion; }
+
+    public void setApplied3DSVersion(String applied3DSVersion) { this.applied3DSVersion = applied3DSVersion; }
+
+    public CultureCode getCulture() {
+        return culture;
+    }
+
+    public void setCulture(CultureCode culture) {
+        this.culture = culture;
     }
 
     /**

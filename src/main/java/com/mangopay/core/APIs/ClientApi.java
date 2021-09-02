@@ -137,4 +137,13 @@ public interface ClientApi {
      * @throws Exception
      */
     PayIn createBankWireDirect(String idempotencyKey, ClientBankWireDirect bankWireDirect) throws Exception;
+
+    BankAccount createBankAccountIBAN(BankAccount bankAccountIBAN) throws Exception;
+
+    BankAccount createBankAccountIBAN(String idempotencyKey, BankAccount bankAccountIBAN) throws Exception;
+
+    PayOut createPayOut(String idempotencyKey, PayOut payOut) throws Exception;
+
+    PayOut createPayOut(PayOut payOut) throws Exception;
+
 }

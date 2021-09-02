@@ -3,6 +3,7 @@ package com.mangopay.entities.subentities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
 import com.mangopay.core.ObjectTool;
+import com.mangopay.core.Shipping;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 import com.mangopay.core.enumerations.CardType;
 
@@ -28,6 +29,15 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
      */
     @SerializedName("StatementDescriptor")
     private String statementDescriptor;
+
+    @SerializedName("Shipping")
+    private Shipping shipping;
+
+    @SerializedName("BrowserInfo")
+    private BrowserInfo browserInfo;
+
+    @SerializedName("IpAddress")
+    private String ipAddress;
 
     public PayInPaymentDetailsCard() {
     }
@@ -61,18 +71,46 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
         this.statementDescriptor = statementDescriptor;
     }
 
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public PayInPaymentDetailsCard setShipping(Shipping shipping) {
+        this.shipping = shipping;
+        return this;
+    }
+
     public static PayInPaymentDetailsCard build(CardType cardType, String cardId) {
         return new PayInPaymentDetailsCard(cardType, cardId);
     }
 
-    public PayInPaymentDetailsCard(CardType cardType, String cardId, String statementDescriptor) {
+    public BrowserInfo getBrowserInfo() {
+        return browserInfo;
+    }
+
+    public PayInPaymentDetailsCard setBrowserInfo(BrowserInfo browserInfo) {
+        this.browserInfo = browserInfo;
+        return this;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public PayInPaymentDetailsCard setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+        return this;
+    }
+
+    public PayInPaymentDetailsCard(CardType cardType, String cardId, String statementDescriptor, Shipping shipping) {
         this.cardType = cardType;
         this.cardId = cardId;
         this.statementDescriptor = statementDescriptor;
+        this.shipping = shipping;
     }
     
-    public static PayInPaymentDetailsCard build(CardType cardType, String cardId, String statementDescriptor) {
-        return new PayInPaymentDetailsCard(cardType, cardId, statementDescriptor);
+    public static PayInPaymentDetailsCard build(CardType cardType, String cardId, String statementDescriptor, Shipping shipping) {
+        return new PayInPaymentDetailsCard(cardType, cardId, statementDescriptor, shipping);
     }
     
     public static PayInPaymentDetailsCard convert(PayInPaymentDetails paymentDetails) throws Exception {

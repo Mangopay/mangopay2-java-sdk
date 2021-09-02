@@ -1,0 +1,66 @@
+# This workflow will build a Java project with Gradle
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+
+name: mangopay2-java-sdk-cd
+
+on:
+  push:
+    branches:
+      # push on master branch
+      - master
+    # Sequence of patterns matched against refs/tags
+    #tags:
+      # It pushes any tags that contain a v. ex: v1.16.1
+      #- '*'
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Install Java
+        run: |
+          sudo apt install openjdk-8-jdk
+          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+          echo $JAVA_HOME
+          export PATH=$PATH:$JAVA_HOME/bin
+          echo $PATH
+          java -version
+      - name: Install Bouncy Castle
+        run: |
+          sudo wget "https://bouncycastle.org/download/bcprov-ext-jdk15on-158.jar" -O "${JAVA_HOME}/jre/lib/ext/bcprov-ext-jdk15on-158.jar"
+          echo "security.provider.1=org.bouncycastle.jce.provider.BouncyCastleProvider" | sudo tee -a /etc/java-8-openjdk/security/java.security
+          sudo perl -pi.bak -e 's/^(security\.provider\.)([0-9]+)/$1.($2+1)/ge' /etc/java-8-openjdk/security/java.security
+      - name: Update OpenSSL
+        run: sudo apt-get install openssl
+      - name: OpenSSL Version
+        run: openssl version
+      - name: Decrypt Security Key
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_TOKEN }}
+          HEX_KEY: ${{ secrets.HEX_KEY }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          SIGNING_PASSWORD: $ {{ secrets.SIGNING_PASSWORD }}
+        run: openssl aes-256-cbc -d -in .utility/secring.gpg.enc -out .utility/secring.gpg -k $PASSWORD
+      - name: Give permissions to file
+        run: chmod +x .utility/initiate-publish.sh
+      - name: Check decrypt step
+        run: ls -a .utility/
+      - name: Add host
+        run: |
+          cat /etc/hosts
+          sudo hostname "$(hostname | cut -c1-63)"
+          sed -e "s/^\\(127\\.0\\.0\\.1.*\\)/\\1 $(hostname | cut -c1-63)/" /etc/hosts > /tmp/hosts
+          sudo mv /tmp/hosts /etc/hosts
+          cat /etc/hosts
+      - name: Publish
+        run: ./gradlew publish -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD -Psigning.keyId=93605ADB -Psigning.password=$SIGNING_PASSWORD -Psigning.secretKeyRingFile=.utility/secring.gpg --stacktrace
+      - name: Close and publish
+        run: ./gradlew closeAndReleaseRepository -PnexusUsername=$MAVEN_USERNAME -PnexusPassword=$MAVEN_PASSWORD

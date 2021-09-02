@@ -130,4 +130,24 @@ public class ClientApiImpl extends ApiBase implements ClientApi {
 
         return this.createObject(PayIn.class, idempotencyKey, "client_create_bankwire_direct", payIn);
     }
+
+    @Override
+    public BankAccount createBankAccountIBAN(BankAccount bankAccountIBAN) throws Exception {
+        return createBankAccountIBAN(null, bankAccountIBAN);
+    }
+
+    @Override
+    public BankAccount createBankAccountIBAN(String idempotencyKey, BankAccount bankAccountIBAN) throws Exception {
+        return this.createObject(BankAccount.class, idempotencyKey, "client_create_bankaccount_iban", bankAccountIBAN);
+    }
+
+    @Override
+    public PayOut createPayOut(PayOut payOut) throws Exception {
+        return createPayOut(null, payOut);
+    }
+
+    @Override
+    public PayOut createPayOut(String idempotencyKey, PayOut payOut) throws Exception {
+        return this.createObject(PayOut.class, idempotencyKey, "client_create_payout", payOut);
+    }
 }

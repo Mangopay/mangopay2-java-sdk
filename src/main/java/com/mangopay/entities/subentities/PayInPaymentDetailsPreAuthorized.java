@@ -2,6 +2,7 @@ package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Dto;
+import com.mangopay.core.Shipping;
 import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 
@@ -22,8 +23,20 @@ public class PayInPaymentDetailsPreAuthorized extends Dto implements PayInPaymen
     @SerializedName("Culture")
     private CultureCode culture;
 
+    @SerializedName("Shipping")
+    private Shipping shipping;
+
     public String getPreauthorizationId() {
         return preauthorizationId;
+    }
+
+    public Shipping getShipping() {
+        return shipping;
+    }
+
+    public PayInPaymentDetailsPreAuthorized setShipping(Shipping shipping) {
+        this.shipping = shipping;
+        return this;
     }
 
     public void setPreauthorizationId(String preauthorizationId) {

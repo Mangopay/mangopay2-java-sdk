@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.mangopay:mangopay2-java-sdk:2.11.4'
+    compile 'com.mangopay:mangopay2-java-sdk:2.17.0'
 }
 ```
 
@@ -32,7 +32,7 @@ dependencies {
 <dependency>
   <groupId>com.mangopay</groupId>
   <artifactId>mangopay2-java-sdk</artifactId>
-  <version>2.11.4</version>
+  <version>2.17.0</version>
 </dependency>
 ```
 
@@ -55,8 +55,7 @@ Report bugs or suggest features using
 
 Account creation
 -------------------------------------------------
-You can get yourself a [free sandbox account](https://www.mangopay.com/signup/create-sandbox/) or sign up for a [production account](https://www.mangopay.com/signup/production-account/) (note that validation of your production account can take a few days, so think about doing it in advance of when you actually want to go live).
-
+You can get yourself a free sandbox account or sign up for a production account by [registering on the Mangopay site](https://www.mangopay.com/start/) (note that validation of your production account involves several steps, so think about doing it in advance of when you actually want to go live).
 
 Configuration
 -------------------------------------------------

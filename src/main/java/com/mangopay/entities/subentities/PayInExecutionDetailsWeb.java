@@ -113,9 +113,7 @@ public class PayInExecutionDetailsWeb extends Dto implements PayInExecutionDetai
         return TemplateURLOptions;
     }
 
-    public void setTemplateURLOptions(PayInTemplateURLOptions templateURLOptions) {
-        this.TemplateURLOptions = templateURLOptions;
-    }
+    public void setTemplateURLOptions(PayInTemplateURLOptions templateURLOptions) { this.TemplateURLOptions = templateURLOptions; }
 
     /**
      * Gets the collection of read-only fields names
