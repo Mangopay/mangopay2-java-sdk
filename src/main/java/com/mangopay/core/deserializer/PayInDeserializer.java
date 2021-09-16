@@ -64,6 +64,10 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsPayPal.setPaypalBuyerAccountEmail(object.get("PaypalBuyerAccountEmail").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;
+            case PAYCONIQ:
+                PayInPaymentDetailsPayconiq payInPaymentDetailsPayconiq = new PayInPaymentDetailsPayconiq();
+                payIn.setPaymentDetails(payInPaymentDetailsPayconiq);
+                break;
             case APPLEPAY:
                 PayInPaymentDetailsApplePay payInPaymentDetailsApplePay = new PayInPaymentDetailsApplePay();
                 if (object.has("PaymentData") && !object.get("PaymentData").isJsonNull()) {
