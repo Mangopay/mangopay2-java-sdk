@@ -66,6 +66,12 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 break;
             case PAYCONIQ:
                 PayInPaymentDetailsPayconiq payInPaymentDetailsPayconiq = new PayInPaymentDetailsPayconiq();
+                if (object.has("ExpirationDate") && !object.get("ExpirationDate").isJsonNull())
+                    payInPaymentDetailsPayconiq.setExpirationDate(object.get("ExpirationDate").getAsString());
+                if (object.has("DebitedWalletId") && !object.get("DebitedWalletId").isJsonNull())
+                    payInPaymentDetailsPayconiq.setDebitedWalletId(object.get("DebitedWalletId").getAsString());
+                if (object.has("DeepLinkURL") && !object.get("DeepLinkURL").isJsonNull())
+                    payInPaymentDetailsPayconiq.setDeepLinkUrl(object.get("DeepLinkURL").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsPayconiq);
                 break;
             case APPLEPAY:
