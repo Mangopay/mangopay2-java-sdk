@@ -7,11 +7,11 @@ on:
   push:
     branches:
       # push on master branch
-      - master
+      # - master
     # Sequence of patterns matched against refs/tags
     #tags:
       # It pushes any tags that contain a v. ex: v1.16.1
-      #- '*'
+      - '*'
 jobs:
   publish:
     runs-on: ubuntu-latest
