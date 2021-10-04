@@ -5,6 +5,8 @@ import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.core.enumerations.KycStatus;
 
+import java.util.ArrayList;
+
 /**
  * KYC document entity.
  */
@@ -45,6 +47,12 @@ public class KycDocument extends EntityBase {
      */
     @SerializedName("ProcessedDate")
     private Long processedDate;
+
+    /**
+     * More information regarding why the document has been rejected.
+     */
+    @SerializedName("Flags")
+    private ArrayList<String> flags;
 
     public KycDocumentType getType() {
         return type;
@@ -88,5 +96,13 @@ public class KycDocument extends EntityBase {
 
     public Long getProcessedDate() {
         return processedDate;
+    }
+
+    public ArrayList<String> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(ArrayList<String> flags) {
+        this.flags = flags;
     }
 }
