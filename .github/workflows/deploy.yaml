@@ -20,7 +20,7 @@ jobs:
         run: |
           mkdir -p .gnupg/
           printf "$GPG_SECRET_KEY" | base64 --decode > .gnupg/private.key
-          gpg --import .gnupg/private.key
+          echo $SIGNING_PASSWORD | gpg --batch --yes --passphrase-fd 0 .gnupg/private.key
         env:
           GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
       - uses: actions/checkout@v2
