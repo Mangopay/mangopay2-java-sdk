@@ -19,8 +19,8 @@ jobs:
       - name: Configure GPG Key
         run: |
           mkdir -p .gnupg/
-          printf "$GPG_SECRET_KEY" | base64 --decode > .gnupg/private.key
-          echo $SIGNING_PASSWORD | gpg --batch --yes --passphrase-fd 0 .gnupg/private.key
+          printf "$GPG_SECRET_KEY" | base64 --decode > .gnupg/private.gpg
+          echo $SIGNING_PASSWORD | gpg --batch --yes --passphrase-fd 0 .gnupg/private.gpg
           echo $SIGNING_PASSWORD | gpg --export-secret-keys -o ~/secring.kbx
         env:
           GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
