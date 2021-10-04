@@ -7,7 +7,7 @@ on:
   push:
     branches:
       # push on master branch
-      - master
+      # - master
       # push on a feature branch
       - feature/*
       # push on a bugfix branch
