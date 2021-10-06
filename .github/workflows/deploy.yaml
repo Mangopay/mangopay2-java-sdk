@@ -16,6 +16,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Configure GPG Key
         run: |
           mkdir -p .gnupg/
@@ -24,7 +25,6 @@ jobs:
           echo $SIGNING_PASSWORD | gpg --export-secret-key AF02E028 > .gnupg/secring.gpg
         env:
           GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
-      - uses: actions/checkout@v2
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
