@@ -6,11 +6,11 @@
 echo -e "Starting publish to Sonatype...\n"
 
 ./gradlew publish -PnexusUsername="${MAVEN_USERNAME}" -PnexusPassword="${MAVEN_PASSWORD}" -Psigning.keyId=AF02E028 -Psigning.password="${SIGNING_PASSWORD}" -Psigning.secretKeyRingFile=.gnupg/secring.gpg
-RETVAL=$?
+#RETVAL=$?
 
-if [ $RETVAL -eq 0 ]; then
-  echo 'Completed publish!'
-  ./gradlew closeAndReleaseRepository -PnexusUsername="${MAVEN_USERNAME}" -PnexusPassword="${MAVEN_PASSWORD}"
-else
-  echo 'Publish failed.'
-fi
+#if [ $RETVAL -eq 0 ]; then
+#  echo 'Completed publish!'
+#  ./gradlew closeAndReleaseRepository -PnexusUsername="${MAVEN_USERNAME}" -PnexusPassword="${MAVEN_PASSWORD}"
+#else
+#  echo 'Publish failed.'
+#fi
