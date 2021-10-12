@@ -21,8 +21,8 @@ jobs:
         run: |
           mkdir -p .gnupg/
           chmod 700 .gnupg
-          echo "${{secrets.SIGNING_SECRET_KEY_RING_FILE}}" > .gradle/secring.gpg.b64
-          base64 -d ~/.gradle/secring.gpg.b64 > .gradle/secring.gpg
+          echo "${{secrets.SIGNING_SECRET_KEY_RING_FILE}}" > .gnupg/secring.gpg.b64
+          base64 -d ~/.gradle/secring.gpg.b64 > .gnupg/secring.gpg
 #      - name: Configure GPG Key
 #        run: |
 #          mkdir -p .gnupg/
