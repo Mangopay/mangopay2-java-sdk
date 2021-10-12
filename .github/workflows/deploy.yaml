@@ -23,9 +23,10 @@ jobs:
           chmod 700 .gnupg
           printf "$GPG_SECRET_KEY" | base64 --decode > .gnupg/private.gpg
           gpg --import --batch .gnupg/private.gpg
-#          echo $SIGNING_PASSWORD | gpg --pinentry-mode loopback --passphrase-fd 0 --export-secret-keys  > .gnupg/secring.gpg
+          printf "$SIGNING_PASSWORD" | gpg --pinentry-mode loopback --passphrase-fd 0 --export-secret-key AF02E028 > .gnupg/secring.gpg
         env:
           GPG_SECRET_KEY: ${{ secrets.GPG_SECRET_KEY }}
+          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
       - name: Set up Java
         uses: actions/setup-java@v2
         with:
