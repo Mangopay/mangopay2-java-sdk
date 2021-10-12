@@ -5,7 +5,7 @@
 
 echo -e "Starting publish to Sonatype...\n"
 
-./gradlew publish -PnexusUsername="${MAVEN_USERNAME}" -PnexusPassword="${MAVEN_PASSWORD}" -Psigning.keyId=AF02E028 -Psigning.password="${SIGNING_PASSWORD}" -Psigning.secretKeyRingFile=.gnupg/secring.gpg
+./gradlew publish -PnexusUsername="${MAVEN_USERNAME}" -PnexusPassword="${MAVEN_PASSWORD}" -Psigning.keyId=610AABD3 -Psigning.password="${SIGNING_PASSWORD}" -Psigning.secretKeyRingFile=.gnupg/secring.gpg
 #RETVAL=$?
 
 #if [ $RETVAL -eq 0 ]; then
