@@ -671,6 +671,8 @@ public class RestTool {
             httpHeaders.putAll(authHlp.getHttpHeaderKey());
         }
 
+        httpHeaders.put("User-Agent",  String.format("MangoPay V2 SDK Java %s", root.getConfig().getVersion()));
+
         return httpHeaders;
     }
 
