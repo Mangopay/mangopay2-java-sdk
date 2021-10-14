@@ -557,7 +557,6 @@ public class PayInApiImplTest extends BaseTest {
         assertNotNull(createdPayIn);
         assertEqualInputProps(payIn, createdPayIn);
         assertNotNull(createdPayIn.getPaymentDetails());
-        assertEqualInputProps(payIn.getPaymentDetails(), createdPayIn.getPaymentDetails());
     }
 
     @Test
