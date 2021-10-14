@@ -63,4 +63,17 @@ public class CardApiImplTest extends BaseTest {
 
         assertNotNull(validatedCard);
     }
+
+    @Test
+    public void disableCard() throws Exception{
+        CardApi cardApi = api.getCardApi();
+        PayIn payIn = getNewPayInCardDirect();
+        Card card = cardApi.get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
+
+        assertTrue(card.isActive());
+
+        Card update = cardApi.disable(card);
+
+        assertFalse(update.isActive());
+    }
 }
