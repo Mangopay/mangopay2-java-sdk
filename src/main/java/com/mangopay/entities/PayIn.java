@@ -120,6 +120,10 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsGooglePay.class);
                                 }}
                         );
+                        put("PAYCONIQ", new HashMap<String, Class<?>>(){{
+                                    put("PaymentDetails", PayInPaymentDetailsPayconiq.class);
+                                }}
+                        );
                         // ...and more in future...
                     }}
             );

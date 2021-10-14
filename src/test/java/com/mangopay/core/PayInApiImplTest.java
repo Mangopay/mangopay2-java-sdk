@@ -531,6 +531,36 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createPayconiqWeb() throws Exception {
+        UserNatural john = getJohn();
+        Wallet wallet = getJohnsWallet();
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(john.getId());
+        payIn.setCreditedUserId(john.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(5);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+        payIn.setCreditedWalletId(wallet.getId());
+        PayInPaymentDetailsPayconiq paymentDetails = new PayInPaymentDetailsPayconiq();
+        paymentDetails.setCountry("BE");
+        payIn.setPaymentDetails(paymentDetails);
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(executionDetails);
+
+        PayIn createdPayIn = api.getPayInApi().create(payIn);
+
+        assertNotNull(createdPayIn);
+        assertEqualInputProps(payIn, createdPayIn);
+        assertNotNull(createdPayIn.getPaymentDetails());
+        assertEqualInputProps(payIn.getPaymentDetails(), createdPayIn.getPaymentDetails());
+    }
+
+    @Test
     public void getPayInRefunds() throws Exception {
         PayIn payIn = getNewPayInCardDirect();
         Refund firstRefund = getNewRefundForPayIn(payIn);
