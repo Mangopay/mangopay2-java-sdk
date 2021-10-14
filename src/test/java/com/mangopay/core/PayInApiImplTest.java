@@ -761,8 +761,6 @@ public class PayInApiImplTest extends BaseTest {
             cit.setStatementDescriptor("lorem");
             cit.setTag("custom meta");
             cit.setBrowserInfo(this.getNewBrowserInfo());
-            cit.setDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
-            cit.setFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
             PayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
 
             assertNotNull(createdCit);

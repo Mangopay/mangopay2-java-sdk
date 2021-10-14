@@ -27,7 +27,7 @@ public class TransferApiImplTest extends BaseTest {
         assertTrue(transfer.getId().length() > 0);
         assertEquals(transfer.getAuthorId(), john.getId());
         assertEquals(transfer.getCreditedUserId(), john.getId());
-        assertTrue(creditedWallet.getBalance().getAmount() == 100);
+        assertTrue(creditedWallet.getBalance().getAmount() == 1);
     }
 
     @Test

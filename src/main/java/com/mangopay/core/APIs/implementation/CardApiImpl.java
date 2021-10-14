@@ -44,6 +44,7 @@ public class CardApiImpl extends ApiBase implements CardApi {
     @Override
     public Card disable(Card card) throws Exception {
         card.setValidity(Validity.INVALID);
+        card.setActive(false);
         return update(card);
     }
 

@@ -290,7 +290,7 @@ public abstract class BaseTest {
      * @return Wallet instance loaded with 10k EUR.
      */
     protected Wallet getJohnsWalletWithMoney() throws Exception {
-        return getJohnsWalletWithMoney(10000);
+        return getJohnsWalletWithMoney(500);
     }
 
     /**
@@ -692,7 +692,7 @@ public abstract class BaseTest {
         transfer.setCreditedUserId(user.getId());
         transfer.setDebitedFunds(new Money());
         transfer.getDebitedFunds().setCurrency(CurrencyIso.EUR);
-        transfer.getDebitedFunds().setAmount(100);
+        transfer.getDebitedFunds().setAmount(1);
         transfer.setFees(new Money());
         transfer.getFees().setCurrency(CurrencyIso.EUR);
         transfer.getFees().setAmount(0);
