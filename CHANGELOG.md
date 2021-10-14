@@ -1,3 +1,28 @@
+## [2.18.0] - 2021-10-14
+## Fixed
+
+- Card deactivation
+- UBO Declaration creation
+- User-Agent in headers
+
+## Added
+
+### Payconiq
+
+As requested by numerous clients, we are now providing [Payconiq](https://www.payconiq.be) as a new mean-of-payment. To request access, please contact MANGOPAY.
+
+### Flags for KYC documents
+
+**We provide more information regarding refused KYC documents.** Therefore it will be easier for you to adapt your app behavior and help your end user.
+
+You are now able to see the exact explanation thanks to a new parameter called “Flags”.
+
+It has been added to
+
+` this.api.getKycDocumentApi().getKycDocument(kycDocument.getId());`
+
+It will display one or several error codes that provide the reason(s) why your document validation has failed. These error codes description are available [here](https://docs.mangopay.com/guide/kyc-document).
+
 ## [2.17.0] - 2021-08-10
 ## Fixed
 
