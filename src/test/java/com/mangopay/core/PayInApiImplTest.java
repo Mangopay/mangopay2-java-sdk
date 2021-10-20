@@ -739,6 +739,7 @@ public class PayInApiImplTest extends BaseTest {
             update.setBilling(this.getNewBilling());
             update.getBilling().setFirstName("TEST");
             update.setShipping(this.getNewShipping());
+            update.setStatus("ENDED");
 
             RecurringPaymentExtended updated = this.api.getPayInApi().updateRecurringPayment(get.getId(), update);
             assertNotNull(updated);

@@ -19,6 +19,9 @@ public class RecurringPaymentUpdate extends EntityBase {
     @SerializedName("Shipping")
     private Shipping shipping;
 
+    @SerializedName("Status")
+    private String status;
+
     public String getCardId() {
         return cardId;
     }
@@ -42,6 +45,10 @@ public class RecurringPaymentUpdate extends EntityBase {
     public void setShipping(Shipping shipping) {
         this.shipping = shipping;
     }
+
+    public String getStatus() { return status; }
+
+    public void setStatus(String status) { this.status = status; }
 
     @Override
     public Map<String, Type> getSubObjects() {
