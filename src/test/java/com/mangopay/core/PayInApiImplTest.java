@@ -761,9 +761,14 @@ public class PayInApiImplTest extends BaseTest {
             cit.setStatementDescriptor("lorem");
             cit.setTag("custom meta");
             cit.setBrowserInfo(this.getNewBrowserInfo());
-            PayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
+            RecurringPayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
 
             assertNotNull(createdCit);
+            assertNotNull(createdCit.getExecutionDetails());
+
+            PayInExecutionDetailsDirect web = (PayInExecutionDetailsDirect) createdCit.getExecutionDetails();
+
+            assertNotNull(web.getSecureModeRedirectUrl());
 
         } catch (Exception e) {
             fail(e.getMessage());
