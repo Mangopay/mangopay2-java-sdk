@@ -40,7 +40,9 @@ public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
             case IBAN:
                 BankAccountDetailsIBAN bankAccountDetailsIBAN = new BankAccountDetailsIBAN();
                 bankAccountDetailsIBAN.setIban(jsonObject.get("IBAN").getAsString());
-                bankAccountDetailsIBAN.setBic(jsonObject.get("BIC").getAsString());
+                if(jsonObject.has("BIC")) {
+                    bankAccountDetailsIBAN.setBic(jsonObject.get("BIC").getAsString());
+                }
                 bankAccount.setDetails(bankAccountDetailsIBAN);
                 break;
             case OTHER:
