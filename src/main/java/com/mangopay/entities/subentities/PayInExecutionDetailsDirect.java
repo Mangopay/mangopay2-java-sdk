@@ -59,6 +59,9 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
     @SerializedName("Applied3DSVersion")
     private String applied3DSVersion;
 
+    @SerializedName("RecurringPayinRegistrationId")
+    private String recurringPayInRegistrationId;
+
     /**
      * The language to use for the payment page - needs to be the ISO code of the language
      */
@@ -203,6 +206,13 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
 
     public PayInExecutionDetailsDirect setApplied3DSVersion(String applied3DSVersion) {
         this.applied3DSVersion = applied3DSVersion;
+        return this;
+    }
+
+    public String getRecurringPayInRegistrationId() { return recurringPayInRegistrationId; }
+
+    public PayInExecutionDetailsDirect setRecurringPayinRegistrationId(String recurringPayInRegistrationId) {
+        this.recurringPayInRegistrationId = recurringPayInRegistrationId;
         return this;
     }
 
