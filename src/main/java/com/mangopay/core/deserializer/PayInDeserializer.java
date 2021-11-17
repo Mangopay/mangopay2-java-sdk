@@ -152,6 +152,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInExecutionDetailsDirect.setRequested3DSVersion(object.get("Requested3DSVersion").getAsString());
                 if (object.has("Applied3DSVersion") && !object.get("Applied3DSVersion").isJsonNull())
                     payInExecutionDetailsDirect.setApplied3DSVersion(object.get("Applied3DSVersion").getAsString());
+                if (object.has("RecurringPayinRegistrationId") && !object.get("RecurringPayinRegistrationId").isJsonNull())
+                    payInExecutionDetailsDirect.setRecurringPayinRegistrationId(object.get("RecurringPayinRegistrationId").getAsString());
                 payIn.setExecutionDetails(payInExecutionDetailsDirect);
                 break;
             case EXTERNAL_INSTRUCTION:

@@ -763,12 +763,17 @@ public class PayInApiImplTest extends BaseTest {
             cit.setBrowserInfo(this.getNewBrowserInfo());
             RecurringPayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
 
+            PayIn getAsPayIn = this.api.getPayInApi().get(createdCit.getId());
+
             assertNotNull(createdCit);
             assertNotNull(createdCit.getExecutionDetails());
 
-            PayInExecutionDetailsDirect web = (PayInExecutionDetailsDirect) createdCit.getExecutionDetails();
+            PayInExecutionDetailsDirect direct = (PayInExecutionDetailsDirect) createdCit.getExecutionDetails();
 
-            assertNotNull(web.getSecureModeRedirectUrl());
+            assertNotNull(direct.getSecureModeRedirectUrl());
+            assertNotNull(getAsPayIn);
+            PayInExecutionDetailsDirect payInGetDirect = (PayInExecutionDetailsDirect) getAsPayIn.getExecutionDetails();
+            assertEquals(payInGetDirect.getRecurringPayInRegistrationId(), result.getId());
 
         } catch (Exception e) {
             fail(e.getMessage());
