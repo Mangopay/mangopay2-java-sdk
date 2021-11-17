@@ -1,3 +1,20 @@
+## [2.20.0] - 2021-11-17
+## Added
+
+### Instant payouts hooks
+
+We are now providing new hooks for our new feature [Instant payouts](https://docs.mangopay.com/guide/instant-payment-payout) :
+
+- INSTANT_PAYOUT_SUCCEEDED
+- INSTANT_PAYOUT_FALLBACKED
+
+It will allow you to trigger an action depends on the Instant Payout treatment.
+
+### GET a RecurringPayIn ID
+
+You can now request the RecurringPayIn ID to check if the status is valid using
+`this.api.getPayInApi().get(createdCit.getId())`
+
 ## [2.19.0] - 2021-10-20
 ## Added
 
