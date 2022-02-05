@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -771,6 +772,66 @@ public class PayInApiImplTest extends BaseTest {
             PayInExecutionDetailsDirect direct = (PayInExecutionDetailsDirect) createdCit.getExecutionDetails();
 
             assertNotNull(direct.getSecureModeRedirectUrl());
+            assertNotNull(getAsPayIn);
+            PayInExecutionDetailsDirect payInGetDirect = (PayInExecutionDetailsDirect) getAsPayIn.getExecutionDetails();
+            assertEquals(payInGetDirect.getRecurringPayInRegistrationId(), result.getId());
+
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateRecurringPaymentMIT() {
+        try {
+            Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
+            UserNatural john = this.getJohn();
+
+            CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+            createRecurringPayment.setAuthorId(john.getId());
+            createRecurringPayment.setCardId(data.get("cardId"));
+            createRecurringPayment.setCreditedUserId(john.getId());
+            createRecurringPayment.setCreditedWalletId(data.get("walletId"));
+            createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setShipping(this.getNewShipping());
+            createRecurringPayment.setBilling(this.getNewBilling());
+            createRecurringPayment.setEndDate(1833374495L);
+            createRecurringPayment.setMigration(true);
+            createRecurringPayment.setNextTransactionDebitedFunds(new Money().setAmount(12).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setNextTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setFrequency("Daily");
+            createRecurringPayment.setFixedNextAmount(true);
+            createRecurringPayment.setFractionedPayment(false);
+
+            RecurringPayment result = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
+
+            RecurringPayInCIT cit = new RecurringPayInCIT();
+            cit.setRecurringPayInRegistrationId(result.getId());
+            cit.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+            cit.setSecureModeReturnURL("http://www.my-site.com/returnurl");
+            cit.setStatementDescriptor("lorem");
+            cit.setTag("custom meta");
+            cit.setBrowserInfo(this.getNewBrowserInfo());
+            cit.setFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            cit.setDebitedFunds(new Money().setAmount(11).setCurrency(CurrencyIso.EUR));
+            RecurringPayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
+
+            RecurringPayInMIT mit = new RecurringPayInMIT();
+            mit.setRecurringPayInRegistrationId(result.getId());
+            mit.setFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            mit.setDebitedFunds(new Money().setAmount(12).setCurrency(CurrencyIso.EUR));
+            mit.setStatementDescriptor("lorem");
+            mit.setTag("custom meta");
+            RecurringPayIn createdMit = this.api.getPayInApi().createRecurringPayInMIT(null, mit);
+
+            PayIn getAsPayIn = this.api.getPayInApi().get(createdMit.getId());
+
+            assertNotNull(createdMit);
+            assertNotNull(createdMit.getExecutionDetails());
+
+            PayInExecutionDetailsDirect direct = (PayInExecutionDetailsDirect) createdMit.getExecutionDetails();
+
             assertNotNull(getAsPayIn);
             PayInExecutionDetailsDirect payInGetDirect = (PayInExecutionDetailsDirect) getAsPayIn.getExecutionDetails();
             assertEquals(payInGetDirect.getRecurringPayInRegistrationId(), result.getId());
