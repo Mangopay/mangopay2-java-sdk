@@ -94,6 +94,7 @@ public abstract class ApiBase {
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
         put("payouts_get", new String[]{"/payouts/%s", RequestType.GET.toString()});
         put("payouts_get_refunds", new String[]{"/payouts/%s/refunds", RequestType.GET.toString()});
+        put("payouts_instant_payout_eligibility", new String[]{"/payouts/reachability/", RequestType.POST.toString()});
 
         put("refunds_get", new String[]{"/refunds/%s", RequestType.GET.toString()});
 
