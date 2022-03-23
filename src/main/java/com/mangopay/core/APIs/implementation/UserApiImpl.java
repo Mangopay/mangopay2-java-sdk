@@ -211,14 +211,15 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
-    public KycDocument createKycDocument(String userId, KycDocumentType type) throws Exception {
-        return createKycDocument(null, userId, type);
+    public KycDocument createKycDocument(String userId, KycDocumentType type, String tag) throws Exception {
+        return createKycDocument(null, userId, type, tag);
     }
 
     @Override
-    public KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type) throws Exception {
+    public KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type, String tag) throws Exception {
         KycDocument kycDocument = new KycDocument();
         kycDocument.setType(type);
+        kycDocument.setTag(tag);
 
         return this.createObject(KycDocument.class, idempotencyKey, "users_createkycdocument", kycDocument, userId);
     }

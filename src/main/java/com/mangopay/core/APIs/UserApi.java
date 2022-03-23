@@ -281,10 +281,11 @@ public interface UserApi {
      *
      * @param userId User identifier.
      * @param type   Type of KycDocument.
+     * @param tag    Custom data that you can add to this item
      * @return KycDocument object returned from API.
      * @throws Exception
      */
-    KycDocument createKycDocument(String userId, KycDocumentType type) throws Exception;
+    KycDocument createKycDocument(String userId, KycDocumentType type, String tag) throws Exception;
 
     /**
      * Creates KycDocument.
@@ -292,10 +293,11 @@ public interface UserApi {
      * @param idempotencyKey idempotency key for this request.
      * @param userId         User identifier.
      * @param type           Type of KycDocument.
+     * @param tag    Custom data that you can add to this item
      * @return KycDocument object returned from API.
      * @throws Exception
      */
-    KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type) throws Exception;
+    KycDocument createKycDocument(String idempotencyKey, String userId, KycDocumentType type, String tag) throws Exception;
 
     /**
      * Gets KycDocument.
