@@ -71,12 +71,12 @@ environment, set it to `https://api.mangopay.com`.
     MangoPayApi api = new MangoPayApi();
 
     // configuration
-    api.Config.ClientId = "your-client-id";
-    api.Config.ClientPassword = "your-client-password";
-    //api.Config.BaseUrl = "https://api.mangopay.com";
+    api.getConfig().setClientId("your-client-id");
+    api.getConfig().setClientPassword("your-client-password");
+    //api.getConfig().setBaseUrl("https://api.mangopay.com");
 
     // call some API methods...
-    List<User> users = api.Users.getAll();
+    List<User> users = api.getUserApi().getAll();
 ```
 
 Sample usage
@@ -96,16 +96,16 @@ Sample usage
     User john = api.Users.get(someId);
 
     // change and update some of his data
-    john.Tag += " - CHANGED";
-    api.Users.update(john);
+    john.setTag(john.getTag() + " - CHANGED");
+    api.getUserApi().update(john);
 
     // get all users (with pagination and sorting)
     Pagination pagination = new Pagination(1, 8); // get 1st page, 8 items per page
     Sorting sort = new Sorting();
     sort.addField("SortingField", SortDirection.asc); // Sorting is an enum, its values: none, asc, desc
-    List<User> users = api.Users.getAll(pagination, sort);
+    List<User> users = api.getUserApi().getAll(pagination, sort);
 
     // get his bank accounts
     pagination = new Pagination(2, 10); // get 2nd page, 10 items per page
-    List<BankAccount> accounts = api.Users.getBankAccounts(john.Id, pagination, sort);
+    List<BankAccount> accounts = api.getUserApi().getBankAccounts(john.Id, pagination, sort);
 ```
