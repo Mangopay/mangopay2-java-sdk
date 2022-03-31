@@ -814,8 +814,9 @@ public abstract class BaseTest {
     protected KycDocument getJohnsKycDocument() throws Exception {
         if (BaseTest.JOHNS_KYC_DOCUMENT == null) {
             String johnsId = this.getJohn().getId();
+            String tag = "TagTagTag";
 
-            BaseTest.JOHNS_KYC_DOCUMENT = this.api.getUserApi().createKycDocument(johnsId, KycDocumentType.IDENTITY_PROOF);
+            BaseTest.JOHNS_KYC_DOCUMENT = this.api.getUserApi().createKycDocument(johnsId, KycDocumentType.IDENTITY_PROOF, tag);
         }
 
         return BaseTest.JOHNS_KYC_DOCUMENT;
