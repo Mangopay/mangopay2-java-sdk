@@ -1,16 +1,11 @@
 package com.mangopay.entities;
 
-/**
- * Holds information regarding API call limits.
- * <P>
- * Created by Paul Hristea on 27-Jul-17.
- */
 public class RateLimit {
 
     private int intervalMinutes;
     private int callsMade;
     private int callsRemaining;
-    private long resetTimeMillis;
+    private long resetTimeSeconds;
 
     public RateLimit(int intervalMinutes) {
         this.intervalMinutes = intervalMinutes;
@@ -71,20 +66,20 @@ public class RateLimit {
     }
 
     /**
-     * Gets the time in millis when the number of allowed calls in this time interval will be reset.
+     * Gets the time in seconds when the number of allowed calls in this time interval will be reset.
      *
      * @return
      */
-    public long getResetTimeMillis() {
-        return resetTimeMillis;
+    public long getResetTimeSeconds() {
+        return resetTimeSeconds;
     }
 
     /**
      * Sets the time at which the number of allowed calls in this interval will be reset.
      *
-     * @param resetTimeMillis The reset time in millis
+     * @param resetTimeSeconds The reset time in seconds
      */
-    public void setResetTimeMillis(long resetTimeMillis) {
-        this.resetTimeMillis = resetTimeMillis;
+    public void setResetTimeSeconds(long resetTimeSeconds) {
+        this.resetTimeSeconds = resetTimeSeconds;
     }
 }

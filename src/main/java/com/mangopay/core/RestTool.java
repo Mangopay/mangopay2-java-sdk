@@ -466,10 +466,10 @@ public class RestTool {
                         updatedRateLimits = initRateLimits();
                     }
                     List<String> resetTimes = k.getValue();
-                    updatedRateLimits.get(0).setResetTimeMillis(Long.valueOf(resetTimes.get(3)));
-                    updatedRateLimits.get(1).setResetTimeMillis(Long.valueOf(resetTimes.get(2)));
-                    updatedRateLimits.get(2).setResetTimeMillis(Long.valueOf(resetTimes.get(1)));
-                    updatedRateLimits.get(3).setResetTimeMillis(Long.valueOf(resetTimes.get(0)));
+                    updatedRateLimits.get(0).setResetTimeSeconds(Long.valueOf(resetTimes.get(3)));
+                    updatedRateLimits.get(1).setResetTimeSeconds(Long.valueOf(resetTimes.get(2)));
+                    updatedRateLimits.get(2).setResetTimeSeconds(Long.valueOf(resetTimes.get(1)));
+                    updatedRateLimits.get(3).setResetTimeSeconds(Long.valueOf(resetTimes.get(0)));
                 }
                 if (k.getKey().equals("X-Number-Of-Pages") || k.getKey().equals("X-Number-Of-Pages".toLowerCase())) {
                     this.pagination.setTotalPages(Integer.parseInt(v));

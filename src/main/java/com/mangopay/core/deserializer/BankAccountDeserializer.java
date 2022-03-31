@@ -26,7 +26,8 @@ public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
                 BankAccountDetailsUS bankAccountDetailsUS = new BankAccountDetailsUS();
                 bankAccountDetailsUS.setAccountNumber(jsonObject.get("AccountNumber").getAsString());
                 bankAccountDetailsUS.setAba(jsonObject.get("ABA").getAsString());
-                bankAccountDetailsUS.setDepositAccountType(DepositAccountType.valueOf(jsonObject.get("DepositAccountType").getAsString()));
+                if (jsonObject.has("DepositAccountType") && !jsonObject.get("DepositAccountType").isJsonNull())
+                    bankAccountDetailsUS.setDepositAccountType(DepositAccountType.valueOf(jsonObject.get("DepositAccountType").getAsString()));
                 bankAccount.setDetails(bankAccountDetailsUS);
                 break;
             case CA:
@@ -40,7 +41,8 @@ public class BankAccountDeserializer implements JsonDeserializer<BankAccount> {
             case IBAN:
                 BankAccountDetailsIBAN bankAccountDetailsIBAN = new BankAccountDetailsIBAN();
                 bankAccountDetailsIBAN.setIban(jsonObject.get("IBAN").getAsString());
-                bankAccountDetailsIBAN.setBic(jsonObject.get("BIC").getAsString());
+                if (jsonObject.has("BIC") && !jsonObject.get("BIC").isJsonNull())
+                    bankAccountDetailsIBAN.setBic(jsonObject.get("BIC").getAsString());
                 bankAccount.setDetails(bankAccountDetailsIBAN);
                 break;
             case OTHER:

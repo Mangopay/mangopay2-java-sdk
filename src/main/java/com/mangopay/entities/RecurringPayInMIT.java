@@ -48,6 +48,14 @@ public class RecurringPayInMIT extends Dto {
         this.tag = tag;
     }
 
+    public Money getDebitedFunds() { return debitedFunds; }
+
+    public void setDebitedFunds(Money debitedFunds) { this.debitedFunds = debitedFunds; }
+
+    public Money getFees() { return fees; }
+
+    public void setFees(Money fees) { this.fees = fees; }
+
     @Override
     public Map<String, Type> getSubObjects() {
 

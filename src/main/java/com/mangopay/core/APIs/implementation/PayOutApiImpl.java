@@ -6,6 +6,8 @@ import com.mangopay.core.APIs.PayOutApi;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.PayOut;
+import com.mangopay.entities.PayOutEligibility;
+import com.mangopay.entities.PayOutEligibilityResult;
 import com.mangopay.entities.Refund;
 
 import java.util.List;
@@ -33,6 +35,11 @@ public class PayOutApiImpl extends ApiBase implements PayOutApi {
     public PayOut create(String idempotencyKey, PayOut payOut) throws Exception {
         String paymentKey = this.getPaymentKey(payOut);
         return this.createObject(PayOut.class, idempotencyKey, String.format("payouts_%s_create", paymentKey), payOut);
+    }
+
+    @Override
+    public PayOutEligibilityResult checkInstantPayoutEligibility(String idempotencyKey, PayOutEligibility payOutEligibility) throws Exception {
+        return this.createObject(PayOutEligibilityResult.class, idempotencyKey, "payouts_instant_payout_eligibility", payOutEligibility);
     }
 
     @Override
