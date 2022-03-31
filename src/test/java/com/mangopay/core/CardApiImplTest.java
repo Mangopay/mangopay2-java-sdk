@@ -8,6 +8,7 @@ import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Transaction;
 import com.mangopay.entities.Transfer;
 import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -54,6 +55,7 @@ public class CardApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void validateCard() throws Exception{
         CardApi cardApi = api.getCardApi();
         PayIn payIn = getNewPayInCardDirect();
