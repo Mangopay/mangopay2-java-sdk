@@ -27,7 +27,7 @@ public class UboDeclarationApiImpl extends ApiBase implements UboDeclarationApi 
 
     @Override
     public UboDeclaration create(String userId) throws Exception {
-        return this.createObject(UboDeclaration.class,null,"ubo_declaration_create",null,userId);
+        return this.createObject(UboDeclaration.class,null,"ubo_declaration_create",new UboDeclaration(),userId);
     }
 
     @Override
