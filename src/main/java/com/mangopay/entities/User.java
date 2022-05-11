@@ -31,12 +31,21 @@ public abstract class User extends EntityBase {
     @SerializedName("Email")
     private String email;
 
+    @SerializedName("TermsAndConditionsAccepted")
+    private boolean termsAndConditionsAccepted;
+
+    /**
+     * TermsAndConditionsAcceptedDate (UNIX timestamp).
+     */
+    @SerializedName("TermsAndConditionsAcceptedDate")
+    private long termsAndConditionsAcceptedDate;
+
     public User(PersonType personType) {
         this.personType = personType;
     }
 
     /**
-     * Descendant classes override it.
+     * Descendant classes overrides it.
      */
     protected User() {
     }
@@ -65,6 +74,18 @@ public abstract class User extends EntityBase {
         this.email = email;
     }
 
+    public boolean isTermsAndConditionsAccepted() {
+        return termsAndConditionsAccepted;
+    }
+
+    public void setTermsAndConditionsAccepted(boolean termsAndConditionsAccepted) {
+        this.termsAndConditionsAccepted = termsAndConditionsAccepted;
+    }
+
+    public long getTermsAndConditionsAcceptedDate() {
+        return termsAndConditionsAcceptedDate;
+    }
+
     /**
      * Gets the collection of read-only fields names.
      *
@@ -77,6 +98,7 @@ public abstract class User extends EntityBase {
 
         result.add("PersonType");
         result.add("KYCLevel");
+        result.add("TermsAndConditionsAcceptedDate");
 
         return result;
     }
