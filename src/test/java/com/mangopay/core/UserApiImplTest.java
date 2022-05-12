@@ -153,7 +153,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateNatural() throws Exception {
-        UserNatural john = this.getJohn();
+        UserNatural john = this.getNewJohn(false);
         john.setLastName(john.getLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(john);
@@ -165,7 +165,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateNaturalNonASCII() throws Exception {
-        UserNatural john = this.getJohn();
+        UserNatural john = this.getNewJohn(false);
         john.setLastName(john.getLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(john);
