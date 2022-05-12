@@ -129,10 +129,14 @@ public abstract class BaseTest {
     }
 
     protected UserNatural getJohn() throws Exception {
-        return getJohn(false);
+        return getJohn(false, false);
     }
 
-    protected UserNatural getJohn(Boolean recreate) throws Exception {
+    protected UserNatural getJohnWithTermsAccepted() throws Exception {
+        return getJohn(true, true);
+    }
+
+    protected UserNatural getJohn(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -147,6 +151,7 @@ public abstract class BaseTest {
             user.setCountryOfResidence(CountryIso.FR);
             user.setOccupation("programmer");
             user.setIncomeRange(3);
+            user.setTermsAndConditionsAccepted(termsAccepted);
 
             BaseTest.JOHN = (UserNatural) this.api.getUserApi().create(user);
             BaseTest.JOHNS_WALLET = null;
@@ -229,6 +234,29 @@ public abstract class BaseTest {
             user.setLegalRepresentativeBirthday(john.getBirthday());
             user.setLegalRepresentativeNationality(john.getNationality());
             user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
+
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+            user.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
+            user.setEmail(john.getEmail());
+
+            BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
+        }
+        return BaseTest.MATRIX;
+    }
+
+    protected UserLegal getMatrixWithoutOptionalFieldsAndAcceptedTerms() throws Exception {
+        if (BaseTest.MATRIX == null) {
+            UserNatural john = this.getJohn();
+            UserLegal user = new UserLegal();
+            user.setName("MartixSampleOrg");
+            user.setLegalPersonType(LegalPersonType.BUSINESS);
+            user.setLegalRepresentativeFirstName(john.getFirstName());
+            user.setLegalRepresentativeLastName(john.getLastName());
+            user.setLegalRepresentativeBirthday(john.getBirthday());
+            user.setLegalRepresentativeNationality(john.getNationality());
+            user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
+            user.setTermsAndConditionsAccepted(true);
 
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);

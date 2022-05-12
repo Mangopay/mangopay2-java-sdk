@@ -153,7 +153,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateNatural() throws Exception {
-        UserNatural john = this.getJohn();
+        UserNatural john = this.getNewJohn(false);
         john.setLastName(john.getLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(john);
@@ -165,7 +165,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateNaturalNonASCII() throws Exception {
-        UserNatural john = this.getJohn();
+        UserNatural john = this.getNewJohn(false);
         john.setLastName(john.getLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(john);
@@ -710,22 +710,40 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore
-    // this endpoind isn't on the api just yet
-    public void getBlockStatus() throws Exception{
-        UserNatural user = this.getJohn();
-        UserBlockStatus blockStatus = this.api.getUserApi().getBlockStatus(user.getId());
-
-        assertNotNull(blockStatus);
-    }
-
-    @Test
-    @Ignore
-    // this endpoind isn't on the api just yet
     public void getRegulatory() throws Exception{
         UserNatural user = this.getJohn();
         UserBlockStatus blockStatus = this.api.getUserApi().getRegulatory(user.getId());
 
         assertNotNull(blockStatus);
+    }
+
+    @Test
+    public void testUserNaturalTermsAndConditions() throws Exception {
+        UserNatural user = this.getJohn();
+        assertFalse(user.isTermsAndConditionsAccepted());
+
+        user.setTermsAndConditionsAccepted(true);
+        UserNatural updatedUser = (UserNatural) this.api.getUserApi().update(user);
+        assertTrue(updatedUser.isTermsAndConditionsAccepted());
+        assertNotNull(updatedUser.getTermsAndConditionsAcceptedDate());
+
+        UserNatural acceptedByDef = this.getJohnWithTermsAccepted();
+        assertTrue(acceptedByDef.isTermsAndConditionsAccepted());
+        assertNotNull(acceptedByDef.getTermsAndConditionsAcceptedDate());
+    }
+
+    @Test
+    public void testUserLegalTermsAndConditions() throws Exception {
+        UserLegal user = this.getMatrix();
+        assertFalse(user.isTermsAndConditionsAccepted());
+
+        user.setTermsAndConditionsAccepted(true);
+        UserLegal updatedUser = (UserLegal) this.api.getUserApi().update(user);
+        assertTrue(updatedUser.isTermsAndConditionsAccepted());
+        assertNotNull(updatedUser.getTermsAndConditionsAcceptedDate());
+
+        UserLegal acceptedByDef = this.getMatrixWithoutOptionalFieldsAndAcceptedTerms();
+        assertTrue(acceptedByDef.isTermsAndConditionsAccepted());
+        assertNotNull(acceptedByDef.getTermsAndConditionsAcceptedDate());
     }
 }
