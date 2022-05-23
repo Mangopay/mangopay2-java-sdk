@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.KycLevel;
 import com.mangopay.core.enumerations.PersonType;
+import com.mangopay.core.enumerations.UserCategory;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,9 @@ public abstract class User extends EntityBase {
      */
     @SerializedName("TermsAndConditionsAcceptedDate")
     private long termsAndConditionsAcceptedDate;
+
+    @SerializedName("UserCategory")
+    private UserCategory userCategory;
 
     public User(PersonType personType) {
         this.personType = personType;
@@ -84,6 +88,14 @@ public abstract class User extends EntityBase {
 
     public long getTermsAndConditionsAcceptedDate() {
         return termsAndConditionsAcceptedDate;
+    }
+
+    public void setUserCategory(UserCategory userCategory) {
+        this.userCategory = userCategory;
+    }
+
+    public UserCategory getUserCategory() {
+        return userCategory;
     }
 
     /**
