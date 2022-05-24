@@ -771,7 +771,7 @@ public class PayInApiImplTest extends BaseTest {
 
             PayInExecutionDetailsDirect direct = (PayInExecutionDetailsDirect) createdCit.getExecutionDetails();
 
-            assertNotNull(direct.getSecureModeRedirectUrl());
+            assertNotNull(direct.getSecureModeReturnUrl());
             assertNotNull(getAsPayIn);
             PayInExecutionDetailsDirect payInGetDirect = (PayInExecutionDetailsDirect) getAsPayIn.getExecutionDetails();
             assertEquals(payInGetDirect.getRecurringPayInRegistrationId(), result.getId());

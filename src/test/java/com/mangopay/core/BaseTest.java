@@ -152,6 +152,7 @@ public abstract class BaseTest {
             user.setOccupation("programmer");
             user.setIncomeRange(3);
             user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setUserCategory(UserCategory.OWNER);
 
             BaseTest.JOHN = (UserNatural) this.api.getUserApi().create(user);
             BaseTest.JOHNS_WALLET = null;
@@ -187,6 +188,7 @@ public abstract class BaseTest {
         user.setCountryOfResidence(CountryIso.FR);
         user.setOccupation("programmer");
         user.setIncomeRange(3);
+        user.setUserCategory(UserCategory.OWNER);
         if (declarative) {
             user.setCapacity(NaturalUserCapacity.DECLARATIVE);
         }
