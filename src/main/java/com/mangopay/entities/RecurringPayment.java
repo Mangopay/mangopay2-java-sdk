@@ -15,9 +15,6 @@ public class RecurringPayment extends CreateRecurringPayment {
     @SerializedName("CycleNumber")
     private Integer cycleNumber;
 
-    @SerializedName("FreeCycles")
-    private Integer freeCycles;
-
     public String getId() {
         return id;
     }
@@ -32,9 +29,5 @@ public class RecurringPayment extends CreateRecurringPayment {
 
     public int getCycleNumber() {
         return cycleNumber;
-    }
-
-    public int getFreeCycles() {
-        return freeCycles;
     }
 }

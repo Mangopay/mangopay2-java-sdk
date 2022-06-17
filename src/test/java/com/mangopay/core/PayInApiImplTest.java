@@ -704,6 +704,7 @@ public class PayInApiImplTest extends BaseTest {
         try {
             RecurringPayment result = this.createJohnsRecurringPayment();
             assertNotNull(result);
+            assertNotNull(result.getFreeCycles());
 
         } catch (Exception e) {
             fail(e.getMessage());
@@ -719,6 +720,7 @@ public class PayInApiImplTest extends BaseTest {
             RecurringPaymentExtended get = this.api.getPayInApi().getRecurringPayment(result.getId());
             assertNotNull(get);
             assertNotNull(get.getCurrentState());
+            assertNotNull(get.getFreeCycles());
             assertTrue(get.getId().equals(result.getId()));
 
         } catch (Exception e) {

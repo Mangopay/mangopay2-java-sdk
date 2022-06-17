@@ -53,6 +53,9 @@ public class CreateRecurringPayment extends Dto {
     @SerializedName("NextTransactionFees")
     private Money nextTransactionFees;
 
+    @SerializedName("FreeCycles")
+    private Integer freeCycles;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -171,6 +174,14 @@ public class CreateRecurringPayment extends Dto {
 
     public void setNextTransactionFees(Money nextTransactionFees) {
         this.nextTransactionFees = nextTransactionFees;
+    }
+
+    public Integer getFreeCycles() {
+        return freeCycles;
+    }
+
+    public void setFreeCycles(Integer freeCycles) {
+        this.freeCycles = freeCycles;
     }
 
     @Override

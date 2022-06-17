@@ -400,6 +400,7 @@ public abstract class BaseTest {
         createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
         createRecurringPayment.setShipping(this.getNewShipping());
         createRecurringPayment.setBilling(this.getNewBilling());
+        createRecurringPayment.setFreeCycles(0);
 
         return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
     }
