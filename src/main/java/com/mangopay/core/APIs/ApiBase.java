@@ -204,6 +204,9 @@ public abstract class ApiBase {
         put("ubo_create", new String[]{"/users/%s/kyc/ubodeclarations/%s/ubos", RequestType.POST.toString()});
         put("ubo_update", new String[]{"/users/%s/kyc/ubodeclarations/%s/ubos/%s", RequestType.PUT.toString()});
         put("ubo_get", new String[]{"/users/%s/kyc/ubodeclarations/%s/ubos/%s", RequestType.GET.toString()});
+
+        put("country_authorization_get", new String[]{"/countries/%s/authorizations", RequestType.GET.toString()});
+        put("country_authorization_all", new String[]{"/countries/authorizations", RequestType.GET.toString()});
     }};
 
     /**
