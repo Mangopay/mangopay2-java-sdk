@@ -34,6 +34,8 @@ public class RestTool {
     // variable to flag that in request authentication data are required
     private boolean authRequired;
 
+    private boolean clientIdRequired;
+
     // array with HTTP header to send with request
     private Map<String, String> requestHttpHeaders;
 
@@ -61,9 +63,10 @@ public class RestTool {
      * @param root         Root/parent instance that holds the OAuthToken and Configuration instance.
      * @param authRequired Defines whether request authentication is required.
      */
-    public RestTool(MangoPayApi root, Boolean authRequired) {
+    public RestTool(MangoPayApi root, Boolean authRequired, Boolean clientIdRequired) {
         this.root = root;
         this.authRequired = authRequired;
+        this.clientIdRequired = clientIdRequired;
         this.debugMode = this.root.getConfig().isDebugMode();
 
         logger = LoggerFactory.getLogger(RestTool.class);
@@ -297,7 +300,7 @@ public class RestTool {
 
         try {
             UrlTool urlTool = new UrlTool(root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this.authRequired, pagination, null);
+            String restUrl = urlTool.getRestUrl(urlMethod, this.clientIdRequired, pagination, null);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
@@ -527,7 +530,7 @@ public class RestTool {
 
         try {
             UrlTool urlTool = new UrlTool(root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this.authRequired, pagination, additionalUrlParams);
+            String restUrl = urlTool.getRestUrl(urlMethod, this.clientIdRequired, pagination, additionalUrlParams);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 

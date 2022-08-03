@@ -22,11 +22,11 @@ public class RegulatoryApiImpl extends ApiBase implements RegulatoryApi {
 
     @Override
     public CountryAuthorization getCountryAuthorizations(CountryIso countryCode) throws Exception {
-        return this.getObject(CountryAuthorization.class, "country_authorization_get", countryCode);
+        return this.getObjectNoClientId(CountryAuthorization.class, "country_authorization_get", countryCode);
     }
 
     @Override
     public List<CountryAuthorization> getAllCountriesAuthorizations(Pagination pagination, Sorting sorting) throws Exception {
-        return this.getList(CountryAuthorization[].class, CountryAuthorization.class, "country_authorization_all", pagination, sorting);
+        return this.getListNoClientId(CountryAuthorization[].class, CountryAuthorization.class, "country_authorization_all", pagination, sorting);
     }
 }

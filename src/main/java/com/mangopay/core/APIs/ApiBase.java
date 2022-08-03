@@ -268,7 +268,7 @@ public abstract class ApiBase {
         else
             urlMethod = String.format(this.getRequestUrl(methodKey), entityId, secondEntityId);
 
-        RestTool rest = new RestTool(this.root, true);
+        RestTool rest = new RestTool(this.root, true, true);
         T result = rest.request(classOfT, idempotencyKey, urlMethod, this.getRequestType(methodKey), null, null, entity);
 
         return result;
@@ -316,9 +316,17 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> T getObject(Class<T> classOfT, String methodKey, Object... args) throws Exception {
+        return getObject(classOfT, methodKey, true, args);
+    }
+
+    protected <T extends Dto> T getObjectNoClientId(Class<T> classOfT, String methodKey, Object... args) throws Exception {
+        return getObject(classOfT, methodKey, false, args);
+    }
+
+    private <T extends Dto> T getObject(Class<T> classOfT, String methodKey, boolean clientIdRequired, Object... args) throws Exception {
         String urlMethod = String.format(this.getRequestUrl(methodKey), args);
 
-        RestTool rest = new RestTool(this.root, true);
+        RestTool rest = new RestTool(this.root, true, clientIdRequired);
         T response = rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
 
         return response;
@@ -338,6 +346,14 @@ public abstract class ApiBase {
      * @throws Exception
      */
     protected <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, String entityId, String secondEntityId, Map<String, String> filter, Sorting sorting) throws Exception {
+        return getList(classOfT, classOfTItem, methodKey, true, pagination, entityId, secondEntityId, filter, sorting);
+    }
+
+    protected <T extends Dto> List<T> getListNoClientId(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, Pagination pagination, Sorting sorting) throws Exception {
+        return getList(classOfT, classOfTItem, methodKey, false, pagination, null, null, null, sorting);
+    }
+
+    private <T extends Dto> List<T> getList(Class<T[]> classOfT, Class<T> classOfTItem, String methodKey, boolean clientIdRequired, Pagination pagination, String entityId, String secondEntityId, Map<String, String> filter, Sorting sorting) throws Exception {
 
         String urlMethod = "";
 
@@ -362,7 +378,7 @@ public abstract class ApiBase {
             additionalUrlParams.putAll(sorting.getSortParameter());
         }
 
-        RestTool rest = new RestTool(this.root, true);
+        RestTool rest = new RestTool(this.root, true, clientIdRequired);
 
         return rest.requestList(classOfT, classOfTItem, urlMethod, this.getRequestType(methodKey), null, pagination, additionalUrlParams);
 
@@ -485,7 +501,7 @@ public abstract class ApiBase {
                 urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase) entity).getId());
             }
 
-            RestTool rest = new RestTool(this.root, true);
+            RestTool rest = new RestTool(this.root, true, true);
             return rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey), null, null, entity);
         } else {
             return null;
@@ -516,7 +532,7 @@ public abstract class ApiBase {
                 urlMethod = String.format(this.getRequestUrl(methodKey), ((EntityBase) entity).getId());
             }
 
-            RestTool rest = new RestTool(this.root, true);
+            RestTool rest = new RestTool(this.root, true, true);
             return rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey), null, null, entity);
         } else {
             return null;
