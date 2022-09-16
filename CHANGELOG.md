@@ -1,5 +1,9 @@
+## [2.25.1] - 2022-09-16
+### Fixed
+User `TermsAndConditionsAccepted` is now nullable
+
 ## [2.25.0] - 2022-08-17
-##Added
+### Added
 **New country authorizations endpoints**
 
 Country authorizations can now be viewed by using one of the following endpoints:
