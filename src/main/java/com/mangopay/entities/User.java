@@ -33,7 +33,7 @@ public abstract class User extends EntityBase {
     private String email;
 
     @SerializedName("TermsAndConditionsAccepted")
-    private boolean termsAndConditionsAccepted;
+    private Boolean termsAndConditionsAccepted;
 
     /**
      * TermsAndConditionsAcceptedDate (UNIX timestamp).
@@ -78,11 +78,11 @@ public abstract class User extends EntityBase {
         this.email = email;
     }
 
-    public boolean isTermsAndConditionsAccepted() {
+    public Boolean isTermsAndConditionsAccepted() {
         return termsAndConditionsAccepted;
     }
 
-    public void setTermsAndConditionsAccepted(boolean termsAndConditionsAccepted) {
+    public void setTermsAndConditionsAccepted(Boolean termsAndConditionsAccepted) {
         this.termsAndConditionsAccepted = termsAndConditionsAccepted;
     }
 
