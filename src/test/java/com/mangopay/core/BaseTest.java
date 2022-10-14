@@ -368,6 +368,8 @@ public abstract class BaseTest {
             // payment type as CARD
             payIn.setPaymentDetails(new PayInPaymentDetailsCard());
             ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
+            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
+            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
             // execution type as DIRECT
             payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
@@ -450,6 +452,8 @@ public abstract class BaseTest {
             // payment type as CARD
             payIn.setPaymentDetails(new PayInPaymentDetailsCard());
             ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
+            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
+            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
             // execution type as DIRECT
             payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
@@ -578,6 +582,8 @@ public abstract class BaseTest {
         // payment type as CARD
         payIn.setPaymentDetails(new PayInPaymentDetailsCard());
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
         // execution type as DIRECT
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
@@ -619,7 +625,6 @@ public abstract class BaseTest {
         BrowserInfo browserInfo = new BrowserInfo();
         browserInfo.setAcceptHeader("text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8");
         browserInfo.setColorDepth(4);
-        browserInfo.setJavaEnabled(true);
         browserInfo.setJavaEnabled(true);
         browserInfo.setLanguage("FR-FR");
         browserInfo.setScreenHeight(1800);
@@ -836,6 +841,9 @@ public abstract class BaseTest {
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
         cardPreAuthorization.setCulture(CultureCode.FR);
 
+        cardPreAuthorization.setBrowserInfo(getNewBrowserInfo());
+        cardPreAuthorization.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+
         //Shipping shipping = getNewShipping();
         //cardPreAuthorization.setShipping(shipping);
 
@@ -919,7 +927,7 @@ public abstract class BaseTest {
 
         String data = "data=" + cardRegistration.getPreregistrationData() +
                 "&accessKeyRef=" + cardRegistration.getAccessKey() +
-                "&cardNumber=4972485830400056" +
+                "&cardNumber=4970105191923460" +
                 "&cardExpirationDate=1224" +
                 "&cardCvx=123";
 
