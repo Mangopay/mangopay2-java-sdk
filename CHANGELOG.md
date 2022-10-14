@@ -1,3 +1,8 @@
+## [2.25.2] - 2022-10-14
+### Fixed
+
+Tests have been fixed due to API evolution.
+
 ## [2.25.1] - 2022-09-16
 ### Fixed
 User `TermsAndConditionsAccepted` is now nullable
