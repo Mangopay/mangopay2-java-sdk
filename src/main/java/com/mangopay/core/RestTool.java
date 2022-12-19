@@ -387,6 +387,8 @@ public class RestTool {
                 is = connection.getInputStream();
             }
 
+            checkApiConnection(is);
+
             StringBuffer resp;
             try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
                 String line;
@@ -597,6 +599,8 @@ public class RestTool {
                 is = connection.getInputStream();
             }
 
+            checkApiConnection(is);
+
             StringBuffer resp;
             try (BufferedReader rd = new BufferedReader(new InputStreamReader(is))) {
                 String line;
@@ -677,6 +681,17 @@ public class RestTool {
         httpHeaders.put("User-Agent",  String.format("MangoPay V2 SDK Java %s", root.getConfig().getVersion()));
 
         return httpHeaders;
+    }
+
+    private void checkApiConnection(InputStream is) throws ResponseException {
+        if (is == null) {
+            ResponseException responseException = new ResponseException("Connection to Mangopay API failed");
+            responseException.setResponseHttpCode(500);
+            responseException.setResponseHttpDescription("Internal Server Error");
+            responseException.setApiMessage("Connection to Mangopay API failed");
+
+            throw responseException;
+        }
     }
 
     /**
