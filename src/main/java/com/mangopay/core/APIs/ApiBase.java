@@ -89,6 +89,7 @@ public abstract class ApiBase {
         put("payins_recurring_registration_get", new String[]{"/recurringpayinregistrations/%s", RequestType.GET.toString()});
         put("payins_recurring_registration_put", new String[]{"/recurringpayinregistrations/%s", RequestType.PUT.toString()});
         put("payins_recurring_card_direct", new String[]{"/payins/recurring/card/direct", RequestType.POST.toString()});
+        put("payins_card_preauthorized_deposit", new String[]{"/payins/deposit-preauthorized/direct/full-capture", RequestType.POST.toString()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
@@ -207,6 +208,11 @@ public abstract class ApiBase {
 
         put("country_authorization_get", new String[]{"/countries/%s/authorizations", RequestType.GET.toString()});
         put("country_authorization_all", new String[]{"/countries/authorizations", RequestType.GET.toString()});
+
+        put("deposits_create", new String[]{"/deposit-preauthorizations/card/direct", RequestType.POST.toString()});
+        put("deposits_get", new String[]{"/deposit-preauthorizations/%s", RequestType.GET.toString()});
+        put("deposits_cancel", new String[]{"/deposit-preauthorizations/%s", RequestType.PUT.toString()});
+
     }};
 
     /**

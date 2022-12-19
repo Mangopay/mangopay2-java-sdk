@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -881,5 +882,30 @@ public class PayInApiImplTest extends BaseTest {
             fail(e.getMessage());
         }
 
+    }
+
+    @Ignore("Manual deposit confirmation needed")
+    @Test
+    public void testCreateCardPreAuthorizedDepositPayIn() {
+        try {
+            Deposit deposit = this.createNewDeposit();
+            Wallet wallet = this.getJohnsWallet();
+
+            Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
+            Money fees = new Money(CurrencyIso.EUR, 0);
+
+            CreateCardPreAuthorizedDepositPayIn dto = new CreateCardPreAuthorizedDepositPayIn(
+                wallet.getId(),
+                debitedFunds,
+                fees,
+                deposit.getId()
+            );
+
+            CardPreAuthorizedDepositPayIn payIn = this.api.getPayInApi().createCardPreAuthorizedDepositPayIn(dto, null);
+
+            Assert.assertNotNull(payIn);
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
     }
 }
