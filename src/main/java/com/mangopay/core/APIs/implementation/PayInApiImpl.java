@@ -10,6 +10,7 @@ import com.mangopay.core.deserializer.PayInDeserializer;
 import com.mangopay.core.deserializer.RecurringPayInDeserializer;
 import com.mangopay.core.serializer.PayInSerializer;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
 
 import java.util.List;
 
@@ -98,6 +99,11 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         return this.getList(Refund[].class, Refund.class, "payin_get_refunds", pagination, payInId, sorting);
     }
 
+    @Override
+    public CardPreAuthorizedDepositPayIn createCardPreAuthorizedDepositPayIn(CreateCardPreAuthorizedDepositPayIn payIn, String idempotencyKey) throws Exception {
+        return this.createObject(CardPreAuthorizedDepositPayIn.class, idempotencyKey, "payins_card_preauthorized_deposit", payIn);
+    }
+
     private String getPaymentKey(PayIn payIn) throws Exception {
 
         if (payIn.getPaymentDetails() == null)
@@ -118,4 +124,6 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         }
         throw new Exception("Execution is not defined or it is not object type");
     }
+
+
 }

@@ -51,6 +51,7 @@ public class MangoPayApi {
         setRepudiationApi(new RepudiationApiImpl(this));
         setSettlementApi(new SettlementApiImpl(this));
         setRegulatoryApi(new RegulatoryApiImpl(this));
+        setDepositApi(new DepositApiImpl(this));
         setGson(gsonBuilder.create());
     }
 
@@ -195,6 +196,11 @@ public class MangoPayApi {
      * Provides Regulatory methods
      */
     private RegulatoryApi regulatoryApi;
+
+    /**
+     * Provides Deposits methods
+     */
+    private DepositApi depositApi;
 
     private Gson gson;
 
@@ -423,6 +429,15 @@ public class MangoPayApi {
 
     public MangoPayApi setRegulatoryApi(RegulatoryApi regulatoryApi) {
         this.regulatoryApi = regulatoryApi;
+        return this;
+    }
+
+    public DepositApi getDepositApi() {
+        return depositApi;
+    }
+
+    public MangoPayApi setDepositApi(DepositApi depositApi) {
+        this.depositApi = depositApi;
         return this;
     }
 }

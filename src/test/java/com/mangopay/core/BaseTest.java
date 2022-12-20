@@ -809,6 +809,18 @@ public abstract class BaseTest {
         return getJohnsCardRegistration(cardType);
     }
 
+    protected CardRegistration getDepositCardRegistration() throws Exception {
+        UserNatural user = this.getJohn();
+        CardRegistration cardRegistration = new CardRegistration();
+        cardRegistration.setUserId(user.getId());
+        cardRegistration.setCurrency(CurrencyIso.EUR);
+        CardRegistration newCardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
+
+        String registrationData = this.getPaylineCorrectRegistartionDataForDeposit(newCardRegistration);
+        newCardRegistration.setRegistrationData(registrationData);
+        return this.api.getCardRegistrationApi().update(newCardRegistration);
+    }
+
     /**
      * Creates card registration object.
      */
@@ -873,12 +885,20 @@ public abstract class BaseTest {
      * @return Registration data.
      */
     protected String getPaylineCorrectRegistartionData3DSecure(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
+        return getPaylineCorrectRegistartionData3DSecureForCardNumber(cardRegistration, "4970105191923460");
+    }
+
+    protected String getPaylineCorrectRegistartionDataForDeposit(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
+        return getPaylineCorrectRegistartionData3DSecureForCardNumber(cardRegistration, "4970105181818183");
+    }
+
+    protected String getPaylineCorrectRegistartionData3DSecureForCardNumber(CardRegistration cardRegistration, String cardNumber) throws MalformedURLException, IOException, Exception {
 
         String data = "data=" + cardRegistration.getPreregistrationData() +
-                "&accessKeyRef=" + cardRegistration.getAccessKey() +
-                "&cardNumber=4970105191923460" +
-                "&cardExpirationDate=1224" +
-                "&cardCvx=123";
+            "&accessKeyRef=" + cardRegistration.getAccessKey() +
+            "&cardNumber=" + cardNumber +
+            "&cardExpirationDate=1224" +
+            "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -924,48 +944,7 @@ public abstract class BaseTest {
      * @return Registration data.
      */
     protected String getPaylineCorrectRegistartionData(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
-
-        String data = "data=" + cardRegistration.getPreregistrationData() +
-                "&accessKeyRef=" + cardRegistration.getAccessKey() +
-                "&cardNumber=4970105191923460" +
-                "&cardExpirationDate=1224" +
-                "&cardCvx=123";
-
-        URL url = new URL(cardRegistration.getCardRegistrationUrl());
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        connection.setRequestMethod("POST");
-        connection.setUseCaches(false);
-        connection.setDoInput(true);
-        connection.setDoOutput(true);
-
-        try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
-            wr.writeBytes(data);
-            wr.flush();
-        }
-
-        int responseCode = connection.getResponseCode();
-        InputStream is;
-        if (responseCode != 200) {
-            is = connection.getErrorStream();
-        } else {
-            is = connection.getInputStream();
-        }
-
-        StringBuffer resp;
-        try (BufferedReader rd = new BufferedReader(new InputStreamReader(is))) {
-            String line;
-            resp = new StringBuffer();
-            while ((line = rd.readLine()) != null) {
-                resp.append(line);
-            }
-        }
-        String responseString = resp.toString();
-
-        if (responseCode == 200)
-            return responseString;
-        else
-            throw new Exception(responseString);
+        return getPaylineCorrectRegistartionData3DSecureForCardNumber(cardRegistration, "4970105191923460");
     }
 
     protected Hook getJohnsHook() throws Exception {
@@ -1076,6 +1055,24 @@ public abstract class BaseTest {
         bankAccountIBAN.setType(BankAccountType.IBAN);
 
         return this.api.getClientApi().createBankAccountIBAN(bankAccountIBAN);
+    }
+
+    protected Deposit createNewDeposit() throws Exception {
+        User john = this.getJohn();
+        CardRegistration cardRegistration = this.getDepositCardRegistration();
+
+        Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
+
+        CreateDeposit dto = new CreateDeposit(
+            john.getId(),
+            debitedFunds,
+            cardRegistration.getCardId(),
+            "http://lorem",
+            "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+            getNewBrowserInfo()
+        );
+
+        return this.api.getDepositApi().create(dto, null);
     }
 
     protected <T> void assertEqualInputProps(T entity1, T entity2) throws Exception {

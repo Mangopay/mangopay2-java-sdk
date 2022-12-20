@@ -3,6 +3,7 @@ package com.mangopay.core.APIs;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
 
 import java.util.List;
 
@@ -123,4 +124,6 @@ public interface PayInApi {
      * @throws Exception
      */
     List<Refund> getRefunds(String payInId, Pagination pagination, Sorting sorting) throws Exception;
+
+    CardPreAuthorizedDepositPayIn createCardPreAuthorizedDepositPayIn(CreateCardPreAuthorizedDepositPayIn payIn, String idempotencyKey) throws Exception;
 }
