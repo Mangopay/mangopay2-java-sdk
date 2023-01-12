@@ -22,5 +22,10 @@ public enum LegalPersonType {
     /**
      * SOLETRADER legal person type.
      */
-    SOLETRADER
+    SOLETRADER,
+
+    /**
+     * PARTNERSHIP legal person type.
+     */
+    PARTNERSHIP
 }
