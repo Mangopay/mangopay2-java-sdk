@@ -1,3 +1,8 @@
+## [2.27.1] - 2023-01-26
+### Fixed
+
+- Fix bug preventing access to authentication endpoint
+
 ## [2.27.0] - 2023-01-12
 ### Added
 
