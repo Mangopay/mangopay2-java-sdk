@@ -37,7 +37,7 @@ public class OAuthApiImpl extends ApiBase implements OAuthApi {
             put("grant_type", "client_credentials");
         }};
 
-        RestTool rest = new RestTool(this.root, false, true);
+        RestTool rest = new RestTool(this.root, false, false);
         AuthenticationHelper authHlp = new AuthenticationHelper(root);
 
         try {
