@@ -1,3 +1,8 @@
+## [2.27.2] - 2023-03-03
+### Fixed
+
+- #290 Missing Kosovo in CountryISO enum
+
 ## [2.27.1] - 2023-01-26
 ### Fixed
 
