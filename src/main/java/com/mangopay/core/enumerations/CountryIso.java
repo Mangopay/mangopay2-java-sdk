@@ -990,6 +990,10 @@ public enum CountryIso {
     */  
     WS,
     /**
+     * Kosovo
+     */
+    XK,
+    /**
     * Yemen
     */  
     YE,
