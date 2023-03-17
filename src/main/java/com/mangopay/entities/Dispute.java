@@ -89,6 +89,12 @@ public class Dispute extends EntityBase {
     @SerializedName("RepudiationId")
     private String repudiationId;
 
+    /**
+     * The date and time the dispute was closed
+     */
+    @SerializedName("ClosedDate")
+    private Long closedDate;
+
     public String getInitialTransactionId() {
         return initialTransactionId;
     }
@@ -183,6 +189,14 @@ public class Dispute extends EntityBase {
 
     public void setRepudiationId(String repudiationId) {
         this.repudiationId = repudiationId;
+    }
+
+    public Long getClosedDate() {
+        return closedDate;
+    }
+
+    public void setClosedDate(Long closedDate) {
+        this.closedDate = closedDate;
     }
 
     /**
