@@ -550,6 +550,12 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInMbwayDirect(String userId) throws Exception {
+        PayIn payIn = getPayInMbwayDirect(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     private PayIn getPayInCardDirect(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
@@ -591,6 +597,38 @@ public abstract class BaseTest {
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCulture(CultureCode.FR);
 
+        return payIn;
+    }
+
+    private PayIn getPayInMbwayDirect(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create pay-in MBWAY DIRECT
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(500);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        // payment type as CARD
+        payIn.setPaymentDetails(new PayInPaymentDetailsMbway());
+        ((PayInPaymentDetailsMbway) payIn.getPaymentDetails()).setStatementDescriptor("testmbway");
+        ((PayInPaymentDetailsMbway) payIn.getPaymentDetails()).setPhoneNumber("351#269458236");
+
+        // execution type as DIRECT
+        payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+
+        payIn.setTag("My MBWAY Tag");
         return payIn;
     }
 

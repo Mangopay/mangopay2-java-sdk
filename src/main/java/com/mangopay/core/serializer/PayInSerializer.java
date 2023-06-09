@@ -4,7 +4,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.mangopay.core.interfaces.PayInPaymentDetails;
 import com.mangopay.entities.PayIn;
 import com.mangopay.entities.subentities.*;
 
@@ -62,6 +61,10 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("PaymentData", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getPaymentData()));
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBilling()));
+                break;
+            case "PayInPaymentDetailsMbway":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("PhoneNumber", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getPhoneNumber()));
                 break;
             default:
                 return null;

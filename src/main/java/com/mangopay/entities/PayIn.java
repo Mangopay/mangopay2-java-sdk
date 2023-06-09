@@ -124,6 +124,10 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsPayconiq.class);
                                 }}
                         );
+                        put("MBWAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsMbway.class);
+                                }}
+                         );
                         // ...and more in future...
                     }}
             );

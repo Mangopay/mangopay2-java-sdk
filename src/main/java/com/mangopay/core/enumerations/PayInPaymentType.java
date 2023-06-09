@@ -52,5 +52,10 @@ public enum PayInPaymentType {
     /**
      * PAYCONIQ payment type
      */
-    PAYCONIQ
+    PAYCONIQ,
+
+    /**
+     * MBWAY payment type
+     */
+    MBWAY
 }
