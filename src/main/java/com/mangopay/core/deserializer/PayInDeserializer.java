@@ -110,6 +110,14 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsDirectDebit.setCulture(CultureCode.valueOf(object.get("Culture").getAsString()));
                 payIn.setPaymentDetails(payInPaymentDetailsDirectDebit);
                 break;
+            case MBWAY:
+                PayInPaymentDetailsMbway payInPaymentDetailsMbway = new PayInPaymentDetailsMbway();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsMbway.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("PhoneNumber") && !object.get("PhoneNumber").isJsonNull())
+                    payInPaymentDetailsMbway.setPhoneNumber(object.get("PhoneNumber").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsMbway);
+                break;
             default:
                 return null;
         }
