@@ -1,3 +1,8 @@
+## [2.29.0] - 2023-06-21
+### Added
+
+- MB WAY is now available as a payment method with Mangopay. This payment method is in private beta. Please contact support if you have any questions.
+
 ## [2.28.0] - 2023-03-17
 ### Added
 
