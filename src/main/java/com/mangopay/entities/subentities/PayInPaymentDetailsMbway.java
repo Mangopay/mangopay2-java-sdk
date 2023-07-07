@@ -19,8 +19,8 @@ public class PayInPaymentDetailsMbway extends Dto implements PayInPaymentDetails
      * The mobile phone number of the user initiating the pay-in
      * Country code followed by hash symbol (#) followed by the rest of the number. Only digits and hash allowed
      */
-    @SerializedName("PhoneNumber")
-    private String phoneNumber;
+    @SerializedName("Phone")
+    private String phone;
 
     public String getStatementDescriptor() {
         return statementDescriptor;
@@ -31,12 +31,12 @@ public class PayInPaymentDetailsMbway extends Dto implements PayInPaymentDetails
         return this;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public PayInPaymentDetailsMbway setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public PayInPaymentDetailsMbway setPhone(String phone) {
+        this.phone = phone;
         return this;
     }
 }

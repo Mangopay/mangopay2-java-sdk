@@ -114,8 +114,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 PayInPaymentDetailsMbway payInPaymentDetailsMbway = new PayInPaymentDetailsMbway();
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsMbway.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
-                if (object.has("PhoneNumber") && !object.get("PhoneNumber").isJsonNull())
-                    payInPaymentDetailsMbway.setPhoneNumber(object.get("PhoneNumber").getAsString());
+                if (object.has("Phone") && !object.get("Phone").isJsonNull())
+                    payInPaymentDetailsMbway.setPhone(object.get("Phone").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsMbway);
                 break;
             default:
