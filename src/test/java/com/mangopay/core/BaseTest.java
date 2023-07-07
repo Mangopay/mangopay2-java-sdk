@@ -623,7 +623,7 @@ public abstract class BaseTest {
         // payment type as CARD
         payIn.setPaymentDetails(new PayInPaymentDetailsMbway());
         ((PayInPaymentDetailsMbway) payIn.getPaymentDetails()).setStatementDescriptor("testmbway");
-        ((PayInPaymentDetailsMbway) payIn.getPaymentDetails()).setPhoneNumber("351#269458236");
+        ((PayInPaymentDetailsMbway) payIn.getPaymentDetails()).setPhone("351#269458236");
 
         // execution type as DIRECT
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
