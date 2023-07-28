@@ -1,3 +1,8 @@
+## [2.30.0] - 2023-07-28
+### Added
+
+Paypal integration with Mangopay has been improved. This payment method is in private beta. Please contact support if you have any questions.
+
 ## [2.29.1] - 2023-07-07
 ### Fixed
 
