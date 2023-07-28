@@ -1,10 +1,8 @@
 package com.mangopay.core.deserializer;
 
 import com.google.gson.*;
-import com.mangopay.core.Billing;
-import com.mangopay.core.Money;
-import com.mangopay.core.SecurityInfo;
-import com.mangopay.core.ShippingAddress;
+import com.google.gson.reflect.TypeToken;
+import com.mangopay.core.*;
 import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.enumerations.DirectDebitType;
@@ -15,6 +13,8 @@ import com.mangopay.entities.PayIn;
 import com.mangopay.entities.subentities.*;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PayInDeserializer implements JsonDeserializer<PayIn> {
 
@@ -62,6 +62,19 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsPayPal.setShippingAddress((ShippingAddress) context.deserialize(object.get("ShippingAddress"), ShippingAddress.class));
                 if (object.has("PaypalBuyerAccountEmail") && !object.get("PaypalBuyerAccountEmail").isJsonNull())
                     payInPaymentDetailsPayPal.setPaypalBuyerAccountEmail(object.get("PaypalBuyerAccountEmail").getAsString());
+                // v2
+                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
+                    payInPaymentDetailsPayPal.setReturnUrl(object.get("ReturnURL").getAsString());
+                if (object.has("RedirectURL") && !object.get("RedirectURL").isJsonNull())
+                    payInPaymentDetailsPayPal.setRedirectUrl(object.get("RedirectURL").getAsString());
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsPayPal.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
+                    payInPaymentDetailsPayPal.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
+                if (object.has("LineItems") && !object.get("LineItems").isJsonNull()) {
+                    Type listType = new TypeToken<ArrayList<LineItem>>(){}.getType();
+                    payInPaymentDetailsPayPal.setLineItems((List<LineItem>) context.deserialize(object.get("LineItems"), listType));
+                }
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;
             case PAYCONIQ:

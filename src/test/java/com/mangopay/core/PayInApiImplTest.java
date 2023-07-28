@@ -7,6 +7,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -530,6 +531,59 @@ public class PayInApiImplTest extends BaseTest {
         assertEqualInputProps(payIn, createdPayIn);
         assertNotNull(createdPayIn.getPaymentDetails());
         assertEqualInputProps(payIn.getPaymentDetails(), createdPayIn.getPaymentDetails());
+    }
+
+    @Test
+    public void createPayPalDirect() throws Exception {
+        UserNatural john = getJohn();
+        Wallet wallet = getJohnsWallet();
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(john.getId());
+
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(5);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        payIn.setCreditedWalletId(wallet.getId());
+
+        PayInPaymentDetailsPayPal paymentDetails = new PayInPaymentDetailsPayPal();
+        paymentDetails.setShipping(new Shipping());
+        paymentDetails.getShipping().setFirstName(john.getFirstName());
+        paymentDetails.getShipping().setLastName(john.getLastName());
+        paymentDetails.getShipping().setAddress(getNewAddress());
+
+        List<LineItem> lineItems = new ArrayList<>();
+        lineItems.add(new LineItem(
+                "test",
+                1,
+                1000,
+                0,
+                "test descr"
+        ));
+        paymentDetails.setLineItems(lineItems);
+        paymentDetails.setReturnUrl("http://mangopay.com");
+        paymentDetails.setStatementDescriptor("sttm");
+
+        payIn.setPaymentDetails(paymentDetails);
+        PayInExecutionDetailsDirect executionDetails = new PayInExecutionDetailsDirect();
+        executionDetails.setCulture(CultureCode.FR);
+        payIn.setExecutionDetails(executionDetails);
+
+        payIn.setTag("tag");
+
+        PayIn createdPayIn = api.getPayInApi().create(payIn);
+
+        assertNotNull(createdPayIn);
+        assertNotNull(createdPayIn.getPaymentDetails());
+        assertEquals(PayInPaymentType.PAYPAL, createdPayIn.getPaymentType());
+        assertEquals(PayInExecutionType.DIRECT, createdPayIn.getExecutionType());
+        assertFalse(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().isEmpty());
+        assertTrue(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().get(0) instanceof LineItem);
     }
 
     @Test
