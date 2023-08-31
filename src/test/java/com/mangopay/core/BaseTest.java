@@ -550,8 +550,8 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-    protected PayIn getNewPayInMbwayDirect(String userId) throws Exception {
-        PayIn payIn = getPayInMbwayDirect(userId);
+    protected PayIn getNewPayInMbwayWeb(String userId) throws Exception {
+        PayIn payIn = getPayInMbwayWeb(userId);
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -600,7 +600,7 @@ public abstract class BaseTest {
         return payIn;
     }
 
-    private PayIn getPayInMbwayDirect(String userId) throws Exception {
+    private PayIn getPayInMbwayWeb(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
 
@@ -609,7 +609,7 @@ public abstract class BaseTest {
             userId = user.getId();
         }
 
-        // create pay-in MBWAY DIRECT
+        // create pay-in MBWAY WEB
         PayIn payIn = new PayIn();
         payIn.setAuthorId(userId);
         payIn.setCreditedWalletId(wallet.getId());
@@ -626,7 +626,7 @@ public abstract class BaseTest {
         ((PayInPaymentDetailsMbway) payIn.getPaymentDetails()).setPhone("351#269458236");
 
         // execution type as DIRECT
-        payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+        payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
 
         payIn.setTag("My MBWAY Tag");
         return payIn;

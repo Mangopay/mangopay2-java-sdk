@@ -84,8 +84,8 @@ public abstract class ApiBase {
         put("payins_directdebit-direct_create", new String[]{"/payins/directdebit/direct", RequestType.POST.toString()});
         put("payins_applepay-direct_create", new String[]{"/payins/applepay/direct", RequestType.POST.toString()});
         put("payins_googlepay-direct_create", new String[]{"/payins/googlepay/direct", RequestType.POST.toString()});
-        put("payins_mbway-direct_create", new String[]{"/payins/payment-methods/mbway", RequestType.POST.toString()});
-        put("payins_paypal-direct_create", new String[]{"/payins/payment-methods/paypal", RequestType.POST.toString()});
+        put("payins_mbway-web_create", new String[]{"/payins/payment-methods/mbway", RequestType.POST.toString()});
+        put("payins_paypal-web_create_v2", new String[]{"/payins/payment-methods/paypal", RequestType.POST.toString()});
         put("payin_get_refunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
         put("payins_recurring_registration", new String[]{"/recurringpayinregistrations", RequestType.POST.toString()});
         put("payins_recurring_registration_get", new String[]{"/recurringpayinregistrations/%s", RequestType.GET.toString()});

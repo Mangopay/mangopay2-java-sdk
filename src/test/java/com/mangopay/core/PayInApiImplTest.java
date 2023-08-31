@@ -534,7 +534,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createPayPalDirect() throws Exception {
+    public void createPayPalWebV2() throws Exception {
         UserNatural john = getJohn();
         Wallet wallet = getJohnsWallet();
 
@@ -576,12 +576,12 @@ public class PayInApiImplTest extends BaseTest {
 
         payIn.setTag("tag");
 
-        PayIn createdPayIn = api.getPayInApi().create(payIn);
+        PayIn createdPayIn = api.getPayInApi().createPayPal(payIn);
 
         assertNotNull(createdPayIn);
         assertNotNull(createdPayIn.getPaymentDetails());
         assertEquals(PayInPaymentType.PAYPAL, createdPayIn.getPaymentType());
-        assertEquals(PayInExecutionType.DIRECT, createdPayIn.getExecutionType());
+        assertEquals(PayInExecutionType.WEB, createdPayIn.getExecutionType());
         assertFalse(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().isEmpty());
         assertTrue(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().get(0) instanceof LineItem);
     }
@@ -964,18 +964,18 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createMbwayDirect() {
+    public void createMbwayWeb() {
         try {
             UserNatural user = this.getJohn();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            PayIn payIn = this.getNewPayInMbwayDirect(user.getId());
+            PayIn payIn = this.getNewPayInMbwayWeb(user.getId());
 
             PayIn created = api.getPayInApi().create(payIn);
 
             assertNotNull(created);
             assertEquals(TransactionStatus.CREATED, payIn.getStatus());
             assertEquals(PayInPaymentType.MBWAY, payIn.getPaymentType());
-            assertEquals(PayInExecutionType.DIRECT, payIn.getExecutionType());
+            assertEquals(PayInExecutionType.WEB, payIn.getExecutionType());
             assertEquals(wallet.getId(), payIn.getCreditedWalletId());
 
             PayIn fetched = api.getPayInApi().get(created.getId());
