@@ -100,13 +100,47 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
             case GOOGLEPAY:
                 PayInPaymentDetailsGooglePay payInPaymentDetailsGooglePay = new PayInPaymentDetailsGooglePay();
                 if (object.has("PaymentData") && !object.get("PaymentData").isJsonNull()) {
-                    payInPaymentDetailsGooglePay.setPaymentData((PaymentData) context.deserialize(object.get("PaymentData"), PaymentData.class));
+                    payInPaymentDetailsGooglePay.setPaymentData(object.get("PaymentData").getAsString());
                 }
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull()) {
                     payInPaymentDetailsGooglePay.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 }
-                if (object.has("Billing") && !object.get("Billing").isJsonNull())
+                if (object.has("Billing") && !object.get("Billing").isJsonNull()) {
                     payInPaymentDetailsGooglePay.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
+                }
+                if (object.has("Shipping") && !object.get("Shipping").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
+                }
+                if (object.has("AuthorId") && !object.get("AuthorId").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setAuthorId(object.get("AuthorId").getAsString());
+                }
+                if (object.has("CreditedWalletId") && !object.get("CreditedWalletId").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setCreditedWalletId(object.get("CreditedWalletId").getAsString());
+                }
+                if (object.has("DebitedFunds") && !object.get("DebitedFunds").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setDebitedFunds((DebitedFunds) context.deserialize(object.get("DebitedFunds"), DebitedFunds.class));
+                }
+                if (object.has("Fees") && !object.get("Fees").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setFees((Fees) context.deserialize(object.get("Fees"), Fees.class));
+                }
+                if (object.has("Tag") && !object.get("Tag").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setTag(object.get("Tag").getAsString());
+                }
+                if (object.has("IpAddress") && !object.get("IpAddress").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setIpAddress(object.get("IpAddress").getAsString());
+                }
+                if (object.has("SecureModeReturnURL") && !object.get("SecureModeReturnURL").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setSecureModeReturnURL(object.get("SecureModeReturnURL").getAsString());
+                }
+                if (object.has("SecureMode") && !object.get("SecureMode").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setSecureMode(object.get("SecureMode").getAsString());
+                }
+                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setReturnURL(object.get("ReturnURL").getAsString());
+                }
+                if (object.has("BrowserInfo") && !object.get("BrowserInfo").isJsonNull()) {
+                    payInPaymentDetailsGooglePay.setBrowserInfo((BrowserInfo) context.deserialize(object.get("BrowserInfo"), BrowserInfo.class));
+                }
                 payIn.setPaymentDetails(payInPaymentDetailsGooglePay);
                 break;
             case DIRECT_DEBIT:

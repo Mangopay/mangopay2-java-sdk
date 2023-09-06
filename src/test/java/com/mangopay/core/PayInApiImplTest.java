@@ -719,10 +719,7 @@ public class PayInApiImplTest extends BaseTest {
     public void testDirectGooglepayPayin() {
         try {
             Wallet wallet = getJohnsWallet();
-            PaymentData paymentData = new PaymentData()
-                    .setTransactionId("placeholder")
-                    .setNetwork("placeholder")
-                    .setTokenData("placeholder");
+            String paymentData = "";
             PayIn googlePayIn = new PayIn();
             googlePayIn.setCreditedWalletId(wallet.getId());
             googlePayIn.setAuthorId(this.getMatrix().getId());
