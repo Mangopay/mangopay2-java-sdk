@@ -67,6 +67,17 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("PaymentData", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getPaymentData()));
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBilling()));
+                object.add("Shipping", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getShipping()));
+                object.add("AuthorId", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getAuthorId()));
+                object.add("CreditedWalletId", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getCreditedWalletId()));
+                object.add("DebitedFunds", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getDebitedFunds()));
+                object.add("Fees", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getFees()));
+                object.add("Tag", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getTag()));
+                object.add("IpAddress", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getIpAddress()));
+                object.add("SecureModeReturnURL", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getSecureModeReturnURL()));
+                object.add("SecureMode", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getSecureMode()));
+                object.add("ReturnURL", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getReturnURL()));
+                object.add("BrowserInfo", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBrowserInfo()));
                 break;
             case "PayInPaymentDetailsMbway":
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getStatementDescriptor()));
