@@ -566,11 +566,12 @@ public class PayInApiImplTest extends BaseTest {
                 "test descr"
         ));
         paymentDetails.setLineItems(lineItems);
-        paymentDetails.setReturnUrl("http://mangopay.com");
         paymentDetails.setStatementDescriptor("sttm");
 
         payIn.setPaymentDetails(paymentDetails);
-        PayInExecutionDetailsDirect executionDetails = new PayInExecutionDetailsDirect();
+
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://mangopay.com");
         executionDetails.setCulture(CultureCode.FR);
         payIn.setExecutionDetails(executionDetails);
 

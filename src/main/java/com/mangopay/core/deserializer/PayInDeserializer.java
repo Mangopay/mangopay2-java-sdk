@@ -63,10 +63,6 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("PaypalBuyerAccountEmail") && !object.get("PaypalBuyerAccountEmail").isJsonNull())
                     payInPaymentDetailsPayPal.setPaypalBuyerAccountEmail(object.get("PaypalBuyerAccountEmail").getAsString());
                 // v2
-                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
-                    payInPaymentDetailsPayPal.setReturnUrl(object.get("ReturnURL").getAsString());
-                if (object.has("RedirectURL") && !object.get("RedirectURL").isJsonNull())
-                    payInPaymentDetailsPayPal.setRedirectUrl(object.get("RedirectURL").getAsString());
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsPayPal.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
