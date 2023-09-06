@@ -83,7 +83,7 @@ public abstract class ApiBase {
         put("payins_createrefunds", new String[]{"/payins/%s/refunds", RequestType.POST.toString()});
         put("payins_directdebit-direct_create", new String[]{"/payins/directdebit/direct", RequestType.POST.toString()});
         put("payins_applepay-direct_create", new String[]{"/payins/applepay/direct", RequestType.POST.toString()});
-        put("payins_googlepay-direct_create", new String[]{"/payins/googlepay/direct", RequestType.POST.toString()});
+        put("payins_googlepay-direct_create", new String[]{"/payins/payment-methods/googlepay", RequestType.POST.toString()});
         put("payins_mbway-direct_create", new String[]{"/payins/payment-methods/mbway", RequestType.POST.toString()});
         put("payins_paypal-direct_create", new String[]{"/payins/payment-methods/paypal", RequestType.POST.toString()});
         put("payin_get_refunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
