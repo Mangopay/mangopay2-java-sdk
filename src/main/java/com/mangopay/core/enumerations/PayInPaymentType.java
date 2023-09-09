@@ -47,7 +47,7 @@ public enum PayInPaymentType {
     /**
      * GOOGLEPAY payment type
      */
-    GOOGLEPAY,
+    GOOGLE_PAY,
 
     /**
      * PAYCONIQ payment type

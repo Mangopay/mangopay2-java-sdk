@@ -21,20 +21,18 @@ public class PayInPaymentDetailsGooglePay extends Dto implements PayInPaymentDet
     @SerializedName("Shipping")
     private Shipping shipping;
 
-    @SerializedName("AuthorId")
-    private String authorId;
+    @SerializedName("SecurityInfo")
+    private SecurityInfo securityInfo;
 
-    @SerializedName("CreditedWalletId")
-    private String creditedWalletId;
+    @SerializedName("SecureModeRedirectURL")
+    private String secureModeRedirectUrl;
 
-    @SerializedName("DebitedFunds")
-    private DebitedFunds debitedFunds;
+    @SerializedName("SecureModeNeeded")
+    private boolean secureModeNeeded;
 
-    @SerializedName("Fees")
-    private Fees fees;
-
-    @SerializedName("Tag")
-    private String tag;
+    public boolean getSecureModeNeeded() {
+        return secureModeNeeded;
+    }
 
     @SerializedName("IpAddress")
     private String ipAddress;
@@ -82,88 +80,77 @@ public class PayInPaymentDetailsGooglePay extends Dto implements PayInPaymentDet
         return shipping;
     }
 
-    public void setShipping(Shipping shipping) {
+    public PayInPaymentDetailsGooglePay setShipping(Shipping shipping) {
         this.shipping = shipping;
-    }
-
-    public String getAuthorId() {
-        return authorId;
-    }
-
-    public void setAuthorId(String authorId) {
-        this.authorId = authorId;
-    }
-
-    public String getCreditedWalletId() {
-        return creditedWalletId;
-    }
-
-    public void setCreditedWalletId(String creditedWalletId) {
-        this.creditedWalletId = creditedWalletId;
-    }
-
-    public DebitedFunds getDebitedFunds() {
-        return debitedFunds;
-    }
-
-    public void setDebitedFunds(DebitedFunds debitedFunds) {
-        this.debitedFunds = debitedFunds;
-    }
-
-    public Fees getFees() {
-        return fees;
-    }
-
-    public void setFees(Fees fees) {
-        this.fees = fees;
-    }
-
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
+        return this;
     }
 
     public String getIpAddress() {
         return ipAddress;
     }
 
-    public void setIpAddress(String ipAddress) {
+    public PayInPaymentDetailsGooglePay setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+        return this;
     }
 
     public String getSecureModeReturnURL() {
         return secureModeReturnURL;
     }
 
-    public void setSecureModeReturnURL(String secureModeReturnURL) {
+    public PayInPaymentDetailsGooglePay setSecureModeReturnURL(String secureModeReturnURL) {
         this.secureModeReturnURL = secureModeReturnURL;
+        return this;
     }
 
     public String getSecureMode() {
         return secureMode;
     }
 
-    public void setSecureMode(String secureMode) {
+    public PayInPaymentDetailsGooglePay setSecureMode(String secureMode) {
         this.secureMode = secureMode;
+        return this;
     }
 
     public String getReturnURL() {
         return returnURL;
     }
 
-    public void setReturnURL(String returnURL) {
+    public PayInPaymentDetailsGooglePay setReturnURL(String returnURL) {
         this.returnURL = returnURL;
+        return this;
     }
 
     public BrowserInfo getBrowserInfo() {
         return browserInfo;
     }
 
-    public void setBrowserInfo(BrowserInfo browserInfo) {
+    public PayInPaymentDetailsGooglePay setBrowserInfo(BrowserInfo browserInfo) {
         this.browserInfo = browserInfo;
+        return this;
+    }
+
+    public PayInPaymentDetailsGooglePay setSecureModeNeeded(boolean secureModeNeeded) {
+        this.secureModeNeeded = secureModeNeeded;
+        return this;
+    }
+
+    public SecurityInfo getSecurityInfo() {
+        return securityInfo;
+    }
+
+    public PayInPaymentDetailsGooglePay setSecurityInfo(SecurityInfo securityInfo) {
+        this.securityInfo = securityInfo;
+        return this;
+    }
+
+    public String getSecureModeRedirectUrl() {
+        return secureModeRedirectUrl;
+    }
+
+    public PayInPaymentDetailsGooglePay setSecureModeRedirectUrl(String secureModeRedirectUrl) {
+        this.secureModeRedirectUrl = secureModeRedirectUrl;
+        return this;
     }
 
     @Override
@@ -172,9 +159,8 @@ public class PayInPaymentDetailsGooglePay extends Dto implements PayInPaymentDet
 
         subObjects.put("Billing", Billing.class);
         subObjects.put("Shipping", Shipping.class);
-        subObjects.put("DebitedFunds", DebitedFunds.class);
-        subObjects.put("Fees", Fees.class);
         subObjects.put("BrowserInfo", BrowserInfo.class);
+        subObjects.put("SecurityInfo", SecurityInfo.class);
 
         return subObjects;
     }

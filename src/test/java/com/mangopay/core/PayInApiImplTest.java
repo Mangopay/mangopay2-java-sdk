@@ -714,40 +714,75 @@ public class PayInApiImplTest extends BaseTest {
         }
     }
 
-    @Ignore("Can't be tested at this moment")
     @Test
     public void testDirectGooglepayPayin() {
         try {
             Wallet wallet = getJohnsWallet();
-            String paymentData = "";
+
+            Address address = new Address();
+            address.setCity("Helsinki");
+            address.setCountry(CountryIso.FI);
+            address.setRegion("Ile de France");
+            address.setAddressLine1("4 Oasis street");
+            address.setAddressLine2("4 Oasis street");
+            address.setPostalCode("75001");
+
+            Shipping shipping = new Shipping();
+            shipping.setFirstName("Sodiq");
+            shipping.setLastName("Ogunyeiwa");
+            shipping.setAddress(address);
+
+            Billing billing = new Billing();
+            billing.setFirstName("Sodiq");
+            billing.setLastName("Ogunyeiwa");
+            billing.setAddress(address);
+
+            String paymentData = "{\"signature\":\"MEUCIEMVk9qrfoJ/ku5qvHCZuv9zPC1QVH6NMMrkZ6wLmt8FAiEAjNduo5gvMGE4KgTeTIuwevdvxJdkQP03ru9lp/5rKhk\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEC1gn5CSvw/UxS9+PCVhgPWNTMGxTBUHpenGNWirrNlmi5bJts3FO92DjcUQmLaCmM1hQwtZ9KCzkc0SGh99X4A\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1694758343052\\\"}\",\"signatures\":[\"MEUCIG+oaBGEl63CqCy+C7OwQCFvr/K9cSYWtQ/ku2UejCTKAiEAnhJ1LXd+JMMvueEorp0Kha922H9wRMR6tPvnGIZ6cM4\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"HmCQdP5BOdsv33ACkGyYJYKFHEnxRbe+TTaTI79tJm/v8NP4XH5Iim9H/a1jj2OmZTgQDklZ6pv1v6XNjKkkaEMPW1MZbtZ2P8GcwAWRKKJx8W4ZmDexb564GP8EvLw4dGzlYE8L5nY7khunPZKAfioQGmNSTIBpB1MLRtgArGA9T/w3EcjU1+gdGAce7NpcZeVIrIX4tNLL5TlpGdAHRU5XNlA/q0HcuvKpmgCfpnSJKu1xPO8Xzoa7C7toX6GmmGlkdhH0Y+vK+mKFpI02uGItSPR64vaZYFD7qPMzXOsp7KjyGw1Tr6fx0Qrmc3CeDcZ3Dzc/WVbM0jw1gMz/gjnZ7KILoqMNxcEz1h8rkLp7FHjCNlls0i6VYNINWWl1PMqHTDBsTsHVdYJlAqycoBJTssHy44ASBIF8epBw3oAydhFV4ZkeLPX/x+QlrS+IEi3af8xj//nhtZ5CwwW5IOuMF0sqAa0PcRVpgw9BrQSXNprymtatS3qtwRrL0LHJsIii+xSI5XY4dfy6Z6j1QCvWriCwfbS9TasvbMb6dbh0S6sS5XBHd5wp/FtHfYBAh9iK08DQ8uKcKfnZx4zmvU5TsSTTbrj/SEFJiJ3rBegIweEpYM3m1QifErNAVhBIpm67tg\\\\u003d\\\\u003d\\\",\\\"ephemeralPublicKey\\\":\\\"BCr5xXtNJMkCYutxBQi8sQBHllG4RcSrxalvi0bf23Jwvyr46OwNGfMe45518pxNzPC8yPUXrGTbKXoQeJR16Ew\\\\u003d\\\",\\\"tag\\\":\\\"5W+s9OGQTFEojaZ5K3ynKuUVninxOVep9pkmqI/+ed4\\\\u003d\\\"}\"}";
             PayIn googlePayIn = new PayIn();
             googlePayIn.setCreditedWalletId(wallet.getId());
             googlePayIn.setAuthorId(this.getMatrix().getId());
             googlePayIn.setCreditedUserId(this.getMatrix().getId());
             googlePayIn.setDebitedFunds(new Money()
-                    .setAmount(199)
+                    .setAmount(112)
                     .setCurrency(CurrencyIso.EUR)
             );
             googlePayIn.setFees(new Money()
                     .setAmount(1)
                     .setCurrency(CurrencyIso.EUR)
             );
-            googlePayIn.setPaymentType(PayInPaymentType.GOOGLEPAY);
+            googlePayIn.setPaymentType(PayInPaymentType.GOOGLE_PAY);
             googlePayIn.setExecutionType(PayInExecutionType.DIRECT);
             googlePayIn.setPaymentDetails(new PayInPaymentDetailsGooglePay()
                     .setPaymentData(paymentData)
-                    .setBilling(new Billing())
-                    .setStatementDescriptor("Java"));
+                    .setShipping(shipping)
+                    .setBilling(billing)
+                    .setReturnURL("http://www.localhost.com/")
+                    .setSecureModeReturnURL("http://www.localhost.com/")
+                    .setSecureMode("DEFAULT")
+                    .setIpAddress("127.0.0.1")
+                    .setSecureModeRedirectUrl("http://www.localhost.com/")
+                    .setSecurityInfo(new SecurityInfo())
+                    .setStatementDescriptor("Java").setBrowserInfo(new BrowserInfo()
+                            .setAcceptHeader("text/html, application/xhtml+xml, application/xml;q=0.9, /;q=0.8")
+                            .setColorDepth(4)
+                            .setJavaEnabled(false)
+                            .setJavascriptEnabled(false)
+                            .setLanguage("FR-FR")
+                            .setScreenHeight(1800)
+                            .setScreenWidth(400)
+                            .setTimeZoneOffset("60")
+                            .setUserAgent("Mozilla/5.0 (iPhone; CPU iPhone OS 13_6_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148")
+
+                    ));
             googlePayIn.setTag("Create an GooglePay card direct Payin");
 
             PayIn createdPayIn = this.api.getPayInApi().create(googlePayIn);
-
             assertNotNull(createdPayIn);
             assertEquals(googlePayIn.getAuthorId(), createdPayIn.getAuthorId());
-            assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLEPAY);
+            assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLE_PAY);
             assertEquals(createdPayIn.getStatus(), TransactionStatus.SUCCEEDED);
         } catch (Exception e) {
-            fail(e.getMessage());
+            fail(String.valueOf(e));
         }
     }
 

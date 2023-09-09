@@ -116,7 +116,7 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsPayPal.class);
                                 }}
                         );
-                        put("GOOGLEPAY", new HashMap<String, Class<?>>() {{
+                        put("GOOGLE_PAY", new HashMap<String, Class<?>>() {{
                                     put("PaymentDetails", PayInPaymentDetailsGooglePay.class);
                                 }}
                         );
