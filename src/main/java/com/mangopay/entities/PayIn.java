@@ -128,6 +128,10 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsMbway.class);
                                 }}
                          );
+                        put("SATISPAY", new HashMap<String, Class<?>>() {{
+                            put("PaymentDetails", PayInPaymentDetailsSatispay.class);
+                        }}
+                );
                         // ...and more in future...
                     }}
             );
