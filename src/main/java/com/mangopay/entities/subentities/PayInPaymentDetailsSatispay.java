@@ -13,12 +13,6 @@ public class PayInPaymentDetailsSatispay extends Dto implements PayInPaymentDeta
     private String country;
 
     /**
-     * Return URL.
-     */
-    @SerializedName("ReturnURL")
-    private String returnUrl;
-
-    /**
      * An optional value to be specified on the user's bank statement
      */
     @SerializedName("StatementDescriptor")
@@ -30,15 +24,6 @@ public class PayInPaymentDetailsSatispay extends Dto implements PayInPaymentDeta
 
     public String getCountry() {
         return country;
-    }
-
-    public String getReturnUrl() {
-        return returnUrl;
-    }
-
-    public PayInPaymentDetailsSatispay setReturnUrl(String returnUrl) {
-        this.returnUrl = returnUrl;
-        return this;
     }
     
     public String getStatementDescriptor() {

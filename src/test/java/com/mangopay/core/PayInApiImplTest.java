@@ -992,7 +992,7 @@ public class PayInApiImplTest extends BaseTest {
         try {
             UserNatural user = this.getJohn();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            PayIn payIn = this.getNewPayInMbwayWeb(user.getId());
+            PayIn payIn = this.getNewPayInSatispayWeb(user.getId());
 
             PayIn created = api.getPayInApi().create(payIn);
 

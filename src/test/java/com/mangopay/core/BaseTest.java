@@ -556,6 +556,12 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInSatispayWeb(String userId) throws Exception {
+        PayIn payIn = getPayInSatispayWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     private PayIn getPayInCardDirect(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
@@ -629,6 +635,41 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
 
         payIn.setTag("My MBWAY Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInSatispayWeb(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create pay-in SATISPAY WEB
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(500);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+        //payIn.setExecutionType(PayInExecutionType.WEB);
+
+        // payment type as SATISPAY
+        payIn.setPaymentDetails(new PayInPaymentDetailsSatispay());
+        ((PayInPaymentDetailsSatispay) payIn.getPaymentDetails()).setStatementDescriptor("satispay");
+        ((PayInPaymentDetailsSatispay) payIn.getPaymentDetails()).setCountry(CountryIso.IT.name());
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(executionDetails);
+
+        payIn.setTag("My SATISPAY Tag");
         return payIn;
     }
 
