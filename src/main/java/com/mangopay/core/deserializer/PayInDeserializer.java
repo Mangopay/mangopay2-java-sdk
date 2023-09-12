@@ -135,6 +135,16 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsSatispay.setCountry(object.get("Country").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsSatispay);
                 break;
+            case BLIK:
+                PayInPaymentDetailsBlik payInPaymentDetailsBlik = new PayInPaymentDetailsBlik();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsBlik.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                break;
+            case MULTIBANCO:
+                PayInPaymentDetailsMultibanco payInPaymentDetailsMultibanco = new PayInPaymentDetailsMultibanco();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsMultibanco.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                break;
             default:
                 return null;
         }

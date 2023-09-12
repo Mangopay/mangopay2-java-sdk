@@ -988,19 +988,59 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createSatispayWeb() {
+    public void createSatispayWebPayIn() {
         try {
             UserNatural user = this.getJohn();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            PayIn payIn = this.getNewPayInSatispayWeb(user.getId());
-
-            PayIn created = api.getPayInApi().create(payIn);
+            PayIn created = this.getNewPayInSatispayWeb(user.getId());
 
             assertNotNull(created);
-            assertEquals(TransactionStatus.CREATED, payIn.getStatus());
-            assertEquals(PayInPaymentType.SATISPAY, payIn.getPaymentType());
-            assertEquals(PayInExecutionType.WEB, payIn.getExecutionType());
-            assertEquals(wallet.getId(), payIn.getCreditedWalletId());
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.SATISPAY, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createBlikWebPayIn() {
+        try {
+            UserNatural user = this.getJohn();
+            PayIn created = this.getNewPayInBlikWeb(user.getId());
+            Wallet wallet = api.getWalletApi().get(created.getCreditedWalletId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.BLIK, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createMultibancoWebPayIn() {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            PayIn created = this.getNewPayInMultibancoWeb(user.getId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.MULTIBANCO, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
 
             PayIn fetched = api.getPayInApi().get(created.getId());
             assertNotNull(fetched);

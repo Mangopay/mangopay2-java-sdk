@@ -93,6 +93,8 @@ public abstract class ApiBase {
         put("payins_recurring_card_direct", new String[]{"/payins/recurring/card/direct", RequestType.POST.toString()});
         put("payins_card_preauthorized_deposit", new String[]{"/payins/deposit-preauthorized/direct/full-capture", RequestType.POST.toString()});
         put("payins_satispay-web_create", new String[]{"/payins/payment-methods/satispay", RequestType.POST.toString()});
+        put("payins_blik-web_create", new String[]{"/payins/payment-methods/blik", RequestType.POST.toString()});
+        put("payins_multibanco-web_create", new String[]{"/payins/payment-methods/multibanco", RequestType.POST.toString()});
 
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
