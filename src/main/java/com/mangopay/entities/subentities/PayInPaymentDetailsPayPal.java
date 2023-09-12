@@ -5,6 +5,7 @@ import com.mangopay.core.Dto;
 import com.mangopay.core.LineItem;
 import com.mangopay.core.Shipping;
 import com.mangopay.core.ShippingAddress;
+import com.mangopay.core.enumerations.ShippingPreference;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 
 import java.lang.reflect.Type;
@@ -44,6 +45,9 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     @SerializedName("LineItems")
     private List<LineItem> lineItems;
+
+    @SerializedName("ShippingPreference")
+    private ShippingPreference shippingPreference;
 
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
@@ -115,5 +119,13 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     public PayInPaymentDetailsPayPal setPaypalBuyerAccountEmail(String paypalBuyerAccountEmail) {
         this.paypalBuyerAccountEmail = paypalBuyerAccountEmail;
         return this;
+    }
+
+    public ShippingPreference getShippingPreference() {
+        return shippingPreference;
+    }
+
+    public void setShippingPreference(ShippingPreference shippingPreference) {
+        this.shippingPreference = shippingPreference;
     }
 }
