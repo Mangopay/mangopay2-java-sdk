@@ -900,6 +900,29 @@ public abstract class BaseTest {
         return cardPreAuthorization;
     }
 
+    protected CardValidation getJohnsCardValidation() throws Exception {
+
+        UserNatural user = this.getJohn();
+        CardRegistration cardRegistration = new CardRegistration();
+        cardRegistration.setUserId(user.getId());
+        cardRegistration.setCurrency(CurrencyIso.EUR);
+        CardRegistration newCardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
+
+        String registrationData = this.getPaylineCorrectRegistartionData(newCardRegistration);
+        newCardRegistration.setRegistrationData(registrationData);
+        cardRegistration = this.api.getCardRegistrationApi().update(newCardRegistration);
+
+        CardValidation cardValidation = new CardValidation();
+
+        cardValidation.setAuthorId(user.getId());
+        cardValidation.setSecureModeReturnUrl("http://test.com");
+
+        cardValidation.setBrowserInfo(getNewBrowserInfo());
+        cardValidation.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+
+        return this.api.getCardApi().validate(cardRegistration.getCardId(), cardValidation);
+    }
+
     protected KycDocument getJohnsKycDocument() throws Exception {
         if (BaseTest.JOHNS_KYC_DOCUMENT == null) {
             String johnsId = this.getJohn().getId();

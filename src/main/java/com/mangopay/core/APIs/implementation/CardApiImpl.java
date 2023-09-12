@@ -8,6 +8,7 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.Validity;
 import com.mangopay.entities.Card;
 import com.mangopay.entities.CardPreAuthorization;
+import com.mangopay.entities.CardValidation;
 import com.mangopay.entities.Transaction;
 
 import java.util.List;
@@ -64,8 +65,8 @@ public class CardApiImpl extends ApiBase implements CardApi {
     }
 
     @Override
-    public Card validate(String cardId) throws Exception {
-        return this.getObject(Card.class, "card_validate", cardId);
+    public CardValidation validate(String cardId, CardValidation cardValidation) throws Exception {
+        return this.createObject(CardValidation.class,  null ,"card_validate", cardValidation, cardId);
     }
 
 

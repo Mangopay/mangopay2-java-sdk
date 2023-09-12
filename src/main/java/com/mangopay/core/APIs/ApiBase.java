@@ -68,7 +68,7 @@ public abstract class ApiBase {
         put("cards_get_by_fingerprint", new String[]{"/cards/fingerprints/%s", RequestType.GET.toString()});
         put("cards_get_transactions", new String[]{"/cards/%s/transactions", RequestType.GET.toString()});
         put("card_get_preauthorization", new String[]{"/cards/%s/preauthorizations", RequestType.GET.toString()});
-        put("card_validate", new String[]{"/cards/%s/validate", RequestType.POST.toString()});
+        put("card_validate", new String[]{"/cards/%s/validation", RequestType.POST.toString()});
 
         // pay ins URLs
         put("payins_paypal-web_create", new String[]{"/payins/paypal/web/", RequestType.POST.toString()});

@@ -1,12 +1,9 @@
 package com.mangopay.core;
 
 import com.mangopay.core.APIs.CardApi;
+import com.mangopay.core.enumerations.CardValidationStatus;
 import com.mangopay.core.enumerations.TransactionType;
-import com.mangopay.entities.Card;
-import com.mangopay.entities.CardPreAuthorization;
-import com.mangopay.entities.PayIn;
-import com.mangopay.entities.Transaction;
-import com.mangopay.entities.Transfer;
+import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -55,15 +52,15 @@ public class CardApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void validateCard() throws Exception{
         CardApi cardApi = api.getCardApi();
-        PayIn payIn = getNewPayInCardDirect();
-        Card card = cardApi.get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
 
-        Card validatedCard = cardApi.validate(card.getId());
+        //create card validation
+        CardValidation cardValidation = getJohnsCardValidation();
 
-        assertNotNull(validatedCard);
+        assertNotNull(cardValidation);
+        assertNotNull(cardValidation.getId());
+        assertEquals(TransactionType.CARD_VALIDATION, cardValidation.getType());
     }
 
     @Test
