@@ -68,6 +68,16 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBilling()));
                 break;
+            case "PayInPaymentDetailsGooglePayV2":
+                object.add("PaymentData", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getPaymentData()));
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getBilling()));
+                object.add("Shipping", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getShipping()));
+                object.add("IpAddress", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getIpAddress()));
+                object.add("SecureModeReturnURL", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getSecureModeReturnURL()));
+                object.add("SecureMode", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getSecureMode()));
+                object.add("BrowserInfo", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getBrowserInfo()));
+                break;
             case "PayInPaymentDetailsMbway":
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Phone", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getPhone()));
