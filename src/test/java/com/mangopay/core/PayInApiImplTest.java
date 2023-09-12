@@ -985,4 +985,27 @@ public class PayInApiImplTest extends BaseTest {
             fail(ex.getMessage());
         }
     }
+
+    @Test
+    public void createKlarnaDirect() {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            PayIn payIn = this.getNewPayInKlarnaDirect(user.getId());
+
+            PayIn created = api.getPayInApi().create(payIn);
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, payIn.getStatus());
+            assertEquals(PayInPaymentType.KLARNA, payIn.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, payIn.getExecutionType());
+            assertEquals(wallet.getId(), payIn.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
 }
