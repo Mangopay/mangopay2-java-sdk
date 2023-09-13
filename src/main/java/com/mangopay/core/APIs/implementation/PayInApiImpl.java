@@ -45,11 +45,6 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     }
 
     @Override
-    public PayIn createGooglePayV2(PayIn payIn) throws Exception {
-        return this.createObject(PayIn.class, null, "payins_googlepay-web_create", payIn);
-    }
-
-    @Override
     public RecurringPayment createRecurringPayment(String idempotencyKey, CreateRecurringPayment createRecurringPayment) throws Exception {
         return this.createObject(RecurringPayment.class, idempotencyKey, "payins_recurring_registration", createRecurringPayment);
     }

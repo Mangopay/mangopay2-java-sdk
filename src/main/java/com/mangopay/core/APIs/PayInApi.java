@@ -21,14 +21,6 @@ public interface PayInApi {
 
     /**
      * Creates new PayIn object.
-     * @param payIn     The PayIn object to be created.
-     * @return          Created PayIn object returned by API.
-     * @throws Exception
-     */
-    PayIn createGooglePayV2(PayIn payIn) throws Exception;
-
-    /**
-     * Creates new PayIn object.
      * @param idempotencyKey    Idempotency key for this request.
      * @param payIn             The PayIn object to be created.
      * @return                  Created PayIn object returned by API.

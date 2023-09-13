@@ -113,26 +113,18 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 PayInPaymentDetailsGooglePayV2 payInPaymentDetailsGooglePayV2 = new PayInPaymentDetailsGooglePayV2();
                 if (object.has("PaymentData") && !object.get("PaymentData").isJsonNull())
                     payInPaymentDetailsGooglePayV2.setPaymentData(object.get("PaymentData").getAsString());
-                if (object.has("SecurityInfo") && !object.get("SecurityInfo").isJsonNull())
-                    payInPaymentDetailsGooglePayV2.setSecurityInfo((SecurityInfo) context.deserialize(object.get("SecurityInfo"), SecurityInfo.class));
-                if (object.has("SecureModeRedirectURL") && !object.get("SecureModeRedirectURL").isJsonNull())
-                    payInPaymentDetailsGooglePayV2.setSecureModeRedirectUrl(object.get("SecureModeRedirectURL").getAsString());
-                if (object.has("SecureModeNeeded") && !object.get("SecureModeNeeded").isJsonNull())
-                    payInPaymentDetailsGooglePayV2.setSecureModeNeeded(object.get("SecureModeNeeded").getAsBoolean());
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsGooglePayV2.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
-                if (object.has("Billing") && !object.get("Billing").isJsonNull())
-                    payInPaymentDetailsGooglePayV2.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
                 if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
                     payInPaymentDetailsGooglePayV2.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
                 if (object.has("IpAddress") && !object.get("IpAddress").isJsonNull())
                     payInPaymentDetailsGooglePayV2.setIpAddress(object.get("IpAddress").getAsString());
-                if (object.has("SecureModeReturnURL") && !object.get("SecureModeReturnURL").isJsonNull())
-                    payInPaymentDetailsGooglePayV2.setSecureModeReturnURL(object.get("SecureModeReturnURL").getAsString());
-                if (object.has("SecureMode") && !object.get("SecureMode").isJsonNull())
-                    payInPaymentDetailsGooglePayV2.setSecureMode(object.get("SecureMode").getAsString());
                 if (object.has("BrowserInfo") && !object.get("BrowserInfo").isJsonNull())
                     payInPaymentDetailsGooglePayV2.setBrowserInfo((BrowserInfo) context.deserialize(object.get("BrowserInfo"), BrowserInfo.class));
+                if (object.has("RedirectURL") && !object.get("RedirectURL").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setRedirectUrl(object.get("RedirectURL").getAsString());
+                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setReturnUrl(object.get("ReturnURL").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsGooglePayV2);
                 break;
             case DIRECT_DEBIT:

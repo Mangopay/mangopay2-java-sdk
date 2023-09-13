@@ -773,26 +773,20 @@ public class PayInApiImplTest extends BaseTest {
                     .setCurrency(CurrencyIso.EUR)
             );
             googlePayIn.setPaymentType(PayInPaymentType.GOOGLE_PAY);
+            googlePayIn.setExecutionType(PayInExecutionType.DIRECT);
             googlePayIn.setPaymentDetails(new PayInPaymentDetailsGooglePayV2()
                     .setPaymentData(paymentData)
                     .setShipping(this.getNewShipping())
-                    .setBilling(this.getNewBilling())
-                    .setSecureModeReturnURL("http://www.localhost.com/")
-                    .setSecureMode("DEFAULT")
                     .setIpAddress("127.0.0.1")
-                    .setSecureModeRedirectUrl("http://www.localhost.com/")
-                    .setSecurityInfo(new SecurityInfo())
                     .setStatementDescriptor("Java")
                     .setBrowserInfo(this.getNewBrowserInfo()));
 
-            // execution type as WEB
-            PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
-            payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
-            payInExecutionDetailsWeb.setRedirectUrl("http://www.mysite.com/redirectUrl/");
-            googlePayIn.setExecutionDetails(payInExecutionDetailsWeb);
+            googlePayIn.setExecutionDetails(new PayInExecutionDetailsDirect()
+                    .setSecureModeReturnUrl("http://www.my-site.com/returnUrl")
+                    .setSecureModeRedirectUrl("http://www.my-site.com/redirectUrl"));
             googlePayIn.setTag("Create an GooglePay card direct Payin");
 
-            PayIn createdPayIn = this.api.getPayInApi().createGooglePayV2(googlePayIn);
+            PayIn createdPayIn = this.api.getPayInApi().create(googlePayIn);
             assertNotNull(createdPayIn);
             assertEquals(googlePayIn.getAuthorId(), createdPayIn.getAuthorId());
             assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLE_PAY);
