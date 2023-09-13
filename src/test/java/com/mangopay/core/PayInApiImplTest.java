@@ -587,6 +587,27 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createKlarnaWebPayIn() throws Exception {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            PayIn created = this.getNewPayInKlarnaWeb(user.getId());
+
+            assertNotNull(created);
+            //assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.KLARNA, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void createPayconiqWeb() throws Exception {
         UserNatural john = getJohn();
         Wallet wallet = getJohnsWallet();
@@ -926,7 +947,7 @@ public class PayInApiImplTest extends BaseTest {
             payIn.setExecutionDetails(payInExecutionDetailsWeb);
 
             PayIn created = api.getPayInApi().create(payIn);
-            String returnUrlCreated = ((PayInExecutionDetailsWeb)created.getExecutionDetails()).getReturnUrl();
+            String returnUrlCreated = ((PayInExecutionDetailsWeb) created.getExecutionDetails()).getReturnUrl();
 
             assertNotNull(created);
             assertNotNull(created.getExecutionDetails());
@@ -949,10 +970,10 @@ public class PayInApiImplTest extends BaseTest {
             Money fees = new Money(CurrencyIso.EUR, 0);
 
             CreateCardPreAuthorizedDepositPayIn dto = new CreateCardPreAuthorizedDepositPayIn(
-                wallet.getId(),
-                debitedFunds,
-                fees,
-                deposit.getId()
+                    wallet.getId(),
+                    debitedFunds,
+                    fees,
+                    deposit.getId()
             );
 
             CardPreAuthorizedDepositPayIn payIn = this.api.getPayInApi().createCardPreAuthorizedDepositPayIn(dto, null);

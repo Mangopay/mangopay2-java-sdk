@@ -57,5 +57,10 @@ public enum PayInPaymentType {
     /**
      * MBWAY payment type
      */
-    MBWAY
+    MBWAY,
+
+    /**
+     * KLARNA payment type
+     */
+    KLARNA
 }

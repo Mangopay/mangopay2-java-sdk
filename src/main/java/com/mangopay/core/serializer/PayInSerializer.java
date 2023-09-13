@@ -49,6 +49,18 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("Shipping", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShipping()));
                 object.add("LineItems", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getLineItems()));
                 break;
+            case "PayInPaymentDetailsKlarna":
+                object.add("LineItems", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getLineItems()));
+                object.add("Shipping", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getShipping()));
+                object.add("Billing", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getShipping()));
+                object.add("PaymentMethod", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getPaymentMethod()));
+                object.add("Country", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getCountry()));
+                object.add("Culture", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getCulture()));
+                object.add("AdditionalData", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getAdditionalData()));
+                object.add("Phone", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getPhone()));
+                object.add("Email", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getEmail()));
+                object.add("MerchantOrderId", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getMerchantOrderId()));
+                break;
             case "PayInPaymentDetailsPayconiq":
                 object.add("Country", context.serialize(((PayInPaymentDetailsPayconiq) src.getPaymentDetails()).getCountry()));
                 break;

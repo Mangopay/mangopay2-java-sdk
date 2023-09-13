@@ -222,9 +222,9 @@ public abstract class BaseTest {
     }
 
     /**
-        Current optional fields are:
-            HeadquartersAddress, LegalRepresentativeAddress, LegalRepresentativeEmail, CompanyNumber
-    */
+     * Current optional fields are:
+     * HeadquartersAddress, LegalRepresentativeAddress, LegalRepresentativeEmail, CompanyNumber
+     */
     protected UserLegal getMatrixWithoutOptionalFields() throws Exception {
         if (BaseTest.MATRIX == null) {
             UserNatural john = this.getJohn();
@@ -483,8 +483,8 @@ public abstract class BaseTest {
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setSecureMode(SecureMode.DEFAULT);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setCulture(CultureCode.FR);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setReturnUrl("https://test.com");
-            
-            if(BaseTest.PAYIN_TEMPLATE_URL_OPTIONS == null) {
+
+            if (BaseTest.PAYIN_TEMPLATE_URL_OPTIONS == null) {
                 BaseTest.PAYIN_TEMPLATE_URL_OPTIONS = new PayInTemplateURLOptions();
                 BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINE = "https://www.maysite.com/payline_template/";
                 BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINEV2 = "https://www.maysite.com/payline_template/";
@@ -552,6 +552,12 @@ public abstract class BaseTest {
 
     protected PayIn getNewPayInMbwayDirect(String userId) throws Exception {
         PayIn payIn = getPayInMbwayDirect(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInKlarnaWeb(String userId) throws Exception {
+        PayIn payIn = getPayInKlarnaWeb(userId);
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -632,6 +638,57 @@ public abstract class BaseTest {
         return payIn;
     }
 
+    private PayIn getPayInKlarnaWeb(String userId) throws Exception {
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+        // create pay-in KLARNA WEB
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(100);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+        payIn.setTag("Klarna test");
+
+        // payment type as KLARNA
+
+        PayInPaymentDetailsKlarna payInPaymentDetailsKlarna = new PayInPaymentDetailsKlarna();
+        List<LineItem> lineItems = new ArrayList<>();
+        lineItems.add(new LineItem(
+                "test",
+                1,
+                1000,
+                0,
+                "test descr"
+        ));
+        payInPaymentDetailsKlarna.setLineItems(lineItems);
+        payInPaymentDetailsKlarna.setCountry(CountryIso.FR.name());
+        payInPaymentDetailsKlarna.setCulture(CountryIso.FR.name());
+        payInPaymentDetailsKlarna.setPhone("33#607080900");
+        payInPaymentDetailsKlarna.setEmail("mango@mangopay.com");
+        payInPaymentDetailsKlarna.setAdditionalData("{}");
+        payInPaymentDetailsKlarna.setMerchantOrderId("afd48-879d-48fg");
+
+        payInPaymentDetailsKlarna.setBilling(getNewBilling());
+        payInPaymentDetailsKlarna.setShipping(getNewShipping());
+        payIn.setPaymentDetails(payInPaymentDetailsKlarna);
+
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(executionDetails);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayIn getNewPayInCardDirectWithRequested3DSVersion() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
@@ -673,7 +730,7 @@ public abstract class BaseTest {
         return browserInfo;
     }
 
-    protected PayIn getNewPayInCardDirectWithBrowserInfo() throws Exception{
+    protected PayIn getNewPayInCardDirectWithBrowserInfo() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
@@ -681,7 +738,7 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-    protected PayIn getNewPayInCardDirectWithIpAddress() throws Exception{
+    protected PayIn getNewPayInCardDirectWithIpAddress() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
@@ -933,10 +990,10 @@ public abstract class BaseTest {
     protected String getPaylineCorrectRegistartionData3DSecureForCardNumber(CardRegistration cardRegistration, String cardNumber) throws MalformedURLException, IOException, Exception {
 
         String data = "data=" + cardRegistration.getPreregistrationData() +
-            "&accessKeyRef=" + cardRegistration.getAccessKey() +
-            "&cardNumber=" + cardNumber +
-            "&cardExpirationDate=1224" +
-            "&cardCvx=123";
+                "&accessKeyRef=" + cardRegistration.getAccessKey() +
+                "&cardNumber=" + cardNumber +
+                "&cardExpirationDate=1224" +
+                "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -1102,12 +1159,12 @@ public abstract class BaseTest {
         Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
 
         CreateDeposit dto = new CreateDeposit(
-            john.getId(),
-            debitedFunds,
-            cardRegistration.getCardId(),
-            "http://lorem",
-            "2001:0620:0000:0000:0211:24FF:FE80:C12C",
-            getNewBrowserInfo()
+                john.getId(),
+                debitedFunds,
+                cardRegistration.getCardId(),
+                "http://lorem",
+                "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+                getNewBrowserInfo()
         );
 
         return this.api.getDepositApi().create(dto, null);
