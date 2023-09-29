@@ -106,6 +106,24 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsGooglePay.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
                 payIn.setPaymentDetails(payInPaymentDetailsGooglePay);
                 break;
+            case GOOGLE_PAY:
+                PayInPaymentDetailsGooglePayV2 payInPaymentDetailsGooglePayV2 = new PayInPaymentDetailsGooglePayV2();
+                if (object.has("PaymentData") && !object.get("PaymentData").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setPaymentData(object.get("PaymentData").getAsString());
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
+                if (object.has("IpAddress") && !object.get("IpAddress").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setIpAddress(object.get("IpAddress").getAsString());
+                if (object.has("BrowserInfo") && !object.get("BrowserInfo").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setBrowserInfo((BrowserInfo) context.deserialize(object.get("BrowserInfo"), BrowserInfo.class));
+                if (object.has("RedirectURL") && !object.get("RedirectURL").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setRedirectUrl(object.get("RedirectURL").getAsString());
+                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setReturnUrl(object.get("ReturnURL").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsGooglePayV2);
+                break;
             case DIRECT_DEBIT:
                 PayInPaymentDetailsDirectDebit payInPaymentDetailsDirectDebit = new PayInPaymentDetailsDirectDebit();
                 if (object.has("DirectDebitType") && !object.get("DirectDebitType").isJsonNull())

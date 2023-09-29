@@ -67,6 +67,15 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBilling()));
                 break;
+            case "PayInPaymentDetailsGooglePayV2":
+                object.add("PaymentData", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getPaymentData()));
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Shipping", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getShipping()));
+                object.add("IpAddress", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getIpAddress()));
+                object.add("BrowserInfo", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getBrowserInfo()));
+                object.add("RedirectURL", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getRedirectUrl()));
+                object.add("RedirectURL", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getReturnUrl()));
+                break;
             case "PayInPaymentDetailsMbway":
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Phone", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getPhone()));
