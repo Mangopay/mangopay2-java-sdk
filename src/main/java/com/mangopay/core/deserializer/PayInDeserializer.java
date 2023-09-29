@@ -63,10 +63,6 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("PaypalBuyerAccountEmail") && !object.get("PaypalBuyerAccountEmail").isJsonNull())
                     payInPaymentDetailsPayPal.setPaypalBuyerAccountEmail(object.get("PaypalBuyerAccountEmail").getAsString());
                 // v2
-                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
-                    payInPaymentDetailsPayPal.setReturnUrl(object.get("ReturnURL").getAsString());
-                if (object.has("RedirectURL") && !object.get("RedirectURL").isJsonNull())
-                    payInPaymentDetailsPayPal.setRedirectUrl(object.get("RedirectURL").getAsString());
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsPayPal.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
@@ -130,6 +126,24 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("Phone") && !object.get("Phone").isJsonNull())
                     payInPaymentDetailsMbway.setPhone(object.get("Phone").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsMbway);
+                break;
+            case SATISPAY:
+                PayInPaymentDetailsSatispay payInPaymentDetailsSatispay = new PayInPaymentDetailsSatispay();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsSatispay.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("Country") && !object.get("Country").isJsonNull())
+                    payInPaymentDetailsSatispay.setCountry(object.get("Country").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsSatispay);
+                break;
+            case BLIK:
+                PayInPaymentDetailsBlik payInPaymentDetailsBlik = new PayInPaymentDetailsBlik();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsBlik.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                break;
+            case MULTIBANCO:
+                PayInPaymentDetailsMultibanco payInPaymentDetailsMultibanco = new PayInPaymentDetailsMultibanco();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsMultibanco.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 break;
             default:
                 return null;

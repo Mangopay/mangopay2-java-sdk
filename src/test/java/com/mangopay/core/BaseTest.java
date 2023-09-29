@@ -550,8 +550,26 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-    protected PayIn getNewPayInMbwayDirect(String userId) throws Exception {
-        PayIn payIn = getPayInMbwayDirect(userId);
+    protected PayIn getNewPayInMbwayWeb(String userId) throws Exception {
+        PayIn payIn = getPayInMbwayWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInSatispayWeb(String userId) throws Exception {
+        PayIn payIn = getPayInSatispayWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInBlikWeb(String userId) throws Exception {
+        PayIn payIn = getPayInBlikWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInMultibancoWeb(String userId) throws Exception {
+        PayIn payIn = getPayInMultibancoWeb(userId);
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -600,7 +618,7 @@ public abstract class BaseTest {
         return payIn;
     }
 
-    private PayIn getPayInMbwayDirect(String userId) throws Exception {
+    private PayIn getPayInMbwayWeb(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
 
@@ -609,7 +627,7 @@ public abstract class BaseTest {
             userId = user.getId();
         }
 
-        // create pay-in MBWAY DIRECT
+        // create pay-in MBWAY WEB
         PayIn payIn = new PayIn();
         payIn.setAuthorId(userId);
         payIn.setCreditedWalletId(wallet.getId());
@@ -626,9 +644,115 @@ public abstract class BaseTest {
         ((PayInPaymentDetailsMbway) payIn.getPaymentDetails()).setPhone("351#269458236");
 
         // execution type as DIRECT
-        payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+        payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
 
         payIn.setTag("My MBWAY Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInSatispayWeb(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create pay-in SATISPAY WEB
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(500);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        // payment type as SATISPAY
+        payIn.setPaymentDetails(new PayInPaymentDetailsSatispay());
+        ((PayInPaymentDetailsSatispay) payIn.getPaymentDetails()).setStatementDescriptor("satispay");
+        ((PayInPaymentDetailsSatispay) payIn.getPaymentDetails()).setCountry(CountryIso.IT.name());
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(executionDetails);
+
+        payIn.setTag("My SATISPAY Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInBlikWeb(String userId) throws Exception {
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create PLN (Polish Zloty) wallet with money
+        Wallet wallet = new Wallet();
+        wallet.setOwners(new ArrayList<String>());
+        wallet.getOwners().add(userId);
+        wallet.setCurrency(CurrencyIso.PLN);
+        wallet.setDescription("WALLET IN PLN WITH MONEY");
+        wallet = this.api.getWalletApi().create(wallet);
+
+        // create pay-in BLIK WEB
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(500);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.PLN);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.PLN);
+
+        // payment type as BLIK
+        payIn.setPaymentDetails(new PayInPaymentDetailsBlik());
+        ((PayInPaymentDetailsBlik) payIn.getPaymentDetails()).setStatementDescriptor("testblik");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(executionDetails);
+
+        payIn.setTag("My BLIK Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInMultibancoWeb(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create pay-in MULTIBANCO WEB
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(500);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        // payment type as MULTIBANCO
+        payIn.setPaymentDetails(new PayInPaymentDetailsMultibanco());
+        ((PayInPaymentDetailsMultibanco) payIn.getPaymentDetails()).setStatementDescriptor("multibanc");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(executionDetails);
+
+        payIn.setTag("My MULTIBANCO Tag");
         return payIn;
     }
 

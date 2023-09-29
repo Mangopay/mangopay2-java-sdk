@@ -43,8 +43,6 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("ShippingAddress", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShippingAddress()));
                 object.add("PaypalBuyerAccountEmail", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getPaypalBuyerAccountEmail()));
                 // v2
-                object.add("ReturnURL", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getReturnUrl()));
-                object.add("RedirectURL", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getRedirectUrl()));
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Shipping", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShipping()));
                 object.add("LineItems", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getLineItems()));
@@ -71,6 +69,16 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
             case "PayInPaymentDetailsMbway":
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Phone", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getPhone()));
+                break;
+            case "PayInPaymentDetailsSatispay":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsSatispay) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Country", context.serialize(((PayInPaymentDetailsSatispay) src.getPaymentDetails()).getCountry()));
+                break;
+            case "PayInPaymentDetailsBlik":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsBlik) src.getPaymentDetails()).getStatementDescriptor()));
+                break;
+            case "PayInPaymentDetailsMultibanco":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMultibanco) src.getPaymentDetails()).getStatementDescriptor()));
                 break;
             default:
                 return null;
