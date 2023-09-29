@@ -63,7 +63,7 @@ public class CardValidation extends EntityBase {
      * Status of the CardValidation.
      */
     @SerializedName("Status")
-    private CardValidationStatus status;
+    private TransactionStatus status;
 
     /**
      * The CardValidation result code.
@@ -85,11 +85,11 @@ public class CardValidation extends EntityBase {
         this.authorId = authorId;
     }
 
-    public CardValidationStatus getStatus() {
+    public TransactionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(CardValidationStatus status) {
+    public void setStatus(TransactionStatus status) {
         this.status = status;
     }
 

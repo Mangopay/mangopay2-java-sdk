@@ -1,7 +1,6 @@
 package com.mangopay.core;
 
 import com.mangopay.core.APIs.CardApi;
-import com.mangopay.core.enumerations.CardValidationStatus;
 import com.mangopay.core.enumerations.TransactionType;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
