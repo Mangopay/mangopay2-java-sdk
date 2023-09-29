@@ -158,11 +158,39 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 PayInPaymentDetailsBlik payInPaymentDetailsBlik = new PayInPaymentDetailsBlik();
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsBlik.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsBlik);
                 break;
             case MULTIBANCO:
                 PayInPaymentDetailsMultibanco payInPaymentDetailsMultibanco = new PayInPaymentDetailsMultibanco();
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsMultibanco.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsMultibanco);
+                break;
+            case KLARNA:
+                PayInPaymentDetailsKlarna payInPaymentDetailsKlarna = new PayInPaymentDetailsKlarna();
+                if (object.has("LineItems") && !object.get("LineItems").isJsonNull()) {
+                    Type listType = new TypeToken<ArrayList<LineItem>>(){}.getType();
+                    payInPaymentDetailsKlarna.setLineItems((List<LineItem>) context.deserialize(object.get("LineItems"), listType));
+                }
+                if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
+                    payInPaymentDetailsKlarna.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
+                if (object.has("Billing") && !object.get("Billing").isJsonNull())
+                    payInPaymentDetailsKlarna.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
+                if (object.has("PaymentMethod") && !object.get("PaymentMethod").isJsonNull())
+                    payInPaymentDetailsKlarna.setPaymentMethod(object.get("PaymentMethod").getAsString());
+                if (object.has("MerchantOrderId") && !object.get("MerchantOrderId").isJsonNull())
+                    payInPaymentDetailsKlarna.setMerchantOrderId(object.get("MerchantOrderId").getAsString());
+                if (object.has("Country") && !object.get("Country").isJsonNull())
+                    payInPaymentDetailsKlarna.setCountry((CountryIso) context.deserialize(object.get("Country"), CountryIso.class));
+                if (object.has("Culture") && !object.get("Culture").isJsonNull())
+                    payInPaymentDetailsKlarna.setCulture((CultureCode) context.deserialize(object.get("Culture"), CultureCode.class));
+                if (object.has("Phone") && !object.get("Phone").isJsonNull())
+                    payInPaymentDetailsKlarna.setPhone(object.get("Phone").getAsString());
+                if (object.has("Email") && !object.get("Email").isJsonNull())
+                    payInPaymentDetailsKlarna.setEmail(object.get("Email").getAsString());
+                if (object.has("AdditionalData") && !object.get("AdditionalData").isJsonNull())
+                    payInPaymentDetailsKlarna.setAdditionalData(object.get("AdditionalData").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsKlarna);
                 break;
             default:
                 return null;

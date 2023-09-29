@@ -98,10 +98,10 @@ public abstract class BaseTest {
 
         result.setAddressLine1("Address line 1");
         result.setAddressLine2("Address line 2");
-        result.setCity("City");
-        result.setCountry(CountryIso.PL);
-        result.setPostalCode("11222");
-        result.setRegion("Region");
+        result.setCity("Paris");
+        result.setCountry(CountryIso.FR);
+        result.setPostalCode("68400");
+        result.setRegion("Europe");
 
         return result;
     }
@@ -574,6 +574,13 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+
+    protected PayIn getNewPayInKlarnaWeb(String userId) throws Exception {
+        PayIn payIn = getPayInKlarnaWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     private PayIn getPayInCardDirect(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
@@ -647,6 +654,58 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
 
         payIn.setTag("My MBWAY Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInKlarnaWeb(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create pay-in KLARNA DIRECT
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        List<LineItem> lineItems = new ArrayList<>();
+        lineItems.add(new LineItem(
+                "test",
+                1,
+                1000,
+                0,
+                "test descr"
+        ));
+
+        // payment type as CARD
+        payIn.setPaymentDetails(new PayInPaymentDetailsKlarna()
+                .setLineItems(lineItems)
+                .setShipping(this.getNewShipping())
+                .setBilling(this.getNewBilling())
+                .setPaymentMethod("")
+                .setMerchantOrderId("afd48-879d-48fg")
+                .setCountry(CountryIso.FR)
+                .setCulture(CultureCode.FR)
+                .setPhone("351#269458236")
+                .setEmail("john.doe@sample.org")
+                .setAdditionalData("{}")
+        );
+        // execution type as WEB
+        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
+        payInExecutionDetailsWeb.setRedirectUrl("http://www.mysite.com/redirectUrl/");
+        payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+        payIn.setTag("My KLARNA Tag");
         return payIn;
     }
 

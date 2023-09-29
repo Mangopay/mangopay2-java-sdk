@@ -77,7 +77,12 @@ public enum PayInPaymentType {
     /**
      * MULTIBANCO payment type
      */
-    MULTIBANCO
+    MULTIBANCO,
+
+    /**
+     * KLARNA payment type
+     */
+    KLARNA
 
 
 }

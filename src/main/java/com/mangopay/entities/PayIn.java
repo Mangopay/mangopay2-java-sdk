@@ -144,6 +144,10 @@ public class PayIn extends Transaction {
                                 put("PaymentDetails", PayInPaymentDetailsMultibanco.class);
                             }}
                         );
+                        put("KLARNA", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsKlarna.class);
+                                }}
+                        );
                         // ...and more in future...
                     }}
             );
