@@ -222,9 +222,9 @@ public abstract class BaseTest {
     }
 
     /**
-        Current optional fields are:
-            HeadquartersAddress, LegalRepresentativeAddress, LegalRepresentativeEmail, CompanyNumber
-    */
+     * Current optional fields are:
+     * HeadquartersAddress, LegalRepresentativeAddress, LegalRepresentativeEmail, CompanyNumber
+     */
     protected UserLegal getMatrixWithoutOptionalFields() throws Exception {
         if (BaseTest.MATRIX == null) {
             UserNatural john = this.getJohn();
@@ -483,8 +483,8 @@ public abstract class BaseTest {
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setSecureMode(SecureMode.DEFAULT);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setCulture(CultureCode.FR);
             BaseTest.PAYIN_EXECUTION_DETAILS_WEB.setReturnUrl("https://test.com");
-            
-            if(BaseTest.PAYIN_TEMPLATE_URL_OPTIONS == null) {
+
+            if (BaseTest.PAYIN_TEMPLATE_URL_OPTIONS == null) {
                 BaseTest.PAYIN_TEMPLATE_URL_OPTIONS = new PayInTemplateURLOptions();
                 BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINE = "https://www.maysite.com/payline_template/";
                 BaseTest.PAYIN_TEMPLATE_URL_OPTIONS.PAYLINEV2 = "https://www.maysite.com/payline_template/";
@@ -673,7 +673,7 @@ public abstract class BaseTest {
         return browserInfo;
     }
 
-    protected PayIn getNewPayInCardDirectWithBrowserInfo() throws Exception{
+    protected PayIn getNewPayInCardDirectWithBrowserInfo() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
@@ -681,7 +681,7 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-    protected PayIn getNewPayInCardDirectWithIpAddress() throws Exception{
+    protected PayIn getNewPayInCardDirectWithIpAddress() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
@@ -933,10 +933,10 @@ public abstract class BaseTest {
     protected String getPaylineCorrectRegistartionData3DSecureForCardNumber(CardRegistration cardRegistration, String cardNumber) throws MalformedURLException, IOException, Exception {
 
         String data = "data=" + cardRegistration.getPreregistrationData() +
-            "&accessKeyRef=" + cardRegistration.getAccessKey() +
-            "&cardNumber=" + cardNumber +
-            "&cardExpirationDate=1224" +
-            "&cardCvx=123";
+                "&accessKeyRef=" + cardRegistration.getAccessKey() +
+                "&cardNumber=" + cardNumber +
+                "&cardExpirationDate=1224" +
+                "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -1102,12 +1102,12 @@ public abstract class BaseTest {
         Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
 
         CreateDeposit dto = new CreateDeposit(
-            john.getId(),
-            debitedFunds,
-            cardRegistration.getCardId(),
-            "http://lorem",
-            "2001:0620:0000:0000:0211:24FF:FE80:C12C",
-            getNewBrowserInfo()
+                john.getId(),
+                debitedFunds,
+                cardRegistration.getCardId(),
+                "http://lorem",
+                "2001:0620:0000:0000:0211:24FF:FE80:C12C",
+                getNewBrowserInfo()
         );
 
         return this.api.getDepositApi().create(dto, null);
@@ -1288,4 +1288,44 @@ public abstract class BaseTest {
 
     }
 
+    protected ConversionRate getConversionRate() throws Exception {
+        return this.api.getInstantConversionApi().getConversionRate("EUR", "GBP");
+    }
+
+    protected InstantConversion createInstantConversion() throws Exception {
+        User john = this.getJohn();
+        Wallet wallet = new Wallet();
+        wallet.setOwners(new ArrayList<String>());
+        wallet.getOwners().add(john.getId());
+
+        wallet.setCurrency(CurrencyIso.GBP);
+        wallet.setDescription("WALLET IN GBP");
+
+        Wallet creditedWallet = this.api.getWalletApi().create(wallet);
+        Wallet debitedWallet = this.getJohnsWalletWithMoney();
+
+        InstantConversion instantConversion = new InstantConversion();
+        instantConversion.setAuthorId(debitedWallet.getOwners().get(0));
+        instantConversion.setCreditedWalletId(creditedWallet.getId());
+        instantConversion.setDebitedWalletId(debitedWallet.getId());
+
+        Money creditedFunds = new Money();
+        creditedFunds.setCurrency(CurrencyIso.GBP);
+
+        Money debitedFunds = new Money();
+        debitedFunds.setCurrency(CurrencyIso.EUR);
+        debitedFunds.setAmount(79);
+
+        instantConversion.setCreditedFunds(creditedFunds);
+        instantConversion.setDebitedFunds(debitedFunds);
+        instantConversion.setTag("create instant conversion");
+
+        return this.api.getInstantConversionApi().createInstantConversion(instantConversion, null);
+    }
+
+    protected InstantConversion getInstantConversion() throws Exception {
+         InstantConversion createdInstantConversion = createInstantConversion();
+
+         return api.getInstantConversionApi().getInstantConversion(createdInstantConversion.getId());
+    }
 }

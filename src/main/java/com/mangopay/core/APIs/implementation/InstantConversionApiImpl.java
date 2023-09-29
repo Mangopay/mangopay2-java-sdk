@@ -1,0 +1,34 @@
+package com.mangopay.core.APIs.implementation;
+
+import com.mangopay.MangoPayApi;
+import com.mangopay.core.APIs.ApiBase;
+import com.mangopay.core.APIs.InstantConversionApi;
+import com.mangopay.entities.ConversionRate;
+import com.mangopay.entities.InstantConversion;
+
+public class InstantConversionApiImpl extends ApiBase implements InstantConversionApi {
+
+    /**
+     * Creates new API instance.
+     *
+     * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
+     */
+    public InstantConversionApiImpl(MangoPayApi root) {
+        super(root);
+    }
+
+    @Override
+    public ConversionRate getConversionRate(String debitedCurrency, String creditedCurrency) throws Exception {
+        return this.getObject(ConversionRate.class, "get_conversion_rate", debitedCurrency, creditedCurrency);
+    }
+
+    @Override
+    public InstantConversion createInstantConversion(InstantConversion conversion, String idempotencyKey) throws Exception {
+        return this.createObject(InstantConversion.class, idempotencyKey, "create_instant_conversion", conversion);
+    }
+
+    @Override
+    public InstantConversion getInstantConversion(String id) throws Exception {
+        return this.getObject(InstantConversion.class, "get_instant_conversion",id);
+    }
+}
