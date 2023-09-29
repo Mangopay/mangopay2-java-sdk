@@ -120,6 +120,10 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsGooglePay.class);
                                 }}
                         );
+                        put("GOOGLE_PAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsGooglePayV2.class);
+                                }}
+                        );
                         put("PAYCONIQ", new HashMap<String, Class<?>>(){{
                                     put("PaymentDetails", PayInPaymentDetailsPayconiq.class);
                                 }}
@@ -128,6 +132,18 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsMbway.class);
                                 }}
                          );
+                        put("SATISPAY", new HashMap<String, Class<?>>() {{
+                                put("PaymentDetails", PayInPaymentDetailsSatispay.class);
+                            }}
+                        );
+                        put("BLIK", new HashMap<String, Class<?>>() {{
+                                put("PaymentDetails", PayInPaymentDetailsBlik.class);
+                            }}
+                        );
+                        put("MULTIBANCO", new HashMap<String, Class<?>>() {{
+                                put("PaymentDetails", PayInPaymentDetailsMultibanco.class);
+                            }}
+                        );
                         put("KLARNA", new HashMap<String, Class<?>>() {{
                                     put("PaymentDetails", PayInPaymentDetailsKlarna.class);
                                 }}

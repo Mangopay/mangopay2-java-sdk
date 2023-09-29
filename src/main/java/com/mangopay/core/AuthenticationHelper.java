@@ -55,7 +55,7 @@ public class AuthenticationHelper {
         }};
     }
     
-    // gets HTTP header value with authorization string for strong authentication
+    // gets HTTP header value with authorization String for strong authentication
     private Map<String, String> getHttpHeaderStrong() throws Exception {
         
         final OAuthToken token = root.getOAuthTokenManager().getToken();
