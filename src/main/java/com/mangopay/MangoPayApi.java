@@ -52,6 +52,7 @@ public class MangoPayApi {
         setSettlementApi(new SettlementApiImpl(this));
         setRegulatoryApi(new RegulatoryApiImpl(this));
         setDepositApi(new DepositApiImpl(this));
+        setInstantConversionApi(new InstantConversionApiImpl(this));
         setGson(gsonBuilder.create());
     }
 
@@ -201,6 +202,11 @@ public class MangoPayApi {
      * Provides Deposits methods
      */
     private DepositApi depositApi;
+
+    /**
+     * Provides Instant conversion methods
+     */
+    private InstantConversionApi instantConversionApi;
 
     private Gson gson;
 
@@ -439,5 +445,13 @@ public class MangoPayApi {
     public MangoPayApi setDepositApi(DepositApi depositApi) {
         this.depositApi = depositApi;
         return this;
+    }
+
+    public InstantConversionApi getInstantConversionApi() {
+        return instantConversionApi;
+    }
+
+    public void setInstantConversionApi(InstantConversionApi instantConversionApi) {
+        this.instantConversionApi = instantConversionApi;
     }
 }

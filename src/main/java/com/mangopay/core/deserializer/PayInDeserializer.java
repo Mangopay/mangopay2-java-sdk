@@ -3,10 +3,7 @@ package com.mangopay.core.deserializer;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.mangopay.core.*;
-import com.mangopay.core.enumerations.CardType;
-import com.mangopay.core.enumerations.CultureCode;
-import com.mangopay.core.enumerations.DirectDebitType;
-import com.mangopay.core.enumerations.SecureMode;
+import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.BankAccount;
 import com.mangopay.entities.DebitedBankAccount;
 import com.mangopay.entities.PayIn;
@@ -63,17 +60,17 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("PaypalBuyerAccountEmail") && !object.get("PaypalBuyerAccountEmail").isJsonNull())
                     payInPaymentDetailsPayPal.setPaypalBuyerAccountEmail(object.get("PaypalBuyerAccountEmail").getAsString());
                 // v2
-                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
-                    payInPaymentDetailsPayPal.setReturnUrl(object.get("ReturnURL").getAsString());
-                if (object.has("RedirectURL") && !object.get("RedirectURL").isJsonNull())
-                    payInPaymentDetailsPayPal.setRedirectUrl(object.get("RedirectURL").getAsString());
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsPayPal.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
                     payInPaymentDetailsPayPal.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
                 if (object.has("LineItems") && !object.get("LineItems").isJsonNull()) {
-                    Type listType = new TypeToken<ArrayList<LineItem>>(){}.getType();
+                    Type listType = new TypeToken<ArrayList<LineItem>>() {
+                    }.getType();
                     payInPaymentDetailsPayPal.setLineItems((List<LineItem>) context.deserialize(object.get("LineItems"), listType));
+                }
+                if (object.has("ShippingPreference") && !object.get("ShippingPreference").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setShippingPreference(ShippingPreference.valueOf(object.get("ShippingPreference").getAsString()));
                 }
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;
@@ -109,6 +106,24 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsGooglePay.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
                 payIn.setPaymentDetails(payInPaymentDetailsGooglePay);
                 break;
+            case GOOGLE_PAY:
+                PayInPaymentDetailsGooglePayV2 payInPaymentDetailsGooglePayV2 = new PayInPaymentDetailsGooglePayV2();
+                if (object.has("PaymentData") && !object.get("PaymentData").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setPaymentData(object.get("PaymentData").getAsString());
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
+                if (object.has("IpAddress") && !object.get("IpAddress").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setIpAddress(object.get("IpAddress").getAsString());
+                if (object.has("BrowserInfo") && !object.get("BrowserInfo").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setBrowserInfo((BrowserInfo) context.deserialize(object.get("BrowserInfo"), BrowserInfo.class));
+                if (object.has("RedirectURL") && !object.get("RedirectURL").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setRedirectUrl(object.get("RedirectURL").getAsString());
+                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
+                    payInPaymentDetailsGooglePayV2.setReturnUrl(object.get("ReturnURL").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsGooglePayV2);
+                break;
             case DIRECT_DEBIT:
                 PayInPaymentDetailsDirectDebit payInPaymentDetailsDirectDebit = new PayInPaymentDetailsDirectDebit();
                 if (object.has("DirectDebitType") && !object.get("DirectDebitType").isJsonNull())
@@ -130,6 +145,24 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("Phone") && !object.get("Phone").isJsonNull())
                     payInPaymentDetailsMbway.setPhone(object.get("Phone").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsMbway);
+                break;
+            case SATISPAY:
+                PayInPaymentDetailsSatispay payInPaymentDetailsSatispay = new PayInPaymentDetailsSatispay();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsSatispay.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("Country") && !object.get("Country").isJsonNull())
+                    payInPaymentDetailsSatispay.setCountry(object.get("Country").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsSatispay);
+                break;
+            case BLIK:
+                PayInPaymentDetailsBlik payInPaymentDetailsBlik = new PayInPaymentDetailsBlik();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsBlik.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                break;
+            case MULTIBANCO:
+                PayInPaymentDetailsMultibanco payInPaymentDetailsMultibanco = new PayInPaymentDetailsMultibanco();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsMultibanco.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 break;
             default:
                 return null;

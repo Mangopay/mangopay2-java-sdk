@@ -126,4 +126,12 @@ public interface PayInApi {
     List<Refund> getRefunds(String payInId, Pagination pagination, Sorting sorting) throws Exception;
 
     CardPreAuthorizedDepositPayIn createCardPreAuthorizedDepositPayIn(CreateCardPreAuthorizedDepositPayIn payIn, String idempotencyKey) throws Exception;
+
+    /**
+     * Creates new PayPal Web PayIn object.
+     * @param payIn     The PayIn object to be created.
+     * @return          Created PayIn object returned by API.
+     * @throws Exception
+     */
+    PayIn createPayPal(PayIn payIn) throws Exception;
 }

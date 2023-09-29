@@ -5,6 +5,7 @@ import com.mangopay.core.Dto;
 import com.mangopay.core.LineItem;
 import com.mangopay.core.Shipping;
 import com.mangopay.core.ShippingAddress;
+import com.mangopay.core.enumerations.ShippingPreference;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
 
 import java.lang.reflect.Type;
@@ -30,12 +31,6 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     /// V2 ///
 
-    @SerializedName("ReturnURL")
-    private String returnUrl;
-
-    @SerializedName("RedirectURL")
-    private String redirectUrl;
-
     @SerializedName("StatementDescriptor")
     private String statementDescriptor;
 
@@ -45,30 +40,15 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     @SerializedName("LineItems")
     private List<LineItem> lineItems;
 
+    @SerializedName("ShippingPreference")
+    private ShippingPreference shippingPreference;
+
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
     }
 
     public void setShippingAddress(ShippingAddress shippingAddress) {
         this.shippingAddress = shippingAddress;
-    }
-
-    public String getReturnUrl() {
-        return returnUrl;
-    }
-
-    public PayInPaymentDetailsPayPal setReturnUrl(String returnUrl) {
-        this.returnUrl = returnUrl;
-        return this;
-    }
-
-    public String getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    public PayInPaymentDetailsPayPal setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
-        return this;
     }
 
     public String getStatementDescriptor() {
@@ -115,5 +95,13 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     public PayInPaymentDetailsPayPal setPaypalBuyerAccountEmail(String paypalBuyerAccountEmail) {
         this.paypalBuyerAccountEmail = paypalBuyerAccountEmail;
         return this;
+    }
+
+    public ShippingPreference getShippingPreference() {
+        return shippingPreference;
+    }
+
+    public void setShippingPreference(ShippingPreference shippingPreference) {
+        this.shippingPreference = shippingPreference;
     }
 }

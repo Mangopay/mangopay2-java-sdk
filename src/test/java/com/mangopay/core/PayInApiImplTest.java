@@ -534,7 +534,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createPayPalDirect() throws Exception {
+    public void createPayPalWebV2() throws Exception {
         UserNatural john = getJohn();
         Wallet wallet = getJohnsWallet();
 
@@ -566,22 +566,25 @@ public class PayInApiImplTest extends BaseTest {
                 "test descr"
         ));
         paymentDetails.setLineItems(lineItems);
+        paymentDetails.setShippingPreference(ShippingPreference.GET_FROM_FILE);
         paymentDetails.setReturnUrl("http://mangopay.com");
         paymentDetails.setStatementDescriptor("sttm");
 
         payIn.setPaymentDetails(paymentDetails);
-        PayInExecutionDetailsDirect executionDetails = new PayInExecutionDetailsDirect();
+
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://mangopay.com");
         executionDetails.setCulture(CultureCode.FR);
         payIn.setExecutionDetails(executionDetails);
 
         payIn.setTag("tag");
 
-        PayIn createdPayIn = api.getPayInApi().create(payIn);
+        PayIn createdPayIn = api.getPayInApi().createPayPal(payIn);
 
         assertNotNull(createdPayIn);
         assertNotNull(createdPayIn.getPaymentDetails());
         assertEquals(PayInPaymentType.PAYPAL, createdPayIn.getPaymentType());
-        assertEquals(PayInExecutionType.DIRECT, createdPayIn.getExecutionType());
+        assertEquals(PayInExecutionType.WEB, createdPayIn.getExecutionType());
         assertFalse(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().isEmpty());
         assertTrue(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().get(0) instanceof LineItem);
     }
@@ -751,6 +754,48 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(createdPayIn.getStatus(), TransactionStatus.SUCCEEDED);
         } catch (Exception e) {
             fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testDirectGooglepayV2Payin() {
+        try {
+            Wallet wallet = getJohnsWallet();
+
+            String paymentData = "{\"signature\":\"MEUCIEMVk9qrfoJ/ku5qvHCZuv9zPC1QVH6NMMrkZ6wLmt8FAiEAjNduo5gvMGE4KgTeTIuwevdvxJdkQP03ru9lp/5rKhk\\u003d\",\"intermediateSigningKey\":{\"signedKey\":\"{\\\"keyValue\\\":\\\"MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEC1gn5CSvw/UxS9+PCVhgPWNTMGxTBUHpenGNWirrNlmi5bJts3FO92DjcUQmLaCmM1hQwtZ9KCzkc0SGh99X4A\\\\u003d\\\\u003d\\\",\\\"keyExpiration\\\":\\\"1694758343052\\\"}\",\"signatures\":[\"MEUCIG+oaBGEl63CqCy+C7OwQCFvr/K9cSYWtQ/ku2UejCTKAiEAnhJ1LXd+JMMvueEorp0Kha922H9wRMR6tPvnGIZ6cM4\\u003d\"]},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"{\\\"encryptedMessage\\\":\\\"HmCQdP5BOdsv33ACkGyYJYKFHEnxRbe+TTaTI79tJm/v8NP4XH5Iim9H/a1jj2OmZTgQDklZ6pv1v6XNjKkkaEMPW1MZbtZ2P8GcwAWRKKJx8W4ZmDexb564GP8EvLw4dGzlYE8L5nY7khunPZKAfioQGmNSTIBpB1MLRtgArGA9T/w3EcjU1+gdGAce7NpcZeVIrIX4tNLL5TlpGdAHRU5XNlA/q0HcuvKpmgCfpnSJKu1xPO8Xzoa7C7toX6GmmGlkdhH0Y+vK+mKFpI02uGItSPR64vaZYFD7qPMzXOsp7KjyGw1Tr6fx0Qrmc3CeDcZ3Dzc/WVbM0jw1gMz/gjnZ7KILoqMNxcEz1h8rkLp7FHjCNlls0i6VYNINWWl1PMqHTDBsTsHVdYJlAqycoBJTssHy44ASBIF8epBw3oAydhFV4ZkeLPX/x+QlrS+IEi3af8xj//nhtZ5CwwW5IOuMF0sqAa0PcRVpgw9BrQSXNprymtatS3qtwRrL0LHJsIii+xSI5XY4dfy6Z6j1QCvWriCwfbS9TasvbMb6dbh0S6sS5XBHd5wp/FtHfYBAh9iK08DQ8uKcKfnZx4zmvU5TsSTTbrj/SEFJiJ3rBegIweEpYM3m1QifErNAVhBIpm67tg\\\\u003d\\\\u003d\\\",\\\"ephemeralPublicKey\\\":\\\"BCr5xXtNJMkCYutxBQi8sQBHllG4RcSrxalvi0bf23Jwvyr46OwNGfMe45518pxNzPC8yPUXrGTbKXoQeJR16Ew\\\\u003d\\\",\\\"tag\\\":\\\"5W+s9OGQTFEojaZ5K3ynKuUVninxOVep9pkmqI/+ed4\\\\u003d\\\"}\"}";
+            PayIn googlePayIn = new PayIn();
+            googlePayIn.setCreditedWalletId(wallet.getId());
+            googlePayIn.setAuthorId(this.getMatrix().getId());
+            googlePayIn.setCreditedUserId(this.getMatrix().getId());
+            googlePayIn.setDebitedFunds(new Money()
+                    .setAmount(112)
+                    .setCurrency(CurrencyIso.EUR)
+            );
+            googlePayIn.setFees(new Money()
+                    .setAmount(1)
+                    .setCurrency(CurrencyIso.EUR)
+            );
+            googlePayIn.setPaymentType(PayInPaymentType.GOOGLE_PAY);
+            googlePayIn.setExecutionType(PayInExecutionType.DIRECT);
+            googlePayIn.setPaymentDetails(new PayInPaymentDetailsGooglePayV2()
+                    .setPaymentData(paymentData)
+                    .setShipping(this.getNewShipping())
+                    .setIpAddress("127.0.0.1")
+                    .setStatementDescriptor("Java")
+                    .setBrowserInfo(this.getNewBrowserInfo()));
+
+            googlePayIn.setExecutionDetails(new PayInExecutionDetailsDirect()
+                    .setSecureModeReturnUrl("http://www.my-site.com/returnUrl")
+                    .setSecureModeRedirectUrl("http://www.my-site.com/redirectUrl"));
+            googlePayIn.setTag("Create an GooglePay card direct Payin");
+
+            PayIn createdPayIn = this.api.getPayInApi().create(googlePayIn);
+            assertNotNull(createdPayIn);
+            assertEquals(googlePayIn.getAuthorId(), createdPayIn.getAuthorId());
+            assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLE_PAY);
+            assertEquals(createdPayIn.getStatus(), TransactionStatus.SUCCEEDED);
+        } catch (Exception e) {
+            fail(String.valueOf(e));
         }
     }
 
@@ -964,19 +1009,82 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createMbwayDirect() {
+    public void createMbwayWeb() {
         try {
             UserNatural user = this.getJohn();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            PayIn payIn = this.getNewPayInMbwayDirect(user.getId());
+            PayIn payIn = this.getNewPayInMbwayWeb(user.getId());
 
             PayIn created = api.getPayInApi().create(payIn);
 
             assertNotNull(created);
             assertEquals(TransactionStatus.CREATED, payIn.getStatus());
             assertEquals(PayInPaymentType.MBWAY, payIn.getPaymentType());
-            assertEquals(PayInExecutionType.DIRECT, payIn.getExecutionType());
+            assertEquals(PayInExecutionType.WEB, payIn.getExecutionType());
             assertEquals(wallet.getId(), payIn.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createSatispayWebPayIn() {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            PayIn created = this.getNewPayInSatispayWeb(user.getId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.SATISPAY, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createBlikWebPayIn() {
+        try {
+            UserNatural user = this.getJohn();
+            PayIn created = this.getNewPayInBlikWeb(user.getId());
+            Wallet wallet = api.getWalletApi().get(created.getCreditedWalletId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.BLIK, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createMultibancoWebPayIn() {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            PayIn created = this.getNewPayInMultibancoWeb(user.getId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.MULTIBANCO, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
 
             PayIn fetched = api.getPayInApi().get(created.getId());
             assertNotNull(fetched);
