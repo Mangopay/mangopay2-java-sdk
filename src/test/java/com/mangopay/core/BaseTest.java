@@ -575,8 +575,8 @@ public abstract class BaseTest {
     }
 
 
-    protected PayIn getNewPayInKlarnaDirect(String userId) throws Exception {
-        PayIn payIn = getPayInKlarnaDirect(userId);
+    protected PayIn getNewPayInKlarnaWeb(String userId) throws Exception {
+        PayIn payIn = getPayInKlarnaWeb(userId);
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -657,7 +657,7 @@ public abstract class BaseTest {
         return payIn;
     }
 
-    private PayIn getPayInKlarnaDirect(String userId) throws Exception {
+    private PayIn getPayInKlarnaWeb(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
 

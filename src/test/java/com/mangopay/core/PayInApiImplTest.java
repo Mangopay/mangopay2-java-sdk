@@ -1094,11 +1094,11 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createKlarnaDirect() {
+    public void createKlarnaWeb() {
         try {
             UserNatural user = this.getJohn();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            PayIn payIn = this.getNewPayInKlarnaDirect(user.getId());
+            PayIn payIn = this.getNewPayInKlarnaWeb(user.getId());
 
             PayIn created = api.getPayInApi().create(payIn);
 
