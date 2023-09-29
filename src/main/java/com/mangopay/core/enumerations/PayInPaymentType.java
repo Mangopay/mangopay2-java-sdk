@@ -50,6 +50,11 @@ public enum PayInPaymentType {
     GOOGLEPAY,
 
     /**
+     * GOOGLEPAY_V2 payment type
+     */
+    GOOGLE_PAY,
+
+    /**
      * PAYCONIQ payment type
      */
     PAYCONIQ,
@@ -57,5 +62,27 @@ public enum PayInPaymentType {
     /**
      * MBWAY payment type
      */
-    MBWAY
+    MBWAY,
+
+    /**
+     * SATISPAY payment type
+     */
+    SATISPAY,
+
+    /**
+     * BLIK payment type
+     */
+    BLIK,
+
+    /**
+     * MULTIBANCO payment type
+     */
+    MULTIBANCO,
+
+    /**
+     * KLARNA payment type
+     */
+    KLARNA
+
+
 }

@@ -3,6 +3,7 @@ package com.mangopay.core.APIs;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.Card;
+import com.mangopay.entities.CardValidation;
 import com.mangopay.entities.Transaction;
 import com.mangopay.entities.CardPreAuthorization;
 
@@ -78,9 +79,9 @@ public interface CardApi {
 
     /**
      * Validate a card
-     * @param cardId
-     * @return
+     * @param cardId, cardValidation to be created
+     * @return CardValidation
      * @throws Exception
      */
-    Card validate(String cardId) throws Exception;
+    CardValidation validate(String cardId, CardValidation cardValidation) throws Exception;
 }

@@ -22,5 +22,15 @@ public enum TransactionType {
     /**
      * TRANSFER transaction type.
      */
-    TRANSFER
+    TRANSFER,
+
+    /**
+     * CONVERSION transaction type.
+     */
+    CONVERSION,
+
+    /**
+     * CARD_VALIDATION transaction type.
+     */
+    CARD_VALIDATION
 }

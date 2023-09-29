@@ -68,7 +68,7 @@ public abstract class ApiBase {
         put("cards_get_by_fingerprint", new String[]{"/cards/fingerprints/%s", RequestType.GET.toString()});
         put("cards_get_transactions", new String[]{"/cards/%s/transactions", RequestType.GET.toString()});
         put("card_get_preauthorization", new String[]{"/cards/%s/preauthorizations", RequestType.GET.toString()});
-        put("card_validate", new String[]{"/cards/%s/validate", RequestType.POST.toString()});
+        put("card_validate", new String[]{"/cards/%s/validation", RequestType.POST.toString()});
 
         // pay ins URLs
         put("payins_paypal-web_create", new String[]{"/payins/paypal/web/", RequestType.POST.toString()});
@@ -84,14 +84,20 @@ public abstract class ApiBase {
         put("payins_directdebit-direct_create", new String[]{"/payins/directdebit/direct", RequestType.POST.toString()});
         put("payins_applepay-direct_create", new String[]{"/payins/applepay/direct", RequestType.POST.toString()});
         put("payins_googlepay-direct_create", new String[]{"/payins/googlepay/direct", RequestType.POST.toString()});
-        put("payins_mbway-direct_create", new String[]{"/payins/payment-methods/mbway", RequestType.POST.toString()});
-        put("payins_paypal-direct_create", new String[]{"/payins/payment-methods/paypal", RequestType.POST.toString()});
+        put("payins_googlepayv2-direct_create", new String[]{"/payins/payment-methods/googlepay", RequestType.POST.toString()});
+        put("payins_mbway-web_create", new String[]{"/payins/payment-methods/mbway", RequestType.POST.toString()});
+        put("payins_paypal-web_create_v2", new String[]{"/payins/payment-methods/paypal", RequestType.POST.toString()});
         put("payin_get_refunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
         put("payins_recurring_registration", new String[]{"/recurringpayinregistrations", RequestType.POST.toString()});
         put("payins_recurring_registration_get", new String[]{"/recurringpayinregistrations/%s", RequestType.GET.toString()});
         put("payins_recurring_registration_put", new String[]{"/recurringpayinregistrations/%s", RequestType.PUT.toString()});
         put("payins_recurring_card_direct", new String[]{"/payins/recurring/card/direct", RequestType.POST.toString()});
         put("payins_card_preauthorized_deposit", new String[]{"/payins/deposit-preauthorized/direct/full-capture", RequestType.POST.toString()});
+        put("payins_satispay-web_create", new String[]{"/payins/payment-methods/satispay", RequestType.POST.toString()});
+        put("payins_blik-web_create", new String[]{"/payins/payment-methods/blik", RequestType.POST.toString()});
+        put("payins_multibanco-web_create", new String[]{"/payins/payment-methods/multibanco", RequestType.POST.toString()});
+        put("payins_klarna-web_create", new String[]{"/payins/payment-methods/klarna", RequestType.POST.toString()});
+
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
@@ -214,6 +220,10 @@ public abstract class ApiBase {
         put("deposits_create", new String[]{"/deposit-preauthorizations/card/direct", RequestType.POST.toString()});
         put("deposits_get", new String[]{"/deposit-preauthorizations/%s", RequestType.GET.toString()});
         put("deposits_cancel", new String[]{"/deposit-preauthorizations/%s", RequestType.PUT.toString()});
+
+        put("get_conversion_rate", new String[]{"/conversion/rate/%s/%s", RequestType.GET.toString()});
+        put("create_instant_conversion", new String[]{"/instant-conversion", RequestType.POST.toString()});
+        put("get_instant_conversion", new String[]{"/instant-conversion/%s", RequestType.GET.toString()});
 
     }};
 

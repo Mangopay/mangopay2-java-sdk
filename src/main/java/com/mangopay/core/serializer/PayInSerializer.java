@@ -43,11 +43,10 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("ShippingAddress", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShippingAddress()));
                 object.add("PaypalBuyerAccountEmail", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getPaypalBuyerAccountEmail()));
                 // v2
-                object.add("ReturnURL", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getReturnUrl()));
-                object.add("RedirectURL", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getRedirectUrl()));
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Shipping", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShipping()));
                 object.add("LineItems", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getLineItems()));
+                object.add("ShippingPreference", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShippingPreference()));
                 break;
             case "PayInPaymentDetailsPayconiq":
                 object.add("Country", context.serialize(((PayInPaymentDetailsPayconiq) src.getPaymentDetails()).getCountry()));
@@ -68,9 +67,40 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Billing", context.serialize(((PayInPaymentDetailsGooglePay) src.getPaymentDetails()).getBilling()));
                 break;
+            case "PayInPaymentDetailsGooglePayV2":
+                object.add("PaymentData", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getPaymentData()));
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Shipping", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getShipping()));
+                object.add("IpAddress", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getIpAddress()));
+                object.add("BrowserInfo", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getBrowserInfo()));
+                object.add("RedirectURL", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getRedirectUrl()));
+                object.add("RedirectURL", context.serialize(((PayInPaymentDetailsGooglePayV2) src.getPaymentDetails()).getReturnUrl()));
+                break;
             case "PayInPaymentDetailsMbway":
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Phone", context.serialize(((PayInPaymentDetailsMbway) src.getPaymentDetails()).getPhone()));
+                break;
+            case "PayInPaymentDetailsSatispay":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsSatispay) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Country", context.serialize(((PayInPaymentDetailsSatispay) src.getPaymentDetails()).getCountry()));
+                break;
+            case "PayInPaymentDetailsBlik":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsBlik) src.getPaymentDetails()).getStatementDescriptor()));
+                break;
+            case "PayInPaymentDetailsMultibanco":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsMultibanco) src.getPaymentDetails()).getStatementDescriptor()));
+                break;
+            case "PayInPaymentDetailsKlarna":
+                object.add("LineItems", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getLineItems()));
+                object.add("Shipping", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getShipping()));
+                object.add("Billing", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getBilling()));
+                object.add("PaymentMethod", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getPaymentMethod()));
+                object.add("MerchantOrderId", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getMerchantOrderId()));
+                object.add("Country", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getCountry()));
+                object.add("Culture", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getCulture()));
+                object.add("Phone", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getPhone()));
+                object.add("Email", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getEmail()));
+                object.add("AdditionalData", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getAdditionalData()));
                 break;
             default:
                 return null;
