@@ -1,3 +1,19 @@
+## [2.31.0] - 2023-09-29
+### Added
+
+- Multibanco, Satispay, Blik, Klarna are now available as a payment method with Mangopay. This payment method is in private beta. Please contact support if you have any questions.
+- Card validation endpoint is now available (Private beta)
+- A new parameter for Paypal : ShippingPreference
+- Instantly convert funds between 2 wallets of different currencies owned by the same user with the new SPOT FX endpoints
+
+### Updated
+
+- Google Pay integration with Mangopay has been improved. This payment method is in private beta. Please contact support if you have any questions.
+
+### Fixed
+
+- MBWay & PayPal are now using Web Execution Type.
+
 ## [2.30.0] - 2023-07-28
 ### Added
 
