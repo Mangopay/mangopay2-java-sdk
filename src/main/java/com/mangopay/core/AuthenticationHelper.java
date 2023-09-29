@@ -67,4 +67,5 @@ public class AuthenticationHelper {
             put("Authorization", token.getTokenType() + " " + token.getAccessToken());
         }};
     }
+
 }
