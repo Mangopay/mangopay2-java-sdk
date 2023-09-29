@@ -31,12 +31,6 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     /// V2 ///
 
-    @SerializedName("ReturnURL")
-    private String returnUrl;
-
-    @SerializedName("RedirectURL")
-    private String redirectUrl;
-
     @SerializedName("StatementDescriptor")
     private String statementDescriptor;
 
@@ -55,24 +49,6 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     public void setShippingAddress(ShippingAddress shippingAddress) {
         this.shippingAddress = shippingAddress;
-    }
-
-    public String getReturnUrl() {
-        return returnUrl;
-    }
-
-    public PayInPaymentDetailsPayPal setReturnUrl(String returnUrl) {
-        this.returnUrl = returnUrl;
-        return this;
-    }
-
-    public String getRedirectUrl() {
-        return redirectUrl;
-    }
-
-    public PayInPaymentDetailsPayPal setRedirectUrl(String redirectUrl) {
-        this.redirectUrl = redirectUrl;
-        return this;
     }
 
     public String getStatementDescriptor() {
