@@ -62,5 +62,22 @@ public enum PayInPaymentType {
     /**
      * MBWAY payment type
      */
-    MBWAY
+    MBWAY,
+
+    /**
+     * SATISPAY payment type
+     */
+    SATISPAY,
+
+    /**
+     * BLIK payment type
+     */
+    BLIK,
+
+    /**
+     * MULTIBANCO payment type
+     */
+    MULTIBANCO
+
+
 }

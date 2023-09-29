@@ -125,5 +125,8 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         throw new Exception("Execution is not defined or it is not object type");
     }
 
-
+    @Override
+    public PayIn createPayPal(PayIn payIn) throws Exception {
+        return this.createObject(PayIn.class, null, "payins_paypal-web_create_v2", payIn);
+    }
 }
