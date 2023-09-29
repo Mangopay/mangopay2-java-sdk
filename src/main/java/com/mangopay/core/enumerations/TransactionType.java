@@ -27,5 +27,10 @@ public enum TransactionType {
     /**
      * CONVERSION transaction type.
      */
-    CONVERSION
+    CONVERSION,
+
+    /**
+     * CARD_VALIDATION transaction type.
+     */
+    CARD_VALIDATION
 }

@@ -567,7 +567,6 @@ public class PayInApiImplTest extends BaseTest {
         ));
         paymentDetails.setLineItems(lineItems);
         paymentDetails.setShippingPreference(ShippingPreference.GET_FROM_FILE);
-        paymentDetails.setReturnUrl("http://mangopay.com");
         paymentDetails.setStatementDescriptor("sttm");
 
         payIn.setPaymentDetails(paymentDetails);
