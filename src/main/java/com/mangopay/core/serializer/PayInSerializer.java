@@ -46,6 +46,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getStatementDescriptor()));
                 object.add("Shipping", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShipping()));
                 object.add("LineItems", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getLineItems()));
+                object.add("ShippingPreference", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShippingPreference()));
                 break;
             case "PayInPaymentDetailsPayconiq":
                 object.add("Country", context.serialize(((PayInPaymentDetailsPayconiq) src.getPaymentDetails()).getCountry()));

@@ -3,10 +3,7 @@ package com.mangopay.core.deserializer;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.mangopay.core.*;
-import com.mangopay.core.enumerations.CardType;
-import com.mangopay.core.enumerations.CultureCode;
-import com.mangopay.core.enumerations.DirectDebitType;
-import com.mangopay.core.enumerations.SecureMode;
+import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.BankAccount;
 import com.mangopay.entities.DebitedBankAccount;
 import com.mangopay.entities.PayIn;
@@ -68,8 +65,12 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
                     payInPaymentDetailsPayPal.setShipping((Shipping) context.deserialize(object.get("Shipping"), Shipping.class));
                 if (object.has("LineItems") && !object.get("LineItems").isJsonNull()) {
-                    Type listType = new TypeToken<ArrayList<LineItem>>(){}.getType();
+                    Type listType = new TypeToken<ArrayList<LineItem>>() {
+                    }.getType();
                     payInPaymentDetailsPayPal.setLineItems((List<LineItem>) context.deserialize(object.get("LineItems"), listType));
+                }
+                if (object.has("ShippingPreference") && !object.get("ShippingPreference").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setShippingPreference(ShippingPreference.valueOf(object.get("ShippingPreference").getAsString()));
                 }
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;
