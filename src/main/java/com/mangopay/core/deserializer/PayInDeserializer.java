@@ -192,6 +192,22 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsKlarna.setAdditionalData(object.get("AdditionalData").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsKlarna);
                 break;
+            case IDEAL:
+                PayInPaymentDetailsIdeal payInPaymentDetailsIdeal = new PayInPaymentDetailsIdeal();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsIdeal.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("BankName") && !object.get("BankName").isJsonNull())
+                    payInPaymentDetailsIdeal.setBankName(object.get("BankName").getAsString());
+                if (object.has("Bic") && !object.get("Bic").isJsonNull())
+                    payInPaymentDetailsIdeal.setBic(object.get("Bic").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsIdeal);
+                break;
+            case GIROPAY:
+                PayInPaymentDetailsGiropay payInPaymentDetailsGiropay = new PayInPaymentDetailsGiropay();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsGiropay.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsGiropay);
+                break;
             default:
                 return null;
         }

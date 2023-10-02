@@ -82,7 +82,17 @@ public enum PayInPaymentType {
     /**
      * KLARNA payment type
      */
-    KLARNA
+    KLARNA,
+
+    /**
+     * IDEAL payment type
+     */
+    IDEAL,
+
+    /**
+     * GIROPAY payment type
+     */
+    GIROPAY
 
 
 }

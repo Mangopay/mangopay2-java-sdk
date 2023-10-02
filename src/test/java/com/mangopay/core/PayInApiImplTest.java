@@ -1098,15 +1098,55 @@ public class PayInApiImplTest extends BaseTest {
         try {
             UserNatural user = this.getJohn();
             Wallet wallet = this.getJohnsWalletWithMoney();
-            PayIn payIn = this.getNewPayInKlarnaWeb(user.getId());
-
-            PayIn created = api.getPayInApi().create(payIn);
+            PayIn created = this.getNewPayInKlarnaWeb(user.getId());
 
             assertNotNull(created);
-            assertEquals(TransactionStatus.CREATED, payIn.getStatus());
-            assertEquals(PayInPaymentType.KLARNA, payIn.getPaymentType());
-            assertEquals(PayInExecutionType.WEB, payIn.getExecutionType());
-            assertEquals(wallet.getId(), payIn.getCreditedWalletId());
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.KLARNA, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createIdealWeb() {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            PayIn created = this.getNewPayInIdealWeb(user.getId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.IDEAL, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createGiropayWeb() {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            PayIn created = this.getNewPayInGiropayWeb(user.getId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.GIROPAY, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
 
             PayIn fetched = api.getPayInApi().get(created.getId());
             assertNotNull(fetched);
