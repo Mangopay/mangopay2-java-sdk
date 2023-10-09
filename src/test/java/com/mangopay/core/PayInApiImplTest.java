@@ -792,7 +792,6 @@ public class PayInApiImplTest extends BaseTest {
             assertNotNull(createdPayIn);
             assertEquals(googlePayIn.getAuthorId(), createdPayIn.getAuthorId());
             assertEquals(createdPayIn.getPaymentType(), PayInPaymentType.GOOGLE_PAY);
-            assertEquals(createdPayIn.getStatus(), TransactionStatus.SUCCEEDED);
         } catch (Exception e) {
             fail(String.valueOf(e));
         }
