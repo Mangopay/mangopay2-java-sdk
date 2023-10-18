@@ -567,6 +567,7 @@ public class PayInApiImplTest extends BaseTest {
         ));
         paymentDetails.setLineItems(lineItems);
         paymentDetails.setShippingPreference(ShippingPreference.GET_FROM_FILE);
+        paymentDetails.setReference("Reference");
         paymentDetails.setStatementDescriptor("sttm");
 
         payIn.setPaymentDetails(paymentDetails);

@@ -72,6 +72,9 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("ShippingPreference") && !object.get("ShippingPreference").isJsonNull()) {
                     payInPaymentDetailsPayPal.setShippingPreference(ShippingPreference.valueOf(object.get("ShippingPreference").getAsString()));
                 }
+                if (object.has("Reference") && !object.get("Reference").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setReference(object.get("Reference").getAsString());
+                }
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;
             case PAYCONIQ:

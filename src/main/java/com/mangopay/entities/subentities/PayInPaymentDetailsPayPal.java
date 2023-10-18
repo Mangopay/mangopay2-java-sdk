@@ -43,6 +43,9 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     @SerializedName("ShippingPreference")
     private ShippingPreference shippingPreference;
 
+    @SerializedName("Reference")
+    private String reference;
+
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
     }
@@ -103,5 +106,13 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     public void setShippingPreference(ShippingPreference shippingPreference) {
         this.shippingPreference = shippingPreference;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 }
