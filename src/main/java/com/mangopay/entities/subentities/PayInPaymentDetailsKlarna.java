@@ -1,7 +1,10 @@
 package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.*;
+import com.mangopay.core.Billing;
+import com.mangopay.core.Dto;
+import com.mangopay.core.LineItem;
+import com.mangopay.core.Shipping;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.interfaces.PayInPaymentDetails;
@@ -28,8 +31,8 @@ public class PayInPaymentDetailsKlarna extends Dto implements PayInPaymentDetail
     @SerializedName("PaymentMethod")
     private String paymentMethod;
 
-    @SerializedName("MerchantOrderId")
-    private String merchantOrderId;
+    @SerializedName("Reference")
+    private String reference;
 
     @SerializedName("Country")
     private CountryIso country;
@@ -82,12 +85,12 @@ public class PayInPaymentDetailsKlarna extends Dto implements PayInPaymentDetail
         return this;
     }
 
-    public String getMerchantOrderId() {
-        return merchantOrderId;
+    public String getReference() {
+        return reference;
     }
 
-    public PayInPaymentDetailsKlarna setMerchantOrderId(String merchantOrderId) {
-        this.merchantOrderId = merchantOrderId;
+    public PayInPaymentDetailsKlarna setReference(String reference) {
+        this.reference = reference;
         return this;
     }
 

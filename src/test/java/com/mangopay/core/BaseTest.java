@@ -704,7 +704,7 @@ public abstract class BaseTest {
                 .setShipping(this.getNewShipping())
                 .setBilling(this.getNewBilling())
                 .setPaymentMethod("")
-                .setMerchantOrderId("afd48-879d-48fg")
+                .setReference("afd48-879d-48fg")
                 .setCountry(CountryIso.FR)
                 .setCulture(CultureCode.FR)
                 .setPhone("351#269458236")

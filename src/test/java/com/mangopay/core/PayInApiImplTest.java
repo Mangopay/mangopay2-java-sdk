@@ -758,6 +758,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Cannot generate payment data in tests")
     public void testDirectGooglepayV2Payin() {
         try {
             Wallet wallet = getJohnsWallet();

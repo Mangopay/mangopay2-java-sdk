@@ -181,8 +181,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsKlarna.setBilling((Billing) context.deserialize(object.get("Billing"), Billing.class));
                 if (object.has("PaymentMethod") && !object.get("PaymentMethod").isJsonNull())
                     payInPaymentDetailsKlarna.setPaymentMethod(object.get("PaymentMethod").getAsString());
-                if (object.has("MerchantOrderId") && !object.get("MerchantOrderId").isJsonNull())
-                    payInPaymentDetailsKlarna.setMerchantOrderId(object.get("MerchantOrderId").getAsString());
+                if (object.has("Reference") && !object.get("Reference").isJsonNull())
+                    payInPaymentDetailsKlarna.setReference(object.get("Reference").getAsString());
                 if (object.has("Country") && !object.get("Country").isJsonNull())
                     payInPaymentDetailsKlarna.setCountry((CountryIso) context.deserialize(object.get("Country"), CountryIso.class));
                 if (object.has("Culture") && !object.get("Culture").isJsonNull())
