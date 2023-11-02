@@ -124,28 +124,36 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsGooglePayV2.class);
                                 }}
                         );
-                        put("PAYCONIQ", new HashMap<String, Class<?>>(){{
+                        put("PAYCONIQ", new HashMap<String, Class<?>>() {{
                                     put("PaymentDetails", PayInPaymentDetailsPayconiq.class);
                                 }}
                         );
                         put("MBWAY", new HashMap<String, Class<?>>() {{
                                     put("PaymentDetails", PayInPaymentDetailsMbway.class);
                                 }}
-                         );
+                        );
                         put("SATISPAY", new HashMap<String, Class<?>>() {{
-                                put("PaymentDetails", PayInPaymentDetailsSatispay.class);
-                            }}
+                                    put("PaymentDetails", PayInPaymentDetailsSatispay.class);
+                                }}
                         );
                         put("BLIK", new HashMap<String, Class<?>>() {{
-                                put("PaymentDetails", PayInPaymentDetailsBlik.class);
-                            }}
+                                    put("PaymentDetails", PayInPaymentDetailsBlik.class);
+                                }}
                         );
                         put("MULTIBANCO", new HashMap<String, Class<?>>() {{
-                                put("PaymentDetails", PayInPaymentDetailsMultibanco.class);
-                            }}
+                                    put("PaymentDetails", PayInPaymentDetailsMultibanco.class);
+                                }}
                         );
                         put("KLARNA", new HashMap<String, Class<?>>() {{
                                     put("PaymentDetails", PayInPaymentDetailsKlarna.class);
+                                }}
+                        );
+                        put("IDEAL", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsIdeal.class);
+                                }}
+                        );
+                        put("GIROPAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsGiropay.class);
                                 }}
                         );
                         // ...and more in future...

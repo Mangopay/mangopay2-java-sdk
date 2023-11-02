@@ -581,6 +581,18 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInIdealWeb(String userId) throws Exception {
+        PayIn payIn = getPayInIdealWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInGiropayWeb(String userId) throws Exception {
+        PayIn payIn = getPayInGiropayWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     private PayIn getPayInCardDirect(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
@@ -666,7 +678,7 @@ public abstract class BaseTest {
             userId = user.getId();
         }
 
-        // create pay-in KLARNA DIRECT
+        // create pay-in KLARNA WEB
         PayIn payIn = new PayIn();
         payIn.setAuthorId(userId);
         payIn.setCreditedWalletId(wallet.getId());
@@ -706,6 +718,69 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(payInExecutionDetailsWeb);
 
         payIn.setTag("My KLARNA Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInIdealWeb(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        payIn.setPaymentDetails(new PayInPaymentDetailsIdeal());
+        ((PayInPaymentDetailsIdeal) payIn.getPaymentDetails()).setStatementDescriptor("Ideal");
+        ((PayInPaymentDetailsIdeal) payIn.getPaymentDetails()).setBic("ABNANL2A");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+        payIn.setTag("My IDEAL Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInGiropayWeb(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        payIn.setPaymentDetails(new PayInPaymentDetailsGiropay());
+        ((PayInPaymentDetailsGiropay) payIn.getPaymentDetails()).setStatementDescriptor("Ideal");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+        payIn.setTag("My GIROPAY Tag");
         return payIn;
     }
 

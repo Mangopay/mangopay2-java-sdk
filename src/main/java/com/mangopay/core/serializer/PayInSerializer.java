@@ -103,6 +103,14 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("Email", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getEmail()));
                 object.add("AdditionalData", context.serialize(((PayInPaymentDetailsKlarna) src.getPaymentDetails()).getAdditionalData()));
                 break;
+            case "PayInPaymentDetailsIdeal":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsIdeal) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Bic", context.serialize(((PayInPaymentDetailsIdeal) src.getPaymentDetails()).getBic()));
+                object.add("BankName", context.serialize(((PayInPaymentDetailsIdeal) src.getPaymentDetails()).getBankName()));
+                break;
+            case "PayInPaymentDetailsGiropay":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGiropay) src.getPaymentDetails()).getStatementDescriptor()));
+                break;
             default:
                 return null;
         }
