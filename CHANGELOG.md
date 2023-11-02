@@ -1,3 +1,11 @@
+## [2.32.0] - 2023-11-02
+### Updated
+- Giropay and Ideal integrations with Mangopay have been improved.
+- Klarna param "MerchantOrderId" has been renamed to "Reference"
+
+### Added
+- New Reference parameter for the new Paypal implementation.
+
 ## [2.31.0] - 2023-09-29
 ### Added
 
