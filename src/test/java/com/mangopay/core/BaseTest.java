@@ -1072,6 +1072,7 @@ public abstract class BaseTest {
         refund.setFees(new Money());
         refund.getFees().setAmount(payIn.getFees().getAmount());
         refund.getFees().setCurrency(payIn.getFees().getCurrency());
+        refund.setReference("Reference");
 
         return this.api.getPayInApi().createRefund(payIn.getId(), refund);
     }

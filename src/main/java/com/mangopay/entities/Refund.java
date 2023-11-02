@@ -43,6 +43,9 @@ public class Refund extends Transaction {
     @SerializedName("RefundReason")
     private RefundReason refundReason;
 
+    @SerializedName("Reference")
+    private String reference;
+
     public String getInitialTransactionId() {
         return initialTransactionId;
     }
@@ -81,6 +84,14 @@ public class Refund extends Transaction {
 
     public void setRefundReason(com.mangopay.core.RefundReason refundReason) {
         this.refundReason = refundReason;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
     /**
