@@ -215,6 +215,25 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createPartialRefundCardDirect() {
+        try {
+            PayIn payIn = this.getNewPayInCardDirect();
+            Wallet wallet = this.getJohnsWalletWithMoney();
+            Wallet walletBefore = this.api.getWalletApi().get(wallet.getId());
+
+            Refund refund = this.getPartialRefundForPayIn(payIn);
+            Wallet walletAfter = this.api.getWalletApi().get(wallet.getId());
+
+            assertTrue(refund.getId().length() > 0);
+            assertTrue(walletAfter.getBalance().getAmount() == (walletBefore.getBalance().getAmount() - refund.getDebitedFunds().getAmount()));
+            assertTrue(refund.getType() == TransactionType.PAYOUT);
+            assertTrue(refund.getNature() == TransactionNature.REFUND);
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void createPreAuthorizedDirect() {
         try {
             CardPreAuthorization cardPreAuthorization = this.getJohnsCardPreAuthorization();

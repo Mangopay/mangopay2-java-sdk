@@ -1078,6 +1078,26 @@ public abstract class BaseTest {
     }
 
     /**
+     * Creates partial refund object for PayIn.
+     *
+     * @return Created Refund entity.
+     */
+    protected Refund getPartialRefundForPayIn(PayIn payIn) throws Exception {
+        UserNatural user = this.getJohn();
+
+        Refund refund = new Refund();
+        refund.setAuthorId(user.getId());
+        refund.setDebitedFunds(new Money());
+        refund.getDebitedFunds().setAmount(100);
+        refund.getDebitedFunds().setCurrency(payIn.getDebitedFunds().getCurrency());
+        refund.setFees(new Money());
+        refund.getFees().setAmount(10);
+        refund.getFees().setCurrency(payIn.getFees().getCurrency());
+
+        return this.api.getPayInApi().createRefund(payIn.getId(), refund);
+    }
+
+    /**
      * Creates card registration object.
      *
      * @return CardRegistration instance returned from API.
