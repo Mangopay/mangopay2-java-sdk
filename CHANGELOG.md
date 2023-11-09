@@ -1,3 +1,8 @@
+## [2.32.1] - 2023-11-09
+### Added
+
+It's now possible to specify an amount for DebitedFunds and Fees when you create a refund with `getPayInApi().createRefund()`.
+
 ## [2.32.0] - 2023-11-02
 ### Updated
 - Giropay and Ideal integrations with Mangopay have been improved.
