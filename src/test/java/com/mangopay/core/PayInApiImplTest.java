@@ -990,7 +990,7 @@ public class PayInApiImplTest extends BaseTest {
             payIn.setExecutionDetails(payInExecutionDetailsWeb);
 
             PayIn created = api.getPayInApi().create(payIn);
-            String returnUrlCreated = ((PayInExecutionDetailsWeb)created.getExecutionDetails()).getReturnUrl();
+            String returnUrlCreated = ((PayInExecutionDetailsWeb) created.getExecutionDetails()).getReturnUrl();
 
             assertNotNull(created);
             assertNotNull(created.getExecutionDetails());
@@ -1013,10 +1013,10 @@ public class PayInApiImplTest extends BaseTest {
             Money fees = new Money(CurrencyIso.EUR, 0);
 
             CreateCardPreAuthorizedDepositPayIn dto = new CreateCardPreAuthorizedDepositPayIn(
-                wallet.getId(),
-                debitedFunds,
-                fees,
-                deposit.getId()
+                    wallet.getId(),
+                    debitedFunds,
+                    fees,
+                    deposit.getId()
             );
 
             CardPreAuthorizedDepositPayIn payIn = this.api.getPayInApi().createCardPreAuthorizedDepositPayIn(dto, null);
@@ -1173,6 +1173,42 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(created.getId(), fetched.getId());
         } catch (Exception ex) {
             fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createLegacyIdealPayIn() {
+        try {
+            Wallet wallet = getJohnsWallet();
+            UserNatural user = getJohn();
+
+            PayIn payIn = new PayIn();
+            payIn.setPaymentType(PayInPaymentType.CARD);
+
+            payIn.setCreditedWalletId(wallet.getId());
+            payIn.setAuthorId(user.getId());
+
+            PayInPaymentDetailsCard pay = new PayInPaymentDetailsCard();
+            pay.setCardType(CardType.IDEAL);
+            pay.setBic("ABNANL2A");
+            payIn.setPaymentDetails(pay);
+
+            payIn.setDebitedFunds(new Money(CurrencyIso.EUR, 1000));
+            payIn.setFees(new Money(CurrencyIso.EUR, 100));
+
+            payIn.setExecutionType(PayInExecutionType.WEB);
+            PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+            payInExecutionDetailsWeb.setReturnUrl("http://www.mysite.com/returnURL/");
+            payInExecutionDetailsWeb.setCulture(CultureCode.EN);
+
+            payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+            PayIn created = api.getPayInApi().create(payIn);
+
+            assertNotNull(created);
+            assertNotNull(((PayInPaymentDetailsCard) created.getPaymentDetails()).getBankName());
+        } catch (Exception e) {
+            fail(e.getMessage());
         }
     }
 }
