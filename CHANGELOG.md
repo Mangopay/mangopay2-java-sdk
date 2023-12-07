@@ -1,3 +1,8 @@
+## [2.33.0] - 2023-12-07
+### Added
+
+The IDEAL legacy implementation has been enhanced. You can now pass the `Bic`., and if provided, the API response will include the `BankName` parameter. More information [here](https://mangopay.com/docs/endpoints/web-card-payins#create-web-card-payin).
+
 ## [2.32.1] - 2023-11-09
 ### Added
 
