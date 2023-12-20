@@ -51,6 +51,29 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createCardPreAuthorizationWithBillingCheckCardInfo() throws Exception {
+        CardPreAuthorization cardPreAuthorization = getPreAuthorization();
+        Billing billing = new Billing();
+        Address address = new Address();
+        address.setCity("Halo");
+        address.setAddressLine1("Street street");
+        address.setCountry(CountryIso.FR);
+        address.setPostalCode("65400");
+        billing.setAddress(address);
+        billing.setFirstName("John");
+        billing.setLastName("Doe");
+        cardPreAuthorization.setBilling(billing);
+
+        cardPreAuthorization = this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
+
+        assertNotNull(cardPreAuthorization.getCardInfo());
+        assertNotNull(cardPreAuthorization.getCardInfo().getBrand());
+        assertNotNull(cardPreAuthorization.getCardInfo().getType());
+        assertNotNull(cardPreAuthorization.getCardInfo().getIssuingBank());
+        assertNotNull(cardPreAuthorization.getCardInfo().getBin());
+    }
+
+    @Test
     public void createCardPreAuthorizationWithRequested3DSVersion() throws Exception {
         CardPreAuthorization cardPreAuthorization = getPreAuthorization();
         Billing billing = new Billing();
