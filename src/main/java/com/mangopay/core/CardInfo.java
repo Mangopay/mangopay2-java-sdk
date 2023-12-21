@@ -1,6 +1,8 @@
 package com.mangopay.core;
 
 import com.google.gson.annotations.SerializedName;
+import com.mangopay.core.enumerations.CardInfoType;
+import com.mangopay.core.enumerations.CountryIso;
 
 public class CardInfo extends Dto {
 
@@ -20,13 +22,13 @@ public class CardInfo extends Dto {
      * The country where the card was issued.
      */
     @SerializedName("IssuerCountryCode")
-    private String issuerCountryCode;
+    private CountryIso issuerCountryCode;
 
     /**
      * The type of card product: DEBIT, CREDIT, CHARGE CARD.
      */
     @SerializedName("Type")
-    private String type;
+    private CardInfoType type;
 
     /**
      * The card brand. Examples include: AMERICAN EXPRESS, DISCOVER, JCB, MASTERCARD, VISA, etc.
@@ -56,19 +58,19 @@ public class CardInfo extends Dto {
         this.issuingBank = issuingBank;
     }
 
-    public String getIssuerCountryCode() {
+    public CountryIso getIssuerCountryCode() {
         return issuerCountryCode;
     }
 
-    public void setIssuerCountryCode(String issuerCountryCode) {
+    public void setIssuerCountryCode(CountryIso issuerCountryCode) {
         this.issuerCountryCode = issuerCountryCode;
     }
 
-    public String getType() {
+    public CardInfoType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(CardInfoType type) {
         this.type = type;
     }
 
