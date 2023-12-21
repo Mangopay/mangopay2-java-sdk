@@ -1,7 +1,6 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.CardInfo;
 import com.mangopay.core.enumerations.PayInExecutionType;
 import com.mangopay.core.enumerations.PayInPaymentType;
 import com.mangopay.core.interfaces.PayInExecutionDetails;
@@ -47,12 +46,6 @@ public class PayIn extends Transaction {
     @SerializedName("ExecutionDetails")
     private PayInExecutionDetails executionDetails;
 
-    /**
-     * Information of the card
-     */
-    @SerializedName("CardInfo")
-    private CardInfo cardInfo;
-
     public String getCreditedWalletId() {
         return creditedWalletId;
     }
@@ -91,14 +84,6 @@ public class PayIn extends Transaction {
 
     public void setExecutionDetails(PayInExecutionDetails executionDetails) {
         this.executionDetails = executionDetails;
-    }
-
-    public CardInfo getCardInfo() {
-        return cardInfo;
-    }
-
-    public void setCardInfo(CardInfo cardInfo) {
-        this.cardInfo = cardInfo;
     }
 
     /**

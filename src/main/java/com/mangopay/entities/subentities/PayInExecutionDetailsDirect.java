@@ -1,10 +1,7 @@
 package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Billing;
-import com.mangopay.core.Dto;
-import com.mangopay.core.ObjectTool;
-import com.mangopay.core.SecurityInfo;
+import com.mangopay.core.*;
 import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.enumerations.SecureMode;
 import com.mangopay.core.interfaces.PayInExecutionDetails;
@@ -67,6 +64,12 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
      */
     @SerializedName("Culture")
     private CultureCode culture;
+
+    /**
+     * Information of the card
+     */
+    @SerializedName("CardInfo")
+    private CardInfo cardInfo;
 
     public PayInExecutionDetailsDirect() {
     }
@@ -213,6 +216,15 @@ public class PayInExecutionDetailsDirect extends Dto implements PayInExecutionDe
 
     public PayInExecutionDetailsDirect setRecurringPayinRegistrationId(String recurringPayInRegistrationId) {
         this.recurringPayInRegistrationId = recurringPayInRegistrationId;
+        return this;
+    }
+
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public PayInExecutionDetailsDirect setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
         return this;
     }
 

@@ -1,7 +1,6 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.CardInfo;
 import com.mangopay.core.Dto;
 import com.mangopay.core.Money;
 
@@ -24,17 +23,6 @@ public class RecurringPayInMIT extends Dto {
 
     @SerializedName("Tag")
     private String tag;
-
-    @SerializedName("CardInfo")
-    private CardInfo cardInfo;
-
-    public CardInfo getCardInfo() {
-        return cardInfo;
-    }
-
-    public void setCardInfo(CardInfo cardInfo) {
-        this.cardInfo = cardInfo;
-    }
 
     public String getRecurringPayInRegistrationId() {
         return recurringPayInRegistrationId;

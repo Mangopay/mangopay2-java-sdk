@@ -2,12 +2,14 @@ package com.mangopay.core.deserializer;
 
 import com.google.gson.*;
 import com.mangopay.core.Billing;
+import com.mangopay.core.CardInfo;
 import com.mangopay.core.SecurityInfo;
 import com.mangopay.core.enumerations.CardType;
 import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.core.enumerations.SecureMode;
 import com.mangopay.entities.RecurringPayIn;
-import com.mangopay.entities.subentities.*;
+import com.mangopay.entities.subentities.PayInExecutionDetailsDirect;
+import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
 
 import java.lang.reflect.Type;
 
@@ -56,6 +58,8 @@ public class RecurringPayInDeserializer implements JsonDeserializer<RecurringPay
                     payInExecutionDetailsDirect.setRequested3DSVersion(object.get("Requested3DSVersion").getAsString());
                 if (object.has("Applied3DSVersion") && !object.get("Applied3DSVersion").isJsonNull())
                     payInExecutionDetailsDirect.setApplied3DSVersion(object.get("Applied3DSVersion").getAsString());
+                if (object.has("CardInfo") && !object.get("CardInfo").isJsonNull())
+                    payInExecutionDetailsDirect.setCardInfo((CardInfo) context.deserialize(object.get("CardInfo"), CardInfo.class));
                 payIn.setExecutionDetails(payInExecutionDetailsDirect);
                 break;
         }
