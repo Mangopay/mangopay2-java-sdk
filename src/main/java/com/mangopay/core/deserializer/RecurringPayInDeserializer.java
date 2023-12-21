@@ -30,6 +30,8 @@ public class RecurringPayInDeserializer implements JsonDeserializer<RecurringPay
                     payInPaymentDetailsCard.setCardId(object.get("CardId").getAsString());
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsCard.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("CardInfo") && !object.get("CardInfo").isJsonNull())
+                    payInPaymentDetailsCard.setCardInfo((CardInfo) context.deserialize(object.get("CardInfo"), CardInfo.class));
                 payIn.setPaymentDetails(payInPaymentDetailsCard);
                 break;
             default:
@@ -58,8 +60,6 @@ public class RecurringPayInDeserializer implements JsonDeserializer<RecurringPay
                     payInExecutionDetailsDirect.setRequested3DSVersion(object.get("Requested3DSVersion").getAsString());
                 if (object.has("Applied3DSVersion") && !object.get("Applied3DSVersion").isJsonNull())
                     payInExecutionDetailsDirect.setApplied3DSVersion(object.get("Applied3DSVersion").getAsString());
-                if (object.has("CardInfo") && !object.get("CardInfo").isJsonNull())
-                    payInExecutionDetailsDirect.setCardInfo((CardInfo) context.deserialize(object.get("CardInfo"), CardInfo.class));
                 payIn.setExecutionDetails(payInExecutionDetailsDirect);
                 break;
         }
