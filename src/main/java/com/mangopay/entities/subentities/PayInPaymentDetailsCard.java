@@ -41,6 +41,18 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
     private String ipAddress;
 
     /**
+     * Name of the end-user’s bank
+     */
+    @SerializedName("BankName")
+    private String bankName;
+
+    /**
+     * The BIC identifier of the end-user’s bank
+     */
+    @SerializedName("Bic")
+    private String bic;
+
+    /**
      * Information of the card
      */
     @SerializedName("CardInfo")
@@ -106,6 +118,24 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
 
     public PayInPaymentDetailsCard setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+        return this;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public PayInPaymentDetailsCard setBankName(String bankName) {
+        this.bankName = bankName;
+        return this;
+    }
+
+    public String getBic() {
+        return bic;
+    }
+
+    public PayInPaymentDetailsCard setBic(String bic) {
+        this.bic = bic;
         return this;
     }
 

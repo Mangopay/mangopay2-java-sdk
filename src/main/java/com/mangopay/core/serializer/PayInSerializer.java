@@ -33,6 +33,8 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("Shipping", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getShipping()));
                 object.add("BrowserInfo", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getBrowserInfo()));
                 object.add("IpAddress", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getIpAddress()));
+                object.add("Bic", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getBic()));
+                object.add("BankName", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getBankName()));
                 break;
             case "PayInPaymentDetailsPreAuthorized":
                 object.add("PreauthorizationId", context.serialize(((PayInPaymentDetailsPreAuthorized) src.getPaymentDetails()).getPreauthorizationId()));
