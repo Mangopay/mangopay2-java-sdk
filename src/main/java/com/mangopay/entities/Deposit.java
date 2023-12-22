@@ -1,10 +1,7 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Billing;
-import com.mangopay.core.EntityBase;
-import com.mangopay.core.Money;
-import com.mangopay.core.Shipping;
+import com.mangopay.core.*;
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.subentities.BrowserInfo;
 import com.mangopay.entities.subentities.PayinsLinked;
@@ -78,6 +75,18 @@ public class Deposit extends EntityBase {
 
     @SerializedName("Applied3DSVersion")
     private String applied3DSVersion;
+
+    @SerializedName("CardInfo")
+    private CardInfo cardInfo;
+
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public Deposit setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
+        return this;
+    }
 
     public String getAuthorId() {
         return authorId;

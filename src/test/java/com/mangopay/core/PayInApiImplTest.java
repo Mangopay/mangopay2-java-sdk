@@ -691,6 +691,21 @@ public class PayInApiImplTest extends BaseTest {
         }
     }
 
+    @Test
+    public void testDirectPayInCheckCardInfo() {
+        try {
+            PayIn payIn = this.getNewPayInCardDirect();
+
+            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo());
+            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getBrand());
+            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getType());
+            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getIssuingBank());
+            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getBin());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Ignore("Can't be tested at this moment")
     @Test
     public void testDirectApplepayPayin() {
@@ -957,6 +972,66 @@ public class PayInApiImplTest extends BaseTest {
             PayInExecutionDetailsDirect payInGetDirect = (PayInExecutionDetailsDirect) getAsPayIn.getExecutionDetails();
             assertEquals(payInGetDirect.getRecurringPayInRegistrationId(), result.getId());
 
+        } catch (Exception e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCreateRecurringPaymentMITCheckCardInfo() {
+        try {
+            Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
+            UserNatural john = this.getJohn();
+
+            CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+            createRecurringPayment.setAuthorId(john.getId());
+            createRecurringPayment.setCardId(data.get("cardId"));
+            createRecurringPayment.setCreditedUserId(john.getId());
+            createRecurringPayment.setCreditedWalletId(data.get("walletId"));
+            createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(10).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setFirstTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setShipping(this.getNewShipping());
+            createRecurringPayment.setBilling(this.getNewBilling());
+            createRecurringPayment.setEndDate(1833374495L);
+            createRecurringPayment.setMigration(true);
+            createRecurringPayment.setNextTransactionDebitedFunds(new Money().setAmount(12).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setNextTransactionFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setFrequency("Daily");
+            createRecurringPayment.setFixedNextAmount(true);
+            createRecurringPayment.setFractionedPayment(false);
+
+            RecurringPayment result = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
+
+            RecurringPayInCIT cit = new RecurringPayInCIT();
+            cit.setRecurringPayInRegistrationId(result.getId());
+            cit.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+            cit.setSecureModeReturnURL("http://www.my-site.com/returnurl");
+            cit.setStatementDescriptor("lorem");
+            cit.setTag("custom meta");
+            cit.setBrowserInfo(this.getNewBrowserInfo());
+            cit.setFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            cit.setDebitedFunds(new Money().setAmount(11).setCurrency(CurrencyIso.EUR));
+            RecurringPayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
+
+            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo());
+            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getBrand());
+            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getType());
+            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getIssuingBank());
+            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getBin());
+
+            RecurringPayInMIT mit = new RecurringPayInMIT();
+            mit.setRecurringPayInRegistrationId(result.getId());
+            mit.setFees(new Money().setAmount(1).setCurrency(CurrencyIso.EUR));
+            mit.setDebitedFunds(new Money().setAmount(12).setCurrency(CurrencyIso.EUR));
+            mit.setStatementDescriptor("lorem");
+            mit.setTag("custom meta");
+            RecurringPayIn createdMit = this.api.getPayInApi().createRecurringPayInMIT(null, mit);
+
+            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo());
+            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getBrand());
+            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getType());
+            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getIssuingBank());
+            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getBin());
         } catch (Exception e) {
             fail(e.getMessage());
         }

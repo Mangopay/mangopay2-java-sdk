@@ -149,6 +149,17 @@ public class CardPreAuthorization extends EntityBase {
     @SerializedName("Culture")
     private CultureCode culture;
 
+    @SerializedName("CardInfo")
+    private CardInfo cardInfo;
+
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
+    }
+
     public String getAuthorId() {
         return authorId;
     }

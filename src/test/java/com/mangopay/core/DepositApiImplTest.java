@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * DepositApiImpl test methods.
  */
@@ -17,6 +19,21 @@ public class DepositApiImplTest extends BaseTest {
             Deposit deposit = this.createNewDeposit();
 
             Assert.assertNotNull(deposit);
+        } catch (Exception ex) {
+            Assert.fail(ex.getMessage());
+        }
+    }
+
+    @Test
+    public void createDepositCheckCardInfo() {
+        try {
+            Deposit deposit = this.createNewDeposit();
+
+            assertNotNull(deposit.getCardInfo());
+            assertNotNull(deposit.getCardInfo().getBrand());
+            assertNotNull(deposit.getCardInfo().getType());
+            assertNotNull(deposit.getCardInfo().getIssuingBank());
+            assertNotNull(deposit.getCardInfo().getBin());
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }

@@ -1,11 +1,12 @@
 package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
+import com.mangopay.core.CardInfo;
 import com.mangopay.core.Dto;
 import com.mangopay.core.ObjectTool;
 import com.mangopay.core.Shipping;
-import com.mangopay.core.interfaces.PayInPaymentDetails;
 import com.mangopay.core.enumerations.CardType;
+import com.mangopay.core.interfaces.PayInPaymentDetails;
 
 /**
  * Class representing the Card type for mean of payment in PayIn entity.
@@ -50,6 +51,12 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
      */
     @SerializedName("Bic")
     private String bic;
+
+    /**
+     * Information of the card
+     */
+    @SerializedName("CardInfo")
+    private CardInfo cardInfo;
 
     public PayInPaymentDetailsCard() {
     }
@@ -129,6 +136,15 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
 
     public PayInPaymentDetailsCard setBic(String bic) {
         this.bic = bic;
+        return this;
+    }
+
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public PayInPaymentDetailsCard setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
         return this;
     }
 
