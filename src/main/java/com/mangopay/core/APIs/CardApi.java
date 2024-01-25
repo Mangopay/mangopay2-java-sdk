@@ -84,4 +84,12 @@ public interface CardApi {
      * @throws Exception
      */
     CardValidation validate(String cardId, CardValidation cardValidation) throws Exception;
+
+    /**
+     * Get card validation
+     * @param cardId, cardValidationId
+     * @return CardValidation
+     * @throws Exception
+     */
+    CardValidation get_card_validation(String cardId, String cardValidationId) throws Exception;
 }

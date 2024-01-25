@@ -58,15 +58,19 @@ public class CardApiImpl extends ApiBase implements CardApi {
     public List<Transaction> getTransactions(String cardId, Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(Transaction[].class, Transaction.class, "cards_get_transactions", pagination, cardId, sorting);
     }
-  
+
     @Override
     public List<CardPreAuthorization> getCardPreAuthorizations(String cardId) throws Exception {
-        return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "card_get_preauthorization",null,cardId);
+        return this.getList(CardPreAuthorization[].class, CardPreAuthorization.class, "card_get_preauthorization", null, cardId);
     }
 
     @Override
     public CardValidation validate(String cardId, CardValidation cardValidation) throws Exception {
-        return this.createObject(CardValidation.class,  null ,"card_validate", cardValidation, cardId);
+        return this.createObject(CardValidation.class, null, "card_validate", cardValidation, cardId);
+    }
+
+    public CardValidation get_card_validation(String cardId, String cardValidationId) throws Exception {
+        return this.getObject(CardValidation.class, "get_card_validation", cardId, cardValidationId);
     }
 
 
