@@ -134,4 +134,12 @@ public interface PayInApi {
      * @throws Exception
      */
     PayIn createPayPal(PayIn payIn) throws Exception;
+
+    /**
+     * Look up metadata from BIN or Google Pay token
+     * @param metadata     The PaymentMethodMetadata post object
+     * @return           PaymentMethodMetadata object returned by API.
+     * @throws Exception
+     */
+    PaymentMethodMetadata getPaymentMethodMetadata(PaymentMethodMetadata metadata) throws Exception;
 }

@@ -100,6 +100,7 @@ public abstract class ApiBase {
         put("payins_ideal-web_create", new String[]{"/payins/payment-methods/ideal", RequestType.POST.toString()});
         put("payins_giropay-web_create", new String[]{"/payins/payment-methods/giropay", RequestType.POST.toString()});
 
+        put("payment_method-metadata", new String[]{"/payment-methods/metadata", RequestType.POST.toString()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});

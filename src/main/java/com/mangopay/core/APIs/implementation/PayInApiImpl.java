@@ -129,4 +129,9 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     public PayIn createPayPal(PayIn payIn) throws Exception {
         return this.createObject(PayIn.class, null, "payins_paypal-web_create_v2", payIn);
     }
+
+    @Override
+    public PaymentMethodMetadata getPaymentMethodMetadata(PaymentMethodMetadata metadata) throws Exception {
+        return this.createObject(PaymentMethodMetadata.class, null, "payment_method-metadata", metadata);
+    }
 }
