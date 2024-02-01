@@ -3,6 +3,8 @@ package com.mangopay.entities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 
+import java.util.List;
+
 public class PaymentMethodMetadata extends EntityBase {
 
     /**
@@ -59,7 +61,7 @@ public class PaymentMethodMetadata extends EntityBase {
      * Additional data about the card based on the BIN. In the case of co-branded card products, two objects are returned.
      */
     @SerializedName("BinData")
-    private BinData[] binData;
+    private List<BinData> binData;
 
     public String getType() {
         return type;
@@ -125,11 +127,11 @@ public class PaymentMethodMetadata extends EntityBase {
         this.commercialIndicator = commercialIndicator;
     }
 
-    public BinData[] getBinData() {
+    public List<BinData> getBinData() {
         return binData;
     }
 
-    public void setBinData(BinData[] binData) {
+    public void setBinData(List<BinData> binData) {
         this.binData = binData;
     }
 }
