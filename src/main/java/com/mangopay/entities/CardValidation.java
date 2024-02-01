@@ -89,7 +89,7 @@ public class CardValidation extends EntityBase {
      * The date and time at which successful authorization occurred. If authorization failed, the value is null.
      */
     @SerializedName("AuthorizationDate")
-    private long authorizationDate;
+    private Long authorizationDate;
 
     /**
      * Information of the card
@@ -137,11 +137,11 @@ public class CardValidation extends EntityBase {
         this.preferredCardNetwork = preferredCardNetwork;
     }
 
-    public long getAuthorizationDate() {
+    public Long getAuthorizationDate() {
         return authorizationDate;
     }
 
-    public void setAuthorizationDate(long authorizationDate) {
+    public void setAuthorizationDate(Long authorizationDate) {
         this.authorizationDate = authorizationDate;
     }
 
