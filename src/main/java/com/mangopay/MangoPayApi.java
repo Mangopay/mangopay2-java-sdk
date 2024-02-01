@@ -312,7 +312,7 @@ public class MangoPayApi {
         return cardPreAuthorizations;
     }
 
-    private void setCardPreAuthorizationApi(CardPreAuthorizationApi cardPreAuthorizations) {
+    public void setCardPreAuthorizationApi(CardPreAuthorizationApi cardPreAuthorizations) {
         this.cardPreAuthorizations = cardPreAuthorizations;
     }
 
@@ -320,7 +320,7 @@ public class MangoPayApi {
         return cards;
     }
 
-    private void setCardApi(CardApi cards) {
+    public void setCardApi(CardApi cards) {
         this.cards = cards;
     }
 
@@ -328,7 +328,7 @@ public class MangoPayApi {
         return refunds;
     }
 
-    private void setRefundApi(RefundApi refunds) {
+    public void setRefundApi(RefundApi refunds) {
         this.refunds = refunds;
     }
 
@@ -336,7 +336,7 @@ public class MangoPayApi {
         return events;
     }
 
-    private void setEventApi(EventApi events) {
+    public void setEventApi(EventApi events) {
         this.events = events;
     }
 
@@ -344,7 +344,7 @@ public class MangoPayApi {
         return hooks;
     }
 
-    private void setHookApi(HookApi hooks) {
+    public void setHookApi(HookApi hooks) {
         this.hooks = hooks;
     }
 
@@ -352,7 +352,7 @@ public class MangoPayApi {
         return kycDocuments;
     }
 
-    private void setKycDocumentApi(KycDocumentApi kycDocuments) {
+    public void setKycDocumentApi(KycDocumentApi kycDocuments) {
         this.kycDocuments = kycDocuments;
     }
 
@@ -360,7 +360,7 @@ public class MangoPayApi {
         return disputes;
     }
 
-    private void setDisputeApi(DisputeApi disputes) {
+    public void setDisputeApi(DisputeApi disputes) {
         this.disputes = disputes;
     }
 
@@ -368,7 +368,7 @@ public class MangoPayApi {
         return idempotency;
     }
 
-    private void setIdempotencyApi(IdempotencyApi idempotency) {
+    public void setIdempotencyApi(IdempotencyApi idempotency) {
         this.idempotency = idempotency;
     }
 
@@ -376,7 +376,7 @@ public class MangoPayApi {
         return mandates;
     }
 
-    private void setMandateApi(MandateApi mandates) {
+    public void setMandateApi(MandateApi mandates) {
         this.mandates = mandates;
     }
 
@@ -384,7 +384,7 @@ public class MangoPayApi {
         return reports;
     }
 
-    private void setReportApi(ReportApi reports) {
+    public void setReportApi(ReportApi reports) {
         this.reports = reports;
     }
 
@@ -392,7 +392,7 @@ public class MangoPayApi {
         return bankingAliases;
     }
 
-    private void setBankingAliasApi(BankingAliasApi bankingAliases) {
+    public void setBankingAliasApi(BankingAliasApi bankingAliases) {
         this.bankingAliases = bankingAliases;
     }
 
@@ -400,7 +400,7 @@ public class MangoPayApi {
         return uboDeclarations;
     }
 
-    private void setUboDeclarationApi(UboDeclarationApi uboDeclarations) {
+    public void setUboDeclarationApi(UboDeclarationApi uboDeclarations) {
         this.uboDeclarations = uboDeclarations;
     }
 
