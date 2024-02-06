@@ -195,6 +195,27 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void cardDirectGetPaymentMethodsMetadata() {
+        try {
+            PayIn payIn = this.getNewPayInCardDirect();
+
+            PaymentMethodMetadata paymentMethodMetadata = new PaymentMethodMetadata();
+            paymentMethodMetadata.setType("BIN");
+            paymentMethodMetadata.setBin(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardInfo().getBin());
+
+            PaymentMethodMetadata resultMetadata = this.api.getPayInApi().getPaymentMethodMetadata(paymentMethodMetadata);
+            assertTrue(resultMetadata.getBin().equals(paymentMethodMetadata.getBin()));
+            assertNotNull(resultMetadata.getIssuerCountryCode());
+            assertNotNull(resultMetadata.getIssuingBank());
+            assertNotNull(resultMetadata.getBinData());
+            assertNotNull(resultMetadata.getCardType());
+
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void createRefundCardDirect() {
         try {
             PayIn payIn = this.getNewPayInCardDirect();
@@ -698,11 +719,11 @@ public class PayInApiImplTest extends BaseTest {
         try {
             PayIn payIn = this.getNewPayInCardDirect();
 
-            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo());
-            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getBrand());
-            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getType());
-            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getIssuingBank());
-            assertNotNull(((PayInPaymentDetailsCard)payIn.getPaymentDetails()).getCardInfo().getBin());
+            assertNotNull(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardInfo());
+            assertNotNull(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardInfo().getBrand());
+            assertNotNull(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardInfo().getType());
+            assertNotNull(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardInfo().getIssuingBank());
+            assertNotNull(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardInfo().getBin());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1015,11 +1036,11 @@ public class PayInApiImplTest extends BaseTest {
             cit.setDebitedFunds(new Money().setAmount(11).setCurrency(CurrencyIso.EUR));
             RecurringPayIn createdCit = this.api.getPayInApi().createRecurringPayInCIT(null, cit);
 
-            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo());
-            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getBrand());
-            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getType());
-            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getIssuingBank());
-            assertNotNull(((PayInPaymentDetailsCard)createdCit.getPaymentDetails()).getCardInfo().getBin());
+            assertNotNull(((PayInPaymentDetailsCard) createdCit.getPaymentDetails()).getCardInfo());
+            assertNotNull(((PayInPaymentDetailsCard) createdCit.getPaymentDetails()).getCardInfo().getBrand());
+            assertNotNull(((PayInPaymentDetailsCard) createdCit.getPaymentDetails()).getCardInfo().getType());
+            assertNotNull(((PayInPaymentDetailsCard) createdCit.getPaymentDetails()).getCardInfo().getIssuingBank());
+            assertNotNull(((PayInPaymentDetailsCard) createdCit.getPaymentDetails()).getCardInfo().getBin());
 
             RecurringPayInMIT mit = new RecurringPayInMIT();
             mit.setRecurringPayInRegistrationId(result.getId());
@@ -1029,11 +1050,11 @@ public class PayInApiImplTest extends BaseTest {
             mit.setTag("custom meta");
             RecurringPayIn createdMit = this.api.getPayInApi().createRecurringPayInMIT(null, mit);
 
-            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo());
-            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getBrand());
-            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getType());
-            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getIssuingBank());
-            assertNotNull(((PayInPaymentDetailsCard)createdMit.getPaymentDetails()).getCardInfo().getBin());
+            assertNotNull(((PayInPaymentDetailsCard) createdMit.getPaymentDetails()).getCardInfo());
+            assertNotNull(((PayInPaymentDetailsCard) createdMit.getPaymentDetails()).getCardInfo().getBrand());
+            assertNotNull(((PayInPaymentDetailsCard) createdMit.getPaymentDetails()).getCardInfo().getType());
+            assertNotNull(((PayInPaymentDetailsCard) createdMit.getPaymentDetails()).getCardInfo().getIssuingBank());
+            assertNotNull(((PayInPaymentDetailsCard) createdMit.getPaymentDetails()).getCardInfo().getBin());
         } catch (Exception e) {
             fail(e.getMessage());
         }
