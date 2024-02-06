@@ -57,6 +57,10 @@ public class WalletApiImplTest extends BaseTest {
         Pagination pagination = new Pagination(1, 1);
         FilterTransactions filter = new FilterTransactions();
         filter.setType(TransactionType.PAYIN);
+
+        // wait 2 seconds for the transactions to be created in the API
+        Thread.sleep(2);
+
         List<Transaction> transactions = this.api.getWalletApi().getTransactions(wallet.getId(), pagination, filter);
 
         assertTrue(transactions.size() == 1);

@@ -77,6 +77,26 @@ public class CardValidation extends EntityBase {
     @SerializedName("ResultMessage")
     private String resultMessage;
 
+    /**
+     * Allowed values: VISA, MASTERCARD, CB, MAESTRO
+     *
+     * The card network to use, as chosen by the cardholder, in case of co-branded card products.
+     */
+    @SerializedName("PreferredCardNetwork")
+    private String preferredCardNetwork;
+
+    /**
+     * The date and time at which successful authorization occurred. If authorization failed, the value is null.
+     */
+    @SerializedName("AuthorizationDate")
+    private Long authorizationDate;
+
+    /**
+     * Information of the card
+     */
+    @SerializedName("CardInfo")
+    private CardInfo cardInfo;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -107,6 +127,30 @@ public class CardValidation extends EntityBase {
 
     public void setResultMessage(String resultMessage) {
         this.resultMessage = resultMessage;
+    }
+
+    public String getPreferredCardNetwork() {
+        return preferredCardNetwork;
+    }
+
+    public void setPreferredCardNetwork(String preferredCardNetwork) {
+        this.preferredCardNetwork = preferredCardNetwork;
+    }
+
+    public Long getAuthorizationDate() {
+        return authorizationDate;
+    }
+
+    public void setAuthorizationDate(Long authorizationDate) {
+        this.authorizationDate = authorizationDate;
+    }
+
+    public CardInfo getCardInfo() {
+        return cardInfo;
+    }
+
+    public void setCardInfo(CardInfo cardInfo) {
+        this.cardInfo = cardInfo;
     }
 
     public BrowserInfo getBrowserInfo() {
