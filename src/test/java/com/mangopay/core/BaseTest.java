@@ -348,7 +348,7 @@ public abstract class BaseTest {
             cardRegistration.setCurrency(CurrencyIso.EUR);
             cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
 
-            cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData3DSecure(cardRegistration));
+            cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData(cardRegistration));
             cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
 
             Card card = this.api.getCardApi().get(cardRegistration.getCardId());
@@ -1133,7 +1133,7 @@ public abstract class BaseTest {
         cardRegistration.setCurrency(CurrencyIso.EUR);
         CardRegistration newCardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
 
-        String registrationData = this.getPaylineCorrectRegistartionDataForDeposit(newCardRegistration);
+        String registrationData = this.getPaylineCorrectRegistartionData(newCardRegistration);
         newCardRegistration.setRegistrationData(registrationData);
         return this.api.getCardRegistrationApi().update(newCardRegistration);
     }
@@ -1179,7 +1179,7 @@ public abstract class BaseTest {
         return cardPreAuthorization;
     }
 
-    protected CardValidation getJohnsCardValidation() throws Exception {
+    protected CardValidation createJohnsCardValidation() throws Exception {
 
         UserNatural user = this.getJohn();
         CardRegistration cardRegistration = new CardRegistration();
@@ -1202,6 +1202,30 @@ public abstract class BaseTest {
         return this.api.getCardApi().validate(cardRegistration.getCardId(), cardValidation);
     }
 
+    protected CardValidation getJohnsCardValidation() throws Exception {
+
+        UserNatural user = this.getJohn();
+        CardRegistration cardRegistration = new CardRegistration();
+        cardRegistration.setUserId(user.getId());
+        cardRegistration.setCurrency(CurrencyIso.EUR);
+        CardRegistration newCardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
+
+        String registrationData = this.getPaylineCorrectRegistartionData(newCardRegistration);
+        newCardRegistration.setRegistrationData(registrationData);
+        cardRegistration = this.api.getCardRegistrationApi().update(newCardRegistration);
+
+        CardValidation cardValidation = new CardValidation();
+
+        cardValidation.setAuthorId(user.getId());
+        cardValidation.setSecureModeReturnUrl("http://test.com");
+
+        cardValidation.setBrowserInfo(getNewBrowserInfo());
+        cardValidation.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+
+        CardValidation cardValidationResponse = this.api.getCardApi().validate(cardRegistration.getCardId(), cardValidation);
+        return this.api.getCardApi().get_card_validation(cardRegistration.getCardId(), cardValidationResponse.getId());
+    }
+
     protected KycDocument getJohnsKycDocument() throws Exception {
         if (BaseTest.JOHNS_KYC_DOCUMENT == null) {
             String johnsId = this.getJohn().getId();
@@ -1218,19 +1242,6 @@ public abstract class BaseTest {
         return getJohnsKycDocument();
     }
 
-    /**
-     * Gets registration data from Payline service 3DSecure.
-     *
-     * @param cardRegistration
-     * @return Registration data.
-     */
-    protected String getPaylineCorrectRegistartionData3DSecure(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
-        return getPaylineCorrectRegistartionData3DSecureForCardNumber(cardRegistration, "4970105191923460");
-    }
-
-    protected String getPaylineCorrectRegistartionDataForDeposit(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
-        return getPaylineCorrectRegistartionData3DSecureForCardNumber(cardRegistration, "4970105181818183");
-    }
 
     protected String getPaylineCorrectRegistartionData3DSecureForCardNumber(CardRegistration cardRegistration, String cardNumber) throws MalformedURLException, IOException, Exception {
 
@@ -1284,7 +1295,7 @@ public abstract class BaseTest {
      * @return Registration data.
      */
     protected String getPaylineCorrectRegistartionData(CardRegistration cardRegistration) throws MalformedURLException, IOException, Exception {
-        return getPaylineCorrectRegistartionData3DSecureForCardNumber(cardRegistration, "4970105191923460");
+        return getPaylineCorrectRegistartionData3DSecureForCardNumber(cardRegistration, "4970107111111119");
     }
 
     protected Hook getJohnsHook() throws Exception {

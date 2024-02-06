@@ -52,9 +52,16 @@ public class CardApiImplTest extends BaseTest {
 
     @Test
     public void validateCard() throws Exception{
-        CardApi cardApi = api.getCardApi();
-
         //create card validation
+        CardValidation cardValidation = createJohnsCardValidation();
+
+        assertNotNull(cardValidation);
+        assertNotNull(cardValidation.getId());
+        assertEquals(TransactionType.CARD_VALIDATION, cardValidation.getType());
+    }
+
+    @Test
+    public void getCardValidation() throws Exception{
         CardValidation cardValidation = getJohnsCardValidation();
 
         assertNotNull(cardValidation);

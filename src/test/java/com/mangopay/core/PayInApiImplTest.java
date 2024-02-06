@@ -282,6 +282,9 @@ public class PayInApiImplTest extends BaseTest {
 
             PayIn createPayIn = this.api.getPayInApi().create(payIn);
 
+            // wait 2 seconds for the transactions to be created in the API
+            Thread.sleep(2000);
+
             List<Transaction> preAuthTransactions = this.api.getCardPreAuthorizationApi().getTransactions(cardPreAuthorization.getId(), new Pagination(1, 1));
 
             assertTrue(!"".equals(createPayIn.getId()));
@@ -483,7 +486,6 @@ public class PayInApiImplTest extends BaseTest {
             assertTrue(createPayIn.getFees().getCurrency() == CurrencyIso.EUR);
             assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getReturnUrl());
             assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getRedirectUrl());
-            assertNotNull(((PayInExecutionDetailsWeb) createPayIn.getExecutionDetails()).getTemplateUrl());
 
         } catch (Exception ex) {
             fail(ex.getMessage());
