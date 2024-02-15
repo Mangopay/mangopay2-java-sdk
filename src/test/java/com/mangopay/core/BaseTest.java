@@ -1223,7 +1223,7 @@ public abstract class BaseTest {
         cardValidation.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
         CardValidation cardValidationResponse = this.api.getCardApi().validate(cardRegistration.getCardId(), cardValidation);
-        return this.api.getCardApi().get_card_validation(cardRegistration.getCardId(), cardValidationResponse.getId());
+        return this.api.getCardApi().getCardValidation(cardRegistration.getCardId(), cardValidationResponse.getId());
     }
 
     protected KycDocument getJohnsKycDocument() throws Exception {
