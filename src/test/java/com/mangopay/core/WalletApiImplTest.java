@@ -83,6 +83,7 @@ public class WalletApiImplTest extends BaseTest {
         FilterTransactions filter = new FilterTransactions();
         filter.setType(TransactionType.PAYIN);
 
+        Thread.sleep(2000);
         List<Transaction> transactions = this.api.getWalletApi().getTransactions(wallet.getId(), pagination, filter, sorting);
 
         assertNotNull(transactions);

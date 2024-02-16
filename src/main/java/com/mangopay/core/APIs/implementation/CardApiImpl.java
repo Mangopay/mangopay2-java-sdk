@@ -69,7 +69,7 @@ public class CardApiImpl extends ApiBase implements CardApi {
         return this.createObject(CardValidation.class, null, "card_validate", cardValidation, cardId);
     }
 
-    public CardValidation get_card_validation(String cardId, String cardValidationId) throws Exception {
+    public CardValidation getCardValidation(String cardId, String cardValidationId) throws Exception {
         return this.getObject(CardValidation.class, "get_card_validation", cardId, cardValidationId);
     }
 
