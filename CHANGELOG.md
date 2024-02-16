@@ -1,3 +1,8 @@
+## [2.35.1] - 2024-02-16
+### Fixed
+
+- Naming of Get card validation endpoint switch to : getCardValidation()
+
 ## [2.35.0] - 2024-02-06
 ### Added
 
