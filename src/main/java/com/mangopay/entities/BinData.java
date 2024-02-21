@@ -7,8 +7,8 @@ public class BinData {
     /**
      * The subtype of the card product. Examples include: CLASSIC, GOLD, PLATINUM, PREPAID, etc.
      */
-    @SerializedName("SubType")
-    private String subType;
+    @SerializedName("Subtype")
+    private String subtype;
 
     /**
      * The card brand. Examples include: AMERICAN EXPRESS, DISCOVER, JCB, MASTERCARD, VISA, etc.
@@ -16,12 +16,12 @@ public class BinData {
     @SerializedName("Brand")
     private String brand;
 
-    public String getSubType() {
-        return subType;
+    public String getSubtype() {
+        return subtype;
     }
 
-    public void setSubType(String subType) {
-        this.subType = subType;
+    public void setSubtype(String subtype) {
+        this.subtype = subtype;
     }
 
     public String getBrand() {
