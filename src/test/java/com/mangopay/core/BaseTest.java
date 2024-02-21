@@ -1629,8 +1629,13 @@ public abstract class BaseTest {
         debitedFunds.setCurrency(CurrencyIso.EUR);
         debitedFunds.setAmount(79);
 
+        Money fees = new Money();
+        fees.setCurrency(CurrencyIso.EUR);
+        fees.setAmount(9);
+
         instantConversion.setCreditedFunds(creditedFunds);
         instantConversion.setDebitedFunds(debitedFunds);
+        instantConversion.setFees(fees);
         instantConversion.setTag("create instant conversion");
 
         return this.api.getInstantConversionApi().createInstantConversion(instantConversion, null);
