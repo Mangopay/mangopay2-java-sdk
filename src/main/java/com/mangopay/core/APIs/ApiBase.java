@@ -228,6 +228,8 @@ public abstract class ApiBase {
         put("get_conversion_rate", new String[]{"/conversion/rate/%s/%s", RequestType.GET.toString()});
         put("create_instant_conversion", new String[]{"/instant-conversion", RequestType.POST.toString()});
         put("get_instant_conversion", new String[]{"/instant-conversion/%s", RequestType.GET.toString()});
+        put("create_conversion_quote", new String[]{"/conversions/quote", RequestType.POST.toString()});
+        put("get_conversion_quote", new String[]{"/conversions/quote/%s", RequestType.GET.toString()});
 
     }};
 
@@ -329,11 +331,10 @@ public abstract class ApiBase {
     }
 
     /**
-     *
-     * @param classOfT Type on behalf of which the request is being called.
+     * @param classOfT  Type on behalf of which the request is being called.
      * @param methodKey Relevant method key.
-     * @param args Arguments that will be set on the method
-     * @param <T>  Type on behalf of which the request is being called.
+     * @param args      Arguments that will be set on the method
+     * @param <T>       Type on behalf of which the request is being called.
      * @return The Dto instance returned from API.
      * @throws Exception
      */

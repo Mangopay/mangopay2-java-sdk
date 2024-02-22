@@ -2,18 +2,19 @@ package com.mangopay.core.APIs.implementation;
 
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
-import com.mangopay.core.APIs.InstantConversionApi;
+import com.mangopay.core.APIs.ConversionsApi;
+import com.mangopay.entities.ConversionQuote;
 import com.mangopay.entities.ConversionRate;
 import com.mangopay.entities.InstantConversion;
 
-public class InstantConversionApiImpl extends ApiBase implements InstantConversionApi {
+public class ConversionsApiImpl extends ApiBase implements ConversionsApi {
 
     /**
      * Creates new API instance.
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public InstantConversionApiImpl(MangoPayApi root) {
+    public ConversionsApiImpl(MangoPayApi root) {
         super(root);
     }
 
@@ -29,6 +30,16 @@ public class InstantConversionApiImpl extends ApiBase implements InstantConversi
 
     @Override
     public InstantConversion getInstantConversion(String id) throws Exception {
-        return this.getObject(InstantConversion.class, "get_instant_conversion",id);
+        return this.getObject(InstantConversion.class, "get_instant_conversion", id);
+    }
+
+    @Override
+    public ConversionQuote createConversionQuote(ConversionQuote conversionQuote, String idempotencyKey) throws Exception {
+        return this.createObject(ConversionQuote.class, idempotencyKey, "create_conversion_quote", conversionQuote);
+    }
+
+    @Override
+    public ConversionQuote getConversionQuote(String quoteId) throws Exception {
+        return this.getObject(ConversionQuote.class, "get_conversion_quote", quoteId);
     }
 }
