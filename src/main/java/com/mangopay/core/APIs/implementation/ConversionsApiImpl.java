@@ -6,6 +6,7 @@ import com.mangopay.core.APIs.ConversionsApi;
 import com.mangopay.entities.ConversionQuote;
 import com.mangopay.entities.ConversionRate;
 import com.mangopay.entities.InstantConversion;
+import com.mangopay.entities.QuotedConversion;
 
 public class ConversionsApiImpl extends ApiBase implements ConversionsApi {
 
@@ -41,5 +42,10 @@ public class ConversionsApiImpl extends ApiBase implements ConversionsApi {
     @Override
     public ConversionQuote getConversionQuote(String quoteId) throws Exception {
         return this.getObject(ConversionQuote.class, "get_conversion_quote", quoteId);
+    }
+
+    @Override
+    public QuotedConversion createQuotedConversion(QuotedConversion quotedConversion, String idempotencyKey) throws Exception {
+        return this.createObject(QuotedConversion.class, idempotencyKey, "create_quoted_conversion", quotedConversion);
     }
 }
