@@ -52,6 +52,9 @@ public class OAuthApiImpl extends ApiBase implements OAuthApi {
         }
         rest.addRequestHttpHeader("Content-Type", "application/x-www-form-urlencoded");
         rest.addRequestHttpHeader("User-Agent",  String.format("MangoPay V2 SDK Java %s", getRoot().getConfig().getVersion()));
+        if(root.getConfig().isUkHeaderFlag()){
+            rest.addRequestHttpHeader("x-tenant-id", "uk");
+        }
         OAuthToken response = rest.request(OAuthToken.class, null, urlMethod, requestType, requestData);
 
         return response;

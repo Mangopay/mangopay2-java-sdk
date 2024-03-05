@@ -679,7 +679,9 @@ public class RestTool {
         }
 
         httpHeaders.put("User-Agent",  String.format("MangoPay V2 SDK Java %s", root.getConfig().getVersion()));
-
+        if(this.root.getConfig().isUkHeaderFlag()) {
+            httpHeaders.put("x-tenant-id", "uk");
+        }
         return httpHeaders;
     }
 
