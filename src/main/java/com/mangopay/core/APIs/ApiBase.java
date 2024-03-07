@@ -230,7 +230,7 @@ public abstract class ApiBase {
         put("get_instant_conversion", new String[]{"/conversions/%s", RequestType.GET.toString()});
         put("create_conversion_quote", new String[]{"/conversions/quote", RequestType.POST.toString()});
         put("get_conversion_quote", new String[]{"/conversions/quote/%s", RequestType.GET.toString()});
-
+        put("create_quoted_conversion", new String[]{"/conversions/quoted-conversion", RequestType.POST.toString()});
     }};
 
     /**

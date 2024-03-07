@@ -3,6 +3,7 @@ package com.mangopay.core.APIs;
 import com.mangopay.entities.ConversionQuote;
 import com.mangopay.entities.ConversionRate;
 import com.mangopay.entities.InstantConversion;
+import com.mangopay.entities.QuotedConversion;
 
 public interface ConversionsApi {
 
@@ -45,4 +46,12 @@ public interface ConversionsApi {
      * @return Quote object returned from API
      */
     ConversionQuote getConversionQuote(String quoteId) throws Exception;
+
+
+    /**
+     * This call triggers a conversion, at the rate guaranteed by its quote, of the debited funds to the credited wallet.
+     *
+     * @return QuotedConversion
+     */
+    QuotedConversion createQuotedConversion(QuotedConversion quotedConversion, String idempotencyKey) throws Exception;
 }
