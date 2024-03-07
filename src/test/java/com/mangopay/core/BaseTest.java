@@ -1602,7 +1602,7 @@ public abstract class BaseTest {
     }
 
     protected ConversionRate getConversionRate() throws Exception {
-        return this.api.getInstantConversionApi().getConversionRate("EUR", "GBP");
+        return this.api.getConversionsApi().getConversionRate("EUR", "GBP");
     }
 
     protected InstantConversion createInstantConversion() throws Exception {
@@ -1638,12 +1638,12 @@ public abstract class BaseTest {
         instantConversion.setFees(fees);
         instantConversion.setTag("create instant conversion");
 
-        return this.api.getInstantConversionApi().createInstantConversion(instantConversion, null);
+        return this.api.getConversionsApi().createInstantConversion(instantConversion, null);
     }
 
     protected InstantConversion getInstantConversion() throws Exception {
          InstantConversion createdInstantConversion = createInstantConversion();
 
-         return api.getInstantConversionApi().getInstantConversion(createdInstantConversion.getId());
+         return api.getConversionsApi().getInstantConversion(createdInstantConversion.getId());
     }
 }

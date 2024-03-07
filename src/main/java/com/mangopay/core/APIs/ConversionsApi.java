@@ -1,9 +1,10 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.entities.ConversionQuote;
 import com.mangopay.entities.ConversionRate;
 import com.mangopay.entities.InstantConversion;
 
-public interface InstantConversionApi {
+public interface ConversionsApi {
 
     /**
      * This endpoint allows the platform to get a real
@@ -29,4 +30,19 @@ public interface InstantConversionApi {
      * @return InstantConversion object returned from API
      */
      InstantConversion getInstantConversion(String id) throws Exception;
+
+    /**
+     * This call guarantees a conversion rate to let you Create a Quoted Conversion.
+     *
+     * @return Quote object returned from API
+     */
+    ConversionQuote createConversionQuote(ConversionQuote conversionQuote, String idempotencyKey) throws Exception;
+
+    /**
+     * This endpoint allows the platform to get the details of a quote
+     *
+     * @param quoteId The unique identifier of the quote
+     * @return Quote object returned from API
+     */
+    ConversionQuote getConversionQuote(String quoteId) throws Exception;
 }
