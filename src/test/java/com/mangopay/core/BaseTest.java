@@ -1605,7 +1605,7 @@ public abstract class BaseTest {
         return this.api.getConversionsApi().getConversionRate("EUR", "GBP");
     }
 
-    protected InstantConversion createInstantConversion() throws Exception {
+    protected Conversion createInstantConversion() throws Exception {
         User john = this.getJohn();
         Wallet wallet = new Wallet();
         wallet.setOwners(new ArrayList<String>());
@@ -1617,7 +1617,7 @@ public abstract class BaseTest {
         Wallet creditedWallet = this.api.getWalletApi().create(wallet);
         Wallet debitedWallet = this.getJohnsWalletWithMoney();
 
-        InstantConversion instantConversion = new InstantConversion();
+        CreateInstantConversion instantConversion = new CreateInstantConversion();
         instantConversion.setAuthorId(debitedWallet.getOwners().get(0));
         instantConversion.setCreditedWalletId(creditedWallet.getId());
         instantConversion.setDebitedWalletId(debitedWallet.getId());
@@ -1641,9 +1641,50 @@ public abstract class BaseTest {
         return this.api.getConversionsApi().createInstantConversion(instantConversion, null);
     }
 
-    protected InstantConversion getInstantConversion() throws Exception {
-         InstantConversion createdInstantConversion = createInstantConversion();
+    protected Conversion createQuotedConversion() throws Exception {
+        final UserNatural user = getJohn();
 
-         return api.getConversionsApi().getInstantConversion(createdInstantConversion.getId());
+        Wallet creditedWallet = new Wallet();
+        creditedWallet.setOwners(new ArrayList<String>());
+        creditedWallet.getOwners().add(user.getId());
+        creditedWallet.setCurrency(CurrencyIso.GBP);
+        creditedWallet.setDescription("WALLET IN EUR WITH MONEY");
+
+        creditedWallet = this.api.getWalletApi().create(creditedWallet);
+
+        Wallet debitedWallet = getJohnsWalletWithMoney();
+        ConversionQuote quote = createConversionQuote();
+
+        CreateQuotedConversion quotedConversion = new CreateQuotedConversion();
+        quotedConversion.setQuoteId(quote.getId());
+        quotedConversion.setAuthorId(debitedWallet.getOwners().get(0));
+        quotedConversion.setCreditedWalletId(creditedWallet.getId());
+        quotedConversion.setDebitedWalletId(debitedWallet.getId());
+
+        return this.api.getConversionsApi().createQuotedConversion(quotedConversion, null);
+    }
+
+    protected Conversion getInstantConversion() throws Exception {
+        Conversion createdInstantConversion = createInstantConversion();
+
+        return api.getConversionsApi().getConversion(createdInstantConversion.getId());
+    }
+
+    protected ConversionQuote createConversionQuote() throws Exception {
+        CreateConversionQuote conversionQuote = new CreateConversionQuote();
+
+        Money creditedFunds = new Money();
+        creditedFunds.setCurrency(CurrencyIso.GBP);
+        conversionQuote.setCreditedFunds(creditedFunds);
+
+        Money debitedFunds = new Money();
+        debitedFunds.setCurrency(CurrencyIso.EUR);
+        debitedFunds.setAmount(50);
+        conversionQuote.setDebitedFunds(debitedFunds);
+
+        conversionQuote.setDuration(90);
+        conversionQuote.setTag("Created using the Mangopay PHP SDK");
+
+        return this.api.getConversionsApi().createConversionQuote(conversionQuote, null);
     }
 }

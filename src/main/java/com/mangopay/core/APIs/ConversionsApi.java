@@ -1,9 +1,6 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.entities.ConversionQuote;
-import com.mangopay.entities.ConversionRate;
-import com.mangopay.entities.InstantConversion;
-import com.mangopay.entities.QuotedConversion;
+import com.mangopay.entities.*;
 
 public interface ConversionsApi {
 
@@ -22,7 +19,14 @@ public interface ConversionsApi {
      * wallets of different currencies instantaneously.
      * @return InstantConversion object returned from API
      */
-     InstantConversion createInstantConversion(InstantConversion conversion, String idempotencyKey) throws Exception;
+     Conversion createInstantConversion(CreateInstantConversion createInstantConversion, String idempotencyKey) throws Exception;
+
+    /**
+     * This call triggers a conversion, at the rate guaranteed by its quote, of the debited funds to the credited wallet.
+     *
+     * @return QuotedConversion
+     */
+    Conversion createQuotedConversion(CreateQuotedConversion quotedConversion, String idempotencyKey) throws Exception;
 
     /**
      * This endpoint allows the platform to get
@@ -30,14 +34,14 @@ public interface ConversionsApi {
      * @param id The unique identifier of the conversion.
      * @return InstantConversion object returned from API
      */
-     InstantConversion getInstantConversion(String id) throws Exception;
+     Conversion getConversion(String id) throws Exception;
 
     /**
      * This call guarantees a conversion rate to let you Create a Quoted Conversion.
      *
      * @return Quote object returned from API
      */
-    ConversionQuote createConversionQuote(ConversionQuote conversionQuote, String idempotencyKey) throws Exception;
+    ConversionQuote createConversionQuote(CreateConversionQuote createConversionQuote, String idempotencyKey) throws Exception;
 
     /**
      * This endpoint allows the platform to get the details of a quote
@@ -47,11 +51,4 @@ public interface ConversionsApi {
      */
     ConversionQuote getConversionQuote(String quoteId) throws Exception;
 
-
-    /**
-     * This call triggers a conversion, at the rate guaranteed by its quote, of the debited funds to the credited wallet.
-     *
-     * @return QuotedConversion
-     */
-    QuotedConversion createQuotedConversion(QuotedConversion quotedConversion, String idempotencyKey) throws Exception;
 }

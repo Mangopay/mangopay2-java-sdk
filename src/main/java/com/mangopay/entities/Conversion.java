@@ -9,7 +9,32 @@ import com.mangopay.core.enumerations.TransactionType;
 
 import java.util.ArrayList;
 
-public class InstantConversion extends EntityBase {
+public class Conversion extends EntityBase {
+
+    /**
+     * The unique identifier of the active quote which guaranteed the rate for the conversion.
+     */
+    @SerializedName("QuoteId")
+    public String quoteId;
+
+    /**
+     * The type of transaction
+     */
+    @SerializedName("Type")
+    public TransactionType type;
+
+    /**
+     * The nature of the transaction, providing more
+     * information about the context in which the transaction occurred:
+     */
+    @SerializedName("Nature")
+    public TransactionNature nature;
+
+    /**
+     * The status of the transaction.
+     */
+    @SerializedName("Status")
+    public TransactionStatus status;
 
     /**
      * The unique identifier of the user at the source of the transaction.
@@ -35,7 +60,6 @@ public class InstantConversion extends EntityBase {
     @SerializedName("DebitedFunds")
     public Money debitedFunds;
 
-
     /**
      * The buy funds
      */
@@ -43,29 +67,11 @@ public class InstantConversion extends EntityBase {
     public Money creditedFunds;
 
     /**
-     * Real time indicative market rate of a specific currency pair
+     * Information about the fees taken by the platform for
+     * this transaction (and hence transferred to the Fees Wallet).
      */
-    @SerializedName("ConversionRate")
-    public ConversionRate conversionRate;
-
-    /**
-     * The status of the transaction.
-     */
-    @SerializedName("Status")
-    public TransactionStatus status;
-
-    /**
-     * The type of transaction
-     */
-    @SerializedName("Type")
-    public TransactionType type;
-
-    /**
-     * The nature of the transaction, providing more
-     * information about the context in which the transaction occurred:
-     */
-    @SerializedName("Nature")
-    public TransactionNature nature;
+    @SerializedName("Fees")
+    public Money fees;
 
     /**
      * The code indicates the result of the operation.
@@ -89,11 +95,18 @@ public class InstantConversion extends EntityBase {
     public Long executionDate;
 
     /**
-     * Information about the fees taken by the platform for
-     * this transaction (and hence transferred to the Fees Wallet).
+     * Real time indicative market rate of a specific currency pair
      */
-    @SerializedName("Fees")
-    public Money fees;
+    @SerializedName("ConversionRateResponse")
+    public ConversionRate conversionRate;
+
+    public String getQuoteId() {
+        return quoteId;
+    }
+
+    public void setQuoteId(String quoteId) {
+        this.quoteId = quoteId;
+    }
 
     public String getAuthorId() {
         return authorId;

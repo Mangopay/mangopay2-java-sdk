@@ -1,12 +1,11 @@
 package com.mangopay.core;
 
-import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.TransactionStatus;
 import com.mangopay.core.enumerations.TransactionType;
-import com.mangopay.entities.*;
+import com.mangopay.entities.Conversion;
+import com.mangopay.entities.ConversionQuote;
+import com.mangopay.entities.ConversionRate;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,7 +23,7 @@ public class ConversionsImplTest extends BaseTest {
 
     @Test
     public void createInstantConversionTest() throws Exception {
-        InstantConversion instantConversion = createInstantConversion();
+        Conversion instantConversion = createInstantConversion();
 
         assertNotNull(instantConversion);
         assertNotNull(instantConversion.creditedFunds.getAmount());
@@ -35,7 +34,7 @@ public class ConversionsImplTest extends BaseTest {
 
     @Test
     public void getInstantConversionTest() throws Exception {
-        InstantConversion instantConversion = getInstantConversion();
+        Conversion instantConversion = getInstantConversion();
 
         assertNotNull(instantConversion);
         assertNotNull(instantConversion.creditedFunds.getAmount());
@@ -70,48 +69,17 @@ public class ConversionsImplTest extends BaseTest {
     }
 
     @Test
-    public void createQuotedConversion() throws Exception {
-        final UserNatural user = getJohn();
-
-        Wallet creditedWallet = new Wallet();
-        creditedWallet.setOwners(new ArrayList<String>());
-        creditedWallet.getOwners().add(user.getId());
-        creditedWallet.setCurrency(CurrencyIso.GBP);
-        creditedWallet.setDescription("WALLET IN EUR WITH MONEY");
-
-        creditedWallet = this.api.getWalletApi().create(creditedWallet);
-
-        Wallet debitedWallet = getJohnsWalletWithMoney();
-        ConversionQuote quote = createConversionQuote();
-
-        QuotedConversion quotedConversion = new QuotedConversion();
-        quotedConversion.setQuoteId(quote.getId());
-        quotedConversion.setAuthorId(debitedWallet.getOwners().get(0));
-        quotedConversion.setCreditedWalletId(creditedWallet.getId());
-        quotedConversion.setDebitedWalletId(debitedWallet.getId());
-
-        quotedConversion = this.api.getConversionsApi().createQuotedConversion(quotedConversion, null);
-
-        assertNotNull(quotedConversion);
+    public void createQuotedConversionTest() throws Exception {
+        Conversion conversion = createQuotedConversion();
+        assertNotNull(conversion);
+        assertNotNull(conversion.getQuoteId());
     }
 
-    private ConversionQuote createConversionQuote() throws Exception {
-        ConversionQuote conversionQuote = new ConversionQuote();
-
-        Money creditedFunds = new Money();
-        creditedFunds.setCurrency(CurrencyIso.GBP);
-        conversionQuote.setCreditedFunds(creditedFunds);
-
-        Money debitedFunds = new Money();
-        debitedFunds.setCurrency(CurrencyIso.EUR);
-        debitedFunds.setAmount(50);
-        conversionQuote.setDebitedFunds(debitedFunds);
-
-        conversionQuote.setDuration(90);
-        conversionQuote.setTag("Created using the Mangopay PHP SDK");
-
-        return this.api.getConversionsApi().createConversionQuote(conversionQuote, null);
+    @Test
+    public void getQuotedConversionTest() throws Exception{
+        Conversion createdConversion =  createQuotedConversion();
+        Conversion conversion = this.api.getConversionsApi().getConversion(createdConversion.getId());
+        assertNotNull(conversion);
+        assertNotNull(conversion.getQuoteId());
     }
-
-
 }
