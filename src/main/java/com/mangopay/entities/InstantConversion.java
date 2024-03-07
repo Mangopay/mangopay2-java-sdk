@@ -88,6 +88,13 @@ public class InstantConversion extends EntityBase {
     @SerializedName("ExecutionDate")
     public Long executionDate;
 
+    /**
+     * Information about the fees taken by the platform for
+     * this transaction (and hence transferred to the Fees Wallet).
+     */
+    @SerializedName("Fees")
+    public Money fees;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -182,6 +189,14 @@ public class InstantConversion extends EntityBase {
 
     public void setExecutionDate(Long executionDate) {
         this.executionDate = executionDate;
+    }
+
+    public Money getFees() {
+        return fees;
+    }
+
+    public void setFees(Money fees) {
+        this.fees = fees;
     }
 
     @Override
