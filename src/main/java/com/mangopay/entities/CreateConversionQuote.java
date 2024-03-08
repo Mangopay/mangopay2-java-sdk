@@ -11,7 +11,7 @@ public class CreateConversionQuote extends Dto {
     private Money debitedFunds;
     @SerializedName("CreditedFunds")
     private Money creditedFunds;
-    @SerializedName("TAG")
+    @SerializedName("Tag")
     private String tag;
 
     public int getDuration() {
