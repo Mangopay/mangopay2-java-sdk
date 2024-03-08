@@ -45,6 +45,11 @@ public class Configuration {
      * Mangopay SDK Version
      */
     private String version;
+
+    /**
+     * Set to true for uk traffic
+     */
+    private boolean ukHeaderFlag = false;
     
 
     public String getClientId() {
@@ -115,7 +120,14 @@ public class Configuration {
         this.readTimeout = readTimeout;
     }
 
-    
+    public boolean isUkHeaderFlag() {
+        return ukHeaderFlag;
+    }
+
+    public void setUkHeaderFlag(boolean ukHeaderFlag) {
+        this.ukHeaderFlag = ukHeaderFlag;
+    }
+
     /**
      * Get Mangopay SDK Version
      * @return String Mangopay Version
