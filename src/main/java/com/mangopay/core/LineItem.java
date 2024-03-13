@@ -35,6 +35,9 @@ public class LineItem extends Dto{
     @SerializedName("Description")
     private String description;
 
+    @SerializedName("Category")
+    private String category;
+
     public LineItem(String name, Integer quantity, Integer unitAmount, Integer taxAmount, String description) {
         this.name = name;
         this.quantity = quantity;
@@ -85,6 +88,15 @@ public class LineItem extends Dto{
 
     public LineItem setDescription(String description) {
         this.description = description;
+        return this;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public LineItem setCategory(String category) {
+        this.category = category;
         return this;
     }
 }

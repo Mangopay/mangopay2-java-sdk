@@ -46,6 +46,9 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     @SerializedName("Reference")
     private String reference;
 
+    @SerializedName("CancelURL")
+    private String cancelUrl;
+
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
     }
@@ -78,6 +81,15 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     public PayInPaymentDetailsPayPal setLineItems(List<LineItem> lineItems) {
         this.lineItems = lineItems;
+        return this;
+    }
+
+    public String getCancelUrl() {
+        return cancelUrl;
+    }
+
+    public PayInPaymentDetailsPayPal setCancelUrl(String cancelUrl) {
+        this.cancelUrl = cancelUrl;
         return this;
     }
 

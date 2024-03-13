@@ -606,11 +606,13 @@ public class PayInApiImplTest extends BaseTest {
                 1000,
                 0,
                 "test descr"
-        ));
+        )
+                .setCategory("Category1"));
         paymentDetails.setLineItems(lineItems);
         paymentDetails.setShippingPreference(ShippingPreference.GET_FROM_FILE);
         paymentDetails.setReference("Reference");
         paymentDetails.setStatementDescriptor("sttm");
+        paymentDetails.setCancelUrl("http://cancelurl.com");
 
         payIn.setPaymentDetails(paymentDetails);
 
