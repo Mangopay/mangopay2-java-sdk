@@ -67,7 +67,7 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     private String paypalBuyerAccountEmail;
 
     @SerializedName("Trackings")
-    private PayPalWebTrackingData trackings;
+    private List<PayPalWebTrackingData> trackings;
 
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
@@ -204,11 +204,11 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
         return this;
     }
 
-    public PayPalWebTrackingData getTrackings() {
+    public List<PayPalWebTrackingData> getTrackings() {
         return trackings;
     }
 
-    public PayInPaymentDetailsPayPal setTrackings(PayPalWebTrackingData trackings) {
+    public PayInPaymentDetailsPayPal setTrackings(List<PayPalWebTrackingData> trackings) {
         this.trackings = trackings;
         return this;
     }

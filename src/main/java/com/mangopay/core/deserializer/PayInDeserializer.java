@@ -103,7 +103,9 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsPayPal.setPaypalOrderID(object.get("PaypalOrderID").getAsString());
                 }
                 if (object.has("Trackings") && !object.get("Trackings").isJsonNull()) {
-                    payInPaymentDetailsPayPal.setTrackings((PayPalWebTrackingData) context.deserialize(object.get("Trackings"), PayPalWebTrackingData.class));
+                    Type listType = new TypeToken<ArrayList<PayPalWebTrackingData>>() {
+                    }.getType();
+                    payInPaymentDetailsPayPal.setTrackings((List<PayPalWebTrackingData>) context.deserialize(object.get("Trackings"), listType));
                 }
 
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
