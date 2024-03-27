@@ -51,6 +51,13 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("ShippingPreference", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getShippingPreference()));
                 object.add("Reference", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getReference()));
                 object.add("CancelURL", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getCancelUrl()));
+                object.add("PaypalPayerID", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getPaypalPayerId()));
+                object.add("BuyerCountry", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getBuyerCountry()));
+                object.add("BuyerFirstname", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getBuyerFirstName()));
+                object.add("BuyerLastname", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getBuyerLastName()));
+                object.add("BuyerPhone", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getBuyerPhone()));
+                object.add("PaypalOrderID", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getPaypalOrderID()));
+                object.add("Trackings", context.serialize(((PayInPaymentDetailsPayPal) src.getPaymentDetails()).getTrackings()));
                 break;
             case "PayInPaymentDetailsPayconiq":
                 object.add("Country", context.serialize(((PayInPaymentDetailsPayconiq) src.getPaymentDetails()).getCountry()));

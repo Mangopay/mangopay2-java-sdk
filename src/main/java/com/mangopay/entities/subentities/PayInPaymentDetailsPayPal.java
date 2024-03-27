@@ -56,10 +56,10 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     private String buyerCountry;
 
     @SerializedName("BuyerFirstname")
-    private String buyerFirstname;
+    private String buyerFirstName;
 
     @SerializedName("BuyerLastname")
-    private String buyerLastname;
+    private String buyerLastName;
 
     @SerializedName("BuyerPhone")
     private String buyerPhone;
@@ -165,20 +165,20 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
         this.buyerCountry = buyerCountry;
     }
 
-    public String getBuyerFirstname() {
-        return buyerFirstname;
+    public String getBuyerFirstName() {
+        return buyerFirstName;
     }
 
-    public void setBuyerFirstname(String buyerFirstname) {
-        this.buyerFirstname = buyerFirstname;
+    public void setBuyerFirstName(String buyerFirstname) {
+        this.buyerFirstName = buyerFirstname;
     }
 
-    public String getBuyerLastname() {
-        return buyerLastname;
+    public String getBuyerLastName() {
+        return buyerLastName;
     }
 
-    public void setBuyerLastname(String buyerLastname) {
-        this.buyerLastname = buyerLastname;
+    public void setBuyerLastName(String buyerLastname) {
+        this.buyerLastName = buyerLastname;
     }
 
     public String getBuyerPhone() {
