@@ -49,6 +49,27 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     @SerializedName("CancelURL")
     private String cancelUrl;
 
+    @SerializedName("PaypalPayerID")
+    private String paypalPayerId;
+
+    @SerializedName("BuyerCountry")
+    private String buyerCountry;
+
+    @SerializedName("BuyerFirstname")
+    private String buyerFirstname;
+
+    @SerializedName("BuyerLastname")
+    private String buyerLastname;
+
+    @SerializedName("BuyerPhone")
+    private String buyerPhone;
+
+    @SerializedName("PaypalOrderID")
+    private String paypalOrderID;
+
+    @SerializedName("Trackings")
+    private PayPalWebTrackingData trackings;
+
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
     }
@@ -126,5 +147,61 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getPaypalPayerId() {
+        return paypalPayerId;
+    }
+
+    public void setPaypalPayerId(String paypalPayerId) {
+        this.paypalPayerId = paypalPayerId;
+    }
+
+    public String getBuyerCountry() {
+        return buyerCountry;
+    }
+
+    public void setBuyerCountry(String buyerCountry) {
+        this.buyerCountry = buyerCountry;
+    }
+
+    public String getBuyerFirstname() {
+        return buyerFirstname;
+    }
+
+    public void setBuyerFirstname(String buyerFirstname) {
+        this.buyerFirstname = buyerFirstname;
+    }
+
+    public String getBuyerLastname() {
+        return buyerLastname;
+    }
+
+    public void setBuyerLastname(String buyerLastname) {
+        this.buyerLastname = buyerLastname;
+    }
+
+    public String getBuyerPhone() {
+        return buyerPhone;
+    }
+
+    public void setBuyerPhone(String buyerPhone) {
+        this.buyerPhone = buyerPhone;
+    }
+
+    public String getPaypalOrderID() {
+        return paypalOrderID;
+    }
+
+    public void setPaypalOrderID(String paypalOrderID) {
+        this.paypalOrderID = paypalOrderID;
+    }
+
+    public PayPalWebTrackingData getTrackings() {
+        return trackings;
+    }
+
+    public void setTrackings(PayPalWebTrackingData trackings) {
+        this.trackings = trackings;
     }
 }
