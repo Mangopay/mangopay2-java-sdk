@@ -29,23 +29,26 @@ public class PayPalWebTrackingData extends Dto {
         return trackingNumber;
     }
 
-    public void setTrackingNumber(String trackingNumber) {
+    public PayPalWebTrackingData setTrackingNumber(String trackingNumber) {
         this.trackingNumber = trackingNumber;
+        return this;
     }
 
     public String getCarrier() {
         return carrier;
     }
 
-    public void setCarrier(String carrier) {
+    public PayPalWebTrackingData setCarrier(String carrier) {
         this.carrier = carrier;
+        return this;
     }
 
     public boolean isNotifyBuyer() {
         return notifyBuyer;
     }
 
-    public void setNotifyBuyer(boolean notifyBuyer) {
+    public PayPalWebTrackingData setNotifyBuyer(boolean notifyBuyer) {
         this.notifyBuyer = notifyBuyer;
+        return this;
     }
 }
