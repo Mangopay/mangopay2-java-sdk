@@ -4,7 +4,7 @@ import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
-import com.mangopay.entities.subentities.PayPalWebTrackingData;
+import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
 
@@ -155,5 +155,5 @@ public interface PayInApi {
      * @param trackingData trackingInformation object
      * @return {PayIn} object returned by the API
      */
-    PayIn addPayPalTrackingInformation(String payInId, PayPalWebTrackingData trackingData) throws Exception;
+    PayIn addPayPalTrackingInformation(String payInId, PayPalWebTracking trackingData) throws Exception;
 }

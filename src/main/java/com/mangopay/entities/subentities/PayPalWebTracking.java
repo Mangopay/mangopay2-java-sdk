@@ -3,7 +3,7 @@ package com.mangopay.entities.subentities;
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 
-public class PayPalWebTrackingData extends EntityBase {
+public class PayPalWebTracking extends EntityBase {
 
     /**
      * The shipment’s tracking number provided by the carrier.
@@ -29,7 +29,7 @@ public class PayPalWebTrackingData extends EntityBase {
         return trackingNumber;
     }
 
-    public PayPalWebTrackingData setTrackingNumber(String trackingNumber) {
+    public PayPalWebTracking setTrackingNumber(String trackingNumber) {
         this.trackingNumber = trackingNumber;
         return this;
     }
@@ -38,7 +38,7 @@ public class PayPalWebTrackingData extends EntityBase {
         return carrier;
     }
 
-    public PayPalWebTrackingData setCarrier(String carrier) {
+    public PayPalWebTracking setCarrier(String carrier) {
         this.carrier = carrier;
         return this;
     }
@@ -47,7 +47,7 @@ public class PayPalWebTrackingData extends EntityBase {
         return notifyBuyer;
     }
 
-    public PayPalWebTrackingData setNotifyBuyer(boolean notifyBuyer) {
+    public PayPalWebTracking setNotifyBuyer(boolean notifyBuyer) {
         this.notifyBuyer = notifyBuyer;
         return this;
     }
