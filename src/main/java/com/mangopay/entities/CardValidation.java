@@ -97,6 +97,16 @@ public class CardValidation extends EntityBase {
     @SerializedName("CardInfo")
     private CardInfo cardInfo;
 
+    /**
+     * The mode applied for the 3DS2 protocol for CB, Visa, and Mastercard.
+     * The options are:
+     * DEFAULT – Requests an exemption to strong customer authentication (SCA), and thus a frictionless payment experience, if allowed by your Mangopay contract and accepted by the issuer.
+     * FORCE – Requests SCA.
+     * NO_CHOICE – Leaves the choice to the issuer whether to allow for a frictionless payment experience or to enforce SCA.
+     */
+    @SerializedName("SecureMode")
+    private SecureMode secureMode = SecureMode.DEFAULT;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -229,6 +239,14 @@ public class CardValidation extends EntityBase {
     public String getApplied3DSVersion() {  return applied3DSVersion; }
 
     public void setApplied3DSVersion(String applied3DSVersion) { this.applied3DSVersion = applied3DSVersion; }
+
+    public SecureMode getSecureMode() {
+        return secureMode;
+    }
+
+    public void setSecureMode(SecureMode secureMode) {
+        this.secureMode = secureMode;
+    }
 
     /**
      * Gets map which property is an object and what type of object.
