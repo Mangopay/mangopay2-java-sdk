@@ -41,6 +41,12 @@ public class CardValidation extends EntityBase {
     @SerializedName("SecureModeNeeded")
     private String secureModeNeeded;
 
+    /**
+     * The mode applied for the 3DS2 protocol for CB, Visa, and Mastercard
+     */
+    @SerializedName("SecureMode")
+    private SecureMode secureMode;
+
     @SerializedName("IpAddress")
     private String ipAddress;
 
@@ -229,6 +235,15 @@ public class CardValidation extends EntityBase {
     public String getApplied3DSVersion() {  return applied3DSVersion; }
 
     public void setApplied3DSVersion(String applied3DSVersion) { this.applied3DSVersion = applied3DSVersion; }
+
+    public SecureMode getSecureMode() {
+        return secureMode;
+    }
+
+    public CardValidation setSecureMode(SecureMode secureMode) {
+        this.secureMode = secureMode;
+        return this;
+    }
 
     /**
      * Gets map which property is an object and what type of object.

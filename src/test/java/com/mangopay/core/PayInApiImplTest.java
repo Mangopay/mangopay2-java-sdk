@@ -606,11 +606,13 @@ public class PayInApiImplTest extends BaseTest {
                 1000,
                 0,
                 "test descr"
-        ));
+        )
+                .setCategory("PHYSICAL_GOODS"));
         paymentDetails.setLineItems(lineItems);
         paymentDetails.setShippingPreference(ShippingPreference.GET_FROM_FILE);
         paymentDetails.setReference("Reference");
         paymentDetails.setStatementDescriptor("sttm");
+        paymentDetails.setCancelUrl("http://cancelurl.com");
 
         payIn.setPaymentDetails(paymentDetails);
 
@@ -629,6 +631,7 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(PayInExecutionType.WEB, createdPayIn.getExecutionType());
         assertFalse(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().isEmpty());
         assertTrue(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().get(0) instanceof LineItem);
+        assertNotNull(((PayInPaymentDetailsPayPal) createdPayIn.getPaymentDetails()).getLineItems().get(0).getCategory());
     }
 
     @Test

@@ -24,10 +24,6 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     @SerializedName("ShippingAddress")
     private ShippingAddress shippingAddress;
 
-    @Deprecated
-    @SerializedName("PaypalBuyerAccountEmail")
-    private String paypalBuyerAccountEmail;
-
 
     /// V2 ///
 
@@ -45,6 +41,33 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
 
     @SerializedName("Reference")
     private String reference;
+
+    @SerializedName("CancelURL")
+    private String cancelUrl;
+
+    @SerializedName("PaypalPayerID")
+    private String paypalPayerId;
+
+    @SerializedName("BuyerCountry")
+    private String buyerCountry;
+
+    @SerializedName("BuyerFirstname")
+    private String buyerFirstName;
+
+    @SerializedName("BuyerLastname")
+    private String buyerLastName;
+
+    @SerializedName("BuyerPhone")
+    private String buyerPhone;
+
+    @SerializedName("PaypalOrderID")
+    private String paypalOrderID;
+
+    @SerializedName("PaypalBuyerAccountEmail")
+    private String paypalBuyerAccountEmail;
+
+    @SerializedName("Trackings")
+    private List<PayPalWebTracking> trackings;
 
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
@@ -81,6 +104,15 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
         return this;
     }
 
+    public String getCancelUrl() {
+        return cancelUrl;
+    }
+
+    public PayInPaymentDetailsPayPal setCancelUrl(String cancelUrl) {
+        this.cancelUrl = cancelUrl;
+        return this;
+    }
+
     @Override
     public Map<String, Type> getSubObjects() {
         Map<String, Type> subObjects = super.getSubObjects();
@@ -104,15 +136,80 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
         return shippingPreference;
     }
 
-    public void setShippingPreference(ShippingPreference shippingPreference) {
+    public PayInPaymentDetailsPayPal setShippingPreference(ShippingPreference shippingPreference) {
         this.shippingPreference = shippingPreference;
+        return this;
     }
 
     public String getReference() {
         return reference;
     }
 
-    public void setReference(String reference) {
+    public PayInPaymentDetailsPayPal setReference(String reference) {
         this.reference = reference;
+        return this;
+    }
+
+    public String getPaypalPayerId() {
+        return paypalPayerId;
+    }
+
+    public PayInPaymentDetailsPayPal setPaypalPayerId(String paypalPayerId) {
+        this.paypalPayerId = paypalPayerId;
+        return this;
+    }
+
+    public String getBuyerCountry() {
+        return buyerCountry;
+    }
+
+    public PayInPaymentDetailsPayPal setBuyerCountry(String buyerCountry) {
+        this.buyerCountry = buyerCountry;
+        return this;
+    }
+
+    public String getBuyerFirstName() {
+        return buyerFirstName;
+    }
+
+    public PayInPaymentDetailsPayPal setBuyerFirstName(String buyerFirstName) {
+        this.buyerFirstName = buyerFirstName;
+        return this;
+    }
+
+    public String getBuyerLastName() {
+        return buyerLastName;
+    }
+
+    public PayInPaymentDetailsPayPal setBuyerLastName(String buyerLastName) {
+        this.buyerLastName = buyerLastName;
+        return this;
+    }
+
+    public String getBuyerPhone() {
+        return buyerPhone;
+    }
+
+    public PayInPaymentDetailsPayPal setBuyerPhone(String buyerPhone) {
+        this.buyerPhone = buyerPhone;
+        return this;
+    }
+
+    public String getPaypalOrderID() {
+        return paypalOrderID;
+    }
+
+    public PayInPaymentDetailsPayPal setPaypalOrderID(String paypalOrderID) {
+        this.paypalOrderID = paypalOrderID;
+        return this;
+    }
+
+    public List<PayPalWebTracking> getTrackings() {
+        return trackings;
+    }
+
+    public PayInPaymentDetailsPayPal setTrackings(List<PayPalWebTracking> trackings) {
+        this.trackings = trackings;
+        return this;
     }
 }

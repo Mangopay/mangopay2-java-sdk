@@ -4,6 +4,7 @@ import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
+import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
 
@@ -142,4 +143,17 @@ public interface PayInApi {
      * @throws Exception
      */
     PaymentMethodMetadata getPaymentMethodMetadata(PaymentMethodMetadata metadata) throws Exception;
+
+
+    /**
+     * Add tracking information to a PayPal PayIn (add the tracking number and carrier for LineItems shipments.)
+     * Caution – Tracking information cannot be edited
+     * You can’t modify the TrackingNumber, Carrier, or NotifyBuyer once added.
+     * You can only send a unique tracking number once.
+     *
+     * @param payInId      The ID of the PayIn
+     * @param trackingData trackingInformation object
+     * @return {PayIn} object returned by the API
+     */
+    PayIn addPayPalTrackingInformation(String payInId, PayPalWebTracking trackingData) throws Exception;
 }

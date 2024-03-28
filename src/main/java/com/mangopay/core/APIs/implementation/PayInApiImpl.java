@@ -11,6 +11,7 @@ import com.mangopay.core.deserializer.RecurringPayInDeserializer;
 import com.mangopay.core.serializer.PayInSerializer;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
+import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
 
@@ -133,5 +134,10 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     @Override
     public PaymentMethodMetadata getPaymentMethodMetadata(PaymentMethodMetadata metadata) throws Exception {
         return this.createObject(PaymentMethodMetadata.class, null, "payment_method-metadata", metadata);
+    }
+
+    @Override
+    public PayIn addPayPalTrackingInformation(String payInId, PayPalWebTracking trackingData) throws Exception {
+        return this.updateObject(PayIn.class, "add_tracking_info", trackingData, payInId);
     }
 }

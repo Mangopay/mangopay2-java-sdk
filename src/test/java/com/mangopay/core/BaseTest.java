@@ -1195,6 +1195,7 @@ public abstract class BaseTest {
 
         cardValidation.setAuthorId(user.getId());
         cardValidation.setSecureModeReturnUrl("http://test.com");
+        cardValidation.setSecureMode(SecureMode.NO_CHOICE);
 
         cardValidation.setBrowserInfo(getNewBrowserInfo());
         cardValidation.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
