@@ -59,7 +59,7 @@ public class WalletApiImplTest extends BaseTest {
         filter.setType(TransactionType.PAYIN);
 
         // wait 2 seconds for the transactions to be created in the API
-        Thread.sleep(2);
+        Thread.sleep(2000);
 
         List<Transaction> transactions = this.api.getWalletApi().getTransactions(wallet.getId(), pagination, filter);
 
