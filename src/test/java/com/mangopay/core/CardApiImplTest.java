@@ -57,6 +57,7 @@ public class CardApiImplTest extends BaseTest {
 
         assertNotNull(cardValidation);
         assertNotNull(cardValidation.getId());
+        assertNotNull(cardValidation.getSecureMode());
         assertEquals(TransactionType.CARD_VALIDATION, cardValidation.getType());
     }
 

@@ -81,6 +81,33 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 if (object.has("Reference") && !object.get("Reference").isJsonNull()) {
                     payInPaymentDetailsPayPal.setReference(object.get("Reference").getAsString());
                 }
+                if (object.has("CancelURL") && !object.get("CancelURL").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setCancelUrl(object.get("CancelURL").getAsString());
+                }
+                if (object.has("PaypalPayerID") && !object.get("PaypalPayerID").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setPaypalOrderID(object.get("PaypalPayerID").getAsString());
+                }
+                if (object.has("BuyerCountry") && !object.get("BuyerCountry").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setBuyerCountry(object.get("BuyerCountry").getAsString());
+                }
+                if (object.has("BuyerFirstname") && !object.get("BuyerFirstname").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setBuyerFirstName(object.get("BuyerFirstname").getAsString());
+                }
+                if (object.has("BuyerLastname") && !object.get("BuyerLastname").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setBuyerLastName(object.get("BuyerLastname").getAsString());
+                }
+                if (object.has("BuyerPhone") && !object.get("BuyerPhone").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setBuyerPhone(object.get("BuyerPhone").getAsString());
+                }
+                if (object.has("PaypalOrderID") && !object.get("PaypalOrderID").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setPaypalOrderID(object.get("PaypalOrderID").getAsString());
+                }
+                if (object.has("Trackings") && !object.get("Trackings").isJsonNull()) {
+                    Type listType = new TypeToken<ArrayList<PayPalWebTracking>>() {
+                    }.getType();
+                    payInPaymentDetailsPayPal.setTrackings((List<PayPalWebTracking>) context.deserialize(object.get("Trackings"), listType));
+                }
+
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;
             case PAYCONIQ:
@@ -178,7 +205,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
             case KLARNA:
                 PayInPaymentDetailsKlarna payInPaymentDetailsKlarna = new PayInPaymentDetailsKlarna();
                 if (object.has("LineItems") && !object.get("LineItems").isJsonNull()) {
-                    Type listType = new TypeToken<ArrayList<LineItem>>(){}.getType();
+                    Type listType = new TypeToken<ArrayList<LineItem>>() {
+                    }.getType();
                     payInPaymentDetailsKlarna.setLineItems((List<LineItem>) context.deserialize(object.get("LineItems"), listType));
                 }
                 if (object.has("Shipping") && !object.get("Shipping").isJsonNull())
