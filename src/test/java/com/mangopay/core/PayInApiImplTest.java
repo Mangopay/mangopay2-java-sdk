@@ -208,7 +208,7 @@ public class PayInApiImplTest extends BaseTest {
             assertNotNull(resultMetadata.getIssuerCountryCode());
             assertNotNull(resultMetadata.getIssuingBank());
             assertNotNull(resultMetadata.getBinData());
-            assertNotNull(resultMetadata.getCardType());
+            assertNotNull(resultMetadata.getBinData().get(0).getCardType());
 
         } catch (Exception ex) {
             fail(ex.getMessage());
