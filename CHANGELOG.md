@@ -1,3 +1,8 @@
+## [2.37.1] - 2024-04-30
+### Fixed
+
+- Updated the implementation for [Look up metadata for a payment method](https://mangopay.com/docs/endpoints/payment-method-metadata#lookup-payment-method-metadata). The `CommercialIndicator` and `CardType` fields have been moved to the `BinData` object in the API response.
+
 ## [2.37.0] - 2024-04-02
 ### Added
 
