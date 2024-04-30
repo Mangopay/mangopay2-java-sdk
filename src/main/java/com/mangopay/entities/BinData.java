@@ -16,6 +16,18 @@ public class BinData {
     @SerializedName("Brand")
     private String brand;
 
+    /**
+     * Whether the card is held in a personal or commercial capacity.
+     */
+    @SerializedName("CommercialIndicator")
+    private String commercialIndicator;
+
+    /**
+     * The type of the card. Allowed / Returned / Default values: CREDIT, DEBIT, CHARGE CARD
+     */
+    @SerializedName("CardType")
+    private String cardType;
+
     public String getSubtype() {
         return subtype;
     }
@@ -30,5 +42,23 @@ public class BinData {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getCommercialIndicator() {
+        return commercialIndicator;
+    }
+
+    public BinData setCommercialIndicator(String commercialIndicator) {
+        this.commercialIndicator = commercialIndicator;
+        return this;
+    }
+
+    public String getCardType() {
+        return cardType;
+    }
+
+    public BinData setCardType(String cardType) {
+        this.cardType = cardType;
+        return this;
     }
 }

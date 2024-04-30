@@ -34,12 +34,6 @@ public class PaymentMethodMetadata extends EntityBase {
     private String tokenFormat;
 
     /**
-     * The type of the card. Allowed / Returned / Default values: CREDIT, DEBIT, CHARGE CARD
-     */
-    @SerializedName("CardType")
-    private String cardType;
-
-    /**
      * The country where the card was issued. Format: ISO-3166 alpha-2 two-letter country code
      */
     @SerializedName("IssuerCountryCode")
@@ -50,12 +44,6 @@ public class PaymentMethodMetadata extends EntityBase {
      */
     @SerializedName("IssuingBank")
     private String issuingBank;
-
-    /**
-     * Whether the card is held in a personal or commercial capacity.
-     */
-    @SerializedName("CommercialIndicator")
-    private String commercialIndicator;
 
     /**
      * Additional data about the card based on the BIN. In the case of co-branded card products, two objects are returned.
@@ -95,14 +83,6 @@ public class PaymentMethodMetadata extends EntityBase {
         this.tokenFormat = tokenFormat;
     }
 
-    public String getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
-    }
-
     public String getIssuerCountryCode() {
         return issuerCountryCode;
     }
@@ -117,14 +97,6 @@ public class PaymentMethodMetadata extends EntityBase {
 
     public void setIssuingBank(String issuingBank) {
         this.issuingBank = issuingBank;
-    }
-
-    public String getCommercialIndicator() {
-        return commercialIndicator;
-    }
-
-    public void setCommercialIndicator(String commercialIndicator) {
-        this.commercialIndicator = commercialIndicator;
     }
 
     public List<BinData> getBinData() {
