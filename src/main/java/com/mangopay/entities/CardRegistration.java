@@ -72,6 +72,12 @@ public class CardRegistration extends EntityBase {
     @SerializedName("CardType")
     private CardType cardType;
 
+    /**
+     * The cardholder’s name shown on the payment card.
+     */
+    @SerializedName("CardHolderName")
+    private String cardHolderName;
+
     public CardRegistration() {
         this.cardType = CardType.CB_VISA_MASTERCARD;
     }
@@ -158,6 +164,11 @@ public class CardRegistration extends EntityBase {
 
     public void setCardType(CardType cardType) {
         this.cardType = cardType;
+    }
+
+    public CardRegistration setCardHolderName(String cardHolderName) {
+        this.cardHolderName = cardHolderName;
+        return this;
     }
 
     /**

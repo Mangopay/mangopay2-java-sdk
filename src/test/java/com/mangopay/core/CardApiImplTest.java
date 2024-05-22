@@ -23,6 +23,7 @@ public class CardApiImplTest extends BaseTest {
 
         for (Card byFingerprint : cardsByFingerprint) {
             assertEquals(card.getFingerprint(), byFingerprint.getFingerprint());
+            assertNotNull(card.getCardHolderName());
         }
     }
 

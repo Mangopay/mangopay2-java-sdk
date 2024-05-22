@@ -89,6 +89,12 @@ public class Card extends EntityBase {
     @SerializedName("Shipping")
     private Shipping shipping;
 
+    /**
+     * The cardholder’s name shown on the payment card.
+     */
+    @SerializedName("CardHolderName")
+    private String cardHolderName;
+
     public String getUserId() {
         return userId;
     }
@@ -184,6 +190,10 @@ public class Card extends EntityBase {
     public Shipping getShipping() { return shipping; }
 
     public void setShipping(Shipping shipping) { this.shipping = shipping; }
+
+    public String getCardHolderName() {
+        return cardHolderName;
+    }
 
     /**
      * Gets the collection of read-only fields names.
