@@ -607,6 +607,7 @@ public abstract class BaseTest {
         cardRegistration.setCurrency(CurrencyIso.EUR);
         cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
         cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData(cardRegistration));
+        cardRegistration.setCardHolderName("John Silver");
         cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
 
         Card card = this.api.getCardApi().get(cardRegistration.getCardId());
