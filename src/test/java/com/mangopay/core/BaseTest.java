@@ -1052,6 +1052,7 @@ public abstract class BaseTest {
         refund.setFees(new Money());
         refund.getFees().setAmount(transfer.getFees().getAmount());
         refund.getFees().setCurrency(transfer.getFees().getCurrency());
+        refund.setStatementDescriptor("MGP");
 
         return this.api.getTransferApi().createRefund(transfer.getId(), refund);
     }

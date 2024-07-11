@@ -46,6 +46,12 @@ public class Refund extends Transaction {
     @SerializedName("Reference")
     private String reference;
 
+    /**
+     * An optional value to be specified on the user's bank statement
+     */
+    @SerializedName("StatementDescriptor")
+    private String statementDescriptor;
+
     public String getInitialTransactionId() {
         return initialTransactionId;
     }
@@ -92,6 +98,14 @@ public class Refund extends Transaction {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getStatementDescriptor() {
+        return statementDescriptor;
+    }
+
+    public void setStatementDescriptor(String statementDescriptor) {
+        this.statementDescriptor = statementDescriptor;
     }
 
     /**
