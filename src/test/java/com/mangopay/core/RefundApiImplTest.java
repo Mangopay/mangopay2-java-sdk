@@ -47,6 +47,7 @@ public class RefundApiImplTest extends BaseTest {
         assertTrue(getRefund.getType() == TransactionType.PAYOUT);
         assertTrue(getRefund.getInitialTransactionType() == InitialTransactionType.PAYIN);
         assertNotNull(getRefund.getRefundReason());
+        assertNotNull(getRefund.getStatementDescriptor());
         assertTrue(getRefund.getRefundReason().getRefundReasonType() == RefundReasonType.INITIALIZED_BY_CLIENT);
     }
 }
