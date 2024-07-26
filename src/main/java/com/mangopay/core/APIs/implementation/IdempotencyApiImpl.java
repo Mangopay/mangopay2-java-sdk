@@ -46,7 +46,7 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
             //Class<? extends Object> value = entry.getValue();
 
             String sourceUrl = super.getRequestUrl(entry.getKey());
-            sourceUrl = String.format(sourceUrl, "[0-9a-zA-Z]+", "[0-9a-zA-Z]+");
+            sourceUrl = String.format(sourceUrl, "[0-9a-zA-Z_]+", "[0-9a-zA-Z_]+");
             sourceUrl = sourceUrl.replace("/", "\\/");
 
             Pattern ex = Pattern.compile(sourceUrl);
