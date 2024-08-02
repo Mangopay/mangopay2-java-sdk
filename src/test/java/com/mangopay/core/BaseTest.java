@@ -593,6 +593,12 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInBancontactWeb(String userId) throws Exception {
+        PayIn payIn = getPayInBancontactWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     private PayIn getPayInCardDirect(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
@@ -782,6 +788,39 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(payInExecutionDetailsWeb);
 
         payIn.setTag("My GIROPAY Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInBancontactWeb(String userId) throws Exception {
+
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(1000);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(10);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        payIn.setPaymentDetails(new PayInPaymentDetailsBancontact());
+        ((PayInPaymentDetailsBancontact) payIn.getPaymentDetails()).setStatementDescriptor("test");
+        ((PayInPaymentDetailsBancontact) payIn.getPaymentDetails()).setRecurring(true);
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+        payInExecutionDetailsWeb.setCulture(CultureCode.FR);
+        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+        payIn.setTag("My Bancontact Tag");
         return payIn;
     }
 
