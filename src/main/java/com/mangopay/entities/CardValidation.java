@@ -103,6 +103,9 @@ public class CardValidation extends EntityBase {
     @SerializedName("CardInfo")
     private CardInfo cardInfo;
 
+    @SerializedName("PaymentCategory")
+    private String paymentCategory;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -242,6 +245,15 @@ public class CardValidation extends EntityBase {
 
     public CardValidation setSecureMode(SecureMode secureMode) {
         this.secureMode = secureMode;
+        return this;
+    }
+
+    public String getPaymentCategory() {
+        return paymentCategory;
+    }
+
+    public CardValidation setPaymentCategory(String paymentCategory) {
+        this.paymentCategory = paymentCategory;
         return this;
     }
 

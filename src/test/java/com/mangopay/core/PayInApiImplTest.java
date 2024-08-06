@@ -69,6 +69,7 @@ public class PayInApiImplTest extends BaseTest {
             UserNatural user = this.getJohn();
 
             check(user, payIn, wallet, beforeWallet);
+            assertEquals("TelephoneOrder", ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getPaymentCategory());
         } catch (Exception ex) {
             fail(ex.getMessage());
         }

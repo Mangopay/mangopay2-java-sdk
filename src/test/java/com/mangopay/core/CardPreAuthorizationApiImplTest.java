@@ -27,6 +27,7 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         assertTrue((cardPreAuthorization.getCulture()) == CultureCode.FR);
         assertNull(cardPreAuthorization.getPayInId());
         assertNotNull(cardPreAuthorization.getRemainingFunds());
+        assertEquals("TelephoneOrder", cardPreAuthorization.getPaymentCategory());
     }
 
     @Test

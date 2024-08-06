@@ -49,6 +49,8 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsCard.setBankName(object.get("BankName").getAsString());
                 if (object.has("CardInfo") && !object.get("CardInfo").isJsonNull())
                     payInPaymentDetailsCard.setCardInfo((CardInfo) context.deserialize(object.get("CardInfo"), CardInfo.class));
+                if (object.has("PaymentCategory") && !object.get("PaymentCategory").isJsonNull())
+                    payInPaymentDetailsCard.setPaymentCategory(object.get("PaymentCategory").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsCard);
                 break;
             case PREAUTHORIZED:

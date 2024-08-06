@@ -628,6 +628,7 @@ public abstract class BaseTest {
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setPaymentCategory("TelephoneOrder");
 
         // execution type as DIRECT
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
@@ -1170,6 +1171,7 @@ public abstract class BaseTest {
         cardPreAuthorization.setCardId(getCardRegistration.getCardId());
         cardPreAuthorization.setSecureModeReturnUrl("http://test.com");
         cardPreAuthorization.setCulture(CultureCode.FR);
+        cardPreAuthorization.setPaymentCategory("TelephoneOrder");
 
         cardPreAuthorization.setBrowserInfo(getNewBrowserInfo());
         cardPreAuthorization.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
@@ -1197,6 +1199,7 @@ public abstract class BaseTest {
         cardValidation.setAuthorId(user.getId());
         cardValidation.setSecureModeReturnUrl("http://test.com");
         cardValidation.setSecureMode(SecureMode.NO_CHOICE);
+        cardValidation.setPaymentCategory("TelephoneOrder");
 
         cardValidation.setBrowserInfo(getNewBrowserInfo());
         cardValidation.setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");

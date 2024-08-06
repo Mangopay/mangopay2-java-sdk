@@ -58,6 +58,9 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
     @SerializedName("CardInfo")
     private CardInfo cardInfo;
 
+    @SerializedName("PaymentCategory")
+    private String paymentCategory;
+
     public PayInPaymentDetailsCard() {
     }
 
@@ -145,6 +148,15 @@ public class PayInPaymentDetailsCard extends Dto implements PayInPaymentDetails 
 
     public PayInPaymentDetailsCard setCardInfo(CardInfo cardInfo) {
         this.cardInfo = cardInfo;
+        return this;
+    }
+
+    public String getPaymentCategory() {
+        return paymentCategory;
+    }
+
+    public PayInPaymentDetailsCard setPaymentCategory(String paymentCategory) {
+        this.paymentCategory = paymentCategory;
         return this;
     }
 
