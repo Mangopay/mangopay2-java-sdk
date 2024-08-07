@@ -92,7 +92,12 @@ public enum PayInPaymentType {
     /**
      * GIROPAY payment type
      */
-    GIROPAY
+    GIROPAY,
+
+    /**
+     * BANCONTACT payment type
+     */
+    BCMC
 
 
 }
