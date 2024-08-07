@@ -245,6 +245,16 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsGiropay.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsGiropay);
                 break;
+            case BCMC:
+                PayInPaymentDetailsBancontact payInPaymentDetailsBancontact = new PayInPaymentDetailsBancontact();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsBancontact.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("DeepLinkURL") && !object.get("DeepLinkURL").isJsonNull())
+                    payInPaymentDetailsBancontact.setDeepLinkUrl(object.get("DeepLinkURL").getAsString());
+                if (object.has("Recurring") && !object.get("Recurring").isJsonNull())
+                    payInPaymentDetailsBancontact.setRecurring(object.get("Recurring").getAsBoolean());
+                payIn.setPaymentDetails(payInPaymentDetailsBancontact);
+                break;
             default:
                 return null;
         }

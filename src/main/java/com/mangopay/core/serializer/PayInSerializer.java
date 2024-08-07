@@ -121,6 +121,11 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
             case "PayInPaymentDetailsGiropay":
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsGiropay) src.getPaymentDetails()).getStatementDescriptor()));
                 break;
+            case "PayInPaymentDetailsBancontact":
+                object.add("DeepLinkURL", context.serialize(((PayInPaymentDetailsBancontact) src.getPaymentDetails()).getDeepLinkUrl()));
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsBancontact) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Recurring", context.serialize(((PayInPaymentDetailsBancontact) src.getPaymentDetails()).getRecurring()));
+                break;
             default:
                 return null;
         }
