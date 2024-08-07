@@ -1,3 +1,19 @@
+## [2.38.0] - 2024-08-07
+### Added
+
+1. New endpoint: [Create a Bancontact PayIn](https://docs.mangopay.com/api-reference/bancontact/bancontact-payin-object#create-bancontact-payin)
+2. New parameter `PaymentCategory` for the following endpoints:
+- [Create a Card Validation](https://docs.mangopay.com/api-reference/card-validations/create-card-validation)
+- [Create a Direct Card PayIn](https://docs.mangopay.com/api-reference/direct-card-payins/create-direct-card-payin)
+- [Create a Preauthorization](https://docs.mangopay.com/api-reference/preauthorizations/create-preauthorization)
+3. New parameter `StatementDescriptor` for the following endpoints:
+- [Create a Refund for a PayIn](https://docs.mangopay.com/api-reference/refunds/create-refund-payin)
+- [View a Refund](https://docs.mangopay.com/api-reference/refunds/view-refund)
+
+### Fixed
+
+- Adjust the parameter `CardHolderName`
+
 ## [2.37.2] - 2024-05-24
 ### Added
 
