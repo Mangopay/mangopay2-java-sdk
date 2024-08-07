@@ -152,6 +152,9 @@ public class CardPreAuthorization extends EntityBase {
     @SerializedName("CardInfo")
     private CardInfo cardInfo;
 
+    @SerializedName("PaymentCategory")
+    private String paymentCategory;
+
     public CardInfo getCardInfo() {
         return cardInfo;
     }
@@ -353,6 +356,15 @@ public class CardPreAuthorization extends EntityBase {
 
     public void setCulture(CultureCode culture) {
         this.culture = culture;
+    }
+
+    public String getPaymentCategory() {
+        return paymentCategory;
+    }
+
+    public CardPreAuthorization setPaymentCategory(String paymentCategory) {
+        this.paymentCategory = paymentCategory;
+        return this;
     }
 
     /**

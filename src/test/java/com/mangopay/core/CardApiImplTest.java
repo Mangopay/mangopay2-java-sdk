@@ -60,6 +60,7 @@ public class CardApiImplTest extends BaseTest {
         assertNotNull(cardValidation.getId());
         assertNotNull(cardValidation.getSecureMode());
         assertEquals(TransactionType.CARD_VALIDATION, cardValidation.getType());
+        assertEquals("TelephoneOrder", cardValidation.getPaymentCategory());
     }
 
     @Test
@@ -76,11 +77,13 @@ public class CardApiImplTest extends BaseTest {
         CardApi cardApi = api.getCardApi();
         PayIn payIn = getNewPayInCardDirect();
         Card card = cardApi.get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
+        card.setCardHolderName("placeholder name");
 
         assertTrue(card.isActive());
 
         Card update = cardApi.disable(card);
 
         assertFalse(update.isActive());
+        assertEquals("placeholder name", card.getCardHolderName());
     }
 }

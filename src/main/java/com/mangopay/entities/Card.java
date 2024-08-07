@@ -195,6 +195,11 @@ public class Card extends EntityBase {
         return cardHolderName;
     }
 
+    public Card setCardHolderName(String cardHolderName) {
+        this.cardHolderName = cardHolderName;
+        return this;
+    }
+
     /**
      * Gets the collection of read-only fields names.
      *
