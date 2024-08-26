@@ -1,3 +1,7 @@
+## [2.38.1] - 2024-08-26
+### Fixed
+- Fixed the idempotency source URL ID pattern matcher to support the updated resource ID format. (thank you @AntoineDuComptoirDesPharmacies )
+
 ## [2.38.0] - 2024-08-07
 ### Added
 
