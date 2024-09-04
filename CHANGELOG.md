@@ -1,3 +1,8 @@
+## [2.38.2] - 2024-09-04
+### Fixed
+
+- Add additional refund reason types.
+
 ## [2.38.1] - 2024-08-26
 ### Fixed
 - Fixed the idempotency source URL ID pattern matcher to support the updated resource ID format. (thank you @AntoineDuComptoirDesPharmacies )
