@@ -23,6 +23,12 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     private String bankWireRef;
 
     /**
+     * Payment reference provided for the payout.
+     */
+    @SerializedName("PaymentRef")
+    private PayOutPaymentRef paymentRef;
+
+    /**
      * The requested payout mode.
      */
     @SerializedName("PayoutModeRequested")
@@ -80,6 +86,14 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
 
     public void setBankWireRef(String bankWireRef) {
         this.bankWireRef = bankWireRef;
+    }
+
+    public PayOutPaymentRef getPaymentRef() {
+        return paymentRef;
+    }
+
+    public void setPaymentRef(PayOutPaymentRef paymentRef) {
+        this.paymentRef = paymentRef;
     }
 
     public PayoutMode getPayoutModeRequested() {
