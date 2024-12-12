@@ -1,21 +1,21 @@
 package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.enumerations.PayoutReasonType;
 
 public class PayOutPaymentRef {
 
+    // Only valid PaymentRef reasonType is PAYIN_REFUND
     @SerializedName("ReasonType")
-    private PayoutReasonType reasonType;
+    private String reasonType;
 
     @SerializedName("ReferenceId")
     private String referenceId;
 
-    public PayoutReasonType getReasonType() {
+    public String getReasonType() {
         return reasonType;
     }
 
-    public void setReasonType(PayoutReasonType reasonType) {
+    public void setReasonType(String reasonType) {
         this.reasonType = reasonType;
     }
 
