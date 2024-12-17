@@ -46,12 +46,11 @@ public class PayInPaymentDetailsBankWire extends Dto implements PayInPaymentDeta
     @SerializedName("TransactionDetails")
     private List<PayInTransactionDetailsBankWire> transactionDetails;
 
-    public PayInPaymentDetailsBankWire(Money declaredDebitedFunds, Money declaredFees, BankAccount bankAccount, String wireReference, List<PayInTransactionDetailsBankWire> transactionDetails) {
+    public PayInPaymentDetailsBankWire(Money declaredDebitedFunds, Money declaredFees, BankAccount bankAccount, String wireReference) {
         this.declaredDebitedFunds = declaredDebitedFunds;
         this.declaredFees = declaredFees;
         this.bankAccount = bankAccount;
         this.wireReference = wireReference;
-        this.transactionDetails = transactionDetails;
     }
 
     public PayInPaymentDetailsBankWire() {
