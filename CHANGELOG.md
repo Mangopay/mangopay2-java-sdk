@@ -1,3 +1,8 @@
+## [2.40.0] - 2024-12-17
+### Added
+
+- New `TransactionDetails` parameter for [Bank wire PayIns](https://docs.mangopay.com/api-reference/bank-wire-payins/bank-wire-payin-object).
+
 ## [2.39.0] - 2024-12-13
 ### Added
 
