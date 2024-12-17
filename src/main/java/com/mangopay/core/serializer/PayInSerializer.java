@@ -25,6 +25,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("DeclaredFees", context.serialize(((PayInPaymentDetailsBankWire) src.getPaymentDetails()).getDeclaredFees()));
                 object.add("BankAccount", context.serialize(((PayInPaymentDetailsBankWire) src.getPaymentDetails()).getBankAccount()));
                 object.add("WireReference", context.serialize(((PayInPaymentDetailsBankWire) src.getPaymentDetails()).getWireReference()));
+                object.add("TransactionDetails", context.serialize(((PayInPaymentDetailsBankWire) src.getPaymentDetails()).getTransactionDetails()));
                 break;
             case "PayInPaymentDetailsCard":
                 object.add("CardType", context.serialize(((PayInPaymentDetailsCard) src.getPaymentDetails()).getCardType()));

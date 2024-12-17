@@ -8,6 +8,7 @@ import com.mangopay.entities.BankAccount;
 
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,11 +40,18 @@ public class PayInPaymentDetailsBankWire extends Dto implements PayInPaymentDeta
     @SerializedName("WireReference")
     private String wireReference;
 
-    public PayInPaymentDetailsBankWire(Money declaredDebitedFunds, Money declaredFees, BankAccount bankAccount, String wireReference) {
+    /**
+     * Transaction details for BankWire Pay-ins retrieval.
+     */
+    @SerializedName("TransactionDetails")
+    private List<PayInTransactionDetailsBankWire> transactionDetails;
+
+    public PayInPaymentDetailsBankWire(Money declaredDebitedFunds, Money declaredFees, BankAccount bankAccount, String wireReference, List<PayInTransactionDetailsBankWire> transactionDetails) {
         this.declaredDebitedFunds = declaredDebitedFunds;
         this.declaredFees = declaredFees;
         this.bankAccount = bankAccount;
         this.wireReference = wireReference;
+        this.transactionDetails = transactionDetails;
     }
 
     public PayInPaymentDetailsBankWire() {
@@ -79,6 +87,14 @@ public class PayInPaymentDetailsBankWire extends Dto implements PayInPaymentDeta
 
     public void setWireReference(String wireReference) {
         this.wireReference = wireReference;
+    }
+
+    public List<PayInTransactionDetailsBankWire> getTransactionDetails() {
+        return transactionDetails;
+    }
+
+    public void setTransactionDetails(List<PayInTransactionDetailsBankWire> transactionDetails) {
+        this.transactionDetails = transactionDetails;
     }
 
     /**
