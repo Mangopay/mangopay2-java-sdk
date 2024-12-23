@@ -32,6 +32,11 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInDetails.setBankAccount((BankAccount) context.deserialize(object.get("BankAccount"), BankAccount.class));
                 if (object.has("WireReference") && !object.get("WireReference").isJsonNull())
                     payInDetails.setWireReference(object.get("WireReference").getAsString());
+                if (object.has("TransactionDetails") && !object.get("TransactionDetails").isJsonNull()) {
+                    Type listType = new TypeToken<ArrayList<PayInTransactionDetailsBankWire>>() {
+                    }.getType();
+                    payInDetails.setTransactionDetails((List<PayInTransactionDetailsBankWire>) context.deserialize(object.get("TransactionDetails"), listType));
+                }
 
                 payIn.setPaymentDetails(payInDetails);
                 break;
