@@ -41,6 +41,7 @@ public abstract class BaseTest {
     private static BankingAlias JOHNS_BANKING_ALIAS;
     private static UboDeclaration UBO_DECLARATION;
     private static PayInTemplateURLOptions PAYIN_TEMPLATE_URL_OPTIONS;
+    private static VirtualAccount JOHNS_VIRTUAL_ACCOUNT;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -387,6 +388,20 @@ public abstract class BaseTest {
         map.put("walletId", wally.getId());
 
         return map;
+    }
+
+    protected VirtualAccount getJohnsVirtualAccount() throws Exception {
+        if(BaseTest.JOHNS_VIRTUAL_ACCOUNT == null) {
+            Wallet wallet = this.getJohnsWallet();
+            VirtualAccount virtualAccount = new VirtualAccount();
+            virtualAccount.setCountry("FR");
+            virtualAccount.setVirtualAccountPurpose("Collection");
+            virtualAccount.setTag("create virtual account tag");
+
+            BaseTest.JOHNS_VIRTUAL_ACCOUNT = this.api.getVirtualAccountApi().create(wallet.getId(), virtualAccount);
+        }
+
+        return BaseTest.JOHNS_VIRTUAL_ACCOUNT;
     }
 
     protected RecurringPayment createJohnsRecurringPayment() throws Exception {
