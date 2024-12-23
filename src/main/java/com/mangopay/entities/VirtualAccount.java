@@ -10,33 +10,66 @@ import java.util.List;
 
 public class VirtualAccount extends EntityBase {
 
+    /**
+     * The ID of the wallet
+     */
     @SerializedName("WalletId")
     private String walletId;
 
+    /**
+     * The credited user ID
+     */
     @SerializedName("CreditedUserId")
     private String creditedUserId;
 
+    /**
+     * The type of the virtual account
+     * Allowed values: `COLLECTION`, `USER_OWNED`
+     */
     @SerializedName("VirtualAccountPurpose")
     private String virtualAccountPurpose;
 
+    /**
+     * The country of the IBAN. The country must correspond to the currency of the wallet
+     */
     @SerializedName("Country")
     private String country;
 
+    /**
+     * The status of the virtual account creation
+     * Allowed values: `COLLECTION`, `USER_OWNED`
+     */
     @SerializedName("Status")
     private String status;
 
+    /**
+     * Whether the banking alias is active or not
+     */
     @SerializedName("Active")
     private Boolean active;
 
+    /**
+     * The current Status of the Virtual Account
+     * Allowed values: `COLLECTION`, `USER_OWNED`
+     */
     @SerializedName("AccountOwner")
     private String accountOwner;
 
+    /**
+     * The current Status of the Virtual Account
+     */
     @SerializedName("LocalAccountDetails")
     private LocalAccountDetails localAccountDetails;
 
+    /**
+     * The current Status of the Virtual Account
+     */
     @SerializedName("InternationalAccountDetails")
     private List<InternationalAccountDetails> internationalAccountDetails;
 
+    /**
+     * The current Status of the Virtual Account
+     */
     @SerializedName("Capabilities")
     private VirtualAccountCapabilities capabilities;
 

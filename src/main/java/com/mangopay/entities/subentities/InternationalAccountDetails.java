@@ -1,9 +1,9 @@
 package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.EntityBase;
+import com.mangopay.core.Dto;
 
-public class InternationalAccountDetails extends EntityBase {
+public class InternationalAccountDetails extends Dto {
 
     @SerializedName("Address")
     private VirtualAccountAddress address;
