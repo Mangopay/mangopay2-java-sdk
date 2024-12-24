@@ -47,7 +47,7 @@ public class VirtualAccountApiImplTest extends BaseTest {
 
     @Test
     public void getAvailabilities() throws Exception {
-        VirtualAccountAvailabilities availabilities = this.api.getVirtualAccountApi().GetAvailabilities();
+        VirtualAccountAvailabilities availabilities = this.api.getVirtualAccountApi().getAvailabilities();
 
         assertNotNull(availabilities);
         assertTrue(availabilities.getCollection().getClass().isArray());

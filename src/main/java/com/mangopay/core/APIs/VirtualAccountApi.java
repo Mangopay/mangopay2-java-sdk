@@ -53,7 +53,7 @@ public interface VirtualAccountApi {
     /**
      * @return VirtualAccountAvailabilities
      */
-    VirtualAccountAvailabilities GetAvailabilities() throws Exception;
+    VirtualAccountAvailabilities getAvailabilities() throws Exception;
 
 
 }

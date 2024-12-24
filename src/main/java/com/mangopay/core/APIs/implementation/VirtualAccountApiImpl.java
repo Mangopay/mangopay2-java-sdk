@@ -48,7 +48,7 @@ public class VirtualAccountApiImpl extends ApiBase implements VirtualAccountApi 
     }
 
     @Override
-    public VirtualAccountAvailabilities GetAvailabilities() throws Exception {
+    public VirtualAccountAvailabilities getAvailabilities() throws Exception {
         return this.getObject(VirtualAccountAvailabilities.class, "virtual_account_get_availabilities", (Object) null);
     }
 }
