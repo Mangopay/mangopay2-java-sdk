@@ -1,3 +1,21 @@
+## [2.41.0] - 2024-12-25
+### Added
+
+New endpoints for The Virtual Account object:
+
+- Create a Virtual Account
+- Deactivate a Virtual Account
+- View a Virtual Account
+- List Virtual Accounts for a Wallet
+- View Client Availabilities
+
+Added all relevant `EVENT_TYPE_CHOICES`:
+
+- `VIRTUAL_ACCOUNT_ACTIVE`
+- `VIRTUAL_ACCOUNT_BLOCKED`
+- `VIRTUAL_ACCOUNT_CLOSED`
+- `VIRTUAL_ACCOUNT_FAILED`
+
 ## [2.40.0] - 2024-12-17
 ### Added
 
