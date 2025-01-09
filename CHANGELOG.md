@@ -1,3 +1,7 @@
+## [2.41.1] - 2024-01-09
+### Fixed
+#345 `PayInReferences` class attributes are now readable and instantiable. Thank you for your contribution [@toni07 ](https://github.com/toni07)!
+
 ## [2.41.0] - 2024-12-25
 ### Added
 
