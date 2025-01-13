@@ -5,6 +5,7 @@ import com.mangopay.core.enumerations.PersonType;
 import com.mangopay.entities.User;
 import com.mangopay.entities.UserLegal;
 import com.mangopay.entities.UserNatural;
+import com.mangopay.entities.UserNaturalSca;
 
 import java.lang.reflect.Type;
 
@@ -21,8 +22,14 @@ public class UserSerializer implements JsonSerializer<User> {
             return object;
         } else {
             if (personType.equals(PersonType.NATURAL)) {
-                if (((UserNatural)src).getAddress() != null && ((UserNatural)src).getAddress().allFieldsNull())
-                    object.add("Address", null);
+                if (src instanceof UserNaturalSca) {
+                    if (((UserNaturalSca)src).getAddress() != null && ((UserNaturalSca)src).getAddress().allFieldsNull())
+                        object.add("Address", null);
+                    // other sub-objects...
+                } else if (src instanceof UserNatural) {
+                    if (((UserNatural)src).getAddress() != null && ((UserNatural)src).getAddress().allFieldsNull())
+                        object.add("Address", null);
+                }
                 return object;
             } else {
                 throw new IllegalArgumentException("Invalid user JSON:" + context.toString());

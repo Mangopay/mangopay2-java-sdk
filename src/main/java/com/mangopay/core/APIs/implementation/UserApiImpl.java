@@ -39,6 +39,7 @@ public class UserApiImpl extends ApiBase implements UserApi {
         super(root);
         gsonBuilder.registerTypeAdapter(UserLegal.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(UserNatural.class, new UserSerializer());
+        gsonBuilder.registerTypeAdapter(UserNaturalSca.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
         gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountSerializer());
         gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountDeserializer());
@@ -47,6 +48,11 @@ public class UserApiImpl extends ApiBase implements UserApi {
     @Override
     public User get(String userId) throws Exception {
         return this.getObject(User.class, "users_get", userId);
+    }
+
+    @Override
+    public User getSca(String userId) throws Exception {
+        return this.getObject(User.class, "users_get_sca", userId);
     }
 
     @Override
@@ -63,6 +69,8 @@ public class UserApiImpl extends ApiBase implements UserApi {
             response = this.createObject(UserNatural.class, idempotencyKey, "users_createnaturals", (UserNatural) user);
         else if (user instanceof UserLegal)
             response = this.createObject(UserLegal.class, idempotencyKey, "users_createlegals", (UserLegal) user);
+        else if (user instanceof UserNaturalSca)
+            response = this.createObject(UserNaturalSca.class, idempotencyKey, "users_createnaturals_sca", (UserNaturalSca) user);
         else
             throw new Exception("Unsupported user entity type.");
 
@@ -87,6 +95,11 @@ public class UserApiImpl extends ApiBase implements UserApi {
     @Override
     public UserLegal getLegal(String userId) throws Exception {
         return this.getObject(UserLegal.class, "users_getlegals", userId);
+    }
+
+    @Override
+    public UserNaturalSca getNaturalSca(String userId) throws Exception {
+        return this.getObject(UserNaturalSca.class, "users_getnaturals_sca", userId);
     }
 
     @Override

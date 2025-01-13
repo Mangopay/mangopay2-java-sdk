@@ -25,6 +25,15 @@ public interface UserApi {
     User get(String userId) throws Exception;
 
     /**
+     * Gets user (SCA).
+     *
+     * @param userId User identifier.
+     * @return User instance returned from API, which is either of UserNaturalSca or UserLegalSca type.
+     * @throws Exception
+     */
+    User getSca(String userId) throws Exception;
+
+    /**
      * Creates new user.
      *
      * @param user User object to be created.
@@ -77,6 +86,15 @@ public interface UserApi {
      * @throws Exception
      */
     UserLegal getLegal(String userId) throws Exception;
+
+    /**
+     * Gets natural sca user by its identifier,
+     *
+     * @param userId UserNaturalSca identifier.
+     * @return UserNaturalSca object returned from API.
+     * @throws Exception
+     */
+    UserNaturalSca getNaturalSca(String userId) throws Exception;
 
     /**
      * Updates the user.

@@ -120,6 +120,7 @@ public abstract class ApiBase {
 
         put("users_createnaturals", new String[]{"/users/natural", RequestType.POST.toString()});
         put("users_createlegals", new String[]{"/users/legal", RequestType.POST.toString()});
+        put("users_createnaturals_sca", new String[]{"/sca/users/natural", RequestType.POST.toString()});
 
         put("users_createbankaccounts_iban", new String[]{"/users/%s/bankaccounts/iban", RequestType.POST.toString()});
         put("users_createbankaccounts_gb", new String[]{"/users/%s/bankaccounts/gb", RequestType.POST.toString()});
@@ -140,7 +141,9 @@ public abstract class ApiBase {
         put("users_alltransactions", new String[]{"/users/%s/transactions", RequestType.GET.toString()});
         put("users_allkycdocuments", new String[]{"/users/%s/KYC/documents", RequestType.GET.toString()});
         put("users_get", new String[]{"/users/%s", RequestType.GET.toString()});
+        put("users_get_sca", new String[]{"/sca/users/%s", RequestType.GET.toString()});
         put("users_getnaturals", new String[]{"/users/natural/%s", RequestType.GET.toString()});
+        put("users_getnaturals_sca", new String[]{"/sca/users/natural/%s", RequestType.GET.toString()});
         put("users_getlegals", new String[]{"/users/legal/%s", RequestType.GET.toString()});
         put("users_getbankaccount", new String[]{"/users/%s/bankaccounts/%s", RequestType.GET.toString()});
         put("users_savenaturals", new String[]{"/users/natural/%s", RequestType.PUT.toString()});

@@ -21,6 +21,7 @@ public abstract class BaseTest {
     protected MangoPayApi api;
 
     private static UserNatural JOHN;
+    private static UserNaturalSca JOHN_SCA;
     private static UserLegal MATRIX;
     private static UboDeclaration MATRIX_UBO_DECLARATION;
     private static Ubo MATRIX_UBO;
@@ -137,6 +138,10 @@ public abstract class BaseTest {
         return getJohn(true, true);
     }
 
+    protected UserNaturalSca getJohnSca() throws Exception {
+        return getJohnSca(false, false);
+    }
+
     protected UserNatural getJohn(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN == null || recreate) {
             Calendar c = Calendar.getInstance();
@@ -168,6 +173,31 @@ public abstract class BaseTest {
             BaseTest.JOHNS_BANKING_ALIAS = null;
         }
         return BaseTest.JOHN;
+    }
+
+    protected UserNaturalSca getJohnSca(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.JOHN_SCA == null || recreate) {
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+
+            UserNaturalSca user = new UserNaturalSca();
+            user.setFirstName("John SCA");
+            user.setLastName("Doe SCA Review");
+            user.setEmail("john.doe.sca@sample.org");
+            user.setAddress(this.getNewAddress());
+            user.setBirthday(c.getTimeInMillis() / 1000);
+            user.setNationality(CountryIso.FR);
+            user.setCountryOfResidence(CountryIso.FR);
+            user.setOccupation("programmer");
+            user.setIncomeRange(3);
+            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setUserCategory(UserCategory.OWNER);
+            user.setPhoneNumber("+33611111111");
+            user.setPhoneNumberCountry(CountryIso.FR);
+
+            BaseTest.JOHN_SCA = (UserNaturalSca) this.api.getUserApi().create(user);
+        }
+        return BaseTest.JOHN_SCA;
     }
 
     protected UserNatural getNewDeclarativeJohn() throws Exception {
