@@ -2,6 +2,7 @@ package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.KycLevel;
 import com.mangopay.core.enumerations.PersonType;
 import com.mangopay.core.enumerations.UserCategory;
@@ -49,6 +50,12 @@ public abstract class User extends EntityBase {
      */
     @SerializedName("UserStatus")
     private String userStatus;
+
+    @SerializedName("PhoneNumber")
+    private String phoneNumber;
+
+    @SerializedName("PhoneNumberCountry")
+    private CountryIso phoneNumberCountry;
 
     public User(PersonType personType) {
         this.personType = personType;
@@ -112,6 +119,21 @@ public abstract class User extends EntityBase {
         return userStatus;
     }
 
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public CountryIso getPhoneNumberCountry() {
+        return phoneNumberCountry;
+    }
+
+    public void setPhoneNumberCountry(CountryIso phoneNumberCountry) {
+        this.phoneNumberCountry = phoneNumberCountry;
+    }
 
     /**
      * Gets the collection of read-only fields names.

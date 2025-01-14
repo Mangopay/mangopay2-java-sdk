@@ -29,20 +29,20 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createLegal() throws Exception {
-        UserLegal matrix = this.getMatrix();
-        assertTrue(matrix.getId().length() > 0);
-        assertEquals(matrix.getPersonType(), PersonType.LEGAL);
-        assertEquals("LU12345678", matrix.getCompanyNumber());
-    }
-
-    @Test
     public void createNaturalSca() throws Exception {
         UserNaturalSca johnSca = this.getJohnSca();
         assertTrue(johnSca.getId().length() > 0);
         assertTrue(johnSca.getPersonType().equals(PersonType.NATURAL));
         assertNotNull(johnSca.getPendingUserAction());
         assertEquals("PENDING_USER_ACTION", johnSca.getUserStatus());
+    }
+
+    @Test
+    public void createLegal() throws Exception {
+        UserLegal matrix = this.getMatrix();
+        assertTrue(matrix.getId().length() > 0);
+        assertEquals(matrix.getPersonType(), PersonType.LEGAL);
+        assertEquals("LU12345678", matrix.getCompanyNumber());
     }
 
     @Test
@@ -128,13 +128,13 @@ public class UserApiImplTest extends BaseTest {
         User user1 = this.api.getUserApi().getSca(john.getId());
         UserNaturalSca user2 = this.api.getUserApi().getNaturalSca(john.getId());
 
+        assertTrue(user1 instanceof UserNaturalSca);
         assertTrue(user1.getPersonType().equals(PersonType.NATURAL));
         assertTrue(user1.getId().equals(john.getId()));
         assertTrue(user2.getPersonType().equals(PersonType.NATURAL));
         assertTrue(user2.getId().equals(john.getId()));
-        assertNotNull(john.getPendingUserAction());
-        assertEquals(john.getPendingUserAction().getRedirectUrl(), ((UserNaturalSca)user1).getPendingUserAction().getRedirectUrl());
-        assertEquals(john.getPendingUserAction().getRedirectUrl(), user2.getPendingUserAction().getRedirectUrl());
+
+        assertEqualInputProps(user1, john);
     }
 
     @Test
@@ -186,6 +186,20 @@ public class UserApiImplTest extends BaseTest {
 
         assertEqualInputProps(john, userSaved);
         assertEqualInputProps(john, userFetched);
+    }
+
+    @Test
+    public void updateNaturalSca() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca();
+        String updatedLastName = johnSca.getLastName() + " - CHANGED";
+        johnSca.setLastName(updatedLastName);
+
+        User userSaved = this.api.getUserApi().updateSca(johnSca);
+        User userFetched = this.api.getUserApi().getSca(johnSca.getId());
+
+        assertEquals(updatedLastName, ((UserNaturalSca) userFetched).getLastName());
+        assertEqualInputProps(johnSca, userSaved);
+        assertEqualInputProps(johnSca, userFetched);
     }
 
     @Test

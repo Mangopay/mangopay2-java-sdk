@@ -93,13 +93,13 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
-    public UserLegal getLegal(String userId) throws Exception {
-        return this.getObject(UserLegal.class, "users_getlegals", userId);
+    public UserNaturalSca getNaturalSca(String userId) throws Exception {
+        return this.getObject(UserNaturalSca.class, "users_getnaturals_sca", userId);
     }
 
     @Override
-    public UserNaturalSca getNaturalSca(String userId) throws Exception {
-        return this.getObject(UserNaturalSca.class, "users_getnaturals_sca", userId);
+    public UserLegal getLegal(String userId) throws Exception {
+        return this.getObject(UserLegal.class, "users_getlegals", userId);
     }
 
     @Override
@@ -108,6 +108,20 @@ public class UserApiImpl extends ApiBase implements UserApi {
         String methodKey = "";
         if (user instanceof UserNatural)
             methodKey = "users_savenaturals";
+        else if (user instanceof UserLegal)
+            methodKey = "users_savelegals";
+        else
+            throw new Exception("Unsupported user entity type.");
+
+        return this.updateObject(User.class, methodKey, user);
+    }
+
+    @Override
+    public User updateSca(User user) throws Exception {
+
+        String methodKey = "";
+        if (user instanceof UserNaturalSca)
+            methodKey = "users_savenaturals_sca";
         else if (user instanceof UserLegal)
             methodKey = "users_savelegals";
         else

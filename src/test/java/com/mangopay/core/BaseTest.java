@@ -1542,6 +1542,33 @@ public abstract class BaseTest {
             assertEquals(((UserNatural) entity1).getOccupation(), ((UserNatural) entity2).getOccupation());
             assertEquals(((UserNatural) entity1).getIncomeRange(), ((UserNatural) entity2).getIncomeRange());
 
+        } else if (entity1 instanceof UserNaturalSca) {
+            assertEquals(((UserNaturalSca) entity1).getPhoneNumber(), ((UserNaturalSca) entity2).getPhoneNumber());
+            assertEquals(((UserNaturalSca) entity1).getPhoneNumberCountry(), ((UserNaturalSca) entity2).getPhoneNumberCountry());
+            assertEquals(((UserNaturalSca) entity1).getUserStatus(), ((UserNaturalSca) entity2).getUserStatus());
+            assertEquals(((UserNaturalSca) entity1).getTag(), ((UserNaturalSca) entity2).getTag());
+            assertEquals(((UserNaturalSca) entity1).getPersonType(), ((UserNaturalSca) entity2).getPersonType());
+            assertEquals(((UserNaturalSca) entity1).getFirstName(), ((UserNaturalSca) entity2).getFirstName());
+            assertEquals(((UserNaturalSca) entity1).getLastName(), ((UserNaturalSca) entity2).getLastName());
+            assertEquals(((UserNaturalSca) entity1).getEmail(), ((UserNaturalSca) entity2).getEmail());
+
+            if (((UserNaturalSca) entity1).getAddress() == null) {
+                assertNull(((UserNaturalSca) entity2).getAddress());
+            } else {
+                assertNotNull(((UserNaturalSca) entity2).getAddress());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getAddressLine1(), ((UserNaturalSca) entity2).getAddress().getAddressLine1());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getAddressLine2(), ((UserNaturalSca) entity2).getAddress().getAddressLine2());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getCity(), ((UserNaturalSca) entity2).getAddress().getCity());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getCountry(), ((UserNaturalSca) entity2).getAddress().getCountry());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getPostalCode(), ((UserNaturalSca) entity2).getAddress().getPostalCode());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getRegion(), ((UserNaturalSca) entity2).getAddress().getRegion());
+            }
+
+            assertEquals(((UserNaturalSca) entity1).getBirthday(), ((UserNaturalSca) entity2).getBirthday());
+            assertEquals(((UserNaturalSca) entity1).getNationality(), ((UserNaturalSca) entity2).getNationality());
+            assertEquals(((UserNaturalSca) entity1).getCountryOfResidence(), ((UserNaturalSca) entity2).getCountryOfResidence());
+            assertEquals(((UserNaturalSca) entity1).getOccupation(), ((UserNaturalSca) entity2).getOccupation());
+            assertEquals(((UserNaturalSca) entity1).getIncomeRange(), ((UserNaturalSca) entity2).getIncomeRange());
         } else if (entity1 instanceof UserLegal) {
             assertEquals(((UserLegal) entity1).getTag(), ((UserLegal) entity2).getTag());
             assertEquals(((UserLegal) entity1).getPersonType(), ((UserLegal) entity2).getPersonType());

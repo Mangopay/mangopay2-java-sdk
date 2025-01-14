@@ -79,15 +79,6 @@ public interface UserApi {
     UserNatural getNatural(String userId) throws Exception;
 
     /**
-     * Gets legal user by its identifier.
-     *
-     * @param userId UserLegal identifier.
-     * @return UserLegal object returned from API.
-     * @throws Exception
-     */
-    UserLegal getLegal(String userId) throws Exception;
-
-    /**
      * Gets natural sca user by its identifier,
      *
      * @param userId UserNaturalSca identifier.
@@ -97,6 +88,15 @@ public interface UserApi {
     UserNaturalSca getNaturalSca(String userId) throws Exception;
 
     /**
+     * Gets legal user by its identifier.
+     *
+     * @param userId UserLegal identifier.
+     * @return UserLegal object returned from API.
+     * @throws Exception
+     */
+    UserLegal getLegal(String userId) throws Exception;
+
+    /**
      * Updates the user.
      *
      * @param user Instance of UserNatural or UserLegal class to be updated.
@@ -104,6 +104,15 @@ public interface UserApi {
      * @throws Exception
      */
     User update(User user) throws Exception;
+
+    /**
+     * Updates the user (SCA).
+     *
+     * @param user Instance of UserNaturalSca or UserLegalSca class to be updated.
+     * @return Updated User object returned from API.
+     * @throws Exception
+     */
+    User updateSca(User user) throws Exception;
 
     /**
      * Creates bank account for user.
