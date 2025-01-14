@@ -217,10 +217,20 @@ public class UserApiImplTest extends BaseTest {
         johnSca.setCountryOfResidence(CountryIso.FR);
 
         // transition from PAYER to OWNER
-        this.api.getUserApi().categorizeSca(johnSca);
+        this.api.getUserApi().categorize(johnSca);
         User userFetched = this.api.getUserApi().getSca(johnSca.getId());
 
         assertEquals(UserCategory.OWNER, userFetched.getUserCategory());
+    }
+
+    @Test
+    public void activateNaturalSca() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca();
+        ActivateUserResult result = this.api.getUserApi().activate(johnSca.getId());
+
+        assertNotNull(johnSca.getPendingUserAction().getRedirectUrl());
+        assertNotNull(result.getPendingUserAction().getRedirectUrl());
+        assertNotEquals(result.getPendingUserAction().getRedirectUrl(), johnSca.getPendingUserAction().getRedirectUrl());
     }
 
     @Test

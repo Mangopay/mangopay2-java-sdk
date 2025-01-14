@@ -15,6 +15,7 @@ import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.core.serializer.BankAccountSerializer;
 import com.mangopay.core.serializer.UserSerializer;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.ActivateUserResult;
 import org.apache.commons.codec.binary.Base64;
 
 import java.nio.file.Files;
@@ -131,7 +132,7 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
-    public User categorizeSca(User user) throws Exception {
+    public User categorize(User user) throws Exception {
 
         String methodKey = "";
         if (user instanceof UserNaturalSca)
@@ -142,6 +143,11 @@ public class UserApiImpl extends ApiBase implements UserApi {
             throw new Exception("Unsupported user entity type.");
 
         return this.updateObject(User.class, methodKey, user);
+    }
+
+    @Override
+    public ActivateUserResult activate(String userId) throws Exception {
+        return this.createObject(ActivateUserResult.class, null, "users_activate_sca", null, userId);
     }
 
     @Override

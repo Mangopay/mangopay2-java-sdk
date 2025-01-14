@@ -7,6 +7,7 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.ActivateUserResult;
 
 import java.util.List;
 
@@ -123,7 +124,16 @@ public interface UserApi {
      * @return Updated User object returned from API.
      * @throws Exception
      */
-    User categorizeSca(User user) throws Exception;
+    User categorize(User user) throws Exception;
+
+    /**
+     * Obtain a new SCA redirection link to authenticate a user
+     *
+     * @param userId User identifier
+     * @return User for that User
+     * @throws Exception
+     */
+    ActivateUserResult activate(String userId) throws Exception;
 
     /**
      * Creates bank account for user.

@@ -18,7 +18,7 @@ public class PendingUserAction extends Dto {
         return redirectUrl;
     }
 
-    public Boolean allFieldsNull(){
+    public Boolean allFieldsNull() {
         return redirectUrl == null;
     }
 }
