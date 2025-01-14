@@ -131,6 +131,20 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
+    public User categorizeSca(User user) throws Exception {
+
+        String methodKey = "";
+        if (user instanceof UserNaturalSca)
+            methodKey = "users_categorizenaturals_sca";
+        else if (user instanceof UserLegal)
+            methodKey = "users_savelegals";
+        else
+            throw new Exception("Unsupported user entity type.");
+
+        return this.updateObject(User.class, methodKey, user);
+    }
+
+    @Override
     public BankAccount createBankAccount(String userId, BankAccount bankAccount) throws Exception {
         return this.createBankAccount(null, userId, bankAccount);
     }

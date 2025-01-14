@@ -115,6 +115,17 @@ public interface UserApi {
     User updateSca(User user) throws Exception;
 
     /**
+     * Transition a Natural/Legal Payer to Owner (SCA).
+     *
+     * @param user Instance of UserNaturalSca or UserLegalSca to be transitioned. Some parameters may be required based on the kind of transition you do.
+     *             See <a href="https://docs.mangopay.com/api-reference/users/categorize-natural-user">Categorize Natural User</a>
+     *             or <a href="https://docs.mangopay.com/api-reference/users/categorize-legal-user">Categorize Legal User</a> for more info.
+     * @return Updated User object returned from API.
+     * @throws Exception
+     */
+    User categorizeSca(User user) throws Exception;
+
+    /**
      * Creates bank account for user.
      *
      * @param userId      User identifier to create bank account for.

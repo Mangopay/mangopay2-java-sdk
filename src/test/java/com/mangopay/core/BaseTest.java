@@ -21,7 +21,8 @@ public abstract class BaseTest {
     protected MangoPayApi api;
 
     private static UserNatural JOHN;
-    private static UserNaturalSca JOHN_SCA;
+    private static UserNaturalSca JOHN_SCA_OWNER;
+    private static UserNaturalSca JOHN_SCA_PAYER;
     private static UserLegal MATRIX;
     private static UboDeclaration MATRIX_UBO_DECLARATION;
     private static Ubo MATRIX_UBO;
@@ -139,7 +140,17 @@ public abstract class BaseTest {
     }
 
     protected UserNaturalSca getJohnSca() throws Exception {
-        return getJohnSca(false, false);
+        return getJohnScaOwner(false, false);
+    }
+
+    protected UserNaturalSca getJohnSca(UserCategory userCategory) throws Exception {
+        switch (userCategory) {
+            case OWNER:
+                return getJohnScaOwner(false, false);
+            case PAYER:
+                return getJohnScaPayer(false, false);
+        }
+        throw new Exception("userCategory not supported");
     }
 
     protected UserNatural getJohn(Boolean recreate, Boolean termsAccepted) throws Exception {
@@ -175,8 +186,8 @@ public abstract class BaseTest {
         return BaseTest.JOHN;
     }
 
-    protected UserNaturalSca getJohnSca(Boolean recreate, Boolean termsAccepted) throws Exception {
-        if (BaseTest.JOHN_SCA == null || recreate) {
+    protected UserNaturalSca getJohnScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.JOHN_SCA_OWNER == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
 
@@ -195,9 +206,26 @@ public abstract class BaseTest {
             user.setPhoneNumber("+33611111111");
             user.setPhoneNumberCountry(CountryIso.FR);
 
-            BaseTest.JOHN_SCA = (UserNaturalSca) this.api.getUserApi().create(user);
+            BaseTest.JOHN_SCA_OWNER = (UserNaturalSca) this.api.getUserApi().create(user);
         }
-        return BaseTest.JOHN_SCA;
+        return BaseTest.JOHN_SCA_OWNER;
+    }
+
+    protected UserNaturalSca getJohnScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.JOHN_SCA_PAYER == null || recreate) {
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+
+            UserNaturalSca user = new UserNaturalSca();
+            user.setFirstName("John SCA");
+            user.setLastName("Doe SCA Review");
+            user.setEmail("john.doe.sca@sample.org");
+            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setUserCategory(UserCategory.PAYER);
+
+            BaseTest.JOHN_SCA_PAYER = (UserNaturalSca) this.api.getUserApi().create(user);
+        }
+        return BaseTest.JOHN_SCA_PAYER;
     }
 
     protected UserNatural getNewDeclarativeJohn() throws Exception {

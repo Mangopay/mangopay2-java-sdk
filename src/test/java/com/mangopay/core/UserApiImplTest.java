@@ -203,6 +203,27 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void categorizeNaturalSca() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca(UserCategory.PAYER);
+        Calendar c = Calendar.getInstance();
+        c.set(1975, 12, 21, 0, 0, 0);
+
+        johnSca.setUserCategory(UserCategory.OWNER);
+        johnSca.setTermsAndConditionsAccepted(true);
+        johnSca.setPhoneNumber("+33611111111");
+        johnSca.setPhoneNumberCountry(CountryIso.FR);
+        johnSca.setBirthday(c.getTimeInMillis() / 1000);
+        johnSca.setNationality(CountryIso.FR);
+        johnSca.setCountryOfResidence(CountryIso.FR);
+
+        // transition from PAYER to OWNER
+        this.api.getUserApi().categorizeSca(johnSca);
+        User userFetched = this.api.getUserApi().getSca(johnSca.getId());
+
+        assertEquals(UserCategory.OWNER, userFetched.getUserCategory());
+    }
+
+    @Test
     public void updateNaturalNonASCII() throws Exception {
         UserNatural john = this.getNewJohn(false);
         john.setLastName(john.getLastName() + " - CHANGED");
