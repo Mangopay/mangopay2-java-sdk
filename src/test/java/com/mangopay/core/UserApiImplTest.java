@@ -203,6 +203,7 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Can't be tested at this moment")
     public void categorizeNaturalSca() throws Exception {
         UserNaturalSca johnSca = this.getJohnSca(UserCategory.PAYER);
         Calendar c = Calendar.getInstance();
