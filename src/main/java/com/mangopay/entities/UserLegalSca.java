@@ -5,6 +5,7 @@ import com.mangopay.core.Address;
 import com.mangopay.core.LegalRepresentative;
 import com.mangopay.core.enumerations.LegalPersonType;
 import com.mangopay.core.enumerations.PersonType;
+import com.mangopay.entities.subentities.PendingUserAction;
 
 /**
  * UserLegal entity.
@@ -58,6 +59,12 @@ public final class UserLegalSca extends User {
      */
     @SerializedName("CompanyNumber")
     private String companyNumber;
+
+    /**
+     * Information about the action required from the user if action was triggered by the API call (otherwise returned null).
+     */
+    @SerializedName("PendingUserAction")
+    private PendingUserAction pendingUserAction;
 
     @SerializedName("LegalRepresentative")
     private LegalRepresentative legalRepresentative;
@@ -136,5 +143,9 @@ public final class UserLegalSca extends User {
 
     public void setLegalRepresentative(LegalRepresentative legalRepresentative) {
         this.legalRepresentative = legalRepresentative;
+    }
+
+    public PendingUserAction getPendingUserAction() {
+        return pendingUserAction;
     }
 }

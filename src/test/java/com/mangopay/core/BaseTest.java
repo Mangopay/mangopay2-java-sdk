@@ -289,23 +289,29 @@ public abstract class BaseTest {
         if (BaseTest.MATRIX_SCA == null || recreate) {
             UserNatural john = this.getJohn();
             UserLegalSca user = new UserLegalSca();
-            user.setName("MartixSampleOrg");
-            user.setLegalPersonType(LegalPersonType.BUSINESS);
-            user.setHeadquartersAddress(this.getNewAddress());
-            LegalRepresentative representative = new LegalRepresentative();
-            representative.setFirstName(john.getFirstName());
-            representative.setLastName(john.getLastName());
-            user.setLegalRepresentativeAddress(john.getAddress());
-            representative.setEmail(john.getEmail());
-            representative.setBirthday(john.getBirthday());
-            representative.setNationality(john.getNationality());
-            representative.setCountryOfResidence(john.getCountryOfResidence());
-            user.setCompanyNumber("LU12345678");
 
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
-            representative.setBirthday(c.getTimeInMillis() / 1000);
+            LegalRepresentative legalRepresentative = new LegalRepresentative();
+            legalRepresentative.setBirthday(c.getTimeInMillis() / 1000);
+            legalRepresentative.setFirstName(john.getFirstName());
+            legalRepresentative.setLastName("SCA Review");
+            legalRepresentative.setEmail(john.getEmail());
+            legalRepresentative.setBirthday(john.getBirthday());
+            legalRepresentative.setNationality(john.getNationality());
+            legalRepresentative.setCountryOfResidence(john.getCountryOfResidence());
+            legalRepresentative.setPhoneNumber("+33611111111");
+            legalRepresentative.setPhoneNumberCountry(CountryIso.FR);
+
+            user.setName("MartixSampleOrg");
+            user.setLegalPersonType(LegalPersonType.BUSINESS);
+            user.setUserCategory(UserCategory.OWNER);
+            user.setHeadquartersAddress(this.getNewAddress());
+            user.setLegalRepresentativeAddress(john.getAddress());
+            user.setCompanyNumber("LU12345678");
             user.setEmail(john.getEmail());
+            user.setLegalRepresentative(legalRepresentative);
+            user.setTermsAndConditionsAccepted(termsAccepted);
 
             BaseTest.MATRIX_SCA = (UserLegalSca) this.api.getUserApi().create(user);
         }
@@ -1397,7 +1403,7 @@ public abstract class BaseTest {
         String data = "data=" + cardRegistration.getPreregistrationData() +
                 "&accessKeyRef=" + cardRegistration.getAccessKey() +
                 "&cardNumber=" + cardNumber +
-                "&cardExpirationDate=1224" +
+            "&cardExpirationDate=1229" +
                 "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());
@@ -1651,6 +1657,28 @@ public abstract class BaseTest {
             assertEquals(((UserLegal) entity1).getLegalRepresentativeNationality(), ((UserLegal) entity2).getLegalRepresentativeNationality());
             assertEquals(((UserLegal) entity1).getLegalRepresentativeCountryOfResidence(), ((UserLegal) entity2).getLegalRepresentativeCountryOfResidence());
 
+        } else if (entity1 instanceof UserLegalSca) {
+            assertEquals(((UserLegalSca) entity1).getTag(), ((UserLegalSca) entity2).getTag());
+            assertEquals(((UserLegalSca) entity1).getPersonType(), ((UserLegalSca) entity2).getPersonType());
+            assertEquals(((UserLegalSca) entity1).getName(), ((UserLegalSca) entity2).getName());
+            assertNotNull(((UserLegalSca) entity1).getHeadquartersAddress());
+            assertNotNull(((UserLegalSca) entity2).getHeadquartersAddress());
+            assertEquals(((UserLegalSca) entity1).getUserStatus(), ((UserLegalSca) entity2).getUserStatus());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getAddressLine1(), ((UserLegalSca) entity2).getHeadquartersAddress().getAddressLine1());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getAddressLine2(), ((UserLegalSca) entity2).getHeadquartersAddress().getAddressLine2());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getCity(), ((UserLegalSca) entity2).getHeadquartersAddress().getCity());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getCountry(), ((UserLegalSca) entity2).getHeadquartersAddress().getCountry());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getPostalCode(), ((UserLegalSca) entity2).getHeadquartersAddress().getPostalCode());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getRegion(), ((UserLegalSca) entity2).getHeadquartersAddress().getRegion());
+
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getFirstName(), ((UserLegalSca) entity2).getLegalRepresentative().getFirstName());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getLastName(), ((UserLegalSca) entity2).getLegalRepresentative().getLastName());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getEmail(), ((UserLegalSca) entity2).getLegalRepresentative().getEmail());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getBirthday(), ((UserLegalSca) entity2).getLegalRepresentative().getBirthday());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getNationality(), ((UserLegalSca) entity2).getLegalRepresentative().getNationality());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getCountryOfResidence(), ((UserLegalSca) entity2).getLegalRepresentative().getCountryOfResidence());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getPhoneNumber(), ((UserLegalSca) entity2).getLegalRepresentative().getPhoneNumber());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getPhoneNumberCountry(), ((UserLegalSca) entity2).getLegalRepresentative().getPhoneNumberCountry());
         } else if (entity1 instanceof BankAccount) {
             assertEquals(((BankAccount) entity1).getTag(), ((BankAccount) entity2).getTag());
             assertEquals(((BankAccount) entity1).getUserId(), ((BankAccount) entity2).getUserId());

@@ -133,8 +133,6 @@ public class UserApiImpl extends ApiBase implements UserApi {
             methodKey = "users_savenaturals_sca";
         else if (user instanceof UserLegalSca)
             methodKey = "users_savelegals_sca";
-        else if (user instanceof UserLegal)
-            methodKey = "users_savelegals";
         else
             throw new Exception("Unsupported user entity type.");
 
@@ -149,8 +147,6 @@ public class UserApiImpl extends ApiBase implements UserApi {
             methodKey = "users_categorizenaturals_sca";
         else if (user instanceof UserLegalSca)
             methodKey = "users_categorizelegals_sca";
-        else if (user instanceof UserLegal)
-            methodKey = "users_savelegals";
         else
             throw new Exception("Unsupported user entity type.");
 

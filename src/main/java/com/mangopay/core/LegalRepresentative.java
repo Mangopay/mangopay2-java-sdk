@@ -15,6 +15,9 @@ public class LegalRepresentative extends Dto {
     @SerializedName("LastName")
     private String lastName;
 
+    @SerializedName("ProofOfIdentity")
+    private String proofOfIdentity;
+
     @SerializedName("Email")
     private String email;
 
@@ -97,9 +100,18 @@ public class LegalRepresentative extends Dto {
         this.phoneNumberCountry = phoneNumberCountry;
     }
 
+    public String getProofOfIdentity() {
+        return proofOfIdentity;
+    }
+
+    public void setProofOfIdentity(String proofOfIdentity) {
+        this.proofOfIdentity = proofOfIdentity;
+    }
+
     public Boolean allFieldsNull() {
         return firstName == null &&
                 lastName == null &&
+            proofOfIdentity == null &&
                 email == null &&
                 birthday == null &&
                 nationality == null &&

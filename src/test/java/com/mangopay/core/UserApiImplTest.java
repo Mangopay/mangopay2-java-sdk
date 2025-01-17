@@ -49,6 +49,7 @@ public class UserApiImplTest extends BaseTest {
     public void createLegalSca() throws Exception {
         UserLegalSca matrixSca = this.getMatrixSca();
         assertTrue(matrixSca.getId().length() > 0);
+        assertNotNull(matrixSca.getPendingUserAction().getRedirectUrl());
         assertEquals(matrixSca.getPersonType(), PersonType.LEGAL);
         assertEquals("LU12345678", matrixSca.getCompanyNumber());
     }
@@ -188,8 +189,8 @@ public class UserApiImplTest extends BaseTest {
     public void getLegalSca() throws Exception {
         UserLegalSca matrixSca = this.getMatrixSca();
 
-        User user1 = this.api.getUserApi().get(matrixSca.getId());
-        User user2 = this.api.getUserApi().getLegal(matrixSca.getId());
+        User user1 = this.api.getUserApi().getSca(matrixSca.getId());
+        User user2 = this.api.getUserApi().getLegalSca(matrixSca.getId());
 
         assert(user1 instanceof UserLegalSca);
         assertEqualInputProps(user1, matrixSca);
@@ -224,13 +225,13 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateLegalSca() throws Exception {
-        UserLegalSca matrixSca = this.getMatrixSca();
+        UserLegalSca matrixSca = this.getMatrixSca(true, true);
         LegalRepresentative updatedRepresentative = matrixSca.getLegalRepresentative();
         updatedRepresentative.setFirstName(updatedRepresentative.getFirstName() + " - CHANGED");
         matrixSca.setLegalRepresentative(updatedRepresentative);
 
-        User userSaved = this.api.getUserApi().update(matrixSca);
-        User userFetched = this.api.getUserApi().get(matrixSca.getId());
+        User userSaved = this.api.getUserApi().updateSca(matrixSca);
+        User userFetched = this.api.getUserApi().getSca(matrixSca.getId());
 
         assertEqualInputProps(userSaved, matrixSca);
         assertEqualInputProps(userFetched, matrixSca);
