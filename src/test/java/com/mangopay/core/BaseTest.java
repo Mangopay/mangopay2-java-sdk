@@ -21,7 +21,10 @@ public abstract class BaseTest {
     protected MangoPayApi api;
 
     private static UserNatural JOHN;
+    private static UserNaturalSca JOHN_SCA_OWNER;
+    private static UserNaturalSca JOHN_SCA_PAYER;
     private static UserLegal MATRIX;
+    private static UserLegalSca MATRIX_SCA;
     private static UboDeclaration MATRIX_UBO_DECLARATION;
     private static Ubo MATRIX_UBO;
     private static BankAccount JOHNS_ACCOUNT;
@@ -137,6 +140,24 @@ public abstract class BaseTest {
         return getJohn(true, true);
     }
 
+    protected UserNaturalSca getJohnSca() throws Exception {
+        return getJohnScaOwner(false, false);
+    }
+
+    protected UserNaturalSca getJohnSca(UserCategory userCategory) throws Exception {
+        switch (userCategory) {
+            case OWNER:
+                return getJohnScaOwner(false, false);
+            case PAYER:
+                return getJohnScaPayer(false, false);
+        }
+        throw new Exception("userCategory not supported");
+    }
+
+    protected UserLegalSca getMatrixSca() throws Exception {
+        return getMatrixSca(false, false);
+    }
+
     protected UserNatural getJohn(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN == null || recreate) {
             Calendar c = Calendar.getInstance();
@@ -168,6 +189,48 @@ public abstract class BaseTest {
             BaseTest.JOHNS_BANKING_ALIAS = null;
         }
         return BaseTest.JOHN;
+    }
+
+    protected UserNaturalSca getJohnScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.JOHN_SCA_OWNER == null || recreate) {
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+
+            UserNaturalSca user = new UserNaturalSca();
+            user.setFirstName("John SCA");
+            user.setLastName("Doe SCA Review");
+            user.setEmail("john.doe.sca@sample.org");
+            user.setAddress(this.getNewAddress());
+            user.setBirthday(c.getTimeInMillis() / 1000);
+            user.setNationality(CountryIso.FR);
+            user.setCountryOfResidence(CountryIso.FR);
+            user.setOccupation("programmer");
+            user.setIncomeRange(3);
+            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setUserCategory(UserCategory.OWNER);
+            user.setPhoneNumber("+33611111111");
+            user.setPhoneNumberCountry(CountryIso.FR);
+
+            BaseTest.JOHN_SCA_OWNER = (UserNaturalSca) this.api.getUserApi().create(user);
+        }
+        return BaseTest.JOHN_SCA_OWNER;
+    }
+
+    protected UserNaturalSca getJohnScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.JOHN_SCA_PAYER == null || recreate) {
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+
+            UserNaturalSca user = new UserNaturalSca();
+            user.setFirstName("John SCA");
+            user.setLastName("Doe SCA Review");
+            user.setEmail("john.doe.sca@sample.org");
+            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setUserCategory(UserCategory.PAYER);
+
+            BaseTest.JOHN_SCA_PAYER = (UserNaturalSca) this.api.getUserApi().create(user);
+        }
+        return BaseTest.JOHN_SCA_PAYER;
     }
 
     protected UserNatural getNewDeclarativeJohn() throws Exception {
@@ -220,6 +283,39 @@ public abstract class BaseTest {
             BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX;
+    }
+
+    protected UserLegalSca getMatrixSca(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.MATRIX_SCA == null || recreate) {
+            UserNatural john = this.getJohn();
+            UserLegalSca user = new UserLegalSca();
+
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+            LegalRepresentative legalRepresentative = new LegalRepresentative();
+            legalRepresentative.setBirthday(c.getTimeInMillis() / 1000);
+            legalRepresentative.setFirstName(john.getFirstName());
+            legalRepresentative.setLastName("SCA Review");
+            legalRepresentative.setEmail(john.getEmail());
+            legalRepresentative.setBirthday(john.getBirthday());
+            legalRepresentative.setNationality(john.getNationality());
+            legalRepresentative.setCountryOfResidence(john.getCountryOfResidence());
+            legalRepresentative.setPhoneNumber("+33611111111");
+            legalRepresentative.setPhoneNumberCountry(CountryIso.FR);
+
+            user.setName("MartixSampleOrg");
+            user.setLegalPersonType(LegalPersonType.BUSINESS);
+            user.setUserCategory(UserCategory.OWNER);
+            user.setHeadquartersAddress(this.getNewAddress());
+            user.setLegalRepresentativeAddress(john.getAddress());
+            user.setCompanyNumber("LU12345678");
+            user.setEmail(john.getEmail());
+            user.setLegalRepresentative(legalRepresentative);
+            user.setTermsAndConditionsAccepted(termsAccepted);
+
+            BaseTest.MATRIX_SCA = (UserLegalSca) this.api.getUserApi().create(user);
+        }
+        return BaseTest.MATRIX_SCA;
     }
 
     /**
@@ -1307,7 +1403,7 @@ public abstract class BaseTest {
         String data = "data=" + cardRegistration.getPreregistrationData() +
                 "&accessKeyRef=" + cardRegistration.getAccessKey() +
                 "&cardNumber=" + cardNumber +
-                "&cardExpirationDate=1224" +
+            "&cardExpirationDate=1229" +
                 "&cardCvx=123";
 
         URL url = new URL(cardRegistration.getCardRegistrationUrl());
@@ -1512,6 +1608,33 @@ public abstract class BaseTest {
             assertEquals(((UserNatural) entity1).getOccupation(), ((UserNatural) entity2).getOccupation());
             assertEquals(((UserNatural) entity1).getIncomeRange(), ((UserNatural) entity2).getIncomeRange());
 
+        } else if (entity1 instanceof UserNaturalSca) {
+            assertEquals(((UserNaturalSca) entity1).getPhoneNumber(), ((UserNaturalSca) entity2).getPhoneNumber());
+            assertEquals(((UserNaturalSca) entity1).getPhoneNumberCountry(), ((UserNaturalSca) entity2).getPhoneNumberCountry());
+            assertEquals(((UserNaturalSca) entity1).getUserStatus(), ((UserNaturalSca) entity2).getUserStatus());
+            assertEquals(((UserNaturalSca) entity1).getTag(), ((UserNaturalSca) entity2).getTag());
+            assertEquals(((UserNaturalSca) entity1).getPersonType(), ((UserNaturalSca) entity2).getPersonType());
+            assertEquals(((UserNaturalSca) entity1).getFirstName(), ((UserNaturalSca) entity2).getFirstName());
+            assertEquals(((UserNaturalSca) entity1).getLastName(), ((UserNaturalSca) entity2).getLastName());
+            assertEquals(((UserNaturalSca) entity1).getEmail(), ((UserNaturalSca) entity2).getEmail());
+
+            if (((UserNaturalSca) entity1).getAddress() == null) {
+                assertNull(((UserNaturalSca) entity2).getAddress());
+            } else {
+                assertNotNull(((UserNaturalSca) entity2).getAddress());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getAddressLine1(), ((UserNaturalSca) entity2).getAddress().getAddressLine1());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getAddressLine2(), ((UserNaturalSca) entity2).getAddress().getAddressLine2());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getCity(), ((UserNaturalSca) entity2).getAddress().getCity());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getCountry(), ((UserNaturalSca) entity2).getAddress().getCountry());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getPostalCode(), ((UserNaturalSca) entity2).getAddress().getPostalCode());
+                assertEquals(((UserNaturalSca) entity1).getAddress().getRegion(), ((UserNaturalSca) entity2).getAddress().getRegion());
+            }
+
+            assertEquals(((UserNaturalSca) entity1).getBirthday(), ((UserNaturalSca) entity2).getBirthday());
+            assertEquals(((UserNaturalSca) entity1).getNationality(), ((UserNaturalSca) entity2).getNationality());
+            assertEquals(((UserNaturalSca) entity1).getCountryOfResidence(), ((UserNaturalSca) entity2).getCountryOfResidence());
+            assertEquals(((UserNaturalSca) entity1).getOccupation(), ((UserNaturalSca) entity2).getOccupation());
+            assertEquals(((UserNaturalSca) entity1).getIncomeRange(), ((UserNaturalSca) entity2).getIncomeRange());
         } else if (entity1 instanceof UserLegal) {
             assertEquals(((UserLegal) entity1).getTag(), ((UserLegal) entity2).getTag());
             assertEquals(((UserLegal) entity1).getPersonType(), ((UserLegal) entity2).getPersonType());
@@ -1534,6 +1657,28 @@ public abstract class BaseTest {
             assertEquals(((UserLegal) entity1).getLegalRepresentativeNationality(), ((UserLegal) entity2).getLegalRepresentativeNationality());
             assertEquals(((UserLegal) entity1).getLegalRepresentativeCountryOfResidence(), ((UserLegal) entity2).getLegalRepresentativeCountryOfResidence());
 
+        } else if (entity1 instanceof UserLegalSca) {
+            assertEquals(((UserLegalSca) entity1).getTag(), ((UserLegalSca) entity2).getTag());
+            assertEquals(((UserLegalSca) entity1).getPersonType(), ((UserLegalSca) entity2).getPersonType());
+            assertEquals(((UserLegalSca) entity1).getName(), ((UserLegalSca) entity2).getName());
+            assertNotNull(((UserLegalSca) entity1).getHeadquartersAddress());
+            assertNotNull(((UserLegalSca) entity2).getHeadquartersAddress());
+            assertEquals(((UserLegalSca) entity1).getUserStatus(), ((UserLegalSca) entity2).getUserStatus());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getAddressLine1(), ((UserLegalSca) entity2).getHeadquartersAddress().getAddressLine1());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getAddressLine2(), ((UserLegalSca) entity2).getHeadquartersAddress().getAddressLine2());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getCity(), ((UserLegalSca) entity2).getHeadquartersAddress().getCity());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getCountry(), ((UserLegalSca) entity2).getHeadquartersAddress().getCountry());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getPostalCode(), ((UserLegalSca) entity2).getHeadquartersAddress().getPostalCode());
+            assertEquals(((UserLegalSca) entity1).getHeadquartersAddress().getRegion(), ((UserLegalSca) entity2).getHeadquartersAddress().getRegion());
+
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getFirstName(), ((UserLegalSca) entity2).getLegalRepresentative().getFirstName());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getLastName(), ((UserLegalSca) entity2).getLegalRepresentative().getLastName());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getEmail(), ((UserLegalSca) entity2).getLegalRepresentative().getEmail());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getBirthday(), ((UserLegalSca) entity2).getLegalRepresentative().getBirthday());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getNationality(), ((UserLegalSca) entity2).getLegalRepresentative().getNationality());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getCountryOfResidence(), ((UserLegalSca) entity2).getLegalRepresentative().getCountryOfResidence());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getPhoneNumber(), ((UserLegalSca) entity2).getLegalRepresentative().getPhoneNumber());
+            assertEquals(((UserLegalSca) entity1).getLegalRepresentative().getPhoneNumberCountry(), ((UserLegalSca) entity2).getLegalRepresentative().getPhoneNumberCountry());
         } else if (entity1 instanceof BankAccount) {
             assertEquals(((BankAccount) entity1).getTag(), ((BankAccount) entity2).getTag());
             assertEquals(((BankAccount) entity1).getUserId(), ((BankAccount) entity2).getUserId());

@@ -15,6 +15,7 @@ import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.core.serializer.BankAccountSerializer;
 import com.mangopay.core.serializer.UserSerializer;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.ActivateUserResult;
 import org.apache.commons.codec.binary.Base64;
 
 import java.nio.file.Files;
@@ -38,7 +39,9 @@ public class UserApiImpl extends ApiBase implements UserApi {
     public UserApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
         gsonBuilder.registerTypeAdapter(UserLegal.class, new UserSerializer());
+        gsonBuilder.registerTypeAdapter(UserLegalSca.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(UserNatural.class, new UserSerializer());
+        gsonBuilder.registerTypeAdapter(UserNaturalSca.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
         gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountSerializer());
         gsonBuilder.registerTypeAdapter(BankAccount.class, new BankAccountDeserializer());
@@ -47,6 +50,11 @@ public class UserApiImpl extends ApiBase implements UserApi {
     @Override
     public User get(String userId) throws Exception {
         return this.getObject(User.class, "users_get", userId);
+    }
+
+    @Override
+    public User getSca(String userId) throws Exception {
+        return this.getObject(User.class, "users_get_sca", userId);
     }
 
     @Override
@@ -63,6 +71,10 @@ public class UserApiImpl extends ApiBase implements UserApi {
             response = this.createObject(UserNatural.class, idempotencyKey, "users_createnaturals", (UserNatural) user);
         else if (user instanceof UserLegal)
             response = this.createObject(UserLegal.class, idempotencyKey, "users_createlegals", (UserLegal) user);
+        else if (user instanceof UserNaturalSca)
+            response = this.createObject(UserNaturalSca.class, idempotencyKey, "users_createnaturals_sca", (UserNaturalSca) user);
+        else if (user instanceof UserLegalSca)
+            response = this.createObject(UserLegalSca.class, idempotencyKey, "users_createlegals_sca", (UserLegalSca) user);
         else
             throw new Exception("Unsupported user entity type.");
 
@@ -85,8 +97,18 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
+    public UserNaturalSca getNaturalSca(String userId) throws Exception {
+        return this.getObject(UserNaturalSca.class, "users_getnaturals_sca", userId);
+    }
+
+    @Override
     public UserLegal getLegal(String userId) throws Exception {
         return this.getObject(UserLegal.class, "users_getlegals", userId);
+    }
+
+    @Override
+    public UserLegalSca getLegalSca(String userId) throws Exception {
+        return this.getObject(UserLegalSca.class, "users_getlegals_sca", userId);
     }
 
     @Override
@@ -101,6 +123,39 @@ public class UserApiImpl extends ApiBase implements UserApi {
             throw new Exception("Unsupported user entity type.");
 
         return this.updateObject(User.class, methodKey, user);
+    }
+
+    @Override
+    public User updateSca(User user) throws Exception {
+
+        String methodKey = "";
+        if (user instanceof UserNaturalSca)
+            methodKey = "users_savenaturals_sca";
+        else if (user instanceof UserLegalSca)
+            methodKey = "users_savelegals_sca";
+        else
+            throw new Exception("Unsupported user entity type.");
+
+        return this.updateObject(User.class, methodKey, user);
+    }
+
+    @Override
+    public User categorize(User user) throws Exception {
+
+        String methodKey = "";
+        if (user instanceof UserNaturalSca)
+            methodKey = "users_categorizenaturals_sca";
+        else if (user instanceof UserLegalSca)
+            methodKey = "users_categorizelegals_sca";
+        else
+            throw new Exception("Unsupported user entity type.");
+
+        return this.updateObject(User.class, methodKey, user);
+    }
+
+    @Override
+    public ActivateUserResult activate(String userId) throws Exception {
+        return this.createObject(ActivateUserResult.class, null, "users_activate_sca", null, userId);
     }
 
     @Override

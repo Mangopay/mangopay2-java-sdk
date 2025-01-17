@@ -44,6 +44,12 @@ public abstract class User extends EntityBase {
     @SerializedName("UserCategory")
     private UserCategory userCategory;
 
+    /**
+     * The status of the user.
+     */
+    @SerializedName("UserStatus")
+    private String userStatus;
+
     public User(PersonType personType) {
         this.personType = personType;
     }
@@ -96,6 +102,14 @@ public abstract class User extends EntityBase {
 
     public UserCategory getUserCategory() {
         return userCategory;
+    }
+
+    public Boolean getTermsAndConditionsAccepted() {
+        return termsAndConditionsAccepted;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
     }
 
     /**
