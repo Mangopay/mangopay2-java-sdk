@@ -2,7 +2,9 @@ package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.Address;
-import com.mangopay.core.enumerations.*;
+import com.mangopay.core.enumerations.CountryIso;
+import com.mangopay.core.enumerations.LegalPersonType;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Map;
@@ -97,6 +99,12 @@ public class UserLegal extends User {
      */
     @SerializedName("CompanyNumber")
     private String companyNumber;
+
+    @SerializedName("PhoneNumber")
+    private String phoneNumber;
+
+    @SerializedName("PhoneNumberCountry")
+    private CountryIso phoneNumberCountry;
 
     /**
      * Instantiates new UserLegal object.
@@ -214,6 +222,22 @@ public class UserLegal extends User {
 
     public void setCompanyNumber(String companyNumber) {
         this.companyNumber = companyNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public CountryIso getPhoneNumberCountry() {
+        return phoneNumberCountry;
+    }
+
+    public void setPhoneNumberCountry(CountryIso phoneNumberCountry) {
+        this.phoneNumberCountry = phoneNumberCountry;
     }
 
     /**

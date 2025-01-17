@@ -106,6 +106,12 @@ public final class UserNatural extends User {
     @SerializedName("Capacity")
     private NaturalUserCapacity capacity;
 
+    @SerializedName("PhoneNumber")
+    private String phoneNumber;
+
+    @SerializedName("PhoneNumberCountry")
+    private CountryIso phoneNumberCountry;
+
     /**
      * Instantiates new UserNatural object.
      */
@@ -207,6 +213,22 @@ public final class UserNatural extends User {
 
     public void setCapacity(NaturalUserCapacity capacity) {
         this.capacity = capacity;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public CountryIso getPhoneNumberCountry() {
+        return phoneNumberCountry;
+    }
+
+    public void setPhoneNumberCountry(CountryIso phoneNumberCountry) {
+        this.phoneNumberCountry = phoneNumberCountry;
     }
 
     /**

@@ -29,11 +29,29 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createNaturalSca() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca();
+        assertTrue(johnSca.getId().length() > 0);
+        assertTrue(johnSca.getPersonType().equals(PersonType.NATURAL));
+        assertNotNull(johnSca.getPendingUserAction());
+        assertEquals("PENDING_USER_ACTION", johnSca.getUserStatus());
+    }
+
+    @Test
     public void createLegal() throws Exception {
         UserLegal matrix = this.getMatrix();
         assertTrue(matrix.getId().length() > 0);
         assertEquals(matrix.getPersonType(), PersonType.LEGAL);
         assertEquals("LU12345678", matrix.getCompanyNumber());
+    }
+
+    @Test
+    public void createLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca();
+        assertTrue(matrixSca.getId().length() > 0);
+        assertNotNull(matrixSca.getPendingUserAction().getRedirectUrl());
+        assertEquals(matrixSca.getPersonType(), PersonType.LEGAL);
+        assertEquals("LU12345678", matrixSca.getCompanyNumber());
     }
 
     @Test
@@ -113,6 +131,22 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getNaturalSca() throws Exception {
+        UserNaturalSca john = this.getJohnSca();
+
+        User user1 = this.api.getUserApi().getSca(john.getId());
+        UserNaturalSca user2 = this.api.getUserApi().getNaturalSca(john.getId());
+
+        assertTrue(user1 instanceof UserNaturalSca);
+        assertTrue(user1.getPersonType().equals(PersonType.NATURAL));
+        assertTrue(user1.getId().equals(john.getId()));
+        assertTrue(user2.getPersonType().equals(PersonType.NATURAL));
+        assertTrue(user2.getId().equals(john.getId()));
+
+        assertEqualInputProps(user1, john);
+    }
+
+    @Test
     public void getNaturalFailsForLegalUser() throws Exception {
         UserLegal matrix = this.getMatrix();
 
@@ -152,6 +186,18 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca();
+
+        User user1 = this.api.getUserApi().getSca(matrixSca.getId());
+        User user2 = this.api.getUserApi().getLegalSca(matrixSca.getId());
+
+        assert(user1 instanceof UserLegalSca);
+        assertEqualInputProps(user1, matrixSca);
+        assertEqualInputProps(user2, matrixSca);
+    }
+
+    @Test
     public void updateNatural() throws Exception {
         UserNatural john = this.getNewJohn(false);
         john.setLastName(john.getLastName() + " - CHANGED");
@@ -161,6 +207,88 @@ public class UserApiImplTest extends BaseTest {
 
         assertEqualInputProps(john, userSaved);
         assertEqualInputProps(john, userFetched);
+    }
+
+    @Test
+    public void updateNaturalSca() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca();
+        String updatedLastName = johnSca.getLastName() + " - CHANGED";
+        johnSca.setLastName(updatedLastName);
+
+        User userSaved = this.api.getUserApi().updateSca(johnSca);
+        User userFetched = this.api.getUserApi().getSca(johnSca.getId());
+
+        assertEquals(updatedLastName, ((UserNaturalSca) userFetched).getLastName());
+        assertEqualInputProps(johnSca, userSaved);
+        assertEqualInputProps(johnSca, userFetched);
+    }
+
+    @Test
+    public void updateLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca(true, true);
+        LegalRepresentative updatedRepresentative = matrixSca.getLegalRepresentative();
+        updatedRepresentative.setFirstName(updatedRepresentative.getFirstName() + " - CHANGED");
+        matrixSca.setLegalRepresentative(updatedRepresentative);
+
+        User userSaved = this.api.getUserApi().updateSca(matrixSca);
+        User userFetched = this.api.getUserApi().getSca(matrixSca.getId());
+
+        assertEqualInputProps(userSaved, matrixSca);
+        assertEqualInputProps(userFetched, matrixSca);
+    }
+
+    @Test
+    @Ignore("Can't be tested at this moment")
+    public void categorizeNaturalSca() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca(UserCategory.PAYER);
+        Calendar c = Calendar.getInstance();
+        c.set(1975, 12, 21, 0, 0, 0);
+
+        johnSca.setUserCategory(UserCategory.OWNER);
+        johnSca.setTermsAndConditionsAccepted(true);
+        johnSca.setPhoneNumber("+33611111111");
+        johnSca.setPhoneNumberCountry(CountryIso.FR);
+        johnSca.setBirthday(c.getTimeInMillis() / 1000);
+        johnSca.setNationality(CountryIso.FR);
+        johnSca.setCountryOfResidence(CountryIso.FR);
+
+        // transition from PAYER to OWNER
+        this.api.getUserApi().categorize(johnSca);
+        User userFetched = this.api.getUserApi().getSca(johnSca.getId());
+
+        assertEquals(UserCategory.OWNER, userFetched.getUserCategory());
+    }
+
+    @Test
+    @Ignore("Can't be tested at this moment")
+    public void categorizeLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca();
+
+        Calendar c = Calendar.getInstance();
+        c.set(1975, 12, 21, 0, 0, 0);
+
+        matrixSca.setUserCategory(UserCategory.OWNER);
+        matrixSca.setTermsAndConditionsAccepted(true);
+        LegalRepresentative updatedOwnerLegalRepresentative = matrixSca.getLegalRepresentative();
+        updatedOwnerLegalRepresentative.setPhoneNumber("+33611111111");
+        updatedOwnerLegalRepresentative.setPhoneNumberCountry(CountryIso.FR);
+
+        User user1 = this.api.getUserApi().get(matrixSca.getId());
+        User user2 = this.api.getUserApi().getLegal(matrixSca.getId());
+
+        assert(user1 instanceof UserLegalSca);
+        assertEqualInputProps(user1, matrixSca);
+        assertEqualInputProps(user2, matrixSca);
+    }
+
+    @Test
+    public void activateNaturalSca() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca();
+        ActivateUserResult result = this.api.getUserApi().activate(johnSca.getId());
+
+        assertNotNull(johnSca.getPendingUserAction().getRedirectUrl());
+        assertNotNull(result.getPendingUserAction().getRedirectUrl());
+        assertNotEquals(result.getPendingUserAction().getRedirectUrl(), johnSca.getPendingUserAction().getRedirectUrl());
     }
 
     @Test

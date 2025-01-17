@@ -7,6 +7,7 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.ActivateUserResult;
 
 import java.util.List;
 
@@ -23,6 +24,15 @@ public interface UserApi {
      * @throws Exception
      */
     User get(String userId) throws Exception;
+
+    /**
+     * Gets user (SCA).
+     *
+     * @param userId User identifier.
+     * @return User instance returned from API, which is either of UserNaturalSca or UserLegalSca type.
+     * @throws Exception
+     */
+    User getSca(String userId) throws Exception;
 
     /**
      * Creates new user.
@@ -70,6 +80,15 @@ public interface UserApi {
     UserNatural getNatural(String userId) throws Exception;
 
     /**
+     * Gets natural sca user by its identifier,
+     *
+     * @param userId UserNaturalSca identifier.
+     * @return UserNaturalSca object returned from API.
+     * @throws Exception
+     */
+    UserNaturalSca getNaturalSca(String userId) throws Exception;
+
+    /**
      * Gets legal user by its identifier.
      *
      * @param userId UserLegal identifier.
@@ -79,6 +98,15 @@ public interface UserApi {
     UserLegal getLegal(String userId) throws Exception;
 
     /**
+     * Gets legal sca user by its identifier,
+     *
+     * @param userId UserLegalSca identifier.
+     * @return UserLegalSca object returned from API.
+     * @throws Exception
+     */
+    UserLegalSca getLegalSca(String userId) throws Exception;
+
+    /**
      * Updates the user.
      *
      * @param user Instance of UserNatural or UserLegal class to be updated.
@@ -86,6 +114,35 @@ public interface UserApi {
      * @throws Exception
      */
     User update(User user) throws Exception;
+
+    /**
+     * Updates the user (SCA).
+     *
+     * @param user Instance of UserNaturalSca or UserLegalSca class to be updated.
+     * @return Updated User object returned from API.
+     * @throws Exception
+     */
+    User updateSca(User user) throws Exception;
+
+    /**
+     * Transition a Natural/Legal Payer to Owner (SCA).
+     *
+     * @param user Instance of UserNaturalSca or UserLegalSca to be transitioned. Some parameters may be required based on the kind of transition you do.
+     *             See <a href="https://docs.mangopay.com/api-reference/users/categorize-natural-user">Categorize Natural User</a>
+     *             or <a href="https://docs.mangopay.com/api-reference/users/categorize-legal-user">Categorize Legal User</a> for more info.
+     * @return Updated User object returned from API.
+     * @throws Exception
+     */
+    User categorize(User user) throws Exception;
+
+    /**
+     * Obtain a new SCA redirection link to authenticate a user
+     *
+     * @param userId User identifier
+     * @return User for that User
+     * @throws Exception
+     */
+    ActivateUserResult activate(String userId) throws Exception;
 
     /**
      * Creates bank account for user.
