@@ -121,6 +121,7 @@ public abstract class ApiBase {
         put("users_createnaturals", new String[]{"/users/natural", RequestType.POST.toString()});
         put("users_createnaturals_sca", new String[]{"/sca/users/natural", RequestType.POST.toString()});
         put("users_createlegals", new String[]{"/users/legal", RequestType.POST.toString()});
+        put("users_createlegals_sca", new String[]{"/sca/users/legal", RequestType.POST.toString()});
 
         put("users_createbankaccounts_iban", new String[]{"/users/%s/bankaccounts/iban", RequestType.POST.toString()});
         put("users_createbankaccounts_gb", new String[]{"/users/%s/bankaccounts/gb", RequestType.POST.toString()});
@@ -145,11 +146,14 @@ public abstract class ApiBase {
         put("users_getnaturals", new String[]{"/users/natural/%s", RequestType.GET.toString()});
         put("users_getnaturals_sca", new String[]{"/sca/users/natural/%s", RequestType.GET.toString()});
         put("users_getlegals", new String[]{"/users/legal/%s", RequestType.GET.toString()});
+        put("users_getlegals_sca", new String[]{"/sca/users/legal/%s", RequestType.GET.toString()});
         put("users_getbankaccount", new String[]{"/users/%s/bankaccounts/%s", RequestType.GET.toString()});
         put("users_savenaturals", new String[]{"/users/natural/%s", RequestType.PUT.toString()});
         put("users_savenaturals_sca", new String[]{"/sca/users/natural/%s", RequestType.PUT.toString()});
-        put("users_categorizenaturals_sca", new String[]{"/sca/users/natural/%s/category", RequestType.PUT.toString()});
         put("users_savelegals", new String[]{"/users/legal/%s", RequestType.PUT.toString()});
+        put("users_savelegals_sca", new String[]{"/sca/users/legal/%s", RequestType.PUT.toString()});
+        put("users_categorizenaturals_sca", new String[]{"/sca/users/natural/%s/category", RequestType.PUT.toString()});
+        put("users_categorizelegals_sca", new String[]{"/sca/users/legal/%s/category", RequestType.PUT.toString()});
         put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
         put("users_regulatory", new String[]{"/users/%s/Regulatory", RequestType.GET.toString()});
         put("users_activate_sca", new String[]{"/sca/users/%s/activation", RequestType.POST.toString()});

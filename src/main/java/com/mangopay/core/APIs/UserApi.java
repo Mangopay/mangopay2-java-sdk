@@ -98,6 +98,15 @@ public interface UserApi {
     UserLegal getLegal(String userId) throws Exception;
 
     /**
+     * Gets legal sca user by its identifier,
+     *
+     * @param userId UserLegalSca identifier.
+     * @return UserLegalSca object returned from API.
+     * @throws Exception
+     */
+    UserLegalSca getLegalSca(String userId) throws Exception;
+
+    /**
      * Updates the user.
      *
      * @param user Instance of UserNatural or UserLegal class to be updated.

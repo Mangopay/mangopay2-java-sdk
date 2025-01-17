@@ -39,6 +39,7 @@ public class UserApiImpl extends ApiBase implements UserApi {
     public UserApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
         gsonBuilder.registerTypeAdapter(UserLegal.class, new UserSerializer());
+        gsonBuilder.registerTypeAdapter(UserLegalSca.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(UserNatural.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(UserNaturalSca.class, new UserSerializer());
         gsonBuilder.registerTypeAdapter(User.class, new UserDeserializer());
@@ -72,6 +73,8 @@ public class UserApiImpl extends ApiBase implements UserApi {
             response = this.createObject(UserLegal.class, idempotencyKey, "users_createlegals", (UserLegal) user);
         else if (user instanceof UserNaturalSca)
             response = this.createObject(UserNaturalSca.class, idempotencyKey, "users_createnaturals_sca", (UserNaturalSca) user);
+        else if (user instanceof UserLegalSca)
+            response = this.createObject(UserLegalSca.class, idempotencyKey, "users_createlegals_sca", (UserLegalSca) user);
         else
             throw new Exception("Unsupported user entity type.");
 
@@ -104,6 +107,11 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
+    public UserLegalSca getLegalSca(String userId) throws Exception {
+        return this.getObject(UserLegalSca.class, "users_getlegals_sca", userId);
+    }
+
+    @Override
     public User update(User user) throws Exception {
 
         String methodKey = "";
@@ -123,6 +131,8 @@ public class UserApiImpl extends ApiBase implements UserApi {
         String methodKey = "";
         if (user instanceof UserNaturalSca)
             methodKey = "users_savenaturals_sca";
+        else if (user instanceof UserLegalSca)
+            methodKey = "users_savelegals_sca";
         else if (user instanceof UserLegal)
             methodKey = "users_savelegals";
         else
@@ -137,6 +147,8 @@ public class UserApiImpl extends ApiBase implements UserApi {
         String methodKey = "";
         if (user instanceof UserNaturalSca)
             methodKey = "users_categorizenaturals_sca";
+        else if (user instanceof UserLegalSca)
+            methodKey = "users_categorizelegals_sca";
         else if (user instanceof UserLegal)
             methodKey = "users_savelegals";
         else

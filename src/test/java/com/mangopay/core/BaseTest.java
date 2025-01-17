@@ -24,6 +24,7 @@ public abstract class BaseTest {
     private static UserNaturalSca JOHN_SCA_OWNER;
     private static UserNaturalSca JOHN_SCA_PAYER;
     private static UserLegal MATRIX;
+    private static UserLegalSca MATRIX_SCA;
     private static UboDeclaration MATRIX_UBO_DECLARATION;
     private static Ubo MATRIX_UBO;
     private static BankAccount JOHNS_ACCOUNT;
@@ -153,6 +154,10 @@ public abstract class BaseTest {
         throw new Exception("userCategory not supported");
     }
 
+    protected UserLegalSca getMatrixSca() throws Exception {
+        return getMatrixSca(false, false);
+    }
+
     protected UserNatural getJohn(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN == null || recreate) {
             Calendar c = Calendar.getInstance();
@@ -278,6 +283,33 @@ public abstract class BaseTest {
             BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX;
+    }
+
+    protected UserLegalSca getMatrixSca(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.MATRIX_SCA == null || recreate) {
+            UserNatural john = this.getJohn();
+            UserLegalSca user = new UserLegalSca();
+            user.setName("MartixSampleOrg");
+            user.setLegalPersonType(LegalPersonType.BUSINESS);
+            user.setHeadquartersAddress(this.getNewAddress());
+            LegalRepresentative representative = new LegalRepresentative();
+            representative.setFirstName(john.getFirstName());
+            representative.setLastName(john.getLastName());
+            user.setLegalRepresentativeAddress(john.getAddress());
+            representative.setEmail(john.getEmail());
+            representative.setBirthday(john.getBirthday());
+            representative.setNationality(john.getNationality());
+            representative.setCountryOfResidence(john.getCountryOfResidence());
+            user.setCompanyNumber("LU12345678");
+
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+            representative.setBirthday(c.getTimeInMillis() / 1000);
+            user.setEmail(john.getEmail());
+
+            BaseTest.MATRIX_SCA = (UserLegalSca) this.api.getUserApi().create(user);
+        }
+        return BaseTest.MATRIX_SCA;
     }
 
     /**

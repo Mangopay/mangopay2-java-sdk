@@ -46,6 +46,14 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca();
+        assertTrue(matrixSca.getId().length() > 0);
+        assertEquals(matrixSca.getPersonType(), PersonType.LEGAL);
+        assertEquals("LU12345678", matrixSca.getCompanyNumber());
+    }
+
+    @Test
     public void createLegalFailsIfRequiredPropsNotProvided() throws Exception {
         UserLegal user = new UserLegal();
 
@@ -177,6 +185,18 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca();
+
+        User user1 = this.api.getUserApi().get(matrixSca.getId());
+        User user2 = this.api.getUserApi().getLegal(matrixSca.getId());
+
+        assert(user1 instanceof UserLegalSca);
+        assertEqualInputProps(user1, matrixSca);
+        assertEqualInputProps(user2, matrixSca);
+    }
+
+    @Test
     public void updateNatural() throws Exception {
         UserNatural john = this.getNewJohn(false);
         john.setLastName(john.getLastName() + " - CHANGED");
@@ -203,6 +223,20 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void updateLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca();
+        LegalRepresentative updatedRepresentative = matrixSca.getLegalRepresentative();
+        updatedRepresentative.setFirstName(updatedRepresentative.getFirstName() + " - CHANGED");
+        matrixSca.setLegalRepresentative(updatedRepresentative);
+
+        User userSaved = this.api.getUserApi().update(matrixSca);
+        User userFetched = this.api.getUserApi().get(matrixSca.getId());
+
+        assertEqualInputProps(userSaved, matrixSca);
+        assertEqualInputProps(userFetched, matrixSca);
+    }
+
+    @Test
     @Ignore("Can't be tested at this moment")
     public void categorizeNaturalSca() throws Exception {
         UserNaturalSca johnSca = this.getJohnSca(UserCategory.PAYER);
@@ -222,6 +256,28 @@ public class UserApiImplTest extends BaseTest {
         User userFetched = this.api.getUserApi().getSca(johnSca.getId());
 
         assertEquals(UserCategory.OWNER, userFetched.getUserCategory());
+    }
+
+    @Test
+    @Ignore("Can't be tested at this moment")
+    public void categorizeLegalSca() throws Exception {
+        UserLegalSca matrixSca = this.getMatrixSca();
+
+        Calendar c = Calendar.getInstance();
+        c.set(1975, 12, 21, 0, 0, 0);
+
+        matrixSca.setUserCategory(UserCategory.OWNER);
+        matrixSca.setTermsAndConditionsAccepted(true);
+        LegalRepresentative updatedOwnerLegalRepresentative = matrixSca.getLegalRepresentative();
+        updatedOwnerLegalRepresentative.setPhoneNumber("+33611111111");
+        updatedOwnerLegalRepresentative.setPhoneNumberCountry(CountryIso.FR);
+
+        User user1 = this.api.getUserApi().get(matrixSca.getId());
+        User user2 = this.api.getUserApi().getLegal(matrixSca.getId());
+
+        assert(user1 instanceof UserLegalSca);
+        assertEqualInputProps(user1, matrixSca);
+        assertEqualInputProps(user2, matrixSca);
     }
 
     @Test

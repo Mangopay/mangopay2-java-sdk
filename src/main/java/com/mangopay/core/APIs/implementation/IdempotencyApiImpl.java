@@ -81,6 +81,7 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
             put("transfers_create", Transfer.class);
             put("users_createnaturals", UserNatural.class);
             put("users_createlegals", UserLegal.class);
+            put("users_createlegals_sca", UserLegalSca.class);
             put("users_createnaturals_sca", UserNaturalSca.class);
             put("users_createkycdocument", KycDocument.class);
             put("users_createbankaccounts_iban", BankAccount.class);
