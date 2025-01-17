@@ -4,6 +4,7 @@ import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.entities.Mandate;
 import com.mangopay.entities.Transfer;
 import com.mangopay.entities.UserNatural;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -124,6 +125,7 @@ public class MandateApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Expired mandateId ID")
     public void getMandateTransfers() throws Exception {
         String mandateId = "15397886";// synced with mangopay sandbox
         List<Transfer> transfers = this.api.getMandateApi().getTransfers("15397886", new Pagination(1, 1), null);

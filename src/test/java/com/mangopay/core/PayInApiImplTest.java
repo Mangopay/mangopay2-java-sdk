@@ -396,6 +396,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Expired payin ID")
     public void getBankWireExternalInstructionIBAN() {
         try {
             PayIn payIn = this.api.getPayInApi().get("74980101");
@@ -417,6 +418,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Expired payin ID")
     public void getBankWireExternalInstructionAccountNumber() {
         try {
             PayIn payIn = this.api.getPayInApi().get("74981216");
@@ -688,6 +690,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Expired payin ID")
     public void testPayPalAccountEmail() throws Exception {
         String payInId = "54088959";
         String payPalBuyerEmail = "paypal-buyer-user@mangopay.com";
