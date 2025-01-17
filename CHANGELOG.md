@@ -1,4 +1,16 @@
-## [2.41.1] - 2024-01-09
+## [2.42.0] - 2025-01-17
+### Added
+New endpoints for strong customer authentication (SCA):
+
+- POST Create a Natural User (SCA)
+- PUT Update a Natural User (SCA)
+- POST Create a Legal User (SCA)
+- PUT Update a Legal User (SCA)
+- PUT Categorize a Natural User (SCA)
+- PUT Categorize a Legal User (SCA)
+- POST Activate a User (SCA)
+
+## [2.41.1] - 2025-01-09
 ### Fixed
 #345 `PayInReferences` class attributes are now readable and instantiable. Thank you for your contribution [@toni07 ](https://github.com/toni07)!
 
