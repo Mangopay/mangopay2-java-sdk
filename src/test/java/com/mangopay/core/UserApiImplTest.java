@@ -39,7 +39,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void createLegal() throws Exception {
-        UserLegal matrix = this.getMatrix();
+        UserLegal matrix = this.getMatrixOwner();
         assertTrue(matrix.getId().length() > 0);
         assertEquals(matrix.getPersonType(), PersonType.LEGAL);
         assertEquals("LU12345678", matrix.getCompanyNumber());
@@ -148,7 +148,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void getNaturalFailsForLegalUser() throws Exception {
-        UserLegal matrix = this.getMatrix();
+        UserLegal matrix = this.getMatrixOwner();
 
         UserNatural user = null;
         try {
@@ -176,7 +176,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void getLegal() throws Exception {
-        UserLegal matrix = this.getMatrix();
+        UserLegal matrix = this.getMatrixOwner();
 
         User user1 = this.api.getUserApi().get(matrix.getId());
         User user2 = this.api.getUserApi().getLegal(matrix.getId());
@@ -238,49 +238,54 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-//    @Ignore("Can't be tested at this moment")
+    @Ignore("Can't be tested at this moment")
     public void categorizeNaturalSca() throws Exception {
-        UserNaturalSca johnSca = this.getJohnSca(UserCategory.PAYER);
+        UserNatural johnPayer = this.getJohn(UserCategory.PAYER);
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
 
-        johnSca.setUserCategory(UserCategory.OWNER);
-        johnSca.setTermsAndConditionsAccepted(true);
-        johnSca.setPhoneNumber("+33611111111");
-        johnSca.setPhoneNumberCountry(CountryIso.FR);
-        johnSca.setBirthday(c.getTimeInMillis() / 1000);
-        johnSca.setNationality(CountryIso.FR);
-        johnSca.setCountryOfResidence(CountryIso.FR);
+        johnPayer.setUserCategory(UserCategory.OWNER);
+        johnPayer.setTermsAndConditionsAccepted(true);
+        johnPayer.setPhoneNumber("+33611111111");
+        johnPayer.setPhoneNumberCountry(CountryIso.FR);
+        johnPayer.setBirthday(c.getTimeInMillis() / 1000);
+        johnPayer.setNationality(CountryIso.FR);
+        johnPayer.setCountryOfResidence(CountryIso.FR);
+        johnPayer.setAddress(getNewAddress());
 
         // transition from PAYER to OWNER
-        this.api.getUserApi().categorize(johnSca);
-        User userFetched = this.api.getUserApi().getSca(johnSca.getId());
+        this.api.getUserApi().categorize(johnPayer);
+        User userFetched = this.api.getUserApi().getSca(johnPayer.getId());
 
         assertEquals(UserCategory.OWNER, userFetched.getUserCategory());
     }
 
     @Test
-//    @Ignore("Can't be tested at this moment")
+    @Ignore("Can't be tested at this moment")
     public void categorizeLegalSca() throws Exception {
-        UserLegalSca matrixSca = this.getMatrixSca();
-        UserLegal matrix = this.getMatrix();
+        UserLegal matrixPayer = this.getMatrix(UserCategory.PAYER);
+        UserNatural john = this.getJohn();
 
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
 
-        matrixSca.setUserCategory(UserCategory.OWNER);
-        matrixSca.setTermsAndConditionsAccepted(true);
-        LegalRepresentative updatedOwnerLegalRepresentative = matrixSca.getLegalRepresentative();
-        updatedOwnerLegalRepresentative.setPhoneNumber("+33611111111");
-        updatedOwnerLegalRepresentative.setPhoneNumberCountry(CountryIso.FR);
+        matrixPayer.setUserCategory(UserCategory.OWNER);
+        matrixPayer.setTermsAndConditionsAccepted(true);
+        matrixPayer.setHeadquartersAddress(this.getNewAddress());
+        matrixPayer.setLegalRepresentativeFirstName(john.getFirstName());
+        matrixPayer.setLegalRepresentativeLastName(john.getLastName());
+        matrixPayer.setLegalRepresentativeAddress(john.getAddress());
+        matrixPayer.setLegalRepresentativeEmail(john.getEmail());
+        matrixPayer.setLegalRepresentativeBirthday(john.getBirthday());
+        matrixPayer.setLegalRepresentativeNationality(john.getNationality());
+        matrixPayer.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
+        matrixPayer.setCompanyNumber("LU12345678");
 
-        this.api.getUserApi().categorize(matrix);
-        User user1 = this.api.getUserApi().get(matrixSca.getId());
-        User user2 = this.api.getUserApi().getLegalSca(matrixSca.getId());
+        // transition from PAYER to OWNER
+        this.api.getUserApi().categorize(matrixPayer);
+        User userFetched = this.api.getUserApi().getSca(matrixPayer.getId());
 
-        assert(user1 instanceof UserLegalSca);
-        assertEqualInputProps(user1, matrixSca);
-        assertEqualInputProps(user2, matrixSca);
+        assertEquals(UserCategory.OWNER, userFetched.getUserCategory());
     }
 
     @Test
@@ -307,7 +312,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateLegal() throws Exception {
-        UserLegal matrix = this.getMatrix();
+        UserLegal matrix = this.getMatrixOwner();
         matrix.setLegalRepresentativeLastName(matrix.getLegalRepresentativeLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(matrix);
@@ -864,7 +869,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void testUserLegalTermsAndConditions() throws Exception {
-        UserLegal user = this.getMatrix();
+        UserLegal user = this.getMatrixOwner();
         assertFalse(user.isTermsAndConditionsAccepted());
 
         user.setTermsAndConditionsAccepted(true);

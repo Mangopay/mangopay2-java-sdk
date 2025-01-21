@@ -84,7 +84,7 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForUser() throws Exception {
-        UserNatural user = this.getJohn(true, false);
+        UserNatural user = this.getJohnOwner(true, false);
 
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(this.getJohnsAccount(true).getId());
@@ -105,7 +105,7 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForBankAccount() throws Exception {
-        UserNatural user = this.getJohn(true, false);
+        UserNatural user = this.getJohnOwner(true, false);
 
         Mandate mandatePost = new Mandate();
         mandatePost.setBankAccountId(this.getJohnsAccount(true).getId());
