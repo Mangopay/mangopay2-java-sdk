@@ -238,7 +238,7 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore("Can't be tested at this moment")
+//    @Ignore("Can't be tested at this moment")
     public void categorizeNaturalSca() throws Exception {
         UserNaturalSca johnSca = this.getJohnSca(UserCategory.PAYER);
         Calendar c = Calendar.getInstance();
@@ -260,9 +260,10 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore("Can't be tested at this moment")
+//    @Ignore("Can't be tested at this moment")
     public void categorizeLegalSca() throws Exception {
         UserLegalSca matrixSca = this.getMatrixSca();
+        UserLegal matrix = this.getMatrix();
 
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
@@ -273,8 +274,9 @@ public class UserApiImplTest extends BaseTest {
         updatedOwnerLegalRepresentative.setPhoneNumber("+33611111111");
         updatedOwnerLegalRepresentative.setPhoneNumberCountry(CountryIso.FR);
 
+        this.api.getUserApi().categorize(matrix);
         User user1 = this.api.getUserApi().get(matrixSca.getId());
-        User user2 = this.api.getUserApi().getLegal(matrixSca.getId());
+        User user2 = this.api.getUserApi().getLegalSca(matrixSca.getId());
 
         assert(user1 instanceof UserLegalSca);
         assertEqualInputProps(user1, matrixSca);
