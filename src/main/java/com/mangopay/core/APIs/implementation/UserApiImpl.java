@@ -143,9 +143,9 @@ public class UserApiImpl extends ApiBase implements UserApi {
     public User categorize(User user) throws Exception {
 
         String methodKey = "";
-        if (user instanceof UserNaturalSca)
+        if (user instanceof UserNaturalSca || user instanceof UserNatural)
             methodKey = "users_categorizenaturals_sca";
-        else if (user instanceof UserLegalSca)
+        else if (user instanceof UserLegalSca || user instanceof UserLegal)
             methodKey = "users_categorizelegals_sca";
         else
             throw new Exception("Unsupported user entity type.");

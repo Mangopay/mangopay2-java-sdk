@@ -21,9 +21,11 @@ public abstract class BaseTest {
     protected MangoPayApi api;
 
     private static UserNatural JOHN;
+    private static UserNatural JOHN_PAYER;
     private static UserNaturalSca JOHN_SCA_OWNER;
     private static UserNaturalSca JOHN_SCA_PAYER;
     private static UserLegal MATRIX;
+    private static UserLegal MATRIX_PAYER;
     private static UserLegalSca MATRIX_SCA;
     private static UboDeclaration MATRIX_UBO_DECLARATION;
     private static Ubo MATRIX_UBO;
@@ -133,11 +135,21 @@ public abstract class BaseTest {
     }
 
     protected UserNatural getJohn() throws Exception {
-        return getJohn(false, false);
+        return getJohnOwner(false, false);
+    }
+
+    protected UserNatural getJohn(UserCategory userCategory) throws Exception {
+        switch (userCategory) {
+            case OWNER:
+                return getJohnOwner(false, false);
+            case PAYER:
+                return getJohnPayer(false, false);
+        }
+        throw new Exception("userCategory not supported");
     }
 
     protected UserNatural getJohnWithTermsAccepted() throws Exception {
-        return getJohn(true, true);
+        return getJohnOwner(true, true);
     }
 
     protected UserNaturalSca getJohnSca() throws Exception {
@@ -158,7 +170,7 @@ public abstract class BaseTest {
         return getMatrixSca(false, false);
     }
 
-    protected UserNatural getJohn(Boolean recreate, Boolean termsAccepted) throws Exception {
+    protected UserNatural getJohnOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -189,6 +201,20 @@ public abstract class BaseTest {
             BaseTest.JOHNS_BANKING_ALIAS = null;
         }
         return BaseTest.JOHN;
+    }
+
+    protected UserNatural getJohnPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.JOHN_PAYER == null || recreate) {
+            UserNatural user = new UserNatural();
+            user.setFirstName("John");
+            user.setLastName("Doe");
+            user.setEmail("john.doe@sample.org");
+            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setUserCategory(UserCategory.PAYER);
+
+            BaseTest.JOHN_PAYER = (UserNatural) this.api.getUserApi().create(user);
+        }
+        return BaseTest.JOHN_PAYER;
     }
 
     protected UserNaturalSca getJohnScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
@@ -259,7 +285,17 @@ public abstract class BaseTest {
         return (UserNatural) this.api.getUserApi().create(user);
     }
 
-    protected UserLegal getMatrix() throws Exception {
+    protected UserLegal getMatrix(UserCategory userCategory) throws Exception {
+        switch (userCategory) {
+            case OWNER:
+                return getMatrixOwner();
+            case PAYER:
+                return getMatrixPayer();
+        }
+        throw new Exception("userCategory not supported");
+    }
+
+    protected UserLegal getMatrixOwner() throws Exception {
         if (BaseTest.MATRIX == null) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
@@ -274,6 +310,7 @@ public abstract class BaseTest {
             user.setLegalRepresentativeNationality(john.getNationality());
             user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
             user.setCompanyNumber("LU12345678");
+            user.setUserCategory(UserCategory.OWNER);
 
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -283,6 +320,23 @@ public abstract class BaseTest {
             BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX;
+    }
+
+    protected UserLegal getMatrixPayer() throws Exception {
+        if (BaseTest.MATRIX_PAYER == null) {
+            UserNatural john = this.getJohn();
+            UserLegal user = new UserLegal();
+            user.setName("MartixSampleOrg");
+            user.setLegalPersonType(LegalPersonType.BUSINESS);
+            user.setEmail(john.getEmail());
+            user.setUserCategory(UserCategory.PAYER);
+            user.setLegalRepresentativeFirstName(john.getFirstName());
+            user.setLegalRepresentativeLastName(john.getLastName());
+            user.setTermsAndConditionsAccepted(true);
+
+            BaseTest.MATRIX_PAYER = (UserLegal) this.api.getUserApi().create(user);
+        }
+        return BaseTest.MATRIX_PAYER;
     }
 
     protected UserLegalSca getMatrixSca(Boolean recreate, Boolean termsAccepted) throws Exception {
@@ -1510,7 +1564,7 @@ public abstract class BaseTest {
 
     protected UboDeclaration getMatrixUboDeclaration() throws Exception {
         if (MATRIX_UBO_DECLARATION == null) {
-            MATRIX_UBO_DECLARATION = api.getUboDeclarationApi().create(this.getMatrix().getId());
+            MATRIX_UBO_DECLARATION = api.getUboDeclarationApi().create(this.getMatrixOwner().getId());
         }
         return MATRIX_UBO_DECLARATION;
     }
@@ -1531,7 +1585,7 @@ public abstract class BaseTest {
 
     protected Ubo getMatrixUbo() throws Exception {
         if (MATRIX_UBO == null) {
-            UserLegal matrix = this.getMatrix();
+            UserLegal matrix = this.getMatrixOwner();
             UboDeclaration uboDeclaration = this.getMatrixUboDeclaration();
 
             Ubo ubo = this.createNewUboForMatrix();
