@@ -1,3 +1,8 @@
+## [2.42.1] - 2025-01-23
+### Fixed
+
+The [Categorize a Natural User](https://docs.mangopay.com/api-reference/users/categorize-natural-user) endpoint now allows non-SCA users to be categorized as SCA users.
+
 ## [2.42.0] - 2025-01-17
 ### Added
 New endpoints for strong customer authentication (SCA):
