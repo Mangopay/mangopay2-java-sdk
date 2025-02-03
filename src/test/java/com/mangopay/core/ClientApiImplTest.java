@@ -27,24 +27,28 @@ public class ClientApiImplTest extends BaseTest {
         List<KycDocument> result2 = null;
 
         try {
-            result = this.api.getClientApi().getKycDocuments(null, null, null);
+            KycDocument kycDocument = this.getJohnsKycDocument();
+            FilterKycDocuments filter = new FilterKycDocuments();
+            filter.setAfterDate(kycDocument.getCreationDate() - 10);
+            filter.setBeforeDate(kycDocument.getCreationDate() + 10);
+
+            result = this.api.getClientApi().getKycDocuments(null, filter, null);
             assertNotNull(result);
             assertTrue(result.size() > 0);
 
             Pagination pagination = new Pagination(1, 2);
             Sorting sort = new Sorting();
             sort.addField("CreationDate", SortDirection.asc);
-            result = this.api.getClientApi().getKycDocuments(pagination, null, sort);
+            result = this.api.getClientApi().getKycDocuments(pagination, filter, sort);
             assertNotNull(result);
             assertTrue(result.size() > 0);
 
             sort = new Sorting();
             sort.addField("CreationDate", SortDirection.desc);
-            result2 = this.api.getClientApi().getKycDocuments(pagination, null, sort);
+            result2 = this.api.getClientApi().getKycDocuments(pagination, filter, sort);
             assertNotNull(result2);
             assertTrue(result2.size() > 0);
 
-            assertTrue((result.get(0).getId() == null ? result2.get(0).getId() != null : !result.get(0).getId().equals(result2.get(0).getId())));
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }

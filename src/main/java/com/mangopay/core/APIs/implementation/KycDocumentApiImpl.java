@@ -4,6 +4,7 @@ import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.KycDocumentApi;
 import com.mangopay.core.DocumentPageConsult;
+import com.mangopay.core.FilterKycDocuments;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.KycDocument;
@@ -26,6 +27,11 @@ public class KycDocumentApiImpl extends ApiBase implements KycDocumentApi {
     @Override
     public List<KycDocument> getAll(Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(KycDocument[].class, KycDocument.class, "kyc_documents_all", pagination, sorting);
+    }
+
+    @Override
+    public List<KycDocument> getAll(Pagination pagination, FilterKycDocuments filter, Sorting sorting) throws Exception {
+        return this.getList(KycDocument[].class, KycDocument.class, "kyc_documents_all", pagination, null, null, filter.getValues(), sorting);
     }
     
     @Override
