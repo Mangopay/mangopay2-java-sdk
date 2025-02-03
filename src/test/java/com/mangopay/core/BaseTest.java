@@ -446,7 +446,7 @@ public abstract class BaseTest {
      * @return Wallet instance loaded with 10k EUR.
      */
     protected Wallet getJohnsWalletWithMoney() throws Exception {
-        return getJohnsWalletWithMoney(500);
+        return getJohnsWalletWithMoney(1000);
     }
 
     /**
@@ -1914,7 +1914,7 @@ public abstract class BaseTest {
 
         Money debitedFunds = new Money();
         debitedFunds.setCurrency(CurrencyIso.EUR);
-        debitedFunds.setAmount(50);
+        debitedFunds.setAmount(1);
         conversionQuote.setDebitedFunds(debitedFunds);
 
         conversionQuote.setDuration(300);
