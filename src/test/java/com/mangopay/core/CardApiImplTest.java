@@ -4,7 +4,6 @@ import com.mangopay.core.APIs.CardApi;
 import com.mangopay.core.enumerations.TransactionType;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -32,6 +31,9 @@ public class CardApiImplTest extends BaseTest {
         PayIn payIn = getNewPayInCardDirect();
         Card card = api.getCardApi().get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
         Pagination pagination = new Pagination(1, 1);
+
+        // wait 2 seconds for the transactions to be created in the API
+        Thread.sleep(2000);
         List<Transaction> transactions = this.api.getCardApi().getTransactions(card.getId(), pagination, null);
 
         assertNotNull("Card transactions came back null", transactions);

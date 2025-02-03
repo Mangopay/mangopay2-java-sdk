@@ -1,8 +1,10 @@
 package com.mangopay.core.APIs.implementation;
 
+import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.ConversionsApi;
+import com.mangopay.core.serializer.CreateConversionQuoteSerializer;
 import com.mangopay.entities.*;
 
 public class ConversionsApiImpl extends ApiBase implements ConversionsApi {
@@ -12,8 +14,9 @@ public class ConversionsApiImpl extends ApiBase implements ConversionsApi {
      *
      * @param root Root/parent instance that holds the OAuthToken and Configuration instance.
      */
-    public ConversionsApiImpl(MangoPayApi root) {
+    public ConversionsApiImpl(MangoPayApi root, GsonBuilder gsonBuilder) {
         super(root);
+        gsonBuilder.registerTypeAdapter(CreateConversionQuote.class, new CreateConversionQuoteSerializer());
     }
 
     @Override

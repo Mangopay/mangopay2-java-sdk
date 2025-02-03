@@ -4,6 +4,7 @@ import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -174,6 +175,7 @@ public class ClientApiImplTest extends BaseTest {
         assertTrue(result.size() > 0);
     }
 
+    @Ignore("Endpoint removed")
     @Test
     public void getTransactions() {
         List<Transaction> result = null;

@@ -1,10 +1,8 @@
 package com.mangopay.core;
 
-import com.mangopay.core.enumerations.CultureCode;
 import com.mangopay.entities.Mandate;
 import com.mangopay.entities.Transfer;
 import com.mangopay.entities.UserNatural;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,30 +16,19 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void createMandate() throws Exception {
-        Mandate mandatePost = new Mandate();
-        mandatePost.setBankAccountId(this.getJohnsAccount().getId());
-        mandatePost.setReturnUrl("http://test.test");
-        mandatePost.setCulture(CultureCode.EN);
-
-        Mandate mandate = this.api.getMandateApi().create(mandatePost);
+        Mandate mandate = this.createMandate(false);
         assertNotNull(mandate);
         assertFalse(mandate.getId().isEmpty());
     }
 
     @Test
     public void getMandate() throws Exception {
-        Mandate mandatePost = new Mandate();
-        mandatePost.setBankAccountId(this.getJohnsAccount().getId());
-        mandatePost.setReturnUrl("http://test.test");
-        mandatePost.setCulture(CultureCode.EN);
+        Mandate created = this.createMandate(false);
+        Mandate fetched = this.api.getMandateApi().get(created.getId());
 
-        Mandate mandateCreated = this.api.getMandateApi().create(mandatePost);
-
-        Mandate mandate = this.api.getMandateApi().get(mandateCreated.getId());
-
-        assertNotNull(mandate);
-        assertFalse(mandate.getId().isEmpty());
-        assertEquals(mandateCreated.getId(), mandate.getId());
+        assertNotNull(fetched);
+        assertFalse(fetched.getId().isEmpty());
+        assertEquals(created.getId(), fetched.getId());
     }
 
     /*
@@ -84,14 +71,8 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForUser() throws Exception {
-        UserNatural user = this.getJohnOwner(true, false);
-
-        Mandate mandatePost = new Mandate();
-        mandatePost.setBankAccountId(this.getJohnsAccount(true).getId());
-        mandatePost.setReturnUrl("http://test.test");
-        mandatePost.setCulture(CultureCode.EN);
-
-        Mandate mandateCreated = this.api.getMandateApi().create(mandatePost);
+        UserNatural user = this.getJohnOwner(false, false);
+        Mandate mandateCreated = this.createMandate(false);
 
         List<Mandate> mandates = this.api.getMandateApi().getForUser(user.getId(), new FilterMandates(), new Pagination(1, 1), null);
 
@@ -105,16 +86,10 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForBankAccount() throws Exception {
-        UserNatural user = this.getJohnOwner(true, false);
+        UserNatural user = this.getJohnOwner(false, false);
+        Mandate mandateCreated = this.createMandate(false);
 
-        Mandate mandatePost = new Mandate();
-        mandatePost.setBankAccountId(this.getJohnsAccount(true).getId());
-        mandatePost.setReturnUrl("http://test.test");
-        mandatePost.setCulture(CultureCode.EN);
-
-        Mandate mandateCreated = this.api.getMandateApi().create(mandatePost);
-
-        List<Mandate> mandates = this.api.getMandateApi().getForBankAccount(user.getId(), mandatePost.getBankAccountId(), new FilterMandates(), new Pagination(1, 1), null);
+        List<Mandate> mandates = this.api.getMandateApi().getForBankAccount(user.getId(), this.getJohnsAccount().getId(), new FilterMandates(), new Pagination(1, 1), null);
 
         assertNotNull(mandates);
         assertTrue(mandates.size() > 0);
@@ -125,10 +100,14 @@ public class MandateApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore("Expired mandateId ID")
     public void getMandateTransfers() throws Exception {
-        String mandateId = "15397886";// synced with mangopay sandbox
-        List<Transfer> transfers = this.api.getMandateApi().getTransfers("15397886", new Pagination(1, 1), null);
+        Mandate mandate = this.createMandate(false);
+        this.createDirectDebitDirect();
+
+        // wait for the Transaction to be created on API side
+        Thread.sleep(2000);
+
+        List<Transfer> transfers = this.api.getMandateApi().getTransfers(mandate.getId(), new Pagination(1, 1), null);
         assertNotNull(transfers);
         assertTrue(transfers.size() == 1);
     }

@@ -47,6 +47,7 @@ public abstract class BaseTest {
     private static UboDeclaration UBO_DECLARATION;
     private static PayInTemplateURLOptions PAYIN_TEMPLATE_URL_OPTIONS;
     private static VirtualAccount JOHNS_VIRTUAL_ACCOUNT;
+    private static Mandate MANDATE;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -257,32 +258,6 @@ public abstract class BaseTest {
             BaseTest.JOHN_SCA_PAYER = (UserNaturalSca) this.api.getUserApi().create(user);
         }
         return BaseTest.JOHN_SCA_PAYER;
-    }
-
-    protected UserNatural getNewDeclarativeJohn() throws Exception {
-        return getNewJohn(true);
-    }
-
-    protected UserNatural getNewJohn(boolean declarative) throws Exception {
-
-        Calendar c = Calendar.getInstance();
-        c.set(1975, 12, 21, 0, 0, 0);
-
-        UserNatural user = new UserNatural();
-        user.setFirstName("John");
-        user.setLastName("Doe");
-        user.setEmail("john.doe@sample.org");
-        user.setAddress(this.getNewAddress());
-        user.setBirthday(c.getTimeInMillis() / 1000);
-        user.setNationality(CountryIso.FR);
-        user.setCountryOfResidence(CountryIso.FR);
-        user.setOccupation("programmer");
-        user.setIncomeRange(3);
-        user.setUserCategory(UserCategory.OWNER);
-        if (declarative) {
-            user.setCapacity(NaturalUserCapacity.DECLARATIVE);
-        }
-        return (UserNatural) this.api.getUserApi().create(user);
     }
 
     protected UserLegal getMatrix(UserCategory userCategory) throws Exception {
@@ -1912,6 +1887,7 @@ public abstract class BaseTest {
 
         Wallet debitedWallet = getJohnsWalletWithMoney();
         ConversionQuote quote = createConversionQuote();
+        System.out.println("quote created");
 
         CreateQuotedConversion quotedConversion = new CreateQuotedConversion();
         quotedConversion.setQuoteId(quote.getId());
@@ -1919,6 +1895,7 @@ public abstract class BaseTest {
         quotedConversion.setCreditedWalletId(creditedWallet.getId());
         quotedConversion.setDebitedWalletId(debitedWallet.getId());
 
+        System.out.println("creating conversion quote");
         return this.api.getConversionsApi().createQuotedConversion(quotedConversion, null);
     }
 
@@ -1940,9 +1917,45 @@ public abstract class BaseTest {
         debitedFunds.setAmount(50);
         conversionQuote.setDebitedFunds(debitedFunds);
 
-        conversionQuote.setDuration(90);
+        conversionQuote.setDuration(300);
         conversionQuote.setTag("Created using the Mangopay PHP SDK");
 
         return this.api.getConversionsApi().createConversionQuote(conversionQuote, null);
+    }
+
+    protected Mandate createMandate(Boolean recreate) throws Exception {
+        if (BaseTest.MANDATE == null || recreate) {
+            Mandate mandatePost = new Mandate();
+            mandatePost.setBankAccountId(this.getJohnsAccount().getId());
+            mandatePost.setReturnUrl("http://test.test");
+            mandatePost.setCulture(CultureCode.EN);
+
+            BaseTest.MANDATE = this.api.getMandateApi().create(mandatePost);
+        }
+        return BaseTest.MANDATE;
+    }
+
+    public PayIn createDirectDebitDirect() throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+        UserNatural user = this.getJohn();
+
+        Mandate mandate = this.createMandate(false);
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(user.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(10);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+        payIn.setCreditedWalletId(wallet.getId());
+        PayInPaymentDetailsDirectDebit paymentDetails = new PayInPaymentDetailsDirectDebit();
+        paymentDetails.setMandateId(mandate.getId());
+        payIn.setPaymentDetails(paymentDetails);
+        PayInExecutionDetailsDirect executionDetails = new PayInExecutionDetailsDirect();
+        payIn.setExecutionDetails(executionDetails);
+
+        return this.api.getPayInApi().create(payIn);
     }
 }
