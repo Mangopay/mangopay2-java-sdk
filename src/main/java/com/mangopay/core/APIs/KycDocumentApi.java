@@ -1,6 +1,7 @@
 package com.mangopay.core.APIs;
 
 import com.mangopay.core.DocumentPageConsult;
+import com.mangopay.core.FilterKycDocuments;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.KycDocument;
@@ -19,6 +20,8 @@ public interface KycDocumentApi {
      * @throws Exception
      */
     List<KycDocument> getAll(Pagination pagination, Sorting sorting) throws Exception;
+
+    List<KycDocument> getAll(Pagination pagination, FilterKycDocuments filter, Sorting sorting) throws Exception;
 
     /**
      * Gets KYC document.

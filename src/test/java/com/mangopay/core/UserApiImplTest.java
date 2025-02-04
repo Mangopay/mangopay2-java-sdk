@@ -199,7 +199,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateNatural() throws Exception {
-        UserNatural john = this.getNewJohn(false);
+        UserNatural john = this.getJohn();
         john.setLastName(john.getLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(john);
@@ -225,7 +225,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateLegalSca() throws Exception {
-        UserLegalSca matrixSca = this.getMatrixSca(true, true);
+        UserLegalSca matrixSca = this.getMatrixSca(false, true);
         LegalRepresentative updatedRepresentative = matrixSca.getLegalRepresentative();
         updatedRepresentative.setFirstName(updatedRepresentative.getFirstName() + " - CHANGED");
         matrixSca.setLegalRepresentative(updatedRepresentative);
@@ -300,7 +300,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateNaturalNonASCII() throws Exception {
-        UserNatural john = this.getNewJohn(false);
+        UserNatural john = this.getJohn();
         john.setLastName(john.getLastName() + " - CHANGED");
 
         User userSaved = this.api.getUserApi().update(john);
@@ -599,7 +599,6 @@ public class UserApiImplTest extends BaseTest {
         this.api.getUserApi().createKycPage(john.getId(), kycDocument.getId(), Files.readAllBytes(Paths.get(filePath)));
     }
 
-    @Ignore("Can't be tested at this moment")
     @Test
     public void getCards() throws Exception {
         UserNatural john = this.getJohn();
@@ -751,11 +750,11 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore
     public void getBankAccountTransactions() throws Exception {
         BankAccount johnsAccount = getJohnsAccount();
         PayOut johnsPayOutBankWire = getJohnsPayOutBankWire();
         Pagination pagination = new Pagination(1, 1);
+        Thread.sleep(2000);
         List<Transaction> bankAccountTransactions = this.api.getUserApi().getBankAccountTransactions(johnsAccount.getId(), pagination, null);
 
         assertNotNull("List of bank account transactions is null", bankAccountTransactions);

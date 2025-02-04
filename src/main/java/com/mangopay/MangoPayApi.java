@@ -53,7 +53,7 @@ public class MangoPayApi {
         setRegulatoryApi(new RegulatoryApiImpl(this));
         setDepositApi(new DepositApiImpl(this));
         setVirtualAccountApi(new VirtualAccountApiImpl(this));
-        setConversionsApi(new ConversionsApiImpl(this));
+        setConversionsApi(new ConversionsApiImpl(this, gsonBuilder));
         setGson(gsonBuilder.create());
     }
 
