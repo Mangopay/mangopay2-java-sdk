@@ -1,3 +1,10 @@
+## [2.42.2] - 2025-02-04
+
+### Updated
+
+- Revised tests to improve reliability and address any outdated tests.
+- Added instant payout event `INSTANT_PAYOUT_FAILED`.
+
 ## [2.42.1] - 2025-01-23
 ### Fixed
 
