@@ -636,6 +636,12 @@ public class UserApiImplTest extends BaseTest {
 
         List<Transaction> transactions = this.api.getUserApi().getTransactions(john.getId(), pagination, new FilterTransactions(), null);
 
+        assertFalse(transactions.isEmpty());
+        for (Transaction t : transactions) {
+            assertNotNull(t.getStatus());
+            assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
+
         assertTrue(transactions.size() > 0);
         assertTrue(transactions.get(0).getType() != null);
         assertTrue(transactions.get(0).getStatus() != null);
@@ -652,6 +658,12 @@ public class UserApiImplTest extends BaseTest {
         sorting.addField("CreationDate", SortDirection.desc);
 
         List<Transaction> transactions = this.api.getUserApi().getTransactions(john.getId(), pagination, new FilterTransactions(), sorting);
+
+        assertFalse(transactions.isEmpty());
+        for (Transaction t : transactions) {
+            assertNotNull(t.getStatus());
+            assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
 
         assertNotNull(transactions);
         assertTrue(transactions.size() > 1);

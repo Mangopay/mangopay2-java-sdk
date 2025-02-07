@@ -30,7 +30,7 @@ import static org.junit.Assert.*;
 /**
  * DisputeApiImpl test methods.
  */
-@Ignore("Comment this line out to allow DisputeApi unit tests run")
+
 public class DisputeApiImplTest extends BaseTest {
 
     private List<Dispute> clientDisputes = null;
@@ -74,6 +74,11 @@ public class DisputeApiImplTest extends BaseTest {
 
         assertNotNull(result);
         assertFalse(result.isEmpty());
+
+        for (Transaction t : result) {
+            assertNotNull(t.getStatus());
+            assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
     }
 
     @Test
@@ -114,6 +119,12 @@ public class DisputeApiImplTest extends BaseTest {
 
         assertNotNull(result);
         assertFalse(result.isEmpty());
+
+        assertFalse(transactions.isEmpty());
+        for (Transaction t : transactions) {
+            assertNotNull(t.getStatus());
+            assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
     }
 
     @Test
@@ -169,6 +180,7 @@ public class DisputeApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Cannot be tested. Needs manual creation of dispute on API side")
     public void contestDispute() throws Exception {
         Dispute notContestedDispute = null;
 
@@ -211,6 +223,7 @@ public class DisputeApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Cannot be tested. Needs manual creation of dispute on API side")
     public void closeDispute() throws Exception {
         Dispute dispute = null;
 
@@ -328,6 +341,7 @@ public class DisputeApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Cannot be tested. Needs manual creation of dispute on API side")
     public void submitDisputeDocument() throws Exception {
         Dispute dispute = null;
         DisputeDocument disputeDocument = null;
@@ -507,6 +521,7 @@ public class DisputeApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Cannot be tested. Needs manual creation of dispute on API side")
     public void resubmitDispute() throws Exception {
         Dispute dispute = null;
 

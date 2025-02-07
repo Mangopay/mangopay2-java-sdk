@@ -1,6 +1,7 @@
 package com.mangopay.core;
 
 import com.mangopay.core.APIs.CardApi;
+import com.mangopay.core.enumerations.TransactionStatus;
 import com.mangopay.core.enumerations.TransactionType;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.PayInPaymentDetailsCard;
@@ -38,6 +39,11 @@ public class CardApiImplTest extends BaseTest {
 
         assertNotNull("Card transactions came back null", transactions);
         assertFalse("Api returned an empty list of card transactions", transactions.isEmpty());
+
+        for (Transaction t : transactions) {
+            assertNotNull(t.getStatus());
+            assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
     }
 
     @Test
