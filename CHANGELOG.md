@@ -1,3 +1,14 @@
+## [2.43.0] - 2025-02-07
+
+### Added
+
+New endpoints
+for [hosted Identity Verification](https://docs.mangopay.com/guides/users/verification/hosted#guide-to-hosted-identity-verification):
+
+- [Create a hosted Identity Verification Session](https://docs.mangopay.com/guides/users/verification/hosted#post-create-a-hosted-identity-verification-session)
+- [View an Identity Verification Session](https://docs.mangopay.com/guides/users/verification/hosted#get-view-an-identity-verification-session)
+- [View an Identity Verification Checks](https://docs.mangopay.com/guides/users/verification/hosted#get-view-identity-verification-checks)
+
 ## [2.42.2] - 2025-02-04
 
 ### Updated
