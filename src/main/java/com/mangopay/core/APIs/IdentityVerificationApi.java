@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.IdentityVerificationCheck;
 import com.mangopay.entities.IdentityVerification;
 
 
@@ -30,4 +31,12 @@ public interface IdentityVerificationApi {
      * @return IdentityVerification instance
      */
     IdentityVerification get(String id) throws Exception;
+
+    /**
+     * Obtain verified user data and results of each check performed
+     *
+     * @param id The unique identifier of the identity verification session.
+     * @return IdentityVerificationCheck instance
+     */
+    IdentityVerificationCheck getChecks(String id) throws Exception;
 }

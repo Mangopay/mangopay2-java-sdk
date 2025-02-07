@@ -254,6 +254,7 @@ public abstract class ApiBase {
         // identity verification
         put("identify_verification_create", new String[]{"/users/%s/identity-verifications", RequestType.POST.toString()});
         put("identify_verification_get", new String[]{"/identity-verifications/%s", RequestType.GET.toString()});
+        put("identify_verification_checks_get", new String[]{"/identity-verifications/%s/checks", RequestType.GET.toString()});
     }};
 
     /**

@@ -5,8 +5,7 @@ import com.mangopay.entities.UserNatural;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class IdentityVerificationApiImplTest extends BaseTest {
 
@@ -34,9 +33,21 @@ public class IdentityVerificationApiImplTest extends BaseTest {
         assertEquals(identityVerification.getStatus(), fetched.getStatus());
     }
 
+    @Test
+    public void getIdentityVerificationChecks() throws Exception {
+        IdentityVerificationCheck check = getApi().getIdentityVerificationApi().getChecks(identityVerification.getId());
+        assertNotNull(check);
+        assertEquals(identityVerification.getId(), check.getSessionId());
+        assertEquals("PENDING", check.getStatus());
+        assertTrue(check.getCreationDate() > 0);
+        assertTrue(check.getLastUpdate() > 0);
+        assertNotNull(check.getChecks());
+    }
+
     private IdentityVerification getNewIdentityVerification() throws Exception {
-        UserNatural user = this.getJohn();
+        UserNatural user = getJohn();
         IdentityVerification createObject = new IdentityVerification().setReturnUrl("https://example.com");
-        return this.getApi().getIdentityVerificationApi().create(createObject, user.getId());
+        createObject.setTag("Created by the Java SDK");
+        return getApi().getIdentityVerificationApi().create(createObject, user.getId());
     }
 }
