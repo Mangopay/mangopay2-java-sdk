@@ -774,7 +774,7 @@ public class PayInApiImplTest extends BaseTest {
             assertEquals(applePayPayin.getAuthorId(), createdPayin.getAuthorId());
             assertEquals(createdPayin.getPaymentType(), PayInPaymentType.APPLEPAY);
 
-            // TODO: enable after updating the PaymentData
+            // SUCCEEDED payment can only be tested manually with updated payment data
 //            assertEquals(createdPayin.getStatus(), TransactionStatus.SUCCEEDED);
         } catch (Exception e) {
             fail(e.getMessage());

@@ -250,6 +250,11 @@ public abstract class ApiBase {
         put("virtual_account_get", new String[]{"/wallets/%s/virtual-accounts/%s", RequestType.GET.toString()});
         put("virtual_account_get_all", new String[]{"/wallets/%s/virtual-accounts", RequestType.GET.toString()});
         put("virtual_account_get_availabilities", new String[]{"/virtual-accounts/availability", RequestType.GET.toString()});
+
+        // identity verification
+        put("identify_verification_create", new String[]{"/users/%s/identity-verifications", RequestType.POST.toString()});
+        put("identify_verification_get", new String[]{"/identity-verifications/%s", RequestType.GET.toString()});
+        put("identify_verification_checks_get", new String[]{"/identity-verifications/%s/checks", RequestType.GET.toString()});
     }};
 
     /**

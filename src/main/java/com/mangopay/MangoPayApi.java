@@ -54,6 +54,7 @@ public class MangoPayApi {
         setDepositApi(new DepositApiImpl(this));
         setVirtualAccountApi(new VirtualAccountApiImpl(this));
         setConversionsApi(new ConversionsApiImpl(this, gsonBuilder));
+        setIdentityVerificationApi(new IdentityVerificationApiImpl(this));
         setGson(gsonBuilder.create());
     }
 
@@ -213,6 +214,11 @@ public class MangoPayApi {
      * Provides Instant conversion methods
      */
     private ConversionsApi conversionApi;
+
+    /**
+     * Provides Identity Verification methods
+     */
+    private IdentityVerificationApi identityVerificationApi;
 
     private Gson gson;
 
@@ -468,5 +474,13 @@ public class MangoPayApi {
 
     public void setConversionsApi(ConversionsApi conversionApi) {
         this.conversionApi = conversionApi;
+    }
+
+    public IdentityVerificationApi getIdentityVerificationApi() {
+        return identityVerificationApi;
+    }
+
+    public void setIdentityVerificationApi(IdentityVerificationApi identityVerificationApi) {
+        this.identityVerificationApi = identityVerificationApi;
     }
 }
