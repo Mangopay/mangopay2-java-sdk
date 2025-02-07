@@ -288,6 +288,12 @@ public class PayInApiImplTest extends BaseTest {
 
             List<Transaction> preAuthTransactions = this.api.getCardPreAuthorizationApi().getTransactions(cardPreAuthorization.getId(), new Pagination(1, 1));
 
+            assertFalse(preAuthTransactions.isEmpty());
+            for (Transaction t : preAuthTransactions) {
+                assertNotNull(t.getStatus());
+                assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+            }
+
             assertTrue(!"".equals(createPayIn.getId()));
             assertEquals(wallet.getId(), createPayIn.getCreditedWalletId());
             assertTrue(createPayIn.getPaymentType() == PayInPaymentType.PREAUTHORIZED);
