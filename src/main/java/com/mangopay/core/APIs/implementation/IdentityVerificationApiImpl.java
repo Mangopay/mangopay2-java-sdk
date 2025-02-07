@@ -28,4 +28,9 @@ public class IdentityVerificationApiImpl extends ApiBase implements IdentityVeri
     public IdentityVerification create(IdentityVerification identityVerification, String userId, String idempotencyKey) throws Exception {
         return this.createObject(IdentityVerification.class, idempotencyKey, "identify_verification_create", identityVerification, userId);
     }
+
+    @Override
+    public IdentityVerification get(String id) throws Exception {
+        return this.getObject(IdentityVerification.class, "identify_verification_get", id);
+    }
 }

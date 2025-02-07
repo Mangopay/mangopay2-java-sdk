@@ -22,4 +22,12 @@ public interface IdentityVerificationApi {
      * @return IdentityVerification instance
      */
     IdentityVerification create(IdentityVerification identityVerification, String userId, String idempotencyKey) throws Exception;
+
+    /**
+     * See the status and basic details of an identity verification session
+     *
+     * @param id The unique identifier of the identity verification session.
+     * @return IdentityVerification instance
+     */
+    IdentityVerification get(String id) throws Exception;
 }
