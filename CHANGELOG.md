@@ -1,3 +1,18 @@
+## [2.44.0] - 2025-02-10
+
+### Added
+
+New endpoints for [TWINT PayIn](https://docs.mangopay.com/api-reference/twint/twint-payin-object) object:
+
+- [Create a TWINT PayIn](https://docs.mangopay.com/api-reference/twint/create-twint-payin)
+- [View a PayIn (TWINT)](https://docs.mangopay.com/api-reference/twint/view-payin-twint)
+
+### Updated
+
+- Removed the `Reference` parameter from the [Refund](https://docs.mangopay.com/api-reference/refunds/refund-object)
+  object.
+- Added additional tests for transaction retrieval.
+
 ## [2.43.0] - 2025-02-07
 
 ### Added
