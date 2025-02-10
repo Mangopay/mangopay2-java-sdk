@@ -439,21 +439,17 @@ public abstract class BaseTest {
         return BaseTest.JOHNS_WALLET;
     }
 
-    protected Wallet getJohnsWallet(CurrencyIso currencyIso) throws Exception {
-        if (BaseTest.JOHNS_WALLET == null) {
-            UserNatural john = this.getJohn();
+    protected Wallet getNewWallet(CurrencyIso currencyIso) throws Exception {
+        UserNatural john = this.getJohn();
 
-            Wallet wallet = new Wallet();
-            wallet.setOwners(new ArrayList<String>());
-            wallet.getOwners().add(john.getId());
+        Wallet wallet = new Wallet();
+        wallet.setOwners(new ArrayList<String>());
+        wallet.getOwners().add(john.getId());
 
-            wallet.setCurrency(currencyIso);
-            wallet.setDescription(String.format("WALLET IN %s", currencyIso.toString()));
+        wallet.setCurrency(currencyIso);
+        wallet.setDescription(String.format("WALLET IN %s", currencyIso.toString()));
 
-            BaseTest.JOHNS_WALLET = this.api.getWalletApi().create(wallet);
-        }
-
-        return BaseTest.JOHNS_WALLET;
+        return this.api.getWalletApi().create(wallet);
     }
 
     /**
