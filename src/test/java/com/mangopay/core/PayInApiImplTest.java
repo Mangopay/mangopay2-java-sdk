@@ -1284,8 +1284,8 @@ public class PayInApiImplTest extends BaseTest {
     public void createTwintWeb() {
         try {
             UserNatural user = this.getJohn();
-            Wallet wallet = this.getJohnsWalletWithMoney();
-            PayIn created = this.getNewPayInTwintWeb(user.getId());
+            Wallet wallet = this.getJohnsWallet(CurrencyIso.CHF);
+            PayIn created = this.getNewPayInTwintWeb(user.getId(), wallet.getId());
 
             assertNotNull(created);
             assertEquals(TransactionStatus.CREATED, created.getStatus());

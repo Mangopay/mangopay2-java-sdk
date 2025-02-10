@@ -439,6 +439,23 @@ public abstract class BaseTest {
         return BaseTest.JOHNS_WALLET;
     }
 
+    protected Wallet getJohnsWallet(CurrencyIso currencyIso) throws Exception {
+        if (BaseTest.JOHNS_WALLET == null) {
+            UserNatural john = this.getJohn();
+
+            Wallet wallet = new Wallet();
+            wallet.setOwners(new ArrayList<String>());
+            wallet.getOwners().add(john.getId());
+
+            wallet.setCurrency(currencyIso);
+            wallet.setDescription(String.format("WALLET IN %s", currencyIso.toString()));
+
+            BaseTest.JOHNS_WALLET = this.api.getWalletApi().create(wallet);
+        }
+
+        return BaseTest.JOHNS_WALLET;
+    }
+
     /**
      * Creates wallet for John, loaded with 10k EUR (John's got lucky) if not
      * created yet, or returns an existing one.
@@ -738,8 +755,8 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-    protected PayIn getNewPayInTwintWeb(String userId) throws Exception {
-        PayIn payIn = getPayInTwintWeb(userId);
+    protected PayIn getNewPayInTwintWeb(String userId, String walletId) throws Exception {
+        PayIn payIn = getPayInTwintWeb(userId, walletId);
         return this.api.getPayInApi().create(payIn);
     }
 
@@ -1132,9 +1149,7 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-    private PayIn getPayInTwintWeb(String userId) throws Exception {
-        Wallet wallet = this.getJohnsWalletWithMoney();
-
+    private PayIn getPayInTwintWeb(String userId, String walletId) throws Exception {
         if (userId == null) {
             UserNatural user = this.getJohn();
             userId = user.getId();
@@ -1142,13 +1157,13 @@ public abstract class BaseTest {
 
         PayIn payIn = new PayIn();
         payIn.setAuthorId(userId);
-        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setCreditedWalletId(walletId);
         payIn.setDebitedFunds(new Money());
         payIn.getDebitedFunds().setAmount(100);
-        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.CHF);
         payIn.setFees(new Money());
         payIn.getFees().setAmount(0);
-        payIn.getFees().setCurrency(CurrencyIso.EUR);
+        payIn.getFees().setCurrency(CurrencyIso.CHF);
 
         payIn.setPaymentDetails(new PayInPaymentDetailsTwint());
         ((PayInPaymentDetailsTwint) payIn.getPaymentDetails()).setStatementDescriptor("Twint");
