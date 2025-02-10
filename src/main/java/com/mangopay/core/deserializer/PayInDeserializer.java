@@ -262,6 +262,12 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsBancontact.setRecurring(object.get("Recurring").getAsBoolean());
                 payIn.setPaymentDetails(payInPaymentDetailsBancontact);
                 break;
+            case TWINT:
+                PayInPaymentDetailsTwint payInPaymentDetailsTwint = new PayInPaymentDetailsTwint();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsTwint.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsTwint);
+                break;
             default:
                 return null;
         }

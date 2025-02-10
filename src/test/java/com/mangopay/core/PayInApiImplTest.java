@@ -1281,6 +1281,27 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createTwintWeb() {
+        try {
+            UserNatural user = this.getJohn();
+            Wallet wallet = this.getNewWallet(CurrencyIso.CHF);
+            PayIn created = this.getNewPayInTwintWeb(user.getId(), wallet.getId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.TWINT, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertEquals(wallet.getId(), created.getCreditedWalletId());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void createBancontactWeb() {
         try {
             UserNatural user = this.getJohn();
