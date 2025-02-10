@@ -97,7 +97,10 @@ public enum PayInPaymentType {
     /**
      * BANCONTACT payment type
      */
-    BCMC
+    BCMC,
 
-
+    /**
+     * TWINT payment type
+     */
+    TWINT
 }

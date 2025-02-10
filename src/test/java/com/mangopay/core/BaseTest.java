@@ -714,7 +714,6 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-
     protected PayIn getNewPayInKlarnaWeb(String userId) throws Exception {
         PayIn payIn = getPayInKlarnaWeb(userId);
 
@@ -736,6 +735,11 @@ public abstract class BaseTest {
     protected PayIn getNewPayInBancontactWeb(String userId) throws Exception {
         PayIn payIn = getPayInBancontactWeb(userId);
 
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInTwintWeb(String userId) throws Exception {
+        PayIn payIn = getPayInTwintWeb(userId);
         return this.api.getPayInApi().create(payIn);
     }
 
@@ -1126,6 +1130,36 @@ public abstract class BaseTest {
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
         return this.api.getPayInApi().create(payIn);
+    }
+
+    private PayIn getPayInTwintWeb(String userId) throws Exception {
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(100);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        payIn.setPaymentDetails(new PayInPaymentDetailsTwint());
+        ((PayInPaymentDetailsTwint) payIn.getPaymentDetails()).setStatementDescriptor("Twint");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+        payIn.setTag("My Twint Tag");
+        return payIn;
     }
 
     protected PayOut getJohnsPayOutBankWire() throws Exception {
