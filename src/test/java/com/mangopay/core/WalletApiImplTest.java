@@ -1,6 +1,7 @@
 package com.mangopay.core;
 
 import com.mangopay.core.enumerations.SortDirection;
+import com.mangopay.core.enumerations.TransactionStatus;
 import com.mangopay.core.enumerations.TransactionType;
 import com.mangopay.entities.PayIn;
 import com.mangopay.entities.Transaction;
@@ -67,6 +68,12 @@ public class WalletApiImplTest extends BaseTest {
         assertTrue(transactions.get(0) instanceof Transaction);
         assertEquals(transactions.get(0).getAuthorId(), john.getId());
         //this.assertEqualInputProps(transactions.get(0), payIn);
+
+        assertFalse(transactions.isEmpty());
+        for (Transaction t : transactions) {
+            assertNotNull(t.getStatus());
+            assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
     }
 
     @Test
@@ -89,5 +96,11 @@ public class WalletApiImplTest extends BaseTest {
         assertNotNull(transactions);
         assertTrue(transactions.size() > 1);
         assertTrue(transactions.get(0).getCreationDate() > transactions.get(1).getCreationDate());
+
+        assertFalse(transactions.isEmpty());
+        for (Transaction t : transactions) {
+            assertNotNull(t.getStatus());
+            assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
     }
 }
