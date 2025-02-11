@@ -12,6 +12,9 @@ public class CardInfoTypeDeserializer implements JsonDeserializer<CardInfoType> 
     @Override
     public CardInfoType deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         String value = json.getAsString();
+        if ("null".equals(value)) {
+            return null;
+        }
         if ("CHARGE CARD".equals(value)) {
             return CardInfoType.CHARGE_CARD;
         }
