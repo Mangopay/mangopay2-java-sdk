@@ -6,6 +6,9 @@ import com.mangopay.core.APIs.*;
 import com.mangopay.core.APIs.implementation.*;
 import com.mangopay.core.AuthorizationTokenManager;
 import com.mangopay.core.Configuration;
+import com.mangopay.core.deserializer.CardInfoTypeDeserializer;
+import com.mangopay.core.enumerations.CardInfoType;
+import com.mangopay.core.serializer.CardInfoTypeSerializer;
 import com.mangopay.entities.RateLimit;
 
 import java.util.List;
@@ -55,6 +58,11 @@ public class MangoPayApi {
         setVirtualAccountApi(new VirtualAccountApiImpl(this));
         setConversionsApi(new ConversionsApiImpl(this, gsonBuilder));
         setIdentityVerificationApi(new IdentityVerificationApiImpl(this));
+
+        // register custom serializers/deserializers for objects that are used in multiple APIs
+        gsonBuilder.registerTypeAdapter(CardInfoType.class, new CardInfoTypeSerializer());
+        gsonBuilder.registerTypeAdapter(CardInfoType.class, new CardInfoTypeDeserializer());
+
         setGson(gsonBuilder.create());
     }
 
