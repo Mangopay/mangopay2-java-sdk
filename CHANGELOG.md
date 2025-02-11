@@ -1,3 +1,9 @@
+## [2.44.1] - 2025-02-11
+
+### Fixed
+
+Added a custom deserializer to support the `CardInfo.Type` naming change from `CHARDE_CARD` to `CHARGE CARD`.
+
 ## [2.44.0] - 2025-02-10
 
 ### Added
