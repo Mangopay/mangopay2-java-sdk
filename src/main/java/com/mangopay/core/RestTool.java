@@ -407,7 +407,7 @@ public class RestTool {
                 }
             }
 
-            if (responseCodeIsSuccessful()) {
+            if (responseCodeIsSuccessful() && responseCode != 204) {
 
                 this.readResponseHeaders(connection);
 
@@ -620,7 +620,7 @@ public class RestTool {
                 }
             }
 
-            if (responseCodeIsSuccessful()) {
+            if (responseCodeIsSuccessful() && responseCode != 204) {
 
                 this.readResponseHeaders(connection);
 
@@ -707,7 +707,6 @@ public class RestTool {
         if (!responseCodeIsSuccessful()) {
 
             HashMap<Integer, String> responseCodes = new HashMap<Integer, String>() {{
-                put(206, "PartialContent");
                 put(400, "Bad request");
                 put(401, "Unauthorized");
                 put(403, "Prohibition to use the method");
