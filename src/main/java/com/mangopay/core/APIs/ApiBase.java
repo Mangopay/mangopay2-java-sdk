@@ -245,17 +245,17 @@ public abstract class ApiBase {
         put("get_conversion_quote", new String[]{"/conversions/quote/%s", RequestType.GET.toString()});
         put("create_quoted_conversion", new String[]{"/conversions/quoted-conversion", RequestType.POST.toString()});
 
-        // virtual account URLs
         put("virtual_account_create", new String[]{"/wallets/%s/virtual-accounts", RequestType.POST.toString()});
         put("virtual_account_deactivate", new String[]{"/wallets/%s/virtual-accounts/%s", RequestType.PUT.toString()});
         put("virtual_account_get", new String[]{"/wallets/%s/virtual-accounts/%s", RequestType.GET.toString()});
         put("virtual_account_get_all", new String[]{"/wallets/%s/virtual-accounts", RequestType.GET.toString()});
         put("virtual_account_get_availabilities", new String[]{"/virtual-accounts/availability", RequestType.GET.toString()});
 
-        // identity verification
         put("identify_verification_create", new String[]{"/users/%s/identity-verifications", RequestType.POST.toString()});
         put("identify_verification_get", new String[]{"/identity-verifications/%s", RequestType.GET.toString()});
         put("identify_verification_checks_get", new String[]{"/identity-verifications/%s/checks", RequestType.GET.toString()});
+
+        put("recipient_create", new String[]{"/users/%s/recipients", RequestType.POST.toString()});
     }};
 
     /**

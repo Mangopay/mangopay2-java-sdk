@@ -381,10 +381,10 @@ public class RestTool {
             // get response
             this.responseCode = connection.getResponseCode();
             InputStream is;
-            if (this.responseCode != 200 && this.responseCode != 204) {
-                is = connection.getErrorStream();
-            } else {
+            if (responseCodeIsSuccessful()) {
                 is = connection.getInputStream();
+            } else {
+                is = connection.getErrorStream();
             }
 
             checkApiConnection(is);
@@ -400,14 +400,14 @@ public class RestTool {
             String responseString = resp.toString();
 
             if (this.debugMode) {
-                if (this.responseCode == 200 || this.responseCode == 204) {
+                if (responseCodeIsSuccessful()) {
                     logger.info("Response OK: {}", responseString);
                 } else {
                     logger.info("Response ERROR: {}", responseString);
                 }
             }
 
-            if (this.responseCode == 200) {
+            if (responseCodeIsSuccessful()) {
 
                 this.readResponseHeaders(connection);
 
@@ -593,10 +593,10 @@ public class RestTool {
             //Get Response	
             this.responseCode = connection.getResponseCode();
             InputStream is;
-            if (this.responseCode != 200) {
-                is = connection.getErrorStream();
-            } else {
+            if (responseCodeIsSuccessful()) {
                 is = connection.getInputStream();
+            } else {
+                is = connection.getErrorStream();
             }
 
             checkApiConnection(is);
@@ -613,14 +613,14 @@ public class RestTool {
             String responseString = resp.toString();
 
             if (this.debugMode) {
-                if (this.responseCode == 200) {
+                if (responseCodeIsSuccessful()) {
                     logger.info("Response OK: {}", responseString);
                 } else {
                     logger.info("Response ERROR: {}", responseString);
                 }
             }
 
-            if (this.responseCode == 200) {
+            if (responseCodeIsSuccessful()) {
 
                 this.readResponseHeaders(connection);
 
@@ -697,14 +697,14 @@ public class RestTool {
     }
 
     /**
-     * Checks the HTTP response code and if it's neither 200 nor 204 throws a ResponseException.
+     * Checks the HTTP response code and if it's not successful throws a ResponseException.
      *
      * @param message Text response.
-     * @throws ResponseException If response code is other than 200 or 204.
+     * @throws ResponseException If response code is not successful
      */
     private void checkResponseCode(String message) throws ResponseException {
 
-        if (this.responseCode != 200 && this.responseCode != 204) {
+        if (!responseCodeIsSuccessful()) {
 
             HashMap<Integer, String> responseCodes = new HashMap<Integer, String>() {{
                 put(206, "PartialContent");
@@ -771,5 +771,9 @@ public class RestTool {
 
             throw responseException;
         }
+    }
+
+    private boolean responseCodeIsSuccessful() {
+        return (responseCode >= 200 && responseCode < 300);
     }
 }
