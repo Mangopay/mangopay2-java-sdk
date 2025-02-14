@@ -4,6 +4,7 @@ import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.RecipientApi;
 import com.mangopay.entities.Recipient;
+import com.mangopay.entities.subentities.UserRecipients;
 
 public class RecipientApiImpl extends ApiBase implements RecipientApi {
     /**
@@ -28,5 +29,10 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     @Override
     public Recipient get(String recipientId) throws Exception {
         return this.getObject(Recipient.class, "recipient_get", recipientId);
+    }
+
+    @Override
+    public UserRecipients getUserRecipients(String userId) throws Exception {
+        return this.getObject(UserRecipients.class, "recipient_get_all", userId);
     }
 }

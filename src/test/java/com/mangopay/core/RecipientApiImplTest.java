@@ -3,17 +3,19 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
 import com.mangopay.entities.subentities.IndividualRecipient;
+import com.mangopay.entities.subentities.UserRecipients;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class RecipientApiImplTest extends BaseTest {
 
+    // already active SCA Natural user ID
+    private final static String ACTIVE_USER_NATURAL_SCA_ID = "user_m_01JKZW095BFB2TRQMCZ8GE7M8D";
     private static Recipient recipient;
 
     @Before
@@ -41,10 +43,14 @@ public class RecipientApiImplTest extends BaseTest {
         assertEquals(recipient.getStatus(), fetched.getStatus());
     }
 
-    private Recipient createNewRecipient() throws Exception {
-        // already active SCA Natural user ID
-        String activeUserNaturalScaId = "user_m_01JKZW095BFB2TRQMCZ8GE7M8D";
+    @Test
+    public void getUserRecipients() throws Exception {
+        UserRecipients recipients = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID);
+        assertNotNull(recipients.getRecipients());
+        assertFalse(recipients.getRecipients().isEmpty());
+    }
 
+    private Recipient createNewRecipient() throws Exception {
         if (recipient == null) {
             Map<String, Object> localBankTransfer = new HashMap<>();
             Map<String, Object> gbpDetails = new HashMap<>();
@@ -65,7 +71,7 @@ public class RecipientApiImplTest extends BaseTest {
                 )
                 .setLocalBankTransfer(localBankTransfer);
 
-            recipient = getApi().getRecipientApi().create(toCreate, activeUserNaturalScaId);
+            recipient = getApi().getRecipientApi().create(toCreate, ACTIVE_USER_NATURAL_SCA_ID);
         }
         return recipient;
     }
