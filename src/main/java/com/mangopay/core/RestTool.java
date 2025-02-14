@@ -778,6 +778,6 @@ public class RestTool {
     }
 
     private boolean responseCodeIsSuccessful() {
-        return (responseCode >= 200 && responseCode < 300);
+        return responseCode >= 200 && responseCode < 300;
     }
 }
