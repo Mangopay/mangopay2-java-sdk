@@ -258,6 +258,7 @@ public abstract class ApiBase {
         put("recipient_create", new String[]{"/users/%s/recipients", RequestType.POST.toString()});
         put("recipient_get", new String[]{"/recipients/%s", RequestType.GET.toString()});
         put("recipient_get_all", new String[]{"/users/%s/recipients", RequestType.GET.toString()});
+        put("recipient_get_schema", new String[]{"/recipients/schema?payoutMethodType=%s&recipientType=%s&currency=%s", RequestType.GET.toString()});
     }};
 
     /**

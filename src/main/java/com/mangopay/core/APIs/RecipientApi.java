@@ -1,6 +1,8 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
+import com.mangopay.entities.subentities.RecipientSchema;
 import com.mangopay.entities.subentities.UserRecipients;
 
 public interface RecipientApi {
@@ -36,4 +38,14 @@ public interface RecipientApi {
      * @return UserRecipients instance
      */
     UserRecipients getUserRecipients(String userId) throws Exception;
+
+    /**
+     * Get a Recipient schema
+     *
+     * @param payoutMethodType Defines the payout method (e.g., LocalBankTransfer, InternationalBankTransfer).
+     * @param recipientType    Specifies whether the recipient is an Individual or a Business.
+     * @param currency         3-letter ISO 4217 destination currency code (e.g. EUR, USD, GBP, AUD, CAD,HKD, SGD, MXN).
+     * @return RecipientSchema instance
+     */
+    RecipientSchema getSchema(String payoutMethodType, String recipientType, CurrencyIso currency) throws Exception;
 }
