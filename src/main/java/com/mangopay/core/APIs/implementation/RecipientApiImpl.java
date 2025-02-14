@@ -52,4 +52,9 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     public void validate(String idempotencyKey, Recipient recipient, String userId) throws Exception {
         this.createObject(Recipient.class, idempotencyKey, "recipient_validate", recipient, userId);
     }
+
+    @Override
+    public void deactivate(String recipientId) throws Exception {
+        this.updateObject(Recipient.class, "recipient_deactivate", new Recipient(), recipientId);
+    }
 }

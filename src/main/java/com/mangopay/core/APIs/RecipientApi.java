@@ -68,4 +68,10 @@ public interface RecipientApi {
      */
     void validate(String idempotencyKey, Recipient recipient, String userId) throws Exception;
 
+    /**
+     * Deactivate a Recipient
+     *
+     * @param recipientId the recipient identifier
+     */
+    void deactivate(String recipientId) throws Exception;
 }

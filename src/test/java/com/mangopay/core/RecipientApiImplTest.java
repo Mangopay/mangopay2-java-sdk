@@ -6,6 +6,7 @@ import com.mangopay.entities.subentities.IndividualRecipient;
 import com.mangopay.entities.subentities.RecipientPropertySchema;
 import com.mangopay.entities.subentities.RecipientSchema;
 import com.mangopay.entities.subentities.UserRecipients;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -72,6 +73,15 @@ public class RecipientApiImplTest extends BaseTest {
         createNewRecipient();
         // if it fails, the test will crash with error
         getApi().getRecipientApi().validate(recipient, ACTIVE_USER_NATURAL_SCA_ID);
+    }
+
+    @Ignore("A recipient needs to be manually activated before testing this")
+    @Test
+    public void deactivateRecipient() throws Exception {
+        String recipientId = "rec_01JM2J975QESK6AB9RNBV7EZSF";
+        getApi().getRecipientApi().deactivate(recipientId);
+        Recipient afterDeactivation = getApi().getRecipientApi().get(recipientId);
+        assertEquals("DEACTIVATED", afterDeactivation.getStatus());
     }
 
     private void createNewRecipient() throws Exception {
