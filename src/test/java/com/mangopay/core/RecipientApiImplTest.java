@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class RecipientApiImplTest extends BaseTest {
@@ -23,12 +24,21 @@ public class RecipientApiImplTest extends BaseTest {
     @Test
     public void createRecipient() {
         assertNotNull(recipient);
+        assertNotNull(recipient.getStatus());
         assertNotNull(recipient.getDisplayName());
         assertNotNull(recipient.getPayoutMethodType());
         assertNotNull(recipient.getRecipientType());
         assertNotNull(recipient.getIndividualRecipient());
         assertNotNull(recipient.getLocalBankTransfer());
         assertNotNull(recipient.getPendingUserAction());
+    }
+
+    @Test
+    public void getRecipient() throws Exception {
+        Recipient fetched = getApi().getRecipientApi().get(recipient.getId());
+        assertNotNull(fetched);
+        assertEquals(recipient.getId(), fetched.getId());
+        assertEquals(recipient.getStatus(), fetched.getStatus());
     }
 
     private Recipient createNewRecipient() throws Exception {

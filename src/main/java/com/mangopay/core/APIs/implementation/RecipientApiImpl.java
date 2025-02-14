@@ -24,4 +24,9 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     public Recipient create(String idempotencyKey, Recipient recipient, String userId) throws Exception {
         return this.createObject(Recipient.class, idempotencyKey, "recipient_create", recipient, userId);
     }
+
+    @Override
+    public Recipient get(String recipientId) throws Exception {
+        return this.getObject(Recipient.class, "recipient_get", recipientId);
+    }
 }

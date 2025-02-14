@@ -6,4 +6,6 @@ public interface RecipientApi {
     Recipient create(Recipient recipient, String userId) throws Exception;
 
     Recipient create(String idempotencyKey, Recipient recipient, String userId) throws Exception;
+
+    Recipient get(String recipientId) throws Exception;
 }

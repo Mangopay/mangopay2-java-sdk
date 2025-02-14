@@ -11,6 +11,12 @@ import java.util.Map;
 
 public class Recipient extends EntityBase {
     /**
+     * The status
+     */
+    @SerializedName("Status")
+    private String status;
+
+    /**
      * A unique external identifier for the recipient's bank account.
      */
     @SerializedName("DisplayName")
@@ -57,6 +63,15 @@ public class Recipient extends EntityBase {
      */
     @SerializedName("PendingUserAction")
     private PendingUserAction pendingUserAction;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public Recipient setStatus(String status) {
+        this.status = status;
+        return this;
+    }
 
     public String getDisplayName() {
         return displayName;
