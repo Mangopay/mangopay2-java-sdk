@@ -42,4 +42,14 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     public RecipientSchema getSchema(String payoutMethodType, String recipientType, CurrencyIso currency) throws Exception {
         return this.getObject(RecipientSchema.class, "recipient_get_schema", payoutMethodType, recipientType, currency);
     }
+
+    @Override
+    public void validate(Recipient recipient, String userId) throws Exception {
+        validate(null, recipient, userId);
+    }
+
+    @Override
+    public void validate(String idempotencyKey, Recipient recipient, String userId) throws Exception {
+        this.createObject(Recipient.class, idempotencyKey, "recipient_validate", recipient, userId);
+    }
 }

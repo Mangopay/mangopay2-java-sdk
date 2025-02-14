@@ -67,6 +67,13 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(gbpSchema.get("SortCode"));
     }
 
+    @Test
+    public void validate() throws Exception {
+        createNewRecipient();
+        // if it fails, the test will crash with error
+        getApi().getRecipientApi().validate(recipient, ACTIVE_USER_NATURAL_SCA_ID);
+    }
+
     private void createNewRecipient() throws Exception {
         if (recipient == null) {
             Map<String, Object> localBankTransfer = new HashMap<>();

@@ -17,15 +17,17 @@ public interface RecipientApi {
 
     /**
      * Create a User recipient
-     * @param idempotencyKey       idempotency key for this request.
-     * @param recipient the recipient
-     * @param userId the user identifier
+     *
+     * @param idempotencyKey idempotency key for this request.
+     * @param recipient      the recipient
+     * @param userId         the user identifier
      * @return Recipient instance
      */
     Recipient create(String idempotencyKey, Recipient recipient, String userId) throws Exception;
 
     /**
      * Get a Recipient
+     *
      * @param recipientId recipient identifier
      * @return Recipient instance
      */
@@ -48,4 +50,22 @@ public interface RecipientApi {
      * @return RecipientSchema instance
      */
     RecipientSchema getSchema(String payoutMethodType, String recipientType, CurrencyIso currency) throws Exception;
+
+    /**
+     * Validate recipient data
+     *
+     * @param recipient the recipient
+     * @param userId    the user identifier
+     */
+    void validate(Recipient recipient, String userId) throws Exception;
+
+    /**
+     * Validate recipient data
+     *
+     * @param idempotencyKey idempotency key for this request.
+     * @param recipient      the recipient
+     * @param userId         the user identifier
+     */
+    void validate(String idempotencyKey, Recipient recipient, String userId) throws Exception;
+
 }
