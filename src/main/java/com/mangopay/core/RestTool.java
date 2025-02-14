@@ -411,9 +411,12 @@ public class RestTool {
 
                 this.readResponseHeaders(connection);
 
-                response = castResponseToEntity(classOfT, JsonParser.parseString(responseString).getAsJsonObject());
+                // some endpoints return 200 with empty body
+                if (!responseString.isEmpty()) {
+                    response = castResponseToEntity(classOfT, JsonParser.parseString(responseString).getAsJsonObject());
+                    if (this.debugMode) logger.info("Response object: {}", response.toString());
+                }
 
-                if (this.debugMode) logger.info("Response object: {}", response.toString());
             }
 
             this.checkResponseCode(responseString);
@@ -621,20 +624,22 @@ public class RestTool {
             }
 
             if (responseCodeIsSuccessful() && responseCode != 204) {
-
                 this.readResponseHeaders(connection);
 
-                JsonArray ja = JsonParser.parseString(responseString).getAsJsonArray();
+                // some endpoints return 200 with empty body
+                if (!responseString.isEmpty()) {
+                    JsonArray ja = JsonParser.parseString(responseString).getAsJsonArray();
 
-                for (int x = 0; x < ja.size(); x++) {
-                    JsonObject jo = ja.get(x).getAsJsonObject();
-                    T toAdd = castResponseToEntity(classOfTItem, jo);
-                    response.add(toAdd);
-                }
+                    for (int x = 0; x < ja.size(); x++) {
+                        JsonObject jo = ja.get(x).getAsJsonObject();
+                        T toAdd = castResponseToEntity(classOfTItem, jo);
+                        response.add(toAdd);
+                    }
 
-                if (this.debugMode) {
-                    logger.info("Response object: {}", response.toString());
-                    logger.info("Elements count: {}", response.size());
+                    if (this.debugMode) {
+                        logger.info("Response object: {}", response.toString());
+                        logger.info("Elements count: {}", response.size());
+                    }
                 }
             }
 
