@@ -544,6 +544,10 @@ public class RestTool {
             if (connection instanceof HttpsURLConnection) {
                 configureSslContext((HttpsURLConnection) connection);
             }
+            // Get connection timeout from config
+            connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
+            // Get read timeout from config
+            connection.setReadTimeout(this.root.getConfig().getReadTimeout());
 
             // set request method
             connection.setRequestMethod(this.requestType);
