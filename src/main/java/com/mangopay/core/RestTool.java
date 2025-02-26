@@ -28,7 +28,7 @@ public class RestTool {
     private final static int MINUTES_15 = 15;
     private final static int MINUTES_30 = 30;
     private final static int MINUTES_60 = 60;
-    private final static int ONE_DAY_IN_MINUTES = 60 * 24;
+    private final static int ONE_DAY_IN_MINUTES = MINUTES_60 * 24;
 
     // root/parent instance that holds the OAuthToken and Configuration instance
     private MangoPayApi root;
@@ -527,7 +527,7 @@ public class RestTool {
     ) {
         if (rateLimitResetValues.size() == rateLimitRemainingValues.size() && rateLimitResetValues.size() == rateLimitValues.size()) {
             if (this.debugMode) {
-                logger.info("Assigning rate limits to root");
+                logger.info("Setting rate limits");
             }
             List<RateLimit> rateLimits = new ArrayList<>();
 
