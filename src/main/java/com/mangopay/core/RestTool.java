@@ -535,7 +535,7 @@ public class RestTool {
             long currentTime = System.currentTimeMillis() / 1000;
 
             for (int i = 0; i < rateLimitResetValues.size(); i++) {
-                long numberOfMinutes = (Integer.valueOf(rateLimitResetValues.get(i)) - currentTime) / 60;
+                long numberOfMinutes = (Integer.parseInt(rateLimitResetValues.get(i)) - currentTime) / 60;
                 RateLimit rateLimit = new RateLimit();
 
                 if (numberOfMinutes <= MINUTES_15) {
