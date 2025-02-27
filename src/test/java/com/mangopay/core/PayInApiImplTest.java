@@ -644,6 +644,27 @@ public class PayInApiImplTest extends BaseTest {
 
     @Test
     public void createPayconiqWeb() throws Exception {
+        PayIn payIn = newPayconiqWebPayIn();
+        PayIn createdPayIn = api.getPayInApi().create(payIn);
+
+        assertNotNull(createdPayIn);
+        assertEqualInputProps(payIn, createdPayIn);
+        assertNotNull(createdPayIn.getPaymentDetails());
+    }
+
+    @Test
+    public void createPayconiqWebV2() throws Exception {
+        PayIn payIn = newPayconiqWebPayIn();
+        PayIn createdPayIn = api.getPayInApi().createPayconiq(newPayconiqWebPayIn(), null);
+
+        assertNotNull(createdPayIn);
+        assertEqualInputProps(payIn, createdPayIn);
+        assertNotNull(createdPayIn.getPaymentDetails());
+        assertNotNull(((PayInPaymentDetailsPayconiq) createdPayIn.getPaymentDetails()).getQrCodeUrl());
+        assertNotNull(((PayInPaymentDetailsPayconiq) createdPayIn.getPaymentDetails()).getDeepLinkUrl());
+    }
+
+    private PayIn newPayconiqWebPayIn() throws Exception {
         UserNatural john = getJohn();
         Wallet wallet = getJohnsWallet();
 
@@ -664,11 +685,7 @@ public class PayInApiImplTest extends BaseTest {
         executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
         payIn.setExecutionDetails(executionDetails);
 
-        PayIn createdPayIn = api.getPayInApi().create(payIn);
-
-        assertNotNull(createdPayIn);
-        assertEqualInputProps(payIn, createdPayIn);
-        assertNotNull(createdPayIn.getPaymentDetails());
+        return payIn;
     }
 
     @Test

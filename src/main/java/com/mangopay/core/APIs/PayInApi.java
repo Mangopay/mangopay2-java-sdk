@@ -156,4 +156,14 @@ public interface PayInApi {
      * @return {PayIn} object returned by the API
      */
     PayIn addPayPalTrackingInformation(String payInId, PayPalWebTracking trackingData) throws Exception;
+
+    /**
+     * Creates a Payconiq Web PayIn using the latest API url (payins/payment-methods/payconiq)
+     *
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @param payIn          The PayIn object to be created.
+     * @return Created PayIn object returned by API.
+     * @throws Exception
+     */
+    PayIn createPayconiq(PayIn payIn, String idempotencyKey) throws Exception;
 }

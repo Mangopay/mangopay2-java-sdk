@@ -18,6 +18,15 @@ public class PayInPaymentDetailsPayconiq extends Dto implements PayInPaymentDeta
     @SerializedName("DeepLinkURL")
     private String deepLinkUrl;
 
+
+    // v2 //
+
+    @SerializedName("StatementDescriptor")
+    private String statementDescriptor;
+
+    @SerializedName("QRCodeURL")
+    private String qrCodeUrl;
+
     public void setCountry(String country) {
         this.country = country;
     }
@@ -48,5 +57,21 @@ public class PayInPaymentDetailsPayconiq extends Dto implements PayInPaymentDeta
 
     public void setDeepLinkUrl(String deepLinkUrl) {
         this.deepLinkUrl = deepLinkUrl;
+    }
+
+    public String getStatementDescriptor() {
+        return statementDescriptor;
+    }
+
+    public void setStatementDescriptor(String statementDescriptor) {
+        this.statementDescriptor = statementDescriptor;
+    }
+
+    public String getQrCodeUrl() {
+        return qrCodeUrl;
+    }
+
+    public void setQrCodeUrl(String qrCodeUrl) {
+        this.qrCodeUrl = qrCodeUrl;
     }
 }
