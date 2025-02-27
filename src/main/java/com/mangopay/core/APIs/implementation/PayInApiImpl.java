@@ -140,4 +140,9 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     public PayIn addPayPalTrackingInformation(String payInId, PayPalWebTracking trackingData) throws Exception {
         return this.updateObject(PayIn.class, "add_tracking_info", trackingData, payInId);
     }
+
+    @Override
+    public PayIn createPayconiq(PayIn payIn, String idempotencyKey) throws Exception {
+        return this.createObject(PayIn.class, idempotencyKey, "payins_payconiqv2-web_create", payIn);
+    }
 }
