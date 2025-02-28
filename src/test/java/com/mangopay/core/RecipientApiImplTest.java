@@ -1,11 +1,9 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
-import com.mangopay.entities.subentities.IndividualRecipient;
-import com.mangopay.entities.subentities.RecipientPropertySchema;
-import com.mangopay.entities.subentities.RecipientSchema;
-import com.mangopay.entities.subentities.UserRecipients;
+import com.mangopay.entities.subentities.*;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -82,6 +80,13 @@ public class RecipientApiImplTest extends BaseTest {
         getApi().getRecipientApi().deactivate(recipientId);
         Recipient afterDeactivation = getApi().getRecipientApi().get(recipientId);
         assertEquals("DEACTIVATED", afterDeactivation.getStatus());
+    }
+
+    @Test
+    public void getPayoutMethods() throws Exception {
+        PayoutMethods payoutMethods = getApi().getRecipientApi().getPayoutMethods(CountryIso.DE, CurrencyIso.EUR);
+        assertNotNull(payoutMethods);
+        assertFalse(payoutMethods.getAvailablePayoutMethods().isEmpty());
     }
 
     private void createNewRecipient() throws Exception {

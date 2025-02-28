@@ -1,7 +1,9 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
+import com.mangopay.entities.subentities.PayoutMethods;
 import com.mangopay.entities.subentities.RecipientSchema;
 import com.mangopay.entities.subentities.UserRecipients;
 
@@ -74,4 +76,12 @@ public interface RecipientApi {
      * @param recipientId the recipient identifier
      */
     void deactivate(String recipientId) throws Exception;
+
+    /**
+     * See payout methods available to your platform by currency and country
+     *
+     * @param country  The destination country of the payout method.
+     * @param currency The currency of the payout method.
+     */
+    PayoutMethods getPayoutMethods(CountryIso country, CurrencyIso currency) throws Exception;
 }
