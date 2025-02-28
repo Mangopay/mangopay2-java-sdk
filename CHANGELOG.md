@@ -1,3 +1,9 @@
+## [2.44.3] - 2025-02-28
+
+### Fixed
+
+Added missing timeout config for doRequestList()
+
 ## [2.44.2] - 2025-02-26
 
 ### Fixed
