@@ -721,6 +721,16 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInBlikWebWithCode(String userId) throws Exception {
+        PayIn payIn = getPayInBlikWeb(userId);
+
+        ((PayInPaymentDetailsBlik) payIn.getPaymentDetails()).setCode("777365");
+        ((PayInPaymentDetailsBlik) payIn.getPaymentDetails()).setIpAddress("159.180.248.187");
+        ((PayInPaymentDetailsBlik) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayIn getNewPayInMultibancoWeb(String userId) throws Exception {
         PayIn payIn = getPayInMultibancoWeb(userId);
 
