@@ -1203,6 +1203,31 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void createBlikWebPayInWithCode() {
+        try {
+            UserNatural user = this.getJohn();
+            PayIn created = this.getNewPayInBlikWebWithCode(user.getId());
+
+            assertNotNull(created);
+            assertEquals(TransactionStatus.CREATED, created.getStatus());
+            assertEquals(PayInPaymentType.BLIK, created.getPaymentType());
+            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
+            assertNotNull(((PayInPaymentDetailsBlik) created.getPaymentDetails()).getCode());
+            assertNotNull(((PayInPaymentDetailsBlik) created.getPaymentDetails()).getIpAddress());
+            assertNotNull(((PayInPaymentDetailsBlik) created.getPaymentDetails()).getBrowserInfo());
+
+            PayIn fetched = api.getPayInApi().get(created.getId());
+            assertNotNull(fetched);
+            assertEquals(created.getId(), fetched.getId());
+            assertNotNull(((PayInPaymentDetailsBlik) fetched.getPaymentDetails()).getCode());
+            assertNotNull(((PayInPaymentDetailsBlik) fetched.getPaymentDetails()).getIpAddress());
+            assertNotNull(((PayInPaymentDetailsBlik) fetched.getPaymentDetails()).getBrowserInfo());
+        } catch (Exception ex) {
+            fail(ex.getMessage());
+        }
+    }
+
+    @Test
     public void createMultibancoWebPayIn() {
         try {
             UserNatural user = this.getJohn();
