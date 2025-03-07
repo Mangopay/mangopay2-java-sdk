@@ -289,9 +289,9 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    public void activateNaturalSca() throws Exception {
+    public void enrollNaturalSca() throws Exception {
         UserNaturalSca johnSca = this.getJohnSca();
-        ActivateUserResult result = this.api.getUserApi().activate(johnSca.getId());
+        UserEnrollmentResult result = this.api.getUserApi().enroll(johnSca.getId());
 
         assertNotNull(johnSca.getPendingUserAction().getRedirectUrl());
         assertNotNull(result.getPendingUserAction().getRedirectUrl());
