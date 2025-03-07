@@ -125,6 +125,10 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsPayconiq.setDebitedWalletId(object.get("DebitedWalletId").getAsString());
                 if (object.has("DeepLinkURL") && !object.get("DeepLinkURL").isJsonNull())
                     payInPaymentDetailsPayconiq.setDeepLinkUrl(object.get("DeepLinkURL").getAsString());
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsPayconiq.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("QRCodeURL") && !object.get("QRCodeURL").isJsonNull())
+                    payInPaymentDetailsPayconiq.setQrCodeUrl(object.get("QRCodeURL").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsPayconiq);
                 break;
             case APPLEPAY:

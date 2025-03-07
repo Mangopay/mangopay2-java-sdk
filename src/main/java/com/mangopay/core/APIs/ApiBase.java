@@ -74,6 +74,7 @@ public abstract class ApiBase {
         // pay ins URLs
         put("payins_paypal-web_create", new String[]{"/payins/paypal/web/", RequestType.POST.toString()});
         put("payins_payconiq-web_create", new String[]{"/payins/payconiq/web/", RequestType.POST.toString()});
+        put("payins_payconiqv2-web_create", new String[]{"/payins/payment-methods/payconiq/", RequestType.POST.toString()});
         put("payins_card-web_create", new String[]{"/payins/card/web/", RequestType.POST.toString()});
         put("payins_card-direct_create", new String[]{"/payins/card/direct/", RequestType.POST.toString()});
         put("payins_preauthorized-direct_create", new String[]{"/payins/preauthorized/direct/", RequestType.POST.toString()});
