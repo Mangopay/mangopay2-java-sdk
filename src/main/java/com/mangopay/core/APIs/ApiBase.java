@@ -157,7 +157,7 @@ public abstract class ApiBase {
         put("users_categorizelegals_sca", new String[]{"/sca/users/legal/%s/category", RequestType.PUT.toString()});
         put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
         put("users_regulatory", new String[]{"/users/%s/Regulatory", RequestType.GET.toString()});
-        put("users_activate_sca", new String[]{"/sca/users/%s/activation", RequestType.POST.toString()});
+        put("users_enroll_sca", new String[]{"/sca/users/%s/enrollment", RequestType.POST.toString()});
 
         put("users_emoney_year", new String[]{"/users/%s/emoney/%s", RequestType.GET.toString()});
         put("users_emoney_month", new String[]{"/users/%s/emoney/%s/%s", RequestType.GET.toString()});

@@ -7,7 +7,7 @@ import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.entities.*;
-import com.mangopay.entities.subentities.ActivateUserResult;
+import com.mangopay.entities.subentities.UserEnrollmentResult;
 
 import java.util.List;
 
@@ -136,13 +136,15 @@ public interface UserApi {
     User categorize(User user) throws Exception;
 
     /**
-     * Obtain a new SCA redirection link to authenticate a user
+     * If UserCategory is OWNER, this endpoint allows you to enroll a user in SCA.
+     * Your platform needs to retrieve the returned PendingUserAction.RedirectUrl,
+     * add an encoded returnUrl query parameter for them to be returned to after the SCA session, and redirect the user.
      *
      * @param userId User identifier
      * @return User for that User
      * @throws Exception
      */
-    ActivateUserResult activate(String userId) throws Exception;
+    UserEnrollmentResult enroll(String userId) throws Exception;
 
     /**
      * Creates bank account for user.
