@@ -96,6 +96,10 @@ public abstract class User extends EntityBase {
         return termsAndConditionsAcceptedDate;
     }
 
+    public void setTermsAndConditionsAcceptedDate(long termsAndConditionsAcceptedDate) {
+        this.termsAndConditionsAcceptedDate = termsAndConditionsAcceptedDate;
+    }
+
     public void setUserCategory(UserCategory userCategory) {
         this.userCategory = userCategory;
     }
