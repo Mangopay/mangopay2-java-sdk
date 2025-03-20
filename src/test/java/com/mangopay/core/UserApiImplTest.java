@@ -4,7 +4,6 @@ import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.*;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -238,9 +237,8 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore("Can't be tested at this moment")
     public void categorizeNaturalSca() throws Exception {
-        UserNatural johnPayer = this.getJohn(UserCategory.PAYER);
+        UserNaturalSca johnPayer = this.getJohnScaPayer(false, true);
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
 
@@ -251,7 +249,6 @@ public class UserApiImplTest extends BaseTest {
         johnPayer.setBirthday(c.getTimeInMillis() / 1000);
         johnPayer.setNationality(CountryIso.FR);
         johnPayer.setCountryOfResidence(CountryIso.FR);
-        johnPayer.setAddress(getNewAddress());
 
         // transition from PAYER to OWNER
         this.api.getUserApi().categorize(johnPayer);
@@ -261,25 +258,22 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
-    @Ignore("Can't be tested at this moment")
     public void categorizeLegalSca() throws Exception {
-        UserLegal matrixPayer = this.getMatrix(UserCategory.PAYER);
-        UserNatural john = this.getJohn();
+        UserLegalSca matrixPayer = this.getMatrixScaPayer(false, true);
 
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
+        LegalRepresentative legalRepresentative = new LegalRepresentative();
+        legalRepresentative.setBirthday(c.getTimeInMillis() / 1000);
+        legalRepresentative.setNationality(CountryIso.FR);
+        legalRepresentative.setCountryOfResidence(CountryIso.FR);
+        legalRepresentative.setEmail("john.doe.sca@sample.org");
 
         matrixPayer.setUserCategory(UserCategory.OWNER);
         matrixPayer.setTermsAndConditionsAccepted(true);
-        matrixPayer.setHeadquartersAddress(this.getNewAddress());
-        matrixPayer.setLegalRepresentativeFirstName(john.getFirstName());
-        matrixPayer.setLegalRepresentativeLastName(john.getLastName());
-        matrixPayer.setLegalRepresentativeAddress(john.getAddress());
-        matrixPayer.setLegalRepresentativeEmail(john.getEmail());
-        matrixPayer.setLegalRepresentativeBirthday(john.getBirthday());
-        matrixPayer.setLegalRepresentativeNationality(john.getNationality());
-        matrixPayer.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
-        matrixPayer.setCompanyNumber("LU12345678");
+        matrixPayer.setHeadquartersAddress(getNewAddress());
+        matrixPayer.setCompanyNumber("LU72HN11");
+        matrixPayer.setLegalRepresentative(legalRepresentative);
 
         // transition from PAYER to OWNER
         this.api.getUserApi().categorize(matrixPayer);
