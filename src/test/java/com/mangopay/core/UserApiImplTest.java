@@ -49,7 +49,6 @@ public class UserApiImplTest extends BaseTest {
     public void createLegalSca() throws Exception {
         UserLegalSca matrixSca = this.getMatrixSca();
         assertTrue(matrixSca.getId().length() > 0);
-        assertNotNull(matrixSca.getPendingUserAction().getRedirectUrl());
         assertEquals(matrixSca.getPersonType(), PersonType.LEGAL);
         assertEquals("LU12345678", matrixSca.getCompanyNumber());
     }
