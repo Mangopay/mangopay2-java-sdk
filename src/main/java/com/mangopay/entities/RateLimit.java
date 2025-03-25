@@ -7,8 +7,7 @@ public class RateLimit {
     private int callsRemaining;
     private long resetTimeSeconds;
 
-    public RateLimit(int intervalMinutes) {
-        this.intervalMinutes = intervalMinutes;
+    public RateLimit() {
     }
 
     /**
@@ -81,5 +80,10 @@ public class RateLimit {
      */
     public void setResetTimeSeconds(long resetTimeSeconds) {
         this.resetTimeSeconds = resetTimeSeconds;
+    }
+
+    public RateLimit setIntervalMinutes(int intervalMinutes) {
+        this.intervalMinutes = intervalMinutes;
+        return this;
     }
 }

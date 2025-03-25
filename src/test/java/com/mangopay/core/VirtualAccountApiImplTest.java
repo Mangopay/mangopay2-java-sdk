@@ -3,7 +3,6 @@ package com.mangopay.core;
 import com.mangopay.entities.VirtualAccount;
 import com.mangopay.entities.Wallet;
 import com.mangopay.entities.subentities.VirtualAccountAvailabilities;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -46,15 +45,13 @@ public class VirtualAccountApiImplTest extends BaseTest {
         assertEquals(1, virtualAccounts.size());
     }
 
-    // TODO
-    @Ignore("API issue. Re-enable after fix.")
     @Test
     public void getAvailabilities() throws Exception {
         VirtualAccountAvailabilities availabilities = this.api.getVirtualAccountApi().getAvailabilities();
 
         assertNotNull(availabilities);
-        assertTrue(availabilities.getCollection().getClass().isArray());
-        assertTrue(availabilities.getUserOwned().getClass().isArray());
+        assertFalse(availabilities.getCollection().isEmpty());
+        assertFalse(availabilities.getUserOwned().isEmpty());
     }
 
     @Test

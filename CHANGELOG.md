@@ -1,3 +1,30 @@
+## [2.45.0] - 2025-03-07
+
+### Added
+
+New endpoint for [strong customer authentication (SCA)](https://docs.mangopay.com/guides/users/sca) on Owner users:
+
+- [POST Enroll a User in SCA](https://docs.mangopay.com/api-reference/users/enroll-user)
+
+### Added
+
+New endpoint for Payconiq:
+
+- [POST Create a Payconiq PayIn](https://docs.mangopay.com/api-reference/payconiq/create-payconiq-payin)
+
+## [2.44.3] - 2025-02-28
+
+### Fixed
+
+Added missing timeout config for doRequestList()
+
+## [2.44.2] - 2025-02-26
+
+### Fixed
+
+Rate limiting headers interpreted dynamically based on `X-RateLimit-Reset` time and for a variable number of bucket
+values.
+
 ## [2.44.1] - 2025-02-11
 
 ### Fixed

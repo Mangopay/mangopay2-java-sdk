@@ -15,7 +15,7 @@ import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.core.serializer.BankAccountSerializer;
 import com.mangopay.core.serializer.UserSerializer;
 import com.mangopay.entities.*;
-import com.mangopay.entities.subentities.ActivateUserResult;
+import com.mangopay.entities.subentities.UserEnrollmentResult;
 import org.apache.commons.codec.binary.Base64;
 
 import java.nio.file.Files;
@@ -154,8 +154,8 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
-    public ActivateUserResult activate(String userId) throws Exception {
-        return this.createObject(ActivateUserResult.class, null, "users_activate_sca", null, userId);
+    public UserEnrollmentResult enroll(String userId) throws Exception {
+        return this.createObject(UserEnrollmentResult.class, null, "users_enroll_sca", null, userId);
     }
 
     @Override

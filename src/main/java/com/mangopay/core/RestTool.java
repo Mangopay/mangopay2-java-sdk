@@ -25,6 +25,11 @@ import java.util.regex.Matcher;
  */
 public class RestTool {
 
+    private final static int MINUTES_15 = 15;
+    private final static int MINUTES_30 = 30;
+    private final static int MINUTES_60 = 60;
+    private final static int ONE_DAY_IN_MINUTES = MINUTES_60 * 24;
+
     // root/parent instance that holds the OAuthToken and Configuration instance
     private MangoPayApi root;
 
@@ -441,50 +446,51 @@ public class RestTool {
     }
 
     private void readResponseHeaders(HttpURLConnection conn) {
-        List<RateLimit> updatedRateLimits = null;
-        for (Map.Entry<String, List<String>> k : conn.getHeaderFields().entrySet()) {
+        Set<Map.Entry<String, List<String>>> headers = conn.getHeaderFields().entrySet();
+
+        List<String> rateLimitResetValues = new ArrayList<>();
+        List<String> rateLimitRemainingValues = new ArrayList<>();
+        List<String> rateLimitValues = new ArrayList<>();
+
+        for (Map.Entry<String, List<String>> k : headers) {
+            if (this.debugMode) {
+                logger.info("Reading rate limit headers");
+            }
+
+            // prepare rate limits values
+            if (k.getKey() != null) {
+                switch (k.getKey().toLowerCase()) {
+                    case "x-ratelimit-reset": {
+                        rateLimitResetValues = k.getValue();
+                        break;
+                    }
+                    case "x-ratelimit-remaining": {
+                        rateLimitRemainingValues = k.getValue();
+                        break;
+                    }
+                    case "x-ratelimit": {
+                        rateLimitValues = k.getValue();
+                        break;
+                    }
+                    default:
+                        break;
+                }
+            }
+
             for (String v : k.getValue()) {
-
                 if (this.debugMode) logger.info("Response header: {}", k.getKey() + ":" + v);
+                if (k.getKey() == null) {
+                    continue;
+                }
 
-                if (k.getKey() == null) continue;
-
-                if (k.getKey().equals("X-RateLimit-Remaining") || k.getKey().equals("X-RateLimit-Remaining".toLowerCase())) {
-                    if (updatedRateLimits == null) {
-                        updatedRateLimits = initRateLimits();
-                    }
-                    List<String> callsRemaining = k.getValue();
-                    updatedRateLimits.get(0).setCallsRemaining(Integer.valueOf(callsRemaining.get(3)));
-                    updatedRateLimits.get(1).setCallsRemaining(Integer.valueOf(callsRemaining.get(2)));
-                    updatedRateLimits.get(2).setCallsRemaining(Integer.valueOf(callsRemaining.get(1)));
-                    updatedRateLimits.get(3).setCallsRemaining(Integer.valueOf(callsRemaining.get(0)));
-                }
-                if (k.getKey().equals("X-RateLimit") || k.getKey().equals("X-RateLimit".toLowerCase())) {
-                    if (updatedRateLimits == null) {
-                        updatedRateLimits = initRateLimits();
-                    }
-                    List<String> callsMade = k.getValue();
-                    updatedRateLimits.get(0).setCallsMade(Integer.valueOf(callsMade.get(3)));
-                    updatedRateLimits.get(1).setCallsMade(Integer.valueOf(callsMade.get(2)));
-                    updatedRateLimits.get(2).setCallsMade(Integer.valueOf(callsMade.get(1)));
-                    updatedRateLimits.get(3).setCallsMade(Integer.valueOf(callsMade.get(0)));
-                }
-                if (k.getKey().equals("X-RateLimit-Reset") || k.getKey().equals("X-RateLimit-Reset".toLowerCase())) {
-                    if (updatedRateLimits == null) {
-                        updatedRateLimits = initRateLimits();
-                    }
-                    List<String> resetTimes = k.getValue();
-                    updatedRateLimits.get(0).setResetTimeSeconds(Long.valueOf(resetTimes.get(3)));
-                    updatedRateLimits.get(1).setResetTimeSeconds(Long.valueOf(resetTimes.get(2)));
-                    updatedRateLimits.get(2).setResetTimeSeconds(Long.valueOf(resetTimes.get(1)));
-                    updatedRateLimits.get(3).setResetTimeSeconds(Long.valueOf(resetTimes.get(0)));
-                }
                 if (k.getKey().equals("X-Number-Of-Pages") || k.getKey().equals("X-Number-Of-Pages".toLowerCase())) {
                     this.pagination.setTotalPages(Integer.parseInt(v));
                 }
+
                 if (k.getKey().equals("X-Number-Of-Items") || k.getKey().equals("X-Number-Of-Items".toLowerCase())) {
                     this.pagination.setTotalItems(Integer.parseInt(v));
                 }
+
                 if (k.getKey().equals("Link") || k.getKey().equals("Link".toLowerCase())) {
                     String linkValue = v;
                     String[] links = linkValue.split(",");
@@ -508,17 +514,56 @@ public class RestTool {
                 }
             }
         }
-        if (updatedRateLimits != null) {
-            root.setRateLimits(updatedRateLimits);
-        }
+
+        setRateLimits(rateLimitResetValues, rateLimitRemainingValues, rateLimitValues);
     }
 
-    private List<RateLimit> initRateLimits() {
-        return Arrays.asList(
-                new RateLimit(15),
-                new RateLimit(30),
-                new RateLimit(60),
-                new RateLimit(24 * 60));
+    /**
+     * set rate limits:
+     * - if the X-RateLimit-Reset is not present, rate limits can't be set
+     * - if all 3 headers are present, but they don't have the same structure (size), rate limits can't be set
+     */
+    private void setRateLimits(
+        List<String> rateLimitResetValues,
+        List<String> rateLimitRemainingValues,
+        List<String> rateLimitValues
+    ) {
+        if (rateLimitResetValues.size() == rateLimitRemainingValues.size() && rateLimitResetValues.size() == rateLimitValues.size()) {
+            if (this.debugMode) {
+                logger.info("Setting rate limits");
+            }
+            List<RateLimit> rateLimits = new ArrayList<>();
+
+            // resetTime is in epoch (seconds), currentTime is in ms => convert currentTime to the same unit
+            long currentTime = System.currentTimeMillis() / 1000;
+
+            for (int i = 0; i < rateLimitResetValues.size(); i++) {
+                long numberOfMinutes = (Integer.parseInt(rateLimitResetValues.get(i)) - currentTime) / 60;
+                RateLimit rateLimit = new RateLimit();
+
+                if (numberOfMinutes <= MINUTES_15) {
+                    rateLimit.setIntervalMinutes(MINUTES_15);
+                } else if (numberOfMinutes <= MINUTES_30) {
+                    rateLimit.setIntervalMinutes(MINUTES_30);
+                } else if (numberOfMinutes <= MINUTES_60) {
+                    rateLimit.setIntervalMinutes(MINUTES_60);
+                } else if (numberOfMinutes <= ONE_DAY_IN_MINUTES) {
+                    rateLimit.setIntervalMinutes(ONE_DAY_IN_MINUTES);
+                }
+
+                rateLimit.setResetTimeSeconds(Long.parseLong(rateLimitResetValues.get(i)));
+                rateLimit.setCallsRemaining(Integer.parseInt(rateLimitRemainingValues.get(i)));
+                rateLimit.setCallsMade(Integer.parseInt(rateLimitValues.get(i)));
+
+                rateLimits.add(rateLimit);
+            }
+
+            if (!rateLimits.isEmpty()) {
+                root.setRateLimits(rateLimits);
+            }
+        } else if (this.debugMode) {
+            logger.warn("Can't set rate limits");
+        }
     }
 
     public <T> T castResponseToEntity(Class<T> classOfT, JsonObject response) {
@@ -547,6 +592,10 @@ public class RestTool {
             if (connection instanceof HttpsURLConnection) {
                 configureSslContext((HttpsURLConnection) connection);
             }
+            // Get connection timeout from config
+            connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
+            // Get read timeout from config
+            connection.setReadTimeout(this.root.getConfig().getReadTimeout());
 
             // set request method
             connection.setRequestMethod(this.requestType);

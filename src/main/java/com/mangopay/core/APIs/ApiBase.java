@@ -74,6 +74,7 @@ public abstract class ApiBase {
         // pay ins URLs
         put("payins_paypal-web_create", new String[]{"/payins/paypal/web/", RequestType.POST.toString()});
         put("payins_payconiq-web_create", new String[]{"/payins/payconiq/web/", RequestType.POST.toString()});
+        put("payins_payconiqv2-web_create", new String[]{"/payins/payment-methods/payconiq/", RequestType.POST.toString()});
         put("payins_card-web_create", new String[]{"/payins/card/web/", RequestType.POST.toString()});
         put("payins_card-direct_create", new String[]{"/payins/card/direct/", RequestType.POST.toString()});
         put("payins_preauthorized-direct_create", new String[]{"/payins/preauthorized/direct/", RequestType.POST.toString()});
@@ -157,7 +158,7 @@ public abstract class ApiBase {
         put("users_categorizelegals_sca", new String[]{"/sca/users/legal/%s/category", RequestType.PUT.toString()});
         put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
         put("users_regulatory", new String[]{"/users/%s/Regulatory", RequestType.GET.toString()});
-        put("users_activate_sca", new String[]{"/sca/users/%s/activation", RequestType.POST.toString()});
+        put("users_enroll_sca", new String[]{"/sca/users/%s/enrollment", RequestType.POST.toString()});
 
         put("users_emoney_year", new String[]{"/users/%s/emoney/%s", RequestType.GET.toString()});
         put("users_emoney_month", new String[]{"/users/%s/emoney/%s/%s", RequestType.GET.toString()});
