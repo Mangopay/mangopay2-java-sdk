@@ -1,11 +1,13 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.Pagination;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
 import com.mangopay.entities.subentities.PayoutMethods;
 import com.mangopay.entities.subentities.RecipientSchema;
-import com.mangopay.entities.subentities.UserRecipients;
+
+import java.util.List;
 
 public interface RecipientApi {
     /**
@@ -41,7 +43,7 @@ public interface RecipientApi {
      * @param userId the user identifier
      * @return UserRecipients instance
      */
-    UserRecipients getUserRecipients(String userId) throws Exception;
+    List<Recipient> getUserRecipients(String userId, Pagination pagination) throws Exception;
 
     /**
      * Get a Recipient schema
@@ -75,7 +77,7 @@ public interface RecipientApi {
      *
      * @param recipientId the recipient identifier
      */
-    void deactivate(String recipientId) throws Exception;
+    Recipient deactivate(String recipientId) throws Exception;
 
     /**
      * See payout methods available to your platform by currency and country

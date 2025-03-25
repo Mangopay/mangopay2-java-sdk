@@ -3,12 +3,14 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.RecipientApi;
+import com.mangopay.core.Pagination;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
 import com.mangopay.entities.subentities.PayoutMethods;
 import com.mangopay.entities.subentities.RecipientSchema;
-import com.mangopay.entities.subentities.UserRecipients;
+
+import java.util.List;
 
 public class RecipientApiImpl extends ApiBase implements RecipientApi {
     /**
@@ -36,8 +38,8 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     }
 
     @Override
-    public UserRecipients getUserRecipients(String userId) throws Exception {
-        return this.getObject(UserRecipients.class, "recipient_get_all", userId);
+    public List<Recipient> getUserRecipients(String userId, Pagination pagination) throws Exception {
+        return this.getList(Recipient[].class, Recipient.class, "recipient_get_all", pagination, userId);
     }
 
     @Override
@@ -56,8 +58,8 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     }
 
     @Override
-    public void deactivate(String recipientId) throws Exception {
-        this.updateObject(Recipient.class, "recipient_deactivate", new Recipient(), recipientId);
+    public Recipient deactivate(String recipientId) throws Exception {
+        return this.updateObject(Recipient.class, "recipient_deactivate", new Recipient(), recipientId);
     }
 
     @Override

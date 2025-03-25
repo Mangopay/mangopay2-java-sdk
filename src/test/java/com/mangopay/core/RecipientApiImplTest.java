@@ -3,11 +3,15 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
-import com.mangopay.entities.subentities.*;
+import com.mangopay.entities.subentities.IndividualRecipient;
+import com.mangopay.entities.subentities.PayoutMethods;
+import com.mangopay.entities.subentities.RecipientPropertySchema;
+import com.mangopay.entities.subentities.RecipientSchema;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -41,9 +45,8 @@ public class RecipientApiImplTest extends BaseTest {
 
     @Test
     public void getUserRecipients() throws Exception {
-        UserRecipients recipients = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID);
-        assertNotNull(recipients.getRecipients());
-        assertFalse(recipients.getRecipients().isEmpty());
+        List<Recipient> recipients = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID, new Pagination(0, 100));
+        assertFalse(recipients.isEmpty());
     }
 
     @Test
@@ -76,10 +79,11 @@ public class RecipientApiImplTest extends BaseTest {
     @Ignore("A recipient needs to be manually activated before testing this")
     @Test
     public void deactivateRecipient() throws Exception {
-        String recipientId = "rec_01JM2J975QESK6AB9RNBV7EZSF";
-        getApi().getRecipientApi().deactivate(recipientId);
+        String recipientId = "rec_01JQ6DFC8KG08473CY8Q7Q1ZFP";
+        Recipient deactivated = getApi().getRecipientApi().deactivate(recipientId);
         Recipient afterDeactivation = getApi().getRecipientApi().get(recipientId);
         assertEquals("DEACTIVATED", afterDeactivation.getStatus());
+        assertEquals("DEACTIVATED", deactivated.getStatus());
     }
 
     @Test
