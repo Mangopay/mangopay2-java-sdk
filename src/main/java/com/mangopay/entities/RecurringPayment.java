@@ -1,7 +1,6 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Money;
 
 public class RecurringPayment extends CreateRecurringPayment {
     @SerializedName("Id")
@@ -11,7 +10,7 @@ public class RecurringPayment extends CreateRecurringPayment {
     private String status;
 
     @SerializedName("TotalAmount")
-    private Money totalAmount;
+    private Integer totalAmount;
 
     @SerializedName("CycleNumber")
     private Integer cycleNumber;
@@ -24,7 +23,7 @@ public class RecurringPayment extends CreateRecurringPayment {
         return status;
     }
 
-    public Money getTotalAmount() {
+    public int getTotalAmount() {
         return totalAmount;
     }
 

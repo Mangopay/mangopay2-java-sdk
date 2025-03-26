@@ -76,7 +76,7 @@ public class RecipientApiImplTest extends BaseTest {
         getApi().getRecipientApi().validate(recipient, ACTIVE_USER_NATURAL_SCA_ID);
     }
 
-    @Ignore("A recipient needs to be manually activated before testing this")
+    @Ignore("A recipient needs to be manually activated before running the test")
     @Test
     public void deactivateRecipient() throws Exception {
         String recipientId = "rec_01JQ6DFC8KG08473CY8Q7Q1ZFP";
