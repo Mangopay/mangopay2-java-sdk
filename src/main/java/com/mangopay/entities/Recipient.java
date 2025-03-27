@@ -53,10 +53,16 @@ public class Recipient extends EntityBase {
     private BusinessRecipient businessRecipient;
 
     /**
-     * Each currency has specific bank details that must be provided based on the recipient's location and payout requirements.
+     * The account details if PayoutMethodType is LocalBankTransfer, depending on the Currency.
      */
     @SerializedName("LocalBankTransfer")
     private Map<String, Object> localBankTransfer;
+
+    /**
+     * The account details if PayoutMethodType is InternationalBankTransfer.
+     */
+    @SerializedName("InternationalBankTransfer")
+    private Map<String, Object> internationalBankTransfer;
 
     /**
      * Information about the action required from the user
@@ -142,6 +148,15 @@ public class Recipient extends EntityBase {
 
     public Recipient setPendingUserAction(PendingUserAction pendingUserAction) {
         this.pendingUserAction = pendingUserAction;
+        return this;
+    }
+
+    public Map<String, Object> getInternationalBankTransfer() {
+        return internationalBankTransfer;
+    }
+
+    public Recipient setInternationalBankTransfer(Map<String, Object> internationalBankTransfer) {
+        this.internationalBankTransfer = internationalBankTransfer;
         return this;
     }
 }
