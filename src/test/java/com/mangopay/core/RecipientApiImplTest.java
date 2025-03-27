@@ -45,7 +45,7 @@ public class RecipientApiImplTest extends BaseTest {
 
     @Test
     public void getUserRecipients() throws Exception {
-        List<Recipient> recipients = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID, new Pagination(0, 100));
+        List<Recipient> recipients = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID);
         assertFalse(recipients.isEmpty());
     }
 

@@ -1,6 +1,7 @@
 package com.mangopay.core.APIs;
 
 import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
@@ -43,7 +44,15 @@ public interface RecipientApi {
      * @param userId the user identifier
      * @return UserRecipients instance
      */
-    List<Recipient> getUserRecipients(String userId, Pagination pagination) throws Exception;
+    List<Recipient> getUserRecipients(String userId, Pagination pagination, Sorting sorting) throws Exception;
+
+    /**
+     * Get all recipients associated with a specific user
+     *
+     * @param userId the user identifier
+     * @return UserRecipients instance
+     */
+    List<Recipient> getUserRecipients(String userId) throws Exception;
 
     /**
      * Get a Recipient schema

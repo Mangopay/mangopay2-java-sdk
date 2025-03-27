@@ -4,6 +4,7 @@ import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.RecipientApi;
 import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
@@ -38,8 +39,13 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     }
 
     @Override
-    public List<Recipient> getUserRecipients(String userId, Pagination pagination) throws Exception {
-        return this.getList(Recipient[].class, Recipient.class, "recipient_get_all", pagination, userId);
+    public List<Recipient> getUserRecipients(String userId, Pagination pagination, Sorting sorting) throws Exception {
+        return this.getList(Recipient[].class, Recipient.class, "recipient_get_all", pagination, userId, sorting);
+    }
+
+    @Override
+    public List<Recipient> getUserRecipients(String userId) throws Exception {
+        return getUserRecipients(userId, null, null);
     }
 
     @Override
