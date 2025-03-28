@@ -22,7 +22,7 @@ public class RecipientSchema extends Dto {
     private Map<String, Map<String, RecipientPropertySchema>> localBankTransfer;
 
     @SerializedName("InternationalBankTransfer")
-    private Map<String, Map<String, RecipientPropertySchema>> internationalBankTransfer;
+    private Map<String, RecipientPropertySchema> internationalBankTransfer;
 
     @SerializedName("IndividualRecipient")
     private IndividualRecipientPropertySchema individualRecipient;
@@ -93,11 +93,11 @@ public class RecipientSchema extends Dto {
         return this;
     }
 
-    public Map<String, Map<String, RecipientPropertySchema>> getInternationalBankTransfer() {
+    public Map<String, RecipientPropertySchema> getInternationalBankTransfer() {
         return internationalBankTransfer;
     }
 
-    public RecipientSchema setInternationalBankTransfer(Map<String, Map<String, RecipientPropertySchema>> internationalBankTransfer) {
+    public RecipientSchema setInternationalBankTransfer(Map<String, RecipientPropertySchema> internationalBankTransfer) {
         this.internationalBankTransfer = internationalBankTransfer;
         return this;
     }

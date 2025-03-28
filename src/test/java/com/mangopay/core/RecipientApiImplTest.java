@@ -50,7 +50,7 @@ public class RecipientApiImplTest extends BaseTest {
     }
 
     @Test
-    public void getSchema() throws Exception {
+    public void getSchemaLocalBankTransferIndividual() throws Exception {
         RecipientSchema schema = getApi().getRecipientApi().getSchema("LocalBankTransfer",
             "Individual", CurrencyIso.GBP);
         assertNotNull(schema);
@@ -60,6 +60,8 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(schema.getPayoutMethodType());
         assertNotNull(schema.getIndividualRecipient());
         assertNotNull(schema.getLocalBankTransfer());
+        assertNull(schema.getInternationalBankTransfer());
+        assertNull(schema.getBusinessRecipient());
 
         Map<String, Map<String, RecipientPropertySchema>> localBankTransferSchema = schema.getLocalBankTransfer();
         assertNotNull(localBankTransferSchema.get(CurrencyIso.GBP.toString()));
@@ -67,6 +69,21 @@ public class RecipientApiImplTest extends BaseTest {
         Map<String, RecipientPropertySchema> gbpSchema = localBankTransferSchema.get(CurrencyIso.GBP.toString());
         assertNotNull(gbpSchema.get("AccountNumber"));
         assertNotNull(gbpSchema.get("SortCode"));
+    }
+
+    @Test
+    public void getSchemaInternationalBankTransferBusiness() throws Exception {
+        RecipientSchema schema = getApi().getRecipientApi().getSchema("InternationalBankTransfer",
+            "Business", CurrencyIso.GBP);
+        assertNotNull(schema);
+        assertNotNull(schema.getDisplayName());
+        assertNotNull(schema.getCurrency());
+        assertNotNull(schema.getRecipientType());
+        assertNotNull(schema.getPayoutMethodType());
+        assertNotNull(schema.getInternationalBankTransfer());
+        assertNotNull(schema.getBusinessRecipient());
+        assertNull(schema.getIndividualRecipient());
+        assertNull(schema.getLocalBankTransfer());
     }
 
     @Test
