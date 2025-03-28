@@ -11,7 +11,7 @@ public class IndividualRecipientPropertySchema extends Dto {
     private RecipientPropertySchema lastName;
 
     @SerializedName("Address")
-    private RecipientAddressPropertySchema addressPropertySchema;
+    private RecipientAddressPropertySchema address;
 
     public RecipientPropertySchema getFirstName() {
         return firstName;
@@ -31,12 +31,12 @@ public class IndividualRecipientPropertySchema extends Dto {
         return this;
     }
 
-    public RecipientAddressPropertySchema getAddressPropertySchema() {
-        return addressPropertySchema;
+    public RecipientAddressPropertySchema getAddress() {
+        return address;
     }
 
-    public IndividualRecipientPropertySchema setAddressPropertySchema(RecipientAddressPropertySchema addressPropertySchema) {
-        this.addressPropertySchema = addressPropertySchema;
+    public IndividualRecipientPropertySchema setAddress(RecipientAddressPropertySchema address) {
+        this.address = address;
         return this;
     }
 }
