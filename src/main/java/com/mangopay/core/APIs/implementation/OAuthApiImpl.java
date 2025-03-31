@@ -54,7 +54,7 @@ public class OAuthApiImpl extends ApiBase implements OAuthApi {
 
         String javaVersion = System.getProperty("java.version");
         javaVersion = javaVersion != null ? javaVersion : "unknown";
-        String userAgentHeader = String.format("MangoPay-SDK/%s (Java/%s)", getRoot().getConfig().getVersion(), javaVersion);
+        String userAgentHeader = String.format("Mangopay-SDK/%s (Java/%s)", getRoot().getConfig().getVersion(), javaVersion);
         rest.addRequestHttpHeader("User-Agent", userAgentHeader);
         if(root.getConfig().isUkHeaderFlag()){
             rest.addRequestHttpHeader("x-tenant-id", "uk");

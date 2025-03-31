@@ -729,7 +729,7 @@ public class RestTool {
 
         String javaVersion = System.getProperty("java.version");
         javaVersion = javaVersion != null ? javaVersion : "unknown";
-        String userAgentHeader = String.format("MangoPay-SDK/%s (Java/%s)", root.getConfig().getVersion(), javaVersion);
+        String userAgentHeader = String.format("Mangopay-SDK/%s (Java/%s)", root.getConfig().getVersion(), javaVersion);
 
         httpHeaders.put("User-Agent", userAgentHeader);
         if(this.root.getConfig().isUkHeaderFlag()) {
