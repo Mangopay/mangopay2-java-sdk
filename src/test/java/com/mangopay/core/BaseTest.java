@@ -27,6 +27,7 @@ public abstract class BaseTest {
     private static UserLegal MATRIX;
     private static UserLegal MATRIX_PAYER;
     private static UserLegalSca MATRIX_SCA;
+    private static UserLegalSca MATRIX_SCA_PAYER;
     private static UboDeclaration MATRIX_UBO_DECLARATION;
     private static Ubo MATRIX_UBO;
     private static BankAccount JOHNS_ACCOUNT;
@@ -254,6 +255,7 @@ public abstract class BaseTest {
             user.setEmail("john.doe.sca@sample.org");
             user.setTermsAndConditionsAccepted(termsAccepted);
             user.setUserCategory(UserCategory.PAYER);
+            user.setAddress(getNewAddress());
 
             BaseTest.JOHN_SCA_PAYER = (UserNaturalSca) this.api.getUserApi().create(user);
         }
@@ -345,6 +347,32 @@ public abstract class BaseTest {
             BaseTest.MATRIX_SCA = (UserLegalSca) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX_SCA;
+    }
+
+    protected UserLegalSca getMatrixScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.MATRIX_SCA_PAYER == null || recreate) {
+            UserLegalSca user = new UserLegalSca();
+
+            Calendar c = Calendar.getInstance();
+            c.set(1975, 12, 21, 0, 0, 0);
+            LegalRepresentative legalRepresentative = new LegalRepresentative();
+            legalRepresentative.setFirstName("John");
+            legalRepresentative.setLastName("Doe SCA");
+            legalRepresentative.setEmail("john.doe.sca@sample.org");
+            legalRepresentative.setPhoneNumber("+33611111111");
+            legalRepresentative.setPhoneNumberCountry(CountryIso.FR);
+
+            user.setName("MartixSampleOrg");
+            user.setLegalPersonType(LegalPersonType.BUSINESS);
+            user.setUserCategory(UserCategory.PAYER);
+            user.setEmail("john.doe@sample.org");
+            user.setLegalRepresentative(legalRepresentative);
+            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setLegalRepresentativeAddress(getNewAddress());
+
+            BaseTest.MATRIX_SCA_PAYER = (UserLegalSca) this.api.getUserApi().create(user);
+        }
+        return BaseTest.MATRIX_SCA_PAYER;
     }
 
     /**
