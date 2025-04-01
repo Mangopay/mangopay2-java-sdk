@@ -205,6 +205,12 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 PayInPaymentDetailsBlik payInPaymentDetailsBlik = new PayInPaymentDetailsBlik();
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsBlik.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("Code") && !object.get("Code").isJsonNull())
+                    payInPaymentDetailsBlik.setCode(object.get("Code").getAsString());
+                if (object.has("IpAddress") && !object.get("IpAddress").isJsonNull())
+                    payInPaymentDetailsBlik.setIpAddress(object.get("IpAddress").getAsString());
+                if (object.has("BrowserInfo") && !object.get("BrowserInfo").isJsonNull())
+                    payInPaymentDetailsBlik.setBrowserInfo((BrowserInfo) context.deserialize(object.get("BrowserInfo"), BrowserInfo.class));
                 payIn.setPaymentDetails(payInPaymentDetailsBlik);
                 break;
             case MULTIBANCO:
