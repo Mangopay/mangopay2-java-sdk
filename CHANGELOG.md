@@ -1,3 +1,19 @@
+## [2.46.0] - 2025-04-01
+
+### Changed
+
+- User-Agent Header value standardized on format: User-Agent: Mangopay-SDK/`SDKVersion` (`Language`/`LanguageVersion`)
+
+### Fixed
+
+- Replaced int property with Money property for recurring payin registration `TotalAmount`
+- Fixed tests for categorize SCA users endpoint
+
+### Added
+
+- Support
+  for [POST Create a BLIK PayIn (with code)](https://docs.mangopay.com/api-reference/blik/create-blik-payin-with-code)
+
 ## [2.45.0] - 2025-03-07
 
 ### Added
