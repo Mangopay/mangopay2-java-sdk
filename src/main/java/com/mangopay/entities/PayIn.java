@@ -160,6 +160,10 @@ public class PayIn extends Transaction {
                                     put("PaymentDetails", PayInPaymentDetailsBancontact.class);
                                 }}
                         );
+                put("PAY_BY_BANK", new HashMap<String, Class<?>>() {{
+                        put("PaymentDetails", PayInPaymentDetailsPayByBank.class);
+                    }}
+                );
                         // ...and more in future...
                     }}
             );
