@@ -18,6 +18,12 @@ public class RecipientSchema extends Dto {
     @SerializedName("PayoutMethodType")
     private RecipientPropertySchema payoutMethodType;
 
+    @SerializedName("RecipientScope")
+    private RecipientPropertySchema recipientScope;
+
+    @SerializedName("Tag")
+    private RecipientPropertySchema tag;
+
     @SerializedName("LocalBankTransfer")
     private Map<String, Map<String, RecipientPropertySchema>> localBankTransfer;
 
@@ -99,6 +105,24 @@ public class RecipientSchema extends Dto {
 
     public RecipientSchema setInternationalBankTransfer(Map<String, RecipientPropertySchema> internationalBankTransfer) {
         this.internationalBankTransfer = internationalBankTransfer;
+        return this;
+    }
+
+    public RecipientPropertySchema getRecipientScope() {
+        return recipientScope;
+    }
+
+    public RecipientSchema setRecipientScope(RecipientPropertySchema recipientScope) {
+        this.recipientScope = recipientScope;
+        return this;
+    }
+
+    public RecipientPropertySchema getTag() {
+        return tag;
+    }
+
+    public RecipientSchema setTag(RecipientPropertySchema tag) {
+        this.tag = tag;
         return this;
     }
 }

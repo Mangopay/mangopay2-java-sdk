@@ -58,6 +58,8 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(schema.getCurrency());
         assertNotNull(schema.getRecipientType());
         assertNotNull(schema.getPayoutMethodType());
+        assertNotNull(schema.getRecipientScope());
+        assertNotNull(schema.getTag());
         assertNotNull(schema.getIndividualRecipient());
         assertNotNull(schema.getLocalBankTransfer());
         assertNull(schema.getInternationalBankTransfer());
@@ -79,6 +81,8 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(schema.getDisplayName());
         assertNotNull(schema.getCurrency());
         assertNotNull(schema.getRecipientType());
+        assertNotNull(schema.getRecipientScope());
+        assertNotNull(schema.getTag());
         assertNotNull(schema.getPayoutMethodType());
         assertNotNull(schema.getInternationalBankTransfer());
         assertNotNull(schema.getBusinessRecipient());
