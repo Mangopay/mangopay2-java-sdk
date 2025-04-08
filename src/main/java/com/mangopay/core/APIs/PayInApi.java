@@ -80,6 +80,26 @@ public interface PayInApi {
      */
     RecurringPayIn createRecurringPayInMIT(String idempotencyKey, RecurringPayInMIT cit) throws Exception;
 
+    /**
+     * Creates a new Recurring PayPal PayIn CIT
+     *
+     * @param idempotencyKey Idempotency key for this request.
+     * @param cit            The RecurringPayPalPayInCIT object to be created
+     * @return Instance of RecurringPayIn
+     * @throws Exception
+     */
+    RecurringPayIn createRecurringPayPalPayInCIT(String idempotencyKey, RecurringPayPalPayInCIT cit) throws Exception;
+
+    /**
+     * Creates a new Recurring PayPal PayIn MIT
+     *
+     * @param idempotencyKey Idempotency key for this request.
+     * @param mit            The RecurringPayPalPayInMIT object to be created
+     * @return Instance of RecurringPayIn
+     * @throws Exception
+     */
+    RecurringPayIn createRecurringPayPalPayInMIT(String idempotencyKey, RecurringPayPalPayInMIT mit) throws Exception;
+
 
     /**
      * Creates refund for PayIn object.

@@ -588,6 +588,22 @@ public abstract class BaseTest {
         return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
     }
 
+    protected RecurringPayment createJohnsRecurringPayPalPayInRegistration() throws Exception {
+        Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
+        UserNatural john = this.getJohn();
+
+        CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+        createRecurringPayment.setAuthorId(john.getId());
+        createRecurringPayment.setCreditedWalletId(data.get("walletId"));
+        createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(1000).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setFirstTransactionFees(new Money().setAmount(0).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setShipping(this.getNewShipping());
+        createRecurringPayment.setBilling(this.getNewBilling());
+        createRecurringPayment.setPaymentType(PayInPaymentType.PAYPAL);
+
+        return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
+    }
+
     /**
      * Creates wallet for John, if not created yet, or returns an existing one.
      *
