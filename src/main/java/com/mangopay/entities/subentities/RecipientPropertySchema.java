@@ -21,6 +21,12 @@ public class RecipientPropertySchema extends Dto {
     @SerializedName("AllowedValues")
     private List<String> allowedValues;
 
+    @SerializedName("Label")
+    private String label;
+
+    @SerializedName("EndUserDisplay")
+    private String endUserDisplay;
+
     public Boolean getRequired() {
         return required;
     }
@@ -63,6 +69,24 @@ public class RecipientPropertySchema extends Dto {
 
     public RecipientPropertySchema setAllowedValues(List<String> allowedValues) {
         this.allowedValues = allowedValues;
+        return this;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public RecipientPropertySchema setLabel(String label) {
+        this.label = label;
+        return this;
+    }
+
+    public String getEndUserDisplay() {
+        return endUserDisplay;
+    }
+
+    public RecipientPropertySchema setEndUserDisplay(String endUserDisplay) {
+        this.endUserDisplay = endUserDisplay;
         return this;
     }
 }
