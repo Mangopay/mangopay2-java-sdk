@@ -32,6 +32,8 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(recipient.getIndividualRecipient());
         assertNotNull(recipient.getLocalBankTransfer());
         assertNotNull(recipient.getPendingUserAction());
+        assertNotNull(recipient.getRecipientScope());
+        assertNotNull(recipient.getUserId());
     }
 
     @Test

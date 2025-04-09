@@ -41,6 +41,26 @@ public class Recipient extends EntityBase {
     private CurrencyIso currency;
 
     /**
+     * The unique identifier of the user.
+     */
+    @SerializedName("UserId")
+    private String userId;
+
+    /**
+     * The scope of the recipient:
+     *
+     * <p>- PAYOUT – Usable for payouts and in pay-in use cases.
+     * A PAYOUT recipient can only be created by a user with the UserCategory OWNER and requires SCA.
+     * You need to use the returned PendingUserAction.RedirectUrl value, adding your encoded returnUrl as a
+     * query parameter, to redirect the user to the hosted SCA session so they can complete the necessary steps.</p>
+     *
+     * <p>- PAYIN - Usable for pay-in use cases only, such as direct debit and refunds using payouts.
+     * A PAYIN recipient can be created by a user with the UserCategory PAYER or OWNER, and does not require SCA.</p>
+     */
+    @SerializedName("RecipientScope")
+    private String recipientScope;
+
+    /**
      * Individual recipient
      */
     @SerializedName("IndividualRecipient")
@@ -157,6 +177,24 @@ public class Recipient extends EntityBase {
 
     public Recipient setInternationalBankTransfer(Map<String, Object> internationalBankTransfer) {
         this.internationalBankTransfer = internationalBankTransfer;
+        return this;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public Recipient setUserId(String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public String getRecipientScope() {
+        return recipientScope;
+    }
+
+    public Recipient setRecipientScope(String recipientScope) {
+        this.recipientScope = recipientScope;
         return this;
     }
 }
