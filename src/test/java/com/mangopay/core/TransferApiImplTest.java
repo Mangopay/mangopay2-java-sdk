@@ -40,12 +40,12 @@ public class TransferApiImplTest extends BaseTest {
 //        UserNaturalSca userNaturalSca = this.getJohnScaOwner(false, false);
         Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000, CurrencyIso.EUR);
 
-        Transfer pendingUserActionTransfer = this.getNewTransferScaUserPresent(3001, debitedWallet.getId(),
+        Transfer pendingUserActionTransfer = this.getNewTransferSca(3001, debitedWallet.getId(),
             VALID_USER_NATURAL_SCA_ID, "USER_PRESENT");
         assertEquals(TransactionStatus.CREATED, pendingUserActionTransfer.getStatus());
         assertNotNull(pendingUserActionTransfer.getPendingUserAction());
 
-        Transfer noPendingUserActionTransfer = this.getNewTransferScaUserPresent(2000, debitedWallet.getId(),
+        Transfer noPendingUserActionTransfer = this.getNewTransferSca(2000, debitedWallet.getId(),
             VALID_USER_NATURAL_SCA_ID, "USER_PRESENT");
         assertEquals(TransactionStatus.SUCCEEDED, noPendingUserActionTransfer.getStatus());
         assertNull(noPendingUserActionTransfer.getPendingUserAction());
@@ -56,7 +56,7 @@ public class TransferApiImplTest extends BaseTest {
 //        UserNaturalSca userNaturalSca = this.getJohnScaOwner(false, false);
         Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000, CurrencyIso.EUR);
 
-        Transfer pendingUserActionTransfer = this.getNewTransferScaUserPresent(3001, debitedWallet.getId(),
+        Transfer pendingUserActionTransfer = this.getNewTransferSca(3001, debitedWallet.getId(),
             VALID_USER_NATURAL_SCA_ID, "USER_NOT_PRESENT");
         assertEquals(TransactionStatus.SUCCEEDED, pendingUserActionTransfer.getStatus());
         assertNull(pendingUserActionTransfer.getPendingUserAction());

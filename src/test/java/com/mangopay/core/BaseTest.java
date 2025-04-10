@@ -1313,7 +1313,7 @@ public abstract class BaseTest {
         return this.api.getTransferApi().create(transfer);
     }
 
-    protected Transfer getNewTransferScaUserPresent(int amount, String walletWithMoneyId, String userNaturalScaId, String scaContext) throws Exception {
+    protected Transfer getNewTransferSca(int amount, String walletWithMoneyId, String userNaturalScaId, String scaContext) throws Exception {
         UserLegalSca userLegalSca = this.getMatrixSca(UserCategory.OWNER, false, true);
 
         Wallet creditedWallet = new Wallet();
