@@ -14,6 +14,7 @@ public class TransferSerializer implements JsonSerializer<Transfer> {
         JsonObject object = SerializedTransaction.getTransactionObject(src, context);
         object.add("DebitedWalletId", context.serialize(src.getDebitedWalletId()));
         object.add("CreditedWalletId", context.serialize(src.getCreditedWalletId()));
+        object.add("ScaContext", context.serialize(src.getScaContext()));
         return object;
     }
 }
