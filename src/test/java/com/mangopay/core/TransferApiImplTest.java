@@ -1,6 +1,5 @@
 package com.mangopay.core;
 
-import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.TransactionNature;
 import com.mangopay.core.enumerations.TransactionStatus;
 import com.mangopay.core.enumerations.TransactionType;
@@ -38,7 +37,7 @@ public class TransferApiImplTest extends BaseTest {
     @Test
     public void createTransferScaUserPresent() throws Exception {
 //        UserNaturalSca userNaturalSca = this.getJohnScaOwner(false, false);
-        Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000, CurrencyIso.EUR);
+        Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000);
 
         Transfer pendingUserActionTransfer = this.getNewTransferSca(3001, debitedWallet.getId(),
             VALID_USER_NATURAL_SCA_ID, "USER_PRESENT");
@@ -54,7 +53,7 @@ public class TransferApiImplTest extends BaseTest {
     @Test
     public void createTransferScaUserNotPresent() throws Exception {
 //        UserNaturalSca userNaturalSca = this.getJohnScaOwner(false, false);
-        Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000, CurrencyIso.EUR);
+        Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000);
 
         Transfer pendingUserActionTransfer = this.getNewTransferSca(3001, debitedWallet.getId(),
             VALID_USER_NATURAL_SCA_ID, "USER_NOT_PRESENT");

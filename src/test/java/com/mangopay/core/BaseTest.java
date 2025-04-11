@@ -601,62 +601,59 @@ public abstract class BaseTest {
     protected Wallet getJohnsWalletWithMoney(int amount) throws Exception {
         if (BaseTest.JOHNS_WALLET_WITH_MONEY == null) {
             UserNatural john = this.getJohn();
-            BaseTest.JOHNS_WALLET_WITH_MONEY = createWalletForUser(john.getId(), CurrencyIso.EUR);
-            Card card = getCardWithMoney(john.getId(), CurrencyIso.EUR);
-            createPayInCardDirect(john.getId(), BaseTest.JOHNS_WALLET_WITH_MONEY.getId(), amount, CurrencyIso.EUR, card);
+            BaseTest.JOHNS_WALLET_WITH_MONEY = createWalletForUser(john.getId());
+            CardRegistration cardRegistration = getNewCardRegistration(john.getId());
+            createPayInCardDirect(john.getId(), BaseTest.JOHNS_WALLET_WITH_MONEY.getId(), amount, cardRegistration.getCardId());
         }
 
         return this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
     }
 
-    protected Wallet getJohnsScaWalletWithMoney(String userId, int amount, CurrencyIso currency) throws Exception {
+    protected Wallet getJohnsScaWalletWithMoney(String userId, int amount) throws Exception {
         if (BaseTest.JOHNS_SCA_WALLET_WITH_MONEY == null) {
-            BaseTest.JOHNS_SCA_WALLET_WITH_MONEY = createWalletForUser(userId, currency);
-            Card card = getCardWithMoney(userId, currency);
-            createPayInCardDirect(userId, BaseTest.JOHNS_SCA_WALLET_WITH_MONEY.getId(), amount, currency, card);
+            BaseTest.JOHNS_SCA_WALLET_WITH_MONEY = createWalletForUser(userId);
+            CardRegistration cardRegistration = getNewCardRegistration(userId);
+            createPayInCardDirect(userId, BaseTest.JOHNS_SCA_WALLET_WITH_MONEY.getId(), amount, cardRegistration.getCardId());
         }
         return this.api.getWalletApi().get(BaseTest.JOHNS_SCA_WALLET_WITH_MONEY.getId());
     }
 
-    private Wallet createWalletForUser(String userId, CurrencyIso currency) throws Exception {
+    private Wallet createWalletForUser(String userId) throws Exception {
         Wallet wallet = new Wallet();
         wallet.setOwners(new ArrayList<String>());
         wallet.getOwners().add(userId);
-        wallet.setCurrency(currency);
+        wallet.setCurrency(CurrencyIso.EUR);
         wallet.setDescription("WALLET IN EUR WITH MONEY");
         return this.api.getWalletApi().create(wallet);
     }
 
-    private Card getCardWithMoney(String userId, CurrencyIso currency) throws Exception {
+    private CardRegistration getNewCardRegistration(String userId) throws Exception {
         CardRegistration cardRegistration = new CardRegistration();
         cardRegistration.setUserId(userId);
-        cardRegistration.setCurrency(currency);
+        cardRegistration.setCurrency(CurrencyIso.EUR);
         cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
 
         cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData(cardRegistration));
-        cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
-
-        return this.api.getCardApi().get(cardRegistration.getCardId());
+        return this.api.getCardRegistrationApi().update(cardRegistration);
     }
 
-    private void createPayInCardDirect(String userId, String walletId, int amount, CurrencyIso currency, Card card) throws Exception {
+    private void createPayInCardDirect(String userId, String walletId, int amount, String cardId) throws Exception {
         PayIn payIn = new PayIn();
         payIn.setCreditedWalletId(walletId);
         payIn.setAuthorId(userId);
         payIn.setDebitedFunds(new Money());
         payIn.getDebitedFunds().setAmount(amount);
-        payIn.getDebitedFunds().setCurrency(currency);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
         payIn.setFees(new Money());
         payIn.getFees().setAmount(0);
-        payIn.getFees().setCurrency(currency);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
 
         payIn.setPaymentDetails(new PayInPaymentDetailsCard());
-        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
         ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
 
         payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
-        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
+        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(cardId);
         ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
 
         this.api.getPayInApi().create(payIn);
