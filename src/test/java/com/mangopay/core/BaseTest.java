@@ -794,6 +794,11 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInSwishWeb(String userId, String walletId) throws Exception {
+        PayIn payIn = getPayInSwishWeb(userId, walletId);
+        return this.api.getPayInApi().create(payIn);
+    }
+
     private PayIn getPayInCardDirect(String userId) throws Exception {
 
         Wallet wallet = this.getJohnsWalletWithMoney();
@@ -1208,6 +1213,34 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(payInExecutionDetailsWeb);
 
         payIn.setTag("My Twint Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInSwishWeb(String userId, String walletId) throws Exception {
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(walletId);
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(100);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.SEK);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.SEK);
+
+        payIn.setPaymentDetails(new PayInPaymentDetailsSwish());
+        ((PayInPaymentDetailsSwish) payIn.getPaymentDetails()).setStatementDescriptor("Swish");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+        payIn.setTag("My Swish Tag");
         return payIn;
     }
 
