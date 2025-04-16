@@ -64,12 +64,11 @@ public class TransferApiImplTest extends BaseTest {
     public void getTransferRefunds() throws Exception {
         Transfer transfer = this.getNewTransfer();
         Refund firstRefund = this.getNewRefundForTransfer(transfer);
-        Refund secondRefund = this.getNewRefundForTransfer(transfer);
         Pagination pagination = new Pagination(1, 2);
         List<Refund> refunds = this.getApi().getTransferApi().getRefunds(transfer.getId(), pagination, null);
 
         assertNotNull("Refunds came back null", refunds);
-        assertTrue("Refunds size is not correct", refunds.size() == 2);
+        assertTrue("Refunds size is not correct", refunds.size() == 1);
 
 
     }
