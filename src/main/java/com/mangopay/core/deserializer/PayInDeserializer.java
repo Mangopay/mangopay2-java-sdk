@@ -290,6 +290,26 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsSwish.setPaymentFlow(object.get("PaymentFlow").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsSwish);
                 break;
+            case PAY_BY_BANK:
+                PayInPaymentDetailsPayByBank payInPaymentDetailsPayByBank = new PayInPaymentDetailsPayByBank();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsPayByBank.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("Country") && !object.get("Country").isJsonNull())
+                    payInPaymentDetailsPayByBank.setCountry((CountryIso) context.deserialize(object.get("Country"), CountryIso.class));
+                if (object.has("BIC") && !object.get("BIC").isJsonNull())
+                    payInPaymentDetailsPayByBank.setBic(object.get("BIC").getAsString());
+                if (object.has("IBAN") && !object.get("IBAN").isJsonNull())
+                    payInPaymentDetailsPayByBank.setIban(object.get("IBAN").getAsString());
+                if (object.has("PaymentFlow") && !object.get("PaymentFlow").isJsonNull())
+                    payInPaymentDetailsPayByBank.setPaymentFlow(object.get("PaymentFlow").getAsString());
+                if (object.has("BankName") && !object.get("BankName").isJsonNull())
+                    payInPaymentDetailsPayByBank.setBankName(object.get("BankName").getAsString());
+                if (object.has("Scheme") && !object.get("Scheme").isJsonNull())
+                    payInPaymentDetailsPayByBank.setScheme(object.get("Scheme").getAsString());
+                if (object.has("ProcessingStatus") && !object.get("ProcessingStatus").isJsonNull())
+                    payInPaymentDetailsPayByBank.setProcessingStatus(object.get("ProcessingStatus").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsPayByBank);
+                break;
             default:
                 return null;
         }

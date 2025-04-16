@@ -107,5 +107,10 @@ public enum PayInPaymentType {
     /**
      * SWISH payment type
      */
-    SWISH
+    SWISH,
+
+    /**
+     * PAY_BY_BANK payment type
+     */
+    PAY_BY_BANK
 }

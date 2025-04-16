@@ -140,6 +140,10 @@ public abstract class BaseTest {
         return getJohnOwner(false, false);
     }
 
+    protected UserNatural getNewJohn() throws Exception {
+        return getJohnOwner(true, true);
+    }
+
     protected UserNatural getJohn(UserCategory userCategory) throws Exception {
         switch (userCategory) {
             case OWNER:
@@ -765,6 +769,12 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInPayByBankWeb(String userId) throws Exception {
+        PayIn payIn = getPayInPayByBankWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayIn getNewPayInKlarnaWeb(String userId) throws Exception {
         PayIn payIn = getPayInKlarnaWeb(userId);
 
@@ -1128,6 +1138,43 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(executionDetails);
 
         payIn.setTag("My MULTIBANCO Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInPayByBankWeb(String userId) throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(500);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        PayInPaymentDetailsPayByBank paymentDetails = new PayInPaymentDetailsPayByBank();
+        paymentDetails.setStatementDescriptor("Example123");
+        paymentDetails.setCountry(CountryIso.DE);
+        paymentDetails.setIban("DE03500105177564668331");
+        paymentDetails.setBic("AACSDE33");
+        paymentDetails.setScheme("SEPA_INSTANT_CREDIT_TRANSFER");
+        paymentDetails.setBankName("de-demobank-open-banking-embedded-templates");
+        paymentDetails.setPaymentFlow("WEB");
+        payIn.setPaymentDetails(paymentDetails);
+
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://example.com");
+        executionDetails.setCulture(CultureCode.EN);
+        payIn.setExecutionDetails(executionDetails);
+        payIn.setTag("PayByBank Java");
+
         return payIn;
     }
 

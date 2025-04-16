@@ -104,6 +104,7 @@ public abstract class ApiBase {
         put("payins_bancontact-web_create", new String[]{"/payins/payment-methods/bancontact", RequestType.POST.toString()});
         put("payins_twint-web_create", new String[]{"/payins/payment-methods/twint", RequestType.POST.toString()});
         put("payins_swish-web_create", new String[]{"/payins/payment-methods/swish", RequestType.POST.toString()});
+        put("payins_paybybank-web_create", new String[]{"/payins/payment-methods/openbanking", RequestType.POST.toString()});
         put("add_tracking_info", new String[]{"/payins/%s/trackings", RequestType.PUT.toString()});
 
         put("payment_method-metadata", new String[]{"/payment-methods/metadata", RequestType.POST.toString()});
