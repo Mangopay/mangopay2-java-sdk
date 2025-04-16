@@ -278,6 +278,18 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsTwint.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsTwint);
                 break;
+            case SWISH:
+                PayInPaymentDetailsSwish payInPaymentDetailsSwish = new PayInPaymentDetailsSwish();
+                if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
+                    payInPaymentDetailsSwish.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
+                if (object.has("DeepLinkURL") && !object.get("DeepLinkURL").isJsonNull())
+                    payInPaymentDetailsSwish.setDeepLinkUrl(object.get("DeepLinkURL").getAsString());
+                if (object.has("QRCodeURL") && !object.get("QRCodeURL").isJsonNull())
+                    payInPaymentDetailsSwish.setQrCodeUrl(object.get("QRCodeURL").getAsString());
+                if (object.has("PaymentFlow") && !object.get("PaymentFlow").isJsonNull())
+                    payInPaymentDetailsSwish.setPaymentFlow(object.get("PaymentFlow").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsSwish);
+                break;
             case PAY_BY_BANK:
                 PayInPaymentDetailsPayByBank payInPaymentDetailsPayByBank = new PayInPaymentDetailsPayByBank();
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
