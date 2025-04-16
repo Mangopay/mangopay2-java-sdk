@@ -102,9 +102,13 @@ public class RecipientApiImplTest extends BaseTest {
     @Ignore("A recipient needs to be manually activated before running the test")
     @Test
     public void deactivateRecipient() throws Exception {
-        String recipientId = "rec_01JQ6DFC8KG08473CY8Q7Q1ZFP";
+        String recipientId = "rec_01JRYVYE0BSX25DHHP2K803PG9";
+        Recipient beforeDeactivation = getApi().getRecipientApi().get(recipientId);
+        assertEquals("ACTIVE", beforeDeactivation.getStatus());
+
         Recipient deactivated = getApi().getRecipientApi().deactivate(recipientId);
         Recipient afterDeactivation = getApi().getRecipientApi().get(recipientId);
+
         assertEquals("DEACTIVATED", afterDeactivation.getStatus());
         assertEquals("DEACTIVATED", deactivated.getStatus());
     }

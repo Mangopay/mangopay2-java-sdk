@@ -65,7 +65,10 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
 
     @Override
     public Recipient deactivate(String recipientId) throws Exception {
-        return this.updateObject(Recipient.class, "recipient_deactivate", new Recipient(), recipientId);
+        Recipient recipient = new Recipient();
+        recipient.setStatus("DEACTIVATED");
+        recipient.setId(recipientId);
+        return this.updateObject(Recipient.class, "recipient_deactivate", recipient);
     }
 
     @Override
