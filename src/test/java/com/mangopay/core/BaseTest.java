@@ -1173,33 +1173,8 @@ public abstract class BaseTest {
         executionDetails.setReturnUrl("http://example.com");
         executionDetails.setCulture(CultureCode.EN);
         payIn.setExecutionDetails(executionDetails);
-
-        /*
-        {
-    "Tag": "Created using the Mangopay API Postman collection",
-    "AuthorId": "user_m_01JM2D5H6C117W88ZDH61FDTA2",
-    "DebitedFunds": {
-      "Currency": "EUR",
-        "Amount": 1000
-    },
-    "Fees": {
-      "Currency": "EUR",
-        "Amount": 0
-    },
-    "CreditedWalletId": "wlt_m_01JM2D5R22PRP33Z5FG33V4N11",
-    "Country": "DE",
-    "ReturnURL": "http://example.com",
-    "IBAN": "DE03500105177564668331",
-    "BIC": "AACSDE33",
-    "Scheme": "SEPA_INSTANT_CREDIT_TRANSFER",
-    "BankName": "de-demobank-open-banking-embedded-templates",
-    "Culture": "EN",
-    "PaymentFlow": "WEB",
-    "StatementDescriptor": "Example123"
-}
-         */
-
         payIn.setTag("PayByBank Java");
+
         return payIn;
     }
 
