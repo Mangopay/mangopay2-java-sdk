@@ -1,5 +1,6 @@
 package com.mangopay.core;
 
+import com.mangopay.core.enumerations.UserCategory;
 import com.mangopay.entities.Mandate;
 import com.mangopay.entities.Transfer;
 import com.mangopay.entities.UserNatural;
@@ -71,7 +72,7 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForUser() throws Exception {
-        UserNatural user = this.getJohnOwner(false, false);
+        UserNatural user = this.getJohn(UserCategory.OWNER, false, false);
         Mandate mandateCreated = this.createMandate(false);
 
         List<Mandate> mandates = this.api.getMandateApi().getForUser(user.getId(), new FilterMandates(), new Pagination(1, 1), null);
@@ -86,7 +87,7 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForBankAccount() throws Exception {
-        UserNatural user = this.getJohnOwner(false, false);
+        UserNatural user = this.getJohn(UserCategory.OWNER, false, false);
         Mandate mandateCreated = this.createMandate(false);
 
         List<Mandate> mandates = this.api.getMandateApi().getForBankAccount(user.getId(), this.getJohnsAccount().getId(), new FilterMandates(), new Pagination(1, 1), null);

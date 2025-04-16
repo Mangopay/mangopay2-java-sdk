@@ -29,7 +29,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
     @Test
     public void getUboDeclarationList() throws Exception {
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
-        UserLegal matrix = this.getMatrixOwner();
+        UserLegal matrix = this.getMatrix();
         List<UboDeclaration> declarations=this.api.getUboDeclarationApi().getAll(matrix.getId(),null,null);
 
         assertNotNull(declarations);
@@ -41,7 +41,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
     @Test
     public void getUboDeclaration() throws Exception {
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
-        UserLegal matrix = this.getMatrixOwner();
+        UserLegal matrix = this.getMatrix();
 
         UboDeclaration declarationFromApi=this.api.getUboDeclarationApi().get(matrix.getId(),uboDeclaration.getId());
 
@@ -52,7 +52,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
     @Test
     public void createUbo() throws Exception {
         Ubo ubo=this.createNewUboForMatrix();
-        UserLegal matrix = this.getMatrixOwner();
+        UserLegal matrix = this.getMatrix();
         UboDeclaration uboDeclaration = this.getMatrixUboDeclaration();
         Ubo newUbo = api.getUboDeclarationApi().createUbo(matrix.getId(), uboDeclaration.getId(), ubo);
 
@@ -68,7 +68,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
 
     @Test
     public void updateUbo() throws Exception {
-        UserLegal matrix = this.getMatrixOwner();
+        UserLegal matrix = this.getMatrix();
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
         Calendar calendar=Calendar.getInstance();
         calendar.set(1991,12,21,0,0,0);
@@ -96,7 +96,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
 
     @Test
     public void getUbo() throws Exception {
-        UserLegal matrix = this.getMatrixOwner();
+        UserLegal matrix = this.getMatrix();
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
         Ubo existingUbo=this.getMatrixUbo();
 
@@ -115,7 +115,7 @@ public class UboDeclarationApiImplTest extends BaseTest {
     
     @Test
     public void submitUboDeclaration() throws Exception{
-        UserLegal matrix = this.getMatrixOwner();
+        UserLegal matrix = this.getMatrix();
         UboDeclaration uboDeclaration=this.getMatrixUboDeclaration();
         UboDeclaration declaration=this.api.getUboDeclarationApi().get(matrix.getId(),uboDeclaration.getId());
         
