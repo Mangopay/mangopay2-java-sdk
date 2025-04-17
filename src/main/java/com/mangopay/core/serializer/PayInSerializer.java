@@ -141,6 +141,16 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 object.add("QRCodeURL", context.serialize(((PayInPaymentDetailsSwish) src.getPaymentDetails()).getQrCodeUrl()));
                 object.add("PaymentFlow", context.serialize(((PayInPaymentDetailsSwish) src.getPaymentDetails()).getPaymentFlow()));
                 break;
+            case "PayInPaymentDetailsPayByBank":
+                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getStatementDescriptor()));
+                object.add("Country", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getCountry()));
+                object.add("BIC", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getBic()));
+                object.add("IBAN", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getIban()));
+                object.add("PaymentFlow", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getPaymentFlow()));
+                object.add("BankName", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getBankName()));
+                object.add("Scheme", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getScheme()));
+                object.add("ProcessingStatus", context.serialize(((PayInPaymentDetailsPayByBank) src.getPaymentDetails()).getProcessingStatus()));
+                break;
             default:
                 return null;
         }
