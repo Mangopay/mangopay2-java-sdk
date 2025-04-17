@@ -1,18 +1,3 @@
-## [2.47.0] - 2025-04-16
-
-### Added
-
-- [POST Create a Swish PayIn](https://docs.mangopay.com/api-reference/swish/create-swish-payin)
-- [POST Create a Pay by Bank PayIn](https://docs.mangopay.com/api-reference/pay-by-bank/create-pay-by-bank-payin),
-  including related `PAYIN_NORMAL_PROCESSING_STATUS_PENDING_SUCCEEDED` webhook event type
-- `RTGS_PAYMENT` for `PayoutModeRequested`
-  on [POST Create a Payout](https://docs.mangopay.com/api-reference/payouts/create-payout)
-- PayPal recurring payments, thanks to the `PaymentType` value `PAYPAL`
-  on [Recurring PayIn Registrations](https://docs.mangopay.com/api-reference/recurring-payin-registrations/create-recurring-payin-registration-paypal)
-  and new
-  endpoints ([POST Create a Recurring PayPal PayIn (CIT)](https://docs.mangopay.com/api-reference/paypal/create-recurring-paypal-payin-cit)
-  and [POST Create a Recurring PayPal PayIn (MIT)](https://docs.mangopay.com/api-reference/paypal/create-recurring-paypal-payin-mit)
-
 ## [2.46.0] - 2025-04-01
 
 ### Changed
