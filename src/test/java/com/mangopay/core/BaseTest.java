@@ -49,7 +49,6 @@ public abstract class BaseTest {
     private static PayInTemplateURLOptions PAYIN_TEMPLATE_URL_OPTIONS;
     private static VirtualAccount JOHNS_VIRTUAL_ACCOUNT;
     private static Mandate MANDATE;
-    private static RecurringPayment JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -139,6 +138,10 @@ public abstract class BaseTest {
 
     protected UserNatural getJohn() throws Exception {
         return getJohnOwner(false, false);
+    }
+
+    protected UserNatural getNewJohn() throws Exception {
+        return getJohnOwner(true, true);
     }
 
     protected UserNatural getJohn(UserCategory userCategory) throws Exception {
@@ -590,23 +593,19 @@ public abstract class BaseTest {
     }
 
     protected RecurringPayment createJohnsRecurringPayPalPayInRegistration() throws Exception {
-        if (JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION == null) {
-            Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
-            UserNatural john = this.getJohn();
+        Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
+        UserNatural john = this.getJohn();
 
-            CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
-            createRecurringPayment.setAuthorId(john.getId());
-            createRecurringPayment.setCreditedWalletId(data.get("walletId"));
-            createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(1000).setCurrency(CurrencyIso.EUR));
-            createRecurringPayment.setFirstTransactionFees(new Money().setAmount(0).setCurrency(CurrencyIso.EUR));
-            createRecurringPayment.setShipping(this.getNewShipping());
-            createRecurringPayment.setBilling(this.getNewBilling());
-            createRecurringPayment.setPaymentType(PayInPaymentType.PAYPAL);
+        CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+        createRecurringPayment.setAuthorId(john.getId());
+        createRecurringPayment.setCreditedWalletId(data.get("walletId"));
+        createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(1000).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setFirstTransactionFees(new Money().setAmount(0).setCurrency(CurrencyIso.EUR));
+        createRecurringPayment.setShipping(this.getNewShipping());
+        createRecurringPayment.setBilling(this.getNewBilling());
+        createRecurringPayment.setPaymentType(PayInPaymentType.PAYPAL);
 
-            JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
-        }
-
-        return JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION;
+        return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
     }
 
     /**

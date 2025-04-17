@@ -51,7 +51,7 @@ public class WalletApiImplTest extends BaseTest {
 
     @Test
     public void getWalletTransactions() throws Exception {
-        UserNatural john = this.getJohn();
+        UserNatural john = this.getNewJohn();
         Wallet wallet = this.getJohnsWallet();
         PayIn payIn = this.getJohnsPayInCardWeb();
 
