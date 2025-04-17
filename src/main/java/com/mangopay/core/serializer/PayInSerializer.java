@@ -135,12 +135,6 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
             case "PayInPaymentDetailsTwint":
                 object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsTwint) src.getPaymentDetails()).getStatementDescriptor()));
                 break;
-            case "PayInPaymentDetailsSwish":
-                object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsSwish) src.getPaymentDetails()).getStatementDescriptor()));
-                object.add("DeepLinkURL", context.serialize(((PayInPaymentDetailsSwish) src.getPaymentDetails()).getDeepLinkUrl()));
-                object.add("QRCodeURL", context.serialize(((PayInPaymentDetailsSwish) src.getPaymentDetails()).getQrCodeUrl()));
-                object.add("PaymentFlow", context.serialize(((PayInPaymentDetailsSwish) src.getPaymentDetails()).getPaymentFlow()));
-                break;
             default:
                 return null;
         }
