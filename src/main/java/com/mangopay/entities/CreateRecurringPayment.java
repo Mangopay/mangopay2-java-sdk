@@ -1,11 +1,7 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.Billing;
-import com.mangopay.core.Dto;
-import com.mangopay.core.Money;
-import com.mangopay.core.Shipping;
-import com.mangopay.core.enumerations.PayInPaymentType;
+import com.mangopay.core.*;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -59,9 +55,6 @@ public class CreateRecurringPayment extends Dto {
 
     @SerializedName("FreeCycles")
     private Integer freeCycles;
-
-    @SerializedName("PaymentType")
-    private PayInPaymentType paymentType;
 
     public String getAuthorId() {
         return authorId;
@@ -189,15 +182,6 @@ public class CreateRecurringPayment extends Dto {
 
     public void setFreeCycles(Integer freeCycles) {
         this.freeCycles = freeCycles;
-    }
-
-    public PayInPaymentType getPaymentType() {
-        return paymentType;
-    }
-
-    public CreateRecurringPayment setPaymentType(PayInPaymentType paymentType) {
-        this.paymentType = paymentType;
-        return this;
     }
 
     @Override
