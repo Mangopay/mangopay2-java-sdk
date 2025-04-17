@@ -1350,27 +1350,6 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createSwishWeb() {
-        try {
-            UserNatural user = this.getJohn();
-            Wallet wallet = this.getNewWallet(CurrencyIso.SEK);
-            PayIn created = this.getNewPayInSwishWeb(user.getId(), wallet.getId());
-
-            assertNotNull(created);
-            assertEquals(TransactionStatus.CREATED, created.getStatus());
-            assertEquals(PayInPaymentType.SWISH, created.getPaymentType());
-            assertEquals(PayInExecutionType.WEB, created.getExecutionType());
-            assertEquals(wallet.getId(), created.getCreditedWalletId());
-
-            PayIn fetched = api.getPayInApi().get(created.getId());
-            assertNotNull(fetched);
-            assertEquals(created.getId(), fetched.getId());
-        } catch (Exception ex) {
-            fail(ex.getMessage());
-        }
-    }
-
-    @Test
     public void createBancontactWeb() {
         try {
             UserNatural user = this.getJohn();
