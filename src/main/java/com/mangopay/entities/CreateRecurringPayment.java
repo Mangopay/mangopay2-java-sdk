@@ -5,7 +5,7 @@ import com.mangopay.core.Billing;
 import com.mangopay.core.Dto;
 import com.mangopay.core.Money;
 import com.mangopay.core.Shipping;
-import com.mangopay.core.enumerations.PayInPaymentType;
+import com.mangopay.core.enumerations.RecurringPayInRegistrationPaymentType;
 
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -61,7 +61,7 @@ public class CreateRecurringPayment extends Dto {
     private Integer freeCycles;
 
     @SerializedName("PaymentType")
-    private PayInPaymentType paymentType;
+    private RecurringPayInRegistrationPaymentType paymentType;
 
     public String getAuthorId() {
         return authorId;
@@ -191,11 +191,11 @@ public class CreateRecurringPayment extends Dto {
         this.freeCycles = freeCycles;
     }
 
-    public PayInPaymentType getPaymentType() {
+    public RecurringPayInRegistrationPaymentType getPaymentType() {
         return paymentType;
     }
 
-    public CreateRecurringPayment setPaymentType(PayInPaymentType paymentType) {
+    public CreateRecurringPayment setPaymentType(RecurringPayInRegistrationPaymentType paymentType) {
         this.paymentType = paymentType;
         return this;
     }

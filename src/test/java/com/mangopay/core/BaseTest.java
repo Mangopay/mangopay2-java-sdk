@@ -601,7 +601,7 @@ public abstract class BaseTest {
             createRecurringPayment.setFirstTransactionFees(new Money().setAmount(0).setCurrency(CurrencyIso.EUR));
             createRecurringPayment.setShipping(this.getNewShipping());
             createRecurringPayment.setBilling(this.getNewBilling());
-            createRecurringPayment.setPaymentType(PayInPaymentType.PAYPAL);
+            createRecurringPayment.setPaymentType(RecurringPayInRegistrationPaymentType.PAYPAL);
 
             JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
         }
