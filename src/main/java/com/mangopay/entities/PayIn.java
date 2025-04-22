@@ -96,100 +96,88 @@ public class PayIn extends Transaction {
 
         return new HashMap<String, Map<String, Map<String, Class<?>>>>() {{
             put("PaymentType", new HashMap<String, Map<String, Class<?>>>() {{
-                    put("CARD", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsCard.class);
-                        }}
-                    );
-                    put("PREAUTHORIZED", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsPreAuthorized.class);
-                        }}
-                    );
-                    put("BANK_WIRE", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsBankWire.class);
-                        }}
-                    );
-                    put("DIRECT_DEBIT", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsDirectDebit.class);
-                        }}
-                    );
-                    put("PAYPAL", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsPayPal.class);
-                        }}
-                    );
-                    put("GOOGLEPAY", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsGooglePay.class);
-                        }}
-                    );
-                    put("GOOGLE_PAY", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsGooglePayV2.class);
-                        }}
-                    );
-                    put("PAYCONIQ", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsPayconiq.class);
-                        }}
-                    );
-                    put("MBWAY", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsMbway.class);
-                        }}
-                    );
-                    put("SATISPAY", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsSatispay.class);
-                        }}
-                    );
-                    put("BLIK", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsBlik.class);
-                        }}
-                    );
-                    put("MULTIBANCO", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsMultibanco.class);
-                        }}
-                    );
-                    put("KLARNA", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsKlarna.class);
-                        }}
-                    );
-                    put("IDEAL", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsIdeal.class);
-                        }}
-                    );
-                    put("GIROPAY", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsGiropay.class);
-                        }}
-                    );
-                    put("BCMC", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsBancontact.class);
-                        }}
-                    );
-                    put("PAY_BY_BANK", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsPayByBank.class);
-                        }}
-                    );
-                    put("SWISH", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsSwish.class);
-                        }}
-                    );
-                    put("TWINT", new HashMap<String, Class<?>>() {{
-                            put("PaymentDetails", PayInPaymentDetailsTwint.class);
-                        }}
-                    );
-                    // ...and more in future...
-                }}
+                        put("CARD", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsCard.class);
+                                }}
+                        );
+                        put("PREAUTHORIZED", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsPreAuthorized.class);
+                                }}
+                        );
+                        put("BANK_WIRE", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsBankWire.class);
+                                }}
+                        );
+                        put("DIRECT_DEBIT", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsDirectDebit.class);
+                                }}
+                        );
+                        put("PAYPAL", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsPayPal.class);
+                                }}
+                        );
+                        put("GOOGLEPAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsGooglePay.class);
+                                }}
+                        );
+                        put("GOOGLE_PAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsGooglePayV2.class);
+                                }}
+                        );
+                        put("PAYCONIQ", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsPayconiq.class);
+                                }}
+                        );
+                        put("MBWAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsMbway.class);
+                                }}
+                        );
+                        put("SATISPAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsSatispay.class);
+                                }}
+                        );
+                        put("BLIK", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsBlik.class);
+                                }}
+                        );
+                        put("MULTIBANCO", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsMultibanco.class);
+                                }}
+                        );
+                        put("KLARNA", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsKlarna.class);
+                                }}
+                        );
+                        put("IDEAL", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsIdeal.class);
+                                }}
+                        );
+                        put("GIROPAY", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsGiropay.class);
+                                }}
+                        );
+                        put("BCMC", new HashMap<String, Class<?>>() {{
+                                    put("PaymentDetails", PayInPaymentDetailsBancontact.class);
+                                }}
+                        );
+                        // ...and more in future...
+                    }}
             );
             put("ExecutionType", new HashMap<String, Map<String, Class<?>>>() {{
-                    put("WEB", new HashMap<String, Class<?>>() {{
-                            put("ExecutionDetails", PayInExecutionDetailsWeb.class);
-                        }}
-                    );
-                    put("DIRECT", new HashMap<String, Class<?>>() {{
-                            put("ExecutionDetails", PayInExecutionDetailsDirect.class);
-                        }}
-                    );
-                    put("EXTERNAL_INSTRUCTION", new HashMap<String, Class<?>>() {{
-                            put("ExecutionDetails", PayInExecutionDetailsBankingAlias.class);
-                        }}
-                    );
-                    // ...and more in future...
-                }}
+                        put("WEB", new HashMap<String, Class<?>>() {{
+                                    put("ExecutionDetails", PayInExecutionDetailsWeb.class);
+                                }}
+                        );
+                        put("DIRECT", new HashMap<String, Class<?>>() {{
+                                    put("ExecutionDetails", PayInExecutionDetailsDirect.class);
+                                }}
+                        );
+                        put("EXTERNAL_INSTRUCTION", new HashMap<String, Class<?>>() {{
+                                    put("ExecutionDetails", PayInExecutionDetailsBankingAlias.class);
+                                }}
+                        );
+                        // ...and more in future...
+                    }}
             );
         }};
     }

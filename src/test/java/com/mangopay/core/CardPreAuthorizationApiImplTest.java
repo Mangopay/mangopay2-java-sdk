@@ -6,6 +6,7 @@ package com.mangopay.core;
 
 import com.mangopay.core.enumerations.*;
 import com.mangopay.entities.CardPreAuthorization;
+import com.mangopay.entities.subentities.BrowserInfo;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -67,10 +68,10 @@ public class CardPreAuthorizationApiImplTest extends BaseTest {
         cardPreAuthorization = this.api.getCardPreAuthorizationApi().create(cardPreAuthorization);
 
         assertNotNull(cardPreAuthorization.getCardInfo());
-//        assertNotNull(cardPreAuthorization.getCardInfo().getBrand());
-//        assertNotNull(cardPreAuthorization.getCardInfo().getType());
-//        assertNotNull(cardPreAuthorization.getCardInfo().getIssuingBank());
-//        assertNotNull(cardPreAuthorization.getCardInfo().getBin());
+        assertNotNull(cardPreAuthorization.getCardInfo().getBrand());
+        assertNotNull(cardPreAuthorization.getCardInfo().getType());
+        assertNotNull(cardPreAuthorization.getCardInfo().getIssuingBank());
+        assertNotNull(cardPreAuthorization.getCardInfo().getBin());
     }
 
     @Test

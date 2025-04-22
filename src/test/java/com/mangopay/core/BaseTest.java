@@ -49,7 +49,6 @@ public abstract class BaseTest {
     private static PayInTemplateURLOptions PAYIN_TEMPLATE_URL_OPTIONS;
     private static VirtualAccount JOHNS_VIRTUAL_ACCOUNT;
     private static Mandate MANDATE;
-    private static RecurringPayment JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -589,26 +588,6 @@ public abstract class BaseTest {
         return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
     }
 
-    protected RecurringPayment createJohnsRecurringPayPalPayInRegistration() throws Exception {
-        if (JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION == null) {
-            Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
-            UserNatural john = this.getJohn();
-
-            CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
-            createRecurringPayment.setAuthorId(john.getId());
-            createRecurringPayment.setCreditedWalletId(data.get("walletId"));
-            createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(1000).setCurrency(CurrencyIso.EUR));
-            createRecurringPayment.setFirstTransactionFees(new Money().setAmount(0).setCurrency(CurrencyIso.EUR));
-            createRecurringPayment.setShipping(this.getNewShipping());
-            createRecurringPayment.setBilling(this.getNewBilling());
-            createRecurringPayment.setPaymentType(RecurringPayInRegistrationPaymentType.PAYPAL);
-
-            JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
-        }
-
-        return JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION;
-    }
-
     /**
      * Creates wallet for John, if not created yet, or returns an existing one.
      *
@@ -786,12 +765,6 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
-    protected PayIn getNewPayInPayByBankWeb(String userId) throws Exception {
-        PayIn payIn = getPayInPayByBankWeb(userId);
-
-        return this.api.getPayInApi().create(payIn);
-    }
-
     protected PayIn getNewPayInKlarnaWeb(String userId) throws Exception {
         PayIn payIn = getPayInKlarnaWeb(userId);
 
@@ -818,11 +791,6 @@ public abstract class BaseTest {
 
     protected PayIn getNewPayInTwintWeb(String userId, String walletId) throws Exception {
         PayIn payIn = getPayInTwintWeb(userId, walletId);
-        return this.api.getPayInApi().create(payIn);
-    }
-
-    protected PayIn getNewPayInSwishWeb(String userId, String walletId) throws Exception {
-        PayIn payIn = getPayInSwishWeb(userId, walletId);
         return this.api.getPayInApi().create(payIn);
     }
 
@@ -1158,43 +1126,6 @@ public abstract class BaseTest {
         return payIn;
     }
 
-    private PayIn getPayInPayByBankWeb(String userId) throws Exception {
-        Wallet wallet = this.getJohnsWallet();
-
-        if (userId == null) {
-            UserNatural user = this.getJohn();
-            userId = user.getId();
-        }
-
-        PayIn payIn = new PayIn();
-        payIn.setAuthorId(userId);
-        payIn.setCreditedWalletId(wallet.getId());
-        payIn.setDebitedFunds(new Money());
-        payIn.getDebitedFunds().setAmount(500);
-        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
-        payIn.setFees(new Money());
-        payIn.getFees().setAmount(0);
-        payIn.getFees().setCurrency(CurrencyIso.EUR);
-
-        PayInPaymentDetailsPayByBank paymentDetails = new PayInPaymentDetailsPayByBank();
-        paymentDetails.setStatementDescriptor("Example123");
-        paymentDetails.setCountry(CountryIso.DE);
-        paymentDetails.setIban("DE03500105177564668331");
-        paymentDetails.setBic("AACSDE33");
-        paymentDetails.setScheme("SEPA_INSTANT_CREDIT_TRANSFER");
-        paymentDetails.setBankName("de-demobank-open-banking-embedded-templates");
-        paymentDetails.setPaymentFlow("WEB");
-        payIn.setPaymentDetails(paymentDetails);
-
-        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
-        executionDetails.setReturnUrl("http://example.com");
-        executionDetails.setCulture(CultureCode.EN);
-        payIn.setExecutionDetails(executionDetails);
-        payIn.setTag("PayByBank Java");
-
-        return payIn;
-    }
-
     protected PayIn getNewPayInCardDirectWithRequested3DSVersion() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
@@ -1277,34 +1208,6 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(payInExecutionDetailsWeb);
 
         payIn.setTag("My Twint Tag");
-        return payIn;
-    }
-
-    private PayIn getPayInSwishWeb(String userId, String walletId) throws Exception {
-        if (userId == null) {
-            UserNatural user = this.getJohn();
-            userId = user.getId();
-        }
-
-        PayIn payIn = new PayIn();
-        payIn.setAuthorId(userId);
-        payIn.setCreditedWalletId(walletId);
-        payIn.setDebitedFunds(new Money());
-        payIn.getDebitedFunds().setAmount(100);
-        payIn.getDebitedFunds().setCurrency(CurrencyIso.SEK);
-        payIn.setFees(new Money());
-        payIn.getFees().setAmount(0);
-        payIn.getFees().setCurrency(CurrencyIso.SEK);
-
-        payIn.setPaymentDetails(new PayInPaymentDetailsSwish());
-        ((PayInPaymentDetailsSwish) payIn.getPaymentDetails()).setStatementDescriptor("Swish");
-
-        // execution type as WEB
-        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
-        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
-        payIn.setExecutionDetails(payInExecutionDetailsWeb);
-
-        payIn.setTag("My Swish Tag");
         return payIn;
     }
 
