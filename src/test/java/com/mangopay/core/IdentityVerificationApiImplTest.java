@@ -3,7 +3,6 @@ package com.mangopay.core;
 import com.mangopay.entities.IdentityVerification;
 import com.mangopay.entities.UserNatural;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -34,7 +33,6 @@ public class IdentityVerificationApiImplTest extends BaseTest {
         assertEquals(identityVerification.getStatus(), fetched.getStatus());
     }
 
-    @Ignore("Endpoint returns 404")
     @Test
     public void getIdentityVerificationChecks() throws Exception {
         IdentityVerificationCheck check = getApi().getIdentityVerificationApi().getChecks(identityVerification.getId());

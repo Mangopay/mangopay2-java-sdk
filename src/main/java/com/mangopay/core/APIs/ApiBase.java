@@ -94,7 +94,6 @@ public abstract class ApiBase {
         put("payins_recurring_registration_get", new String[]{"/recurringpayinregistrations/%s", RequestType.GET.toString()});
         put("payins_recurring_registration_put", new String[]{"/recurringpayinregistrations/%s", RequestType.PUT.toString()});
         put("payins_recurring_card_direct", new String[]{"/payins/recurring/card/direct", RequestType.POST.toString()});
-        put("payins_recurring_paypal", new String[]{"/payins/payment-methods/paypal/recurring", RequestType.POST.toString()});
         put("payins_card_preauthorized_deposit", new String[]{"/payins/deposit-preauthorized/direct/full-capture", RequestType.POST.toString()});
         put("payins_satispay-web_create", new String[]{"/payins/payment-methods/satispay", RequestType.POST.toString()});
         put("payins_blik-web_create", new String[]{"/payins/payment-methods/blik", RequestType.POST.toString()});
@@ -104,8 +103,6 @@ public abstract class ApiBase {
         put("payins_giropay-web_create", new String[]{"/payins/payment-methods/giropay", RequestType.POST.toString()});
         put("payins_bancontact-web_create", new String[]{"/payins/payment-methods/bancontact", RequestType.POST.toString()});
         put("payins_twint-web_create", new String[]{"/payins/payment-methods/twint", RequestType.POST.toString()});
-        put("payins_swish-web_create", new String[]{"/payins/payment-methods/swish", RequestType.POST.toString()});
-        put("payins_paybybank-web_create", new String[]{"/payins/payment-methods/openbanking", RequestType.POST.toString()});
         put("add_tracking_info", new String[]{"/payins/%s/trackings", RequestType.PUT.toString()});
 
         put("payment_method-metadata", new String[]{"/payment-methods/metadata", RequestType.POST.toString()});

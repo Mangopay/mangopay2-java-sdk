@@ -71,16 +71,6 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     }
 
     @Override
-    public RecurringPayIn createRecurringPayPalPayInCIT(String idempotencyKey, RecurringPayPalPayInCIT cit) throws Exception {
-        return this.createObject(RecurringPayIn.class, idempotencyKey, "payins_recurring_paypal", cit);
-    }
-
-    @Override
-    public RecurringPayIn createRecurringPayPalPayInMIT(String idempotencyKey, RecurringPayPalPayInMIT mit) throws Exception {
-        return this.createObject(RecurringPayIn.class, idempotencyKey, "payins_recurring_paypal", mit);
-    }
-
-    @Override
     public PayIn get(String payInId) throws Exception {
         return this.getObject(PayIn.class, "payins_get", payInId);
     }
