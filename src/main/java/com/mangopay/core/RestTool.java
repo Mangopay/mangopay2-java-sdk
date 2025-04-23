@@ -785,7 +785,7 @@ public class RestTool {
 
             // handle 401 SCA
             if (this.responseCode == 401 && headers.containsKey(WWW_AUTHENTICATE)) {
-                handleSca401(responseException, message, headers);
+                handleSca401(responseException, headers);
             }
 
             if (message != null) {
@@ -838,7 +838,7 @@ public class RestTool {
      *
      * @throws ResponseException
      */
-    private void handleSca401(ResponseException responseException, String message, Map<String, List<String>> headers) throws ResponseException {
+    private void handleSca401(ResponseException responseException, Map<String, List<String>> headers) throws ResponseException {
         List<String> wwwAuth = headers.get(WWW_AUTHENTICATE);
         for (String value : wwwAuth) {
             if (value.startsWith("PendingUserAction RedirectUrl")) {
@@ -857,16 +857,6 @@ public class RestTool {
                     HashMap<String, String> errors = new HashMap<>();
                     errors.put("Sca", "SCA required to perform this action.");
                     responseException.setErrors(errors);
-
-                    if (message != null) {
-                        JsonObject error = JsonParser.parseString(message).getAsJsonObject();
-                        for (Entry<String, JsonElement> entry : error.entrySet()) {
-                            if (entry.getKey().equals("traceId")) {
-                                responseException.setId(entry.getValue().getAsString());
-                                break;
-                            }
-                        }
-                    }
 
                     throw responseException;
                 }
