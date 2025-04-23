@@ -622,6 +622,21 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getUserWalletsSca() throws Exception {
+        UserNatural john = this.getJohn();
+        Pagination pagination = new Pagination(1, 20);
+        FilterWallets filter = new FilterWallets().setScaContext("USER_PRESENT");
+
+        try {
+            this.api.getUserApi().getWallets(john.getId(), pagination, filter, null);
+        } catch (ResponseException e) {
+            assertEquals(401, e.getResponseHttpCode());
+            assertTrue(e.getErrors().containsKey("Sca"));
+            assertTrue(e.getData().containsKey("RedirectUrl"));
+        }
+    }
+
+    @Test
     public void getTransactions() throws Exception {
         UserNatural john = this.getJohn();
         Transfer transfer = this.getNewTransfer();
@@ -638,6 +653,22 @@ public class UserApiImplTest extends BaseTest {
         assertTrue(transactions.size() > 0);
         assertTrue(transactions.get(0).getType() != null);
         assertTrue(transactions.get(0).getStatus() != null);
+    }
+
+    @Test
+    public void getTransactionsSca() throws Exception {
+        UserNatural john = this.getJohn();
+        Pagination pagination = new Pagination(1, 20);
+        FilterTransactions filter = new FilterTransactions();
+        filter.setScaContext("USER_PRESENT");
+
+        try {
+            this.api.getUserApi().getTransactions(john.getId(), pagination, filter, null);
+        } catch (ResponseException e) {
+            assertEquals(401, e.getResponseHttpCode());
+            assertTrue(e.getErrors().containsKey("Sca"));
+            assertTrue(e.getData().containsKey("RedirectUrl"));
+        }
     }
 
     @Test

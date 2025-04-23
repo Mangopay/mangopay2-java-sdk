@@ -1,9 +1,6 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.core.FilterPreAuthorizations;
-import com.mangopay.core.FilterTransactions;
-import com.mangopay.core.Pagination;
-import com.mangopay.core.Sorting;
+import com.mangopay.core.*;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.entities.*;
@@ -260,6 +257,17 @@ public interface UserApi {
      * @throws Exception
      */
     List<Wallet> getWallets(String userId, Pagination pagination, Sorting sorting) throws Exception;
+
+    /**
+     * Gets all wallets of user.
+     *
+     * @param userId     User identifier to get bank accounts of.
+     * @param pagination Pagination object.
+     * @param sorting    Sorting object.
+     * @return Collection of wallets of user.
+     * @throws Exception
+     */
+    List<Wallet> getWallets(String userId, Pagination pagination, FilterWallets filter, Sorting sorting) throws Exception;
 
     /**
      * Gets first page of all wallets of user.

@@ -19,6 +19,7 @@ import java.security.SecureRandom;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Class used to build HTTP request, call the request and handle response.
@@ -29,6 +30,7 @@ public class RestTool {
     private final static int MINUTES_30 = 30;
     private final static int MINUTES_60 = 60;
     private final static int ONE_DAY_IN_MINUTES = MINUTES_60 * 24;
+    private final static String WWW_AUTHENTICATE = "WWW-Authenticate";
 
     // root/parent instance that holds the OAuthToken and Configuration instance
     private MangoPayApi root;
@@ -421,7 +423,7 @@ public class RestTool {
                 if (this.debugMode) logger.info("Response object: {}", response.toString());
             }
 
-            this.checkResponseCode(responseString);
+            this.checkResponseCode(responseString, connection.getHeaderFields());
 
         } catch (Exception ex) {
             //ex.printStackTrace();
@@ -687,7 +689,7 @@ public class RestTool {
                 }
             }
 
-            this.checkResponseCode(responseString);
+            this.checkResponseCode(responseString, connection.getHeaderFields());
 
         } catch (Exception ex) {
             if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
@@ -755,7 +757,7 @@ public class RestTool {
      * @param message Text response.
      * @throws ResponseException If response code is other than 200 or 204.
      */
-    private void checkResponseCode(String message) throws ResponseException {
+    private void checkResponseCode(String message, Map<String, List<String>> headers) throws ResponseException {
 
         if (this.responseCode != 200 && this.responseCode != 204) {
 
@@ -779,6 +781,11 @@ public class RestTool {
                 responseException.setResponseHttpDescription(responseCodes.get(this.responseCode));
             } else {
                 responseException.setResponseHttpDescription("Unknown response error");
+            }
+
+            // handle 401 SCA
+            if (this.responseCode == 401 && headers.containsKey(WWW_AUTHENTICATE)) {
+                handleSca401(responseException, message, headers);
             }
 
             if (message != null) {
@@ -823,6 +830,47 @@ public class RestTool {
             }
 
             throw responseException;
+        }
+    }
+
+    /**
+     * Extract the www-authenticate header and get the PendingUserAction RedirectUrl
+     *
+     * @throws ResponseException
+     */
+    private void handleSca401(ResponseException responseException, String message, Map<String, List<String>> headers) throws ResponseException {
+        List<String> wwwAuth = headers.get(WWW_AUTHENTICATE);
+        for (String value : wwwAuth) {
+            if (value.startsWith("PendingUserAction RedirectUrl")) {
+                Pattern pattern = Pattern.compile("PendingUserAction RedirectUrl=([^\\s]+)");
+                Matcher matcher = pattern.matcher(value);
+                if (matcher.find() && matcher.groupCount() == 1) {
+                    String redirectUrl = matcher.group(1);
+                    responseException.setResponseHttpDescription("SCA required");
+                    responseException.setDate((int) System.currentTimeMillis());
+                    responseException.setType("unauthorized");
+
+                    Map<String, String> data = new HashMap<>();
+                    data.put("RedirectUrl", redirectUrl);
+                    responseException.setData(data);
+
+                    HashMap<String, String> errors = new HashMap<>();
+                    errors.put("Sca", "SCA required to perform this action.");
+                    responseException.setErrors(errors);
+
+                    if (message != null) {
+                        JsonObject error = JsonParser.parseString(message).getAsJsonObject();
+                        for (Entry<String, JsonElement> entry : error.entrySet()) {
+                            if (entry.getKey().equals("traceId")) {
+                                responseException.setId(entry.getValue().getAsString());
+                                break;
+                            }
+                        }
+                    }
+
+                    throw responseException;
+                }
+            }
         }
     }
 }

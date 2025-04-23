@@ -3,6 +3,7 @@ package com.mangopay.core;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Response exception class.
@@ -50,6 +51,11 @@ public class ResponseException extends Exception {
      */
     @SerializedName("Errors")
     private HashMap<String, String> errors;
+
+    /**
+     * Additional data related to the exception
+     */
+    private Map<String, String> data;
 
     /**
      * Instantiates new ResponseException object.
@@ -143,5 +149,13 @@ public class ResponseException extends Exception {
 
     public void setErrors(HashMap<String, String> errors) {
         this.errors = errors;
+    }
+
+    public Map<String, String> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, String> data) {
+        this.data = data;
     }
 }

@@ -39,6 +39,19 @@ public class WalletApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getWalletSca() throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+
+        try {
+            this.api.getWalletApi().get(wallet.getId(), "USER_PRESENT");
+        } catch (ResponseException e) {
+            assertEquals(401, e.getResponseHttpCode());
+            assertTrue(e.getErrors().containsKey("Sca"));
+            assertTrue(e.getData().containsKey("RedirectUrl"));
+        }
+    }
+
+    @Test
     public void updateWallet() throws Exception {
         Wallet wallet = this.getJohnsWallet();
         wallet.setDescription("New description to test");
@@ -101,6 +114,23 @@ public class WalletApiImplTest extends BaseTest {
         for (Transaction t : transactions) {
             assertNotNull(t.getStatus());
             assertNotEquals(TransactionStatus.NotSpecified, t.getStatus());
+        }
+    }
+
+    @Test
+    public void getWalletTransactionsSca() throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+
+        Pagination pagination = new Pagination(1, 20);
+        FilterTransactions filter = new FilterTransactions();
+        filter.setScaContext("USER_PRESENT");
+
+        try {
+            this.api.getWalletApi().getTransactions(wallet.getId(), pagination, filter, null);
+        } catch (ResponseException e) {
+            assertEquals(401, e.getResponseHttpCode());
+            assertTrue(e.getErrors().containsKey("Sca"));
+            assertTrue(e.getData().containsKey("RedirectUrl"));
         }
     }
 }
