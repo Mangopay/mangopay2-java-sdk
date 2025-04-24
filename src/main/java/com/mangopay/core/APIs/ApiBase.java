@@ -162,6 +162,8 @@ public abstract class ApiBase {
         put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
         put("users_regulatory", new String[]{"/users/%s/Regulatory", RequestType.GET.toString()});
         put("users_enroll_sca", new String[]{"/sca/users/%s/enrollment", RequestType.POST.toString()});
+        put("users_close_natural", new String[]{"/users/natural/%s", RequestType.DELETE.toString()});
+        put("users_close_legal", new String[]{"/users/legal/%s", RequestType.DELETE.toString()});
 
         put("users_emoney_year", new String[]{"/users/%s/emoney/%s", RequestType.GET.toString()});
         put("users_emoney_month", new String[]{"/users/%s/emoney/%s/%s", RequestType.GET.toString()});
@@ -297,7 +299,7 @@ public abstract class ApiBase {
      * Gets the HTTP request verb.
      *
      * @param key The method key.
-     * @return One of the HTTP verbs: GET, PUT or POST.
+     * @return One of the HTTP verbs: GET, PUT, POST or DELETE
      */
     protected String getRequestType(String key) {
         return this.methods.get(key)[1];
@@ -595,5 +597,12 @@ public abstract class ApiBase {
         } else {
             return null;
         }
+    }
+
+
+    protected <T extends Dto, U extends Dto> T deleteObject(Class<T> classOfT, String methodKey, EntityBase entity) throws Exception {
+        String urlMethod = String.format(this.getRequestUrl(methodKey), entity.getId());
+        RestTool rest = new RestTool(this.root, true, true);
+        return rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
     }
 }

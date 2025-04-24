@@ -885,4 +885,97 @@ public class UserApiImplTest extends BaseTest {
         assertTrue(acceptedByDef.isTermsAndConditionsAccepted());
         assertNotNull(acceptedByDef.getTermsAndConditionsAcceptedDate());
     }
+
+    @Test
+    public void testCloseUserNatural() throws Exception {
+        Calendar c = getCalendar();
+
+        UserNatural john = new UserNatural();
+        john.setFirstName("John");
+        john.setLastName("Doe");
+        john.setEmail("john.doe@sample.org");
+        john.setAddress(this.getNewAddress());
+        john.setBirthday(c.getTimeInMillis() / 1000);
+        john.setNationality(CountryIso.FR);
+        john.setCountryOfResidence(CountryIso.FR);
+        john.setOccupation("programmer");
+        john.setIncomeRange(3);
+        john.setTermsAndConditionsAccepted(true);
+        john.setUserCategory(UserCategory.OWNER);
+
+        UserNaturalSca johnSca = new UserNaturalSca();
+        johnSca.setFirstName("John SCA");
+        johnSca.setLastName("Doe SCA Review");
+        johnSca.setEmail("john.doe.sca@sample.org");
+        johnSca.setTermsAndConditionsAccepted(true);
+        johnSca.setUserCategory(UserCategory.PAYER);
+        johnSca.setAddress(getNewAddress());
+
+        john = (UserNatural) this.api.getUserApi().create(john);
+        johnSca = (UserNaturalSca) this.api.getUserApi().create(johnSca);
+
+        getApi().getUserApi().close(john);
+        getApi().getUserApi().close(johnSca);
+
+        User closedJohn = getApi().getUserApi().get(john.getId());
+        User closedJohnSca = getApi().getUserApi().get(johnSca.getId());
+
+        assertEquals("CLOSED", closedJohn.getUserStatus());
+        assertEquals("CLOSED", closedJohnSca.getUserStatus());
+    }
+
+    @Test
+    public void testCloseUserLegal() throws Exception {
+        Calendar c = getCalendar();
+
+        UserNatural john = this.getJohn();
+        UserLegal matrix = new UserLegal();
+        matrix.setName("MartixSampleOrg");
+        matrix.setLegalPersonType(LegalPersonType.BUSINESS);
+        matrix.setHeadquartersAddress(this.getNewAddress());
+        matrix.setLegalRepresentativeFirstName(john.getFirstName());
+        matrix.setLegalRepresentativeLastName(john.getLastName());
+        matrix.setLegalRepresentativeAddress(john.getAddress());
+        matrix.setLegalRepresentativeEmail(john.getEmail());
+        matrix.setLegalRepresentativeBirthday(john.getBirthday());
+        matrix.setLegalRepresentativeNationality(john.getNationality());
+        matrix.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
+        matrix.setCompanyNumber("LU12345678");
+        matrix.setUserCategory(UserCategory.OWNER);
+        matrix.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
+        matrix.setEmail(john.getEmail());
+
+        UserLegalSca matrixSca = new UserLegalSca();
+        LegalRepresentative legalRepresentative = new LegalRepresentative();
+        legalRepresentative.setFirstName("John");
+        legalRepresentative.setLastName("Doe SCA");
+        legalRepresentative.setEmail("john.doe.sca@sample.org");
+        legalRepresentative.setPhoneNumber("+33611111111");
+        legalRepresentative.setPhoneNumberCountry(CountryIso.FR);
+        matrixSca.setName("MartixSampleOrg");
+        matrixSca.setLegalPersonType(LegalPersonType.BUSINESS);
+        matrixSca.setUserCategory(UserCategory.PAYER);
+        matrixSca.setEmail("john.doe@sample.org");
+        matrixSca.setLegalRepresentative(legalRepresentative);
+        matrixSca.setTermsAndConditionsAccepted(true);
+        matrixSca.setLegalRepresentativeAddress(getNewAddress());
+
+        matrix = (UserLegal) this.api.getUserApi().create(matrix);
+        matrixSca = (UserLegalSca) this.api.getUserApi().create(matrixSca);
+
+        getApi().getUserApi().close(matrix);
+        getApi().getUserApi().close(matrixSca);
+
+        User closedMatrix = getApi().getUserApi().get(matrix.getId());
+        User closedMatrixSca = getApi().getUserApi().get(matrixSca.getId());
+
+        assertEquals("CLOSED", closedMatrix.getUserStatus());
+        assertEquals("CLOSED", closedMatrixSca.getUserStatus());
+    }
+
+    private Calendar getCalendar() {
+        Calendar c = Calendar.getInstance();
+        c.set(1975, 12, 21, 0, 0, 0);
+        return c;
+    }
 }
