@@ -1,6 +1,7 @@
 package com.mangopay.core;
 
 import com.mangopay.core.enumerations.TransactionNature;
+import com.mangopay.core.enumerations.TransactionStatus;
 import com.mangopay.core.enumerations.TransactionType;
 import com.mangopay.entities.Refund;
 import com.mangopay.entities.Transfer;
@@ -17,6 +18,9 @@ import static org.junit.Assert.*;
  */
 public class TransferApiImplTest extends BaseTest {
 
+    private static String VALID_USER_NATURAL_SCA_ID = "user_m_01JRFJJN9BR864A4KG7MH1WCZG";
+
+
     @Test
     public void createTransfer() throws Exception {
         UserNatural john = this.getJohn();
@@ -28,6 +32,33 @@ public class TransferApiImplTest extends BaseTest {
         assertEquals(transfer.getAuthorId(), john.getId());
         assertEquals(transfer.getCreditedUserId(), john.getId());
         assertTrue(creditedWallet.getBalance().getAmount() == 1);
+    }
+
+    @Test
+    public void createTransferScaUserPresent() throws Exception {
+//        UserNaturalSca userNaturalSca = this.getJohnScaOwner(false, false);
+        Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000);
+
+        Transfer pendingUserActionTransfer = this.getNewTransferSca(3001, debitedWallet.getId(),
+            VALID_USER_NATURAL_SCA_ID, "USER_PRESENT");
+        assertEquals(TransactionStatus.CREATED, pendingUserActionTransfer.getStatus());
+        assertNotNull(pendingUserActionTransfer.getPendingUserAction());
+
+        Transfer noPendingUserActionTransfer = this.getNewTransferSca(10, debitedWallet.getId(),
+            VALID_USER_NATURAL_SCA_ID, "USER_PRESENT");
+        assertEquals(TransactionStatus.SUCCEEDED, noPendingUserActionTransfer.getStatus());
+        assertNull(noPendingUserActionTransfer.getPendingUserAction());
+    }
+
+    @Test
+    public void createTransferScaUserNotPresent() throws Exception {
+//        UserNaturalSca userNaturalSca = this.getJohnScaOwner(false, false);
+        Wallet debitedWallet = this.getJohnsScaWalletWithMoney(VALID_USER_NATURAL_SCA_ID, 10000);
+
+        Transfer pendingUserActionTransfer = this.getNewTransferSca(3001, debitedWallet.getId(),
+            VALID_USER_NATURAL_SCA_ID, "USER_NOT_PRESENT");
+        assertEquals(TransactionStatus.SUCCEEDED, pendingUserActionTransfer.getStatus());
+        assertNull(pendingUserActionTransfer.getPendingUserAction());
     }
 
     @Test
