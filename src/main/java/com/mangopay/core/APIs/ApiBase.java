@@ -162,6 +162,8 @@ public abstract class ApiBase {
         put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
         put("users_regulatory", new String[]{"/users/%s/Regulatory", RequestType.GET.toString()});
         put("users_enroll_sca", new String[]{"/sca/users/%s/enrollment", RequestType.POST.toString()});
+        put("users_close_natural", new String[]{"/users/natural/%s", RequestType.DELETE.toString()});
+        put("users_close_legal", new String[]{"/users/legal/%s", RequestType.DELETE.toString()});
 
         put("users_emoney_year", new String[]{"/users/%s/emoney/%s", RequestType.GET.toString()});
         put("users_emoney_month", new String[]{"/users/%s/emoney/%s/%s", RequestType.GET.toString()});
@@ -249,17 +251,23 @@ public abstract class ApiBase {
         put("get_conversion_quote", new String[]{"/conversions/quote/%s", RequestType.GET.toString()});
         put("create_quoted_conversion", new String[]{"/conversions/quoted-conversion", RequestType.POST.toString()});
 
-        // virtual account URLs
         put("virtual_account_create", new String[]{"/wallets/%s/virtual-accounts", RequestType.POST.toString()});
         put("virtual_account_deactivate", new String[]{"/wallets/%s/virtual-accounts/%s", RequestType.PUT.toString()});
         put("virtual_account_get", new String[]{"/wallets/%s/virtual-accounts/%s", RequestType.GET.toString()});
         put("virtual_account_get_all", new String[]{"/wallets/%s/virtual-accounts", RequestType.GET.toString()});
         put("virtual_account_get_availabilities", new String[]{"/virtual-accounts/availability", RequestType.GET.toString()});
 
-        // identity verification
         put("identify_verification_create", new String[]{"/users/%s/identity-verifications", RequestType.POST.toString()});
         put("identify_verification_get", new String[]{"/identity-verifications/%s", RequestType.GET.toString()});
         put("identify_verification_checks_get", new String[]{"/identity-verifications/%s/checks", RequestType.GET.toString()});
+
+        put("recipient_create", new String[]{"/users/%s/recipients", RequestType.POST.toString()});
+        put("recipient_get", new String[]{"/recipients/%s", RequestType.GET.toString()});
+        put("recipient_get_all", new String[]{"/users/%s/recipients", RequestType.GET.toString()});
+        put("recipient_get_schema", new String[]{"/recipients/schema?payoutMethodType=%s&recipientType=%s&currency=%s", RequestType.GET.toString()});
+        put("recipient_validate", new String[]{"/users/%s/recipients/validate", RequestType.POST.toString()});
+        put("recipient_deactivate", new String[]{"/recipients/%s", RequestType.PUT.toString()});
+        put("recipient_get_payout_methods", new String[]{"/recipients/payout-methods?country=%s&currency=%s", RequestType.GET.toString()});
     }};
 
     /**
@@ -291,7 +299,7 @@ public abstract class ApiBase {
      * Gets the HTTP request verb.
      *
      * @param key The method key.
-     * @return One of the HTTP verbs: GET, PUT or POST.
+     * @return One of the HTTP verbs: GET, PUT, POST or DELETE
      */
     protected String getRequestType(String key) {
         return this.methods.get(key)[1];
@@ -589,5 +597,12 @@ public abstract class ApiBase {
         } else {
             return null;
         }
+    }
+
+
+    protected <T extends Dto, U extends Dto> T deleteObject(Class<T> classOfT, String methodKey, EntityBase entity) throws Exception {
+        String urlMethod = String.format(this.getRequestUrl(methodKey), entity.getId());
+        RestTool rest = new RestTool(this.root, true, true);
+        return rest.request(classOfT, null, urlMethod, this.getRequestType(methodKey));
     }
 }
