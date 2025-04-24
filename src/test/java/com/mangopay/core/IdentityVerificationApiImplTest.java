@@ -47,9 +47,12 @@ public class IdentityVerificationApiImplTest extends BaseTest {
     }
 
     private IdentityVerification getNewIdentityVerification() throws Exception {
-        UserNatural user = getJohn();
-        IdentityVerification createObject = new IdentityVerification().setReturnUrl("https://example.com");
-        createObject.setTag("Created by the Java SDK");
-        return getApi().getIdentityVerificationApi().create(createObject, user.getId());
+        if (identityVerification == null) {
+            UserNatural user = getJohn();
+            IdentityVerification createObject = new IdentityVerification().setReturnUrl("https://example.com");
+            createObject.setTag("Created by the Java SDK");
+            identityVerification = getApi().getIdentityVerificationApi().create(createObject, user.getId());
+        }
+        return identityVerification;
     }
 }
