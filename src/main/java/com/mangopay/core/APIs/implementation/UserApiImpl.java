@@ -364,4 +364,19 @@ public class UserApiImpl extends ApiBase implements UserApi {
     public UserBlockStatus getRegulatory(String userId) throws Exception {
         return this.getObject(UserBlockStatus.class, "users_regulatory", userId);
     }
+
+    @Override
+    public void close(User user) throws Exception {
+        String methodKey;
+
+        if (user instanceof UserNatural || user instanceof UserNaturalSca)
+            methodKey = "users_close_natural";
+        else if (user instanceof UserLegal || user instanceof UserLegalSca)
+            methodKey = "users_close_legal";
+        else
+            throw new Exception("Unsupported user entity type.");
+
+        this.deleteObject(User.class, methodKey, user);
+    }
+
 }

@@ -494,4 +494,12 @@ public interface UserApi {
      * @throws Exception
      */
     UserBlockStatus getRegulatory(String userId) throws Exception;
+
+    /**
+     * Close a user (change status to CLOSED). The resource remains available for historical purposes.
+     *
+     * @param user The User
+     * @throws Exception
+     */
+    void close(User user) throws Exception;
 }

@@ -20,19 +20,20 @@ public abstract class BaseTest {
 
     protected MangoPayApi api;
 
-    private static UserNatural JOHN;
+    private static UserNatural JOHN_OWNER;
     private static UserNatural JOHN_PAYER;
     private static UserNaturalSca JOHN_SCA_OWNER;
     private static UserNaturalSca JOHN_SCA_PAYER;
-    private static UserLegal MATRIX;
+    private static UserLegal MATRIX_OWNER;
     private static UserLegal MATRIX_PAYER;
-    private static UserLegalSca MATRIX_SCA;
+    private static UserLegalSca MATRIX_SCA_OWNER;
     private static UserLegalSca MATRIX_SCA_PAYER;
     private static UboDeclaration MATRIX_UBO_DECLARATION;
     private static Ubo MATRIX_UBO;
     private static BankAccount JOHNS_ACCOUNT;
     private static Wallet JOHNS_WALLET;
     private static Wallet JOHNS_WALLET_WITH_MONEY;
+    private static Wallet JOHNS_SCA_WALLET_WITH_MONEY;
     private static Card JOHNS_3DSECURE_CARD;
     private static Wallet JOHNS_WALLET_WITH_MONEY_3D_SECURE;
     private static PayIn JOHNS_PAYIN_CARD_WEB;
@@ -49,6 +50,7 @@ public abstract class BaseTest {
     private static PayInTemplateURLOptions PAYIN_TEMPLATE_URL_OPTIONS;
     private static VirtualAccount JOHNS_VIRTUAL_ACCOUNT;
     private static Mandate MANDATE;
+    private static RecurringPayment JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION;
 
     public BaseTest() {
         this.api = buildNewMangoPayApi();
@@ -137,43 +139,31 @@ public abstract class BaseTest {
     }
 
     protected UserNatural getJohn() throws Exception {
-        return getJohnOwner(false, false);
+        return getJohn(UserCategory.OWNER, false, false);
     }
 
-    protected UserNatural getJohn(UserCategory userCategory) throws Exception {
+    protected UserNatural getJohn(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
         switch (userCategory) {
             case OWNER:
-                return getJohnOwner(false, false);
+                return getJohnOwner(recreate, termsAccepted);
             case PAYER:
-                return getJohnPayer(false, false);
+                return getJohnPayer(recreate, termsAccepted);
         }
         throw new Exception("userCategory not supported");
     }
 
-    protected UserNatural getJohnWithTermsAccepted() throws Exception {
-        return getJohnOwner(true, true);
-    }
-
-    protected UserNaturalSca getJohnSca() throws Exception {
-        return getJohnScaOwner(false, false);
-    }
-
-    protected UserNaturalSca getJohnSca(UserCategory userCategory) throws Exception {
+    protected UserNaturalSca getJohnSca(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
         switch (userCategory) {
             case OWNER:
-                return getJohnScaOwner(false, false);
+                return getJohnScaOwner(recreate, termsAccepted);
             case PAYER:
-                return getJohnScaPayer(false, false);
+                return getJohnScaPayer(recreate, termsAccepted);
         }
         throw new Exception("userCategory not supported");
     }
 
-    protected UserLegalSca getMatrixSca() throws Exception {
-        return getMatrixSca(false, false);
-    }
-
-    protected UserNatural getJohnOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
-        if (BaseTest.JOHN == null || recreate) {
+    private UserNatural getJohnOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.JOHN_OWNER == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
 
@@ -190,7 +180,7 @@ public abstract class BaseTest {
             user.setTermsAndConditionsAccepted(termsAccepted);
             user.setUserCategory(UserCategory.OWNER);
 
-            BaseTest.JOHN = (UserNatural) this.api.getUserApi().create(user);
+            BaseTest.JOHN_OWNER = (UserNatural) this.api.getUserApi().create(user);
             BaseTest.JOHNS_WALLET = null;
             BaseTest.JOHNS_WALLET_WITH_MONEY = null;
             BaseTest.JOHNS_ACCOUNT = null;
@@ -202,10 +192,10 @@ public abstract class BaseTest {
             BaseTest.JOHNS_PAYOUT_FOR_CARD_DIRECT = null;
             BaseTest.JOHNS_BANKING_ALIAS = null;
         }
-        return BaseTest.JOHN;
+        return BaseTest.JOHN_OWNER;
     }
 
-    protected UserNatural getJohnPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserNatural getJohnPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN_PAYER == null || recreate) {
             UserNatural user = new UserNatural();
             user.setFirstName("John");
@@ -219,7 +209,7 @@ public abstract class BaseTest {
         return BaseTest.JOHN_PAYER;
     }
 
-    protected UserNaturalSca getJohnScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserNaturalSca getJohnScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN_SCA_OWNER == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -244,7 +234,7 @@ public abstract class BaseTest {
         return BaseTest.JOHN_SCA_OWNER;
     }
 
-    protected UserNaturalSca getJohnScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserNaturalSca getJohnScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.JOHN_SCA_PAYER == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -262,18 +252,32 @@ public abstract class BaseTest {
         return BaseTest.JOHN_SCA_PAYER;
     }
 
-    protected UserLegal getMatrix(UserCategory userCategory) throws Exception {
+    protected UserLegal getMatrix() throws Exception {
+        return getMatrix(UserCategory.OWNER, false, false);
+    }
+
+    protected UserLegal getMatrix(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
         switch (userCategory) {
             case OWNER:
-                return getMatrixOwner();
+                return getMatrixOwner(recreate, termsAccepted);
             case PAYER:
-                return getMatrixPayer();
+                return getMatrixPayer(recreate, termsAccepted);
         }
         throw new Exception("userCategory not supported");
     }
 
-    protected UserLegal getMatrixOwner() throws Exception {
-        if (BaseTest.MATRIX == null) {
+    protected UserLegalSca getMatrixSca(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
+        switch (userCategory) {
+            case OWNER:
+                return getMatrixScaOwner(recreate, termsAccepted);
+            case PAYER:
+                return getMatrixScaPayer(recreate, termsAccepted);
+        }
+        throw new Exception("userCategory not supported");
+    }
+
+    private UserLegal getMatrixOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.MATRIX_OWNER == null || recreate) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
             user.setName("MartixSampleOrg");
@@ -288,19 +292,20 @@ public abstract class BaseTest {
             user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
             user.setCompanyNumber("LU12345678");
             user.setUserCategory(UserCategory.OWNER);
+            user.setTermsAndConditionsAccepted(termsAccepted);
 
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
             user.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
             user.setEmail(john.getEmail());
 
-            BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
+            BaseTest.MATRIX_OWNER = (UserLegal) this.api.getUserApi().create(user);
         }
-        return BaseTest.MATRIX;
+        return BaseTest.MATRIX_OWNER;
     }
 
-    protected UserLegal getMatrixPayer() throws Exception {
-        if (BaseTest.MATRIX_PAYER == null) {
+    private UserLegal getMatrixPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.MATRIX_PAYER == null || recreate) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
             user.setName("MartixSampleOrg");
@@ -309,15 +314,15 @@ public abstract class BaseTest {
             user.setUserCategory(UserCategory.PAYER);
             user.setLegalRepresentativeFirstName(john.getFirstName());
             user.setLegalRepresentativeLastName(john.getLastName());
-            user.setTermsAndConditionsAccepted(true);
+            user.setTermsAndConditionsAccepted(termsAccepted);
 
             BaseTest.MATRIX_PAYER = (UserLegal) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX_PAYER;
     }
 
-    protected UserLegalSca getMatrixSca(Boolean recreate, Boolean termsAccepted) throws Exception {
-        if (BaseTest.MATRIX_SCA == null || recreate) {
+    private UserLegalSca getMatrixScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+        if (BaseTest.MATRIX_SCA_OWNER == null || recreate) {
             UserNatural john = this.getJohn();
             UserLegalSca user = new UserLegalSca();
 
@@ -344,12 +349,12 @@ public abstract class BaseTest {
             user.setLegalRepresentative(legalRepresentative);
             user.setTermsAndConditionsAccepted(termsAccepted);
 
-            BaseTest.MATRIX_SCA = (UserLegalSca) this.api.getUserApi().create(user);
+            BaseTest.MATRIX_SCA_OWNER = (UserLegalSca) this.api.getUserApi().create(user);
         }
-        return BaseTest.MATRIX_SCA;
+        return BaseTest.MATRIX_SCA_OWNER;
     }
 
-    protected UserLegalSca getMatrixScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserLegalSca getMatrixScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
         if (BaseTest.MATRIX_SCA_PAYER == null || recreate) {
             UserLegalSca user = new UserLegalSca();
 
@@ -380,7 +385,7 @@ public abstract class BaseTest {
      * HeadquartersAddress, LegalRepresentativeAddress, LegalRepresentativeEmail, CompanyNumber
      */
     protected UserLegal getMatrixWithoutOptionalFields() throws Exception {
-        if (BaseTest.MATRIX == null) {
+        if (BaseTest.MATRIX_OWNER == null) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
             user.setName("MartixSampleOrg");
@@ -396,13 +401,13 @@ public abstract class BaseTest {
             user.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
             user.setEmail(john.getEmail());
 
-            BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
+            BaseTest.MATRIX_OWNER = (UserLegal) this.api.getUserApi().create(user);
         }
-        return BaseTest.MATRIX;
+        return BaseTest.MATRIX_OWNER;
     }
 
     protected UserLegal getMatrixWithoutOptionalFieldsAndAcceptedTerms() throws Exception {
-        if (BaseTest.MATRIX == null) {
+        if (BaseTest.MATRIX_OWNER == null) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
             user.setName("MartixSampleOrg");
@@ -419,9 +424,9 @@ public abstract class BaseTest {
             user.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
             user.setEmail(john.getEmail());
 
-            BaseTest.MATRIX = (UserLegal) this.api.getUserApi().create(user);
+            BaseTest.MATRIX_OWNER = (UserLegal) this.api.getUserApi().create(user);
         }
-        return BaseTest.MATRIX;
+        return BaseTest.MATRIX_OWNER;
     }
 
     protected BankAccount getJohnsAccount() throws Exception {
@@ -588,6 +593,26 @@ public abstract class BaseTest {
         return api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
     }
 
+    protected RecurringPayment createJohnsRecurringPayPalPayInRegistration() throws Exception {
+        if (JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION == null) {
+            Map<String, String> data = this.getJohnsWalletWithMoney3DSecure(1000);
+            UserNatural john = this.getJohn();
+
+            CreateRecurringPayment createRecurringPayment = new CreateRecurringPayment();
+            createRecurringPayment.setAuthorId(john.getId());
+            createRecurringPayment.setCreditedWalletId(data.get("walletId"));
+            createRecurringPayment.setFirstTransactionDebitedFunds(new Money().setAmount(1000).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setFirstTransactionFees(new Money().setAmount(0).setCurrency(CurrencyIso.EUR));
+            createRecurringPayment.setShipping(this.getNewShipping());
+            createRecurringPayment.setBilling(this.getNewBilling());
+            createRecurringPayment.setPaymentType(RecurringPayInRegistrationPaymentType.PAYPAL);
+
+            JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION = api.getPayInApi().createRecurringPayment(null, createRecurringPayment);
+        }
+
+        return JOHNS_RECURRING_PAYPAL_PAYIN_REGISTRATION;
+    }
+
     /**
      * Creates wallet for John, if not created yet, or returns an existing one.
      *
@@ -595,57 +620,64 @@ public abstract class BaseTest {
      * @return Wallet entity instance.
      */
     protected Wallet getJohnsWalletWithMoney(int amount) throws Exception {
-
         if (BaseTest.JOHNS_WALLET_WITH_MONEY == null) {
-
             UserNatural john = this.getJohn();
-
-            // create wallet with money
-            Wallet wallet = new Wallet();
-            wallet.setOwners(new ArrayList<String>());
-            wallet.getOwners().add(john.getId());
-            wallet.setCurrency(CurrencyIso.EUR);
-            wallet.setDescription("WALLET IN EUR WITH MONEY");
-
-            BaseTest.JOHNS_WALLET_WITH_MONEY = this.api.getWalletApi().create(wallet);
-
-            CardRegistration cardRegistration = new CardRegistration();
-            cardRegistration.setUserId(BaseTest.JOHNS_WALLET_WITH_MONEY.getOwners().get(0));
-            cardRegistration.setCurrency(CurrencyIso.EUR);
-            cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
-
-            cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData(cardRegistration));
-            cardRegistration = this.api.getCardRegistrationApi().update(cardRegistration);
-
-            Card card = this.api.getCardApi().get(cardRegistration.getCardId());
-
-            // create pay-in CARD DIRECT
-            PayIn payIn = new PayIn();
-            payIn.setCreditedWalletId(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
-            payIn.setAuthorId(cardRegistration.getUserId());
-            payIn.setDebitedFunds(new Money());
-            payIn.getDebitedFunds().setAmount(amount);
-            payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
-            payIn.setFees(new Money());
-            payIn.getFees().setAmount(0);
-            payIn.getFees().setCurrency(CurrencyIso.EUR);
-
-            // payment type as CARD
-            payIn.setPaymentDetails(new PayInPaymentDetailsCard());
-            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setCardType(card.getCardType());
-            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
-            ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
-
-            // execution type as DIRECT
-            payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
-            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(card.getId());
-            ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
-
-            // create Pay-In
-            this.api.getPayInApi().create(payIn);
+            BaseTest.JOHNS_WALLET_WITH_MONEY = createWalletForUser(john.getId());
+            CardRegistration cardRegistration = getNewCardRegistration(john.getId());
+            createPayInCardDirect(john.getId(), BaseTest.JOHNS_WALLET_WITH_MONEY.getId(), amount, cardRegistration.getCardId());
         }
 
         return this.api.getWalletApi().get(BaseTest.JOHNS_WALLET_WITH_MONEY.getId());
+    }
+
+    protected Wallet getJohnsScaWalletWithMoney(String userId, int amount) throws Exception {
+        if (BaseTest.JOHNS_SCA_WALLET_WITH_MONEY == null) {
+            BaseTest.JOHNS_SCA_WALLET_WITH_MONEY = createWalletForUser(userId);
+            CardRegistration cardRegistration = getNewCardRegistration(userId);
+            createPayInCardDirect(userId, BaseTest.JOHNS_SCA_WALLET_WITH_MONEY.getId(), amount, cardRegistration.getCardId());
+        }
+        return this.api.getWalletApi().get(BaseTest.JOHNS_SCA_WALLET_WITH_MONEY.getId());
+    }
+
+    private Wallet createWalletForUser(String userId) throws Exception {
+        Wallet wallet = new Wallet();
+        wallet.setOwners(new ArrayList<String>());
+        wallet.getOwners().add(userId);
+        wallet.setCurrency(CurrencyIso.EUR);
+        wallet.setDescription("WALLET IN EUR WITH MONEY");
+        return this.api.getWalletApi().create(wallet);
+    }
+
+    private CardRegistration getNewCardRegistration(String userId) throws Exception {
+        CardRegistration cardRegistration = new CardRegistration();
+        cardRegistration.setUserId(userId);
+        cardRegistration.setCurrency(CurrencyIso.EUR);
+        cardRegistration = this.api.getCardRegistrationApi().create(cardRegistration);
+
+        cardRegistration.setRegistrationData(this.getPaylineCorrectRegistartionData(cardRegistration));
+        return this.api.getCardRegistrationApi().update(cardRegistration);
+    }
+
+    private void createPayInCardDirect(String userId, String walletId, int amount, String cardId) throws Exception {
+        PayIn payIn = new PayIn();
+        payIn.setCreditedWalletId(walletId);
+        payIn.setAuthorId(userId);
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(amount);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        payIn.setPaymentDetails(new PayInPaymentDetailsCard());
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setBrowserInfo(getNewBrowserInfo());
+        ((PayInPaymentDetailsCard) payIn.getPaymentDetails()).setIpAddress("2001:0620:0000:0000:0211:24FF:FE80:C12C");
+
+        payIn.setExecutionDetails(new PayInExecutionDetailsDirect());
+        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setCardId(cardId);
+        ((PayInExecutionDetailsDirect) payIn.getExecutionDetails()).setSecureModeReturnUrl("http://test.com");
+
+        this.api.getPayInApi().create(payIn);
     }
 
     private PayInPaymentDetailsCard getPayInPaymentDetailsCard() {
@@ -765,6 +797,12 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInPayByBankWeb(String userId) throws Exception {
+        PayIn payIn = getPayInPayByBankWeb(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayIn getNewPayInKlarnaWeb(String userId) throws Exception {
         PayIn payIn = getPayInKlarnaWeb(userId);
 
@@ -791,6 +829,11 @@ public abstract class BaseTest {
 
     protected PayIn getNewPayInTwintWeb(String userId, String walletId) throws Exception {
         PayIn payIn = getPayInTwintWeb(userId, walletId);
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInSwishWeb(String userId, String walletId) throws Exception {
+        PayIn payIn = getPayInSwishWeb(userId, walletId);
         return this.api.getPayInApi().create(payIn);
     }
 
@@ -1126,6 +1169,43 @@ public abstract class BaseTest {
         return payIn;
     }
 
+    private PayIn getPayInPayByBankWeb(String userId) throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(500);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        PayInPaymentDetailsPayByBank paymentDetails = new PayInPaymentDetailsPayByBank();
+        paymentDetails.setStatementDescriptor("Example123");
+        paymentDetails.setCountry(CountryIso.DE);
+        paymentDetails.setIban("DE03500105177564668331");
+        paymentDetails.setBic("AACSDE33");
+        paymentDetails.setScheme("SEPA_INSTANT_CREDIT_TRANSFER");
+        paymentDetails.setBankName("de-demobank-open-banking-embedded-templates");
+        paymentDetails.setPaymentFlow("WEB");
+        payIn.setPaymentDetails(paymentDetails);
+
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://example.com");
+        executionDetails.setCulture(CultureCode.EN);
+        payIn.setExecutionDetails(executionDetails);
+        payIn.setTag("PayByBank Java");
+
+        return payIn;
+    }
+
     protected PayIn getNewPayInCardDirectWithRequested3DSVersion() throws Exception {
         PayIn payIn = getPayInCardDirect(null);
 
@@ -1208,6 +1288,34 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(payInExecutionDetailsWeb);
 
         payIn.setTag("My Twint Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInSwishWeb(String userId, String walletId) throws Exception {
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(walletId);
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(100);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.SEK);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.SEK);
+
+        payIn.setPaymentDetails(new PayInPaymentDetailsSwish());
+        ((PayInPaymentDetailsSwish) payIn.getPaymentDetails()).setStatementDescriptor("Swish");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb payInExecutionDetailsWeb = new PayInExecutionDetailsWeb();
+        payInExecutionDetailsWeb.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(payInExecutionDetailsWeb);
+
+        payIn.setTag("My Swish Tag");
         return payIn;
     }
 
@@ -1295,6 +1403,34 @@ public abstract class BaseTest {
 
         transfer.setDebitedWalletId(walletWithMoney.getId());
         transfer.setCreditedWalletId(wallet.getId());
+
+        return this.api.getTransferApi().create(transfer);
+    }
+
+    protected Transfer getNewTransferSca(int amount, String walletWithMoneyId, String userNaturalScaId, String scaContext) throws Exception {
+        UserLegalSca userLegalSca = this.getMatrixSca(UserCategory.OWNER, false, true);
+
+        Wallet creditedWallet = new Wallet();
+        creditedWallet.setOwners(new ArrayList<String>());
+        creditedWallet.getOwners().add(userLegalSca.getId());
+        creditedWallet.setCurrency(CurrencyIso.EUR);
+        creditedWallet.setDescription("WALLET IN EUR FOR TRANSFER");
+        creditedWallet = this.api.getWalletApi().create(creditedWallet);
+
+        Transfer transfer = new Transfer();
+        transfer.setAuthorId(userNaturalScaId);
+        transfer.setDebitedFunds(new Money());
+        transfer.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        // amount needs to be >= 30 in order for the SCA logic to be triggered
+        transfer.getDebitedFunds().setAmount(amount);
+        transfer.setFees(new Money());
+        transfer.getFees().setCurrency(CurrencyIso.EUR);
+        transfer.getFees().setAmount(0);
+
+        transfer.setDebitedWalletId(walletWithMoneyId);
+        transfer.setCreditedWalletId(creditedWallet.getId());
+
+        transfer.setScaContext(scaContext);
 
         return this.api.getTransferApi().create(transfer);
     }
@@ -1621,7 +1757,7 @@ public abstract class BaseTest {
 
     protected UboDeclaration getMatrixUboDeclaration() throws Exception {
         if (MATRIX_UBO_DECLARATION == null) {
-            MATRIX_UBO_DECLARATION = api.getUboDeclarationApi().create(this.getMatrixOwner().getId());
+            MATRIX_UBO_DECLARATION = api.getUboDeclarationApi().create(this.getMatrix().getId());
         }
         return MATRIX_UBO_DECLARATION;
     }
@@ -1642,7 +1778,7 @@ public abstract class BaseTest {
 
     protected Ubo getMatrixUbo() throws Exception {
         if (MATRIX_UBO == null) {
-            UserLegal matrix = this.getMatrixOwner();
+            UserLegal matrix = this.getMatrix();
             UboDeclaration uboDeclaration = this.getMatrixUboDeclaration();
 
             Ubo ubo = this.createNewUboForMatrix();
