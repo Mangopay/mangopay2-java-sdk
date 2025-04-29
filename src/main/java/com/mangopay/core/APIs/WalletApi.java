@@ -39,6 +39,15 @@ public interface WalletApi {
     Wallet get(String walletId) throws Exception;
 
     /**
+     * Gets the wallet.
+     *
+     * @param walletId Wallet identifier.
+     * @return Wallet instance returned from API.
+     * @throws Exception
+     */
+    Wallet get(String walletId, String scaContext) throws Exception;
+
+    /**
      * Updates the wallet.
      * @param wallet        Wallet object to save.
      * @return              Wallet instance returned from API.

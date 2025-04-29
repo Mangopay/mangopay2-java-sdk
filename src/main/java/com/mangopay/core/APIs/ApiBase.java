@@ -173,6 +173,7 @@ public abstract class ApiBase {
         put("wallets_create", new String[]{"/wallets", RequestType.POST.toString()});
         put("wallets_alltransactions", new String[]{"/wallets/%s/transactions", RequestType.GET.toString()});
         put("wallets_get", new String[]{"/wallets/%s", RequestType.GET.toString()});
+        put("wallets_get_sca", new String[]{"/wallets/%s?ScaContext=%s", RequestType.GET.toString()});
         put("wallets_save", new String[]{"/wallets/%s", RequestType.PUT.toString()});
 
         put("users_createkycdocument", new String[]{"/users/%s/KYC/documents/", RequestType.POST.toString()});

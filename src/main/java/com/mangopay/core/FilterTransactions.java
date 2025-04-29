@@ -40,6 +40,12 @@ public class FilterTransactions extends Dto {
     @SerializedName("AfterDate")
     private Long afterDate;
 
+    /**
+     * Possible values: USER_NOT_PRESENT, USER_PRESENT
+     */
+    @SerializedName("ScaContext")
+    private String scaContext;
+
     public TransactionStatus getStatus() {
         return status;
     }
@@ -80,6 +86,14 @@ public class FilterTransactions extends Dto {
         this.afterDate = afterDate;
     }
 
+    public String getScaContext() {
+        return scaContext;
+    }
+
+    public void setScaContext(String scaContext) {
+        this.scaContext = scaContext;
+    }
+
     /**
      * Gets map of fields and values.
      *
@@ -94,6 +108,7 @@ public class FilterTransactions extends Dto {
         if (nature != null && nature != TransactionNature.NotSpecified) result.put("Nature", nature.toString());
         if (beforeDate != null) result.put("BeforeDate", Long.toString(beforeDate));
         if (afterDate != null) result.put("AfterDate", Long.toString(afterDate));
+        if (scaContext != null) result.put("ScaContext", scaContext);
 
         return result;
     }

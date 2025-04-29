@@ -41,6 +41,11 @@ public class WalletApiImpl extends ApiBase implements WalletApi {
     }
 
     @Override
+    public Wallet get(String walletId, String scaContext) throws Exception {
+        return this.getObject(Wallet.class, "wallets_get_sca", walletId, scaContext);
+    }
+
+    @Override
     public Wallet update(Wallet wallet) throws Exception {
         return this.updateObject(Wallet.class, "wallets_save", wallet);
     }

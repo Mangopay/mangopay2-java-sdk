@@ -4,10 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.UserApi;
-import com.mangopay.core.FilterPreAuthorizations;
-import com.mangopay.core.FilterTransactions;
-import com.mangopay.core.Pagination;
-import com.mangopay.core.Sorting;
+import com.mangopay.core.*;
 import com.mangopay.core.deserializer.BankAccountDeserializer;
 import com.mangopay.core.deserializer.UserDeserializer;
 import com.mangopay.core.enumerations.CurrencyIso;
@@ -214,6 +211,11 @@ public class UserApiImpl extends ApiBase implements UserApi {
     @Override
     public List<Wallet> getWallets(String userId, Pagination pagination, Sorting sorting) throws Exception {
         return this.getList(Wallet[].class, Wallet.class, "users_allwallets", pagination, userId, sorting);
+    }
+
+    @Override
+    public List<Wallet> getWallets(String userId, Pagination pagination, FilterWallets filter, Sorting sorting) throws Exception {
+        return this.getList(Wallet[].class, Wallet.class, "users_allwallets", pagination, userId, filter.getValues(), sorting);
     }
 
     @Override
