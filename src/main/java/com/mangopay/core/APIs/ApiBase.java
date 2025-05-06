@@ -259,8 +259,8 @@ public abstract class ApiBase {
         put("virtual_account_get_availabilities", new String[]{"/virtual-accounts/availability", RequestType.GET.toString()});
 
         put("identify_verification_create", new String[]{"/users/%s/identity-verifications", RequestType.POST.toString()});
+        put("identify_verification_get_all", new String[]{"/users/%s/identity-verifications", RequestType.GET.toString()});
         put("identify_verification_get", new String[]{"/identity-verifications/%s", RequestType.GET.toString()});
-        put("identify_verification_checks_get", new String[]{"/identity-verifications/%s/checks", RequestType.GET.toString()});
 
         put("recipient_create", new String[]{"/users/%s/recipients", RequestType.POST.toString()});
         put("recipient_get", new String[]{"/recipients/%s", RequestType.GET.toString()});
