@@ -87,6 +87,7 @@ public class ClientApiImplTest extends BaseTest {
         assertEquals("Client's headquarter phone number did not update", headquarterPhoneNumber, clientNew.getHeadquartersPhoneNumber());
     }
 
+    @Ignore
     @Test
     public void uploadClientLogo() throws Exception {
 

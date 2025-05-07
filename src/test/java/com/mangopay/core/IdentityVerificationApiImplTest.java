@@ -3,8 +3,9 @@ package com.mangopay.core;
 import com.mangopay.entities.IdentityVerification;
 import com.mangopay.entities.UserNatural;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -34,16 +35,12 @@ public class IdentityVerificationApiImplTest extends BaseTest {
         assertEquals(identityVerification.getStatus(), fetched.getStatus());
     }
 
-    @Ignore("Endpoint returns 404")
     @Test
-    public void getIdentityVerificationChecks() throws Exception {
-        IdentityVerificationCheck check = getApi().getIdentityVerificationApi().getChecks(identityVerification.getId());
-        assertNotNull(check);
-        assertEquals(identityVerification.getId(), check.getSessionId());
-        assertEquals("PENDING", check.getStatus());
-        assertTrue(check.getCreationDate() > 0);
-        assertTrue(check.getLastUpdate() > 0);
-        assertNotNull(check.getChecks());
+    public void getAllIdentityVerificationsForUser() throws Exception {
+        UserNatural user = getJohn();
+        List<IdentityVerification> fetched = getApi().getIdentityVerificationApi().getAll(user.getId(), null);
+        assertNotNull(fetched);
+        assertFalse(fetched.isEmpty());
     }
 
     private IdentityVerification getNewIdentityVerification() throws Exception {

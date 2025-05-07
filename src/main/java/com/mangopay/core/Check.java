@@ -45,6 +45,9 @@ public class Check extends Dto {
     @SerializedName("Data")
     private List<CheckData> data;
 
+    @SerializedName("Reasons")
+    private List<CheckData> reasons;
+
     public String getCheckId() {
         return checkId;
     }
@@ -91,5 +94,13 @@ public class Check extends Dto {
 
     public void setData(List<CheckData> data) {
         this.data = data;
+    }
+
+    public List<CheckData> getReasons() {
+        return reasons;
+    }
+
+    public void setReasons(List<CheckData> reasons) {
+        this.reasons = reasons;
     }
 }

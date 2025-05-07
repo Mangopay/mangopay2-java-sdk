@@ -3,8 +3,10 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.IdentityVerificationApi;
-import com.mangopay.core.IdentityVerificationCheck;
+import com.mangopay.core.Pagination;
 import com.mangopay.entities.IdentityVerification;
+
+import java.util.List;
 
 /**
  * API for Identity Verification Sessions.
@@ -36,7 +38,7 @@ public class IdentityVerificationApiImpl extends ApiBase implements IdentityVeri
     }
 
     @Override
-    public IdentityVerificationCheck getChecks(String id) throws Exception {
-        return this.getObject(IdentityVerificationCheck.class, "identify_verification_checks_get", id);
+    public List<IdentityVerification> getAll(String userId, Pagination pagination) throws Exception {
+        return this.getList(IdentityVerification[].class, IdentityVerification.class, "identify_verification_get_all", pagination, userId);
     }
 }

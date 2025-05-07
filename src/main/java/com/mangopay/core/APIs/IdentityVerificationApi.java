@@ -1,7 +1,9 @@
 package com.mangopay.core.APIs;
 
-import com.mangopay.core.IdentityVerificationCheck;
+import com.mangopay.core.Pagination;
 import com.mangopay.entities.IdentityVerification;
+
+import java.util.List;
 
 
 public interface IdentityVerificationApi {
@@ -33,10 +35,10 @@ public interface IdentityVerificationApi {
     IdentityVerification get(String id) throws Exception;
 
     /**
-     * Obtain verified user data and results of each check performed
+     * See the status and basic details of an identity verification session
      *
-     * @param id The unique identifier of the identity verification session.
-     * @return IdentityVerificationCheck instance
+     * @param userId The unique identifier of the user.
+     * @return List of IdentityVerifications
      */
-    IdentityVerificationCheck getChecks(String id) throws Exception;
+    List<IdentityVerification> getAll(String userId, Pagination pagination) throws Exception;
 }
