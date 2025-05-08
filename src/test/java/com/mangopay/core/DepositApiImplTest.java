@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -50,6 +52,24 @@ public class DepositApiImplTest extends BaseTest {
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
+    }
+
+    @Test
+    public void getAllDepositsForUser() throws Exception {
+        Deposit deposit = this.createNewDeposit();
+        List<Deposit> result = this.api.getDepositApi().getAllForUser(deposit.getAuthorId(), null, null, null);
+
+        Assert.assertNotNull(result);
+        Assert.assertFalse(result.isEmpty());
+    }
+
+    @Test
+    public void getAllDepositsForCard() throws Exception {
+        Deposit deposit = this.createNewDeposit();
+        List<Deposit> result = this.api.getDepositApi().getAllForCard(deposit.getCardId(), null, null, null);
+
+        Assert.assertNotNull(result);
+        Assert.assertFalse(result.isEmpty());
     }
 
     @Ignore("Manual deposit confirmation needed")
