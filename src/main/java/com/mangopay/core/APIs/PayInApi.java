@@ -146,6 +146,17 @@ public interface PayInApi {
      */
     List<Refund> getRefunds(String payInId, Pagination pagination, Sorting sorting) throws Exception;
 
+    /**
+     * Create a Deposit Preauthorized PayIn without complement
+     *
+     * @param payIn          The PayIn object to be created
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Created PayIn object returned by API
+     * @throws Exception
+     * @deprecated This method is deprecated. Please use 'createDepositPreauthorizedWithoutComplement', which follows
+     * the same pattern as the other PayIns
+     */
+    @Deprecated
     CardPreAuthorizedDepositPayIn createCardPreAuthorizedDepositPayIn(CreateCardPreAuthorizedDepositPayIn payIn, String idempotencyKey) throws Exception;
 
     /**
@@ -186,4 +197,34 @@ public interface PayInApi {
      * @throws Exception
      */
     PayIn createPayconiq(PayIn payIn, String idempotencyKey) throws Exception;
+
+    /**
+     * Create a Deposit Preauthorized PayIn without complement
+     *
+     * @param payIn          The PayIn object to be created
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Created PayIn object returned by API
+     * @throws Exception
+     */
+    PayIn createDepositPreauthorizedWithoutComplement(PayIn payIn, String idempotencyKey) throws Exception;
+
+    /**
+     * Create a Deposit Preauthorized PayIn prior to complement
+     *
+     * @param payIn          The PayIn object to be created
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Created PayIn object returned by API
+     * @throws Exception
+     */
+    PayIn createDepositPreauthorizedPriorToComplement(PayIn payIn, String idempotencyKey) throws Exception;
+
+    /**
+     * Create a Deposit Preauthorized PayIn complement
+     *
+     * @param payIn          The PayIn object to be created
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Created PayIn object returned by API
+     * @throws Exception
+     */
+    PayIn createDepositPreauthorizedComplement(PayIn payIn, String idempotencyKey) throws Exception;
 }
