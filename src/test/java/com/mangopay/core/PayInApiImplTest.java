@@ -1262,7 +1262,7 @@ public class PayInApiImplTest extends BaseTest {
         paymentDetails.setDepositId(deposit.getId());
         payIn.setPaymentDetails(paymentDetails);
 
-        PayIn created = this.api.getPayInApi().createDepositPreauthorizedWithoutComplement(payIn, null);
+        PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInWithoutComplement(payIn, null);
 
         assertNotNull(created);
         assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
@@ -1290,7 +1290,7 @@ public class PayInApiImplTest extends BaseTest {
         paymentDetails.setDepositId(deposit.getId());
         payIn.setPaymentDetails(paymentDetails);
 
-        PayIn created = this.api.getPayInApi().createDepositPreauthorizedPriorToComplement(payIn, null);
+        PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInPriorToComplement(payIn, null);
 
         assertNotNull(created);
         assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
@@ -1320,7 +1320,7 @@ public class PayInApiImplTest extends BaseTest {
         paymentDetails.setDepositId(deposit.getId());
         payIn.setPaymentDetails(paymentDetails);
 
-        PayIn created = this.api.getPayInApi().createDepositPreauthorizedComplement(payIn, null);
+        PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInComplement(payIn, null);
 
         assertNotNull(created);
         assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());

@@ -206,7 +206,7 @@ public interface PayInApi {
      * @return Created PayIn object returned by API
      * @throws Exception
      */
-    PayIn createDepositPreauthorizedWithoutComplement(PayIn payIn, String idempotencyKey) throws Exception;
+    PayIn createDepositPreauthorizedPayInWithoutComplement(PayIn payIn, String idempotencyKey) throws Exception;
 
     /**
      * Create a Deposit Preauthorized PayIn prior to complement
@@ -216,7 +216,7 @@ public interface PayInApi {
      * @return Created PayIn object returned by API
      * @throws Exception
      */
-    PayIn createDepositPreauthorizedPriorToComplement(PayIn payIn, String idempotencyKey) throws Exception;
+    PayIn createDepositPreauthorizedPayInPriorToComplement(PayIn payIn, String idempotencyKey) throws Exception;
 
     /**
      * Create a Deposit Preauthorized PayIn complement
@@ -226,5 +226,5 @@ public interface PayInApi {
      * @return Created PayIn object returned by API
      * @throws Exception
      */
-    PayIn createDepositPreauthorizedComplement(PayIn payIn, String idempotencyKey) throws Exception;
+    PayIn createDepositPreauthorizedPayInComplement(PayIn payIn, String idempotencyKey) throws Exception;
 }
