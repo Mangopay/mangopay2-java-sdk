@@ -1302,6 +1302,8 @@ public class PayInApiImplTest extends BaseTest {
     @Test
     public void testCreateDepositPreAuthorizedPayInComplement() throws Exception {
         Deposit deposit = this.createNewDeposit();
+        // payment status NO_SHOW is required for the deposit
+        getApi().getDepositApi().update(deposit.getId(), PaymentStatus.NO_SHOW_REQUESTED);
         Wallet wallet = this.getJohnsWallet();
 
         Money debitedFunds = new Money(CurrencyIso.EUR, 1000);

@@ -245,7 +245,7 @@ public abstract class ApiBase {
 
         put("deposits_create", new String[]{"/deposit-preauthorizations/card/direct", RequestType.POST.toString()});
         put("deposits_get", new String[]{"/deposit-preauthorizations/%s", RequestType.GET.toString()});
-        put("deposits_cancel", new String[]{"/deposit-preauthorizations/%s", RequestType.PUT.toString()});
+        put("deposits_update", new String[]{"/deposit-preauthorizations/%s", RequestType.PUT.toString()});
 
         put("get_conversion_rate", new String[]{"/conversions/rate/%s/%s", RequestType.GET.toString()});
         put("create_instant_conversion", new String[]{"/conversions/instant-conversion", RequestType.POST.toString()});
