@@ -34,6 +34,7 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(recipient.getPendingUserAction());
         assertNotNull(recipient.getRecipientScope());
         assertNotNull(recipient.getUserId());
+        assertNotNull(recipient.getCountry());
     }
 
     @Test
@@ -139,7 +140,8 @@ public class RecipientApiImplTest extends BaseTest {
                         .setLastName("Team")
                         .setAddress(getNewAddress())
                 )
-                .setLocalBankTransfer(localBankTransfer);
+                .setLocalBankTransfer(localBankTransfer)
+                .setCountry(CountryIso.GB);
 
             recipient = getApi().getRecipientApi().create(toCreate, ACTIVE_USER_NATURAL_SCA_ID);
         }
