@@ -54,7 +54,7 @@ public class RecipientApiImplTest extends BaseTest {
     @Test
     public void getSchemaLocalBankTransferIndividual() throws Exception {
         RecipientSchema schema = getApi().getRecipientApi().getSchema("LocalBankTransfer",
-            "Individual", CurrencyIso.GBP);
+            "Individual", CurrencyIso.GBP, CountryIso.GB);
         assertNotNull(schema);
         assertNotNull(schema.getDisplayName());
         assertNotNull(schema.getCurrency());
@@ -78,7 +78,7 @@ public class RecipientApiImplTest extends BaseTest {
     @Test
     public void getSchemaInternationalBankTransferBusiness() throws Exception {
         RecipientSchema schema = getApi().getRecipientApi().getSchema("InternationalBankTransfer",
-            "Business", CurrencyIso.GBP);
+            "Business", CurrencyIso.GBP, CountryIso.GB);
         assertNotNull(schema);
         assertNotNull(schema.getDisplayName());
         assertNotNull(schema.getCurrency());
