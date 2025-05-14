@@ -40,7 +40,7 @@ public class IdentityVerification extends EntityBase {
      * The date and time at which the session was last updated.
      */
     @SerializedName("LastUpdate")
-    private long lastUpdate;
+    private Long lastUpdate;
 
     @SerializedName("UserId")
     private String userId;
@@ -78,11 +78,11 @@ public class IdentityVerification extends EntityBase {
         return this;
     }
 
-    public long getLastUpdate() {
+    public Long getLastUpdate() {
         return lastUpdate;
     }
 
-    public IdentityVerification setLastUpdate(long lastUpdate) {
+    public IdentityVerification setLastUpdate(Long lastUpdate) {
         this.lastUpdate = lastUpdate;
         return this;
     }
