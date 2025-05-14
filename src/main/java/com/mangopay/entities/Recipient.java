@@ -2,6 +2,7 @@ package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
+import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.subentities.BusinessRecipient;
 import com.mangopay.entities.subentities.IndividualRecipient;
@@ -39,6 +40,9 @@ public class Recipient extends EntityBase {
      */
     @SerializedName("Currency")
     private CurrencyIso currency;
+
+    @SerializedName("Country")
+    private CountryIso country;
 
     /**
      * The unique identifier of the user.
@@ -195,6 +199,15 @@ public class Recipient extends EntityBase {
 
     public Recipient setRecipientScope(String recipientScope) {
         this.recipientScope = recipientScope;
+        return this;
+    }
+
+    public CountryIso getCountry() {
+        return country;
+    }
+
+    public Recipient setCountry(CountryIso country) {
+        this.country = country;
         return this;
     }
 }

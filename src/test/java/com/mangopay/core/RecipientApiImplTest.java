@@ -34,6 +34,7 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(recipient.getPendingUserAction());
         assertNotNull(recipient.getRecipientScope());
         assertNotNull(recipient.getUserId());
+        assertNotNull(recipient.getCountry());
     }
 
     @Test
@@ -54,7 +55,7 @@ public class RecipientApiImplTest extends BaseTest {
     @Test
     public void getSchemaLocalBankTransferIndividual() throws Exception {
         RecipientSchema schema = getApi().getRecipientApi().getSchema("LocalBankTransfer",
-            "Individual", CurrencyIso.GBP);
+            "Individual", CurrencyIso.GBP, CountryIso.GB);
         assertNotNull(schema);
         assertNotNull(schema.getDisplayName());
         assertNotNull(schema.getCurrency());
@@ -78,7 +79,7 @@ public class RecipientApiImplTest extends BaseTest {
     @Test
     public void getSchemaInternationalBankTransferBusiness() throws Exception {
         RecipientSchema schema = getApi().getRecipientApi().getSchema("InternationalBankTransfer",
-            "Business", CurrencyIso.GBP);
+            "Business", CurrencyIso.GBP, CountryIso.GB);
         assertNotNull(schema);
         assertNotNull(schema.getDisplayName());
         assertNotNull(schema.getCurrency());
@@ -139,7 +140,8 @@ public class RecipientApiImplTest extends BaseTest {
                         .setLastName("Team")
                         .setAddress(getNewAddress())
                 )
-                .setLocalBankTransfer(localBankTransfer);
+                .setLocalBankTransfer(localBankTransfer)
+                .setCountry(CountryIso.GB);
 
             recipient = getApi().getRecipientApi().create(toCreate, ACTIVE_USER_NATURAL_SCA_ID);
         }

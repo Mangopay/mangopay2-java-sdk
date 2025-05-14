@@ -49,8 +49,8 @@ public class RecipientApiImpl extends ApiBase implements RecipientApi {
     }
 
     @Override
-    public RecipientSchema getSchema(String payoutMethodType, String recipientType, CurrencyIso currency) throws Exception {
-        return this.getObject(RecipientSchema.class, "recipient_get_schema", payoutMethodType, recipientType, currency);
+    public RecipientSchema getSchema(String payoutMethodType, String recipientType, CurrencyIso currency, CountryIso country) throws Exception {
+        return this.getObject(RecipientSchema.class, "recipient_get_schema", payoutMethodType, recipientType, currency, country);
     }
 
     @Override
