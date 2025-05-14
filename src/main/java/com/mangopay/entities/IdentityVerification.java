@@ -1,7 +1,10 @@
 package com.mangopay.entities;
 
 import com.google.gson.annotations.SerializedName;
+import com.mangopay.core.Check;
 import com.mangopay.core.EntityBase;
+
+import java.util.List;
 
 /**
  * Card entity.
@@ -33,6 +36,21 @@ public class IdentityVerification extends EntityBase {
     @SerializedName("ReturnUrl")
     private String returnUrl;
 
+    /**
+     * The date and time at which the session was last updated.
+     */
+    @SerializedName("LastUpdate")
+    private long lastUpdate;
+
+    @SerializedName("UserId")
+    private String userId;
+
+    /**
+     * The details of the individual verification checks performed during the session.
+     */
+    @SerializedName("Checks")
+    private List<Check> checks;
+
     public String getHostedUrl() {
         return hostedUrl;
     }
@@ -57,6 +75,33 @@ public class IdentityVerification extends EntityBase {
 
     public IdentityVerification setReturnUrl(String returnUrl) {
         this.returnUrl = returnUrl;
+        return this;
+    }
+
+    public long getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public IdentityVerification setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+        return this;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public IdentityVerification setUserId(String userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public List<Check> getChecks() {
+        return checks;
+    }
+
+    public IdentityVerification setChecks(List<Check> checks) {
+        this.checks = checks;
         return this;
     }
 }
