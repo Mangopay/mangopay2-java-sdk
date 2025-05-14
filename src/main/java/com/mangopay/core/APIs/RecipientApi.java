@@ -60,9 +60,10 @@ public interface RecipientApi {
      * @param payoutMethodType Defines the payout method (e.g., LocalBankTransfer, InternationalBankTransfer).
      * @param recipientType    Specifies whether the recipient is an Individual or a Business.
      * @param currency         3-letter ISO 4217 destination currency code (e.g. EUR, USD, GBP, AUD, CAD,HKD, SGD, MXN).
+     * @param country Country ISO
      * @return RecipientSchema instance
      */
-    RecipientSchema getSchema(String payoutMethodType, String recipientType, CurrencyIso currency) throws Exception;
+    RecipientSchema getSchema(String payoutMethodType, String recipientType, CurrencyIso currency, CountryIso country) throws Exception;
 
     /**
      * Validate recipient data

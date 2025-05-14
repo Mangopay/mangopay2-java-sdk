@@ -55,7 +55,9 @@ public class FilterPreAuthorizations extends Dto {
     public Map<String, String> getValues() {
         HashMap<String, String> result = new HashMap<>();
 
-        if (!resultCode.isEmpty()) { result.put(RESULT_CODE, resultCode.toString()); }
+        if (resultCode != null && !resultCode.isEmpty()) {
+            result.put(RESULT_CODE, resultCode.toString());
+        }
         if (preAuthorizationStatus != null && preAuthorizationStatus != PreAuthorizationStatus.NotSpecified) { result.put(STATUS, preAuthorizationStatus.toString()); }
         if (paymentStatus != null && paymentStatus != PaymentStatus.NotSpecified) { result.put(PAYMENT_STATUS, paymentStatus.toString()); }
 

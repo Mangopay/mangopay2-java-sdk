@@ -12,6 +12,9 @@ public class RecipientSchema extends Dto {
     @SerializedName("Currency")
     private RecipientPropertySchema currency;
 
+    @SerializedName("Country")
+    private RecipientPropertySchema country;
+
     @SerializedName("RecipientType")
     private RecipientPropertySchema recipientType;
 
@@ -123,6 +126,15 @@ public class RecipientSchema extends Dto {
 
     public RecipientSchema setTag(RecipientPropertySchema tag) {
         this.tag = tag;
+        return this;
+    }
+
+    public RecipientPropertySchema getCountry() {
+        return country;
+    }
+
+    public RecipientSchema setCountry(RecipientPropertySchema country) {
+        this.country = country;
         return this;
     }
 }
