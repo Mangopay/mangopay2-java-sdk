@@ -26,6 +26,31 @@ public enum PaymentStatus {
 
     /**
      * VALIDATED payment status.
-     */ 
-    VALIDATED
+     */
+    VALIDATED,
+
+    /**
+     * CANCEL_REQUESTED payment status (deposits)
+     */
+    CANCEL_REQUESTED,
+
+    /**
+     * TO_BE_COMPLETED payment status (deposits)
+     */
+    TO_BE_COMPLETED,
+
+    /**
+     * NO_SHOW_REQUESTED payment status (deposits)
+     */
+    NO_SHOW_REQUESTED,
+
+    /**
+     * NO_SHOW payment status (deposits)
+     */
+    NO_SHOW,
+
+    /**
+     * FAILED payment status (deposits)
+     */
+    FAILED
 }
