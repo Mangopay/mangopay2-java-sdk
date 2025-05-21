@@ -1246,29 +1246,13 @@ public class PayInApiImplTest extends BaseTest {
     @Test
     public void testCreateDepositPreAuthorizedPayInWithoutComplement() throws Exception {
         Deposit deposit = this.createNewDeposit();
-        Wallet wallet = this.getJohnsWallet();
-
-        Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
-        Money fees = new Money(CurrencyIso.EUR, 0);
-
-        PayIn payIn = new PayIn();
-        payIn.setPaymentType(PayInPaymentType.PREAUTHORIZED);
-        payIn.setExecutionType(PayInExecutionType.DIRECT);
-        payIn.setCreditedWalletId(wallet.getId());
-        payIn.setDebitedFunds(debitedFunds);
-        payIn.setFees(fees);
-
-        PayInPaymentDetailsPreAuthorized paymentDetails = new PayInPaymentDetailsPreAuthorized();
-        paymentDetails.setDepositId(deposit.getId());
-        payIn.setPaymentDetails(paymentDetails);
-
-        PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInWithoutComplement(payIn, null);
+        PayIn created = this.createDepositPreAuthorizedPayInWithoutComplement(deposit.getId());
 
         assertNotNull(created);
         assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
         assertEquals(PayInExecutionType.DIRECT, created.getExecutionType());
         assertEquals(TransactionStatus.SUCCEEDED, created.getStatus());
-        assertNotNull(((PayInPaymentDetailsPreAuthorized) created.getPaymentDetails()).getDepositId());
+        assertNotNull(created.getDepositId());
     }
 
     @Test
@@ -1285,10 +1269,7 @@ public class PayInApiImplTest extends BaseTest {
         payIn.setCreditedWalletId(wallet.getId());
         payIn.setDebitedFunds(debitedFunds);
         payIn.setFees(fees);
-
-        PayInPaymentDetailsPreAuthorized paymentDetails = new PayInPaymentDetailsPreAuthorized();
-        paymentDetails.setDepositId(deposit.getId());
-        payIn.setPaymentDetails(paymentDetails);
+        payIn.setDepositId(deposit.getId());
 
         PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInPriorToComplement(payIn, null);
 
@@ -1296,7 +1277,7 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
         assertEquals(PayInExecutionType.DIRECT, created.getExecutionType());
         assertEquals(TransactionStatus.SUCCEEDED, created.getStatus());
-        assertNotNull(((PayInPaymentDetailsPreAuthorized) created.getPaymentDetails()).getDepositId());
+        assertNotNull(created.getDepositId());
     }
 
     @Test
@@ -1315,10 +1296,7 @@ public class PayInApiImplTest extends BaseTest {
         payIn.setCreditedWalletId(wallet.getId());
         payIn.setDebitedFunds(debitedFunds);
         payIn.setFees(fees);
-
-        PayInPaymentDetailsPreAuthorized paymentDetails = new PayInPaymentDetailsPreAuthorized();
-        paymentDetails.setDepositId(deposit.getId());
-        payIn.setPaymentDetails(paymentDetails);
+        payIn.setDepositId(deposit.getId());
 
         PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInComplement(payIn, null);
 
@@ -1326,7 +1304,7 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
         assertEquals(PayInExecutionType.DIRECT, created.getExecutionType());
         assertEquals(TransactionStatus.SUCCEEDED, created.getStatus());
-        assertNotNull(((PayInPaymentDetailsPreAuthorized) created.getPaymentDetails()).getDepositId());
+        assertNotNull(created.getDepositId());
     }
 
     @Test

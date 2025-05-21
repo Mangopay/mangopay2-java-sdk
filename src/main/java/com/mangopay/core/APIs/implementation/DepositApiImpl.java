@@ -3,10 +3,16 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.DepositApi;
+import com.mangopay.core.FilterTransactions;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.entities.Deposit;
+import com.mangopay.entities.Transaction;
 import com.mangopay.entities.subentities.CreateDeposit;
 import com.mangopay.entities.subentities.UpdateDeposit;
+
+import java.util.List;
 
 public class DepositApiImpl extends ApiBase implements DepositApi {
     public DepositApiImpl(MangoPayApi root) {
@@ -35,5 +41,13 @@ public class DepositApiImpl extends ApiBase implements DepositApi {
         UpdateDeposit dto = new UpdateDeposit();
         dto.setPaymentStatus(paymentStatus);
         return this.updateObject(Deposit.class, "deposits_update", dto, depositId);
+    }
+
+    @Override
+    public List<Transaction> getTransactions(String depositId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception {
+        if (filter != null) {
+            return this.getList(Transaction[].class, Transaction.class, "deposits_get_transactions", pagination, depositId, filter.getValues(), sorting);
+        }
+        return this.getList(Transaction[].class, Transaction.class, "deposits_get_transactions", pagination, depositId, null, sorting);
     }
 }

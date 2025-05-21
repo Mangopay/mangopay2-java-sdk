@@ -26,13 +26,6 @@ public class PayInPaymentDetailsPreAuthorized extends Dto implements PayInPaymen
     @SerializedName("Shipping")
     private Shipping shipping;
 
-    /**
-     * The unique identifier of the deposit preauthorization.
-     * Used for Deposit Preauthorized PayIn
-     */
-    @SerializedName("DepositId")
-    private String depositId;
-
     public String getPreauthorizationId() {
         return preauthorizationId;
     }
@@ -57,13 +50,5 @@ public class PayInPaymentDetailsPreAuthorized extends Dto implements PayInPaymen
     public PayInPaymentDetailsPreAuthorized setCulture(CultureCode culture) {
         this.culture = culture;
         return this;
-    }
-
-    public String getDepositId() {
-        return depositId;
-    }
-
-    public void setDepositId(String depositId) {
-        this.depositId = depositId;
     }
 }

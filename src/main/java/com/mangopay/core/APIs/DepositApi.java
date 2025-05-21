@@ -1,8 +1,14 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.FilterTransactions;
+import com.mangopay.core.Pagination;
+import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.entities.Deposit;
+import com.mangopay.entities.Transaction;
 import com.mangopay.entities.subentities.CreateDeposit;
+
+import java.util.List;
 
 public interface DepositApi {
     Deposit create(CreateDeposit deposit, String idempotencyKey) throws Exception;
@@ -26,4 +32,15 @@ public interface DepositApi {
      * @throws Exception
      */
     Deposit update(String depositId, PaymentStatus paymentStatus) throws Exception;
+
+    /**
+     * Gets transactions for a Deposit.
+     *
+     * @param depositId  Deposit identifier.
+     * @param pagination Pagination object.
+     * @param filter     Object to filter data.
+     * @return Transactions for deposit returned from API.
+     * @throws Exception
+     */
+    List<Transaction> getTransactions(String depositId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception;
 }

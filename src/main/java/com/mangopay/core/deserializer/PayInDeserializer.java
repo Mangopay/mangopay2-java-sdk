@@ -64,8 +64,6 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsPreAuthorized.setPreauthorizationId(object.get("PreauthorizationId").getAsString());
                 if (object.has("Culture") && !object.get("Culture").isJsonNull())
                     payInPaymentDetailsPreAuthorized.setCulture(CultureCode.valueOf(object.get("Culture").getAsString()));
-                if (object.has("DepositId") && !object.get("DepositId").isJsonNull())
-                    payInPaymentDetailsPreAuthorized.setDepositId(object.get("DepositId").getAsString());
                 payIn.setPaymentDetails(payInPaymentDetailsPreAuthorized);
                 break;
             case PAYPAL:
