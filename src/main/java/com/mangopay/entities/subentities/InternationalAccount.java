@@ -16,7 +16,6 @@ public class InternationalAccount extends Dto {
         this.bic = bic;
     }
 
-
     public String getIban() {
         return iban;
     }

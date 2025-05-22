@@ -11,6 +11,12 @@ public class LocalAccount extends EntityBase {
     @SerializedName("SortCode")
     private String sortCode;
 
+    @SerializedName("IBAN")
+    private String iban;
+
+    @SerializedName("BIC")
+    private String bic;
+
     @SerializedName("AchNumber")
     private String achNumber;
 
@@ -86,6 +92,24 @@ public class LocalAccount extends EntityBase {
 
     public LocalAccount setInstitutionNumber(String institutionNumber) {
         this.institutionNumber = institutionNumber;
+        return this;
+    }
+
+    public String getIban() {
+        return iban;
+    }
+
+    public LocalAccount setIban(String iban) {
+        this.iban = iban;
+        return this;
+    }
+
+    public String getBic() {
+        return bic;
+    }
+
+    public LocalAccount setBic(String bic) {
+        this.bic = bic;
         return this;
     }
 }
