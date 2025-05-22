@@ -11,10 +11,10 @@ public class LocalAccount extends EntityBase {
     @SerializedName("SortCode")
     private String sortCode;
 
-    @SerializedName("IBAN")
+    @SerializedName("Iban")
     private String iban;
 
-    @SerializedName("BIC")
+    @SerializedName("Bic")
     private String bic;
 
     @SerializedName("AchNumber")
