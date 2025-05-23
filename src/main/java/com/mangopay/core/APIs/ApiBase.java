@@ -246,6 +246,8 @@ public abstract class ApiBase {
         put("deposits_create", new String[]{"/deposit-preauthorizations/card/direct", RequestType.POST.toString()});
         put("deposits_get", new String[]{"/deposit-preauthorizations/%s", RequestType.GET.toString()});
         put("deposits_update", new String[]{"/deposit-preauthorizations/%s", RequestType.PUT.toString()});
+        put("deposits_get_all_for_user", new String[]{"/users/%s/deposit-preauthorizations", RequestType.GET.toString()});
+        put("deposits_get_all_for_card", new String[]{"/cards/%s/deposit-preauthorizations", RequestType.GET.toString()});
         put("deposits_get_transactions", new String[]{"/deposit-preauthorizations/%s/transactions", RequestType.GET.toString()});
 
         put("get_conversion_rate", new String[]{"/conversions/rate/%s/%s", RequestType.GET.toString()});
@@ -262,13 +264,13 @@ public abstract class ApiBase {
         put("virtual_account_get_availabilities", new String[]{"/virtual-accounts/availability", RequestType.GET.toString()});
 
         put("identify_verification_create", new String[]{"/users/%s/identity-verifications", RequestType.POST.toString()});
+        put("identify_verification_get_all", new String[]{"/users/%s/identity-verifications", RequestType.GET.toString()});
         put("identify_verification_get", new String[]{"/identity-verifications/%s", RequestType.GET.toString()});
-        put("identify_verification_checks_get", new String[]{"/identity-verifications/%s/checks", RequestType.GET.toString()});
 
         put("recipient_create", new String[]{"/users/%s/recipients", RequestType.POST.toString()});
         put("recipient_get", new String[]{"/recipients/%s", RequestType.GET.toString()});
         put("recipient_get_all", new String[]{"/users/%s/recipients", RequestType.GET.toString()});
-        put("recipient_get_schema", new String[]{"/recipients/schema?payoutMethodType=%s&recipientType=%s&currency=%s", RequestType.GET.toString()});
+        put("recipient_get_schema", new String[]{"/recipients/schema?payoutMethodType=%s&recipientType=%s&currency=%s&country=%s", RequestType.GET.toString()});
         put("recipient_validate", new String[]{"/users/%s/recipients/validate", RequestType.POST.toString()});
         put("recipient_deactivate", new String[]{"/recipients/%s", RequestType.PUT.toString()});
         put("recipient_get_payout_methods", new String[]{"/recipients/payout-methods?country=%s&currency=%s", RequestType.GET.toString()});
