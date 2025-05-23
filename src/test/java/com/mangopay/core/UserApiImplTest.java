@@ -594,7 +594,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void getCards() throws Exception {
-        UserNatural john = this.getJohn();
+        UserNatural john = this.getJohn(UserCategory.OWNER, true, true);
         Pagination pagination = new Pagination(1, 20);
         List<Card> cardsBefore = this.api.getUserApi().getCards(john.getId(), pagination, null);
         PayIn payIn = this.getNewPayInCardDirect();
@@ -787,7 +787,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void getBankAccountTransactions() throws Exception {
-        BankAccount johnsAccount = getJohnsAccount();
+        BankAccount johnsAccount = getJohnsAccount(true);
         PayOut johnsPayOutBankWire = getJohnsPayOutBankWire();
         Pagination pagination = new Pagination(1, 1);
         Thread.sleep(2000);
