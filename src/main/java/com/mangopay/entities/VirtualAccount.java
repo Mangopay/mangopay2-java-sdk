@@ -73,6 +73,18 @@ public class VirtualAccount extends EntityBase {
     @SerializedName("Capabilities")
     private VirtualAccountCapabilities capabilities;
 
+    /**
+     * Result code.
+     */
+    @SerializedName("ResultCode")
+    private String resultCode;
+
+    /**
+     * Result message.
+     */
+    @SerializedName("ResultMessage")
+    private String resultMessage;
+
     public String getWalletId() {
         return walletId;
     }
@@ -160,6 +172,24 @@ public class VirtualAccount extends EntityBase {
 
     public VirtualAccount setCapabilities(VirtualAccountCapabilities capabilities) {
         this.capabilities = capabilities;
+        return this;
+    }
+
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public VirtualAccount setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+        return this;
+    }
+
+    public String getResultMessage() {
+        return resultMessage;
+    }
+
+    public VirtualAccount setResultMessage(String resultMessage) {
+        this.resultMessage = resultMessage;
         return this;
     }
 }

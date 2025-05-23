@@ -5,17 +5,16 @@ import com.mangopay.core.Dto;
 
 public class InternationalAccount extends Dto {
 
-    @SerializedName("IBAN")
+    @SerializedName("Iban")
     private String iban;
 
-    @SerializedName("BIC")
+    @SerializedName("Bic")
     private String bic;
 
     public InternationalAccount(String iban, String bic) {
         this.iban = iban;
         this.bic = bic;
     }
-
 
     public String getIban() {
         return iban;
