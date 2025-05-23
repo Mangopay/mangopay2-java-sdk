@@ -23,6 +23,7 @@ class SerializedTransaction {
         object.add("ExecutionDate", context.serialize(source.getExecutionDate()));
         object.add("Type", context.serialize(source.getType()));
         object.add("Nature", context.serialize(source.getNature()));
+        object.add("DepositId", context.serialize(source.getDepositId()));
 
         return object;
     }

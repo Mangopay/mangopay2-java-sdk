@@ -2176,4 +2176,21 @@ public abstract class BaseTest {
 
         return this.api.getPayInApi().create(payIn);
     }
+
+    protected PayIn createDepositPreAuthorizedPayInWithoutComplement(String depositId) throws Exception {
+        Wallet wallet = this.getJohnsWallet();
+
+        Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
+        Money fees = new Money(CurrencyIso.EUR, 0);
+
+        PayIn payIn = new PayIn();
+        payIn.setPaymentType(PayInPaymentType.PREAUTHORIZED);
+        payIn.setExecutionType(PayInExecutionType.DIRECT);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(debitedFunds);
+        payIn.setFees(fees);
+        payIn.setDepositId(depositId);
+
+        return this.api.getPayInApi().createDepositPreauthorizedPayInWithoutComplement(payIn, null);
+    }
 }

@@ -96,6 +96,8 @@ public abstract class ApiBase {
         put("payins_recurring_card_direct", new String[]{"/payins/recurring/card/direct", RequestType.POST.toString()});
         put("payins_recurring_paypal", new String[]{"/payins/payment-methods/paypal/recurring", RequestType.POST.toString()});
         put("payins_card_preauthorized_deposit", new String[]{"/payins/deposit-preauthorized/direct/full-capture", RequestType.POST.toString()});
+        put("payins_deposit_preauthorized_prior_to_complement", new String[]{"/payins/deposit-preauthorized/direct/capture-with-complement", RequestType.POST.toString()});
+        put("payins_deposit_preauthorized_complement", new String[]{"/payins/deposit-preauthorized/direct/complement", RequestType.POST.toString()});
         put("payins_satispay-web_create", new String[]{"/payins/payment-methods/satispay", RequestType.POST.toString()});
         put("payins_blik-web_create", new String[]{"/payins/payment-methods/blik", RequestType.POST.toString()});
         put("payins_multibanco-web_create", new String[]{"/payins/payment-methods/multibanco", RequestType.POST.toString()});
@@ -243,9 +245,10 @@ public abstract class ApiBase {
 
         put("deposits_create", new String[]{"/deposit-preauthorizations/card/direct", RequestType.POST.toString()});
         put("deposits_get", new String[]{"/deposit-preauthorizations/%s", RequestType.GET.toString()});
-        put("deposits_cancel", new String[]{"/deposit-preauthorizations/%s", RequestType.PUT.toString()});
+        put("deposits_update", new String[]{"/deposit-preauthorizations/%s", RequestType.PUT.toString()});
         put("deposits_get_all_for_user", new String[]{"/users/%s/deposit-preauthorizations", RequestType.GET.toString()});
         put("deposits_get_all_for_card", new String[]{"/cards/%s/deposit-preauthorizations", RequestType.GET.toString()});
+        put("deposits_get_transactions", new String[]{"/deposit-preauthorizations/%s/transactions", RequestType.GET.toString()});
 
         put("get_conversion_rate", new String[]{"/conversions/rate/%s/%s", RequestType.GET.toString()});
         put("create_instant_conversion", new String[]{"/conversions/instant-conversion", RequestType.POST.toString()});

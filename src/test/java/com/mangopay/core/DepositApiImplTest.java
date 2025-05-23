@@ -2,12 +2,15 @@ package com.mangopay.core;
 
 import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.entities.Deposit;
+import com.mangopay.entities.Transaction;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
 
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -86,5 +89,14 @@ public class DepositApiImplTest extends BaseTest {
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
+    }
+
+    @Test
+    public void getTransactions() throws Exception {
+        Deposit deposit = this.createNewDeposit();
+        this.createDepositPreAuthorizedPayInWithoutComplement(deposit.getId());
+        Thread.sleep(1000);
+        List<Transaction> transactions = this.api.getDepositApi().getTransactions(deposit.getId(), null, null, null);
+        assertFalse(transactions.isEmpty());
     }
 }
