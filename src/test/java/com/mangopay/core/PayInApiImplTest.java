@@ -1214,7 +1214,7 @@ public class PayInApiImplTest extends BaseTest {
 
     }
 
-    @Ignore("Manual deposit confirmation needed")
+    //    @Ignore("Manual deposit confirmation needed")
     @Test
     public void testCreateCardPreAuthorizedDepositPayIn() {
         try {
@@ -1232,11 +1232,79 @@ public class PayInApiImplTest extends BaseTest {
             );
 
             CardPreAuthorizedDepositPayIn payIn = this.api.getPayInApi().createCardPreAuthorizedDepositPayIn(dto, null);
+            assertNotNull(payIn);
+            assertEquals(PayInPaymentType.PREAUTHORIZED, payIn.getPaymentType());
+            assertEquals(PayInExecutionType.DIRECT, payIn.getExecutionType());
+            assertEquals(TransactionStatus.SUCCEEDED, payIn.getStatus());
 
             Assert.assertNotNull(payIn);
         } catch (Exception ex) {
             Assert.fail(ex.getMessage());
         }
+    }
+
+    @Test
+    public void testCreateDepositPreAuthorizedPayInWithoutComplement() throws Exception {
+        Deposit deposit = this.createNewDeposit();
+        PayIn created = this.createDepositPreAuthorizedPayInWithoutComplement(deposit.getId());
+
+        assertNotNull(created);
+        assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
+        assertEquals(PayInExecutionType.DIRECT, created.getExecutionType());
+        assertEquals(TransactionStatus.SUCCEEDED, created.getStatus());
+        assertNotNull(created.getDepositId());
+    }
+
+    @Test
+    public void testCreateDepositPreAuthorizedPayInPriorToComplement() throws Exception {
+        Deposit deposit = this.createNewDeposit();
+        Wallet wallet = this.getJohnsWallet();
+
+        Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
+        Money fees = new Money(CurrencyIso.EUR, 0);
+
+        PayIn payIn = new PayIn();
+        payIn.setPaymentType(PayInPaymentType.PREAUTHORIZED);
+        payIn.setExecutionType(PayInExecutionType.DIRECT);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(debitedFunds);
+        payIn.setFees(fees);
+        payIn.setDepositId(deposit.getId());
+
+        PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInPriorToComplement(payIn, null);
+
+        assertNotNull(created);
+        assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
+        assertEquals(PayInExecutionType.DIRECT, created.getExecutionType());
+        assertEquals(TransactionStatus.SUCCEEDED, created.getStatus());
+        assertNotNull(created.getDepositId());
+    }
+
+    @Test
+    public void testCreateDepositPreAuthorizedPayInComplement() throws Exception {
+        Deposit deposit = this.createNewDeposit();
+        // payment status NO_SHOW is required for the deposit
+        getApi().getDepositApi().update(deposit.getId(), PaymentStatus.NO_SHOW_REQUESTED);
+        Wallet wallet = this.getJohnsWallet();
+
+        Money debitedFunds = new Money(CurrencyIso.EUR, 1000);
+        Money fees = new Money(CurrencyIso.EUR, 0);
+
+        PayIn payIn = new PayIn();
+        payIn.setPaymentType(PayInPaymentType.PREAUTHORIZED);
+        payIn.setExecutionType(PayInExecutionType.DIRECT);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(debitedFunds);
+        payIn.setFees(fees);
+        payIn.setDepositId(deposit.getId());
+
+        PayIn created = this.api.getPayInApi().createDepositPreauthorizedPayInComplement(payIn, null);
+
+        assertNotNull(created);
+        assertEquals(PayInPaymentType.PREAUTHORIZED, created.getPaymentType());
+        assertEquals(PayInExecutionType.DIRECT, created.getExecutionType());
+        assertEquals(TransactionStatus.SUCCEEDED, created.getStatus());
+        assertNotNull(created.getDepositId());
     }
 
     @Test

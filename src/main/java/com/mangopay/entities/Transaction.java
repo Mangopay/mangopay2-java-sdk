@@ -83,6 +83,13 @@ public class Transaction extends EntityBase {
     @SerializedName("Nature")
     private TransactionNature nature;
 
+    /**
+     * The unique identifier of the deposit preauthorization.
+     * Used for Deposit Preauthorized PayIn
+     */
+    @SerializedName("DepositId")
+    private String depositId;
+
     public String getAuthorId() {
         return authorId;
     }
@@ -178,6 +185,14 @@ public class Transaction extends EntityBase {
 
     public void setNature(TransactionNature nature) {
         this.nature = nature;
+    }
+
+    public String getDepositId() {
+        return depositId;
+    }
+
+    public void setDepositId(String depositId) {
+        this.depositId = depositId;
     }
 
     /**

@@ -46,6 +46,9 @@ public class FilterTransactions extends Dto {
     @SerializedName("ScaContext")
     private String scaContext;
 
+    @SerializedName("ResultCode")
+    private String resultCode;
+
     public TransactionStatus getStatus() {
         return status;
     }
@@ -94,6 +97,14 @@ public class FilterTransactions extends Dto {
         this.scaContext = scaContext;
     }
 
+    public String getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+    }
+
     /**
      * Gets map of fields and values.
      *
@@ -109,6 +120,7 @@ public class FilterTransactions extends Dto {
         if (beforeDate != null) result.put("BeforeDate", Long.toString(beforeDate));
         if (afterDate != null) result.put("AfterDate", Long.toString(afterDate));
         if (scaContext != null) result.put("ScaContext", scaContext);
+        if (resultCode != null) result.put("ResultCode", resultCode);
 
         return result;
     }

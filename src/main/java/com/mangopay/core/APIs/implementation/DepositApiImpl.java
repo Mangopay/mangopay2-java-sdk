@@ -6,12 +6,15 @@ import com.mangopay.core.APIs.DepositApi;
 import com.mangopay.core.FilterPreAuthorizations;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
+import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.enumerations.PaymentStatus;
 import com.mangopay.entities.Deposit;
-import com.mangopay.entities.subentities.CancelDeposit;
+import com.mangopay.entities.Transaction;
 import com.mangopay.entities.subentities.CreateDeposit;
+import com.mangopay.entities.subentities.UpdateDeposit;
 
 import java.util.List;
+
 
 public class DepositApiImpl extends ApiBase implements DepositApi {
     public DepositApiImpl(MangoPayApi root) {
@@ -30,10 +33,24 @@ public class DepositApiImpl extends ApiBase implements DepositApi {
 
     @Override
     public Deposit cancel(String depositId) throws Exception {
-        CancelDeposit dto = new CancelDeposit();
+        UpdateDeposit dto = new UpdateDeposit();
         dto.setPaymentStatus(PaymentStatus.CANCELED);
+        return this.updateObject(Deposit.class, "deposits_update", dto, depositId);
+    }
 
-        return this.updateObject(Deposit.class, "deposits_cancel", dto, depositId);
+    @Override
+    public Deposit update(String depositId, PaymentStatus paymentStatus) throws Exception {
+        UpdateDeposit dto = new UpdateDeposit();
+        dto.setPaymentStatus(paymentStatus);
+        return this.updateObject(Deposit.class, "deposits_update", dto, depositId);
+    }
+
+    @Override
+    public List<Transaction> getTransactions(String depositId, Pagination pagination, FilterTransactions filter, Sorting sorting) throws Exception {
+        if (filter != null) {
+            return this.getList(Transaction[].class, Transaction.class, "deposits_get_transactions", pagination, depositId, filter.getValues(), sorting);
+        }
+        return this.getList(Transaction[].class, Transaction.class, "deposits_get_transactions", pagination, depositId, null, sorting);
     }
 
     @Override
