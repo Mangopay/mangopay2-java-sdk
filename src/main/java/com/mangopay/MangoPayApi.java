@@ -59,6 +59,7 @@ public class MangoPayApi {
         setConversionsApi(new ConversionsApiImpl(this, gsonBuilder));
         setIdentityVerificationApi(new IdentityVerificationApiImpl(this));
         setRecipientApi(new RecipientApiImpl(this));
+        setReportV2Api(new ReportV2ApiImpl(this));
 
         // register custom serializers/deserializers for objects that are used in multiple APIs
         gsonBuilder.registerTypeAdapter(CardInfoType.class, new CardInfoTypeSerializer());
@@ -183,6 +184,11 @@ public class MangoPayApi {
      * Provides Reports methods.
      */
     private ReportApi reports;
+
+    /**
+     * Provides Reports V2 methods.
+     */
+    private ReportV2Api reportsV2;
 
     /**
      * Provides Banking Alias methods.
@@ -504,5 +510,13 @@ public class MangoPayApi {
 
     public void setRecipientApi(RecipientApi recipientApi) {
         this.recipientApi = recipientApi;
+    }
+
+    public ReportV2Api getReportV2Api() {
+        return reportsV2;
+    }
+
+    public void setReportV2Api(ReportV2Api reportsV2) {
+        this.reportsV2 = reportsV2;
     }
 }
