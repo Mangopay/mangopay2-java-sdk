@@ -4,6 +4,7 @@ import com.mangopay.core.*;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.UserDataFormatValidation;
 import com.mangopay.entities.subentities.UserEnrollmentResult;
 
 import java.util.List;
@@ -502,4 +503,11 @@ public interface UserApi {
      * @throws Exception
      */
     void close(User user) throws Exception;
+
+    /**
+     * @param dataValidation The data to be validated
+     * @param idempotencyKey Idempotency key. Optional.
+     * @return UserDataFormatValidation instance
+     */
+    UserDataFormatValidation validateDataFormat(UserDataFormatValidation dataValidation, String idempotencyKey) throws Exception;
 }
