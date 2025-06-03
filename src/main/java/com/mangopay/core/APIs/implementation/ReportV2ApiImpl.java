@@ -7,6 +7,7 @@ import com.mangopay.core.FilterReportsListV2;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.Report;
+import com.mangopay.entities.subentities.CreateReport;
 
 import java.util.List;
 
@@ -20,12 +21,12 @@ public class ReportV2ApiImpl extends ApiBase implements ReportV2Api {
     }
 
     @Override
-    public Report create(Report report) throws Exception {
+    public Report create(CreateReport report) throws Exception {
         return create(null, report);
     }
 
     @Override
-    public Report create(String idempotencyKey, Report report) throws Exception {
+    public Report create(String idempotencyKey, CreateReport report) throws Exception {
         return this.createObject(Report.class, idempotencyKey, "reports_create", report);
     }
 

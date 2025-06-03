@@ -1,9 +1,8 @@
-package com.mangopay.entities;
+package com.mangopay.entities.subentities;
 
 import com.google.gson.annotations.SerializedName;
-import com.mangopay.core.EntityBase;
+import com.mangopay.core.Dto;
 import com.mangopay.core.ReportFilters;
-import com.mangopay.entities.subentities.ReportColumn;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -12,44 +11,16 @@ import java.util.Map;
 /**
  * Report entity.
  */
-public class Report extends EntityBase {
+public class CreateReport extends Dto {
 
-    /**
-     * The date and time at which the report was generated.
-     */
-    @SerializedName("ReportDate")
-    private long reportDate;
-
-    /**
-     * Status of the report.
-     * Returned values: PENDING, READY_FOR_DOWNLOAD, FAILED, EXPIRED
-     */
-    @SerializedName("Status")
-    private String status;
-
-    /**
-     * The code indicating the result of the operation. This information is mostly used to handle errors or for filtering purposes.
-     */
-    @SerializedName("ResultCode")
-    private String resultCode;
-
-    /**
-     * The explanation of the result code.
-     */
-    @SerializedName("ResultMessage")
-    private String resultMessage;
+    @SerializedName("Tag")
+    private String tag;
 
     /**
      * Download file format.
      */
     @SerializedName("DownloadFormat")
     private String downloadFormat;
-
-    /**
-     * Download URL.
-     */
-    @SerializedName("DownloadURL")
-    private String downloadUrl;
 
     /**
      * Type of the report: USER_WALLET_TRANSACTIONS, COLLECTED_FEES
@@ -85,41 +56,14 @@ public class Report extends EntityBase {
      * The data columns to be included in the report.
      */
     @SerializedName("Columns")
-    private List<ReportColumn> columns;
+    private List<String> columns;
 
-    public long getReportDate() {
-        return reportDate;
+    public String getTag() {
+        return tag;
     }
 
-    public Report setReportDate(long reportDate) {
-        this.reportDate = reportDate;
-        return this;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public Report setStatus(String status) {
-        this.status = status;
-        return this;
-    }
-
-    public String getResultCode() {
-        return resultCode;
-    }
-
-    public Report setResultCode(String resultCode) {
-        this.resultCode = resultCode;
-        return this;
-    }
-
-    public String getResultMessage() {
-        return resultMessage;
-    }
-
-    public Report setResultMessage(String resultMessage) {
-        this.resultMessage = resultMessage;
+    public CreateReport setTag(String tag) {
+        this.tag = tag;
         return this;
     }
 
@@ -127,17 +71,8 @@ public class Report extends EntityBase {
         return downloadFormat;
     }
 
-    public Report setDownloadFormat(String downloadFormat) {
+    public CreateReport setDownloadFormat(String downloadFormat) {
         this.downloadFormat = downloadFormat;
-        return this;
-    }
-
-    public String getDownloadUrl() {
-        return downloadUrl;
-    }
-
-    public Report setDownloadUrl(String downloadUrl) {
-        this.downloadUrl = downloadUrl;
         return this;
     }
 
@@ -145,7 +80,7 @@ public class Report extends EntityBase {
         return reportType;
     }
 
-    public Report setReportType(String reportType) {
+    public CreateReport setReportType(String reportType) {
         this.reportType = reportType;
         return this;
     }
@@ -154,7 +89,7 @@ public class Report extends EntityBase {
         return sort;
     }
 
-    public Report setSort(String sort) {
+    public CreateReport setSort(String sort) {
         this.sort = sort;
         return this;
     }
@@ -163,7 +98,7 @@ public class Report extends EntityBase {
         return afterDate;
     }
 
-    public Report setAfterDate(long afterDate) {
+    public CreateReport setAfterDate(long afterDate) {
         this.afterDate = afterDate;
         return this;
     }
@@ -172,7 +107,7 @@ public class Report extends EntityBase {
         return beforeDate;
     }
 
-    public Report setBeforeDate(long beforeDate) {
+    public CreateReport setBeforeDate(long beforeDate) {
         this.beforeDate = beforeDate;
         return this;
     }
@@ -181,16 +116,16 @@ public class Report extends EntityBase {
         return filters;
     }
 
-    public Report setFilters(ReportFilters filters) {
+    public CreateReport setFilters(ReportFilters filters) {
         this.filters = filters;
         return this;
     }
 
-    public List<ReportColumn> getColumns() {
+    public List<String> getColumns() {
         return columns;
     }
 
-    public Report setColumns(List<ReportColumn> columns) {
+    public CreateReport setColumns(List<String> columns) {
         this.columns = columns;
         return this;
     }

@@ -2,6 +2,7 @@ package com.mangopay.core;
 
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Report;
+import com.mangopay.entities.subentities.CreateReport;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class ReportV2ApiImplTest extends BaseTest {
         columns.add("AuthorId");
 
         Report report = this.api.getReportV2Api().create(
-            new Report()
+            new CreateReport()
                 .setDownloadFormat("CSV")
                 .setReportType("USER_WALLET_TRANSACTIONS")
                 .setAfterDate(1740787200)
@@ -36,13 +37,14 @@ public class ReportV2ApiImplTest extends BaseTest {
         );
         assertNotNull(report);
         assertEquals("PENDING", report.getStatus());
+        assertEquals(2, report.getColumns().size());
     }
 
     @Test
     public void getReport() throws Exception {
-//        Report report = createReport();
-        Report getReport = this.api.getReportV2Api().get("report_01JWG8PW1HBQZBH8YPY14CSXVT");
-        assertEquals(getReport.getId(), "report_01JWG8PW1HBQZBH8YPY14CSXVT");
+        Report report = createReport();
+        Report getReport = this.api.getReportV2Api().get(report.getId());
+        assertEquals(getReport.getId(), report.getId());
     }
 
     @Test
@@ -54,7 +56,7 @@ public class ReportV2ApiImplTest extends BaseTest {
 
     private Report createReport() throws Exception {
         Report report = this.api.getReportV2Api().create(
-            new Report()
+            new CreateReport()
                 .setDownloadFormat("CSV")
                 .setReportType("COLLECTED_FEES")
                 .setAfterDate(1740787200)

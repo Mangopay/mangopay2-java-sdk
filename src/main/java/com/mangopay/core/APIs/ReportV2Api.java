@@ -4,6 +4,7 @@ import com.mangopay.core.FilterReportsListV2;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.Report;
+import com.mangopay.entities.subentities.CreateReport;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface ReportV2Api {
      * @param report Report details for creation
      * @return Newly-created {@link Report}
      */
-    Report create(Report report) throws Exception;
+    Report create(CreateReport report) throws Exception;
 
     /**
      * Creates new report.
@@ -26,7 +27,7 @@ public interface ReportV2Api {
      * @param report         Report details for creation
      * @return Newly-created {@link Report}
      */
-    Report create(String idempotencyKey, Report report) throws Exception;
+    Report create(String idempotencyKey, CreateReport report) throws Exception;
 
     /**
      * Gets a report by its unique identifier.
