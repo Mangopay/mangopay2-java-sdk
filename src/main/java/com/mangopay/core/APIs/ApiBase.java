@@ -195,6 +195,7 @@ public abstract class ApiBase {
         put("disputes_get_all", new String[]{"/disputes", RequestType.GET.toString()});
         put("disputes_get_for_wallet", new String[]{"/wallets/%s/disputes", RequestType.GET.toString()});
         put("disputes_get_for_user", new String[]{"/users/%s/disputes", RequestType.GET.toString()});
+        put("disputes_get_for_payin", new String[]{"/payins/%s/disputes", RequestType.GET.toString()});
         put("disputes_document_create", new String[]{"/disputes/%s/documents", RequestType.POST.toString()});
         put("disputes_document_page_create", new String[]{"/disputes/%s/documents/%s/pages", RequestType.POST.toString()});
         put("disputes_document_submit", new String[]{"/disputes/%s/documents/%s", RequestType.PUT.toString()});

@@ -190,4 +190,11 @@ public class DisputeApiImpl extends ApiBase implements DisputeApi {
     public List<DocumentPageConsult> createDisputeDocumentConsult(String documentId) throws Exception {
         return this.getList(DocumentPageConsult[].class, DocumentPageConsult.class, "disputes_document_create_consult", null, documentId);
     }
+
+    @Override
+    public List<Dispute> getDisputesForPayIn(String payInId, Pagination pagination, FilterDisputes filters, Sorting sorting) throws Exception {
+        if (filters == null) filters = new FilterDisputes();
+        return this.getList(Dispute[].class, Dispute.class, "disputes_get_for_payin", pagination, payInId,
+            filters.getValues(), sorting);
+    }
 }
