@@ -48,8 +48,20 @@ public class RecipientApiImplTest extends BaseTest {
 
     @Test
     public void getUserRecipients() throws Exception {
-        List<Recipient> recipients = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID);
-        assertFalse(recipients.isEmpty());
+        List<Recipient> recipients1 = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID);
+        List<Recipient> recipients2 =
+            getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID, null, null, null);
+        List<Recipient> recipients3 = getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID, null);
+        List<Recipient> recipients4 =
+            getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID, new FilterRecipients().setRecipientScope("PAYOUT"));
+        List<Recipient> recipients5 =
+            getApi().getRecipientApi().getUserRecipients(ACTIVE_USER_NATURAL_SCA_ID, new FilterRecipients().setRecipientScope("PAYIN"));
+
+        assertFalse(recipients1.isEmpty());
+        assertEquals(recipients1.size(), recipients2.size());
+        assertEquals(recipients1.size(), recipients3.size());
+        assertEquals(recipients1.size(), recipients4.size());
+        assertTrue(recipients5.isEmpty());
     }
 
     @Test

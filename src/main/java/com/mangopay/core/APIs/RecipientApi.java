@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.FilterRecipients;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.CountryIso;
@@ -42,9 +43,21 @@ public interface RecipientApi {
      * Get all recipients associated with a specific user
      *
      * @param userId the user identifier
+     * @param filter Filter
+     * @param pagination Pagination
+     * @param sorting Sorting
      * @return UserRecipients instance
      */
-    List<Recipient> getUserRecipients(String userId, Pagination pagination, Sorting sorting) throws Exception;
+    List<Recipient> getUserRecipients(String userId, FilterRecipients filter, Pagination pagination, Sorting sorting) throws Exception;
+
+    /**
+     * Get all recipients associated with a specific user
+     *
+     * @param userId the user identifier
+     * @param filter Filter
+     * @return UserRecipients instance
+     */
+    List<Recipient> getUserRecipients(String userId, FilterRecipients filter) throws Exception;
 
     /**
      * Get all recipients associated with a specific user
@@ -53,6 +66,7 @@ public interface RecipientApi {
      * @return UserRecipients instance
      */
     List<Recipient> getUserRecipients(String userId) throws Exception;
+
 
     /**
      * Get a Recipient schema
