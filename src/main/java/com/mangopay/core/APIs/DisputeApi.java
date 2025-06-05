@@ -277,4 +277,6 @@ public interface DisputeApi {
      * @throws Exception
      */
     List<DocumentPageConsult> createDisputeDocumentConsult(String documentId) throws Exception;
+
+    List<Dispute> getDisputesForPayIn(String payInId, Pagination pagination, FilterDisputes filters, Sorting sorting) throws Exception;
 }
