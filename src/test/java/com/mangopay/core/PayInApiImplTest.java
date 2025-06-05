@@ -1594,4 +1594,14 @@ public class PayInApiImplTest extends BaseTest {
         assertNotNull(fetched);
         assertEquals(created.getId(), fetched.getId());
     }
+
+    @Test
+    public void getExtendedCardWeb() throws Exception {
+        PayIn payIn = this.getJohnsPayInCardWeb();
+        ExtendedWebCardPayin extended = getApi().getPayInApi().getExtendedWebCardPayin(payIn.getId());
+
+        assertNotNull(extended);
+        assertEquals(PayInPaymentType.CARD, extended.getPaymentType());
+        assertEquals(PayInExecutionType.WEB, extended.getExecutionType());
+    }
 }
