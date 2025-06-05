@@ -137,8 +137,8 @@ public abstract class ApiBase {
         put("users_createbankaccounts_other", new String[]{"/users/%s/bankaccounts/other", RequestType.POST.toString()});
 
         put("users_savebankaccount", new String[]{"/users/%s/bankaccounts/%s", RequestType.PUT.toString()});
-
         put("users_get_preauthorizations", new String[]{"/users/%s/preauthorizations", RequestType.GET.toString()});
+        put("users_validate_data_format", new String[]{"/users/data-formats/validation", RequestType.POST.toString()});
 
         put("get_transactions_for_banckaccount", new String[]{"/bankaccounts/%s/transactions", RequestType.GET.toString()});
 

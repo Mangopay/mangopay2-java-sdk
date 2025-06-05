@@ -7,6 +7,7 @@ import com.mangopay.core.APIs.IdempotencyApi;
 import com.mangopay.core.deserializer.PayOutDeserializer;
 import com.mangopay.core.serializer.PayOutSerializer;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.UserDataFormatValidation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -96,6 +97,7 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
             put("client_create_bankwire_direct", PayIn.class);
             put("banking_alias_create_iban", BankingAlias.class);
             put("payins_recurring_paypal", RecurringPayIn.class);
+            put("users_validate_data_format", UserDataFormatValidation.class);
         }};
     }
 }
