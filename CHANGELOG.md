@@ -1,3 +1,16 @@
+## [2.51.1] - 2025-06-06
+
+### Added
+
+- Support for `RecipientScope` query parameter
+  on [GET List Recipients for a User](https://docs.mangopay.com/api-reference/recipients/list-recipients-user)
+- [POST Validate the format of User data](https://docs.mangopay.com/api-reference/user-data-format/validate-user-data-format)
+- [GET List Disputes for a PayIn](https://docs.mangopay.com/api-reference/disputes/list-disputes-payin)
+
+### Fixed
+
+- `Status` enum value on Identity Verification object changed from `OUTDATED` to `OUT_OF_DATE`
+
 ## [2.51.0] - 2025-05-23
 
 ### Added
