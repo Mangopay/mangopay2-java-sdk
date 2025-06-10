@@ -98,6 +98,7 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
             put("banking_alias_create_iban", BankingAlias.class);
             put("payins_recurring_paypal", RecurringPayIn.class);
             put("users_validate_data_format", UserDataFormatValidation.class);
+            put("reports_create", Report.class);
         }};
     }
 }

@@ -225,6 +225,10 @@ public abstract class ApiBase {
         put("reports_get_all", new String[]{"/reports", RequestType.GET.toString()});
         put("reports_get", new String[]{"/reports/%s", RequestType.GET.toString()});
 
+        put("reports_create", new String[]{"/reporting/reports", RequestType.POST.toString()});
+        put("reports_get_all_v2", new String[]{"/reporting/reports", RequestType.GET.toString()});
+        put("reports_get_v2", new String[]{"/reporting/reports/%s", RequestType.GET.toString()});
+
         put("reports_wallets_create", new String[]{"/reports/wallets", RequestType.POST.toString()});
 
         put("banking_alias_create_iban", new String[]{"/wallets/%s/bankingaliases/iban", RequestType.POST.toString()});
