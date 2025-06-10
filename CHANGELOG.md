@@ -1,3 +1,18 @@
+## [2.52.0] - 2025-06-10
+
+### Added
+
+Endpoints for [new Reporting Service](https://docs.mangopay.com/release-notes/api/2025-06-05) feature:
+
+- [POST Create a Report](https://docs.mangopay.com/api-reference/reporting/create-report)
+- [GET View a Report](https://docs.mangopay.com/api-reference/reporting/view-report)
+- [GET List all Reports](https://docs.mangopay.com/api-reference/reporting/list-reports)
+
+Webhook [event types](url) for new Reporting Service:
+
+- `REPORT_GENERATED`
+- `REPORT_FAILED`
+
 ## [2.51.1] - 2025-06-06
 
 ### Added
