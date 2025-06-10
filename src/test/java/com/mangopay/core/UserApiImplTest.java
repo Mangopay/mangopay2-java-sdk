@@ -1004,6 +1004,33 @@ public class UserApiImplTest extends BaseTest {
         assertEquals("CLOSED", closedMatrixSca.getUserStatus());
     }
 
+    @Test
+    public void validateUserDataFormat() throws Exception {
+        UserDataFormatValidation validation = new UserDataFormatValidation()
+            .setCompanyNumber(
+                new CompanyNumberValidation()
+                    .setCompanyNumber("AB123456")
+                    .setCountryCode(CountryIso.IT)
+            );
+
+        UserDataFormatValidation result = api.getUserApi().validateDataFormat(validation, null);
+        assertNotNull(result);
+        assertNotNull(result.getCompanyNumber());
+        assertNotNull(result.getCompanyNumber().getCompanyNumber());
+        assertTrue(result.getCompanyNumber().getValid());
+
+        validation.setCompanyNumber(
+            new CompanyNumberValidation()
+                .setCompanyNumber("111")
+        );
+
+        try {
+            api.getUserApi().validateDataFormat(validation, null);
+        } catch (ResponseException e) {
+            assertEquals(400, e.getResponseHttpCode());
+        }
+    }
+
     private Calendar getCalendar() {
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);

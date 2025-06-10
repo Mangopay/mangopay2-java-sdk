@@ -137,8 +137,8 @@ public abstract class ApiBase {
         put("users_createbankaccounts_other", new String[]{"/users/%s/bankaccounts/other", RequestType.POST.toString()});
 
         put("users_savebankaccount", new String[]{"/users/%s/bankaccounts/%s", RequestType.PUT.toString()});
-
         put("users_get_preauthorizations", new String[]{"/users/%s/preauthorizations", RequestType.GET.toString()});
+        put("users_validate_data_format", new String[]{"/users/data-formats/validation", RequestType.POST.toString()});
 
         put("get_transactions_for_banckaccount", new String[]{"/bankaccounts/%s/transactions", RequestType.GET.toString()});
 
@@ -195,6 +195,7 @@ public abstract class ApiBase {
         put("disputes_get_all", new String[]{"/disputes", RequestType.GET.toString()});
         put("disputes_get_for_wallet", new String[]{"/wallets/%s/disputes", RequestType.GET.toString()});
         put("disputes_get_for_user", new String[]{"/users/%s/disputes", RequestType.GET.toString()});
+        put("disputes_get_for_payin", new String[]{"/payins/%s/disputes", RequestType.GET.toString()});
         put("disputes_document_create", new String[]{"/disputes/%s/documents", RequestType.POST.toString()});
         put("disputes_document_page_create", new String[]{"/disputes/%s/documents/%s/pages", RequestType.POST.toString()});
         put("disputes_document_submit", new String[]{"/disputes/%s/documents/%s", RequestType.PUT.toString()});
