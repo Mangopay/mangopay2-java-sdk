@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.Card;
@@ -92,4 +93,16 @@ public interface CardApi {
      * @throws Exception
      */
     CardValidation getCardValidation(String cardId, String cardValidationId) throws Exception;
+
+    /**
+     * This call returns all the transactions made with cards with the same Fingerprint value.
+     *
+     * @param fingerprint The unique representation of the card number. This string can be used to track the card behavior while keeping the card information confidential.
+     * @param filter      Filter
+     * @param pagination  Pagination
+     * @param sorting     Sorting
+     * @return List of Transactions
+     */
+    List<Transaction> getTransactionsByCardFingerprint(String fingerprint, FilterTransactions filter,
+                                                       Pagination pagination, Sorting sorting) throws Exception;
 }

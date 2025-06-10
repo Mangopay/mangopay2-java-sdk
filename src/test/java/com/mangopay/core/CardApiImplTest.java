@@ -28,6 +28,17 @@ public class CardApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getTransactionsByCardFingerprint() throws Exception {
+        PayIn payIn = getNewPayInCardDirect();
+        Card card = getApi().getCardApi().get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
+        Thread.sleep(1000);
+        List<Transaction> transactions = getApi().getCardApi().getTransactionsByCardFingerprint(card.getFingerprint(),
+            null, null, null);
+        assertNotNull(transactions);
+        assertFalse(transactions.isEmpty());
+    }
+
+    @Test
     public void getTransactions() throws Exception {
         PayIn payIn = getNewPayInCardDirect();
         Card card = api.getCardApi().get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
