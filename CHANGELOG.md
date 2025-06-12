@@ -1,5 +1,9 @@
-## [2.52.0] - 2025-06-10
+## [2.52.1] - 2025-06-12
+### Added
+- [US and CA virtual accounts](https://docs.mangopay.com/release-notes/api/2025-06-12) for local pay-in collection
+- [GET List Transactions for a Card Fingerprint](https://docs.mangopay.com/api-reference/transactions/list-transactions-card-fingerprint#list-transactions-for-a-card-fingerprint)
 
+## [2.52.0] - 2025-06-10
 ### Added
 
 Endpoints for [new Reporting Service](https://docs.mangopay.com/release-notes/api/2025-06-05) feature:
