@@ -11,6 +11,9 @@ public class InternationalAccountDetails extends Dto {
     @SerializedName("Account")
     private InternationalAccount account;
 
+    @SerializedName("BankName")
+    private String bankName;
+
     public InternationalAccountDetails(VirtualAccountAddress address, InternationalAccount account) {
         this.address = address;
         this.account = account;
@@ -31,6 +34,15 @@ public class InternationalAccountDetails extends Dto {
 
     public InternationalAccountDetails setAccount(InternationalAccount account) {
         this.account = account;
+        return this;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public InternationalAccountDetails setBankName(String bankName) {
+        this.bankName = bankName;
         return this;
     }
 }

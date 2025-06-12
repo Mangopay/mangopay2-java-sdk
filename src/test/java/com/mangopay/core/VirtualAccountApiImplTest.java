@@ -21,6 +21,9 @@ public class VirtualAccountApiImplTest extends BaseTest {
 
         assertNotNull(johnsVirtualAccount);
         assertEquals(johnsVirtualAccount.getWalletId(), johnsWallet.getId());
+        assertEquals("000000", johnsVirtualAccount.getResultCode());
+        assertEquals("Success", johnsVirtualAccount.getResultMessage());
+        assertNotNull(johnsVirtualAccount.getLocalAccountDetails().getBankName());
     }
 
     @Test
