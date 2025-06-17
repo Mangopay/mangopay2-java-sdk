@@ -1,9 +1,3 @@
-## [2.52.2] - 2025-06-12
-
-### Updated
-
-- release configurations
-
 ## [2.52.1] - 2025-06-12
 
 ### Added

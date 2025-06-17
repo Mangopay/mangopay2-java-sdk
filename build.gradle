@@ -40,7 +40,7 @@ task javadocJar(type: Jar) {
 }
 
 group = 'com.mangopay'
-version = '2.52.2'
+version = '2.52.1'
 sourceCompatibility = '1.7'
 
 publishing {
@@ -49,7 +49,7 @@ publishing {
             pom {
                 groupId 'com.mangopay'
                 artifactId 'mangopay2-java-sdk'
-                version '2.52.2'
+                version '2.52.1'
 
                 from(components.java)
 
@@ -89,10 +89,10 @@ publishing {
     repositories {
         maven {
             name = "mangopay2-java-sdk"
-            url = 'https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2'
+            url = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
             credentials {
-                username = System.getenv("CENTRAL_USERNAME") ?: ""
-                password = System.getenv("CENTRAL_PASSWORD") ?: ""
+                username = System.getenv("MAVEN_USERNAME") ?: ""
+                password = System.getenv("MAVEN_PASSWORD") ?: ""
             }
         }
     }
