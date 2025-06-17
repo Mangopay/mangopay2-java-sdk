@@ -139,12 +139,7 @@ task updatePropertiesFile {
 }
 
 signing {
-    if (project.hasProperty('signing.keyId') && project.hasProperty('signing.password') && project.hasProperty('signing.secretKeyRingFile')) {
-        sign configurations.archives
-
-        /* Uncomment this if you use shadow in your build process */
-        // sign configurations.shadow
-    }
+    sign publishing.publications.mavenJava
 }
 
 processResources.dependsOn updatePropertiesFile
