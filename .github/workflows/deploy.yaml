@@ -41,7 +41,7 @@ jobs:
         run: ./.utility/initiate-publish.sh
         env:
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.PASSWORD }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
       - name: Close and publish
-        run: ./gradlew closeAndReleaseRepository -PnexusUsername=${{ secrets.MAVEN_USERNAME }} -PnexusPassword=${{ secrets.PASSWORD }}
+        run: ./gradlew closeAndReleaseRepository -PnexusUsername=${{ secrets.CENTRAL_USERNAME }} -PnexusPassword=${{ secrets.CENTRAL_PASSWORD }}
