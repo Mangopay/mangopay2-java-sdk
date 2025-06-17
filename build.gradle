@@ -113,9 +113,6 @@ tasks.withType(Javadoc) {
 nexusPublishing {
     packageGroup = "com.mangopay"
     repositories {
-        sonatype()
-    }
-    repositories {
         sonatype {
             stagingProfileId = "2be9f53d7db009"
             username = project.findProperty("nexusUsername")
