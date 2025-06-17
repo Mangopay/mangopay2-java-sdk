@@ -89,10 +89,10 @@ publishing {
     repositories {
         maven {
             name = "mangopay2-java-sdk"
-            url = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+            url = 'https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2'
             credentials {
-                username = System.getenv("MAVEN_USERNAME") ?: ""
-                password = System.getenv("MAVEN_PASSWORD") ?: ""
+                username = System.getenv("CENTRAL_USERNAME") ?: ""
+                password = System.getenv("CENTRAL_PASSWORD") ?: ""
             }
         }
     }
