@@ -44,4 +44,4 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
       - name: Close and publish
-        run: ./gradlew publishToSonatype closeSonatypeStagingRepository -PnexusUsername=${{ secrets.CENTRAL_USERNAME }} -PnexusPassword=${{ secrets.CENTRAL_PASSWORD }} -Psigning.keyId=610AABD3 -Psigning.password=${{ secrets.SIGNING_PASSWORD }} -Psigning.secretKeyRingFile=.gnupg/secring.gpg
+        run: ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository -PnexusUsername=${{ secrets.CENTRAL_USERNAME }} -PnexusPassword=${{ secrets.CENTRAL_PASSWORD }} -Psigning.keyId=610AABD3 -Psigning.password=${{ secrets.SIGNING_PASSWORD }} -Psigning.secretKeyRingFile=.gnupg/secring.gpg
