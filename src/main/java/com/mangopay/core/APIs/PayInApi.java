@@ -227,4 +227,14 @@ public interface PayInApi {
      * @throws Exception
      */
     PayIn createDepositPreauthorizedPayInComplement(PayIn payIn, String idempotencyKey) throws Exception;
+
+    /**
+     * Create a pay in intent authorization
+     *
+     * @param payInIntent    The PayInIntentAuthorization object to be created
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Created PayInIntentAuthorization
+     * @throws Exception
+     */
+    PayInIntent createPayInIntentAuthorization(PayInIntent payInIntent, String idempotencyKey) throws Exception;
 }
