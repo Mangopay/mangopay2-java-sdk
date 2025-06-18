@@ -109,33 +109,11 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process collections of objects,
      * use <code>requestList</code> method instead.
      *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
-     * @param requestType HTTP request term, one of the GET, PUT or POST.
-     * @param requestData Collection of key-value pairs of request
-     *                    parameters.
-     * @param pagination  Pagination object.
-     * @param entity      Instance of Dto class that is going to be
-     *                    sent in case of PUTting or POSTing.
-     * @return The Dto instance returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto, U extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, U entity) throws Exception {
-        return this.request(classOfT, null, urlMethod, requestType, requestData, pagination, entity);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting single
-     * <code>Dto</code> instances. In order to process collections of objects,
-     * use <code>requestList</code> method instead.
-     *
      * @param <T>            Type on behalf of which the request is being called.
      * @param classOfT       Type on behalf of which the request is being called.
      * @param idempotencyKey idempotency key for this request.
-     * @param urlMethod      Relevant method key.
+     * @param urlPath        Url path.
+     * @param apiVersion     Api version.
      * @param requestType    HTTP request term, one of the GET, PUT or POST.
      * @param requestData    Collection of key-value pairs of request
      *                       parameters.
@@ -145,12 +123,19 @@ public class RestTool {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto, U extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, U entity) throws Exception {
-
+    public <T extends Dto, U extends Dto> T request(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        String requestType,
+        Map<String, String> requestData,
+        Pagination pagination,
+        U entity
+    ) throws Exception {
         this.requestType = requestType;
         this.requestData = requestData;
-
-        return this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
+        return this.doRequest(classOfT, idempotencyKey, urlPath, apiVersion, pagination, entity);
     }
 
     /**
@@ -162,13 +147,20 @@ public class RestTool {
      *
      * @param <T>         Type on behalf of which the request is being called.
      * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
+     * @param urlPath     Url Path.
+     * @param apiVersion  Api version.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType) throws Exception {
-        return request(classOfT, idempotencyKey, urlMethod, requestType, null, null, null);
+    public <T extends Dto> T request(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        String requestType
+    ) throws Exception {
+        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, null, null, null);
     }
 
     /**
@@ -180,36 +172,23 @@ public class RestTool {
      *
      * @param <T>         Type on behalf of which the request is being called.
      * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
-     * @param requestType HTTP request term, one of the GET, PUT or POST.
-     * @param requestData Collection of key-value pairs of request
-     *                    parameters.
-     * @return The Dto instance returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData) throws Exception {
-        return request(classOfT, idempotencyKey, urlMethod, requestType, requestData, null, null);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting single
-     * <code>Dto</code> instances. In order to process collections of objects,
-     * use <code>requestList</code> method instead.
-     *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
+     * @param urlPath     Url path.
+     * @param apiVersion  Api version.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @param requestData Collection of key-value pairs of request
      *                    parameters.
-     * @param pagination  Pagination object.
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination) throws Exception {
-        return request(classOfT, idempotencyKey, urlMethod, requestType, requestData, pagination, null);
+    public <T extends Dto> T request(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        String requestType,
+        Map<String, String> requestData
+    ) throws Exception {
+        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, requestData, null, null);
     }
 
     /**
@@ -222,92 +201,41 @@ public class RestTool {
      * @param <T>                 Type on behalf of which the request is being called.
      * @param classOfT            Type on behalf of which the request is being called.
      * @param classOfTItem        The class of single item in array.
-     * @param urlMethod           Relevant method key.
+     * @param urlPath             Url path.
+     * @param apiVersion          Api version.
      * @param requestType         HTTP request term. For lists should be always GET.
-     * @param requestData         Collection of key-value pairs of request
-     *                            parameters.
+     * @param requestData         Collection of key-value pairs of request parameters.
      * @param pagination          Pagination object.
-     * @param additionalUrlParams
+     * @param additionalUrlParams Additional parameters
      * @return The collection of Dto instances returned from API.
-     * @throws Exception
      */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, Map<String, String> additionalUrlParams) throws Exception {
-
+    public <T extends Dto> List<T> requestList(
+        Class<T[]> classOfT,
+        Class<T> classOfTItem,
+        String urlPath,
+        String apiVersion,
+        String requestType,
+        Map<String, String> requestData,
+        Pagination pagination, Map<String, String> additionalUrlParams
+    ) throws Exception {
         this.requestType = requestType;
         this.requestData = requestData;
-
-        return this.doRequestList(classOfT, classOfTItem, urlMethod, pagination, additionalUrlParams);
+        return this.doRequestList(classOfT, classOfTItem, urlPath, apiVersion, pagination, additionalUrlParams);
     }
 
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting collections of
-     * <code>Dto</code> instances. In order to process single objects,
-     * use <code>request</code> method instead.
-     *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
-     * @param classOfTItem The class of single item in array.
-     * @param urlMethod    Relevant method key.
-     * @param requestType  HTTP request term. For lists should be always GET.
-     * @return The collection of Dto instances returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType) throws Exception {
-        return requestList(classOfT, classOfTItem, urlMethod, requestType, null, null, null);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting collections of
-     * <code>Dto</code> instances. In order to process single objects,
-     * use <code>request</code> method instead.
-     *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
-     * @param classOfTItem The class of single item in array.
-     * @param urlMethod    Relevant method key.
-     * @param requestType  HTTP request term. For lists should be always GET.
-     * @param requestData  Collection of key-value pairs of request
-     *                     parameters.
-     * @return The collection of Dto instances returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType, Map<String, String> requestData) throws Exception {
-        return requestList(classOfT, classOfTItem, urlMethod, requestType, requestData, null, null);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting collections of
-     * <code>Dto</code> instances. In order to process single objects,
-     * use <code>request</code> method instead.
-     *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
-     * @param classOfTItem The class of single item in array.
-     * @param urlMethod    Relevant method key.
-     * @param requestType  HTTP request term. For lists should be always GET.
-     * @param requestData  Collection of key-value pairs of request
-     *                     parameters.
-     * @param pagination   Pagination object.
-     * @return The collection of Dto instances returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination) throws Exception {
-        return requestList(classOfT, classOfTItem, urlMethod, requestType, requestData, pagination, null);
-    }
-
-    private <T extends Dto, U extends Dto> T doRequest(Class<T> classOfT, String idempotencyKey, String urlMethod, Pagination pagination, U entity) throws Exception {
-
+    private <T extends Dto, U extends Dto> T doRequest(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        Pagination pagination,
+        U entity
+    ) throws Exception {
         T response = null;
 
         try {
             UrlTool urlTool = new UrlTool(root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this.clientIdRequired, pagination, null);
+            String restUrl = urlTool.getRestUrl(urlPath, apiVersion, this.clientIdRequired, pagination, null);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
@@ -572,17 +500,19 @@ public class RestTool {
         return root.getGson().fromJson(response, classOfT);
     }
 
-    private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination) throws Exception {
-        return doRequestList(classOfT, classOfTItem, urlMethod, pagination, null);
-    }
-
-    private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination, Map<String, String> additionalUrlParams) throws Exception {
-
+    private <T extends Dto> List<T> doRequestList(
+        Class<T[]> classOfT,
+        Class<T> classOfTItem,
+        String urlPath,
+        String apiVersion,
+        Pagination pagination,
+        Map<String, String> additionalUrlParams
+    ) throws Exception {
         List<T> response = new ArrayList<>();
 
         try {
             UrlTool urlTool = new UrlTool(root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this.clientIdRequired, pagination, additionalUrlParams);
+            String restUrl = urlTool.getRestUrl(urlPath, apiVersion, this.clientIdRequired, pagination, additionalUrlParams);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 

@@ -6,6 +6,7 @@ import com.mangopay.core.APIs.OAuthApi;
 import com.mangopay.core.AuthenticationHelper;
 import com.mangopay.core.OAuthToken;
 import com.mangopay.core.RestTool;
+import com.mangopay.core.enumerations.ApiVersion;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -30,8 +31,7 @@ public class OAuthApiImpl extends ApiBase implements OAuthApi {
 
     @Override
     public OAuthToken createToken() throws Exception {
-
-        String urlMethod = this.getRequestUrl("authentication_oauth");
+        String urlPath = this.getRequestUrl("authentication_oauth");
         String requestType = this.getRequestType("authentication_oauth");
         Map<String, String> requestData = new HashMap<String, String>() {{
             put("grant_type", "client_credentials");
@@ -59,7 +59,7 @@ public class OAuthApiImpl extends ApiBase implements OAuthApi {
         if(root.getConfig().isUkHeaderFlag()){
             rest.addRequestHttpHeader("x-tenant-id", "uk");
         }
-        OAuthToken response = rest.request(OAuthToken.class, null, urlMethod, requestType, requestData);
+        OAuthToken response = rest.request(OAuthToken.class, null, urlPath, ApiVersion.V2_01.name(), requestType, requestData);
 
         return response;
     }
