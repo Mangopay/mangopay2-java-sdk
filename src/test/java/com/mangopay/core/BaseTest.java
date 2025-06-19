@@ -781,6 +781,18 @@ public abstract class BaseTest {
         return this.api.getPayInApi().create(payIn);
     }
 
+    protected PayIn getNewPayInBizumWebWithReturnUrlWithPhone(String userId) throws Exception {
+        PayIn payIn = getPayInBizumWebWithReturnUrlWithPhone(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
+    protected PayIn getNewPayInBizumWebWithReturnUrl(String userId) throws Exception {
+        PayIn payIn = getPayInBizumWebWithReturnUrl(userId);
+
+        return this.api.getPayInApi().create(payIn);
+    }
+
     protected PayIn getNewPayInBlikWebWithCode(String userId) throws Exception {
         PayIn payIn = getPayInBlikWeb(userId);
 
@@ -1133,6 +1145,69 @@ public abstract class BaseTest {
         payIn.setExecutionDetails(executionDetails);
 
         payIn.setTag("My BLIK Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInBizumWebWithReturnUrlWithPhone(String userId) throws Exception {
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create pay-in Bizum WEB
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(100);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        // payment type as CARD
+        payIn.setPaymentDetails(new PayInPaymentDetailsBizum());
+        ((PayInPaymentDetailsBizum) payIn.getPaymentDetails()).setStatementDescriptor("testbizum");
+
+        ((PayInPaymentDetailsBizum) payIn.getPaymentDetails()).setPhone("+34700000000");
+        // execution type as WEB
+        payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
+
+        payIn.setTag("My Bizum Tag");
+        return payIn;
+    }
+
+    private PayIn getPayInBizumWebWithReturnUrl(String userId) throws Exception {
+        Wallet wallet = this.getJohnsWalletWithMoney();
+
+        if (userId == null) {
+            UserNatural user = this.getJohn();
+            userId = user.getId();
+        }
+
+        // create pay-in Bizum WEB
+        PayIn payIn = new PayIn();
+        payIn.setAuthorId(userId);
+        payIn.setCreditedWalletId(wallet.getId());
+        payIn.setDebitedFunds(new Money());
+        payIn.getDebitedFunds().setAmount(100);
+        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
+        payIn.setFees(new Money());
+        payIn.getFees().setAmount(0);
+        payIn.getFees().setCurrency(CurrencyIso.EUR);
+
+        // payment type as CARD
+        payIn.setPaymentDetails(new PayInPaymentDetailsBizum());
+        ((PayInPaymentDetailsBizum) payIn.getPaymentDetails()).setStatementDescriptor("testbizum");
+
+        // execution type as WEB
+        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+        payIn.setExecutionDetails(executionDetails);
+
+        payIn.setTag("My Bizum Tag");
         return payIn;
     }
 

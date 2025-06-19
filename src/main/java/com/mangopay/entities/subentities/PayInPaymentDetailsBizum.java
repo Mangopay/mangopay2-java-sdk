@@ -17,13 +17,6 @@ public class PayInPaymentDetailsBizum extends Dto implements PayInPaymentDetails
     private String statementDescriptor;
 
     /**
-     * The URL to which the user is returned after the payment, whether the transaction is successful or not.
-     * Required if Phone is not sent
-     */
-    @SerializedName("ReturnURL")
-    private String returnUrl;
-
-    /**
      * Format: International E.164 standard (preceded by plus sign and country code, +34 in Spain); pattern: ^[+][1-9][\d]{4,14}$
      * The phone number of the end user to which the Bizum push notification is sent to authenticate the transaction.
      * If the Phone parameter is sent, then RedirectURL is not returned and ReturnURL is ignored.
@@ -44,10 +37,6 @@ public class PayInPaymentDetailsBizum extends Dto implements PayInPaymentDetails
     public void setStatementDescriptor(String statementDescriptor) {
         this.statementDescriptor = statementDescriptor;
     }
-
-    public String getReturnUrl() { return returnUrl; }
-
-    public void setReturnUrl(String returnUrl) { this.returnUrl = returnUrl; }
 
     public String getPhone() { return phone; }
 

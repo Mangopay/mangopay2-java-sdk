@@ -205,8 +205,6 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                 PayInPaymentDetailsBizum payInPaymentDetailsBizum = new PayInPaymentDetailsBizum();
                 if (object.has("StatementDescriptor") && !object.get("StatementDescriptor").isJsonNull())
                     payInPaymentDetailsBizum.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
-                if (object.has("ReturnURL") && !object.get("ReturnURL").isJsonNull())
-                    payInPaymentDetailsBizum.setReturnUrl(object.get("ReturnURL").getAsString());
                 if (object.has("Phone") && !object.get("Phone").isJsonNull())
                     payInPaymentDetailsBizum.setPhone(object.get("Phone").getAsString());
                 if (object.has("ProfilingAttemptReference") && !object.get("ProfilingAttemptReference").isJsonNull())
