@@ -227,4 +227,12 @@ public interface PayInApi {
      * @throws Exception
      */
     PayIn createDepositPreauthorizedPayInComplement(PayIn payIn, String idempotencyKey) throws Exception;
+
+    /**
+     * Get information about the card used for a Web Card PayIn.
+     *
+     * @param payInId the PayIn identifier
+     * @return ExtendedWebCardPayin instance
+     */
+    ExtendedWebCardPayin getExtendedWebCardPayin(String payInId) throws Exception;
 }
