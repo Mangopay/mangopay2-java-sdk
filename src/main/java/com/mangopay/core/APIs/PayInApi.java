@@ -231,10 +231,21 @@ public interface PayInApi {
     /**
      * Create a pay in intent authorization
      *
-     * @param payInIntent    The PayInIntentAuthorization object to be created
+     * @param payInIntent    The PayInIntent object to be created
      * @param idempotencyKey Idempotency key for this request. Can be null.
-     * @return Created PayInIntentAuthorization
+     * @return Created PayInIntent
      * @throws Exception
      */
     PayInIntent createPayInIntentAuthorization(PayInIntent payInIntent, String idempotencyKey) throws Exception;
+
+    /**
+     * Create a pay in intent capture
+     *
+     * @param payInIntentCapture The PayInIntent capture object to be created
+     * @param intentId           Intent identifier
+     * @param idempotencyKey     Idempotency key for this request. Can be null.
+     * @return Created PayInIntent
+     * @throws Exception
+     */
+    PayInIntent createPayInIntentCapture(PayInIntent payInIntentCapture, String intentId, String idempotencyKey) throws Exception;
 }

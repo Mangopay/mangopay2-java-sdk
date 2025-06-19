@@ -48,6 +48,12 @@ public class PayInIntentLineItem extends Dto {
     private Integer unitAmount;
 
     /**
+     * The item total amount to be captured
+     */
+    @SerializedName("Amount")
+    private Integer amount;
+
+    /**
      * The tax amount applied to the item
      */
     @SerializedName("TaxAmount")
@@ -257,6 +263,15 @@ public class PayInIntentLineItem extends Dto {
 
     public PayInIntentLineItem setId(String id) {
         this.id = id;
+        return this;
+    }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public PayInIntentLineItem setAmount(Integer amount) {
+        this.amount = amount;
         return this;
     }
 }

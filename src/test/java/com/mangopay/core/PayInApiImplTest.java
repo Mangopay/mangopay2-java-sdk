@@ -1598,41 +1598,56 @@ public class PayInApiImplTest extends BaseTest {
 
     @Test
     public void createPayInIntentAuthorization() throws Exception {
-        User john = this.getJohn();
-        Wallet wallet = this.getJohnsWallet();
+        PayInIntent created = this.createNewPayInIntent();
+        assertNotNull(created);
+        assertEquals("AUTHORIZED", created.getStatus());
+    }
 
-        List<PayInIntentLineItem> lineItems = new ArrayList<>();
-        lineItems.add(
-            new PayInIntentLineItem()
-                .setSeller(
-                    new PayInIntentSeller()
-                        .setWalletId(wallet.getId())
-                        .setTransferDate("13-11-2030")
-                )
-                .setSku("item-123456")
-                .setQuantity(1)
-                .setUnitAmount(1000)
-        );
+    @Test
+    public void createPayInIntentFullCapture() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
 
-        PayInIntent toCreate = new PayInIntent()
-            .setAmount(1000)
-            .setCurrency(CurrencyIso.EUR)
+        PayInIntent fullCaptureToCreate = new PayInIntent();
+        fullCaptureToCreate
             .setExternalData(
                 new PayInIntentExternalData()
-                    .setExternalProcessingDate("01-10-2024")
+                    .setExternalProcessingDate("01-11-2024")
+                    .setExternalProviderReference(Integer.valueOf(new Random().nextInt(1000)).toString())
+                    .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
+                    .setExternalProviderName("Stripe")
+                    .setExternalProviderPaymentMethod("PAYPAL")
+            );
+
+        PayInIntent result = api.getPayInApi().createPayInIntentCapture(fullCaptureToCreate, intent.getId(), null);
+        assertNotNull(result);
+        assertEquals("CAPTURED", result.getStatus());
+    }
+
+    @Test
+    public void createPayInIntentPartialCapture() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
+        List<PayInIntentLineItem> lineItems = new ArrayList<>();
+        PayInIntentLineItem existingLineItem = intent.getLineItems().get(0);
+        existingLineItem.setAmount(1000);
+        lineItems.add(existingLineItem);
+
+        PayInIntent fullCaptureToCreate = new PayInIntent();
+        fullCaptureToCreate
+            .setAmount(1000)
+            .setCurrency(CurrencyIso.EUR)
+            .setPlatformFeesAmount(0)
+            .setExternalData(
+                new PayInIntentExternalData()
+                    .setExternalProcessingDate("01-11-2024")
                     .setExternalProviderReference(Integer.valueOf(new Random().nextInt(1000)).toString())
                     .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
                     .setExternalProviderName("Stripe")
                     .setExternalProviderPaymentMethod("PAYPAL")
             )
-            .setBuyer(
-                new PayInIntentBuyer()
-                    .setId(john.getId())
-            )
             .setLineItems(lineItems);
 
-        PayInIntent created = getApi().getPayInApi().createPayInIntentAuthorization(toCreate, null);
-        assertNotNull(created);
-        assertEquals("AUTHORIZED", created.getStatus());
+        PayInIntent result = api.getPayInApi().createPayInIntentCapture(fullCaptureToCreate, intent.getId(), null);
+        assertNotNull(result);
+        assertEquals("CAPTURED", result.getStatus());
     }
 }

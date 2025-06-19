@@ -2193,4 +2193,41 @@ public abstract class BaseTest {
 
         return this.api.getPayInApi().createDepositPreauthorizedPayInWithoutComplement(payIn, null);
     }
+
+    protected PayInIntent createNewPayInIntent() throws Exception {
+        User john = this.getJohn();
+        Wallet wallet = this.getJohnsWallet();
+
+        List<PayInIntentLineItem> lineItems = new ArrayList<>();
+        lineItems.add(
+            new PayInIntentLineItem()
+                .setSeller(
+                    new PayInIntentSeller()
+                        .setWalletId(wallet.getId())
+                        .setTransferDate("13-11-2030")
+                )
+                .setSku("item-123456")
+                .setQuantity(1)
+                .setUnitAmount(1000)
+        );
+
+        PayInIntent toCreate = new PayInIntent()
+            .setAmount(1000)
+            .setCurrency(CurrencyIso.EUR)
+            .setExternalData(
+                new PayInIntentExternalData()
+                    .setExternalProcessingDate("01-10-2024")
+                    .setExternalProviderReference(Integer.valueOf(new Random().nextInt(1000)).toString())
+                    .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
+                    .setExternalProviderName("Stripe")
+                    .setExternalProviderPaymentMethod("PAYPAL")
+            )
+            .setBuyer(
+                new PayInIntentBuyer()
+                    .setId(john.getId())
+            )
+            .setLineItems(lineItems);
+
+        return getApi().getPayInApi().createPayInIntentAuthorization(toCreate, null);
+    }
 }

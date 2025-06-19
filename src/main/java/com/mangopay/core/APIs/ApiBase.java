@@ -113,6 +113,7 @@ public abstract class ApiBase {
         put("add_tracking_info", new String[]{"/payins/%s/trackings", RequestType.PUT.toString()});
         put("payment_method-metadata", new String[]{"/payment-methods/metadata", RequestType.POST.toString()});
         put("pay_in_intent_authorization", new String[]{"/payins/intents", RequestType.POST.toString(), ApiVersion.V3.name()});
+        put("pay_in_intent_capture", new String[]{"/payins/intents/%s/captures", RequestType.POST.toString(), ApiVersion.V3.name()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
