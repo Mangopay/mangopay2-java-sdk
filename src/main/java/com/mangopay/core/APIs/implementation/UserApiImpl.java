@@ -12,6 +12,7 @@ import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.core.serializer.BankAccountSerializer;
 import com.mangopay.core.serializer.UserSerializer;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.UserDataFormatValidation;
 import com.mangopay.entities.subentities.UserEnrollmentResult;
 import org.apache.commons.codec.binary.Base64;
 
@@ -379,4 +380,8 @@ public class UserApiImpl extends ApiBase implements UserApi {
         this.deleteObject(User.class, methodKey, user);
     }
 
+    @Override
+    public UserDataFormatValidation validateDataFormat(UserDataFormatValidation dataValidation, String idempotencyKey) throws Exception {
+        return this.createObject(UserDataFormatValidation.class, idempotencyKey, "users_validate_data_format", dataValidation);
+    }
 }

@@ -11,6 +11,9 @@ public class LocalAccountDetails extends Dto {
     @SerializedName("Account")
     private LocalAccount account;
 
+    @SerializedName("BankName")
+    private String bankName;
+
     public LocalAccountDetails(VirtualAccountAddress address, LocalAccount account) {
         this.address = address;
         this.account = account;
@@ -32,6 +35,15 @@ public class LocalAccountDetails extends Dto {
 
     public LocalAccountDetails setAccount(LocalAccount account) {
         this.account = account;
+        return this;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public LocalAccountDetails setBankName(String bankName) {
+        this.bankName = bankName;
         return this;
     }
 }

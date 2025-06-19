@@ -728,6 +728,11 @@ public class RestTool {
         // content type
         httpHeaders.put("Content-Type", "application/json");
 
+        // some Reports V2 endpoints fail without the Accept header
+        if (restUrl.contains("reporting/reports")) {
+            httpHeaders.put("Accept", "*/*");
+        }
+
         // AuthenticationHelper http header
         if (this.authRequired) {
             AuthenticationHelper authHlp = new AuthenticationHelper(root);

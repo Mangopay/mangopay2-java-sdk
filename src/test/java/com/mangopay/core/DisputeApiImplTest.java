@@ -541,4 +541,24 @@ public class DisputeApiImplTest extends BaseTest {
         assertNotNull(result);
         assertTrue(result.getStatus() == DisputeStatus.SUBMITTED);
     }
+
+    @Test
+    public void getDisputesForPayIn() throws Exception {
+        Dispute dispute = null;
+
+        for (Dispute d : clientDisputes) {
+            if (d.getDisputeType() == DisputeType.NOT_CONTESTABLE) {
+                dispute = d;
+                break;
+            }
+        }
+
+        assertNotNull("Cannot test getting disputes for user because there's no not contestable dispute in the disputes list.", dispute);
+
+        PayIn payin = api.getPayInApi().get(dispute.getInitialTransactionId());
+        List<Dispute> result = api.getDisputeApi().getDisputesForPayIn(payin.getId(), new Pagination(1, 10), null, null);
+
+        assertNotNull(result);
+        assertFalse(result.isEmpty());
+    }
 }

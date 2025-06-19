@@ -1,3 +1,43 @@
+## [2.52.2] - 2025-06-12
+
+### Updated
+
+- release configurations
+
+## [2.52.1] - 2025-06-12
+
+### Added
+- [US and CA virtual accounts](https://docs.mangopay.com/release-notes/api/2025-06-12) for local pay-in collection
+- [GET List Transactions for a Card Fingerprint](https://docs.mangopay.com/api-reference/transactions/list-transactions-card-fingerprint#list-transactions-for-a-card-fingerprint)
+
+## [2.52.0] - 2025-06-10
+
+### Added
+
+Endpoints for [new Reporting Service](https://docs.mangopay.com/release-notes/api/2025-06-05) feature:
+
+- [POST Create a Report](https://docs.mangopay.com/api-reference/reporting/create-report)
+- [GET View a Report](https://docs.mangopay.com/api-reference/reporting/view-report)
+- [GET List all Reports](https://docs.mangopay.com/api-reference/reporting/list-reports)
+
+Webhook [event types](url) for new Reporting Service:
+
+- `REPORT_GENERATED`
+- `REPORT_FAILED`
+
+## [2.51.1] - 2025-06-06
+
+### Added
+
+- Support for `RecipientScope` query parameter
+  on [GET List Recipients for a User](https://docs.mangopay.com/api-reference/recipients/list-recipients-user)
+- [POST Validate the format of User data](https://docs.mangopay.com/api-reference/user-data-format/validate-user-data-format)
+- [GET List Disputes for a PayIn](https://docs.mangopay.com/api-reference/disputes/list-disputes-payin)
+
+### Fixed
+
+- `Status` enum value on Identity Verification object changed from `OUTDATED` to `OUT_OF_DATE`
+
 ## [2.51.0] - 2025-05-23
 
 ### Added

@@ -3,6 +3,7 @@ package com.mangopay.core.APIs.implementation;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.CardApi;
+import com.mangopay.core.FilterTransactions;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.enumerations.Validity;
@@ -73,5 +74,12 @@ public class CardApiImpl extends ApiBase implements CardApi {
         return this.getObject(CardValidation.class, "get_card_validation", cardId, cardValidationId);
     }
 
-
+    @Override
+    public List<Transaction> getTransactionsByCardFingerprint(String fingerprint, FilterTransactions filter, Pagination pagination, Sorting sorting) throws Exception {
+        if (filter == null) {
+            filter = new FilterTransactions();
+        }
+        return this.getList(Transaction[].class, Transaction.class, "cards_get_transactions_by_fingerprint",
+            null, fingerprint, filter.getValues(), sorting);
+    }
 }
