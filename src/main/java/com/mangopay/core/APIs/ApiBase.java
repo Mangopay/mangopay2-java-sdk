@@ -326,11 +326,7 @@ public abstract class ApiBase {
      * @return The api version as String
      */
     protected String getApiVersion(String key) {
-        if (methods.get(key).length == 2) {
-            return "v2.01";
-        }
-
-        if (methods.get(key)[2].equals(ApiVersion.V3.name())) {
+        if (methods.get(key).length == 3 && methods.get(key)[2].equals(ApiVersion.V3.name())) {
             return "V3.0";
         }
 
