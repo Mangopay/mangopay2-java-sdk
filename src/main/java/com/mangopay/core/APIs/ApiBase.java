@@ -112,8 +112,8 @@ public abstract class ApiBase {
         put("payins_paybybank-web_create", new String[]{"/payins/payment-methods/openbanking", RequestType.POST.toString()});
         put("add_tracking_info", new String[]{"/payins/%s/trackings", RequestType.PUT.toString()});
         put("payment_method-metadata", new String[]{"/payment-methods/metadata", RequestType.POST.toString()});
-        put("pay_in_intent_authorization", new String[]{"/payins/intents", RequestType.POST.toString(), ApiVersion.V3.name()});
-        put("pay_in_intent_capture", new String[]{"/payins/intents/%s/captures", RequestType.POST.toString(), ApiVersion.V3.name()});
+        put("pay_in_intent_authorization", new String[]{"/payins/intents", RequestType.POST.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_capture", new String[]{"/payins/intents/%s/captures", RequestType.POST.toString(), ApiVersion.V3_0.name()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
@@ -326,11 +326,10 @@ public abstract class ApiBase {
      * @return The api version as String
      */
     protected String getApiVersion(String key) {
-        if (methods.get(key).length == 3 && methods.get(key)[2].equals(ApiVersion.V3.name())) {
-            return "V3.0";
+        if (methods.get(key).length == 3 && methods.get(key)[2].equals(ApiVersion.V3_0.name())) {
+            return ApiVersion.V3_0.getUrlValue();
         }
-
-        return "v2.01";
+        return ApiVersion.V2_01.getUrlValue();
     }
 
     /**
