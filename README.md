@@ -1,4 +1,4 @@
-Mangopay Java SDK [![Build Status](https://travis-ci.org/Mangopay/mangopay2-java-sdk.svg?branch=master)](https://travis-ci.org/Mangopay/mangopay2-java-sdk)
+Mangopay Java SDK
 =================================================
 MangopaySDK is a Java client library to work with
 [Mangopay REST API](http://docs.mangopay.com/api-references/).
@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.mangopay:mangopay2-java-sdk:2.20.0'
+    compile 'com.mangopay:mangopay2-java-sdk:2.51.0'
 }
 ```
 
@@ -32,7 +32,7 @@ dependencies {
 <dependency>
   <groupId>com.mangopay</groupId>
   <artifactId>mangopay2-java-sdk</artifactId>
-  <version>2.20.0</version>
+    <version>2.51.0</version>
 </dependency>
 ```
 
@@ -53,13 +53,9 @@ Report bugs or suggest features using
 [issue tracker at GitHub](https://github.com/MangoPay/mangopay2-java-sdk).
 
 
-Account creation
--------------------------------------------------
-You can get yourself a free sandbox account or sign up for a production account by [registering on the Mangopay site](https://www.mangopay.com/start/) (note that validation of your production account involves several steps, so think about doing it in advance of when you actually want to go live).
-
 Configuration
 -------------------------------------------------
-Using the credential info from the signup process above, you should then set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your APIKey.
+Set `api.Config.ClientId` to your Mangopay Client ID and `api.Config.ClientPassword` to your APIKey.
 
 `api.Config.BaseUrl` is set to sandbox environment by default. To enable production
 environment, set it to `https://api.mangopay.com`.

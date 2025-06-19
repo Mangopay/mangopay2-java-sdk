@@ -10,12 +10,12 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-api:1.7.32'
-    implementation 'com.google.code.gson:gson:2.8.7'
-    implementation 'commons-codec:commons-codec:1.15'
+    implementation 'org.slf4j:slf4j-api:2.0.16'
+    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'commons-codec:commons-codec:1.18.0'
 
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.slf4j:slf4j-simple:1.7.32'
+    testImplementation 'org.slf4j:slf4j-simple:2.0.16'
 }
 
 test {
@@ -41,7 +41,7 @@ task javadocJar(type: Jar) {
 
 group = 'com.mangopay'
 version = '2.52.2'
-sourceCompatibility = '1.7'
+sourceCompatibility = '1.8'
 
 publishing {
     publications {
