@@ -70,6 +70,11 @@ public enum PayInPaymentType {
     SATISPAY,
 
     /**
+     * BIZUM payment type
+     */
+    BIZUM,
+
+    /**
      * BLIK payment type
      */
     BLIK,
