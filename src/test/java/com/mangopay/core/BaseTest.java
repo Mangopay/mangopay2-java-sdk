@@ -782,13 +782,13 @@ public abstract class BaseTest {
     }
 
     protected PayIn getNewPayInBizumWebWithReturnUrlWithPhone(String userId) throws Exception {
-        PayIn payIn = getPayInBizumWebWithReturnUrlWithPhone(userId);
+        PayIn payIn = getPayInBizumWeb(userId, true);
 
         return this.api.getPayInApi().create(payIn);
     }
 
     protected PayIn getNewPayInBizumWebWithReturnUrl(String userId) throws Exception {
-        PayIn payIn = getPayInBizumWebWithReturnUrl(userId);
+        PayIn payIn = getPayInBizumWeb(userId, false);
 
         return this.api.getPayInApi().create(payIn);
     }
@@ -1148,7 +1148,7 @@ public abstract class BaseTest {
         return payIn;
     }
 
-    private PayIn getPayInBizumWebWithReturnUrlWithPhone(String userId) throws Exception {
+    private PayIn getPayInBizumWeb(String userId, Boolean usePhone) throws Exception {
         Wallet wallet = this.getJohnsWalletWithMoney();
 
         if (userId == null) {
@@ -1171,41 +1171,17 @@ public abstract class BaseTest {
         payIn.setPaymentDetails(new PayInPaymentDetailsBizum());
         ((PayInPaymentDetailsBizum) payIn.getPaymentDetails()).setStatementDescriptor("testbizum");
 
-        ((PayInPaymentDetailsBizum) payIn.getPaymentDetails()).setPhone("+34700000000");
-        // execution type as WEB
-        payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
+        if (usePhone) {
+            ((PayInPaymentDetailsBizum) payIn.getPaymentDetails()).setPhone("+34700000000");
 
-        payIn.setTag("My Bizum Tag");
-        return payIn;
-    }
-
-    private PayIn getPayInBizumWebWithReturnUrl(String userId) throws Exception {
-        Wallet wallet = this.getJohnsWalletWithMoney();
-
-        if (userId == null) {
-            UserNatural user = this.getJohn();
-            userId = user.getId();
+            // execution type as WEB when using the Phone field
+            payIn.setExecutionDetails(new PayInExecutionDetailsWeb());
+        } else {
+            // execution type as WEB when using the returnUrl field
+            PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
+            executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
+            payIn.setExecutionDetails(executionDetails);
         }
-
-        // create pay-in Bizum WEB
-        PayIn payIn = new PayIn();
-        payIn.setAuthorId(userId);
-        payIn.setCreditedWalletId(wallet.getId());
-        payIn.setDebitedFunds(new Money());
-        payIn.getDebitedFunds().setAmount(100);
-        payIn.getDebitedFunds().setCurrency(CurrencyIso.EUR);
-        payIn.setFees(new Money());
-        payIn.getFees().setAmount(0);
-        payIn.getFees().setCurrency(CurrencyIso.EUR);
-
-        // payment type as CARD
-        payIn.setPaymentDetails(new PayInPaymentDetailsBizum());
-        ((PayInPaymentDetailsBizum) payIn.getPaymentDetails()).setStatementDescriptor("testbizum");
-
-        // execution type as WEB
-        PayInExecutionDetailsWeb executionDetails = new PayInExecutionDetailsWeb();
-        executionDetails.setReturnUrl("http://www.my-site.com/returnURL");
-        payIn.setExecutionDetails(executionDetails);
 
         payIn.setTag("My Bizum Tag");
         return payIn;
