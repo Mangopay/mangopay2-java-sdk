@@ -1,80 +1,45 @@
 package com.mangopay.core;
 
-import com.mangopay.core.enumerations.CurrencyIso;
-import com.mangopay.core.enumerations.DisputeStatus;
-import com.mangopay.core.enumerations.DisputeType;
-import com.mangopay.core.enumerations.SortDirection;
-import com.mangopay.entities.Dispute;
-import com.mangopay.entities.Repudiation;
-import com.mangopay.entities.SettlementTransfer;
-import com.mangopay.entities.Transfer;
+import com.mangopay.entities.Settlement;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
+import java.io.File;
+import java.net.URL;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class SettlementApiImplTest extends BaseTest {
-    private String settlementId = null;
-    private List<Dispute> clientDisputes;
-
-    @Before
-    public void initialize() throws Exception {
-
-        Sorting sort = new Sorting();
-        sort.addField("CreationDate", SortDirection.desc);
-
-        clientDisputes = api.getDisputeApi().getAll(new Pagination(1, 100), null, sort);
-        assertTrue("INITIALIZATION FAILURE - cannot test disputes", clientDisputes != null && !clientDisputes.isEmpty());
-
-        if (settlementId == null || settlementId.isEmpty()) {
-            Dispute dispute = null;
-            for (Dispute d : clientDisputes) {
-                if (d.getStatus() == DisputeStatus.CLOSED && d.getDisputeType() == DisputeType.NOT_CONTESTABLE) {
-                    dispute = d;
-                    break;
-                }
-            }
-
-            assertNotNull("Cannot initialize settlement api test class because " +
-                    "there's no closed and not contestable disputes in the disputes list.", dispute);
-
-            String repudiationId = api.getDisputeApi().getTransactions(
-                    dispute.getId(), new Pagination(1, 1), null, null).get(0).getId();
-            Repudiation repudiation = null;
-            repudiation = api.getRepudiationApi().getRepudiation(repudiationId);
-
-            Money debitedFunds = new Money();
-            Money fees = new Money();
-            debitedFunds.setCurrency(CurrencyIso.EUR);
-            debitedFunds.setAmount(1);
-            fees.setCurrency(CurrencyIso.EUR);
-            fees.setAmount(0);
-
-            SettlementTransfer post = new SettlementTransfer();
-            post.setAuthorId(repudiation.getAuthorId());
-            post.setDebitedFunds(debitedFunds);
-            post.setFees(fees);
-            post.setTag("abc");
-
-            Transfer result = null;
-            result = api.getDisputeApi().createSettlementTransfer(post, repudiationId);
-            assertNotNull("Can't retrieve id from settlement transfer because it is null", result);
-            settlementId = result.getId();
-        }
-
-    }
-
+    private static Settlement settlement;
 
     /*
-    * Test to be uncommented when testing account data are fixed
-    @Test
-    public void getSettlement() throws Exception {
-        SettlementTransfer settlementTransfers = this.api.getSettlementApi().get(settlementId);
-        assertNotNull("Settlement api return null settlement transfer", settlementTransfers);
-        assertNotNull(settlementTransfers.getTag());
-        assertEquals("abc",settlementTransfers.getTag());
+        In case the status returned on GET is something related to a failure, try creating a new
+        intent authorization and update the IntentId in the CSV file below
+     */
+    @Before
+    public void initialize() throws Exception {
+        URL url = getClass().getResource("/com/mangopay/core/settlement_sample.csv");
+        File file = new File(url.toURI());
+        settlement = api.getSettlementApi().upload(file, null);
     }
-    */
+
+    @Test
+    public void test_UploadSettlement() {
+        assertNotNull(settlement);
+        assertNotNull(settlement.getSettlementId());
+        assertEquals("UPLOADED", settlement.getStatus());
+    }
+
+    @Test
+    public void test_GetSettlement() throws Exception {
+        // wait 10 seconds for the API to process the file
+        Thread.sleep(10000);
+        Settlement fetched = api.getSettlementApi().getSettlement(settlement.getSettlementId());
+        assertNotNull(fetched);
+        assertEquals(settlement.getSettlementId(), fetched.getSettlementId());
+        assertEquals("PARTIALLY_SETTLED", fetched.getStatus());
+        assertEquals("1000", fetched.getActualSettlementAmount().toString());
+        assertEquals("0", fetched.getExternalProcessorFeesAmount().toString());
+    }
 }

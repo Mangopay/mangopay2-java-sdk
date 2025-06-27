@@ -5,6 +5,7 @@ import com.mangopay.core.*;
 import com.mangopay.core.enumerations.ApiVersion;
 import com.mangopay.core.enumerations.RequestType;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -211,6 +212,8 @@ public abstract class ApiBase {
         put("disputes_pending_settlement", new String[]{"/disputes/pendingsettlement", RequestType.GET.toString()});
 
         put("settlements_get", new String[]{"/settlements/%s", RequestType.GET.toString()});
+        put("settlement_upload", new String[]{"/payins/intents/settlements", RequestType.POST.toString(), ApiVersion.V3_0.name()});
+        put("settlement_get", new String[]{"/payins/intents/settlements/%s", RequestType.GET.toString(), ApiVersion.V3_0.name()});
 
         put("repudiation_get_refunds", new String[]{"/repudiations/%s/refunds", RequestType.GET.toString()});
 
@@ -417,6 +420,34 @@ public abstract class ApiBase {
         U entity
     ) throws Exception {
         return createObject(classOfT, idempotencyKey, methodKey, entity, "");
+    }
+
+    /**
+     * Performs a POST with a MultiPart file
+     *
+     * @param <T>            Type on behalf of which the request is being called.
+     * @param classOfT       Type on behalf of which the request is being called.
+     * @param idempotencyKey idempotency key for this request.
+     * @param methodKey      Relevant method key.
+     * @param file           The File to be created
+     * @return The Dto instance returned from API.
+     */
+    protected <T extends Dto> T createMultipart(
+        Class<T> classOfT,
+        String methodKey,
+        File file,
+        String idempotencyKey
+    ) throws Exception {
+        String urlPath = getRequestUrl(methodKey);
+        RestTool rest = new RestTool(root, true, true);
+        return rest.multipartRequest(
+            classOfT,
+            idempotencyKey,
+            urlPath,
+            getApiVersion(methodKey),
+            getRequestType(methodKey),
+            file
+        );
     }
 
     /**
