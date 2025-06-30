@@ -206,7 +206,7 @@ public class RestTool {
      * @param file           The MultiPart file sent in case of PUTting or POSTing.
      * @return The Dto instance returned from API.
      */
-    public <T extends Dto> T multipartCsvRequest(
+    public <T extends Dto> T multipartRequest(
         Class<T> classOfT,
         String idempotencyKey,
         String urlPath,

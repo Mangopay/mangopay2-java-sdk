@@ -441,7 +441,7 @@ public abstract class ApiBase {
     ) throws Exception {
         String urlPath = getRequestUrl(methodKey);
         RestTool rest = new RestTool(root, true, true);
-        return rest.multipartCsvRequest(
+        return rest.multipartRequest(
             classOfT,
             idempotencyKey,
             urlPath,
@@ -477,7 +477,7 @@ public abstract class ApiBase {
         }
 
         RestTool rest = new RestTool(root, true, true);
-        return rest.multipartCsvRequest(
+        return rest.multipartRequest(
             classOfT,
             idempotencyKey,
             urlPath,
