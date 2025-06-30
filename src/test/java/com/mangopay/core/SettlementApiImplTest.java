@@ -26,9 +26,9 @@ public class SettlementApiImplTest extends BaseTest {
 
     @Test
     public void test_UploadSettlement() {
-        assertNotNull(settlement);
-        assertNotNull(settlement.getSettlementId());
         assertEquals("UPLOADED", settlement.getStatus());
+        assertEquals("1000", settlement.getActualSettlementAmount().toString());
+        assertEquals("0", settlement.getExternalProcessorFeesAmount().toString());
     }
 
     @Test
@@ -41,5 +41,18 @@ public class SettlementApiImplTest extends BaseTest {
         assertEquals("PARTIALLY_SETTLED", fetched.getStatus());
         assertEquals("1000", fetched.getActualSettlementAmount().toString());
         assertEquals("0", fetched.getExternalProcessorFeesAmount().toString());
+    }
+
+    @Test
+    public void test_UpdateSettlement() throws Exception {
+        URL url = getClass().getResource("/com/mangopay/core/settlement_sample.csv");
+        File file = new File(url.toURI());
+
+        Settlement updated = api.getSettlementApi().update(settlement.getSettlementId(), file);
+        assertEquals("UPLOADED", updated.getStatus());
+        Thread.sleep(10000);
+
+        Settlement fetched = api.getSettlementApi().getSettlement(settlement.getSettlementId());
+        assertEquals("PARTIALLY_SETTLED", fetched.getStatus());
     }
 }

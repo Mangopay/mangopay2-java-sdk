@@ -35,4 +35,15 @@ public interface SettlementApi {
      * @throws Exception
      */
     Settlement getSettlement(String settlementId) throws Exception;
+
+    /**
+     * Update a settlement file (API V3)
+     *
+     * @param settlementId Settlement identifier
+     * @param file         The settlement file provided by the external payment provider,
+     *                     formatted to comply with Mangopay’s generic settlement structure (CSV)
+     * @return Settlement object returned by the API
+     * @throws Exception
+     */
+    Settlement update(String settlementId, File file) throws Exception;
 }

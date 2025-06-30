@@ -196,10 +196,6 @@ public class RestTool {
 
     /**
      * Makes a call to the MangoPay API, which involves a MultiPart file
-     * <p>
-     * This generic method handles calls targeting single
-     * <code>Dto</code> instances. In order to process collections of objects,
-     * use <code>requestList</code> method instead.
      *
      * @param <T>            Type on behalf of which the request is being called.
      * @param classOfT       Type on behalf of which the request is being called.
@@ -207,8 +203,7 @@ public class RestTool {
      * @param urlPath        Url path.
      * @param apiVersion     Api version.
      * @param requestType    HTTP request term, one of the GET, PUT or POST.
-     * @param file           The MultiPart file
-     *                       sent in case of PUTting or POSTing.
+     * @param file           The MultiPart file sent in case of PUTting or POSTing.
      * @return The Dto instance returned from API.
      */
     public <T extends Dto> T multipartRequest(

@@ -24,11 +24,16 @@ public class SettlementApiImpl extends ApiBase implements SettlementApi {
 
     @Override
     public Settlement upload(File file, String idempotencyKey) throws Exception {
-        return this.createMultipart(Settlement.class, "settlement_upload", file, idempotencyKey);
+        return this.createOrUpdateMultipart(Settlement.class, "settlement_upload", file, idempotencyKey);
     }
 
     @Override
     public Settlement getSettlement(String settlementId) throws Exception {
         return this.getObject(Settlement.class, "settlement_get", settlementId);
+    }
+
+    @Override
+    public Settlement update(String settlementId, File file) throws Exception {
+        return this.createOrUpdateMultipart(Settlement.class, "settlement_update", file, null, settlementId);
     }
 }

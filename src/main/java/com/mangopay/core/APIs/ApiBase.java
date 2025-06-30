@@ -214,6 +214,7 @@ public abstract class ApiBase {
         put("settlements_get", new String[]{"/settlements/%s", RequestType.GET.toString()});
         put("settlement_upload", new String[]{"/payins/intents/settlements", RequestType.POST.toString(), ApiVersion.V3_0.name()});
         put("settlement_get", new String[]{"/payins/intents/settlements/%s", RequestType.GET.toString(), ApiVersion.V3_0.name()});
+        put("settlement_update", new String[]{"/payins/intents/settlements/%s", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
 
         put("repudiation_get_refunds", new String[]{"/repudiations/%s/refunds", RequestType.GET.toString()});
 
@@ -432,13 +433,49 @@ public abstract class ApiBase {
      * @param file           The File to be created
      * @return The Dto instance returned from API.
      */
-    protected <T extends Dto> T createMultipart(
+    protected <T extends Dto> T createOrUpdateMultipart(
         Class<T> classOfT,
         String methodKey,
         File file,
         String idempotencyKey
     ) throws Exception {
         String urlPath = getRequestUrl(methodKey);
+        RestTool rest = new RestTool(root, true, true);
+        return rest.multipartRequest(
+            classOfT,
+            idempotencyKey,
+            urlPath,
+            getApiVersion(methodKey),
+            getRequestType(methodKey),
+            file
+        );
+    }
+
+    /**
+     * Performs a POST with a MultiPart file
+     *
+     * @param <T>            Type on behalf of which the request is being called.
+     * @param classOfT       Type on behalf of which the request is being called.
+     * @param idempotencyKey idempotency key for this request.
+     * @param methodKey      Relevant method key.
+     * @param file           The File to be created
+     * @param entityId       Entity identifier, mostly used for PUT
+     * @return The Dto instance returned from API.
+     */
+    protected <T extends Dto> T createOrUpdateMultipart(
+        Class<T> classOfT,
+        String methodKey,
+        File file,
+        String idempotencyKey,
+        String entityId
+    ) throws Exception {
+        String urlPath;
+        if (entityId != null) {
+            urlPath = String.format(getRequestUrl(methodKey), entityId);
+        } else {
+            urlPath = getRequestUrl(methodKey);
+        }
+
         RestTool rest = new RestTool(root, true, true);
         return rest.multipartRequest(
             classOfT,

@@ -2217,7 +2217,7 @@ public abstract class BaseTest {
             .setExternalData(
                 new PayInIntentExternalData()
                     .setExternalProcessingDate("01-10-2024")
-                    .setExternalProviderReference(Integer.valueOf(new Random().nextInt(1000)).toString())
+                    .setExternalProviderReference(String.valueOf(System.currentTimeMillis()))
                     .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
                     .setExternalProviderName("Stripe")
                     .setExternalProviderPaymentMethod("PAYPAL")
