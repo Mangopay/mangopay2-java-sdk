@@ -215,7 +215,7 @@ public class RestTool {
         File file
     ) throws Exception {
         this.requestType = requestType;
-        return this.doMultipartRequest(classOfT, idempotencyKey, urlPath, apiVersion, file, "text/csv");
+        return this.doMultipartRequest(classOfT, idempotencyKey, urlPath, apiVersion, file);
     }
 
     /**
@@ -360,8 +360,7 @@ public class RestTool {
         String idempotencyKey,
         String urlPath,
         String apiVersion,
-        File file,
-        String contentType
+        File file
     ) throws Exception {
         if (!this.requestType.equals(RequestType.POST.toString())
             && !Objects.equals(this.requestType, RequestType.PUT.toString())) {
@@ -413,7 +412,6 @@ public class RestTool {
                 // Write multipart headers
                 writer.write("--" + boundary + CRLF);
                 writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"" + file.getName() + "\"" + CRLF);
-                writer.write(String.format("Content-Type: %s%s", contentType, CRLF));
                 writer.write(CRLF);
                 writer.flush();
 
