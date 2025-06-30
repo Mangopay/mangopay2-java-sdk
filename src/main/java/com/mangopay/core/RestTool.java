@@ -206,7 +206,7 @@ public class RestTool {
      * @param file           The MultiPart file sent in case of PUTting or POSTing.
      * @return The Dto instance returned from API.
      */
-    public <T extends Dto> T multipartRequest(
+    public <T extends Dto> T multipartCsvRequest(
         Class<T> classOfT,
         String idempotencyKey,
         String urlPath,
@@ -215,7 +215,7 @@ public class RestTool {
         File file
     ) throws Exception {
         this.requestType = requestType;
-        return this.doMultipartRequest(classOfT, idempotencyKey, urlPath, apiVersion, file);
+        return this.doMultipartRequest(classOfT, idempotencyKey, urlPath, apiVersion, file, "text/csv");
     }
 
     /**
@@ -360,7 +360,8 @@ public class RestTool {
         String idempotencyKey,
         String urlPath,
         String apiVersion,
-        File file
+        File file,
+        String contentType
     ) throws Exception {
         if (!this.requestType.equals(RequestType.POST.toString())
             && !Objects.equals(this.requestType, RequestType.PUT.toString())) {
@@ -412,7 +413,7 @@ public class RestTool {
                 // Write multipart headers
                 writer.write("--" + boundary + CRLF);
                 writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"" + file.getName() + "\"" + CRLF);
-                writer.write("Content-Type: text/csv" + CRLF);
+                writer.write(String.format("Content-Type: %s%s", contentType, CRLF));
                 writer.write(CRLF);
                 writer.flush();
 

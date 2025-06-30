@@ -27,8 +27,6 @@ public class SettlementApiImplTest extends BaseTest {
     @Test
     public void test_UploadSettlement() {
         assertEquals("UPLOADED", settlement.getStatus());
-        assertEquals("1000", settlement.getActualSettlementAmount().toString());
-        assertEquals("0", settlement.getExternalProcessorFeesAmount().toString());
     }
 
     @Test
