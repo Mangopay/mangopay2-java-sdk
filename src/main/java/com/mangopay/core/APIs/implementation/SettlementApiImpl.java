@@ -6,8 +6,6 @@ import com.mangopay.core.APIs.SettlementApi;
 import com.mangopay.entities.Settlement;
 import com.mangopay.entities.SettlementTransfer;
 
-import java.io.File;
-
 /**
  * API for settlements
  */
@@ -23,7 +21,7 @@ public class SettlementApiImpl extends ApiBase implements SettlementApi {
     }
 
     @Override
-    public Settlement upload(File file, String idempotencyKey) throws Exception {
+    public Settlement upload(byte[] file, String idempotencyKey) throws Exception {
         return this.createOrUpdateMultipart(Settlement.class, "settlement_upload", file, idempotencyKey);
     }
 
@@ -33,7 +31,7 @@ public class SettlementApiImpl extends ApiBase implements SettlementApi {
     }
 
     @Override
-    public Settlement update(String settlementId, File file) throws Exception {
+    public Settlement update(String settlementId, byte[] file) throws Exception {
         return this.createOrUpdateMultipart(Settlement.class, "settlement_update", file, null, settlementId);
     }
 }

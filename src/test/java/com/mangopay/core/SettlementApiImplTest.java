@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -21,7 +22,7 @@ public class SettlementApiImplTest extends BaseTest {
     public void initialize() throws Exception {
         URL url = getClass().getResource("/com/mangopay/core/settlement_sample.csv");
         File file = new File(url.toURI());
-        settlement = api.getSettlementApi().upload(file, null);
+        settlement = api.getSettlementApi().upload(Files.readAllBytes(file.toPath()), null);
     }
 
     @Test
@@ -46,7 +47,7 @@ public class SettlementApiImplTest extends BaseTest {
         URL url = getClass().getResource("/com/mangopay/core/settlement_sample.csv");
         File file = new File(url.toURI());
 
-        Settlement updated = api.getSettlementApi().update(settlement.getSettlementId(), file);
+        Settlement updated = api.getSettlementApi().update(settlement.getSettlementId(), Files.readAllBytes(file.toPath()));
         assertEquals("UPLOADED", updated.getStatus());
         Thread.sleep(10000);
 

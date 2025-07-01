@@ -14,7 +14,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -212,7 +211,7 @@ public class RestTool {
         String urlPath,
         String apiVersion,
         String requestType,
-        File file
+        byte[] file
     ) throws Exception {
         this.requestType = requestType;
         return this.doMultipartRequest(classOfT, idempotencyKey, urlPath, apiVersion, file);
@@ -360,7 +359,7 @@ public class RestTool {
         String idempotencyKey,
         String urlPath,
         String apiVersion,
-        File file
+        byte[] file
     ) throws Exception {
         if (!this.requestType.equals(RequestType.POST.toString())
             && !Objects.equals(this.requestType, RequestType.PUT.toString())) {
@@ -411,12 +410,12 @@ public class RestTool {
                  OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {
                 // Write multipart headers
                 writer.write("--" + boundary + CRLF);
-                writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"" + file.getName() + "\"" + CRLF);
+                writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"settlement_file.csv\"" + CRLF);
                 writer.write(CRLF);
                 writer.flush();
 
                 // Write the file content
-                Files.copy(file.toPath(), outputStream);
+                outputStream.write(file);
                 outputStream.flush();
 
                 // End of file part

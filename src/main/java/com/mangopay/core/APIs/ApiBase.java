@@ -5,7 +5,6 @@ import com.mangopay.core.*;
 import com.mangopay.core.enumerations.ApiVersion;
 import com.mangopay.core.enumerations.RequestType;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -436,7 +435,7 @@ public abstract class ApiBase {
     protected <T extends Dto> T createOrUpdateMultipart(
         Class<T> classOfT,
         String methodKey,
-        File file,
+        byte[] file,
         String idempotencyKey
     ) throws Exception {
         String urlPath = getRequestUrl(methodKey);
@@ -465,7 +464,7 @@ public abstract class ApiBase {
     protected <T extends Dto> T createOrUpdateMultipart(
         Class<T> classOfT,
         String methodKey,
-        File file,
+        byte[] file,
         String idempotencyKey,
         String entityId
     ) throws Exception {

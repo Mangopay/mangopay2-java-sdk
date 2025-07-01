@@ -3,8 +3,6 @@ package com.mangopay.core.APIs;
 import com.mangopay.entities.Settlement;
 import com.mangopay.entities.SettlementTransfer;
 
-import java.io.File;
-
 public interface SettlementApi {
 
     /**
@@ -25,7 +23,7 @@ public interface SettlementApi {
      * @return Settlement object returned by the API
      * @throws Exception
      */
-    Settlement upload(File file, String idempotencyKey) throws Exception;
+    Settlement upload(byte[] file, String idempotencyKey) throws Exception;
 
     /**
      * Fetches a Settlement (API V3)
@@ -45,5 +43,5 @@ public interface SettlementApi {
      * @return Settlement object returned by the API
      * @throws Exception
      */
-    Settlement update(String settlementId, File file) throws Exception;
+    Settlement update(String settlementId, byte[] file) throws Exception;
 }
