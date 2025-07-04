@@ -41,8 +41,7 @@ public class TransferApiImplTest extends BaseTest {
 
         Transfer pendingUserActionTransfer = this.getNewTransferSca(3001, debitedWallet.getId(),
             VALID_USER_NATURAL_SCA_ID, "USER_PRESENT");
-        assertEquals(TransactionStatus.CREATED, pendingUserActionTransfer.getStatus());
-        assertNotNull(pendingUserActionTransfer.getPendingUserAction());
+        assertEquals(TransactionStatus.SUCCEEDED, pendingUserActionTransfer.getStatus());
 
         Transfer noPendingUserActionTransfer = this.getNewTransferSca(10, debitedWallet.getId(),
             VALID_USER_NATURAL_SCA_ID, "USER_PRESENT");

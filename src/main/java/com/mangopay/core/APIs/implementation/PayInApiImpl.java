@@ -170,4 +170,19 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     public PayIn createDepositPreauthorizedPayInComplement(PayIn payIn, String idempotencyKey) throws Exception {
         return this.createObject(PayIn.class, idempotencyKey, "payins_deposit_preauthorized_complement", payIn);
     }
+
+    @Override
+    public PayInIntent createPayInIntentAuthorization(PayInIntent payInIntent, String idempotencyKey) throws Exception {
+        return this.createObject(PayInIntent.class, idempotencyKey, "pay_in_intent_authorization", payInIntent);
+    }
+
+    @Override
+    public PayInIntent createPayInIntentCapture(PayInIntent payInIntentCapture, String intentId, String idempotencyKey) throws Exception {
+        return this.createObject(PayInIntent.class, idempotencyKey, "pay_in_intent_capture", payInIntentCapture, intentId);
+    }
+
+    @Override
+    public PayInIntent getPayInIntent(String intentId) throws Exception {
+        return this.getObject(PayInIntent.class, "pay_in_intent_get", intentId);
+    }
 }
