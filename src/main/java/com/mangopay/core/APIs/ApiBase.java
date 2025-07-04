@@ -102,6 +102,7 @@ public abstract class ApiBase {
         put("payins_deposit_preauthorized_complement", new String[]{"/payins/deposit-preauthorized/direct/complement", RequestType.POST.toString()});
         put("payins_satispay-web_create", new String[]{"/payins/payment-methods/satispay", RequestType.POST.toString()});
         put("payins_blik-web_create", new String[]{"/payins/payment-methods/blik", RequestType.POST.toString()});
+        put("payins_bizum-web_create", new String[]{"/payins/payment-methods/bizum", RequestType.POST.toString()});
         put("payins_multibanco-web_create", new String[]{"/payins/payment-methods/multibanco", RequestType.POST.toString()});
         put("payins_klarna-web_create", new String[]{"/payins/payment-methods/klarna", RequestType.POST.toString()});
         put("payins_ideal-web_create", new String[]{"/payins/payment-methods/ideal", RequestType.POST.toString()});

@@ -136,6 +136,10 @@ public class PayIn extends Transaction {
                             put("PaymentDetails", PayInPaymentDetailsSatispay.class);
                         }}
                     );
+                    put("BIZUM", new HashMap<String, Class<?>>() {{
+                            put("PaymentDetails", PayInPaymentDetailsBizum.class);
+                        }}
+                    );
                     put("BLIK", new HashMap<String, Class<?>>() {{
                             put("PaymentDetails", PayInPaymentDetailsBlik.class);
                         }}

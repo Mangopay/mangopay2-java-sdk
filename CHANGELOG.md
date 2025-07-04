@@ -1,5 +1,26 @@
-## [2.52.2] - 2025-06-12
+## [2.53.0] - 2025-06-24
 
+### Changed
+
+- Minimum language version changed to **Java 8.0 or higher**
+- Java `sourceCompatibility` changed to **1.8** (#392)
+- README updated
+
+### Added
+
+- New endpoint [POST Create a Bizum PayIn](https://docs.mangopay.com/api-reference/bizum/create-bizum-payin) (#412)
+- New webhook event types for SCA enrollment – API release planned for Monday, note that these are triggered on
+  enrollment not authentication (#414):
+  - `SCA_ENROLLMENT_SUCCEEDED`
+  - `SCA_ENROLLMENT_FAILED`
+  - `SCA_ENROLLMENT_EXPIRED`
+- New webhook event types for `UserCategory` change – API release planned for Monday (#414):
+  - `USER_CATEGORY_UPDATED_TO_OWNER`
+  - `USER_CATEGORY_UPDATED_TO_PAYER`
+  - `USER_CATEGORY_UPDATED_TO_PLATFORM`
+- Support for `PLATFORM` value to `UserCategory` enum (thank you @AntoineDuComptoirDesPharmacies #401)
+
+## [2.52.2] - 2025-06-12
 ### Updated
 
 - release configurations
