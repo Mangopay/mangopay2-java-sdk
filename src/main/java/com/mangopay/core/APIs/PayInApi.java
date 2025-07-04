@@ -248,4 +248,13 @@ public interface PayInApi {
      * @throws Exception
      */
     PayInIntent createPayInIntentCapture(PayInIntent payInIntentCapture, String intentId, String idempotencyKey) throws Exception;
+
+    /**
+     * Get a PayInIntent
+     *
+     * @param intentId The intent identifier
+     * @return PayInIntent instance
+     * @throws Exception
+     */
+    PayInIntent getPayInIntent(String intentId) throws Exception;
 }

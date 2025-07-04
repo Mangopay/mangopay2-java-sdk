@@ -1650,4 +1650,12 @@ public class PayInApiImplTest extends BaseTest {
         assertNotNull(result);
         assertEquals("CAPTURED", result.getStatus());
     }
+
+    @Test
+    public void getPayInIntent() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
+        PayInIntent result = api.getPayInApi().getPayInIntent(intent.getId());
+        assertEquals(intent.getId(), result.getId());
+        assertEquals(intent.getStatus(), result.getStatus());
+    }
 }

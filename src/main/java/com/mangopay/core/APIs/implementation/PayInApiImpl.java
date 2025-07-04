@@ -180,4 +180,9 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     public PayInIntent createPayInIntentCapture(PayInIntent payInIntentCapture, String intentId, String idempotencyKey) throws Exception {
         return this.createObject(PayInIntent.class, idempotencyKey, "pay_in_intent_capture", payInIntentCapture, intentId);
     }
+
+    @Override
+    public PayInIntent getPayInIntent(String intentId) throws Exception {
+        return this.getObject(PayInIntent.class, "pay_in_intent_get", intentId);
+    }
 }
