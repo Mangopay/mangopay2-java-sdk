@@ -2255,7 +2255,7 @@ public abstract class BaseTest {
                 .setSeller(
                     new PayInIntentSeller()
                         .setWalletId(wallet.getId())
-                        .setTransferDate("13-11-2030")
+                        .setTransferDate(1920809365L)
                 )
                 .setSku("item-123456")
                 .setQuantity(1)
@@ -2267,7 +2267,7 @@ public abstract class BaseTest {
             .setCurrency(CurrencyIso.EUR)
             .setExternalData(
                 new PayInIntentExternalData()
-                    .setExternalProcessingDate("01-10-2024")
+                    .setExternalProcessingDate(1728133765L)
                     .setExternalProviderReference(String.valueOf(System.currentTimeMillis()))
                     .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
                     .setExternalProviderName("Stripe")

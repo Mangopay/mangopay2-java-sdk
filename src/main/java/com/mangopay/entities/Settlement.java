@@ -18,9 +18,10 @@ public class Settlement extends EntityBase {
 
     /**
      * The date at which the settlement was created by the external provider
+     * (UNIX timestamp)
      */
     @SerializedName("SettlementDate")
-    private String settlementDate;
+    private Long settlementDate;
 
     /**
      * The name of the external provider
@@ -73,11 +74,11 @@ public class Settlement extends EntityBase {
         return this;
     }
 
-    public String getSettlementDate() {
+    public Long getSettlementDate() {
         return settlementDate;
     }
 
-    public Settlement setSettlementDate(String settlementDate) {
+    public Settlement setSettlementDate(Long settlementDate) {
         this.settlementDate = settlementDate;
         return this;
     }

@@ -7,9 +7,10 @@ import com.mangopay.core.Dto;
 public class PayInIntentExternalData extends Dto {
     /**
      * The date at which the transaction was created
+     * (UNIX timestamp)
      */
     @SerializedName("ExternalProcessingDate")
-    private String externalProcessingDate;
+    private Long externalProcessingDate;
 
     /**
      * The unique identifier of the transaction at the provider level
@@ -35,11 +36,11 @@ public class PayInIntentExternalData extends Dto {
     @SerializedName("ExternalProviderPaymentMethod")
     private String externalProviderPaymentMethod;
 
-    public String getExternalProcessingDate() {
+    public Long getExternalProcessingDate() {
         return externalProcessingDate;
     }
 
-    public PayInIntentExternalData setExternalProcessingDate(String externalProcessingDate) {
+    public PayInIntentExternalData setExternalProcessingDate(Long externalProcessingDate) {
         this.externalProcessingDate = externalProcessingDate;
         return this;
     }

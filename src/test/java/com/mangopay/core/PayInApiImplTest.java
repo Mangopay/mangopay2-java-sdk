@@ -1653,7 +1653,7 @@ public class PayInApiImplTest extends BaseTest {
         fullCaptureToCreate
             .setExternalData(
                 new PayInIntentExternalData()
-                    .setExternalProcessingDate("01-11-2024")
+                    .setExternalProcessingDate(1728133765L)
                     .setExternalProviderReference(Integer.valueOf(new Random().nextInt(1000)).toString())
                     .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
                     .setExternalProviderName("Stripe")
@@ -1680,7 +1680,7 @@ public class PayInApiImplTest extends BaseTest {
             .setPlatformFeesAmount(0)
             .setExternalData(
                 new PayInIntentExternalData()
-                    .setExternalProcessingDate("01-11-2024")
+                    .setExternalProcessingDate(1728133765L)
                     .setExternalProviderReference(Integer.valueOf(new Random().nextInt(1000)).toString())
                     .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
                     .setExternalProviderName("Stripe")

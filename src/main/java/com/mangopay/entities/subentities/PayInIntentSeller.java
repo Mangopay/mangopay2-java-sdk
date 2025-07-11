@@ -31,9 +31,10 @@ public class PayInIntentSeller extends Dto {
      * Information about the date when the funds are to be transferred to the seller’s wallet
      * <p></p>
      * Must be a date in the future
+     * (UNIX timestamp)
      */
     @SerializedName("TransferDate")
-    private String transferDate;
+    private Long transferDate;
 
     public String getAuthorId() {
         return authorId;
@@ -62,11 +63,11 @@ public class PayInIntentSeller extends Dto {
         return this;
     }
 
-    public String getTransferDate() {
+    public Long getTransferDate() {
         return transferDate;
     }
 
-    public PayInIntentSeller setTransferDate(String transferDate) {
+    public PayInIntentSeller setTransferDate(Long transferDate) {
         this.transferDate = transferDate;
         return this;
     }
