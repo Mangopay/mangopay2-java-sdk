@@ -257,4 +257,24 @@ public interface PayInApi {
      * @throws Exception
      */
     PayInIntent getPayInIntent(String intentId) throws Exception;
+
+    /**
+     * Update a PayInIntent
+     *
+     * @param intentId The intent identifier
+     * @param intent   The object containing the updated fields
+     * @return PayInIntent instance
+     * @throws Exception
+     */
+    PayInIntent updatePayInIntent(String intentId, PayInIntent intent) throws Exception;
+
+    /**
+     * Cancel a PayInIntent
+     *
+     * @param intentId The intent identifier
+     * @param intent   The object containing required fields for canceling
+     * @return PayInIntent instance
+     * @throws Exception
+     */
+    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception;
 }

@@ -116,6 +116,8 @@ public abstract class ApiBase {
         put("pay_in_intent_authorization", new String[]{"/payins/intents", RequestType.POST.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_capture", new String[]{"/payins/intents/%s/captures", RequestType.POST.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_get", new String[]{"/payins/intents/%s", RequestType.GET.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_update", new String[]{"/payins/intents/%s", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_cancel", new String[]{"/payins/intents/%s/cancel", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
