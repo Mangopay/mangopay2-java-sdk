@@ -1733,4 +1733,17 @@ public class PayInApiImplTest extends BaseTest {
         assertNotNull(canceled);
         assertEquals("CANCELED", canceled.getStatus());
     }
+
+    @Test
+    public void createPayInIntentSplit() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
+        PayInIntentSplit split = new PayInIntentSplit()
+            .setLineItemId(intent.getLineItems().get(0).getId());
+        List<PayInIntentSplit> splitList = new ArrayList<>();
+        splitList.add(split);
+
+        CreatePayInIntentSplit toCreate = new CreatePayInIntentSplit().setSplits(splitList);
+        CreatePayInIntentSplit response = api.getPayInApi().createPayInIntentSplits(intent.getId(), toCreate);
+        assertNotNull(response);
+    }
 }

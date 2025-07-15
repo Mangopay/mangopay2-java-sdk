@@ -5,7 +5,7 @@ import com.mangopay.core.Dto;
 
 import java.util.List;
 
-public class PayInIntentSplit extends Dto {
+public class PayInIntentSplitInfo extends Dto {
     /**
      * Unique identifier.
      */
@@ -46,7 +46,7 @@ public class PayInIntentSplit extends Dto {
         return id;
     }
 
-    public PayInIntentSplit setId(String id) {
+    public PayInIntentSplitInfo setId(String id) {
         this.id = id;
         return this;
     }
@@ -55,7 +55,7 @@ public class PayInIntentSplit extends Dto {
         return creationDate;
     }
 
-    public PayInIntentSplit setCreationDate(Long creationDate) {
+    public PayInIntentSplitInfo setCreationDate(Long creationDate) {
         this.creationDate = creationDate;
         return this;
     }
@@ -64,7 +64,7 @@ public class PayInIntentSplit extends Dto {
         return executionDate;
     }
 
-    public PayInIntentSplit setExecutionDate(Long executionDate) {
+    public PayInIntentSplitInfo setExecutionDate(Long executionDate) {
         this.executionDate = executionDate;
         return this;
     }
@@ -73,7 +73,7 @@ public class PayInIntentSplit extends Dto {
         return amount;
     }
 
-    public PayInIntentSplit setAmount(Integer amount) {
+    public PayInIntentSplitInfo setAmount(Integer amount) {
         this.amount = amount;
         return this;
     }
@@ -82,7 +82,7 @@ public class PayInIntentSplit extends Dto {
         return status;
     }
 
-    public PayInIntentSplit setStatus(String status) {
+    public PayInIntentSplitInfo setStatus(String status) {
         this.status = status;
         return this;
     }
@@ -91,7 +91,7 @@ public class PayInIntentSplit extends Dto {
         return lineItems;
     }
 
-    public PayInIntentSplit setLineItems(List<PayInIntentLineItem> lineItems) {
+    public PayInIntentSplitInfo setLineItems(List<PayInIntentLineItem> lineItems) {
         this.lineItems = lineItems;
         return this;
     }

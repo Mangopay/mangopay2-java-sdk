@@ -88,7 +88,7 @@ public class PayInIntent extends EntityBase {
      * Information about the amounts split against the intent
      */
     @SerializedName("Splits")
-    private List<PayInIntentSplit> splits;
+    private List<PayInIntentSplitInfo> splits;
 
     /**
      * The unique identifier of the settlement linked to this intent in Mangopay ecosystem
@@ -204,11 +204,11 @@ public class PayInIntent extends EntityBase {
         return this;
     }
 
-    public List<PayInIntentSplit> getSplits() {
+    public List<PayInIntentSplitInfo> getSplits() {
         return splits;
     }
 
-    public PayInIntent setSplits(List<PayInIntentSplit> splits) {
+    public PayInIntent setSplits(List<PayInIntentSplitInfo> splits) {
         this.splits = splits;
         return this;
     }

@@ -4,6 +4,7 @@ import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
+import com.mangopay.entities.subentities.CreatePayInIntentSplit;
 import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
@@ -277,4 +278,14 @@ public interface PayInApi {
      * @throws Exception
      */
     PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception;
+
+    /**
+     * Create Intent splits
+     *
+     * @param intentId The Intent identifier
+     * @param splits   Object containing array of splits to be created
+     * @return Created splits
+     * @throws Exception
+     */
+    CreatePayInIntentSplit createPayInIntentSplits(String intentId, CreatePayInIntentSplit splits) throws Exception;
 }
