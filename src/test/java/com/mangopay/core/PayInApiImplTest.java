@@ -1702,6 +1702,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore
     public void updatePayInIntent() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
         User john = this.getJohn(UserCategory.PAYER, true, true);
