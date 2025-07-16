@@ -6,7 +6,7 @@ import com.mangopay.entities.PayInIntentSplit;
 
 import java.util.List;
 
-public class CreatePayInIntentSplit extends EntityBase {
+public class IntentSplits extends EntityBase {
     @SerializedName("Splits")
     private List<PayInIntentSplit> splits;
 
@@ -14,7 +14,7 @@ public class CreatePayInIntentSplit extends EntityBase {
         return splits;
     }
 
-    public CreatePayInIntentSplit setSplits(List<PayInIntentSplit> splits) {
+    public IntentSplits setSplits(List<PayInIntentSplit> splits) {
         this.splits = splits;
         return this;
     }

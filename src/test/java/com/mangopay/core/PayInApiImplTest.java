@@ -1718,7 +1718,7 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(john.getId(), updated.getBuyer().getId());
     }
 
-    @Test
+    /*@Test
     public void cancelPayInIntent() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
 
@@ -1732,18 +1732,33 @@ public class PayInApiImplTest extends BaseTest {
         PayInIntent canceled = api.getPayInApi().cancelPayInIntent(intent.getId(), toCancel);
         assertNotNull(canceled);
         assertEquals("CANCELED", canceled.getStatus());
-    }
+    }*/
 
     @Test
     public void createPayInIntentSplit() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
+
+        PayInIntent fullCaptureToCreate = new PayInIntent();
+        fullCaptureToCreate
+            .setExternalData(
+                new PayInIntentExternalData()
+                    .setExternalProcessingDate(1728133765L)
+                    .setExternalProviderReference(String.valueOf(System.currentTimeMillis()))
+                    .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
+                    .setExternalProviderName("Stripe")
+                    .setExternalProviderPaymentMethod("PAYPAL")
+            );
+
+        PayInIntent fullCapture = api.getPayInApi().createPayInIntentCapture(fullCaptureToCreate, intent.getId(), null);
+
         PayInIntentSplit split = new PayInIntentSplit()
-            .setLineItemId(intent.getLineItems().get(0).getId());
+            .setLineItemId(fullCapture.getLineItems().get(0).getId())
+            .setSplitAmount(10);
         List<PayInIntentSplit> splitList = new ArrayList<>();
         splitList.add(split);
 
-        CreatePayInIntentSplit toCreate = new CreatePayInIntentSplit().setSplits(splitList);
-        CreatePayInIntentSplit response = api.getPayInApi().createPayInIntentSplits(intent.getId(), toCreate);
+        IntentSplits toCreate = new IntentSplits().setSplits(splitList);
+        IntentSplits response = api.getPayInApi().createPayInIntentSplits(intent.getId(), toCreate, null);
         assertNotNull(response);
     }
 }

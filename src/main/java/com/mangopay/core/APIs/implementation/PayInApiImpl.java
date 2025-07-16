@@ -11,7 +11,7 @@ import com.mangopay.core.deserializer.RecurringPayInDeserializer;
 import com.mangopay.core.serializer.PayInSerializer;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
-import com.mangopay.entities.subentities.CreatePayInIntentSplit;
+import com.mangopay.entities.subentities.IntentSplits;
 import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
@@ -192,13 +192,13 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         return this.updateObject(PayInIntent.class, "pay_in_intent_update", intent, intentId);
     }
 
-    @Override
+    /*@Override
     public PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception {
         return this.updateObject(PayInIntent.class, "pay_in_intent_cancel", intent, intentId);
-    }
+    }*/
 
     @Override
-    public CreatePayInIntentSplit createPayInIntentSplits(String intentId, CreatePayInIntentSplit splits) throws Exception {
-        return this.createObject(CreatePayInIntentSplit.class, null, "pay_in_intent_create_splits", splits, intentId);
+    public IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception {
+        return this.createObject(IntentSplits.class, idempotencyKey, "pay_in_intent_create_splits", splits, intentId);
     }
 }

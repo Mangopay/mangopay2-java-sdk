@@ -4,7 +4,7 @@ import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
-import com.mangopay.entities.subentities.CreatePayInIntentSplit;
+import com.mangopay.entities.subentities.IntentSplits;
 import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
@@ -269,23 +269,24 @@ public interface PayInApi {
      */
     PayInIntent updatePayInIntent(String intentId, PayInIntent intent) throws Exception;
 
-    /**
-     * Cancel a PayInIntent
-     *
-     * @param intentId The intent identifier
-     * @param intent   The object containing required fields for canceling
-     * @return PayInIntent instance
-     * @throws Exception
-     */
-    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception;
+//    /**
+//     * Cancel a PayInIntent
+//     *
+//     * @param intentId The intent identifier
+//     * @param intent   The object containing required fields for canceling
+//     * @return PayInIntent instance
+//     * @throws Exception
+//     */
+//    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception;
 
     /**
      * Create Intent splits
      *
      * @param intentId The Intent identifier
      * @param splits   Object containing array of splits to be created
+     * @param idempotencyKey     Idempotency key for this request. Can be null.
      * @return Created splits
      * @throws Exception
      */
-    CreatePayInIntentSplit createPayInIntentSplits(String intentId, CreatePayInIntentSplit splits) throws Exception;
+    IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception;
 }
