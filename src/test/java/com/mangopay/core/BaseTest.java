@@ -2255,6 +2255,7 @@ public abstract class BaseTest {
                 .setSeller(
                     new PayInIntentSeller()
                         .setWalletId(wallet.getId())
+                        .setAuthorId(wallet.getOwners().get(0))
                         .setTransferDate(1920809365L)
                 )
                 .setSku("item-123456")

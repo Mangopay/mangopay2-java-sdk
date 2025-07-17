@@ -1760,5 +1760,7 @@ public class PayInApiImplTest extends BaseTest {
         IntentSplits toCreate = new IntentSplits().setSplits(splitList);
         IntentSplits response = api.getPayInApi().createPayInIntentSplits(intent.getId(), toCreate, null);
         assertNotNull(response);
+        assertEquals(1, response.getSplits().size());
+        assertEquals("CREATED", response.getSplits().get(0).getStatus());
     }
 }
