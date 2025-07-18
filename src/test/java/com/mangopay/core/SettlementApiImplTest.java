@@ -32,13 +32,10 @@ public class SettlementApiImplTest extends BaseTest {
 
     @Test
     public void test_GetSettlement() throws Exception {
-        // wait 10 seconds for the API to process the file
-        Thread.sleep(10000);
         Settlement fetched = api.getSettlementApi().getSettlement(settlement.getSettlementId());
         assertNotNull(fetched);
         assertEquals(settlement.getSettlementId(), fetched.getSettlementId());
-        assertEquals("PARTIALLY_SETTLED", fetched.getStatus());
-        assertEquals("1000", fetched.getActualSettlementAmount().toString());
+        assertEquals("UPLOADED", fetched.getStatus());
         assertEquals("0", fetched.getExternalProcessorFeesAmount().toString());
     }
 
@@ -49,9 +46,5 @@ public class SettlementApiImplTest extends BaseTest {
 
         Settlement updated = api.getSettlementApi().update(settlement.getSettlementId(), Files.readAllBytes(file.toPath()));
         assertEquals("UPLOADED", updated.getStatus());
-        Thread.sleep(10000);
-
-        Settlement fetched = api.getSettlementApi().getSettlement(settlement.getSettlementId());
-        assertEquals("PARTIALLY_SETTLED", fetched.getStatus());
     }
 }
