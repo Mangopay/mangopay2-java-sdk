@@ -1701,22 +1701,22 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(intent.getStatus(), result.getStatus());
     }
 
-    @Test
-    @Ignore
-    public void updatePayInIntent() throws Exception {
-        PayInIntent intent = this.createNewPayInIntent();
-        User john = this.getJohn(UserCategory.PAYER, true, true);
-
-        PayInIntent toUpdate = new PayInIntent()
-            .setBuyer(
-                new PayInIntentBuyer()
-                    .setId(john.getId())
-            );
-
-        PayInIntent updated = api.getPayInApi().updatePayInIntent(intent.getId(), toUpdate);
-        assertNotNull(updated);
-        assertEquals(john.getId(), updated.getBuyer().getId());
-    }
+//    @Test
+//    @Ignore
+//    public void updatePayInIntent() throws Exception {
+//        PayInIntent intent = this.createNewPayInIntent();
+//        User john = this.getJohn(UserCategory.PAYER, true, true);
+//
+//        PayInIntent toUpdate = new PayInIntent()
+//            .setBuyer(
+//                new PayInIntentBuyer()
+//                    .setId(john.getId())
+//            );
+//
+//        PayInIntent updated = api.getPayInApi().updatePayInIntent(intent.getId(), toUpdate);
+//        assertNotNull(updated);
+//        assertEquals(john.getId(), updated.getBuyer().getId());
+//    }
 
     /*@Test
     public void cancelPayInIntent() throws Exception {
