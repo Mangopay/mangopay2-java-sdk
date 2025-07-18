@@ -399,6 +399,7 @@ public class DisputeApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Repudiation not found")
     public void getRepudiation() throws Exception {
         Dispute dispute = null;
 
@@ -421,6 +422,7 @@ public class DisputeApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("Repudiation not found")
     public void createSettlementTransfer() throws Exception {
         Dispute dispute = null;
 

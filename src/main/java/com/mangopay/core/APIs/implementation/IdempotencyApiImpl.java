@@ -7,6 +7,7 @@ import com.mangopay.core.APIs.IdempotencyApi;
 import com.mangopay.core.deserializer.PayOutDeserializer;
 import com.mangopay.core.serializer.PayOutSerializer;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.IntentSplits;
 import com.mangopay.entities.subentities.UserDataFormatValidation;
 
 import java.util.HashMap;
@@ -99,6 +100,9 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
             put("payins_recurring_paypal", RecurringPayIn.class);
             put("users_validate_data_format", UserDataFormatValidation.class);
             put("reports_create", Report.class);
+            put("pay_in_intent_authorization", PayInIntent.class);
+            put("pay_in_intent_capture", PayInIntent.class);
+            put("pay_in_intent_create_splits", IntentSplits.class);
         }};
     }
 }

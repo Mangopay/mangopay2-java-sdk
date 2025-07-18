@@ -11,6 +11,7 @@ import com.mangopay.core.deserializer.RecurringPayInDeserializer;
 import com.mangopay.core.serializer.PayInSerializer;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
+import com.mangopay.entities.subentities.IntentSplits;
 import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
@@ -169,5 +170,35 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     @Override
     public PayIn createDepositPreauthorizedPayInComplement(PayIn payIn, String idempotencyKey) throws Exception {
         return this.createObject(PayIn.class, idempotencyKey, "payins_deposit_preauthorized_complement", payIn);
+    }
+
+    @Override
+    public PayInIntent createPayInIntentAuthorization(PayInIntent payInIntent, String idempotencyKey) throws Exception {
+        return this.createObject(PayInIntent.class, idempotencyKey, "pay_in_intent_authorization", payInIntent);
+    }
+
+    @Override
+    public PayInIntent createPayInIntentCapture(PayInIntent payInIntentCapture, String intentId, String idempotencyKey) throws Exception {
+        return this.createObject(PayInIntent.class, idempotencyKey, "pay_in_intent_capture", payInIntentCapture, intentId);
+    }
+
+    @Override
+    public PayInIntent getPayInIntent(String intentId) throws Exception {
+        return this.getObject(PayInIntent.class, "pay_in_intent_get", intentId);
+    }
+
+//    @Override
+//    public PayInIntent updatePayInIntent(String intentId, PayInIntent intent) throws Exception {
+//        return this.updateObject(PayInIntent.class, "pay_in_intent_update", intent, intentId);
+//    }
+
+    /*@Override
+    public PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception {
+        return this.updateObject(PayInIntent.class, "pay_in_intent_cancel", intent, intentId);
+    }*/
+
+    @Override
+    public IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception {
+        return this.createObject(IntentSplits.class, idempotencyKey, "pay_in_intent_create_splits", splits, intentId);
     }
 }

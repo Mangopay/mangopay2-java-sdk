@@ -2244,4 +2244,42 @@ public abstract class BaseTest {
 
         return this.api.getPayInApi().createDepositPreauthorizedPayInWithoutComplement(payIn, null);
     }
+
+    protected PayInIntent createNewPayInIntent() throws Exception {
+        User john = this.getJohn();
+        Wallet wallet = this.getJohnsWallet();
+
+        List<PayInIntentLineItem> lineItems = new ArrayList<>();
+        lineItems.add(
+            new PayInIntentLineItem()
+                .setSeller(
+                    new PayInIntentSeller()
+                        .setWalletId(wallet.getId())
+                        .setAuthorId(wallet.getOwners().get(0))
+                        .setTransferDate(1920809365L)
+                )
+                .setSku("item-123456")
+                .setQuantity(1)
+                .setUnitAmount(1000)
+        );
+
+        PayInIntent toCreate = new PayInIntent()
+            .setAmount(1000)
+            .setCurrency(CurrencyIso.EUR)
+            .setExternalData(
+                new PayInIntentExternalData()
+                    .setExternalProcessingDate(1728133765L)
+                    .setExternalProviderReference(String.valueOf(System.currentTimeMillis()))
+                    .setExternalMerchantReference("Order-xyz-35e8490e-2ec9-4c82-978e-c712a3f5ba16")
+                    .setExternalProviderName("Stripe")
+                    .setExternalProviderPaymentMethod("PAYPAL")
+            )
+            .setBuyer(
+                new PayInIntentBuyer()
+                    .setId(john.getId())
+            )
+            .setLineItems(lineItems);
+
+        return getApi().getPayInApi().createPayInIntentAuthorization(toCreate, null);
+    }
 }

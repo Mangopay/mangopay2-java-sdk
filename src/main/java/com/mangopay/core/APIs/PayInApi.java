@@ -4,6 +4,7 @@ import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
+import com.mangopay.entities.subentities.IntentSplits;
 import com.mangopay.entities.subentities.PayPalWebTracking;
 
 import java.util.List;
@@ -227,4 +228,65 @@ public interface PayInApi {
      * @throws Exception
      */
     PayIn createDepositPreauthorizedPayInComplement(PayIn payIn, String idempotencyKey) throws Exception;
+
+    /**
+     * Create a pay in intent authorization
+     *
+     * @param payInIntent    The PayInIntent object to be created
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Created PayInIntent
+     * @throws Exception
+     */
+    PayInIntent createPayInIntentAuthorization(PayInIntent payInIntent, String idempotencyKey) throws Exception;
+
+    /**
+     * Create a pay in intent capture
+     *
+     * @param payInIntentCapture The PayInIntent capture object to be created
+     * @param intentId           Intent identifier
+     * @param idempotencyKey     Idempotency key for this request. Can be null.
+     * @return Created PayInIntent
+     * @throws Exception
+     */
+    PayInIntent createPayInIntentCapture(PayInIntent payInIntentCapture, String intentId, String idempotencyKey) throws Exception;
+
+    /**
+     * Get a PayInIntent
+     *
+     * @param intentId The intent identifier
+     * @return PayInIntent instance
+     * @throws Exception
+     */
+    PayInIntent getPayInIntent(String intentId) throws Exception;
+
+//    /**
+//     * Update a PayInIntent
+//     *
+//     * @param intentId The intent identifier
+//     * @param intent   The object containing the updated fields
+//     * @return PayInIntent instance
+//     * @throws Exception
+//     */
+//    PayInIntent updatePayInIntent(String intentId, PayInIntent intent) throws Exception;
+
+//    /**
+//     * Cancel a PayInIntent
+//     *
+//     * @param intentId The intent identifier
+//     * @param intent   The object containing required fields for canceling
+//     * @return PayInIntent instance
+//     * @throws Exception
+//     */
+//    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception;
+
+    /**
+     * Create Intent splits
+     *
+     * @param intentId The Intent identifier
+     * @param splits   Object containing array of splits to be created
+     * @param idempotencyKey     Idempotency key for this request. Can be null.
+     * @return Created splits
+     * @throws Exception
+     */
+    IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception;
 }

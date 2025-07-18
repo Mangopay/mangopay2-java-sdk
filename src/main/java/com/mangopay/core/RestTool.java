@@ -13,6 +13,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -31,6 +32,7 @@ public class RestTool {
     private final static int MINUTES_60 = 60;
     private final static int ONE_DAY_IN_MINUTES = MINUTES_60 * 24;
     private final static String WWW_AUTHENTICATE = "WWW-Authenticate";
+    private final static String CRLF = "\r\n";
 
     // root/parent instance that holds the OAuthToken and Configuration instance
     private MangoPayApi root;
@@ -109,33 +111,11 @@ public class RestTool {
      * <code>Dto</code> instances. In order to process collections of objects,
      * use <code>requestList</code> method instead.
      *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
-     * @param requestType HTTP request term, one of the GET, PUT or POST.
-     * @param requestData Collection of key-value pairs of request
-     *                    parameters.
-     * @param pagination  Pagination object.
-     * @param entity      Instance of Dto class that is going to be
-     *                    sent in case of PUTting or POSTing.
-     * @return The Dto instance returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto, U extends Dto> T request(Class<T> classOfT, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, U entity) throws Exception {
-        return this.request(classOfT, null, urlMethod, requestType, requestData, pagination, entity);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting single
-     * <code>Dto</code> instances. In order to process collections of objects,
-     * use <code>requestList</code> method instead.
-     *
      * @param <T>            Type on behalf of which the request is being called.
      * @param classOfT       Type on behalf of which the request is being called.
      * @param idempotencyKey idempotency key for this request.
-     * @param urlMethod      Relevant method key.
+     * @param urlPath        Url path.
+     * @param apiVersion     Api version.
      * @param requestType    HTTP request term, one of the GET, PUT or POST.
      * @param requestData    Collection of key-value pairs of request
      *                       parameters.
@@ -145,12 +125,19 @@ public class RestTool {
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto, U extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, U entity) throws Exception {
-
+    public <T extends Dto, U extends Dto> T request(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        String requestType,
+        Map<String, String> requestData,
+        Pagination pagination,
+        U entity
+    ) throws Exception {
         this.requestType = requestType;
         this.requestData = requestData;
-
-        return this.doRequest(classOfT, idempotencyKey, urlMethod, pagination, entity);
+        return this.doRequest(classOfT, idempotencyKey, urlPath, apiVersion, pagination, entity);
     }
 
     /**
@@ -162,13 +149,20 @@ public class RestTool {
      *
      * @param <T>         Type on behalf of which the request is being called.
      * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
+     * @param urlPath     Url Path.
+     * @param apiVersion  Api version.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType) throws Exception {
-        return request(classOfT, idempotencyKey, urlMethod, requestType, null, null, null);
+    public <T extends Dto> T request(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        String requestType
+    ) throws Exception {
+        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, null, null, null);
     }
 
     /**
@@ -180,36 +174,47 @@ public class RestTool {
      *
      * @param <T>         Type on behalf of which the request is being called.
      * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
-     * @param requestType HTTP request term, one of the GET, PUT or POST.
-     * @param requestData Collection of key-value pairs of request
-     *                    parameters.
-     * @return The Dto instance returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData) throws Exception {
-        return request(classOfT, idempotencyKey, urlMethod, requestType, requestData, null, null);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting single
-     * <code>Dto</code> instances. In order to process collections of objects,
-     * use <code>requestList</code> method instead.
-     *
-     * @param <T>         Type on behalf of which the request is being called.
-     * @param classOfT    Type on behalf of which the request is being called.
-     * @param urlMethod   Relevant method key.
+     * @param urlPath     Url path.
+     * @param apiVersion  Api version.
      * @param requestType HTTP request term, one of the GET, PUT or POST.
      * @param requestData Collection of key-value pairs of request
      *                    parameters.
-     * @param pagination  Pagination object.
      * @return The Dto instance returned from API.
      * @throws Exception
      */
-    public <T extends Dto> T request(Class<T> classOfT, String idempotencyKey, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination) throws Exception {
-        return request(classOfT, idempotencyKey, urlMethod, requestType, requestData, pagination, null);
+    public <T extends Dto> T request(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        String requestType,
+        Map<String, String> requestData
+    ) throws Exception {
+        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, requestData, null, null);
+    }
+
+    /**
+     * Makes a call to the MangoPay API, which involves a MultiPart file
+     *
+     * @param <T>            Type on behalf of which the request is being called.
+     * @param classOfT       Type on behalf of which the request is being called.
+     * @param idempotencyKey idempotency key for this request.
+     * @param urlPath        Url path.
+     * @param apiVersion     Api version.
+     * @param requestType    HTTP request term, one of the GET, PUT or POST.
+     * @param file           The MultiPart file sent in case of PUTting or POSTing.
+     * @return The Dto instance returned from API.
+     */
+    public <T extends Dto> T multipartRequest(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        String requestType,
+        byte[] file
+    ) throws Exception {
+        this.requestType = requestType;
+        return this.doMultipartRequest(classOfT, idempotencyKey, urlPath, apiVersion, file);
     }
 
     /**
@@ -222,92 +227,39 @@ public class RestTool {
      * @param <T>                 Type on behalf of which the request is being called.
      * @param classOfT            Type on behalf of which the request is being called.
      * @param classOfTItem        The class of single item in array.
-     * @param urlMethod           Relevant method key.
+     * @param urlPath             Url path.
+     * @param apiVersion          Api version.
      * @param requestType         HTTP request term. For lists should be always GET.
-     * @param requestData         Collection of key-value pairs of request
-     *                            parameters.
+     * @param requestData         Collection of key-value pairs of request parameters.
      * @param pagination          Pagination object.
-     * @param additionalUrlParams
+     * @param additionalUrlParams Additional parameters
      * @return The collection of Dto instances returned from API.
-     * @throws Exception
      */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination, Map<String, String> additionalUrlParams) throws Exception {
-
+    public <T extends Dto> List<T> requestList(
+        Class<T[]> classOfT,
+        Class<T> classOfTItem,
+        String urlPath,
+        String apiVersion,
+        String requestType,
+        Map<String, String> requestData,
+        Pagination pagination, Map<String, String> additionalUrlParams
+    ) throws Exception {
         this.requestType = requestType;
         this.requestData = requestData;
-
-        return this.doRequestList(classOfT, classOfTItem, urlMethod, pagination, additionalUrlParams);
+        return this.doRequestList(classOfT, classOfTItem, urlPath, apiVersion, pagination, additionalUrlParams);
     }
 
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting collections of
-     * <code>Dto</code> instances. In order to process single objects,
-     * use <code>request</code> method instead.
-     *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
-     * @param classOfTItem The class of single item in array.
-     * @param urlMethod    Relevant method key.
-     * @param requestType  HTTP request term. For lists should be always GET.
-     * @return The collection of Dto instances returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType) throws Exception {
-        return requestList(classOfT, classOfTItem, urlMethod, requestType, null, null, null);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting collections of
-     * <code>Dto</code> instances. In order to process single objects,
-     * use <code>request</code> method instead.
-     *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
-     * @param classOfTItem The class of single item in array.
-     * @param urlMethod    Relevant method key.
-     * @param requestType  HTTP request term. For lists should be always GET.
-     * @param requestData  Collection of key-value pairs of request
-     *                     parameters.
-     * @return The collection of Dto instances returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType, Map<String, String> requestData) throws Exception {
-        return requestList(classOfT, classOfTItem, urlMethod, requestType, requestData, null, null);
-    }
-
-    /**
-     * Makes a call to the MangoPay API.
-     * <p>
-     * This generic method handles calls targeting collections of
-     * <code>Dto</code> instances. In order to process single objects,
-     * use <code>request</code> method instead.
-     *
-     * @param <T>          Type on behalf of which the request is being called.
-     * @param classOfT     Type on behalf of which the request is being called.
-     * @param classOfTItem The class of single item in array.
-     * @param urlMethod    Relevant method key.
-     * @param requestType  HTTP request term. For lists should be always GET.
-     * @param requestData  Collection of key-value pairs of request
-     *                     parameters.
-     * @param pagination   Pagination object.
-     * @return The collection of Dto instances returned from API.
-     * @throws Exception
-     */
-    public <T extends Dto> List<T> requestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, String requestType, Map<String, String> requestData, Pagination pagination) throws Exception {
-        return requestList(classOfT, classOfTItem, urlMethod, requestType, requestData, pagination, null);
-    }
-
-    private <T extends Dto, U extends Dto> T doRequest(Class<T> classOfT, String idempotencyKey, String urlMethod, Pagination pagination, U entity) throws Exception {
-
-        T response = null;
-
+    private <T extends Dto, U extends Dto> T doRequest(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        Pagination pagination,
+        U entity
+    ) throws Exception {
         try {
             UrlTool urlTool = new UrlTool(root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this.clientIdRequired, pagination, null);
+            String restUrl = urlTool.getRestUrl(urlPath, apiVersion, this.clientIdRequired, pagination, null);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
@@ -383,57 +335,144 @@ public class RestTool {
                     osw.flush();
                 }
             }
-
-
-            // get response
-            this.responseCode = connection.getResponseCode();
-            InputStream is;
-            if (responseCodeIsSuccessful()) {
-                is = connection.getInputStream();
-            } else {
-                is = connection.getErrorStream();
-            }
-
-            checkApiConnection(is);
-
-            StringBuffer resp;
-            try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
-                String line;
-                resp = new StringBuffer();
-                while ((line = rd.readLine()) != null) {
-                    resp.append(line);
-                }
-            }
-            String responseString = resp.toString();
-
-            if (this.debugMode) {
-                if (responseCodeIsSuccessful()) {
-                    logger.info("Response OK: {}", responseString);
-                } else {
-                    logger.info("Response ERROR: {}", responseString);
-                }
-            }
-
-            if (responseCodeIsSuccessful() && responseCode != 204) {
-
-                this.readResponseHeaders(connection);
-
-                // some endpoints return 200 with empty body
-                if (!responseString.isEmpty()) {
-                    response = castResponseToEntity(classOfT, JsonParser.parseString(responseString).getAsJsonObject());
-                    if (this.debugMode) logger.info("Response object: {}", response.toString());
-                }
-
-            }
-
-            this.checkResponseCode(responseString, connection.getHeaderFields());
-
+            return readResponse(connection, classOfT);
         } catch (Exception ex) {
             //ex.printStackTrace();
             if (this.debugMode) logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
             throw ex;
         }
+    }
 
+    /**
+     * Perform a POST or PUT request which has a multipart-file part of the payload
+     *
+     * @param <T>            Type on behalf of which the request is being called.
+     * @param classOfT       Type on behalf of which the request is being called.
+     * @param idempotencyKey idempotency key for this request.
+     * @param urlPath        Url path
+     * @param apiVersion     Api version
+     * @param file           The file to be sent on POST/PUT
+     * @return The T instance returned from API.
+     */
+    private <T extends Dto> T doMultipartRequest(
+        Class<T> classOfT,
+        String idempotencyKey,
+        String urlPath,
+        String apiVersion,
+        byte[] file
+    ) throws Exception {
+        if (!this.requestType.equals(RequestType.POST.toString())
+            && !Objects.equals(this.requestType, RequestType.PUT.toString())) {
+            throw new Exception(
+                String.format("Invalid request type %s. For upload a multipart file use POST or PUT", this.requestType)
+            );
+        }
+
+        try {
+            UrlTool urlTool = new UrlTool(root);
+            String restUrl = urlTool.getRestUrl(urlPath, apiVersion, this.clientIdRequired, null, null);
+            URL url = new URL(urlTool.getFullUrl(restUrl));
+
+            if (this.debugMode) {
+                logger.info("FullUrl: {}", urlTool.getFullUrl(restUrl));
+            }
+
+            connection = (HttpURLConnection) url.openConnection();
+            if (connection instanceof HttpsURLConnection) {
+                configureSslContext((HttpsURLConnection) connection);
+            }
+            connection.setConnectTimeout(this.root.getConfig().getConnectTimeout());
+            connection.setReadTimeout(this.root.getConfig().getReadTimeout());
+            connection.setRequestMethod(this.requestType);
+            connection.setUseCaches(false);
+            connection.setDoInput(true);
+            connection.setDoOutput(true);
+
+            // set headers
+            Map<String, String> headers = this.getHttpHeaders(restUrl);
+            String boundary = Long.toHexString(System.currentTimeMillis());
+            headers.put("Content-Type", "multipart/form-data; boundary=" + boundary);
+            for (Entry<String, String> entry : headers.entrySet()) {
+                connection.addRequestProperty(entry.getKey(), entry.getValue());
+                if (this.debugMode) {
+                    logger.info("HTTP Header: {}", entry.getKey() + ": " + entry.getValue());
+                }
+            }
+
+            if (idempotencyKey != null && !idempotencyKey.trim().isEmpty()) {
+                connection.addRequestProperty("Idempotency-Key", idempotencyKey);
+            }
+            if (this.debugMode) {
+                logger.info("RequestType: {}", this.requestType);
+            }
+
+            try (OutputStream outputStream = connection.getOutputStream();
+                 OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {
+                // Write multipart headers
+                writer.write("--" + boundary + CRLF);
+                writer.write("Content-Disposition: form-data; name=\"file\"; filename=\"settlement_file.csv\"" + CRLF);
+                writer.write(CRLF);
+                writer.flush();
+
+                // Write the file content
+                outputStream.write(file);
+                outputStream.flush();
+
+                // End of file part
+                writer.write(CRLF);
+                writer.write("--" + boundary + "--" + CRLF);
+                writer.flush();
+            }
+            return readResponse(connection, classOfT);
+        } catch (Exception ex) {
+            if (this.debugMode) {
+                logger.error("EXCEPTION: {}", Arrays.toString(ex.getStackTrace()));
+            }
+            throw ex;
+        }
+    }
+
+    private <T extends Dto> T readResponse(HttpURLConnection connection, Class<T> classOfT) throws Exception {
+        T response = null;
+        this.responseCode = connection.getResponseCode();
+        InputStream is;
+        if (responseCodeIsSuccessful()) {
+            is = connection.getInputStream();
+        } else {
+            is = connection.getErrorStream();
+        }
+
+        checkApiConnection(is);
+
+        StringBuffer resp;
+        try (BufferedReader rd = new BufferedReader(new InputStreamReader(is, "UTF-8"))) {
+            String line;
+            resp = new StringBuffer();
+            while ((line = rd.readLine()) != null) {
+                resp.append(line);
+            }
+        }
+        String responseString = resp.toString();
+
+        if (this.debugMode) {
+            if (responseCodeIsSuccessful()) {
+                logger.info("Response OK: {}", responseString);
+            } else {
+                logger.info("Response ERROR: {}", responseString);
+            }
+        }
+
+        if (responseCodeIsSuccessful() && responseCode != 204) {
+            this.readResponseHeaders(connection);
+
+            // some endpoints return 200 with empty body
+            if (!responseString.isEmpty()) {
+                response = castResponseToEntity(classOfT, JsonParser.parseString(responseString).getAsJsonObject());
+                if (this.debugMode) logger.info("Response object: {}", response.toString());
+            }
+
+        }
+        this.checkResponseCode(responseString, connection.getHeaderFields());
         return response;
     }
 
@@ -448,13 +487,13 @@ public class RestTool {
     }
 
     private void readResponseHeaders(HttpURLConnection conn) {
-        Set<Map.Entry<String, List<String>>> headers = conn.getHeaderFields().entrySet();
+        Set<Entry<String, List<String>>> headers = conn.getHeaderFields().entrySet();
 
         List<String> rateLimitResetValues = new ArrayList<>();
         List<String> rateLimitRemainingValues = new ArrayList<>();
         List<String> rateLimitValues = new ArrayList<>();
 
-        for (Map.Entry<String, List<String>> k : headers) {
+        for (Entry<String, List<String>> k : headers) {
             if (this.debugMode) {
                 logger.info("Reading rate limit headers");
             }
@@ -572,17 +611,19 @@ public class RestTool {
         return root.getGson().fromJson(response, classOfT);
     }
 
-    private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination) throws Exception {
-        return doRequestList(classOfT, classOfTItem, urlMethod, pagination, null);
-    }
-
-    private <T extends Dto> List<T> doRequestList(Class<T[]> classOfT, Class<T> classOfTItem, String urlMethod, Pagination pagination, Map<String, String> additionalUrlParams) throws Exception {
-
+    private <T extends Dto> List<T> doRequestList(
+        Class<T[]> classOfT,
+        Class<T> classOfTItem,
+        String urlPath,
+        String apiVersion,
+        Pagination pagination,
+        Map<String, String> additionalUrlParams
+    ) throws Exception {
         List<T> response = new ArrayList<>();
 
         try {
             UrlTool urlTool = new UrlTool(root);
-            String restUrl = urlTool.getRestUrl(urlMethod, this.clientIdRequired, pagination, additionalUrlParams);
+            String restUrl = urlTool.getRestUrl(urlPath, apiVersion, this.clientIdRequired, pagination, additionalUrlParams);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
