@@ -23,6 +23,6 @@ public class RateLimitTest extends BaseTest {
         List<RateLimit> rateLimits = this.api.getRateLimits();
 
         assertNotNull(rateLimits);
-        assertFalse(rateLimits.isEmpty());
+        assertEquals(6, rateLimits.size());
     }
 }

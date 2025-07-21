@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
  */
 public class RestTool {
 
+    private final static int MINUTES_1 = 1;
+    private final static int MINUTES_5 = 5;
     private final static int MINUTES_15 = 15;
     private final static int MINUTES_30 = 30;
     private final static int MINUTES_60 = 60;
@@ -582,7 +584,11 @@ public class RestTool {
                 long numberOfMinutes = (Integer.parseInt(rateLimitResetValues.get(i)) - currentTime) / 60;
                 RateLimit rateLimit = new RateLimit();
 
-                if (numberOfMinutes <= MINUTES_15) {
+                if (numberOfMinutes <= MINUTES_1) {
+                    rateLimit.setIntervalMinutes(MINUTES_1);
+                } else if (numberOfMinutes <= MINUTES_5) {
+                    rateLimit.setIntervalMinutes(MINUTES_5);
+                } else if (numberOfMinutes <= MINUTES_15) {
                     rateLimit.setIntervalMinutes(MINUTES_15);
                 } else if (numberOfMinutes <= MINUTES_30) {
                     rateLimit.setIntervalMinutes(MINUTES_30);
