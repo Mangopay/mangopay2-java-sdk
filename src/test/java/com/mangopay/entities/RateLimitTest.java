@@ -24,5 +24,12 @@ public class RateLimitTest extends BaseTest {
 
         assertNotNull(rateLimits);
         assertEquals(6, rateLimits.size());
+
+        assertEquals(1440, rateLimits.get(0).getIntervalMinutes());
+        assertEquals(60, rateLimits.get(1).getIntervalMinutes());
+        assertEquals(30, rateLimits.get(2).getIntervalMinutes());
+        assertEquals(15, rateLimits.get(3).getIntervalMinutes());
+        assertEquals(5, rateLimits.get(4).getIntervalMinutes());
+        assertEquals(1, rateLimits.get(5).getIntervalMinutes());
     }
 }
