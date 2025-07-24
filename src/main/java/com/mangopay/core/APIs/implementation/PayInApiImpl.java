@@ -201,4 +201,24 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     public IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception {
         return this.createObject(IntentSplits.class, idempotencyKey, "pay_in_intent_create_splits", splits, intentId);
     }
+
+    @Override
+    public PayInIntentSplit executePayInIntentSplit(String intentId, String splitId, String idempotencyKey) throws Exception {
+        return this.createObject(PayInIntentSplit.class, idempotencyKey, "pay_in_intent_execute_split", null, intentId, splitId);
+    }
+
+    @Override
+    public PayInIntentSplit reversePayInIntentSplit(String intentId, String splitId, String idempotencyKey) throws Exception {
+        return this.createObject(PayInIntentSplit.class, idempotencyKey, "pay_in_intent_reverse_split", null, intentId, splitId);
+    }
+
+    @Override
+    public PayInIntentSplit getPayInIntentSplit(String intentId, String splitId) throws Exception {
+        return this.getObject(PayInIntentSplit.class, "pay_in_intent_get_split", intentId, splitId);
+    }
+
+    @Override
+    public PayInIntentSplit updatePayInIntentSplit(String intentId, String splitId, PayInIntentSplit split) throws Exception {
+        return this.updateObject(PayInIntentSplit.class, "pay_in_intent_update_split", split, intentId, splitId);
+    }
 }

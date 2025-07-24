@@ -119,6 +119,10 @@ public abstract class ApiBase {
         put("pay_in_intent_update", new String[]{"/payins/intents/%s", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_cancel", new String[]{"/payins/intents/%s/cancel", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_create_splits", new String[]{"/payins/intents/%s/splits", RequestType.POST.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_execute_split", new String[]{"/payins/intents/%s/splits/%s/execute", RequestType.POST.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_reverse_split", new String[]{"/payins/intents/%s/splits/%s/reverse", RequestType.POST.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_get_split", new String[]{"/payins/intents/%s/splits/%s", RequestType.GET.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_update_split", new String[]{"/payins/intents/%s/splits/%s", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
 
         put("payouts_bankwire_create", new String[]{"/payouts/bankwire/", RequestType.POST.toString()});
         put("payouts_bankwire_get", new String[]{"/payouts/bankwire/%s", RequestType.GET.toString()});
