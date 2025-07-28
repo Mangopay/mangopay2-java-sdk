@@ -1,5 +1,6 @@
 package com.mangopay.core.APIs;
 
+import com.mangopay.core.FilterPayByBankSupportedBanks;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.entities.*;
@@ -289,4 +290,14 @@ public interface PayInApi {
      * @throws Exception
      */
     IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception;
+
+    /**
+     * Retrieve a paginated list of banks that you can present to the user for selection during their Pay by Bank checkout experience
+     *
+     * @param filter     Filter containing the countries for which to return supported banks. You can combine query values in a comma-separated list.
+     * @param pagination Pagination
+     * @return PayByBankSupportedBank instance
+     * @throws Exception
+     */
+    PayByBankSupportedBank getPayByBankSupportedBanks(FilterPayByBankSupportedBanks filter, Pagination pagination) throws Exception;
 }

@@ -1766,4 +1766,23 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(1, response.getSplits().size());
         assertEquals("CREATED", response.getSplits().get(0).getStatus());
     }
+
+    @Test
+    public void getPayByBankSupportedBanks() throws Exception {
+        PayByBankSupportedBank result = getApi().getPayInApi().getPayByBankSupportedBanks(null, null);
+        assertFalse(result.getSupportedBanks().getCountries().isEmpty());
+
+        FilterPayByBankSupportedBanks filter = new FilterPayByBankSupportedBanks().setCountryCodes("DE");
+        PayByBankSupportedBank resultFiltered = getApi().getPayInApi().getPayByBankSupportedBanks(filter, null);
+        assertTrue(result.getSupportedBanks().getCountries().size() > resultFiltered.getSupportedBanks().getCountries().size());
+        assertEquals(5, resultFiltered.getSupportedBanks().getCountries().get(0).getBanks().size());
+
+        Pagination pagination = new Pagination(1, 2);
+        PayByBankSupportedBank resultPaginated = getApi().getPayInApi().getPayByBankSupportedBanks(null, pagination);
+        assertEquals(2, resultPaginated.getSupportedBanks().getCountries().get(0).getBanks().size());
+
+        PayByBankSupportedBank resultFilteredAndPaginated = getApi().getPayInApi().getPayByBankSupportedBanks(filter, pagination);
+        assertTrue(result.getSupportedBanks().getCountries().size() > resultFilteredAndPaginated.getSupportedBanks().getCountries().size());
+        assertEquals(2, resultFilteredAndPaginated.getSupportedBanks().getCountries().get(0).getBanks().size());
+    }
 }

@@ -133,11 +133,12 @@ public class RestTool {
         String requestType,
         Map<String, String> requestData,
         Pagination pagination,
+        Map<String, String> additionalUrlParams,
         U entity
     ) throws Exception {
         this.requestType = requestType;
         this.requestData = requestData;
-        return this.doRequest(classOfT, idempotencyKey, urlPath, apiVersion, pagination, entity);
+        return this.doRequest(classOfT, idempotencyKey, urlPath, apiVersion, pagination, entity, additionalUrlParams);
     }
 
     /**
@@ -162,7 +163,7 @@ public class RestTool {
         String apiVersion,
         String requestType
     ) throws Exception {
-        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, null, null, null);
+        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, null, null, null, null);
     }
 
     /**
@@ -190,7 +191,7 @@ public class RestTool {
         String requestType,
         Map<String, String> requestData
     ) throws Exception {
-        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, requestData, null, null);
+        return request(classOfT, idempotencyKey, urlPath, apiVersion, requestType, requestData, null, null, null);
     }
 
     /**
@@ -242,7 +243,8 @@ public class RestTool {
         String apiVersion,
         String requestType,
         Map<String, String> requestData,
-        Pagination pagination, Map<String, String> additionalUrlParams
+        Pagination pagination,
+        Map<String, String> additionalUrlParams
     ) throws Exception {
         this.requestType = requestType;
         this.requestData = requestData;
@@ -255,11 +257,12 @@ public class RestTool {
         String urlPath,
         String apiVersion,
         Pagination pagination,
-        U entity
+        U entity,
+        Map<String, String> additionalUrlParams
     ) throws Exception {
         try {
             UrlTool urlTool = new UrlTool(root);
-            String restUrl = urlTool.getRestUrl(urlPath, apiVersion, this.clientIdRequired, pagination, null);
+            String restUrl = urlTool.getRestUrl(urlPath, apiVersion, this.clientIdRequired, pagination, additionalUrlParams);
 
             URL url = new URL(urlTool.getFullUrl(restUrl));
 
