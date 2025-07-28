@@ -1,3 +1,12 @@
+## [2.54.1] - 2025-07-28
+
+### Added
+
+- `Sku` parameter on LineItem, for [Klarna PayIns](https://docs.mangopay.com/api-reference/klarna/create-klarna-payin)
+- support for new
+  endpoint [View supported banks for Pay by Bank](https://docs.mangopay.com/api-reference/pay-by-bank/view-supported-banks-pay-by-bank),
+  to enable presentation of banks to user before Pay by Bank payment request
+
 ## [2.54.0] - 2025-07-18
 
 ### Added
