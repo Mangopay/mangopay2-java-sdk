@@ -35,6 +35,16 @@ public class ConversionsApiImpl extends ApiBase implements ConversionsApi {
     }
 
     @Override
+    public Conversion createClientWalletsQuotedConversion(CreateClientWalletsQuotedConversion conversion, String idempotencyKey) throws Exception {
+        return this.createObject(Conversion.class, idempotencyKey, "create_client_wallets_quoted_conversion", conversion);
+    }
+
+    @Override
+    public Conversion createClientWalletsInstantConversion(CreateClientWalletsInstantConversion conversion, String idempotencyKey) throws Exception {
+        return this.createObject(Conversion.class, idempotencyKey, "create_client_wallets_instant_conversion", conversion);
+    }
+
+    @Override
     public Conversion getConversion(String id) throws Exception {
         return this.getObject(Conversion.class, "get_conversion", id);
     }

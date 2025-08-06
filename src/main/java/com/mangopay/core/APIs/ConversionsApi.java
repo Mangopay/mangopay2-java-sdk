@@ -29,6 +29,22 @@ public interface ConversionsApi {
     Conversion createQuotedConversion(CreateQuotedConversion quotedConversion, String idempotencyKey) throws Exception;
 
     /**
+     * This call triggers a conversion at the rate defined in its quote. The debited funds (buy currency), credited funds (sell currency) and currencies are defined in the quote.
+     * The Client Wallets to debit and credit are defined in the conversion.
+     *
+     * @return Conversion
+     */
+    Conversion createClientWalletsQuotedConversion(CreateClientWalletsQuotedConversion conversion, String idempotencyKey) throws Exception;
+
+    /**
+     * This call triggers an immediate conversion at the market rate, of the debited funds to the credited wallet at the market rate.
+     * A quote is not required for an instant conversion.
+     *
+     * @return Conversion
+     */
+    Conversion createClientWalletsInstantConversion(CreateClientWalletsInstantConversion conversion, String idempotencyKey) throws Exception;
+
+    /**
      * This endpoint allows the platform to get
      * the details of a conversion which has been carried out.
      * @param id The unique identifier of the conversion.

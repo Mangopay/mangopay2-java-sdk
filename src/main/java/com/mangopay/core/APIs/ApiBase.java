@@ -272,6 +272,8 @@ public abstract class ApiBase {
         put("create_conversion_quote", new String[]{"/conversions/quote", RequestType.POST.toString()});
         put("get_conversion_quote", new String[]{"/conversions/quote/%s", RequestType.GET.toString()});
         put("create_quoted_conversion", new String[]{"/conversions/quoted-conversion", RequestType.POST.toString()});
+        put("create_client_wallets_quoted_conversion", new String[]{"/clients/conversions/quoted-conversion", RequestType.POST.toString()});
+        put("create_client_wallets_instant_conversion", new String[]{"/clients/conversions/instant-conversion", RequestType.POST.toString()});
 
         put("virtual_account_create", new String[]{"/wallets/%s/virtual-accounts", RequestType.POST.toString()});
         put("virtual_account_deactivate", new String[]{"/wallets/%s/virtual-accounts/%s", RequestType.PUT.toString()});
