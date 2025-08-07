@@ -103,6 +103,8 @@ public class IdempotencyApiImpl extends ApiBase implements IdempotencyApi {
             put("pay_in_intent_authorization", PayInIntent.class);
             put("pay_in_intent_capture", PayInIntent.class);
             put("pay_in_intent_create_splits", IntentSplits.class);
+            put("pay_in_intent_execute_split", PayInIntentSplit.class);
+            put("pay_in_intent_reverse_split", PayInIntentSplit.class);
         }};
     }
 }

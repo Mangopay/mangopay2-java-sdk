@@ -282,10 +282,9 @@ public interface PayInApi {
 
     /**
      * Create Intent splits
-     *
      * @param intentId The Intent identifier
-     * @param splits   Object containing array of splits to be created
-     * @param idempotencyKey     Idempotency key for this request. Can be null.
+     * @param splits Object containing array of splits to be created
+     * @param idempotencyKey Idempotency key for this request. Can be null.
      * @return Created splits
      * @throws Exception
      */
@@ -300,4 +299,47 @@ public interface PayInApi {
      * @throws Exception
      */
     PayByBankSupportedBank getPayByBankSupportedBanks(FilterPayByBankSupportedBanks filter, Pagination pagination) throws Exception;
+
+    /**
+     * Execute Split
+     *
+     * @param intentId       The Intent identifier
+     * @param splitId        The Split identifier
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Executed split
+     * @throws Exception
+     */
+    PayInIntentSplit executePayInIntentSplit(String intentId, String splitId, String idempotencyKey) throws Exception;
+
+    /**
+     * Reverse Split
+     *
+     * @param intentId       The Intent identifier
+     * @param splitId        The Split identifier
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return Reversed split
+     * @throws Exception
+     */
+    PayInIntentSplit reversePayInIntentSplit(String intentId, String splitId, String idempotencyKey) throws Exception;
+
+    /**
+     * Get Split
+     *
+     * @param intentId The Intent identifier
+     * @param splitId  The Split identifier
+     * @return Reversed split
+     * @throws Exception
+     */
+    PayInIntentSplit getPayInIntentSplit(String intentId, String splitId) throws Exception;
+
+    /**
+     * Update split
+     *
+     * @param intentId Intent identifier
+     * @param splitId  Split identifier
+     * @param split    The split containing properties to be updated
+     * @return The updated split
+     * @throws Exception
+     */
+    PayInIntentSplit updatePayInIntentSplit(String intentId, String splitId, PayInIntentSplit split) throws Exception;
 }

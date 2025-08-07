@@ -1642,14 +1642,14 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createPayInIntentAuthorization() throws Exception {
+    public void testCreatePayInIntentAuthorization() throws Exception {
         PayInIntent created = this.createNewPayInIntent();
         assertNotNull(created);
         assertEquals("AUTHORIZED", created.getStatus());
     }
 
     @Test
-    public void createPayInIntentFullCapture() throws Exception {
+    public void testCreatePayInIntentFullCapture() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
 
         PayInIntent fullCaptureToCreate = new PayInIntent();
@@ -1669,7 +1669,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void createPayInIntentPartialCapture() throws Exception {
+    public void testCreatePayInIntentPartialCapture() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
         List<PayInIntentLineItem> lineItems = new ArrayList<>();
         PayInIntentLineItem existingLineItem = intent.getLineItems().get(0);
@@ -1697,7 +1697,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
-    public void getPayInIntent() throws Exception {
+    public void testGetPayInIntent() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
         PayInIntent result = api.getPayInApi().getPayInIntent(intent.getId());
         assertEquals(intent.getId(), result.getId());
@@ -1738,9 +1738,63 @@ public class PayInApiImplTest extends BaseTest {
     }*/
 
     @Test
-    public void createPayInIntentSplit() throws Exception {
+    public void testCreatePayInIntentSplit() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
+        IntentSplits response = createNewPayInIntentSplits(intent);
+        assertNotNull(response);
+        assertEquals(1, response.getSplits().size());
+        assertEquals("CREATED", response.getSplits().get(0).getStatus());
+    }
 
+    @Test
+    public void testExecutePayInIntentSplit_returnsError() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
+        IntentSplits splits = createNewPayInIntentSplits(intent);
+
+        try {
+            api.getPayInApi().executePayInIntentSplit(intent.getId(), splits.getSplits().get(0).getId(), null);
+        } catch (Exception e) {
+            // expect error since the status of the split is CREATED
+            // a success flow can't be tested since it needs a PayIn to be manually created
+            assertTrue(e.getMessage().contains("Execute split requires a status in [AVAILABLE, REJECTED]"));
+        }
+    }
+
+    @Test
+    public void testReversePayInIntentSplit_returnsError() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
+        IntentSplits splits = createNewPayInIntentSplits(intent);
+
+        try {
+            api.getPayInApi().reversePayInIntentSplit(intent.getId(), splits.getSplits().get(0).getId(), null);
+        } catch (Exception e) {
+            // expect error since the status of the split is CREATED
+            // a success flow can't be tested since it needs a PayIn to be manually created
+            assertTrue(e.getMessage().contains("Reverse split requires a status in [AVAILABLE, REJECTED]"));
+        }
+    }
+
+    @Test
+    public void testGetSplit() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
+        IntentSplits splits = createNewPayInIntentSplits(intent);
+        PayInIntentSplit fetched = api.getPayInApi().getPayInIntentSplit(intent.getId(), splits.getSplits().get(0).getId());
+        assertNotNull(fetched);
+        assertEquals("CREATED", fetched.getStatus());
+    }
+
+    @Test
+    public void testUpdateSplit() throws Exception {
+        PayInIntent intent = this.createNewPayInIntent();
+        IntentSplits splits = createNewPayInIntentSplits(intent);
+        PayInIntentSplit toUpdate = new PayInIntentSplit()
+            .setLineItemId(splits.getSplits().get(0).getLineItemId())
+            .setDescription("updated description");
+        PayInIntentSplit result = api.getPayInApi().updatePayInIntentSplit(intent.getId(), splits.getSplits().get(0).getId(), toUpdate);
+        assertEquals("updated description", result.getDescription());
+    }
+
+    private IntentSplits createNewPayInIntentSplits(PayInIntent intent) throws Exception {
         PayInIntent fullCaptureToCreate = new PayInIntent();
         fullCaptureToCreate
             .setExternalData(
@@ -1761,10 +1815,7 @@ public class PayInApiImplTest extends BaseTest {
         splitList.add(split);
 
         IntentSplits toCreate = new IntentSplits().setSplits(splitList);
-        IntentSplits response = api.getPayInApi().createPayInIntentSplits(intent.getId(), toCreate, null);
-        assertNotNull(response);
-        assertEquals(1, response.getSplits().size());
-        assertEquals("CREATED", response.getSplits().get(0).getStatus());
+        return api.getPayInApi().createPayInIntentSplits(intent.getId(), toCreate, null);
     }
 
     @Test
