@@ -294,6 +294,8 @@ public abstract class ApiBase {
         put("recipient_validate", new String[]{"/users/%s/recipients/validate", RequestType.POST.toString()});
         put("recipient_deactivate", new String[]{"/recipients/%s", RequestType.PUT.toString()});
         put("recipient_get_payout_methods", new String[]{"/recipients/payout-methods?country=%s&currency=%s", RequestType.GET.toString()});
+
+        put("pay_by_bank_get_supported_banks", new String[]{"/payment-methods/openbanking/metadata/supported-banks", RequestType.GET.toString()});
     }};
 
     /**
@@ -381,6 +383,7 @@ public abstract class ApiBase {
             urlPath,
             getApiVersion(methodKey),
             getRequestType(methodKey),
+            null,
             null,
             null,
             entity
@@ -511,10 +514,23 @@ public abstract class ApiBase {
         return getObject(classOfT, methodKey, false, args);
     }
 
+    protected <T extends Dto> T getObjectWithPagination(Class<T> classOfT, String methodKey, Pagination pagination, Map<String, String> filter) throws Exception {
+        String urlPath = String.format(getRequestUrl(methodKey));
+        RestTool rest = new RestTool(root, true, true);
+
+        if (pagination == null) {
+            pagination = new Pagination();
+        }
+
+        return rest.request(classOfT, null, urlPath, getApiVersion(methodKey),
+            getRequestType(methodKey), null, pagination, filter, null);
+    }
+
     private <T extends Dto> T getObject(
         Class<T> classOfT,
         String methodKey,
-        boolean clientIdRequired, Object... args
+        boolean clientIdRequired,
+        Object... args
     ) throws Exception {
         String urlPath = String.format(getRequestUrl(methodKey), args);
 
@@ -757,6 +773,7 @@ public abstract class ApiBase {
                 getRequestType(methodKey),
                 null,
                 null,
+                null,
                 entity
             );
         } else {
@@ -802,6 +819,7 @@ public abstract class ApiBase {
                 urlPath,
                 getApiVersion(methodKey),
                 getRequestType(methodKey),
+                null,
                 null,
                 null,
                 entity

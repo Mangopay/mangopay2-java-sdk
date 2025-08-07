@@ -2241,6 +2241,7 @@ public abstract class BaseTest {
         payIn.setDebitedFunds(debitedFunds);
         payIn.setFees(fees);
         payIn.setDepositId(depositId);
+        payIn.setAuthorId(wallet.getOwners().get(0));
 
         return this.api.getPayInApi().createDepositPreauthorizedPayInWithoutComplement(payIn, null);
     }

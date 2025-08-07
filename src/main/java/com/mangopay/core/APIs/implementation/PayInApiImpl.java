@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder;
 import com.mangopay.MangoPayApi;
 import com.mangopay.core.APIs.ApiBase;
 import com.mangopay.core.APIs.PayInApi;
+import com.mangopay.core.FilterPayByBankSupportedBanks;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.deserializer.PayInDeserializer;
@@ -200,6 +201,12 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     @Override
     public IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception {
         return this.createObject(IntentSplits.class, idempotencyKey, "pay_in_intent_create_splits", splits, intentId);
+    }
+
+    @Override
+    public PayByBankSupportedBank getPayByBankSupportedBanks(FilterPayByBankSupportedBanks filter, Pagination pagination) throws Exception {
+        return this.getObjectWithPagination(PayByBankSupportedBank.class, "pay_by_bank_get_supported_banks",
+            pagination, filter != null ? filter.getValues() : null);
     }
 
     @Override
