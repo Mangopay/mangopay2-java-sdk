@@ -1,5 +1,13 @@
-## [2.55.0] - 2025-08-07
+## [2.55.1] - 2025-08-14
 
+### Added
+
+- Support
+  for [POST Create a Quoted Conversion between Client Wallets](https://docs.mangopay.com/api-reference/conversions/create-quoted-conversion-client-wallets)
+  and [POST Create an Instant Conversion between Client Wallets](https://docs.mangopay.com/api-reference/conversions/create-instant-conversion-client-wallets)
+  #423
+
+## [2.55.0] - 2025-08-07
 ### Added
 
 Support for new Splits endpoints for Echo (
