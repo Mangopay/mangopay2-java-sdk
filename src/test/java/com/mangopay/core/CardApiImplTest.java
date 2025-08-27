@@ -96,13 +96,12 @@ public class CardApiImplTest extends BaseTest {
         CardApi cardApi = api.getCardApi();
         PayIn payIn = getNewPayInCardDirect();
         Card card = cardApi.get(((PayInPaymentDetailsCard) payIn.getPaymentDetails()).getCardId());
-        card.setCardHolderName("placeholder name");
-
         assertTrue(card.isActive());
 
-        Card update = cardApi.disable(card);
+        Card toUpdate = new Card();
+        toUpdate.setId(card.getId());
+        Card update = cardApi.disable(toUpdate);
 
         assertFalse(update.isActive());
-        assertEquals("placeholder name", card.getCardHolderName());
     }
 }
