@@ -29,7 +29,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void createNaturalSca() throws Exception {
-        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false, false);
+        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false);
         assertTrue(johnSca.getId().length() > 0);
         assertTrue(johnSca.getPersonType().equals(PersonType.NATURAL));
         assertNotNull(johnSca.getPendingUserAction());
@@ -46,7 +46,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void createLegalSca() throws Exception {
-        UserLegalSca matrixSca = this.getMatrixSca(UserCategory.OWNER, false, false);
+        UserLegalSca matrixSca = this.getMatrixSca(UserCategory.OWNER, false);
         assertTrue(matrixSca.getId().length() > 0);
         assertEquals(matrixSca.getPersonType(), PersonType.LEGAL);
         assertEquals("LU12345678", matrixSca.getCompanyNumber());
@@ -88,6 +88,7 @@ public class UserApiImplTest extends BaseTest {
         user.setLegalRepresentativeCountryOfResidence(CountryIso.FR);
         user.setEmail("email@email.org");
         user.setCompanyNumber("LU12345678");
+        user.setTermsAndConditionsAccepted(true);
 
         User ret = null;
 
@@ -130,7 +131,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void getNaturalSca() throws Exception {
-        UserNaturalSca john = this.getJohnSca(UserCategory.OWNER, false, false);
+        UserNaturalSca john = this.getJohnSca(UserCategory.OWNER, false);
 
         User user1 = this.api.getUserApi().getSca(john.getId());
         UserNaturalSca user2 = this.api.getUserApi().getNaturalSca(john.getId());
@@ -185,7 +186,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void getLegalSca() throws Exception {
-        UserLegalSca matrixSca = this.getMatrixSca(UserCategory.OWNER, false, false);
+        UserLegalSca matrixSca = this.getMatrixSca(UserCategory.OWNER, false);
 
         User user1 = this.api.getUserApi().getSca(matrixSca.getId());
         User user2 = this.api.getUserApi().getLegalSca(matrixSca.getId());
@@ -209,7 +210,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateNaturalSca() throws Exception {
-        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false, false);
+        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false);
         String updatedLastName = johnSca.getLastName() + " - CHANGED";
         johnSca.setLastName(updatedLastName);
 
@@ -223,7 +224,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void updateLegalSca() throws Exception {
-        UserLegalSca matrixSca = this.getMatrixSca(UserCategory.OWNER, false, true);
+        UserLegalSca matrixSca = this.getMatrixSca(UserCategory.OWNER, false);
         LegalRepresentative updatedRepresentative = matrixSca.getLegalRepresentative();
         updatedRepresentative.setFirstName(updatedRepresentative.getFirstName() + " - CHANGED");
         matrixSca.setLegalRepresentative(updatedRepresentative);
@@ -237,7 +238,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void categorizeNaturalSca() throws Exception {
-        UserNaturalSca johnPayer = this.getJohnSca(UserCategory.PAYER, false, true);
+        UserNaturalSca johnPayer = this.getJohnSca(UserCategory.PAYER, false);
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
 
@@ -258,7 +259,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void categorizeLegalSca() throws Exception {
-        UserLegalSca matrixPayer = this.getMatrixSca(UserCategory.PAYER, false, true);
+        UserLegalSca matrixPayer = this.getMatrixSca(UserCategory.PAYER, false);
 
         Calendar c = Calendar.getInstance();
         c.set(1975, 12, 21, 0, 0, 0);
@@ -283,7 +284,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void enrollNaturalSca() throws Exception {
-        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false, false);
+        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false);
         UserEnrollmentResult result = this.api.getUserApi().enroll(johnSca.getId());
 
         assertNotNull(johnSca.getPendingUserAction().getRedirectUrl());
@@ -594,7 +595,7 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void getCards() throws Exception {
-        UserNatural john = this.getJohn(UserCategory.OWNER, true, true);
+        UserNatural john = this.getJohn(UserCategory.OWNER, true);
         Pagination pagination = new Pagination(1, 20);
         List<Card> cardsBefore = this.api.getUserApi().getCards(john.getId(), pagination, null);
         PayIn payIn = this.getNewPayInCardDirect();
@@ -889,29 +890,13 @@ public class UserApiImplTest extends BaseTest {
 
     @Test
     public void testUserNaturalTermsAndConditions() throws Exception {
-        UserNatural user = this.getJohn();
-        assertFalse(user.isTermsAndConditionsAccepted());
-
-        user.setTermsAndConditionsAccepted(true);
-        UserNatural updatedUser = (UserNatural) this.api.getUserApi().update(user);
-        assertTrue(updatedUser.isTermsAndConditionsAccepted());
-        assertNotNull(updatedUser.getTermsAndConditionsAcceptedDate());
-
-        UserNatural acceptedByDef = this.getJohn(UserCategory.OWNER, false, true);
+        UserNatural acceptedByDef = this.getJohn(UserCategory.OWNER, false);
         assertTrue(acceptedByDef.isTermsAndConditionsAccepted());
         assertNotNull(acceptedByDef.getTermsAndConditionsAcceptedDate());
     }
 
     @Test
     public void testUserLegalTermsAndConditions() throws Exception {
-        UserLegal user = this.getMatrix();
-        assertFalse(user.isTermsAndConditionsAccepted());
-
-        user.setTermsAndConditionsAccepted(true);
-        UserLegal updatedUser = (UserLegal) this.api.getUserApi().update(user);
-        assertTrue(updatedUser.isTermsAndConditionsAccepted());
-        assertNotNull(updatedUser.getTermsAndConditionsAcceptedDate());
-
         UserLegal acceptedByDef = this.getMatrixWithoutOptionalFieldsAndAcceptedTerms();
         assertTrue(acceptedByDef.isTermsAndConditionsAccepted());
         assertNotNull(acceptedByDef.getTermsAndConditionsAcceptedDate());
@@ -975,6 +960,7 @@ public class UserApiImplTest extends BaseTest {
         matrix.setUserCategory(UserCategory.OWNER);
         matrix.setLegalRepresentativeBirthday(c.getTimeInMillis() / 1000);
         matrix.setEmail(john.getEmail());
+        matrix.setTermsAndConditionsAccepted(true);
 
         UserLegalSca matrixSca = new UserLegalSca();
         LegalRepresentative legalRepresentative = new LegalRepresentative();

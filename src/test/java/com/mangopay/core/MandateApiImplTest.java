@@ -72,7 +72,7 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForUser() throws Exception {
-        UserNatural user = this.getJohn(UserCategory.OWNER, false, false);
+        UserNatural user = this.getJohn(UserCategory.OWNER, false);
         Mandate mandateCreated = this.createMandate(false);
 
         List<Mandate> mandates = this.api.getMandateApi().getForUser(user.getId(), new FilterMandates(), new Pagination(1, 1), null);
@@ -87,7 +87,7 @@ public class MandateApiImplTest extends BaseTest {
 
     @Test
     public void getMandatesForBankAccount() throws Exception {
-        UserNatural user = this.getJohn(UserCategory.OWNER, false, false);
+        UserNatural user = this.getJohn(UserCategory.OWNER, false);
         Mandate mandateCreated = this.createMandate(false);
 
         List<Mandate> mandates = this.api.getMandateApi().getForBankAccount(user.getId(), this.getJohnsAccount().getId(), new FilterMandates(), new Pagination(1, 1), null);
