@@ -42,6 +42,9 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
     @SerializedName("FallbackReason")
     private FallbackReason fallbackReason;
 
+    @SerializedName("RecipientVerificationOfPayee")
+    private VerificationOfPayee recipientVerificationOfPayee;
+
     public PayOutPaymentDetailsBankWire() {
     }
 
@@ -120,6 +123,15 @@ public class PayOutPaymentDetailsBankWire extends Dto implements PayOutPaymentDe
 
     public void setFallbackReason(FallbackReason fallbackReason) {
         this.fallbackReason = fallbackReason;
+    }
+
+    public VerificationOfPayee getRecipientVerificationOfPayee() {
+        return recipientVerificationOfPayee;
+    }
+
+    public PayOutPaymentDetailsBankWire setRecipientVerificationOfPayee(VerificationOfPayee recipientVerificationOfPayee) {
+        this.recipientVerificationOfPayee = recipientVerificationOfPayee;
+        return this;
     }
 
     public static PayOutPaymentDetailsBankWire convert(PayOutPaymentDetails payOutPaymentDetails) throws Exception {

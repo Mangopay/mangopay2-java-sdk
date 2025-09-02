@@ -1,5 +1,6 @@
 package com.mangopay.entities;
 
+import com.google.gson.annotations.SerializedName;
 import com.mangopay.core.EntityBase;
 import com.mangopay.core.enumerations.BankingAliasType;
 import com.mangopay.core.enumerations.CountryIso;
@@ -48,6 +49,9 @@ public class BankingAlias extends EntityBase {
      * Type-specific details of the banking alias.
      */
     public BankingAliasDetails Details;
+
+    @SerializedName("VirtualAccountPurpose")
+    private String virtualAccountPurpose;
 
     public String getCreditedUserId() {
         return CreditedUserId;
@@ -103,6 +107,15 @@ public class BankingAlias extends EntityBase {
 
     public void setDetails(BankingAliasDetails details) {
         this.Details = details;
+    }
+
+    public String getVirtualAccountPurpose() {
+        return virtualAccountPurpose;
+    }
+
+    public BankingAlias setVirtualAccountPurpose(String virtualAccountPurpose) {
+        this.virtualAccountPurpose = virtualAccountPurpose;
+        return this;
     }
 
     /**

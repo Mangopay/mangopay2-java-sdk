@@ -20,6 +20,7 @@ public class PayOutSerializer implements JsonSerializer<PayOut> {
                 object.add("BankAccountId", context.serialize(((PayOutPaymentDetailsBankWire) src.getMeanOfPaymentDetails()).getBankAccountId()));
                 object.add("BankWireRef", context.serialize(((PayOutPaymentDetailsBankWire) src.getMeanOfPaymentDetails()).getBankWireRef()));
                 object.add("PayoutModeRequested", context.serialize(((PayOutPaymentDetailsBankWire) src.getMeanOfPaymentDetails()).getPayoutModeRequested()));
+                object.add("RecipientVerificationOfPayee", context.serialize(((PayOutPaymentDetailsBankWire) src.getMeanOfPaymentDetails()).getRecipientVerificationOfPayee()));
                 return object;
             default:
                 return null;
