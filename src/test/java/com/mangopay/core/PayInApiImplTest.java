@@ -1284,6 +1284,7 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    @Ignore("PSP configuration error")
     public void testCreateDepositPreAuthorizedPayInComplement() throws Exception {
         Deposit deposit = this.createNewDeposit();
         // payment status NO_SHOW is required for the deposit
