@@ -1,3 +1,17 @@
+## [2.55.2] - 2025-09-02
+
+### Added
+
+- Support for missing webhook event types #425 (thanks @SylvainAssemat #330)
+
+### Changed
+
+- OAuth token refresh buffer before expiry updated to 30s #428
+
+### Fixed
+
+- Tests #426
+
 ## [2.55.1] - 2025-08-14
 
 ### Added
