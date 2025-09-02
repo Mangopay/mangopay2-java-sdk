@@ -37,7 +37,7 @@ public class OAuthToken extends Dto implements Serializable {
      * Instantiates new OAuthToken object.
      */
     public OAuthToken() {
-        this.createTime = System.currentTimeMillis() - 5000;
+        this.createTime = System.currentTimeMillis() - 30000;
     }
 
     public Long getCreateTime() {
