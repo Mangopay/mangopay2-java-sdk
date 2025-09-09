@@ -19,6 +19,7 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
         object.add("PaymentType", context.serialize(src.getPaymentType()));
         object.add("ExecutionType", context.serialize(src.getExecutionType()));
         object.add("ExecutionDetails", context.serialize(src.getExecutionDetails()));
+        object.add("ProfilingAttemptReference", context.serialize(src.getProfilingAttemptReference()));
         if (src.getPaymentDetails() != null) {
             switch (src.getPaymentDetails().getClass().getSimpleName()) {
                 case "PayInPaymentDetailsBankWire":
@@ -102,7 +103,6 @@ public class PayInSerializer implements JsonSerializer<PayIn> {
                 case "PayInPaymentDetailsBizum":
                     object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsBizum) src.getPaymentDetails()).getStatementDescriptor()));
                     object.add("Phone", context.serialize(((PayInPaymentDetailsBizum) src.getPaymentDetails()).getPhone()));
-                    object.add("ProfilingAttemptReference", context.serialize(((PayInPaymentDetailsBizum) src.getPaymentDetails()).getProfilingAttemptReference()));
                     break;
                 case "PayInPaymentDetailsBlik":
                     object.add("StatementDescriptor", context.serialize(((PayInPaymentDetailsBlik) src.getPaymentDetails()).getStatementDescriptor()));
