@@ -1893,29 +1893,4 @@ public class PayInApiImplTest extends BaseTest {
 
         return data;
     }
-
-    /*
-    {
-  "sender_account_id" : "A12345N343",
-  "sender_first_name" : "Jane",
-  "sender_last_name" : "Doe",
-  "sender_email" : "jane.doe@sample.com",
-  "sender_phone" : "(042) 1123 4567",
-  "sender_address_zip" : "75009",
-  "sender_country_code" : "FR",
-  "sender_create_date" : "2012-12-09T19:14:55.277-0:00",
-  "sender_signup_ip" : "10.220.90.20",
-  "sender_popularity_score" : "high",
-  "receiver_account_id" : "A12345N344",
-  "receiver_create_date" : "2012-12-09T19:14:55.277-0:00",
-  "receiver_email" : "jane@sample.com",
-  "receiver_address_country_code" : "FR",
-  "business_name" : "Jane Ltd",
-  "recipient_popularity_score" : "high",
-  "first_interaction_date" : "2012-12-09T19:14:55.277-0:00",
-  "txn_count_total" : "34",
-  "vertical" : "Household goods",
-  "transaction_is_tangible" : "0"
-}
-     */
 }
