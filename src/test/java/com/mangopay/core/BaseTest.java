@@ -139,30 +139,30 @@ public abstract class BaseTest {
     }
 
     protected UserNatural getJohn() throws Exception {
-        return getJohn(UserCategory.OWNER, false, false);
+        return getJohn(UserCategory.OWNER, false);
     }
 
-    protected UserNatural getJohn(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
+    protected UserNatural getJohn(UserCategory userCategory, boolean recreate) throws Exception {
         switch (userCategory) {
             case OWNER:
-                return getJohnOwner(recreate, termsAccepted);
+                return getJohnOwner(recreate);
             case PAYER:
-                return getJohnPayer(recreate, termsAccepted);
+                return getJohnPayer(recreate);
         }
         throw new Exception("userCategory not supported");
     }
 
-    protected UserNaturalSca getJohnSca(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
+    protected UserNaturalSca getJohnSca(UserCategory userCategory, boolean recreate) throws Exception {
         switch (userCategory) {
             case OWNER:
-                return getJohnScaOwner(recreate, termsAccepted);
+                return getJohnScaOwner(recreate);
             case PAYER:
-                return getJohnScaPayer(recreate, termsAccepted);
+                return getJohnScaPayer(recreate);
         }
         throw new Exception("userCategory not supported");
     }
 
-    private UserNatural getJohnOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserNatural getJohnOwner(Boolean recreate) throws Exception {
         if (BaseTest.JOHN_OWNER == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -177,7 +177,7 @@ public abstract class BaseTest {
             user.setCountryOfResidence(CountryIso.FR);
             user.setOccupation("programmer");
             user.setIncomeRange(3);
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
             user.setUserCategory(UserCategory.OWNER);
 
             BaseTest.JOHN_OWNER = (UserNatural) this.api.getUserApi().create(user);
@@ -195,13 +195,13 @@ public abstract class BaseTest {
         return BaseTest.JOHN_OWNER;
     }
 
-    private UserNatural getJohnPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserNatural getJohnPayer(Boolean recreate) throws Exception {
         if (BaseTest.JOHN_PAYER == null || recreate) {
             UserNatural user = new UserNatural();
             user.setFirstName("John");
             user.setLastName("Doe");
             user.setEmail("john.doe@sample.org");
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
             user.setUserCategory(UserCategory.PAYER);
 
             BaseTest.JOHN_PAYER = (UserNatural) this.api.getUserApi().create(user);
@@ -209,7 +209,7 @@ public abstract class BaseTest {
         return BaseTest.JOHN_PAYER;
     }
 
-    private UserNaturalSca getJohnScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserNaturalSca getJohnScaOwner(Boolean recreate) throws Exception {
         if (BaseTest.JOHN_SCA_OWNER == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -224,7 +224,7 @@ public abstract class BaseTest {
             user.setCountryOfResidence(CountryIso.FR);
             user.setOccupation("programmer");
             user.setIncomeRange(3);
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
             user.setUserCategory(UserCategory.OWNER);
             user.setPhoneNumber("+33611111111");
             user.setPhoneNumberCountry(CountryIso.FR);
@@ -234,7 +234,7 @@ public abstract class BaseTest {
         return BaseTest.JOHN_SCA_OWNER;
     }
 
-    private UserNaturalSca getJohnScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserNaturalSca getJohnScaPayer(Boolean recreate) throws Exception {
         if (BaseTest.JOHN_SCA_PAYER == null || recreate) {
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -243,7 +243,7 @@ public abstract class BaseTest {
             user.setFirstName("John SCA");
             user.setLastName("Doe SCA Review");
             user.setEmail("john.doe.sca@sample.org");
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
             user.setUserCategory(UserCategory.PAYER);
             user.setAddress(getNewAddress());
 
@@ -253,30 +253,30 @@ public abstract class BaseTest {
     }
 
     protected UserLegal getMatrix() throws Exception {
-        return getMatrix(UserCategory.OWNER, false, false);
+        return getMatrix(UserCategory.OWNER, false);
     }
 
-    protected UserLegal getMatrix(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
+    protected UserLegal getMatrix(UserCategory userCategory, boolean recreate) throws Exception {
         switch (userCategory) {
             case OWNER:
-                return getMatrixOwner(recreate, termsAccepted);
+                return getMatrixOwner(recreate);
             case PAYER:
-                return getMatrixPayer(recreate, termsAccepted);
+                return getMatrixPayer(recreate);
         }
         throw new Exception("userCategory not supported");
     }
 
-    protected UserLegalSca getMatrixSca(UserCategory userCategory, boolean recreate, boolean termsAccepted) throws Exception {
+    protected UserLegalSca getMatrixSca(UserCategory userCategory, boolean recreate) throws Exception {
         switch (userCategory) {
             case OWNER:
-                return getMatrixScaOwner(recreate, termsAccepted);
+                return getMatrixScaOwner(recreate);
             case PAYER:
-                return getMatrixScaPayer(recreate, termsAccepted);
+                return getMatrixScaPayer(recreate);
         }
         throw new Exception("userCategory not supported");
     }
 
-    private UserLegal getMatrixOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserLegal getMatrixOwner(Boolean recreate) throws Exception {
         if (BaseTest.MATRIX_OWNER == null || recreate) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
@@ -292,7 +292,7 @@ public abstract class BaseTest {
             user.setLegalRepresentativeCountryOfResidence(john.getCountryOfResidence());
             user.setCompanyNumber("LU12345678");
             user.setUserCategory(UserCategory.OWNER);
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
 
             Calendar c = Calendar.getInstance();
             c.set(1975, 12, 21, 0, 0, 0);
@@ -304,7 +304,7 @@ public abstract class BaseTest {
         return BaseTest.MATRIX_OWNER;
     }
 
-    private UserLegal getMatrixPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserLegal getMatrixPayer(Boolean recreate) throws Exception {
         if (BaseTest.MATRIX_PAYER == null || recreate) {
             UserNatural john = this.getJohn();
             UserLegal user = new UserLegal();
@@ -314,14 +314,14 @@ public abstract class BaseTest {
             user.setUserCategory(UserCategory.PAYER);
             user.setLegalRepresentativeFirstName(john.getFirstName());
             user.setLegalRepresentativeLastName(john.getLastName());
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
 
             BaseTest.MATRIX_PAYER = (UserLegal) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX_PAYER;
     }
 
-    private UserLegalSca getMatrixScaOwner(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserLegalSca getMatrixScaOwner(Boolean recreate) throws Exception {
         if (BaseTest.MATRIX_SCA_OWNER == null || recreate) {
             UserNatural john = this.getJohn();
             UserLegalSca user = new UserLegalSca();
@@ -347,14 +347,14 @@ public abstract class BaseTest {
             user.setCompanyNumber("LU12345678");
             user.setEmail(john.getEmail());
             user.setLegalRepresentative(legalRepresentative);
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
 
             BaseTest.MATRIX_SCA_OWNER = (UserLegalSca) this.api.getUserApi().create(user);
         }
         return BaseTest.MATRIX_SCA_OWNER;
     }
 
-    private UserLegalSca getMatrixScaPayer(Boolean recreate, Boolean termsAccepted) throws Exception {
+    private UserLegalSca getMatrixScaPayer(Boolean recreate) throws Exception {
         if (BaseTest.MATRIX_SCA_PAYER == null || recreate) {
             UserLegalSca user = new UserLegalSca();
 
@@ -372,7 +372,7 @@ public abstract class BaseTest {
             user.setUserCategory(UserCategory.PAYER);
             user.setEmail("john.doe@sample.org");
             user.setLegalRepresentative(legalRepresentative);
-            user.setTermsAndConditionsAccepted(termsAccepted);
+            user.setTermsAndConditionsAccepted(true);
             user.setLegalRepresentativeAddress(getNewAddress());
 
             BaseTest.MATRIX_SCA_PAYER = (UserLegalSca) this.api.getUserApi().create(user);
@@ -1459,7 +1459,7 @@ public abstract class BaseTest {
     }
 
     protected Transfer getNewTransferSca(int amount, String walletWithMoneyId, String userNaturalScaId, String scaContext) throws Exception {
-        UserLegalSca userLegalSca = this.getMatrixSca(UserCategory.OWNER, false, true);
+        UserLegalSca userLegalSca = this.getMatrixSca(UserCategory.OWNER, false);
 
         Wallet creditedWallet = new Wallet();
         creditedWallet.setOwners(new ArrayList<String>());
