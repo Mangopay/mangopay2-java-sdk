@@ -8,8 +8,10 @@ import com.mangopay.core.FilterPayByBankSupportedBanks;
 import com.mangopay.core.Pagination;
 import com.mangopay.core.Sorting;
 import com.mangopay.core.deserializer.PayInDeserializer;
+import com.mangopay.core.deserializer.PayPalDataCollectionDeserializer;
 import com.mangopay.core.deserializer.RecurringPayInDeserializer;
 import com.mangopay.core.serializer.PayInSerializer;
+import com.mangopay.core.serializer.PayPalDataCollectionSerializer;
 import com.mangopay.entities.*;
 import com.mangopay.entities.subentities.CreateCardPreAuthorizedDepositPayIn;
 import com.mangopay.entities.subentities.IntentSplits;
@@ -33,6 +35,8 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         gsonBuilder.registerTypeAdapter(PayIn.class, new PayInSerializer());
         gsonBuilder.registerTypeAdapter(PayIn.class, new PayInDeserializer());
         gsonBuilder.registerTypeAdapter(RecurringPayIn.class, new RecurringPayInDeserializer());
+        gsonBuilder.registerTypeAdapter(PayPalDataCollection.class, new PayPalDataCollectionSerializer());
+        gsonBuilder.registerTypeAdapter(PayPalDataCollection.class, new PayPalDataCollectionDeserializer());
     }
 
     @Override
@@ -227,5 +231,15 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     @Override
     public PayInIntentSplit updatePayInIntentSplit(String intentId, String splitId, PayInIntentSplit split) throws Exception {
         return this.updateObject(PayInIntentSplit.class, "pay_in_intent_update_split", split, intentId, splitId);
+    }
+
+    @Override
+    public PayPalDataCollection createPayPalDataCollection(PayPalDataCollection data, String idempotencyKey) throws Exception {
+        return this.createObject(PayPalDataCollection.class, idempotencyKey, "payins_paypal_data_collection_create", data);
+    }
+
+    @Override
+    public PayPalDataCollection getPayPalDataCollection(String dataCollectionId) throws Exception {
+        return this.getObject(PayPalDataCollection.class, "payins_paypal_data_collection_get", dataCollectionId);
     }
 }

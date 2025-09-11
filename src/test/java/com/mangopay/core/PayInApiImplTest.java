@@ -7,10 +7,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -1837,4 +1834,88 @@ public class PayInApiImplTest extends BaseTest {
         assertTrue(result.getSupportedBanks().getCountries().size() > resultFilteredAndPaginated.getSupportedBanks().getCountries().size());
         assertEquals(2, resultFilteredAndPaginated.getSupportedBanks().getCountries().get(0).getBanks().size());
     }
+
+    @Test
+    public void createPayPalDataCollection() throws Exception {
+        createNewPayPalDataCollection();
+    }
+
+    @Test
+    public void getPayPalDataCollection() throws Exception {
+        PayPalDataCollection createdDataCollection = createNewPayPalDataCollection();
+        String dataCollectionId = (String) createdDataCollection.getData().get("dataCollectionId");
+        PayPalDataCollection fetchedDataCollection = api.getPayInApi().getPayPalDataCollection(dataCollectionId);
+
+        assertNotNull(fetchedDataCollection);
+        assertEquals(dataCollectionId, fetchedDataCollection.getData().get("DataCollectionId"));
+        assertEquals("A12345N343", fetchedDataCollection.getData().get("sender_account_id"));
+        assertEquals("Jane", fetchedDataCollection.getData().get("sender_first_name"));
+        assertEquals("Doe", fetchedDataCollection.getData().get("sender_last_name"));
+        assertEquals("jane.doe@sample.com", fetchedDataCollection.getData().get("sender_email"));
+    }
+
+    private PayPalDataCollection createNewPayPalDataCollection() throws Exception {
+        PayPalDataCollection dto = new PayPalDataCollection().setData(getPayPalDataCollectionMap());
+        PayPalDataCollection createdDataCollection = api.getPayInApi().createPayPalDataCollection(dto, null);
+
+        assertNotNull(createdDataCollection);
+        assertTrue(createdDataCollection.getData().containsKey("dataCollectionId"));
+
+        return createdDataCollection;
+    }
+
+    private Map<String, Object> getPayPalDataCollectionMap() {
+        Map<String, Object> data = new HashMap<>();
+        data.put("sender_account_id", "A12345N343");
+        data.put("sender_first_name", "Jane");
+        data.put("sender_last_name", "Doe");
+        data.put("sender_email", "jane.doe@sample.com");
+
+        data.put("sender_phone", "(042) 1123 4567");
+        data.put("sender_address_zip", "75009");
+        data.put("sender_country_code", "FR");
+        data.put("sender_create_date", "2012-12-09T19:14:55.277-0:00");
+        data.put("sender_signup_ip", "10.220.90.20");
+        data.put("sender_popularity_score", "high");
+
+        data.put("receiver_account_id", "A12345N343");
+        data.put("receiver_create_date", "2012-12-09T19:14:55.277-0:00");
+        data.put("receiver_email", "jane@sample.com");
+        data.put("receiver_address_country_code", "FR");
+
+        data.put("business_name", "Jane Ltd");
+        data.put("recipient_popularity_score", "high");
+        data.put("first_interaction_date", "2012-12-09T19:14:55.277-0:00");
+
+        data.put("txn_count_total", "34");
+        data.put("vertical", "Household goods");
+        data.put("transaction_is_tangible", "0");
+
+        return data;
+    }
+
+    /*
+    {
+  "sender_account_id" : "A12345N343",
+  "sender_first_name" : "Jane",
+  "sender_last_name" : "Doe",
+  "sender_email" : "jane.doe@sample.com",
+  "sender_phone" : "(042) 1123 4567",
+  "sender_address_zip" : "75009",
+  "sender_country_code" : "FR",
+  "sender_create_date" : "2012-12-09T19:14:55.277-0:00",
+  "sender_signup_ip" : "10.220.90.20",
+  "sender_popularity_score" : "high",
+  "receiver_account_id" : "A12345N344",
+  "receiver_create_date" : "2012-12-09T19:14:55.277-0:00",
+  "receiver_email" : "jane@sample.com",
+  "receiver_address_country_code" : "FR",
+  "business_name" : "Jane Ltd",
+  "recipient_popularity_score" : "high",
+  "first_interaction_date" : "2012-12-09T19:14:55.277-0:00",
+  "txn_count_total" : "34",
+  "vertical" : "Household goods",
+  "transaction_is_tangible" : "0"
+}
+     */
 }
