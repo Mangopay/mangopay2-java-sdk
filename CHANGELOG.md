@@ -1,3 +1,13 @@
+## [2.55.3] - 2025-09-23
+
+### Added
+
+- Support for `ProfilingAttemptReference` on all payment methods for Mangopay's Fraud Prevention solution #431
+- Webhook event types for [Echo](https://docs.mangopay.com/guides/echo), Mangopay's solution for third-party PSP
+  integrations: `INTENT_AUTHORIZED`,`INTENT_CAPTURED`,`INTENT_REFUNDED`,`INTENT_REFUND_REVERSED`,`INTENT_DISPUTE_CREATED`,`INTENT_DISPUTE_DEFENDED`,`INTENT_DISPUTE_WON`,`INTENT_DISPUTE_LOST`,`INTENT_SETTLED_NOT_PAID`,`INTENT_PAID`,`SPLIT_CREATED`,`SPLIT_PENDING_FUNDS_RECEPTION`,`SPLIT_AVAILABLE`,`SPLIT_REJECTED`,`SPLIT_REVERSED`
+  #430
+- Support for `VirtualAccountPurpose` on Banking Alias object #433
+
 ## [2.55.2] - 2025-09-02
 
 ### Added
