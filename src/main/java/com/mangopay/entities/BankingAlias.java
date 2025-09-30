@@ -53,9 +53,6 @@ public class BankingAlias extends EntityBase {
      */
     public BankingAliasDetails Details;
 
-    @SerializedName("VirtualAccountPurpose")
-    private String virtualAccountPurpose;
-
     public String getCreditedUserId() {
         return CreditedUserId;
     }
