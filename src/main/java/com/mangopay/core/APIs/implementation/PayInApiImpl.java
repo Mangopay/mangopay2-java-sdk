@@ -188,15 +188,10 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
         return this.getObject(PayInIntent.class, "pay_in_intent_get", intentId);
     }
 
-//    @Override
-//    public PayInIntent updatePayInIntent(String intentId, PayInIntent intent) throws Exception {
-//        return this.updateObject(PayInIntent.class, "pay_in_intent_update", intent, intentId);
-//    }
-
-    /*@Override
+    @Override
     public PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception {
         return this.updateObject(PayInIntent.class, "pay_in_intent_cancel", intent, intentId);
-    }*/
+    }
 
     @Override
     public IntentSplits createPayInIntentSplits(String intentId, IntentSplits splits, String idempotencyKey) throws Exception {
