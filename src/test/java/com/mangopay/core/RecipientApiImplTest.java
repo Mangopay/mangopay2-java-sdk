@@ -19,7 +19,7 @@ public class RecipientApiImplTest extends BaseTest {
     private static Recipient recipient;
 
     @Test
-    public void createRecipient() throws Exception {
+    public void createRecipientVopNull() throws Exception {
         createNewRecipient();
         assertNotNull(recipient);
         assertNotNull(recipient.getStatus());
@@ -32,7 +32,34 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(recipient.getRecipientScope());
         assertNotNull(recipient.getUserId());
         assertNotNull(recipient.getCountry());
-        assertNotNull(recipient.getRecipientVerificationOfPayee());
+        assertNull(recipient.getRecipientVerificationOfPayee());
+    }
+
+    @Test
+    public void createRecipientVopNotNull() throws Exception {
+        createNewRecipient();
+        Map<String, Object> localBankTransfer = new HashMap<>();
+        Map<String, Object> details = new HashMap<>();
+        details.put("IBAN", "DE75512108001245126199");
+        localBankTransfer.put(CurrencyIso.EUR.name(), details);
+
+        Recipient toCreate = new Recipient()
+            .setDisplayName("My EUR account")
+            .setPayoutMethodType("LocalBankTransfer")
+            .setRecipientType("Individual")
+            .setCurrency(CurrencyIso.EUR)
+            .setIndividualRecipient(
+                new IndividualRecipient()
+                    .setFirstName("John")
+                    .setLastName("Doe")
+                    .setAddress(getNewAddress())
+            )
+            .setLocalBankTransfer(localBankTransfer)
+            .setCountry(CountryIso.DE);
+
+        Recipient recipient1 = getApi().getRecipientApi().create(toCreate, ACTIVE_USER_NATURAL_SCA_ID);
+        assertNotNull(recipient1);
+        assertNotNull(recipient1.getRecipientVerificationOfPayee());
     }
 
     @Test
@@ -135,25 +162,24 @@ public class RecipientApiImplTest extends BaseTest {
     private void createNewRecipient() throws Exception {
         if (recipient == null) {
             Map<String, Object> localBankTransfer = new HashMap<>();
-            Map<String, Object> details = new HashMap<>();
-            details.put("SortCode", "010039");
-            details.put("AccountNumber", "11696419");
-            details.put("IBAN", "DE75512108001245126199");
-            localBankTransfer.put(CurrencyIso.EUR.name(), details);
+            Map<String, Object> gbpDetails = new HashMap<>();
+            gbpDetails.put("SortCode", "010039");
+            gbpDetails.put("AccountNumber", "11696419");
+            localBankTransfer.put(CurrencyIso.GBP.name(), gbpDetails);
 
             Recipient toCreate = new Recipient()
                 .setDisplayName("My GB account")
                 .setPayoutMethodType("LocalBankTransfer")
                 .setRecipientType("Individual")
-                .setCurrency(CurrencyIso.EUR)
+                .setCurrency(CurrencyIso.GBP)
                 .setIndividualRecipient(
                     new IndividualRecipient()
-                        .setFirstName("John")
-                        .setLastName("Doe")
+                        .setFirstName("Payout")
+                        .setLastName("Team")
                         .setAddress(getNewAddress())
                 )
                 .setLocalBankTransfer(localBankTransfer)
-                .setCountry(CountryIso.DE)
+                .setCountry(CountryIso.GB)
                 .setRecipientVerificationOfPayee(
                     new VerificationOfPayee()
                         .setRecipientVerificationId("123456789")
