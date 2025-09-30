@@ -46,6 +46,13 @@ public class PayIn extends Transaction {
     @SerializedName("ExecutionDetails")
     private PayInExecutionDetails executionDetails;
 
+    /**
+     * The unique reference generated for the profiling session, used by the fraud prevention solution
+     * to produce recommendations for the transaction using the profiling data.
+     */
+    @SerializedName("ProfilingAttemptReference")
+    private String profilingAttemptReference;
+
     public String getCreditedWalletId() {
         return creditedWalletId;
     }
@@ -84,6 +91,14 @@ public class PayIn extends Transaction {
 
     public void setExecutionDetails(PayInExecutionDetails executionDetails) {
         this.executionDetails = executionDetails;
+    }
+
+    public String getProfilingAttemptReference() {
+        return profilingAttemptReference;
+    }
+
+    public void setProfilingAttemptReference(String profilingAttemptReference) {
+        this.profilingAttemptReference = profilingAttemptReference;
     }
 
     /**

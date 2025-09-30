@@ -24,12 +24,6 @@ public class PayInPaymentDetailsBizum extends Dto implements PayInPaymentDetails
     @SerializedName("Phone")
     private String phone;
 
-    /**
-     * The unique reference generated for the profiling session, used by the fraud prevention solution to produce recommendations for the transaction using the profiling data.
-     */
-    @SerializedName("ProfilingAttemptReference")
-    private String profilingAttemptReference;
-
     public String getStatementDescriptor() {
         return statementDescriptor;
     }
@@ -41,8 +35,4 @@ public class PayInPaymentDetailsBizum extends Dto implements PayInPaymentDetails
     public String getPhone() { return phone; }
 
     public void setPhone(String phone) { this.phone = phone; }
-
-    public String getProfilingAttemptReference() { return profilingAttemptReference; }
-
-    public void setProfilingAttemptReference(String profilingAttemptReference) { this.profilingAttemptReference = profilingAttemptReference; }
 }

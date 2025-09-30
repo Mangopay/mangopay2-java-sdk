@@ -1,6 +1,5 @@
 package com.mangopay.core;
 
-import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.entities.BankingAlias;
 import com.mangopay.entities.Wallet;
 import org.junit.Test;
@@ -21,6 +20,7 @@ public class BankingAliasApiImplTest extends BaseTest {
 
         assertTrue(bankingAlias.getId().length() > 0);
         assertNotNull(bankingAlias.getDetails());
+        assertNotNull(bankingAlias.getVirtualAccountPurpose());
     }
 
     @Test

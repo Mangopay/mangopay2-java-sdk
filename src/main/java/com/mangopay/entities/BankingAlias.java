@@ -45,6 +45,9 @@ public class BankingAlias extends EntityBase {
      */
     public boolean Active;
 
+    @SerializedName("VirtualAccountPurpose")
+    private String virtualAccountPurpose;
+
     /**
      * Type-specific details of the banking alias.
      */

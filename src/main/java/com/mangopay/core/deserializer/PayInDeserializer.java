@@ -207,8 +207,7 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     payInPaymentDetailsBizum.setStatementDescriptor(object.get("StatementDescriptor").getAsString());
                 if (object.has("Phone") && !object.get("Phone").isJsonNull())
                     payInPaymentDetailsBizum.setPhone(object.get("Phone").getAsString());
-                if (object.has("ProfilingAttemptReference") && !object.get("ProfilingAttemptReference").isJsonNull())
-                    payInPaymentDetailsBizum.setProfilingAttemptReference(object.get("ProfilingAttemptReference").getAsString());
+                payIn.setPaymentDetails(payInPaymentDetailsBizum);
                 break;
             case BLIK:
                 PayInPaymentDetailsBlik payInPaymentDetailsBlik = new PayInPaymentDetailsBlik();
