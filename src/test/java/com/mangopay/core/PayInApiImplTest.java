@@ -1716,9 +1716,9 @@ public class PayInApiImplTest extends BaseTest {
                     .setExternalProviderReference(String.valueOf(System.currentTimeMillis()))
             );
 
-        PayInIntent canceled = api.getPayInApi().cancelPayInIntent(intent.getId(), toCancel);
+        PayInIntent canceled = api.getPayInApi().cancelPayInIntent(intent.getId(), toCancel, null);
         assertNotNull(canceled);
-        assertEquals("CANCELED", canceled.getStatus());
+        assertEquals("CANCELLED", canceled.getStatus());
     }
 
     @Test

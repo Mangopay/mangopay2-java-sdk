@@ -265,10 +265,11 @@ public interface PayInApi {
      *
      * @param intentId The intent identifier
      * @param intent   The object containing required fields for canceling
+     * @param idempotencyKey Idempotency key for this request. Can be null.
      * @return PayInIntent instance
      * @throws Exception
      */
-    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception;
+    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent, String idempotencyKey) throws Exception;
 
     /**
      * Create Intent splits
