@@ -135,24 +135,25 @@ public class RecipientApiImplTest extends BaseTest {
     private void createNewRecipient() throws Exception {
         if (recipient == null) {
             Map<String, Object> localBankTransfer = new HashMap<>();
-            Map<String, Object> gbpDetails = new HashMap<>();
-            gbpDetails.put("SortCode", "010039");
-            gbpDetails.put("AccountNumber", "11696419");
-            localBankTransfer.put(CurrencyIso.GBP.name(), gbpDetails);
+            Map<String, Object> details = new HashMap<>();
+            details.put("SortCode", "010039");
+            details.put("AccountNumber", "11696419");
+            details.put("IBAN", "DE75512108001245126199");
+            localBankTransfer.put(CurrencyIso.EUR.name(), details);
 
             Recipient toCreate = new Recipient()
                 .setDisplayName("My GB account")
                 .setPayoutMethodType("LocalBankTransfer")
                 .setRecipientType("Individual")
-                .setCurrency(CurrencyIso.GBP)
+                .setCurrency(CurrencyIso.EUR)
                 .setIndividualRecipient(
                     new IndividualRecipient()
-                        .setFirstName("Payout")
-                        .setLastName("Team")
+                        .setFirstName("John")
+                        .setLastName("Doe")
                         .setAddress(getNewAddress())
                 )
                 .setLocalBankTransfer(localBankTransfer)
-                .setCountry(CountryIso.GB)
+                .setCountry(CountryIso.DE)
                 .setRecipientVerificationOfPayee(
                     new VerificationOfPayee()
                         .setRecipientVerificationId("123456789")
