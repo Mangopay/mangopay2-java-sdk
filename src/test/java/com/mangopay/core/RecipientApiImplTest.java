@@ -22,7 +22,7 @@ public class RecipientApiImplTest extends BaseTest {
     private static Recipient recipient;
 
     @Test
-    public void createRecipient() throws Exception {
+    public void createRecipientVopNull() throws Exception {
         createNewRecipient();
         assertNotNull(recipient);
         assertNotNull(recipient.getStatus());
@@ -35,6 +35,34 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(recipient.getRecipientScope());
         assertNotNull(recipient.getUserId());
         assertNotNull(recipient.getCountry());
+        assertNull(recipient.getRecipientVerificationOfPayee());
+    }
+
+    @Test
+    public void createRecipientVopNotNull() throws Exception {
+        createNewRecipient();
+        Map<String, Object> localBankTransfer = new HashMap<>();
+        Map<String, Object> details = new HashMap<>();
+        details.put("IBAN", "DE75512108001245126199");
+        localBankTransfer.put(CurrencyIso.EUR.name(), details);
+
+        Recipient toCreate = new Recipient()
+            .setDisplayName("My EUR account")
+            .setPayoutMethodType("LocalBankTransfer")
+            .setRecipientType("Individual")
+            .setCurrency(CurrencyIso.EUR)
+            .setIndividualRecipient(
+                new IndividualRecipient()
+                    .setFirstName("John")
+                    .setLastName("Doe")
+                    .setAddress(getNewAddress())
+            )
+            .setLocalBankTransfer(localBankTransfer)
+            .setCountry(CountryIso.DE);
+
+        Recipient recipient1 = getApi().getRecipientApi().create(toCreate, ACTIVE_USER_NATURAL_SCA_ID);
+        assertNotNull(recipient1);
+        assertNotNull(recipient1.getRecipientVerificationOfPayee());
     }
 
     @Test

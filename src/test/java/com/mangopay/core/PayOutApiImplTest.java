@@ -24,6 +24,7 @@ public class PayOutApiImplTest extends BaseTest {
             assertTrue(payOut.getId().length() > 0);
             assertTrue(payOut.getPaymentType() == PayOutPaymentType.BANK_WIRE);
             assertTrue(payOut.getMeanOfPaymentDetails() instanceof PayOutPaymentDetailsBankWire);
+        assertNotNull(((PayOutPaymentDetailsBankWire) payOut.getMeanOfPaymentDetails()).getRecipientVerificationOfPayee());
     }
 
     @Test

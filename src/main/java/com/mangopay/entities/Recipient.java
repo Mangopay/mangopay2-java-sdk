@@ -7,6 +7,7 @@ import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.subentities.BusinessRecipient;
 import com.mangopay.entities.subentities.IndividualRecipient;
 import com.mangopay.entities.subentities.PendingUserAction;
+import com.mangopay.entities.subentities.VerificationOfPayee;
 
 import java.util.Map;
 
@@ -93,6 +94,9 @@ public class Recipient extends EntityBase {
      */
     @SerializedName("PendingUserAction")
     private PendingUserAction pendingUserAction;
+
+    @SerializedName("RecipientVerificationOfPayee")
+    private VerificationOfPayee recipientVerificationOfPayee;
 
     public String getStatus() {
         return status;
@@ -208,6 +212,15 @@ public class Recipient extends EntityBase {
 
     public Recipient setCountry(CountryIso country) {
         this.country = country;
+        return this;
+    }
+
+    public VerificationOfPayee getRecipientVerificationOfPayee() {
+        return recipientVerificationOfPayee;
+    }
+
+    public Recipient setRecipientVerificationOfPayee(VerificationOfPayee recipientVerificationOfPayee) {
+        this.recipientVerificationOfPayee = recipientVerificationOfPayee;
         return this;
     }
 }

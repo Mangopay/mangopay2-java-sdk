@@ -91,6 +91,8 @@ public abstract class ApiBase {
         put("payins_googlepayv2-direct_create", new String[]{"/payins/payment-methods/googlepay", RequestType.POST.toString()});
         put("payins_mbway-web_create", new String[]{"/payins/payment-methods/mbway", RequestType.POST.toString()});
         put("payins_paypal-web_create_v2", new String[]{"/payins/payment-methods/paypal", RequestType.POST.toString()});
+        put("payins_paypal_data_collection_create", new String[]{"/payins/payment-methods/paypal/data-collection", RequestType.POST.toString()});
+        put("payins_paypal_data_collection_get", new String[]{"/payins/payment-methods/paypal/data-collection/%s", RequestType.GET.toString()});
         put("payin_get_refunds", new String[]{"/payins/%s/refunds", RequestType.GET.toString()});
         put("payins_recurring_registration", new String[]{"/recurringpayinregistrations", RequestType.POST.toString()});
         put("payins_recurring_registration_get", new String[]{"/recurringpayinregistrations/%s", RequestType.GET.toString()});
@@ -117,7 +119,7 @@ public abstract class ApiBase {
         put("pay_in_intent_capture", new String[]{"/payins/intents/%s/captures", RequestType.POST.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_get", new String[]{"/payins/intents/%s", RequestType.GET.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_update", new String[]{"/payins/intents/%s", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
-        put("pay_in_intent_cancel", new String[]{"/payins/intents/%s/cancel", RequestType.PUT.toString(), ApiVersion.V3_0.name()});
+        put("pay_in_intent_cancel", new String[]{"/payins/intents/%s/cancel", RequestType.POST.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_create_splits", new String[]{"/payins/intents/%s/splits", RequestType.POST.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_execute_split", new String[]{"/payins/intents/%s/splits/%s/execute", RequestType.POST.toString(), ApiVersion.V3_0.name()});
         put("pay_in_intent_reverse_split", new String[]{"/payins/intents/%s/splits/%s/reverse", RequestType.POST.toString(), ApiVersion.V3_0.name()});

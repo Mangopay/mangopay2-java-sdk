@@ -260,25 +260,16 @@ public interface PayInApi {
      */
     PayInIntent getPayInIntent(String intentId) throws Exception;
 
-//    /**
-//     * Update a PayInIntent
-//     *
-//     * @param intentId The intent identifier
-//     * @param intent   The object containing the updated fields
-//     * @return PayInIntent instance
-//     * @throws Exception
-//     */
-//    PayInIntent updatePayInIntent(String intentId, PayInIntent intent) throws Exception;
-
-//    /**
-//     * Cancel a PayInIntent
-//     *
-//     * @param intentId The intent identifier
-//     * @param intent   The object containing required fields for canceling
-//     * @return PayInIntent instance
-//     * @throws Exception
-//     */
-//    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent) throws Exception;
+    /**
+     * Cancel a PayInIntent
+     *
+     * @param intentId The intent identifier
+     * @param intent   The object containing required fields for canceling
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return PayInIntent instance
+     * @throws Exception
+     */
+    PayInIntent cancelPayInIntent(String intentId, PayInIntent intent, String idempotencyKey) throws Exception;
 
     /**
      * Create Intent splits
@@ -342,4 +333,23 @@ public interface PayInApi {
      * @throws Exception
      */
     PayInIntentSplit updatePayInIntentSplit(String intentId, String splitId, PayInIntentSplit split) throws Exception;
+
+    /**
+     * Send key pre-transaction data such as order details, buyer information, and merchant context before initiating a PayPal payment
+     *
+     * @param data           Object containing a map with the needed data
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return PayPalDataCollection containing a map with the DataCollectionId and possibly other values
+     * @throws Exception
+     */
+    PayPalDataCollection createPayPalDataCollection(PayPalDataCollection data, String idempotencyKey) throws Exception;
+
+    /**
+     * Get a PayPal data collection
+     *
+     * @param dataCollectionId PayPalDataCollection identifier
+     * @return PayPalDataCollection containing a map with the data
+     * @throws Exception
+     */
+    PayPalDataCollection getPayPalDataCollection(String dataCollectionId) throws Exception;
 }
