@@ -3,7 +3,10 @@ package com.mangopay.core;
 import com.mangopay.core.enumerations.CountryIso;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.entities.Recipient;
-import com.mangopay.entities.subentities.*;
+import com.mangopay.entities.subentities.IndividualRecipient;
+import com.mangopay.entities.subentities.PayoutMethods;
+import com.mangopay.entities.subentities.RecipientPropertySchema;
+import com.mangopay.entities.subentities.RecipientSchema;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -179,13 +182,7 @@ public class RecipientApiImplTest extends BaseTest {
                         .setAddress(getNewAddress())
                 )
                 .setLocalBankTransfer(localBankTransfer)
-                .setCountry(CountryIso.GB)
-                .setRecipientVerificationOfPayee(
-                    new VerificationOfPayee()
-                        .setRecipientVerificationId("123456789")
-                        .setRecipientVerificationCheck("MATCH")
-                        .setRecipientVerificationMessage("test")
-                );
+                .setCountry(CountryIso.GB);
 
             recipient = getApi().getRecipientApi().create(toCreate, ACTIVE_USER_NATURAL_SCA_ID);
         }
