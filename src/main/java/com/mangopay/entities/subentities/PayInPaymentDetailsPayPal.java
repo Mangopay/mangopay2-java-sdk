@@ -69,6 +69,9 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     @SerializedName("Trackings")
     private List<PayPalWebTracking> trackings;
 
+    @SerializedName("DataCollectionId")
+    private String dataCollectionId;
+
     public ShippingAddress getShippingAddress() {
         return shippingAddress;
     }
@@ -111,16 +114,6 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     public PayInPaymentDetailsPayPal setCancelUrl(String cancelUrl) {
         this.cancelUrl = cancelUrl;
         return this;
-    }
-
-    @Override
-    public Map<String, Type> getSubObjects() {
-        Map<String, Type> subObjects = super.getSubObjects();
-
-        subObjects.put("ShippingAddress", ShippingAddress.class);
-        subObjects.put("Shipping", Shipping.class);
-
-        return subObjects;
     }
 
     public String getPaypalBuyerAccountEmail() {
@@ -211,5 +204,24 @@ public class PayInPaymentDetailsPayPal extends Dto implements PayInPaymentDetail
     public PayInPaymentDetailsPayPal setTrackings(List<PayPalWebTracking> trackings) {
         this.trackings = trackings;
         return this;
+    }
+
+    public String getDataCollectionId() {
+        return dataCollectionId;
+    }
+
+    public PayInPaymentDetailsPayPal setDataCollectionId(String dataCollectionId) {
+        this.dataCollectionId = dataCollectionId;
+        return this;
+    }
+
+    @Override
+    public Map<String, Type> getSubObjects() {
+        Map<String, Type> subObjects = super.getSubObjects();
+
+        subObjects.put("ShippingAddress", ShippingAddress.class);
+        subObjects.put("Shipping", Shipping.class);
+
+        return subObjects;
     }
 }

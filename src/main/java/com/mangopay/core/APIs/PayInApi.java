@@ -333,4 +333,23 @@ public interface PayInApi {
      * @throws Exception
      */
     PayInIntentSplit updatePayInIntentSplit(String intentId, String splitId, PayInIntentSplit split) throws Exception;
+
+    /**
+     * Send key pre-transaction data such as order details, buyer information, and merchant context before initiating a PayPal payment
+     *
+     * @param data           Object containing a map with the needed data
+     * @param idempotencyKey Idempotency key for this request. Can be null.
+     * @return PayPalDataCollection containing a map with the DataCollectionId and possibly other values
+     * @throws Exception
+     */
+    PayPalDataCollection createPayPalDataCollection(PayPalDataCollection data, String idempotencyKey) throws Exception;
+
+    /**
+     * Get a PayPal data collection
+     *
+     * @param dataCollectionId PayPalDataCollection identifier
+     * @return PayPalDataCollection containing a map with the data
+     * @throws Exception
+     */
+    PayPalDataCollection getPayPalDataCollection(String dataCollectionId) throws Exception;
 }
