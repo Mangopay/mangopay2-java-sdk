@@ -1830,7 +1830,7 @@ public class PayInApiImplTest extends BaseTest {
         PayPalDataCollection fetchedDataCollection = api.getPayInApi().getPayPalDataCollection(dataCollectionId);
 
         assertNotNull(fetchedDataCollection);
-        assertEquals(dataCollectionId, fetchedDataCollection.getData().get("DataCollectionId"));
+        assertEquals(dataCollectionId, fetchedDataCollection.getData().get("dataCollectionId"));
         assertEquals("A12345N343", fetchedDataCollection.getData().get("sender_account_id"));
         assertEquals("Jane", fetchedDataCollection.getData().get("sender_first_name"));
         assertEquals("Doe", fetchedDataCollection.getData().get("sender_last_name"));

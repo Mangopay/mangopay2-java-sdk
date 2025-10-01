@@ -114,6 +114,9 @@ public class PayInDeserializer implements JsonDeserializer<PayIn> {
                     }.getType();
                     payInPaymentDetailsPayPal.setTrackings((List<PayPalWebTracking>) context.deserialize(object.get("Trackings"), listType));
                 }
+                if (object.has("DataCollectionId") && !object.get("DataCollectionId").isJsonNull()) {
+                    payInPaymentDetailsPayPal.setDataCollectionId(object.get("DataCollectionId").getAsString());
+                }
 
                 payIn.setPaymentDetails(payInPaymentDetailsPayPal);
                 break;

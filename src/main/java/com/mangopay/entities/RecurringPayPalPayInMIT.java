@@ -99,6 +99,9 @@ public class RecurringPayPalPayInMIT extends Dto {
     @SerializedName("Reference")
     private String reference;
 
+    @SerializedName("DataCollectionId")
+    private String dataCollectionId;
+
     public String getRecurringPayInRegistrationId() {
         return recurringPayInRegistrationId;
     }
@@ -204,6 +207,15 @@ public class RecurringPayPalPayInMIT extends Dto {
 
     public RecurringPayPalPayInMIT setReference(String reference) {
         this.reference = reference;
+        return this;
+    }
+
+    public String getDataCollectionId() {
+        return dataCollectionId;
+    }
+
+    public RecurringPayPalPayInMIT setDataCollectionId(String dataCollectionId) {
+        this.dataCollectionId = dataCollectionId;
         return this;
     }
 }
