@@ -6,6 +6,7 @@ import com.mangopay.entities.PayOut;
 import com.mangopay.entities.subentities.FallbackReason;
 import com.mangopay.entities.subentities.PayOutPaymentDetailsBankWire;
 import com.mangopay.entities.subentities.PayOutPaymentRef;
+import com.mangopay.entities.subentities.VerificationOfPayee;
 
 import java.lang.reflect.Type;
 
@@ -31,6 +32,8 @@ public class PayOutDeserializer implements JsonDeserializer<PayOut> {
                     meanOfPaymentDetails.setFallbackReason((FallbackReason) context.deserialize(object.get("FallbackReason"), FallbackReason.class));
                 if (object.has("Status") && !object.get("Status").isJsonNull())
                     meanOfPaymentDetails.setStatus(object.get("Status").getAsString());
+                if (object.has("RecipientVerificationOfPayee") && !object.get("RecipientVerificationOfPayee").isJsonNull())
+                    meanOfPaymentDetails.setRecipientVerificationOfPayee((VerificationOfPayee) context.deserialize(object.get("RecipientVerificationOfPayee"), VerificationOfPayee.class));
                 payOut.setMeanOfPaymentDetails(meanOfPaymentDetails);
                 return payOut;
             default:
