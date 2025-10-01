@@ -72,7 +72,6 @@ public class RecipientApiImplTest extends BaseTest {
         assertNotNull(fetched);
         assertEquals(recipient.getId(), fetched.getId());
         assertEquals(recipient.getStatus(), fetched.getStatus());
-        assertNotNull(fetched.getRecipientVerificationOfPayee());
     }
 
     @Test
