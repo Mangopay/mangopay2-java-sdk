@@ -1705,24 +1705,7 @@ public class PayInApiImplTest extends BaseTest {
         assertEquals(intent.getStatus(), result.getStatus());
     }
 
-//    @Test
-//    @Ignore
-//    public void updatePayInIntent() throws Exception {
-//        PayInIntent intent = this.createNewPayInIntent();
-//        User john = this.getJohn(UserCategory.PAYER, true, true);
-//
-//        PayInIntent toUpdate = new PayInIntent()
-//            .setBuyer(
-//                new PayInIntentBuyer()
-//                    .setId(john.getId())
-//            );
-//
-//        PayInIntent updated = api.getPayInApi().updatePayInIntent(intent.getId(), toUpdate);
-//        assertNotNull(updated);
-//        assertEquals(john.getId(), updated.getBuyer().getId());
-//    }
-
-    /*@Test
+    @Test
     public void cancelPayInIntent() throws Exception {
         PayInIntent intent = this.createNewPayInIntent();
 
@@ -1733,10 +1716,10 @@ public class PayInApiImplTest extends BaseTest {
                     .setExternalProviderReference(String.valueOf(System.currentTimeMillis()))
             );
 
-        PayInIntent canceled = api.getPayInApi().cancelPayInIntent(intent.getId(), toCancel);
+        PayInIntent canceled = api.getPayInApi().cancelPayInIntent(intent.getId(), toCancel, null);
         assertNotNull(canceled);
-        assertEquals("CANCELED", canceled.getStatus());
-    }*/
+        assertEquals("CANCELLED", canceled.getStatus());
+    }
 
     @Test
     public void testCreatePayInIntentSplit() throws Exception {
