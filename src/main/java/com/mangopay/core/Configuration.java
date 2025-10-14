@@ -48,7 +48,9 @@ public class Configuration {
 
     /**
      * Set to true for uk traffic
+     * @deprecated Will be removed in future versions
      */
+    @Deprecated
     private boolean ukHeaderFlag = false;
     
 
