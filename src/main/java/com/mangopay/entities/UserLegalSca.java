@@ -69,6 +69,12 @@ public final class UserLegalSca extends User {
     @SerializedName("LegalRepresentative")
     private LegalRepresentative legalRepresentative;
 
+    /**
+     * If provided, possible values: USER_NOT_PRESENT, USER_PRESENT
+     */
+    @SerializedName("ScaContext")
+    private String scaContext;
+
     public UserLegalSca() {
         this.personType = PersonType.LEGAL;
     }
@@ -147,5 +153,14 @@ public final class UserLegalSca extends User {
 
     public PendingUserAction getPendingUserAction() {
         return pendingUserAction;
+    }
+
+    public String getScaContext() {
+        return scaContext;
+    }
+
+    public UserLegalSca setScaContext(String scaContext) {
+        this.scaContext = scaContext;
+        return this;
     }
 }
