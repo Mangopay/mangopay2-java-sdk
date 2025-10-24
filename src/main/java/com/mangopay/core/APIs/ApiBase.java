@@ -113,6 +113,7 @@ public abstract class ApiBase {
         put("payins_twint-web_create", new String[]{"/payins/payment-methods/twint", RequestType.POST.toString()});
         put("payins_swish-web_create", new String[]{"/payins/payment-methods/swish", RequestType.POST.toString()});
         put("payins_paybybank-web_create", new String[]{"/payins/payment-methods/openbanking", RequestType.POST.toString()});
+        put("payins_get_extended_card_web", new String[]{"/payins/card/web/%s/extended", RequestType.GET.toString()});
         put("add_tracking_info", new String[]{"/payins/%s/trackings", RequestType.PUT.toString()});
         put("payment_method-metadata", new String[]{"/payment-methods/metadata", RequestType.POST.toString()});
         put("pay_in_intent_authorization", new String[]{"/payins/intents", RequestType.POST.toString(), ApiVersion.V3_0.name()});

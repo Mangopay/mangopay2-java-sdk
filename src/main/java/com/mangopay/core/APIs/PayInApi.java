@@ -352,4 +352,12 @@ public interface PayInApi {
      * @throws Exception
      */
     PayPalDataCollection getPayPalDataCollection(String dataCollectionId) throws Exception;
+
+    /**
+     * Get information about the card used for a Web Card PayIn.
+     *
+     * @param payInId the PayIn identifier
+     * @return ExtendedWebCardPayIn instance
+     */
+    ExtendedWebCardPayIn getExtendedWebCardPayin(String payInId) throws Exception;
 }

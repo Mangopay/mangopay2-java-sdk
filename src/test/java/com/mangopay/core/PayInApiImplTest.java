@@ -1824,6 +1824,16 @@ public class PayInApiImplTest extends BaseTest {
     }
 
     @Test
+    public void getExtendedCardWeb() throws Exception {
+        PayIn payIn = this.getJohnsPayInCardWeb();
+        ExtendedWebCardPayIn extended = getApi().getPayInApi().getExtendedWebCardPayin(payIn.getId());
+
+        assertNotNull(extended);
+        assertEquals(PayInPaymentType.CARD, extended.getPaymentType());
+        assertEquals(PayInExecutionType.WEB, extended.getExecutionType());
+    }
+
+    @Test
     public void getPayPalDataCollection() throws Exception {
         PayPalDataCollection createdDataCollection = createNewPayPalDataCollection();
         String dataCollectionId = (String) createdDataCollection.getData().get("dataCollectionId");
