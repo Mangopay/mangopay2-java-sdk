@@ -299,7 +299,7 @@ public class UserApiImplTest extends BaseTest {
         UserEnrollmentResult enrollmentResult = this.api.getUserApi().enroll(johnSca.getId());
         assertNotNull(enrollmentResult.getPendingUserAction().getRedirectUrl());
 
-        UserConsent consentResult = this.api.getUserApi().manageConsent(johnSca.getId());
+        UserConsent consentResult = this.api.getUserApi().manageConsent(johnSca.getId(), null);
         assertNotNull(consentResult.getPendingUserAction().getRedirectUrl());
     }
 
