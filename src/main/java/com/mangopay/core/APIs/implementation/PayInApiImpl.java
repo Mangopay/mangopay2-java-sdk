@@ -237,4 +237,9 @@ public class PayInApiImpl extends ApiBase implements PayInApi {
     public PayPalDataCollection getPayPalDataCollection(String dataCollectionId) throws Exception {
         return this.getObject(PayPalDataCollection.class, "payins_paypal_data_collection_get", dataCollectionId);
     }
+
+    @Override
+    public ExtendedWebCardPayIn getExtendedWebCardPayin(String payInId) throws Exception {
+        return this.getObject(ExtendedWebCardPayIn.class, "payins_get_extended_card_web", payInId);
+    }
 }
