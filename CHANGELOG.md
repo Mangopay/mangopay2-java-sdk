@@ -1,3 +1,25 @@
+## [2.57.0] - 2025-10-27
+
+### Added
+
+- New [POST Manage proxy consent for a User](https://docs.mangopay.com/api-reference/users/manage-proxy-consent)
+  endpoint to obtain and manage user consent via the hosted SCA experience (if proxy is activated). A proxy and user
+  consent are now required to use the `USER_NOT_PRESENT` value for
+  `ScaContext` ([API release note](https://docs.mangopay.com/release-notes/api/2025-10-23), #440)
+- `ScaContext` request parameter newly added on all user POST and PUT endpoints, enabling the platform to request these
+  actions with `USER_NOT_PRESENT` – provided the proxy is in place, activated, and the user has given
+  consent ([API release note](https://docs.mangopay.com/release-notes/api/2025-10-23#sca%3A-scacontext-request-parameter-on-user-endpoints),
+  #438 )
+- Support for the `Licensor` property
+  on [GET View a Client](https://docs.mangopay.com/api-reference/client/view-client) (#437 )
+- Support
+  for [GET View card details for a Web Card PayIn](https://docs.mangopay.com/api-reference/web-card-payins/view-card-details-web-card-payin)
+  endpoint (#439 )
+
+### Changed
+
+- `x-tenant-id` deprecated as no longer necessary for UK platforms; the parameter is ignored by Mangopay (#437 )
+
 ## [2.56.0] - 2025-10-01
 
 ### Added
