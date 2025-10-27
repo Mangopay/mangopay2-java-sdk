@@ -113,6 +113,7 @@ public abstract class ApiBase {
         put("payins_twint-web_create", new String[]{"/payins/payment-methods/twint", RequestType.POST.toString()});
         put("payins_swish-web_create", new String[]{"/payins/payment-methods/swish", RequestType.POST.toString()});
         put("payins_paybybank-web_create", new String[]{"/payins/payment-methods/openbanking", RequestType.POST.toString()});
+        put("payins_get_extended_card_web", new String[]{"/payins/card/web/%s/extended", RequestType.GET.toString()});
         put("add_tracking_info", new String[]{"/payins/%s/trackings", RequestType.PUT.toString()});
         put("payment_method-metadata", new String[]{"/payment-methods/metadata", RequestType.POST.toString()});
         put("pay_in_intent_authorization", new String[]{"/payins/intents", RequestType.POST.toString(), ApiVersion.V3_0.name()});
@@ -178,6 +179,7 @@ public abstract class ApiBase {
         put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
         put("users_regulatory", new String[]{"/users/%s/Regulatory", RequestType.GET.toString()});
         put("users_enroll_sca", new String[]{"/sca/users/%s/enrollment", RequestType.POST.toString()});
+        put("users_manage_consent", new String[]{"/sca/users/%s/consent", RequestType.POST.toString()});
         put("users_close_natural", new String[]{"/users/natural/%s", RequestType.DELETE.toString()});
         put("users_close_legal", new String[]{"/users/legal/%s", RequestType.DELETE.toString()});
 

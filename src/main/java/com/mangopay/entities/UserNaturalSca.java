@@ -122,6 +122,12 @@ public final class UserNaturalSca extends User {
     private PendingUserAction pendingUserAction;
 
     /**
+     * If provided, possible values: USER_NOT_PRESENT, USER_PRESENT
+     */
+    @SerializedName("ScaContext")
+    private String scaContext;
+
+    /**
      * Instantiates new UserNaturalSca object.
      */
     public UserNaturalSca() {
@@ -246,5 +252,14 @@ public final class UserNaturalSca extends User {
 
     public void setPhoneNumberCountry(CountryIso phoneNumberCountry) {
         this.phoneNumberCountry = phoneNumberCountry;
+    }
+
+    public String getScaContext() {
+        return scaContext;
+    }
+
+    public UserNaturalSca setScaContext(String scaContext) {
+        this.scaContext = scaContext;
+        return this;
     }
 }

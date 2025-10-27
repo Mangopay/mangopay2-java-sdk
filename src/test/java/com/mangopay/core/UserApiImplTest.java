@@ -249,6 +249,7 @@ public class UserApiImplTest extends BaseTest {
         johnPayer.setBirthday(c.getTimeInMillis() / 1000);
         johnPayer.setNationality(CountryIso.FR);
         johnPayer.setCountryOfResidence(CountryIso.FR);
+        johnPayer.setScaContext("USER_PRESENT");
 
         // transition from PAYER to OWNER
         this.api.getUserApi().categorize(johnPayer);
@@ -274,6 +275,7 @@ public class UserApiImplTest extends BaseTest {
         matrixPayer.setHeadquartersAddress(getNewAddress());
         matrixPayer.setCompanyNumber("LU72HN11");
         matrixPayer.setLegalRepresentative(legalRepresentative);
+        matrixPayer.setScaContext("USER_NOT_PRESENT");
 
         // transition from PAYER to OWNER
         this.api.getUserApi().categorize(matrixPayer);
@@ -290,6 +292,17 @@ public class UserApiImplTest extends BaseTest {
         assertNotNull(johnSca.getPendingUserAction().getRedirectUrl());
         assertNotNull(result.getPendingUserAction().getRedirectUrl());
         assertNotEquals(result.getPendingUserAction().getRedirectUrl(), johnSca.getPendingUserAction().getRedirectUrl());
+    }
+
+    @Test
+    public void manageConsent() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false);
+
+        UserEnrollmentResult enrollmentResult = this.api.getUserApi().enroll(johnSca.getId());
+        assertNotNull(enrollmentResult.getPendingUserAction().getRedirectUrl());
+
+        UserConsent consentResult = this.api.getUserApi().manageConsent(johnSca.getId(), null);
+        assertNotNull(consentResult.getPendingUserAction().getRedirectUrl());
     }
 
     @Test

@@ -4,6 +4,7 @@ import com.mangopay.core.*;
 import com.mangopay.core.enumerations.CurrencyIso;
 import com.mangopay.core.enumerations.KycDocumentType;
 import com.mangopay.entities.*;
+import com.mangopay.entities.subentities.UserConsent;
 import com.mangopay.entities.subentities.UserDataFormatValidation;
 import com.mangopay.entities.subentities.UserEnrollmentResult;
 
@@ -139,10 +140,20 @@ public interface UserApi {
      * add an encoded returnUrl query parameter for them to be returned to after the SCA session, and redirect the user.
      *
      * @param userId User identifier
-     * @return User for that User
+     * @return UserEnrollmentResult for that User
      * @throws Exception
      */
     UserEnrollmentResult enroll(String userId) throws Exception;
+
+    /**
+     * Manage user consent
+     *
+     * @param userId User identifier
+     * @param idempotencyKey idempotency key for this request.
+     * @return UserConsent for that User
+     * @throws Exception
+     */
+    UserConsent manageConsent(String userId, String idempotencyKey) throws Exception;
 
     /**
      * Creates bank account for user.
