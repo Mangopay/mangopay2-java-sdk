@@ -59,6 +59,7 @@ public class ClientApiImplTest extends BaseTest {
         Client client = this.api.getClientApi().get();
 
         assertNotNull(client);
+        assertNotNull(client.getLicensor());
         assertTrue("sdk-unit-tests".equals(client.getClientId()));
     }
 

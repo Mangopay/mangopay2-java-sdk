@@ -101,6 +101,12 @@ public class Client extends EntityBase {
     @SerializedName("TaxNumber")
     private String taxNumber;
 
+    /**
+     * The licensor of the platform’s company account, indicating the Mangopay entity the platform contracted with
+     */
+    @SerializedName("Licensor")
+    private String licensor;
+
     public String getClientId() {
         return clientId;
     }
@@ -219,6 +225,15 @@ public class Client extends EntityBase {
 
     public Client setHeadquartersPhoneNumber(String headquartersPhoneNumber) {
         this.headquartersPhoneNumber = headquartersPhoneNumber;
+        return this;
+    }
+
+    public String getLicensor() {
+        return licensor;
+    }
+
+    public Client setLicensor(String licensor) {
+        this.licensor = licensor;
         return this;
     }
 }
