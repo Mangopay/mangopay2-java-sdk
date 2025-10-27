@@ -293,6 +293,17 @@ public class UserApiImplTest extends BaseTest {
     }
 
     @Test
+    public void manageConsent() throws Exception {
+        UserNaturalSca johnSca = this.getJohnSca(UserCategory.OWNER, false);
+
+        UserEnrollmentResult enrollmentResult = this.api.getUserApi().enroll(johnSca.getId());
+        assertNotNull(enrollmentResult.getPendingUserAction().getRedirectUrl());
+
+        UserConsent consentResult = this.api.getUserApi().manageConsent(johnSca.getId(), null);
+        assertNotNull(consentResult.getPendingUserAction().getRedirectUrl());
+    }
+
+    @Test
     public void updateNaturalNonASCII() throws Exception {
         UserNatural john = this.getJohn();
         john.setLastName(john.getLastName() + " - CHANGED");

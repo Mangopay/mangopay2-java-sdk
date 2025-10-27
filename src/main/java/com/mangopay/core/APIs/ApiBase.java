@@ -178,6 +178,7 @@ public abstract class ApiBase {
         put("users_block_status", new String[]{"/users/%s/blockStatus", RequestType.GET.toString()});
         put("users_regulatory", new String[]{"/users/%s/Regulatory", RequestType.GET.toString()});
         put("users_enroll_sca", new String[]{"/sca/users/%s/enrollment", RequestType.POST.toString()});
+        put("users_manage_consent", new String[]{"/sca/users/%s/consent", RequestType.POST.toString()});
         put("users_close_natural", new String[]{"/users/natural/%s", RequestType.DELETE.toString()});
         put("users_close_legal", new String[]{"/users/legal/%s", RequestType.DELETE.toString()});
 
