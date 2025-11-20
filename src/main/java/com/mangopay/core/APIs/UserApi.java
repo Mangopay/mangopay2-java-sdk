@@ -149,6 +149,15 @@ public interface UserApi {
      * Manage user consent
      *
      * @param userId User identifier
+     * @return UserConsent for that User
+     * @throws Exception
+     */
+    UserConsent manageConsent(String userId) throws Exception;
+
+    /**
+     * Manage user consent
+     *
+     * @param userId User identifier
      * @param idempotencyKey idempotency key for this request.
      * @return UserConsent for that User
      * @throws Exception

@@ -158,6 +158,11 @@ public class UserApiImpl extends ApiBase implements UserApi {
     }
 
     @Override
+    public UserConsent manageConsent(String userId) throws Exception {
+        return this.manageConsent(userId, null);
+    }
+
+    @Override
     public UserConsent manageConsent(String userId, String idempotencyKey) throws Exception {
         return this.createObject(UserConsent.class, idempotencyKey, "users_manage_consent", null, userId);
     }
